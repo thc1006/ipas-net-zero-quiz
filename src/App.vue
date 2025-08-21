@@ -17,9 +17,15 @@
       </div>
     </header>
 
-    <!-- Main Quiz Container -->
+    <!-- Main Container -->
     <main class="main-container">
-      <QuizView />
+      <PortalView v-if="currentView === 'portal'" @start-quiz="startQuiz" />
+      <QuizView 
+        v-if="currentView === 'quiz'" 
+        :mode="currentQuizMode"
+        :selected-category="selectedCategory"
+        @back-to-portal="goBackToPortal" 
+      />
     </main>
 
     <!-- Footer -->
@@ -30,8 +36,26 @@
 </template>
 
 <script setup>
-// Import the QuizView component
+import { ref } from 'vue'
+// Import components
+import PortalView from './components/PortalView.vue'
 import QuizView from './components/QuizView.vue'
+
+// Current view state
+const currentView = ref('portal')
+const currentQuizMode = ref('practice')
+const selectedCategory = ref(null)
+
+// Navigation methods
+function startQuiz(options = {}) {
+  currentQuizMode.value = options.mode || 'practice'
+  selectedCategory.value = options.selectedCategory || null
+  currentView.value = 'quiz'
+}
+
+function goBackToPortal() {
+  currentView.value = 'portal'
+}
 </script>
 
 <style>
