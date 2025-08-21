@@ -1,0 +1,128 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Custom base styles */
+@layer base {
+  html {
+    font-family: 'Inter var', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'PingFang TC', 'Microsoft JhengHei', 'Microsoft YaHei', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100;
+  }
+
+  /* Better focus styles for accessibility */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-neutral-900;
+  }
+
+  /* Chinese typography improvements */
+  .chinese-text {
+    font-feature-settings: "kern", "liga", "clig", "calt";
+    text-rendering: optimizeLegibility;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* Custom component styles */
+@layer components {
+  .quiz-card {
+    @apply bg-white dark:bg-neutral-800 rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-700 
+           transition-all duration-300 hover:shadow-xl hover:scale-[1.02];
+  }
+
+  .option-button {
+    @apply w-full p-4 text-left rounded-lg border-2 transition-all duration-200 
+           bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700 
+           hover:border-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20
+           focus:border-primary-500 focus:bg-primary-50 dark:focus:bg-primary-900/20;
+  }
+
+  .option-button.selected {
+    @apply border-primary-500 bg-primary-100 dark:bg-primary-900/30 text-primary-900 dark:text-primary-100;
+  }
+
+  .option-button.correct {
+    @apply border-success-500 bg-success-100 dark:bg-success-900/30 text-success-900 dark:text-success-100;
+  }
+
+  .option-button.incorrect {
+    @apply border-error-500 bg-error-100 dark:bg-error-900/30 text-error-900 dark:text-error-100;
+  }
+
+  .nav-button {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-200 
+           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white 
+           dark:focus:ring-offset-neutral-900 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .nav-button-primary {
+    @apply nav-button bg-primary-600 hover:bg-primary-700 active:bg-primary-800 
+           text-white focus:ring-primary-500;
+  }
+
+  .nav-button-secondary {
+    @apply nav-button bg-neutral-200 hover:bg-neutral-300 active:bg-neutral-400 
+           dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:active:bg-neutral-500 
+           text-neutral-900 dark:text-neutral-100 focus:ring-neutral-500;
+  }
+
+  .progress-bar {
+    @apply w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2 overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full 
+           transition-all duration-500 ease-out;
+  }
+
+  .loading-spinner {
+    @apply animate-spin rounded-full border-4 border-neutral-300 border-t-primary-600;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    @apply transition-all duration-300;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    @apply opacity-0 transform translate-y-4;
+  }
+
+  .slide-enter-active,
+  .slide-leave-active {
+    @apply transition-transform duration-300;
+  }
+
+  .slide-enter-from {
+    @apply transform translate-x-full;
+  }
+
+  .slide-leave-to {
+    @apply transform -translate-x-full;
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+
+  .glass {
+    @apply bg-white/80 dark:bg-neutral-800/80 backdrop-blur-sm;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

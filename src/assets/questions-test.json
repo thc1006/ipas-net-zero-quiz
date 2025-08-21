@@ -1,0 +1,28 @@
+[
+  {
+    "id": "test-001",
+    "subject": "Test Subject",
+    "question": "What is 2 + 2?",
+    "options": {
+      "A": "3",
+      "B": "4", 
+      "C": "5",
+      "D": "6"
+    },
+    "answer": "B",
+    "explanation": "2 + 2 equals 4"
+  },
+  {
+    "id": "test-002",
+    "subject": "Test Subject",
+    "question": "What is the capital of France?",
+    "options": {
+      "A": "London",
+      "B": "Berlin",
+      "C": "Paris",
+      "D": "Madrid"
+    },
+    "answer": "C",
+    "explanation": "Paris is the capital of France"
+  }
+]

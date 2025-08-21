@@ -1,0 +1,106 @@
+{
+  "name": "iPAS 淨零碳認證測驗系統",
+  "short_name": "iPAS Quiz",
+  "description": "台灣 iPAS 淨零碳認證測驗系統 - 互動式學習平台",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#1e40af",
+  "background_color": "#ffffff",
+  "lang": "zh-TW",
+  "dir": "ltr",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/pwa-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/pwa-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/pwa-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/pwa-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/pwa-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/pwa-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "首頁畫面"
+    },
+    {
+      "src": "/screenshots/mobile-quiz.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "測驗畫面"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "開始測驗",
+      "short_name": "測驗",
+      "description": "立即開始 iPAS 淨零碳認證測驗",
+      "url": "/quiz",
+      "icons": [
+        {
+          "src": "/icons/shortcut-quiz.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "查看結果",
+      "short_name": "結果",
+      "description": "查看測驗結果和統計",
+      "url": "/results",
+      "icons": [
+        {
+          "src": "/icons/shortcut-results.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
