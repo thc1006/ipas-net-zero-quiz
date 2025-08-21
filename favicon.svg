@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#0ea5e9" rx="6"/>
+  <g fill="white">
+    <!-- Leaf shape for eco/green theme -->
+    <path d="M8 16c0-4.418 3.582-8 8-8s8 3.582 8 8c0 2.209-.895 4.209-2.343 5.657L16 27.314l-5.657-5.657C8.895 20.209 8 18.209 8 16z"/>
+    <!-- Small circle in center -->
+    <circle cx="16" cy="16" r="3"/>
+  </g>
+</svg>

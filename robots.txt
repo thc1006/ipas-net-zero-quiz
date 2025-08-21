@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://ipas-quiz.netlify.app/sitemap.xml
+Sitemap: https://ipas-quiz.vercel.app/sitemap.xml
+
+# Block access to sensitive files
+Disallow: /api/
+Disallow: /.well-known/
+Disallow: /admin/
+Disallow: /config/
+
+# Allow common assets
+Allow: /assets/
+Allow: /icons/
+Allow: *.css
+Allow: *.js
+Allow: *.png
+Allow: *.jpg
+Allow: *.svg
+Allow: *.woff2
+Allow: *.json
+
+# Crawl-delay for Chinese search engines
+User-agent: Baiduspider
+Crawl-delay: 10
+
+User-agent: Sogou web spider
+Crawl-delay: 10
