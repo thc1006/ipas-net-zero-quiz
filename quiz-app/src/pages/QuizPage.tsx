@@ -101,6 +101,7 @@ export function QuizPage({ quiz, onFinish }: QuizPageProps) {
 
       {/* 題目卡片 */}
       <QuestionCard
+        key={currentQuestion.id}
         question={currentQuestion}
         questionNumber={currentIndex + 1}
         selectedAnswer={selectedAnswer}
