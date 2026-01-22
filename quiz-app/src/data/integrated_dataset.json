@@ -15,7 +15,7 @@
       "考科2": 342
     },
     "with_answer": 400,
-    "last_updated": "2026-01-23T05:27:29.952523"
+    "last_updated": "2026-01-23T05:38:13.350449"
   },
   "gist_items": [
     {
@@ -5480,10 +5480,17 @@
           "text": "公開發布所有版本"
         }
       ],
-      "answer": null,
+      "answer": "B",
       "source": "gist",
       "original_section": "考科2",
-      "exam_subject": "考科2"
+      "exam_subject": "考科2",
+      "explanation": "根據 ISO 14064-1:2018，應保留修訂相關之文件化資訊",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 162,
@@ -5507,10 +5514,17 @@
           "text": "固定基準年"
         }
       ],
-      "answer": null,
+      "answer": "C",
       "source": "gist",
       "original_section": "考科2",
-      "exam_subject": "考科2"
+      "exam_subject": "考科2",
+      "explanation": "根據 GHG Protocol，可採用滾動式基準年",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 163,
@@ -5534,10 +5548,17 @@
           "text": "生命週期闡釋"
         }
       ],
-      "answer": null,
+      "answer": "B",
       "source": "gist",
       "original_section": "考科2",
-      "exam_subject": "考科2"
+      "exam_subject": "考科2",
+      "explanation": "LCI 是生命週期盤查分析，LCA 第二階段",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 164,
@@ -5561,10 +5582,17 @@
           "text": "法規要求"
         }
       ],
-      "answer": null,
+      "answer": "A",
       "source": "gist",
       "original_section": "考科2",
-      "exam_subject": "考科2"
+      "exam_subject": "考科2",
+      "explanation": "PCR 提供建立系統邊界的具體規定",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 165,
@@ -5622,10 +5650,17 @@
           "text": "場址特定數據"
         }
       ],
-      "answer": null,
+      "answer": "B",
       "source": "gist",
       "original_section": "考科2",
-      "exam_subject": "考科2"
+      "exam_subject": "考科2",
+      "explanation": "當一級數據不可行時，可使用二級數據",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 167,
@@ -5751,10 +5786,17 @@
           "text": "直接忽略"
         }
       ],
-      "answer": null,
+      "answer": "A",
       "source": "gist",
       "original_section": "考科2",
-      "exam_subject": "考科2"
+      "exam_subject": "考科2",
+      "explanation": "應另行說明以確保透明度",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 171,
@@ -5778,10 +5820,17 @@
           "text": "準備回收再利用及再使用"
         }
       ],
-      "answer": null,
+      "answer": "B",
       "source": "gist",
       "original_section": "考科2",
-      "exam_subject": "考科2"
+      "exam_subject": "考科2",
+      "explanation": "產品設計與開發不屬於生命終結過程",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 172,
@@ -5839,10 +5888,17 @@
           "text": "組織發生合併、併購等結構性變化"
         }
       ],
-      "answer": null,
+      "answer": "D",
       "source": "gist",
       "original_section": "考科2",
-      "exam_subject": "考科2"
+      "exam_subject": "考科2",
+      "explanation": "結構性變化（如併購）會觸發基準年重新計算",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 174,
@@ -6410,10 +6466,17 @@
           "text": "平均分配"
         }
       ],
-      "answer": null,
+      "answer": "B",
       "source": "gist",
       "original_section": "考科2",
-      "exam_subject": "考科2"
+      "exam_subject": "考科2",
+      "explanation": "應反映產品與功能間的基本物理關係",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 191,
@@ -6471,10 +6534,17 @@
           "text": "制定公司的人力資源政策"
         }
       ],
-      "answer": null,
+      "answer": "B",
       "source": "gist",
       "original_section": "考科2",
-      "exam_subject": "考科2"
+      "exam_subject": "考科2",
+      "explanation": "LCA 可識別環境影響熱點以進行改善",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 193,
@@ -15715,10 +15785,17 @@
           "text": "僅通過財務援助參與"
         }
       ],
-      "answer": null,
+      "answer": "B",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科1"
+      "exam_subject": "考科1",
+      "explanation": "已開發國家應積極應對氣候變遷",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 465,
@@ -15742,10 +15819,17 @@
           "text": "享有豁免權"
         }
       ],
-      "answer": null,
+      "answer": "C",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科1"
+      "exam_subject": "考科1",
+      "explanation": "應充分考慮發展中國家的具體需要和特殊情況",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 466,
@@ -15769,10 +15853,17 @@
           "text": "僅通過國際會議進行討論"
         }
       ],
-      "answer": null,
+      "answer": "C",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科1"
+      "exam_subject": "考科1",
+      "explanation": "應採取預防措施，包括緩解其不利影響",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 467,
@@ -15796,10 +15887,17 @@
           "text": "必須完全獨立於其他政策"
         }
       ],
-      "answer": null,
+      "answer": "B",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科1"
+      "exam_subject": "考科1",
+      "explanation": "應融入相關社會、經濟和環境政策及行動中",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 468,
@@ -15823,10 +15921,17 @@
           "text": "完全依賴再生能源"
         }
       ],
-      "answer": null,
+      "answer": "C",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科1"
+      "exam_subject": "考科1",
+      "explanation": "建構能適應氣候風險之低碳家園",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 469,
@@ -15884,10 +15989,17 @@
           "text": "增強化資訊公開及公民參與"
         }
       ],
-      "answer": null,
+      "answer": "C",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科1"
+      "exam_subject": "考科1",
+      "explanation": "台灣規定逐步落實非核家園願景，非新增核能",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "research_agent",
+        "confidence": "high"
+      }
     },
     {
       "index": 471,
@@ -18499,7 +18611,13 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "根據ISO 14064-1:2018，類別4指的是「由組織使用的產品所產生之間接溫室氣體排放」，其中包括外購商品、資本商品、廢物處理等。因此，外購商品的排放屬於類別4。 [1, 2, 3, 4, 5]"
+      "explanation": "根據ISO 14064-1:2018，類別4指的是「由組織使用的產品所產生之間接溫室氣體排放」，其中包括外購商品、資本商品、廢物處理等。因此，外購商品的排放屬於類別4。 [1, 2, 3, 4, 5]",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "index": 548,
@@ -18663,7 +18781,13 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "PAS 2060要求組織建立碳足跡管理計畫（CFM Plan），承諾達到並維持碳中和狀態。 [5]"
+      "explanation": "PAS 2060要求組織建立碳足跡管理計畫（CFM Plan），承諾達到並維持碳中和狀態。 [5]",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "index": 553,
@@ -18691,7 +18815,13 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "CDP透過問卷方式揭露並評比受測對象的表現，並有其獨立的評分方法。 [1, 3, 5]"
+      "explanation": "CDP透過問卷方式揭露並評比受測對象的表現，並有其獨立的評分方法。 [1, 3, 5]",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "index": 554,
@@ -18719,7 +18849,13 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "SBTi的主要目標是協助企業設定符合《巴黎協定》的減碳目標。 [1, 2, 3, 4, 5]"
+      "explanation": "SBTi的主要目標是協助企業設定符合《巴黎協定》的減碳目標。 [1, 2, 3, 4, 5]",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "index": 555,
@@ -18747,7 +18883,13 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "歐盟於2023年12月22日公布適用於過渡期之CBAM報告預設值。 [1, 2]"
+      "explanation": "歐盟於2023年12月22日公布適用於過渡期之CBAM報告預設值。 [1, 2]",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "index": 556,
@@ -18775,7 +18917,13 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "查詢CBAM納管產品時，可輸入產品的稅則號碼前2至6碼進行比對。 [1, 2, 3, 4]"
+      "explanation": "查詢CBAM納管產品時，可輸入產品的稅則號碼前2至6碼進行比對。 [1, 2, 3, 4]",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "index": 557,
@@ -18837,7 +18985,13 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "在CBAM過渡期間，歐盟進口商應在每季結束後的一個月內提交CBAM報告。 [1, 2, 3, 5]"
+      "explanation": "在CBAM過渡期間，歐盟進口商應在每季結束後的一個月內提交CBAM報告。 [1, 2, 3, 5]",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "index": 559,
@@ -18899,7 +19053,13 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "可至經濟部國際貿易署的「綠色貿易資訊網」CBAM專區，輸入產品的稅則號碼查詢是否受到納管。 [1, 3, 4]"
+      "explanation": "可至經濟部國際貿易署的「綠色貿易資訊網」CBAM專區，輸入產品的稅則號碼查詢是否受到納管。 [1, 3, 4]",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "index": 561,
@@ -19289,7 +19449,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科1",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S1-p01-q005",
@@ -19337,7 +19503,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S1-p02-q001",
@@ -19383,7 +19555,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.83,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S1-p02-q003",
@@ -19431,7 +19609,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S1-p02-q004",
@@ -19477,7 +19661,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_01-q005",
@@ -19533,7 +19723,13 @@
       "notes": "partial extraction (6 options)",
       "exam_subject": "考科1",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q006",
@@ -19598,7 +19794,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q002",
@@ -19659,7 +19861,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q009",
@@ -19720,7 +19928,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q010",
@@ -19785,7 +19999,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q011",
@@ -19850,7 +20070,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q017",
@@ -19911,7 +20137,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q018",
@@ -19976,7 +20208,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q019",
@@ -20041,7 +20279,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q020",
@@ -20107,7 +20351,13 @@
         "short_stem",
         "too_many_options"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q016",
@@ -20168,7 +20418,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q022",
@@ -20214,7 +20470,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科1",
       "subject_confidence": 0.5,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q029",
@@ -20280,7 +20542,13 @@
         "short_stem",
         "too_many_options"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q030",
@@ -20341,7 +20609,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q025",
@@ -20390,7 +20664,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q032",
@@ -20444,7 +20724,13 @@
       "notes": "partial extraction (6 options)",
       "exam_subject": "考科1",
       "subject_confidence": 0.6,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q027",
@@ -20509,7 +20795,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q028",
@@ -20571,7 +20863,13 @@
         "short_stem",
         "too_many_options"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q041",
@@ -20632,7 +20930,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q043",
@@ -20674,7 +20978,13 @@
       "notes": "partial extraction (3 options)",
       "exam_subject": "考科1",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q044",
@@ -20725,7 +21035,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q039",
@@ -20787,7 +21103,13 @@
         "short_stem",
         "too_many_options"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q046",
@@ -20852,7 +21174,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q052",
@@ -20917,7 +21245,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q048",
@@ -20978,7 +21312,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q049",
@@ -21032,7 +21372,13 @@
       "notes": "partial extraction (6 options)",
       "exam_subject": "考科1",
       "subject_confidence": 0.67,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q056",
@@ -21089,7 +21435,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q057",
@@ -21142,7 +21494,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q063",
@@ -21207,7 +21565,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q059",
@@ -21272,7 +21636,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q060",
@@ -21337,7 +21707,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q061",
@@ -21398,7 +21774,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q062",
@@ -21463,7 +21845,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q074",
@@ -21528,7 +21916,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q069",
@@ -21593,7 +21987,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q076",
@@ -21643,7 +22043,13 @@
       "notes": "partial extraction (5 options)",
       "exam_subject": "考科1",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q078",
@@ -21681,7 +22087,13 @@
       "notes": "partial extraction (2 options)",
       "exam_subject": "考科1",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q073",
@@ -21731,7 +22143,13 @@
       "notes": "partial extraction (5 options)",
       "exam_subject": "考科1",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q085",
@@ -21796,7 +22214,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q081",
@@ -21861,7 +22285,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q088",
@@ -21926,7 +22356,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q089",
@@ -21991,7 +22427,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q090",
@@ -22056,7 +22498,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q098",
@@ -22122,7 +22570,13 @@
         "short_stem",
         "too_many_options"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q099",
@@ -22188,7 +22642,13 @@
         "short_stem",
         "too_many_options"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q100",
@@ -22230,7 +22690,13 @@
       "notes": "partial extraction (3 options)",
       "exam_subject": "考科1",
       "subject_confidence": 0.67,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q095",
@@ -22287,7 +22753,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_06-q096",
@@ -22336,7 +22808,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q006",
@@ -22401,7 +22879,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q002",
@@ -22466,7 +22950,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q003",
@@ -22531,7 +23021,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q004",
@@ -22587,7 +23083,13 @@
       "notes": "partial extraction (6 options)",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q005",
@@ -22652,7 +23154,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q016",
@@ -22706,7 +23214,13 @@
       "notes": "partial extraction (6 options)",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q020",
@@ -22771,7 +23285,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q027",
@@ -22836,7 +23356,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q022",
@@ -22901,7 +23427,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q029",
@@ -22966,7 +23498,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q030",
@@ -23031,7 +23569,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q031",
@@ -23081,7 +23625,13 @@
       "notes": "partial extraction (5 options)",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q026",
@@ -23132,7 +23682,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q037",
@@ -23197,7 +23753,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q038",
@@ -23262,7 +23824,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q034",
@@ -23329,7 +23897,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q035",
@@ -23394,7 +23968,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q042",
@@ -23448,7 +24028,13 @@
       "notes": "partial extraction (6 options)",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q049",
@@ -23513,7 +24099,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q050",
@@ -23578,7 +24170,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q045",
@@ -23632,7 +24230,13 @@
       "notes": "partial extraction (6 options)",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q052",
@@ -23670,7 +24274,13 @@
       "notes": "partial extraction (2 options)",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q048",
@@ -23720,7 +24330,13 @@
       "notes": "partial extraction (5 options)",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q060",
@@ -23781,7 +24397,13 @@
       "_quality_issues": [
         "too_many_options"
       ],
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q061",
@@ -23831,7 +24453,13 @@
       "notes": "partial extraction (5 options)",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q056",
@@ -23875,7 +24503,13 @@
       "notes": "partial extraction (3 options)",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 80
+      "_quality_score": 80,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q057",
@@ -23913,7 +24547,13 @@
       "notes": "partial extraction (2 options)",
       "exam_subject": "考科2",
       "subject_confidence": 0.67,
-      "_quality_score": 80
+      "_quality_score": 80,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q064",
@@ -23963,7 +24603,13 @@
       "notes": "partial extraction (5 options)",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q067",
@@ -24009,7 +24655,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_CHU_07-q069",
@@ -24055,7 +24707,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_YAMOL_008-q008",
@@ -24104,7 +24762,13 @@
       "_quality_score": 85,
       "_verified_answer": true,
       "_verification_note": "提交承諾信給 SBTi",
-      "_verification_source": "SBTi 官網"
+      "_verification_source": "SBTi 官網",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_YAMOL_010-q008",
@@ -24155,7 +24819,13 @@
       "_verification_note": "來自組織所擁有或控制的溫室氣體源的排放 (Scope 1)",
       "_verification_source": "ISO 14064-1:2018",
       "_original_subject": "考科1",
-      "_classification_corrected": true
+      "_classification_corrected": true,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_YAMOL_018-q002",
@@ -24204,7 +24874,13 @@
       "_quality_score": 85,
       "_verified_answer": true,
       "_verification_note": "數據收集資訊，包括數據來源",
-      "_verification_source": "ISO 14067:2018"
+      "_verification_source": "ISO 14067:2018",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_YAMOL_022-q024",
@@ -24253,7 +24929,13 @@
       "_quality_score": 85,
       "_verified_answer": true,
       "_verification_note": "碳捕捉封存",
-      "_verification_source": "IPCC AR6"
+      "_verification_source": "IPCC AR6",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_YAMOL_023-q052",
@@ -24312,7 +24994,13 @@
       "_verification_source": "經濟部工業局",
       "_time_update_notes": [
         "【時效性說明】環保署已於 2023.8.22 改制為「環境部」"
-      ]
+      ],
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_YAMOL_023-q067",
@@ -24363,7 +25051,13 @@
       "_verification_note": "關鍵熱點 (Hotspot)",
       "_verification_source": "碳足跡標準術語",
       "_original_subject": "考科1",
-      "_classification_corrected": true
+      "_classification_corrected": true,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_YAMOL_023-q078",
@@ -24412,7 +25106,13 @@
       "_quality_score": 85,
       "_verified_answer": true,
       "_verification_note": "114 年 (2025年)，50-100億資本額於 2025 年完成盤查",
-      "_verification_source": "金管會永續發展路徑圖"
+      "_verification_source": "金管會永續發展路徑圖",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_YAMOL_023-q079",
@@ -24468,7 +25168,13 @@
       "_quality_score": 75,
       "_verified_answer": true,
       "_verification_note": "AR5，台灣 113 年版主要採用 IPCC AR5 之 GWP 值",
-      "_verification_source": "環境部溫室氣體排放係數管理表"
+      "_verification_source": "環境部溫室氣體排放係數管理表",
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_YAMOL_023-q090",
@@ -24527,7 +25233,13 @@
       "_verification_source": "經濟部工業局",
       "_time_update_notes": [
         "【時效性說明】環保署已於 2023.8.22 改制為「環境部」"
-      ]
+      ],
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_YAMOL_023-q105",
@@ -24578,7 +25290,13 @@
       "_verification_note": "關鍵熱點 (Hotspot)",
       "_verification_source": "碳足跡標準術語",
       "_original_subject": "考科1",
-      "_classification_corrected": true
+      "_classification_corrected": true,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q001",
@@ -24624,7 +25342,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q002",
@@ -24670,7 +25394,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.86,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q003",
@@ -24716,7 +25446,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q005",
@@ -24762,7 +25498,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.75,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q006",
@@ -24808,7 +25550,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q007",
@@ -24854,7 +25602,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.89,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q008",
@@ -24900,7 +25654,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.67,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q009",
@@ -24946,7 +25706,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q010",
@@ -24992,7 +25758,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.67,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q011",
@@ -25041,7 +25813,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q012",
@@ -25090,7 +25868,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q013",
@@ -25136,7 +25920,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.56,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q014",
@@ -25182,7 +25972,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q015",
@@ -25228,7 +26024,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.67,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q016",
@@ -25274,7 +26076,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q017",
@@ -25320,7 +26128,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科1",
       "subject_confidence": 0.67,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q018",
@@ -25366,7 +26180,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.67,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q019",
@@ -25412,7 +26232,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科1",
       "subject_confidence": 0.6,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_01-q020",
@@ -25458,7 +26284,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q002",
@@ -25504,7 +26336,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q003",
@@ -25553,7 +26391,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q004",
@@ -25599,7 +26443,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.67,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q005",
@@ -25645,7 +26495,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.89,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q006",
@@ -25691,7 +26547,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q007",
@@ -25737,7 +26599,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.8,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q008",
@@ -25783,7 +26651,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.67,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q009",
@@ -25829,7 +26703,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q010",
@@ -25878,7 +26758,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q011",
@@ -25924,7 +26810,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科1",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q012",
@@ -25970,7 +26862,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q013",
@@ -26016,7 +26914,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q014",
@@ -26065,7 +26969,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q015",
@@ -26111,7 +27021,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q017",
@@ -26157,7 +27073,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q018",
@@ -26208,7 +27130,13 @@
       ],
       "_quality_score": 90,
       "_original_subject": "考科1",
-      "_classification_corrected": true
+      "_classification_corrected": true,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q019",
@@ -26257,7 +27185,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_02-q020",
@@ -26303,7 +27237,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科1",
       "subject_confidence": 0.6,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q001",
@@ -26349,7 +27289,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q002",
@@ -26395,7 +27341,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q003",
@@ -26441,7 +27393,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q004",
@@ -26487,7 +27445,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q005",
@@ -26533,7 +27497,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科1",
       "subject_confidence": 0.54,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q006",
@@ -26589,7 +27559,13 @@
       "_quality_score": 90,
       "_time_update_notes": [
         "【時效性說明】IPCC AR6 已於 2021-2023 年發布，部分 GWP 值有更新"
-      ]
+      ],
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q007",
@@ -26635,7 +27611,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科1",
       "subject_confidence": 0.67,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q008",
@@ -26681,7 +27663,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科1",
       "subject_confidence": 0.7,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q009",
@@ -26730,7 +27718,13 @@
       "_quality_issues": [
         "short_stem"
       ],
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q010",
@@ -26776,7 +27770,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q011",
@@ -26822,7 +27822,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科1",
       "subject_confidence": 0.62,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q012",
@@ -26868,7 +27874,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q014",
@@ -26914,7 +27926,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q015",
@@ -26960,7 +27978,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q016",
@@ -27006,7 +28030,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q017",
@@ -27052,7 +28082,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 100
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q018",
@@ -27098,7 +28134,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q019",
@@ -27151,7 +28193,13 @@
           "match": "AR5"
         }
       ],
-      "_quality_score": 80
+      "_quality_score": 80,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     },
     {
       "item_id": "S_VOCUS_03-q020",
@@ -27197,7 +28245,13 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 0.67,
-      "_quality_score": 90
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
     }
   ]
 }
