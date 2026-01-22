@@ -1,0 +1,6357 @@
+[
+  {
+    "id": "c1-001",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "依據 ISO 14064‑1:2018 標準，下列何者「屬於」其他間接排放（類別 4）的範疇？",
+    "options": {
+      "A": "商務差旅的排放",
+      "B": "外購商品的排放",
+      "C": "員工通勤的排放",
+      "D": "購入的電力使用"
+    },
+    "answer": "B",
+    "explanation": "根據ISO 14064-1:2018，類別4指的是「由組織使用的產品所產生之間接溫室氣體排放」，其中包括外購商品、資本商品、廢物處理等。因此，外購商品的排放屬於類別4。 [1, 2, 3, 4, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-002",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "關於 GRI 報告框架與 SASB 標準的差異比較，下列敘述何者錯誤？",
+    "options": {
+      "A": "GRI 涵蓋範圍較廣泛，SASB 則較為聚焦於財務重大性",
+      "B": "GRI 僅適用於上市公司，SASB 則適用於所有類型企業",
+      "C": "GRI 採用利害關係人導向，而 SASB 主要關注投資人需求",
+      "D": "GRI 採用通用性準則，SASB 採用產業別特定準則"
+    },
+    "answer": "B",
+    "explanation": "GRI 報告框架適用於所有類型的組織，而 SASB 則特別針對可能影響企業財務狀況與營運績效的 ESG 議題。 [1, 2, 3, 4, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-003",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "半導體製程中最主要排放的溫室氣體為何？",
+    "options": {
+      "A": "N₂O (Nitrogen Dioxide)",
+      "B": "PFCs (Perfluorocarbons)",
+      "C": "CO₂ (Carbon Dioxide)",
+      "D": "CH₄ (Methane)"
+    },
+    "answer": "B",
+    "explanation": "半導體製程中廣泛使用全氟化物（PFCs）等溫室氣體，其全球暖化潛勢（GWP）極高。 [1, 2, 3, 4, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-004",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "關於已開發國家對發展中國家的氣候資金援助，下列何者不正確？",
+    "options": {
+      "A": "支持發展中國家採用低碳技術",
+      "B": "協助發展中國家應對氣候變遷衝擊",
+      "C": "要求發展中國家每年提供 1000 億美元資金援助給已開發國家",
+      "D": "協助發展中國家強化氣候調適能力"
+    },
+    "answer": "C",
+    "explanation": "已開發國家承諾每年提供1000億美元的氣候資金協助發展中國家減排及調適，而非要求發展中國家提供資金。 [1, 2, 3, 4]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-005",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "關於淨零排放定義，下列敘述何者正確？",
+    "options": {
+      "A": "淨零排放僅需要計算二氧化碳的排放量，其他溫室氣體不列入計算",
+      "B": "淨零排放只要購買足夠的碳權抵換即可達成，不需要實際減少排放量",
+      "C": "淨零排放意味著一個國家或企業完全消除所有溫室氣體排放，不允許任何排放存在",
+      "D": "淨零排放是指透過減量及移除方式，使溫室氣體排放與移除達到平衡的狀態"
+    },
+    "answer": "D",
+    "explanation": "淨零排放的定義是在特定時間內，全球人為造成的溫室氣體排放量，扣除人為移除的量等於零，並非完全不排放。 [1, 2, 3, 4, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-006",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "在制定產品類別規則（PCR）時，下列何種方式最適合用來確定系統邊界的合理性？",
+    "options": {
+      "A": "由驗證機構單方面訂定",
+      "B": "僅依據產品製造商的建議",
+      "C": "完全採用國際標準的規範",
+      "D": "召開利害相關者會議討論決定"
+    },
+    "answer": "D",
+    "explanation": "制定PCR時，通常會召開利害相關者會議，邀集相關團體、專家學者共同討論決定，以確保其合理性與適用性。 [3]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-007",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "在界定組織的溫室氣體排放邊界時，下列何者為財務控制方法的主要特點？",
+    "options": {
+      "A": "排除組織間接持有的資產和投資的排放",
+      "B": "企業對營運資產和負債的控制權",
+      "C": "企業僅負責其直接排放",
+      "D": "企業與供應商共享排放數據"
+    },
+    "answer": "B",
+    "explanation": "財務控制方法是指企業對其營運資產和負債具有主導能力，因此擁有該事業體的財務控制權。 [1, 3]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-008",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "關於聯合國氣候變遷大會締約方大會（Conference of the Parties，COP）的主要目的，下列何者最為正確？",
+    "options": {
+      "A": "檢視《聯合國氣候變化綱要公約》的執行進展，並討論與協商未來的氣候行動方案",
+      "B": "主要為各國展示最新的節能減碳技術，促進綠色科技的國際交流",
+      "C": "專門處理氣候災害的緊急救援機制，並分配國際援助資源",
+      "D": "僅針對已開發國家制定減碳目標，並檢討其減碳成效"
+    },
+    "answer": "A",
+    "explanation": "COP的主要目的是檢視《聯合國氣候變化綱要公約》的執行進展，並透過國際協商、談判達成協議，進而減緩氣候變遷。 [1, 2, 3, 4, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-009",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "關於聯合國氣候變化綱要公約締約方大會（COP）的主要目的，下列何者正確？",
+    "options": {
+      "A": "討論和制定因應氣候變遷的全球政策",
+      "B": "推廣永續發展教育與環境保護意識",
+      "C": "制定全球碳排放交易市場規範與機制",
+      "D": "推動再生能源技術發展與國際貿易合作"
+    },
+    "answer": "A",
+    "explanation": "COP的主要目的是促使各國政府通過會議達成協議，制定限制全球升溫和應對全球暖化的政策。 [1, 2, 3, 4, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-010",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "某公司 2023 年能源使用情況如下：柴油 25 公噸（每公噸產生 3150 kg CO₂e）；汽油 15 公噸（每公噸產生 2360 kg CO₂e）；天然氣 30 公噸（每公噸產生 2720 kg CO₂e）。請問該公司 2023 年使用這三種能源共產生多少二氧化碳排放量？",
+    "options": {
+      "A": "200 000 kg CO₂e",
+      "B": "190 500 kg CO₂e",
+      "C": "185 250 kg CO₂e",
+      "D": "195 750 kg CO₂e"
+    },
+    "answer": "D",
+    "explanation": "計算方式：(25 * 3150) + (15 * 2360) + (30 * 2720) = 78750 + 35400 + 81600 = 195750 kg CO₂e",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-011",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "下列何者為產品類別規則（PCR）的主要目的？",
+    "options": {
+      "A": "降低商品採購成本",
+      "B": "提升產品銷售業績",
+      "C": "統一產品環境衝擊評估方法",
+      "D": "增加產品市場競爭力"
+    },
+    "answer": "C",
+    "explanation": "PCR的主要目的是為特定產品類別確立環境性能評估的方法和標準，以確保不同製造商和組織之間進行環境性能評估時的一致性和可比性。 [1, 2, 3]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-012",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "申請碳標籤前，必須先評估該項產品是否已有下列何項文件，才能針對特定產品或產品群進行環境宣告的生命週期範疇？",
+    "options": {
+      "A": "產品類別規則（PCR）",
+      "B": "碳排放盤查表",
+      "C": "產品規格說明書",
+      "D": "環境政策聲明"
+    },
+    "answer": "A",
+    "explanation": "申請碳標籤前，必須先確認欲申請標籤的產品是否有可以適用的產品類別規則（PCR）。 [1, 2, 3, 4, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-013",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "關於 GRI 永續報告書標準的三大揭露範疇，下列何者非屬之？",
+    "options": {
+      "A": "申報面向",
+      "B": "社會面向",
+      "C": "經濟面向",
+      "D": "環境面向"
+    },
+    "answer": "A",
+    "explanation": "GRI準則的特定主題準則分為經濟（GRI 201-207）、環境（GRI301-308）、社會（GRI401-419）三大面向。 [1, 2, 3, 4, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-014",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "臺灣 2050 淨零排放路徑策略中，以下哪一項非屬於「治理基礎」？",
+    "options": {
+      "A": "自然碳匯",
+      "B": "綠色金融",
+      "C": "碳捕捉封存",
+      "D": "淨零綠生活"
+    },
+    "answer": "C",
+    "explanation": "臺灣2050淨零排放路徑以「能源轉型」、「產業轉型」、「生活轉型」、「社會轉型」等四大轉型，及「科技研發」、「氣候法制」兩大治理基礎。而自然碳匯、綠色金融、淨零綠生活皆屬於十二項關鍵戰略中的項目。 [1, 3, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-015",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "關於碳捕捉與封存（CCS）技術，下列敘述何者不正確？",
+    "options": {
+      "A": "可應用於工業製程中減少二氧化碳排放",
+      "B": "捕捉的二氧化碳可封存於地質構造中",
+      "C": "是實現淨零排放的重要技術之一",
+      "D": "目前技術已相當成熟，成本低廉且易於推廣"
+    },
+    "answer": "D",
+    "explanation": "碳捕捉與封存（CCS）技術目前仍面臨技術成本相對高昂的挑戰，限制了其大規模應用。 [2, 4]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-016",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "下列何者不是臺灣目前正在推動的再生能源發展項目？",
+    "options": {
+      "A": "核能發電廠延役計畫",
+      "B": "離岸風電第三期區塊開發計畫",
+      "C": "屋頂型太陽光電推動計畫",
+      "D": "地熱發電示範計畫"
+    },
+    "answer": "A",
+    "explanation": "台灣能源轉型以「展綠、增氣、減煤、非核」為規劃原則，因此核能發電廠延役計畫並非當前推動的再生能源發展項目。 [3, 6]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-017",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "2007 年 COP 13 會議中的峇里路線圖（Bali Action Plan）提到開發中國家的減緩行動應採用 MRV 機制，此 MRV 指的是什麼？",
+    "options": {
+      "A": "監督（Monitor）、審查（Review）、核實（Verify）",
+      "B": "可測量（Measurable）、可報告（Reportable）、可驗證（Verifiable）",
+      "C": "管理（Management）、研究（Research）、價值（Value）",
+      "D": "減緩（Mitigation）、報告（Report）、自願（Voluntary）"
+    },
+    "answer": "B",
+    "explanation": "峇里路線圖中提到的MRV機制，是指開發中國家在處理廢氣排放上，應達成「可測量（Measurable）、可報告（Reportable）、可驗證（Verifiable）」的行動。 [5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-018",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "某公司年度能源使用包含：煤炭 18 000 公斤（每公斤含碳 0.8 公斤）、燃油 6 000 公升（每公升含碳 0.7 公斤）、電力 100 000 度（其中 30 % 來自再生能源）。若每度電平均產生 0.5 公斤碳排放，請問該公司一年的總碳排放量為多少公斤？",
+    "options": {
+      "A": "52 400 公斤",
+      "B": "46 000 公斤",
+      "C": "49 200 公斤",
+      "D": "53 600 公斤"
+    },
+    "answer": "D",
+    "explanation": "計算方式：(18000 * 0.8) + (6000 * 0.7) + (100000 * (1-0.3) * 0.5) = 14400 + 4200 + 35000 = 53600 公斤",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-019",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "關於溫室氣體盤查的查證保證等級，下列敘述何者錯誤？",
+    "options": {
+      "A": "合理保證等級的結論用語為「在所有重大方面皆符合」",
+      "B": "合理保證等級的查證較有限保證等級需要更多的查證範圍",
+      "C": "環境部規定所有溫室氣體盤查都必須達到有限保證等級",
+      "D": "有限保證等級的查證深度較合理保證等級淺"
+    },
+    "answer": "C",
+    "explanation": "環境部要求溫室氣體查證的保證等級為「合理保證等級」，而非「有限保證等級」。 [2, 4]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-020",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "下列何者不屬於「溫室氣體自願減量推動辦法」所規範的內容？",
+    "options": {
+      "A": "溫室氣體自願減量協議的簽署程序",
+      "B": "違反減量承諾的罰則規定",
+      "C": "減量方案的執行與成效報告",
+      "D": "減量額度的申請與查驗規定"
+    },
+    "answer": "B",
+    "explanation": "「溫室氣體自願減量專案管理辦法」主要規範申請取得國內減量額度的法規，內容包括如何依法制訂自願減量措施、查驗方式等，並無罰則規定。 [1, 2, 3, 4]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-021",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "PAS 2060 要求組織制定什麼來支持其碳中和聲明？",
+    "options": {
+      "A": "減排行動計畫",
+      "B": "員工培訓計畫",
+      "C": "市場營銷策略",
+      "D": "投資回報分析"
+    },
+    "answer": "A",
+    "explanation": "PAS 2060要求組織建立碳足跡管理計畫（CFM Plan），承諾達到並維持碳中和狀態。 [5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-022",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "京都議定書的彈性減量機制不包括下列哪項？",
+    "options": {
+      "A": "共同執行 (JI)",
+      "B": "清潔發展機制 (CDM)",
+      "C": "環境可持續指數 (ESI)",
+      "D": "排放交易 (ET)"
+    },
+    "answer": "C",
+    "explanation": "京都議定書的彈性減量機制包括國際排放交易（IET）、共同減量機制（JI）和清潔發展機制（CDM）。 [2, 3, 5, 6]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-023",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "CDP 每年如何評估公司和城市？",
+    "options": {
+      "A": "通過公開投標",
+      "B": "通過獨立評分方法",
+      "C": "通過投資者投票",
+      "D": "通過客戶反饋"
+    },
+    "answer": "B",
+    "explanation": "CDP透過問卷方式揭露並評比受測對象的表現，並有其獨立的評分方法。 [1, 3, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-024",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "根據 ISO 14068 標準，其首要步驟是什麼？",
+    "options": {
+      "A": "建立碳管理計畫",
+      "B": "執行碳排放測量",
+      "C": "設定減排目標並發布碳中和聲明",
+      "D": "確定碳足跡的範圍並設定碳排基線"
+    },
+    "answer": "D",
+    "explanation": "根據ISO 14068-1，首要步驟是確定碳中和的標的物，界定碳中和範圍與適用對象，並設定基線年作為減碳目標與績效評估的參考。 [1, 2, 3, 4, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-025",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "SBTi 的主要目標是為了符合哪個國際協議的目標？",
+    "options": {
+      "A": "蒙特婁議定書",
+      "B": "巴黎協定",
+      "C": "京都議定書",
+      "D": "瑞士議定書"
+    },
+    "answer": "B",
+    "explanation": "SBTi的主要目標是協助企業設定符合《巴黎協定》的減碳目標。 [1, 2, 3, 4, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-026",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "歐盟於何時公告 CBAM 預設值數字？",
+    "options": {
+      "A": "2023 年 10 月 1 日",
+      "B": "2024 年 1 月 1 日",
+      "C": "2023 年 11 月 30 日",
+      "D": "2023 年 12 月 22 日"
+    },
+    "answer": "D",
+    "explanation": "歐盟於2023年12月22日公布適用於過渡期之CBAM報告預設值。 [1, 2]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-027",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "在 CBAM 系統中查詢產品是否受到納管時，需要輸入稅則號碼的哪幾碼？",
+    "options": {
+      "A": "全部號碼",
+      "B": "前 2 \\~ 6 碼",
+      "C": "前 4 \\~ 8 碼",
+      "D": "僅前 2 碼"
+    },
+    "answer": "B",
+    "explanation": "查詢CBAM納管產品時，可輸入產品的稅則號碼前2至6碼進行比對。 [1, 2, 3, 4]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-028",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "本指引對於使用碳權進行抵換的要求是什麼？",
+    "options": {
+      "A": "鼓勵優先使用碳權而非自身減量",
+      "B": "只能使用國內碳權",
+      "C": "抵換比例不得超過總排放量的 50 %",
+      "D": "應先評估並採取所有可行的減量措施"
+    },
+    "answer": "D",
+    "explanation": "使用碳權進行抵換前，應優先採取所有可行的減量措施，碳權抵換是用於處理剩餘的排放量。 [4]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-029",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "在歐盟碳邊境調整機制 (CBAM) 申報後，最初由哪個單位負責審查？",
+    "options": {
+      "A": "歐盟成員國政府",
+      "B": "歐盟碳邊境調整機制委員會",
+      "C": "歐盟執委會",
+      "D": "主管機關"
+    },
+    "answer": "C",
+    "explanation": "歐盟執委會負責總籌協調制定法規，而執行面則由各歐盟會員國指定其主管機關負責執行。 [1, 2, 4]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-030",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "有關碳邊境調整制度敘述，何者為是？",
+    "options": {
+      "A": "歐盟啟動 CBAM 主要宣稱是為了解決碳洩漏問題",
+      "B": "CBAM 排放範疇與列管產品品項均已成為國際標準",
+      "C": "繳納碳稅費的證明文件可退稅給出口者",
+      "D": "碳關稅衝擊僅限進口者"
+    },
+    "answer": "A",
+    "explanation": "歐盟設立CBAM的主要目的是為了解決「碳洩漏」問題，避免因歐盟內部的碳價格而導致高碳排產業外移至環保標準較寬鬆的國家。 [3, 4, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-031",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "在 CBAM 過渡期間，歐盟進口商應在每季結束後多久內提交 CBAM 報告？",
+    "options": {
+      "A": "一個月內",
+      "B": "兩週內",
+      "C": "兩個月內",
+      "D": "三個月內"
+    },
+    "answer": "A",
+    "explanation": "在CBAM過渡期間，歐盟進口商應在每季結束後的一個月內提交CBAM報告。 [1, 2, 3, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-032",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "碳中和聲明的準確性和真實性應該由誰進行驗證？",
+    "options": {
+      "A": "非政府組織",
+      "B": "政府機構",
+      "C": "獨立第三方",
+      "D": "組織內部審計"
+    },
+    "answer": "C",
+    "explanation": "碳中和聲明應由獨立的第三方機構進行查驗，以確保其準確性、可證性和一致性。 [1, 2, 3, 4]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-033",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "臺灣制定氣候變遷調適策略的願景是什麼？",
+    "options": {
+      "A": "為建構能適應氣候風險之低碳家園",
+      "B": "完全依賴再生能源",
+      "C": "減少自然資源的使用",
+      "D": "增加溫室氣體排放"
+    },
+    "answer": "A",
+    "explanation": "臺灣制定氣候變遷調適策略的願景是建構能適應氣候風險之低碳家園，確保國家永續發展。 [2, 3, 4, 6]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-034",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "在 CBAM 系統中，如何確認自己的產品是否受到納管？",
+    "options": {
+      "A": "詢問歐盟海關",
+      "B": "在綠色貿易資訊網上輸入稅則號碼查詢",
+      "C": "檢查產品的國際標準分類",
+      "D": "查看產品的原產地證明"
+    },
+    "answer": "B",
+    "explanation": "可至經濟部國際貿易署的「綠色貿易資訊網」CBAM專區，輸入產品的稅則號碼查詢是否受到納管。 [1, 3, 4]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-035",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "企業進行產品碳中和時，應優先完成哪項工作？",
+    "options": {
+      "A": "購買碳權",
+      "B": "申請環境部審核",
+      "C": "制定長期減排目標",
+      "D": "完成組織盤查"
+    },
+    "answer": "D",
+    "explanation": "企業進行產品碳中和的第一步應是進行科學化的碳盤查，以確保碳排放與碳移除數據的完整性。 [1, 2]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-036",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "以下哪項不是 CBAM 納管的鋁中下游產品？",
+    "options": {
+      "A": "鋁製容器",
+      "B": "鋁製管配件",
+      "C": "鋁製家具",
+      "D": "鋁板"
+    },
+    "answer": "C",
+    "explanation": "根據CBAM納管產品清單，鋁製容器、鋁製管配件、鋁板皆在納管範圍內，而鋁製家具則不在其中。 [1, 3, 4, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-037",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "CBAM 過渡期第二次（填報 2024 年 1‑3 月）填報的最後修正日期是何時？",
+    "options": {
+      "A": "2024 年 7 月 31 日",
+      "B": "2024 年 6 月 30 日",
+      "C": "2024 年 5 月 31 日",
+      "D": "2024 年 7 月 30 日"
+    },
+    "answer": "A",
+    "explanation": "在CBAM過渡期，前兩次報告（2023年第四季、2024年第一季及第二季）的最後修正日期為2024年7月31日。 [4]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-038",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "CBAM 正式實施後，申報人需要在每年什麼時候前繳納上一年度的 CBAM 憑證費用？",
+    "options": {
+      "A": "3 月 31 日",
+      "B": "6 月 30 日",
+      "C": "5 月 31 日",
+      "D": "4 月 30 日"
+    },
+    "answer": "C",
+    "explanation": "CBAM正式實施後，申報人需在每年5月31日前提交前一年度的CBAM申報單並繳納相應的憑證費用。 [2, 3, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-039",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "碳洩漏 (Carbon Leakage) 是指？",
+    "options": {
+      "A": "植物吸收二氧化碳的過程",
+      "B": "碳排放管制導致產業轉移到碳管制較寬鬆的地區",
+      "C": "溫室氣體的自然循環",
+      "D": "碳的物理洩漏"
+    },
+    "answer": "B",
+    "explanation": "碳洩漏是指因某個國家採用較嚴格的氣候政策，導致生產商將生產遷移到其他氣候政策較為寬鬆的國家，反而可能增加全球溫室氣體排放量的情況。 [1, 2, 3, 4]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c1-040",
+    "subject": "考科一：淨零碳規劃管理基礎概論",
+    "question": "CBAM 正式期第一次申報日期是？",
+    "options": {
+      "A": "2026 年 1 月 31 日",
+      "B": "2027 年 5 月 31 日",
+      "C": "2026 年 5 月 31 日",
+      "D": "2026 年 12 月 31 日"
+    },
+    "answer": "B",
+    "explanation": "CBAM自2026年1月起正式實施，進口商應於每年5月31日前提交前一年度的CBAM申報單，因此第一次申報日期為2027年5月31日。 [3, 5]",
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "subject_1"
+  },
+  {
+    "id": "c2-001",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在 PCR 中，生命週期各階段之數據蒐集要求：",
+    "options": {
+      "A": "可以完全使用估算數據",
+      "B": "只需要收集生產階段的數據",
+      "C": "所有階段必須使用相同的數據收集方法",
+      "D": "可能因階段不同而有不同要求"
+    },
+    "answer": "D",
+    "explanation": "PCR會依據產品的生命週期範圍，訂定出每個階段的數據蒐集項目與要求。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-002",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "若工廠從柴油油槽領用堆高機用的柴油，最優先應參考哪種單據來確定活動數據？",
+    "options": {
+      "A": "該年度柴油領用紀錄表",
+      "B": "該年度柴油採購發票",
+      "C": "該年度柴油採購單",
+      "D": "該年度油槽庫存盤點紀錄表"
+    },
+    "answer": "A",
+    "explanation": "活動數據應以實際使用量為準，因此柴油領用紀錄表是最適當的參考單據。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-003",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "計算下游租賃資產產生的排放時，以下哪項陳述是錯誤的？",
+    "options": {
+      "A": "若無法區分出租及售出產品，則歸為出售產品的使用排放",
+      "B": "需要區分出租及售出產品",
+      "C": "所有租賃資產的排放都應計入此類別",
+      "D": "只計算不包含於報告公司類別 1 及類別 2 排放的部分"
+    },
+    "answer": "C",
+    "explanation": "在計算下游租賃資產產生的排放時，僅需計算不包含於報告公司類別1及類別2排放的部分，並非所有租賃資產的排放都應計入此類別。 [2, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-004",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在 LCA 的衝擊評估階段，溫室氣體排放與移除量應選擇哪種全球暖化潛勢 (GWP) 計算方法？",
+    "options": {
+      "A": "輸入‑輸出分析",
+      "B": "跨期 GWP 加權",
+      "C": "組織範疇分析",
+      "D": "直接排放量計算"
+    },
+    "answer": "B",
+    "explanation": "在LCA的衝擊評估階段，通常會使用GWP（全球暖化潛勢）將不同溫室氣體的排放量換算為二氧化碳當量，並可能考慮不同時間尺度的影響，因此跨期GWP加權是相關的計算方法。 [4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-005",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列哪項不屬於計算產品使用階段排放所需考慮的因素？",
+    "options": {
+      "A": "產品的預期使用壽命",
+      "B": "產品使用過程中的能源消耗",
+      "C": "產品使用過程中的維護需求",
+      "D": "產品的銷售價格"
+    },
+    "answer": "D",
+    "explanation": "計算產品使用階段的排放，主要考量產品在使用過程中直接與間接產生的溫室氣體排放，例如能源消耗、維護需求等，而產品的銷售價格與此無直接關聯。 [1, 2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-006",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "根據《溫室氣體排放量盤查登錄及查驗管理辦法》，查驗作業不得連續幾年由同一主導查驗員執行？",
+    "options": {
+      "A": "5 年",
+      "B": "10 年",
+      "C": "6 年",
+      "D": "3 年"
+    },
+    "answer": "A",
+    "explanation": "根據《溫室氣體排放量盤查登錄及查驗管理辦法》第14條，查驗機構指派執行查驗作業之主導查驗員，不得連續五年執行同一事業同一廠（場）之查驗作業。 [2, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-007",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CFP 研究中的「一致性」原則要求：",
+    "options": {
+      "A": "假設、方法及數據以相同方式應用於整個 CFP 研究中",
+      "B": "所有產品使用相同的方法",
+      "C": "研究結果必須與之前的研究一致",
+      "D": "研究結果必須符合預期"
+    },
+    "answer": "A",
+    "explanation": "CFP研究中的「一致性」原則要求，在整個研究過程中，假設、方法及數據的應用方式應保持一致。 [1, 2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-008",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "使用平均數據法計算「由採購的貨物產生之排放」時，需要哪些信息？",
+    "options": {
+      "A": "採購的產品重量和對應的行業平均排放係數",
+      "B": "供應商的具體生產工藝",
+      "C": "供應商的財務報表",
+      "D": "供應商的員工人數"
+    },
+    "answer": "A",
+    "explanation": "使用平均數據法計算時，需蒐集所採購貨物的重量或其他相關單位的資料，並將其乘以相關的行業平均排放係數。 [2, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-009",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "使用特定供應商法計算「由採購的貨物產生之排放」時，需要哪些數據？",
+    "options": {
+      "A": "公司的採購支出金額",
+      "B": "行業平均排放係數",
+      "C": "產品的市場佔有率",
+      "D": "供應商提供的產品從搖籃到大門的排放數據"
+    },
+    "answer": "D",
+    "explanation": "特定供應商法是指直接從供應商處收集產品層面的「從搖籃到大門」的溫室氣體清單數據，以估算與所購商品和服務相關的排放量。 [1, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-010",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在進行組織溫室氣體盤查時，下列哪種滅火器不需要列入盤查？",
+    "options": {
+      "A": "FM200",
+      "B": "ABC",
+      "C": "CO₂",
+      "D": "BC"
+    },
+    "answer": "B",
+    "explanation": "在溫室氣體盤查中，CO2滅火器、BC型滅火器（含碳酸氫鈉）、FM200（HFCs）等含有或會產生溫室氣體的滅火器需要列入盤查，而ABC乾粉滅火器則不需要。 [1, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-011",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列哪一個公式正確計算了溫室氣體排放量？",
+    "options": {
+      "A": "排放量 = 活動數據 × GHG 排放係數 × GWP 值",
+      "B": "排放量 = 活動數據 + GHG 排放係數 + GWP 值",
+      "C": "排放量 = 活動數據 ÷ GHG 排放係數 × GWP 值",
+      "D": "排放量 = 活動數據 − GHG 排放係數 × GWP 值"
+    },
+    "answer": "A",
+    "explanation": "溫室氣體排放量的計算公式為：活動數據 × 排放係數 × 全球暖化潛勢（GWP）值。 [1, 2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-012",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "生命週期評估 (LCA) 中，資源耗用主要指：",
+    "options": {
+      "A": "只考慮能源資源",
+      "B": "考慮各種自然資源的使用",
+      "C": "只考慮礦產資源",
+      "D": "只考慮水資源"
+    },
+    "answer": "B",
+    "explanation": "LCA是一種評估方法，藉由量化產品的生命週期中，可能造成的資源耗用與環境衝擊，其中資源耗用包含各種自然資源的使用。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-013",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在 PCR 中，關於原料取得階段的數據收集要求是：",
+    "options": {
+      "A": "可以忽略這個階段的數據",
+      "B": "只能使用二級活動數據",
+      "C": "不強制要求收集一級活動數據，但應優先採用",
+      "D": "必須全部使用一級活動數據"
+    },
+    "answer": "C",
+    "explanation": "在PCR中，原料取得階段不強制要求收集一級活動數據，但應優先採用。 [2, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-014",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列哪項不屬於計算由採購貨物產生的排放所需的信息？",
+    "options": {
+      "A": "採購原料重量",
+      "B": "供應商的財務報表",
+      "C": "原料相關排放係數",
+      "D": "原料生產過程的能源消耗"
+    },
+    "answer": "B",
+    "explanation": "計算採購貨物產生的排放時，主要需要原料重量、排放係數、能源消耗等數據，而供應商的財務報表並非直接相關的資訊。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-015",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "ISO 14067 標準強調從哪個視角評估產品碳足跡？",
+    "options": {
+      "A": "廢棄處理",
+      "B": "製造過程",
+      "C": "生命週期",
+      "D": "消費者使用"
+    },
+    "answer": "C",
+    "explanation": "ISO 14067標準強調從產品的整個生命週期視角來評估其碳足跡。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-016",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CFP 研究中的「準確性」原則要求：",
+    "options": {
+      "A": "只使用實測數據",
+      "B": "儘可能在實務上減少偏差與不確定性",
+      "C": "排除所有估算數據",
+      "D": "結果必須 100 % 精確"
+    },
+    "answer": "B",
+    "explanation": "CFP研究中的準確性原則，要求在實務上應盡可能減少偏差與不確定性，以提高研究結果的可靠度。 [1, 2, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-017",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "生命週期闡釋階段的主要功能是：",
+    "options": {
+      "A": "進行實驗室測試",
+      "B": "定義評估範圍",
+      "C": "整合盤查分析及衝擊評估結果，提供決策參考",
+      "D": "收集原始數據"
+    },
+    "answer": "C",
+    "explanation": "生命週期闡釋階段是將盤查分析及衝擊評估的結果整合，以達成結論和建議，提供決策參考。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-018",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "ISO 14067 標準中，對於碳抵換的處理方式是：",
+    "options": {
+      "A": "不允許包含在碳足跡量化中",
+      "B": "僅允許包含可再生能源相關的碳抵換",
+      "C": "允許包含在碳足跡量化中",
+      "D": "由計算者自行決定是否包含"
+    },
+    "answer": "A",
+    "explanation": "根據ISO 14067標準，碳抵換不應包含在產品碳足跡的量化中。 [1]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-019",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "碳盤查工作小組的後續工作不包括以下哪項？",
+    "options": {
+      "A": "推動減碳方案",
+      "B": "制定公司營銷策略",
+      "C": "達成永續淨零",
+      "D": "研擬減碳目標"
+    },
+    "answer": "B",
+    "explanation": "碳盤查工作小組的後續工作主要圍繞減碳目標、方案及永續淨零等，而制定公司營銷策略並非其直接職責。 [1]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-020",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "當有數個替代分配程式可用時，應進行什麼分析？",
+    "options": {
+      "A": "敏感度分析",
+      "B": "成本分析",
+      "C": "風險分析",
+      "D": "市場分析"
+    },
+    "answer": "A",
+    "explanation": "當存在多個替代分配程式時，應進行敏感度分析，以評估不同分配方法對結果的影響。 [1, 2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-021",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "固定式燃料燃燒造成的主要溫室氣體排放包括：",
+    "options": {
+      "A": "二氧化碳和甲烷",
+      "B": "只有二氧化碳",
+      "C": "二氧化碳、甲烷和氧化亞氮",
+      "D": "二氧化碳、甲烷、氧化亞氮和氫氟碳化物"
+    },
+    "answer": "C",
+    "explanation": "固定式燃料燃燒產生的溫室氣體主要包括二氧化碳（CO2）、甲烷（CH4）和氧化亞氮（N2O）。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-022",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在產品碳足跡計算中，以下哪項通常被視為直接排放？",
+    "options": {
+      "A": "購買電力導致的排放",
+      "B": "工廠使用化石燃料的排放",
+      "C": "員工通勤產生的排放",
+      "D": "原材料生產過程的排放"
+    },
+    "answer": "B",
+    "explanation": "直接排放是指由組織擁有或控制的排放源所產生的溫室氣體排放，例如工廠使用化石燃料的排放。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-023",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下哪項不是提高產品碳足跡計算準確性的方法？",
+    "options": {
+      "A": "增加產品的市場佔有率",
+      "B": "改進分配方法",
+      "C": "使用更多的一級數據",
+      "D": "進行敏感度分析"
+    },
+    "answer": "A",
+    "explanation": "提高產品碳足跡計算準確性的方法包括改進分配方法、使用更多的一級數據、進行敏感度分析等，而增加產品的市場佔有率與計算準確性無直接關聯。 [1, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-024",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下哪項不屬於產品碳足跡的應用領域？",
+    "options": {
+      "A": "財務審計",
+      "B": "採購決策",
+      "C": "風險管理",
+      "D": "產品開發"
+    },
+    "answer": "A",
+    "explanation": "產品碳足跡的應用領域包括採購決策、風險管理、產品開發等，但與財務審計無直接關聯。 [1, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-025",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "ISO 14064‑1:2018 中，哪項不屬於 Category 1（直接溫室氣體排放量與移除量）？",
+    "options": {
+      "A": "輸入電力之間接排放",
+      "B": "固定式燃燒源之直接排放",
+      "C": "產業過程之直接排放與移除",
+      "D": "土地使用、土地使用變更及林業之直接排放與移除"
+    },
+    "answer": "A",
+    "explanation": "根據ISO 14064-1:2018，輸入電力之間接排放屬於類別2，而非類別1。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-026",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下哪項不是影響產品碳足跡結果可比性的因素？",
+    "options": {
+      "A": "分配方法的選擇",
+      "B": "功能單位的選擇",
+      "C": "系統邊界的界定",
+      "D": "產品的市場價格"
+    },
+    "answer": "D",
+    "explanation": "影響產品碳足跡結果可比性的因素包括分配方法的選擇、功能單位的選擇、系統邊界的界定等，而產品的市場價格與此無直接關聯。 [2, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-027",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品碳足跡計算中，運輸階段的排放通常基於：",
+    "options": {
+      "A": "行業平均運輸距離",
+      "B": "最大可能運輸距離",
+      "C": "實際運輸距離和方式",
+      "D": "理論最短距離"
+    },
+    "answer": "C",
+    "explanation": "產品碳足跡計算中，運輸階段的排放應基於實際的運輸距離和方式來計算，以確保數據的準確性。 [3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-028",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "組織在量化溫室氣體排放時，還需要量化什麼？",
+    "options": {
+      "A": "溫室氣體移除量",
+      "B": "能源使用效率",
+      "C": "產品銷售量",
+      "D": "員工通勤距離"
+    },
+    "answer": "A",
+    "explanation": "根據ISO 14064-1標準，組織在量化溫室氣體排放時，也應量化溫室氣體的移除量。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-029",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在計算乙炔 (C₂H₂) 燃燒產生的 CO₂ 排放時，正確的排放係數是：",
+    "options": {
+      "A": "3.385 公噸 CO₂/公噸乙炔",
+      "B": "1.385 公噸 CO₂/公噸乙炔",
+      "C": "2.385 公噸 CO₂/公噸乙炔",
+      "D": "4.385 公噸 CO₂/公噸乙炔"
+    },
+    "answer": "A",
+    "explanation": "乙炔燃燒的化學反應式為 C2H2 + 2.5 O2 → 2CO2 + H2O，根據質量平衡法計算，其CO2排放係數約為3.385公噸CO2/公噸乙炔。 [2, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-030",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "分配程式的步驟 2 是什麼？",
+    "options": {
+      "A": "以反映基本實質關係的方式進行分配",
+      "B": "以反映其他關係的方式進行分配",
+      "C": "儘可能避免分配",
+      "D": "擴大產品系統"
+    },
+    "answer": "A",
+    "explanation": "分配程式的步驟2是，若無法避免分配，應以反映基本實質關係（如物理關係）的方式進行分配。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-031",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "組織應根據什麼來決定溫室氣體盤查報告書中排放量資訊的揭露程度？",
+    "options": {
+      "A": "競爭對手的做法",
+      "B": "公司股價表現",
+      "C": "預期使用者需求",
+      "D": "最新的科技發展"
+    },
+    "answer": "C",
+    "explanation": "溫室氣體盤查報告書的揭露程度，應依據預期使用者（如投資人、客戶、主管機關等）的需求來決定。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-032",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "溫室氣體盤查需要跨部門合作的主要原因是什麼？",
+    "options": {
+      "A": "需要收集彙整橫跨組織內部不同部門的資料",
+      "B": "提高員工參與度",
+      "C": "滿足法律要求",
+      "D": "增加工作難度"
+    },
+    "answer": "A",
+    "explanation": "溫室氣體盤查涉及的數據廣泛，需要收集彙整橫跨組織內部不同部門的資料，因此跨部門合作至關重要。 [2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-033",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在產品碳足跡計算中，以下哪項通常被視為間接排放？",
+    "options": {
+      "A": "工廠使用化石燃料的排放",
+      "B": "購買電力導致的排放",
+      "C": "產品使用階段的排放",
+      "D": "產品廢棄階段的排放"
+    },
+    "answer": "B",
+    "explanation": "購買電力導致的排放屬於能源間接排放，是產品碳足跡計算中的間接排放來源。 [1, 2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-034",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下哪項不是 ISO 14064‑1 中 Category 2（來自輸入能源之間接溫室氣體排放量）的排放源？",
+    "options": {
+      "A": "購買的電力",
+      "B": "購買的蒸汽",
+      "C": "購買的熱水",
+      "D": "自產的電力"
+    },
+    "answer": "D",
+    "explanation": "ISO 14064-1中，Category 2指的是來自輸入能源的間接溫室氣體排放，自產的電力屬於直接排放（Category 1）。 [1, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-035",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "巴黎協定要求已開發國家應提供氣候變遷資金，主要目的是：",
+    "options": {
+      "A": "資助氣候變遷相關研究",
+      "B": "補貼化石燃料產業轉型",
+      "C": "幫助開發中國家減少排放並應對氣候變遷",
+      "D": "資助已開發國家的減排計劃"
+    },
+    "answer": "C",
+    "explanation": "巴黎協定要求已開發國家提供氣候變遷資金，主要是為了幫助開發中國家減少溫室氣體排放，並有能力面對全球氣候變遷所帶來的後果。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-036",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在 CFP 研究中，如何處理產品中的生質碳？",
+    "options": {
+      "A": "分別列出但不包括在 CFP 結果中",
+      "B": "只在使用階段考慮",
+      "C": "計入 CFP 結果中",
+      "D": "忽略不計"
+    },
+    "answer": "A",
+    "explanation": "在CFP研究中，產品中的生質碳排放與移除應分別列出，但不包含在最終的CFP結果中。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-037",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "《氣候變遷因應法》規定，事業應在每年的哪一天前完成前一年度溫室氣體排放量的查驗？",
+    "options": {
+      "A": "11 月 30 日",
+      "B": "10 月 31 日",
+      "C": "9 月 30 日",
+      "D": "12 月 31 日"
+    },
+    "answer": "B",
+    "explanation": "根據《氣候變遷因應法》及相關管理辦法，事業應於每年10月31日前完成前一年度溫室氣體排放量的查驗作業。 [2, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-038",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在碳足跡計算中，下游過程的數據通常如何獲得？",
+    "options": {
+      "A": "市調或情境假設",
+      "B": "從資料庫獲取",
+      "C": "專家估算",
+      "D": "實地盤查"
+    },
+    "answer": "A",
+    "explanation": "在碳足跡計算中，下游過程（如產品使用、廢棄處理）的數據，通常較難直接取得，因此常透過市場調查或情境假設的方式來估算。 [4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-039",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CFP 研究報告中，關於分配方法的資訊應如何處理？",
+    "options": {
+      "A": "只記錄主要的分配方法",
+      "B": "鑑別與詳細記錄所選擇使用的分配方法",
+      "C": "不需要提供任何資訊",
+      "D": "只需簡單提及使用了分配方法"
+    },
+    "answer": "B",
+    "explanation": "CFP研究報告中，應詳細記錄所選擇使用的分配方法，以確保研究的透明度與可追溯性。 [2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-040",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "《蒙特婁議定書》主要針對哪一類物質進行管制？",
+    "options": {
+      "A": "氯氟碳化物",
+      "B": "二氧化碳",
+      "C": "甲烷",
+      "D": "氮氧化物"
+    },
+    "answer": "A",
+    "explanation": "《蒙特婁議定書》主要是為了減少使用氟氯碳化物等破壞臭氧層的物質。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-041",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在制定產品碳足跡盤查目標時，下列哪項不是重要考量因素？",
+    "options": {
+      "A": "預期的應用",
+      "B": "產品的市場佔有率",
+      "C": "預期讀者的溝通方式",
+      "D": "展開專案的原因"
+    },
+    "answer": "B",
+    "explanation": "制定產品碳足跡盤查目標時，應考量預期的應用、溝通方式及專案原因等，而產品的市場佔有率並非直接的考量因素。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-042",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "組織進行外部查證前，應先完成什麼程序？",
+    "options": {
+      "A": "公開資訊揭露",
+      "B": "政府審批",
+      "C": "股東大會審核",
+      "D": "內部查證"
+    },
+    "answer": "D",
+    "explanation": "組織在進行外部查證前，應先完成內部查證程序，以確保數據的準確性與一致性。 [1, 2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-043",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在產品碳足跡中，系統邊界是指：",
+    "options": {
+      "A": "納入研究的單元過程範圍",
+      "B": "組織的營運邊界",
+      "C": "產品的物理邊界",
+      "D": "產品銷售的地理範圍"
+    },
+    "answer": "A",
+    "explanation": "在產品碳足跡中，系統邊界指的是納入研究的單元過程範圍，也就是產品生命週期中被納入計算的各個階段。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-044",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下哪項不是 CFP 研究報告中需要包含的資訊？",
+    "options": {
+      "A": "重要單元過程清冊",
+      "B": "功能單位與參考流",
+      "C": "系統界限",
+      "D": "公司的財務報表"
+    },
+    "answer": "D",
+    "explanation": "CFP研究報告中需要包含重要單元過程清冊、功能單位與參考流、系統界限等資訊，但不需要包含公司的財務報表。 [2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-045",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "根據環境部規範，以下哪項屬於直接排放？",
+    "options": {
+      "A": "外購電力使用",
+      "B": "廢棄物處理",
+      "C": "固定燃料燃燒",
+      "D": "員工通勤"
+    },
+    "answer": "C",
+    "explanation": "根據環境部規範，直接排放包括固定燃料燃燒、製程排放、移動源及逸散源等。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 1,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_1"
+  },
+  {
+    "id": "c2-046",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在活動數據整理時，通常需要將非重量單位換算為重量單位的原因是？",
+    "options": {
+      "A": "便於計算",
+      "B": "配合使用之資料庫",
+      "C": "便於比較",
+      "D": "符合法規要求"
+    },
+    "answer": "B",
+    "explanation": "在活動數據整理時，常需將非重量單位換算為重量單位，以配合所使用的排放係數資料庫。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-047",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在計算焊條使用產生的 CO₂ 排放時，需要考慮：",
+    "options": {
+      "A": "焊條重量和焊接時間",
+      "B": "焊條重量和焊條含碳量",
+      "C": "焊條重量和焊接溫度",
+      "D": "只需焊條重量"
+    },
+    "answer": "B",
+    "explanation": "計算焊條使用產生的CO2排放時，需考慮焊條的重量及其含碳量。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-048",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列哪項不屬於產品碳足跡的生命週期階段？",
+    "options": {
+      "A": "原料階段",
+      "B": "測試階段",
+      "C": "製造階段",
+      "D": "使用階段"
+    },
+    "answer": "B",
+    "explanation": "產品碳足跡的生命週期階段通常包括原料取得、製造、配送銷售、使用及廢棄處理等，而測試階段並非獨立的生命週期階段。 [4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-049",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "如果電費單的計費週期跨年度，應如何處理用電量數據？",
+    "options": {
+      "A": "全部計入第二年",
+      "B": "全部計入第一年",
+      "C": "取兩年的平均值",
+      "D": "按實際日數比例攤分使用量"
+    },
+    "answer": "D",
+    "explanation": "若電費單的計費週期跨年度，應按實際日數比例攤分使用量，以確保數據的準確性。 [2, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-050",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "組織量化直接溫室氣體排放量時，應將排放區分為哪些氣體？",
+    "options": {
+      "A": "只需區分 CO₂ 和 CH₄",
+      "B": "應區分 CO₂、CH₄、N₂O、NF₃、SF₆ 等",
+      "C": "不需要區分，只計算總量",
+      "D": "只需區分 CO₂"
+    },
+    "answer": "B",
+    "explanation": "組織量化直接溫室氣體排放量時，應將排放區分為CO2、CH4、N2O、NF3、SF6等七大溫室氣體。 [1, 2, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-051",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在報告階段，報表資訊通常不包括？",
+    "options": {
+      "A": "基本資料",
+      "B": "公司財務報表",
+      "C": "熱點排名",
+      "D": "碳足跡簡表"
+    },
+    "answer": "B",
+    "explanation": "在報告階段，報表資訊通常包括基本資料、熱點排名、碳足跡簡表等，但不需要包含公司的財務報表。 [2, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-052",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在活動數據檢核中，關於物料規格或濃度的說明，哪項是正確的？",
+    "options": {
+      "A": "只需要說明主要原料的濃度",
+      "B": "輔助物料不需要說明規格",
+      "C": "各項物料均須清楚說明濃度、成分或化學反應式",
+      "D": "只需要提供物料名稱，不需要提供規格資訊"
+    },
+    "answer": "C",
+    "explanation": "在活動數據檢核中，各項物料均須清楚說明其濃度、成分或化學反應式，以確保數據的準確性。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-053",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "不確定性分析中，通常不包括以下哪種不確定性？",
+    "options": {
+      "A": "模型的不確定性",
+      "B": "情境的不確定性",
+      "C": "政策的不確定性",
+      "D": "參數的不確定性"
+    },
+    "answer": "C",
+    "explanation": "不確定性分析通常包括模型、情境、參數等的不確定性，而政策的不確定性較難量化，通常不包含在內。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-054",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "根據 GHG Protocol，集團企業在選擇組織邊界彙整方式後，應如何執行？",
+    "options": {
+      "A": "應適用到組織內所有的層級",
+      "B": "各子公司可自行選擇",
+      "C": "只適用於母公司",
+      "D": "可根據需要隨時更改"
+    },
+    "answer": "A",
+    "explanation": "根據GHG Protocol，一旦集團企業選擇了組織邊界彙整方式，就應適用到組織內所有的層級，以確保一致性。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-055",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "關鍵性審查的目的是：",
+    "options": {
+      "A": "確保碳足跡研究符合標準要求",
+      "B": "確定產品碳足跡的市場競爭力",
+      "C": "比較不同計算方法的優劣",
+      "D": "評估產品的環境影響"
+    },
+    "answer": "A",
+    "explanation": "關鍵性審查的目的是確保碳足跡研究的過程與結果，符合相關標準的要求。 [3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-056",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品碳足跡研究中，「供應鏈」是指：",
+    "options": {
+      "A": "僅包括配送網絡",
+      "B": "從原料到最終用戶的所有過程",
+      "C": "僅包括製造過程",
+      "D": "僅包括直接供應商"
+    },
+    "answer": "B",
+    "explanation": "在產品碳足跡研究中，供應鏈指的是從原料取得、製造、配送銷售到最終用戶的所有過程。 [2, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-057",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在產品碳足跡盤查中，關於水體污染物排放的說法，哪項是正確的？",
+    "options": {
+      "A": "水體污染物排放不屬於碳足跡盤查範圍",
+      "B": "需要收集廢水排放量和水體污染物資訊",
+      "C": "只需要考慮直接排入自然水體的污染物",
+      "D": "只需要收集用水量，不需要考慮排放"
+    },
+    "answer": "B",
+    "explanation": "在產品碳足跡盤查中，除了溫室氣體排放外，也應收集廢水排放量和水體污染物等相關資訊，以全面評估產品的環境影響。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-058",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CFP 研究的範疇應與什麼一致？",
+    "options": {
+      "A": "產品的銷售策略",
+      "B": "行業的平均水準",
+      "C": "CFP 研究的目標",
+      "D": "公司的財務狀況"
+    },
+    "answer": "C",
+    "explanation": "CFP研究的範疇應與其研究的目標一致，以確保研究的相關性與有效性。 [2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-059",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在活動數據檢核中，關於空水廢排放的說法，哪項是錯誤的？",
+    "options": {
+      "A": "廢棄物不需提供處理方式",
+      "B": "需提供製程各項空水廢排放的項目名稱和實際排放量",
+      "C": "需提供廢水處理化學藥劑的運輸資訊",
+      "D": "需提供廢棄物的處理和運輸方式"
+    },
+    "answer": "A",
+    "explanation": "在活動數據檢核中，廢棄物需要提供其處理和運輸方式，以利計算相關的溫室氣體排放。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-060",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在產品碳足跡盤查的數據收集過程中，以下哪項不是必須提供的運輸資訊？",
+    "options": {
+      "A": "運輸距離",
+      "B": "物料的購買地點",
+      "C": "運輸方式（陸運、空運、海運）",
+      "D": "運輸工具的品牌"
+    },
+    "answer": "D",
+    "explanation": "在產品碳足跡盤查中，運輸資訊通常包括運輸距離、方式及物料購買地點等，而運輸工具的品牌並非必要資訊。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-061",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "計算外購蒸汽的間接排放時，排放係數應：",
+    "options": {
+      "A": "自行測量",
+      "B": "由供應商提供並經第三方查證",
+      "C": "使用行業平均值",
+      "D": "使用默認值"
+    },
+    "answer": "B",
+    "explanation": "計算外購蒸汽的間接排放時，應優先使用由供應商提供並經第三方查證的排放係數，以確保數據的準確性。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-062",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在 CFP 研究中，如何處理來自航空器運輸之 GHG 排放？",
+    "options": {
+      "A": "計入生物燃料排放",
+      "B": "計入化石燃料排放",
+      "C": "單獨記錄",
+      "D": "忽略不計"
+    },
+    "answer": "B",
+    "explanation": "在CFP研究中，航空器運輸的溫室氣體排放應計入化石燃料排放。 [3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-063",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "如果廠區生活污水已納管，關於化糞池甲烷逸散量計算，下列陳述何者正確？",
+    "options": {
+      "A": "需要計算 50 % 的逸散量",
+      "B": "可以不用計算化糞池甲烷逸散量",
+      "C": "仍然需要計算全部的逸散量",
+      "D": "需要諮詢環保部門再決定"
+    },
+    "answer": "B",
+    "explanation": "若廠區生活污水已納入污水下水道系統，則可不必計算化糞池的甲烷逸散量。 [3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-064",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品碳足跡計算中，參考流的作用是：",
+    "options": {
+      "A": "評估產品的環境影響",
+      "B": "量化滿足功能單位所需的產品數量",
+      "C": "確定產品的生產效率",
+      "D": "確定產品的市場定位"
+    },
+    "answer": "B",
+    "explanation": "在產品碳足跡計算中，參考流是用來量化滿足功能單位所需的產品數量。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-065",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "ISO 14067 標準不包括以下哪項內容？",
+    "options": {
+      "A": "產品碳足跡溝通的要求",
+      "B": "部分碳足跡的計算方法",
+      "C": "碳足跡標籤的設計規範",
+      "D": "產品碳足跡量化的要求"
+    },
+    "answer": "C",
+    "explanation": "ISO 14067標準提供了產品碳足跡量化、溝通的要求及部分碳足跡的計算方法，但不包括碳足跡標籤的設計規範。 [2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-066",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "溫室氣體盤查推動順利所需的支持與承諾，最重要的是哪個層級？",
+    "options": {
+      "A": "基層員工",
+      "B": "外部顧問",
+      "C": "高階主管",
+      "D": "中階主管"
+    },
+    "answer": "C",
+    "explanation": "溫室氣體盤查的推動，需要高階主管的支持與承諾，才能有效整合資源，順利進行。 [3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-067",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "聯合國氣候變遷大會締約方大會 COP 是在哪一年第一次召開？",
+    "options": {
+      "A": "1985 年",
+      "B": "1990 年",
+      "C": "1992 年",
+      "D": "1995 年"
+    },
+    "answer": "D",
+    "explanation": "聯合國氣候變遷大會締約方大會（COP）自1995年於柏林首次召開。 [1, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-068",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "聯合國間為了預防各國溫室氣體排放影響全球氣候暖化，國際上於哪一年簽署《京都議定書》？",
+    "options": {
+      "A": "1995 年",
+      "B": "1997 年",
+      "C": "2000 年",
+      "D": "2005 年"
+    },
+    "answer": "B",
+    "explanation": "《京都議定書》於1997年12月在日本京都的第三次締約國大會上通過。 [4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-069",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "《京都議定書》要求附件一國家的溫室氣體排放量平均減量百分之多少？",
+    "options": {
+      "A": "3 %",
+      "B": "4 %",
+      "C": "5.2 %",
+      "D": "6 %"
+    },
+    "answer": "C",
+    "explanation": "《京都議定書》規範各締約國須於2008年至2012年期間，將該國溫室氣體排放量降至1990年水準平均再減5.2%。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-070",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "COP 成立於哪一年？",
+    "options": {
+      "A": "1992 年",
+      "B": "1995 年",
+      "C": "2000 年",
+      "D": "2005 年"
+    },
+    "answer": "B",
+    "explanation": "聯合國氣候變遷大會締約方大會（COP）自1995年於柏林首次召開。 [1, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-071",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "《京都議定書》於哪一年正式生效？",
+    "options": {
+      "A": "1997 年",
+      "B": "2000 年",
+      "C": "2003 年",
+      "D": "2005 年"
+    },
+    "answer": "D",
+    "explanation": "《京都議定書》於2005年2月16日正式生效。 [3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-072",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "《京都議定書》的減量期間是從哪年開始到哪年結束？",
+    "options": {
+      "A": "2005 – 2010",
+      "B": "2008 – 2012",
+      "C": "2010 – 2015",
+      "D": "2012 – 2016"
+    },
+    "answer": "B",
+    "explanation": "《京都議定書》的第一承諾期為2008年至2012年。 [5, 6]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-073",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "《京都議定書》何時結束？",
+    "options": {
+      "A": "2015 年",
+      "B": "2016 年",
+      "C": "2020 年",
+      "D": "2025 年"
+    },
+    "answer": "C",
+    "explanation": "《京都議定書》的第二承諾期於2020年結束，由《巴黎協定》接替。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-074",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "巴黎協定何時生效？",
+    "options": {
+      "A": "2015 年",
+      "B": "2016 年",
+      "C": "2017 年",
+      "D": "2018 年"
+    },
+    "answer": "B",
+    "explanation": "《巴黎協定》於2016年11月4日正式生效。 [1, 2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-075",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "巴黎協定目標是將全球溫室氣體排放限制在遠低於幾度攝氏的水平？",
+    "options": {
+      "A": "1 °C",
+      "B": "1.5 °C",
+      "C": "2 °C",
+      "D": "2.5 °C"
+    },
+    "answer": "C",
+    "explanation": "《巴黎協定》的目標是將全球平均氣溫升幅控制在工業革命前水準以上低於2℃之內，並努力將氣溫升幅限制在1.5℃之內。 [1, 2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-076",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "巴黎協定要求在本世紀末（即西元幾年前）將全球平均溫度上升控制在工業革命前水準 2 °C，以 1.5 °C 為佳？",
+    "options": {
+      "A": "2050 年",
+      "B": "2075 年",
+      "C": "2100 年",
+      "D": "2150 年"
+    },
+    "answer": "C",
+    "explanation": "《巴黎協定》的目標是將本世紀末（2100年）的全球平均溫度上升控制在工業革命前水準的2°C以內，並力求控制在1.5°C。 [1, 2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-077",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "根據 UNEP《2023 排放差距報告》，現行 NDC 估計本世紀末將升溫多少？",
+    "options": {
+      "A": "2 °C",
+      "B": "2.5 °C",
+      "C": "3 – 3.2 °C",
+      "D": "3.5 °C"
+    },
+    "answer": "C",
+    "explanation": "根據UNEP《2023排放差距報告》，若各國的國家自定貢獻（NDC）完全兌現，預計本世紀末全球仍將升溫2.5至2.9°C，若維持現行政策，則將升溫3°C。因此3–3.2°C為最接近的答案。",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-078",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "COP28 結論認知應於何時達到全球排放峰值？",
+    "options": {
+      "A": "2020 年",
+      "B": "2025 年",
+      "C": "2030 年",
+      "D": "2035 年"
+    },
+    "answer": "B",
+    "explanation": "COP28的全球盤點（Global Stocktake）結論中，認知到為將全球暖化限制在1.5°C，全球溫室氣體排放量應在2025年達到峰值。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-079",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "COP28 呼籲到 2030 年全球再生能源增加幾倍？",
+    "options": {
+      "A": "1 倍",
+      "B": "2 倍",
+      "C": "3 倍",
+      "D": "4 倍"
+    },
+    "answer": "C",
+    "explanation": "COP28的最終協議呼籲各國到2030年將全球再生能源發電容量增加三倍。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-080",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "全球甲烷承諾倡議目標：至 2030 年人為甲烷排放比 2020 年減少多少？",
+    "options": {
+      "A": "10 %",
+      "B": "20 %",
+      "C": "30 %",
+      "D": "40 %"
+    },
+    "answer": "C",
+    "explanation": "全球甲烷承諾倡議的目標是到2030年，全球人為造成的甲烷排放量比2020年減少至少30%。",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-081",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "我國 2030 淨零轉型階段目標：商業場域採用 LED 燈的比例？",
+    "options": {
+      "A": "50 %",
+      "B": "75 %",
+      "C": "90 %",
+      "D": "100 %"
+    },
+    "answer": "D",
+    "explanation": "根據我國2030年淨零轉型階段目標，商業部門的目標之一是新建築物100%採用LED燈具。",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-082",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "全球 120+ 企業承諾 2030 年共使用多少輛 100 % 電動車？",
+    "options": {
+      "A": "100 萬輛",
+      "B": "200 萬輛",
+      "C": "400 萬輛",
+      "D": "575 萬輛"
+    },
+    "answer": "D",
+    "explanation": "全球超過120家企業承諾在2030年前，將其車隊轉換為100%電動車，總計超過575萬輛。",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-083",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "全球 400 家企業加入 RE100 承諾哪一年使用 100 % 再生能源？",
+    "options": {
+      "A": "2030 年",
+      "B": "2040 年",
+      "C": "2050 年",
+      "D": "2060 年"
+    },
+    "answer": "C",
+    "explanation": "RE100倡議的目標是推動企業承諾在2050年前，達成100%使用再生能源。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-084",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "碳關稅（CBAM）主要為了解決哪個問題？",
+    "options": {
+      "A": "碳洩漏",
+      "B": "碳稅",
+      "C": "碳信用",
+      "D": "碳中和"
+    },
+    "answer": "A",
+    "explanation": "歐盟設立CBAM的主要目的是為了解決「碳洩漏」問題。 [3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-085",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下何者屬於歐盟 CBAM 碳排放計入範疇？",
+    "options": {
+      "A": "移動排放源",
+      "B": "固定排放源",
+      "C": "流動排放源",
+      "D": "生物排放源"
+    },
+    "answer": "B",
+    "explanation": "歐盟CBAM的碳排放計算範疇主要包括產品製程中的直接排放（固定排放源）及外購電力的間接排放。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-086",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "臺灣 NDC：相較 2005 基準年應減排多少以達 2050 淨零？",
+    "options": {
+      "A": "20 % ± 1 %",
+      "B": "24 % ± 1 %",
+      "C": "30 % ± 1 %",
+      "D": "40 % ± 1 %"
+    },
+    "answer": "B",
+    "explanation": "我國於2022年12月28日正式公布淨零轉型之2030年階段目標，提升至較基準年（2005年）減少24±1%。 [3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-087",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "2023 年全球年均氣溫較 1850–1900 工業化前水準高多少？",
+    "options": {
+      "A": "1.25 ± 0.12 °C",
+      "B": "1.35 ± 0.12 °C",
+      "C": "1.45 ± 0.12 °C",
+      "D": "1.55 ± 0.12 °C"
+    },
+    "answer": "C",
+    "explanation": "根據世界氣象組織（WMO）的數據，2023年全球年均氣溫較工業化前（1850-1900年）水準高出1.45±0.12°C。",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-088",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "SBTi 認證「企圖心」應符合哪個溫控情境？",
+    "options": {
+      "A": "1 °C",
+      "B": "1.5 °C",
+      "C": "2 °C",
+      "D": "2.5 °C"
+    },
+    "answer": "B",
+    "explanation": "SBTi要求企業設定的近期減量目標，必須與將全球升溫控制在1.5°C的情境保持一致。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-089",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "AR6 指出：地表溫度每上升 0.5 °C，對融冰、海平面、物種減少的影響呈何次方成長？",
+    "options": {
+      "A": "2 次方",
+      "B": "5 次方",
+      "C": "10 次方",
+      "D": "20 次方"
+    },
+    "answer": "C",
+    "explanation": "根據IPCC第六次評估報告（AR6），地表溫度每上升0.5°C，對融冰、海平面上升、物種減少等影響將呈10次方成長。",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-090",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "政府間氣候變化專門委員會的英文縮寫為？",
+    "options": {
+      "A": "IFRS",
+      "B": "TCFD",
+      "C": "CDP",
+      "D": "IPCC"
+    },
+    "answer": "D",
+    "explanation": "政府間氣候變化專門委員會的英文縮寫為IPCC（Intergovernmental Panel on Climate Change）。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 2,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_2"
+  },
+  {
+    "id": "c2-091",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "聯合國氣候變化大會英文縮寫為？",
+    "options": {
+      "A": "UNFCCC",
+      "B": "COP",
+      "C": "IPCC",
+      "D": "UNEP"
+    },
+    "answer": "B",
+    "explanation": "聯合國氣候變化大會的英文縮寫為COP（Conference of the Parties）。 [1, 2, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-092",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "關於「再生能源」的定義，下列何者正確？",
+    "options": {
+      "A": "100 % 不排放碳的能源",
+      "B": "只使用太陽能和風能的能源",
+      "C": "從持續不斷補充的自然過程中取得的能量來源",
+      "D": "由動植物質產生的能源"
+    },
+    "answer": "C",
+    "explanation": "再生能源是指從持續不斷補充的自然過程中取得的能量來源，例如太陽能、風力、水力、地熱能、生質能等。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-093",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列何者不是碳捕捉與儲存（CCS）的主要階段？",
+    "options": {
+      "A": "捕捉",
+      "B": "儲存",
+      "C": "輸送",
+      "D": "再生"
+    },
+    "answer": "D",
+    "explanation": "碳捕捉與儲存（CCS）的主要階段包括捕捉、輸送和儲存，再生並非其主要階段。 [1, 2, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-094",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列何者並非我國 2050 淨零排放路徑之四大轉型？",
+    "options": {
+      "A": "能源轉型",
+      "B": "產業轉型",
+      "C": "生態轉型",
+      "D": "社會轉型"
+    },
+    "answer": "C",
+    "explanation": "我國2050淨零排放路徑的四大轉型為「能源轉型」、「產業轉型」、「生活轉型」、「社會轉型」。 [1, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-095",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列何者非為溫室氣體減量方式？",
+    "options": {
+      "A": "太陽能發電",
+      "B": "風力發電",
+      "C": "使用氫能發電",
+      "D": "使用天然氣取代煤炭"
+    },
+    "answer": "D",
+    "explanation": "雖然使用天然氣取代煤炭可以減少碳排放，但天然氣仍屬於化石燃料，會產生溫室氣體，因此不算是真正的減量方式。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-096",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "溫室氣體盤查報告原則「不」包括下列何者？",
+    "options": {
+      "A": "相關性",
+      "B": "透明度",
+      "C": "最大化",
+      "D": "完整性"
+    },
+    "answer": "C",
+    "explanation": "溫室氣體盤查報告的原則包括相關性、完整性、一致性、準確性及透明度，不包括最大化。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-097",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "敘述在一段期間內一質量單位溫室氣體之輻射衝擊，相對於相等單位 CO₂ 之係數稱為？",
+    "options": {
+      "A": "GWP",
+      "B": "GAP",
+      "C": "GMP",
+      "D": "GDP"
+    },
+    "answer": "A",
+    "explanation": "全球暖化潛勢（Global Warming Potential, GWP）是指一質量單位溫室氣體在一段時間內，相對於相等單位CO2的輻射衝擊係數。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-098",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下何者是常見 B2B 產品生命週期描述方式？",
+    "options": {
+      "A": "從搖籃到搖籃",
+      "B": "從搖籃到大門",
+      "C": "從搖籃到墳墓",
+      "D": "從搖籃到天堂"
+    },
+    "answer": "B",
+    "explanation": "B2B產品的生命週期通常只計算到產品離開工廠大門為止，因此稱為「從搖籃到大門」。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-099",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "「A 公司溫室氣體盤查涵蓋台灣廠與大陸廠」屬於何種邊界？",
+    "options": {
+      "A": "營運邊界",
+      "B": "組織邊界",
+      "C": "報告邊界",
+      "D": "以上皆非"
+    },
+    "answer": "B",
+    "explanation": "組織邊界界定了溫室氣體盤查的地理範圍，涵蓋台灣廠與大陸廠即是設定組織邊界。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-100",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "碳足跡計算採生命週期概念，下列何者目的排放需納入總量？",
+    "options": {
+      "A": "最終產品處理",
+      "B": "產品配送",
+      "C": "生產製造",
+      "D": "以上皆是"
+    },
+    "answer": "D",
+    "explanation": "碳足跡計算採生命週期概念，需納入原料取得、製造、配送銷售、使用及最終產品處理等所有階段的排放量。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-101",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "台灣為達 2050 淨零排放，主要使用的能源為？",
+    "options": {
+      "A": "煤",
+      "B": "天然氣",
+      "C": "核能",
+      "D": "再生能源"
+    },
+    "answer": "D",
+    "explanation": "台灣2050淨零排放路徑規劃以再生能源為主要電力來源，目標占比達60%至70%。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-102",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "何者不是歐盟碳邊境徵稅項目之一？",
+    "options": {
+      "A": "鋼鐵",
+      "B": "水泥",
+      "C": "鋁",
+      "D": "農業產品"
+    },
+    "answer": "D",
+    "explanation": "歐盟碳邊境調整機制（CBAM）目前納管的產品包括鋼鐵、水泥、鋁、肥料、電力及氫氣等，農業產品尚未納入。 [1, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-103",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "何者不是歐盟碳邊境管制項目一部分？",
+    "options": {
+      "A": "CBAM",
+      "B": "ETS",
+      "C": "CCTS",
+      "D": "CORSIA"
+    },
+    "answer": "D",
+    "explanation": "歐盟碳邊境管制項目主要包括CBAM及ETS，CORSIA則是國際航空業的碳抵銷與減量計畫。 [3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-104",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "IPCC 是什麼組織？",
+    "options": {
+      "A": "國際刑警組織",
+      "B": "國際貨幣基金",
+      "C": "聯合國政府間氣候變化專門委員會",
+      "D": "世界貿易組織"
+    },
+    "answer": "C",
+    "explanation": "IPCC是聯合國下的「政府間氣候變化專門委員會」。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-105",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "聯合國永續發展目標 SDGs 共有幾項？",
+    "options": {
+      "A": "15 項",
+      "B": "17 項",
+      "C": "19 項",
+      "D": "21 項"
+    },
+    "answer": "B",
+    "explanation": "聯合國永續發展目標（SDGs）共有17項。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-106",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "台灣設定溫室氣體減量目標的基準年為？",
+    "options": {
+      "A": "1990 年",
+      "B": "2000 年",
+      "C": "2005 年",
+      "D": "2010 年"
+    },
+    "answer": "C",
+    "explanation": "台灣的溫室氣體減量目標基準年為2005年。 [3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-107",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列何者不是實現碳中和的路徑？",
+    "options": {
+      "A": "提高能源效率",
+      "B": "發展再生能源",
+      "C": "維持現狀",
+      "D": "推廣碳捕集與封存"
+    },
+    "answer": "C",
+    "explanation": "實現碳中和需要積極的減碳作為，包括提高能源效率、發展再生能源、推廣碳捕集與封存等，維持現狀無法達成目標。 [1, 2, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-108",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "二氧化碳不會存在於下列哪個地方？",
+    "options": {
+      "A": "大氣層",
+      "B": "海洋",
+      "C": "土壤",
+      "D": "太陽"
+    },
+    "answer": "D",
+    "explanation": "二氧化碳存在於大氣層、海洋、土壤等地方，但不存在於太陽中。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-109",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "根據 ISO 14068，首要步驟為？",
+    "options": {
+      "A": "確定碳足跡範圍、設定基線",
+      "B": "建立碳管理計畫",
+      "C": "執行碳排放測量",
+      "D": "設定減排目標並發布碳中和聲明"
+    },
+    "answer": "A",
+    "explanation": "根據ISO 14068-1，首要步驟是確定碳中和的標的物，界定碳中和範圍與適用對象，並設定基線年作為減碳目標與績效評估的參考。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-110",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "MRV 機制中，MRV 代表？",
+    "options": {
+      "A": "Measurable / Reportable / Variable",
+      "B": "Mixable / Reviewable / Verifiable",
+      "C": "Measurable / Reviewable / Verifiable",
+      "D": "Measurable / Reportable / Verifiable"
+    },
+    "answer": "D",
+    "explanation": "MRV機制指的是「可測量（Measurable）、可報告（Reportable）、可驗證（Verifiable）」。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-111",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "坎昆協議規定附件一國家 MRV 範圍，下列何者正確？",
+    "options": {
+      "A": "強化減緩行動報告（項目與成果）",
+      "B": "接受 ICA 機制對 NAMAs 之參與",
+      "C": "與目標相關基線資料計算",
+      "D": "每兩年更新排放報告並接受 ICA"
+    },
+    "answer": "D",
+    "explanation": "坎昆協議規定，附件一國家應每兩年更新其排放報告，並接受國際諮商與分析（ICA）。",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-112",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "根據 SBTi，企業減排目標至少應涵蓋哪些範疇？",
+    "options": {
+      "A": "範疇 1 + 範疇 2",
+      "B": "範疇 2 + 範疇 3",
+      "C": "範疇 1 + 2 + 3",
+      "D": "範疇 3"
+    },
+    "answer": "A",
+    "explanation": "根據SBTi，企業的近期減排目標必須至少涵蓋範疇1和範疇2的排放。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-113",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "碳匯儲存不包含以下哪一項？",
+    "options": {
+      "A": "森林",
+      "B": "海洋",
+      "C": "地層",
+      "D": "野火"
+    },
+    "answer": "D",
+    "explanation": "碳匯是指吸收並儲存二氧化碳的天然或人工倉庫，如森林、海洋、土壤、地層等，而野火則是排放二氧化碳的來源。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-114",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在 2050 淨零軌跡四大轉型策略中，不包含以下哪一項？",
+    "options": {
+      "A": "社會轉型",
+      "B": "能源轉型",
+      "C": "生活轉型",
+      "D": "生態轉型"
+    },
+    "answer": "D",
+    "explanation": "我國2050淨零排放路徑的四大轉型為「能源轉型」、「產業轉型」、「生活轉型」、「社會轉型」。 [1, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-115",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "歐盟 CBAM 要求何時繳交前一年度進口憑證？",
+    "options": {
+      "A": "每年 1 月 31 日前",
+      "B": "每年 3 月 31 日前",
+      "C": "每年 5 月 31 日前",
+      "D": "每年 12 月 31 日前"
+    },
+    "answer": "C",
+    "explanation": "CBAM正式實施後，申報人需在每年5月31日前提交前一年度的CBAM申報單並繳交相應的憑證費用。 [2, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-116",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "實施碳中和四步驟正確順序為？",
+    "options": {
+      "A": "盤查 → 減量 → 抵換 → 文件化與確證",
+      "B": "盤查 → 減量 → 文件化與確證 → 抵換",
+      "C": "減量 → 盤查 → 抵換 → 文件化與確證",
+      "D": "盤查 → 抵換 → 減量 → 文件化與確證"
+    },
+    "answer": "A",
+    "explanation": "實施碳中和的正確順序為：盤查、減量、抵換、文件化與確證。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-117",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "根據 SBTi，範疇 3 排放超過總排放量多少比例時亦須列入？",
+    "options": {
+      "A": "25 %",
+      "B": "40 %",
+      "C": "50 %",
+      "D": "75 %"
+    },
+    "answer": "B",
+    "explanation": "根據SBTi，若企業的範疇3排放量佔總排放量的40%以上，則必須將範疇3納入近期減量目標。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-118",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "台灣 2050 淨零路徑：2050 年進口能源依存度目標降至多少 % 以下？",
+    "options": {
+      "A": "40 %",
+      "B": "50 %",
+      "C": "60 %",
+      "D": "70 %"
+    },
+    "answer": "B",
+    "explanation": "根據台灣2050淨零排放路徑及策略總說明，目標在2050年將進口能源依存度降至50%以下。 [4, 6]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-119",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CBAM 正式實施後，進口商每季須提前購買多少比例憑證？",
+    "options": {
+      "A": "25 %",
+      "B": "50 %",
+      "C": "75 %",
+      "D": "80 %"
+    },
+    "answer": "D",
+    "explanation": "CBAM正式實施後，申報人必須保證其CBAM帳戶中的憑證餘額，不小於依預設值計算碳含量的80%。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-120",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CBAM 未於期間購買憑證，罰款倍數為？",
+    "options": {
+      "A": "2 倍",
+      "B": "2–3 倍",
+      "C": "3–4 倍",
+      "D": "3–5 倍"
+    },
+    "answer": "D",
+    "explanation": "若進口產品符合管制項目卻未進行申報，將處以3至5倍的罰鍰。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-121",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "依規定，環境部納管或自願登錄企業應使用哪種邊界設定法？",
+    "options": {
+      "A": "組織邊界設定法",
+      "B": "產品邊界設定法",
+      "C": "活動邊界設定法",
+      "D": "範疇邊界設定法"
+    },
+    "answer": "B",
+    "explanation": "根據環境部規範，應以目的事業主管機關核准設立、登記或營運之邊界，辦理排放源之排放量盤查。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-122",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "製造業直接＋間接排放量超過多少噸須被納管？",
+    "options": {
+      "A": "2.5 萬噸",
+      "B": "2 萬噸",
+      "C": "1.5 萬噸",
+      "D": "1 萬噸"
+    },
+    "answer": "A",
+    "explanation": "根據環境部公告，製造業直接與間接溫室氣體年排放量合計達2.5萬公噸二氧化碳當量以上者，應盤查登錄及查驗。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-123",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在碳標籤中，數字「000」代表？",
+    "options": {
+      "A": "每單位產品碳排當量",
+      "B": "產品已完成碳中和",
+      "C": "產品碳排目標值",
+      "D": "產品不需碳標籤"
+    },
+    "answer": "A",
+    "explanation": "碳標籤上的數字代表該產品生命週期各階段所產生的溫室氣體排放量，換算為二氧化碳當量的總和。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-124",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "碳盤查「基準年」定義為？",
+    "options": {
+      "A": "企業首次碳盤查年份",
+      "B": "後續年度比較之參考年",
+      "C": "計算預算年度",
+      "D": "政策制定年份"
+    },
+    "answer": "B",
+    "explanation": "基準年是指後續年度用於比較和衡量溫室氣體減排目標的特定年份。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-125",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "溫室氣體排放最多來自以下哪一項？",
+    "options": {
+      "A": "農業活動",
+      "B": "廢棄物處理",
+      "C": "化石燃料燃燒",
+      "D": "水資源管理"
+    },
+    "answer": "C",
+    "explanation": "溫室氣體排放的最大來源是燃燒化石燃料以產生能源。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-126",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "《UNFCCC》的最終目標為？",
+    "options": {
+      "A": "限制全球平均氣溫上升",
+      "B": "降低全球糧食生產",
+      "C": "增加全球綠化覆蓋率",
+      "D": "減少全球人口"
+    },
+    "answer": "A",
+    "explanation": "《聯合國氣候變化綱要公約》（UNFCCC）的最終目標是穩定大氣中溫室氣體的濃度，以防止氣候系統受到危險的人為干擾。 [1, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-127",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "由於 COVID‑19 大流行，哪一年 COP 未能舉辦實體會議？",
+    "options": {
+      "A": "2019",
+      "B": "2020",
+      "C": "2021",
+      "D": "2022"
+    },
+    "answer": "B",
+    "explanation": "由於COVID-19大流行，原定於2020年舉行的COP26延至2021年舉行。 [4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-128",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "《巴黎協定》要求各國提交 NDC，其更新週期為？",
+    "options": {
+      "A": "每 3 年",
+      "B": "每 5 年",
+      "C": "每 7 年",
+      "D": "每 10 年"
+    },
+    "answer": "B",
+    "explanation": "《巴黎協定》要求各國每五年提交一次國家自定貢獻（NDC），並應比前一次更具企圖心。 [2, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-129",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "京都議定書彈性減量機制不包括以下哪項？",
+    "options": {
+      "A": "CDM",
+      "B": "ET",
+      "C": "JI",
+      "D": "ESI"
+    },
+    "answer": "D",
+    "explanation": "京都議定書的彈性減量機制包括國際排放交易（ET）、共同減量機制（JI）和清潔發展機制（CDM）。 [2, 3, 5, 6]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-130",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "《京都議定書》的減量時程為？",
+    "options": {
+      "A": "1996 – 2000",
+      "B": "1998 – 2002",
+      "C": "2000 – 2004",
+      "D": "2008 – 2012"
+    },
+    "answer": "D",
+    "explanation": "《京都議定書》的第一承諾期為2008年至2012年。 [5, 6]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-131",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "COP27 於埃及沙姆沙伊赫聚焦於「損失與損害」，設立何基金？",
+    "options": {
+      "A": "綠色氣候基金",
+      "B": "國際環境機構",
+      "C": "損失與損害基金",
+      "D": "全球氣候恢復基金"
+    },
+    "answer": "C",
+    "explanation": "COP27同意設置「損失與損害基金」，目的是提供資金給受嚴重氣候變遷衝擊的發展中國家。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-132",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列何者不是碳揭露計畫的揭露範疇領域？",
+    "options": {
+      "A": "土壤",
+      "B": "氣候變遷",
+      "C": "水",
+      "D": "塑膠"
+    },
+    "answer": "D",
+    "explanation": "CDP的揭露範疇主要包括氣候變遷、水安全及森林，塑膠並非其主要揭露領域。 [1, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-133",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "GRI 準則 2021 之系統架構分為三個系列準則，下列何者正確？",
+    "options": {
+      "A": "GRI 環境準則、GRI 社會準則、GRI 治理準則",
+      "B": "GRI 環境準則、GRI 社會準則、GRI 經濟準則",
+      "C": "GRI 通用準則、GRI 進階準則、GRI 特殊準則",
+      "D": "GRI 通用準則、GRI 行業準則、GRI 主題準則"
+    },
+    "answer": "D",
+    "explanation": "GRI準則2021的系統架構分為GRI通用準則、GRI行業準則及GRI主題準則三個系列。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-134",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "SASB 環境面向「空氣品質」議題，下列何者描述不正確？",
+    "options": {
+      "A": "涉及對固定排放源與移動排放源的管理",
+      "B": "亦包括溫室氣體排放，可擇一揭露",
+      "C": "涉及工業排放對空氣質量影響的管理",
+      "D": "污染物包括 NOx、SOx、VOC、重金屬等"
+    },
+    "answer": "B",
+    "explanation": "SASB環境面向的「空氣品質」議題，與「溫室氣體排放」是不同的議題，不可擇一揭露。 [4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-135",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "SASB 社會資本包含 7 項 ESG 議題，下列哪個不是？",
+    "options": {
+      "A": "資訊安全",
+      "B": "商業道德",
+      "C": "客戶福利",
+      "D": "人權與社區關係"
+    },
+    "answer": "B",
+    "explanation": "SASB社會資本面向包含人權與社區關係、客戶福利、資訊安全等議題，而商業道德屬於領導力及公司治理面向。 [4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 3,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_3"
+  },
+  {
+    "id": "c2-136",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "溫室氣體盤查作業基本程序，下列何者正確？",
+    "options": {
+      "A": "納管事業邊界企業可自行設定",
+      "B": "盤查邊界無須與財報一致",
+      "C": "決定方法 → 蒐集數據 → 選排放係數 → 計算排放量",
+      "D": "企業可不界定盤查範圍"
+    },
+    "answer": "C",
+    "explanation": "溫室氣體盤查作業的基本程序為：邊界設定、排放源鑑別、選擇計算方法、蒐集數據、選擇排放係數、計算排放量、文件化與紀錄。 [2, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-137",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "有限確信 vs. 合理確信案件主要差異？",
+    "options": {
+      "A": "邊界大小",
+      "B": "簽證人數",
+      "C": "單一標的 vs. 整體報告",
+      "D": "可接受風險水準低"
+    },
+    "answer": "D",
+    "explanation": "合理確信與有限確信的主要差異在於可接受的風險水準，合理確信的可接受風險水準較低，因此需要更廣泛的查證範圍與更深入的查證深度。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-138",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "有關碳邊境調整制度敘述，何者為是？",
+    "options": {
+      "A": "CBAM 範疇與品項已成國際標準",
+      "B": "出口者多須付關稅，衝擊大",
+      "C": "繳納碳稅證明可供退稅",
+      "D": "CBAM 主宣稱為解決碳洩漏"
+    },
+    "answer": "D",
+    "explanation": "歐盟設立CBAM的主要目的是為了解決「碳洩漏」問題。 [3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-139",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "歐盟 CBAM 排放量計算概念何者正確？",
+    "options": {
+      "A": "計算全生命週期排放",
+      "B": "以生產總重量含包裝計算",
+      "C": "外部熱源計入直接排放",
+      "D": "廢棄物處理須計算排放"
+    },
+    "answer": "C",
+    "explanation": "歐盟CBAM的排放量計算主要包括產品製程中的直接排放（含外部熱源）及外購電力的間接排放。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-140",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "歐盟進口商抵免 CBAM 憑證，可使用何種出口商抵免證明？",
+    "options": {
+      "A": "貨物稅",
+      "B": "營業稅",
+      "C": "自願碳市場額度",
+      "D": "外顯碳價（碳稅／排放交易）"
+    },
+    "answer": "D",
+    "explanation": "在產品製造國若已實際支付碳定價制度下的相關費用，例如碳稅或排放交易，則可以減免CBAM憑證費用。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-141",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "ISSB S1 描述何者錯誤？",
+    "options": {
+      "A": "不得以商業機密規避揭露",
+      "B": "必須揭露比較性、估計基準與不確定性",
+      "C": "提供投資人評估公司價值資訊",
+      "D": "屬永續相關財務資訊一般揭露要求"
+    },
+    "answer": "A",
+    "explanation": "根據ISSB S1，若某項資訊對企業價值有重大影響，即使涉及商業機密，仍須揭露，但可透過特定方式保護機敏資訊。 [1]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-142",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "ISSB S1 (2023) 揭露要求重視？",
+    "options": {
+      "A": "廣泛考量全部 ESG 面向",
+      "B": "強調氣候風險與機會",
+      "C": "僅為指引，視各國在地化",
+      "D": "僅適用聯合國成員國"
+    },
+    "answer": "B",
+    "explanation": "ISSB S1和S2皆強調氣候相關的風險與機會，並要求企業揭露其對財務狀況的影響。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-143",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "IFRS S2 氣候揭露要求，下列何者不正確？",
+    "options": {
+      "A": "揭露內部碳定價機制",
+      "B": "揭露高階管理性別比例",
+      "C": "揭露氣候相關資本支出",
+      "D": "揚露受氣候影響之資產金額"
+    },
+    "answer": "B",
+    "explanation": "IFRS S2的氣候揭露要求，包括內部碳定價機制、氣候相關資本支出、受氣候影響之資產金額等，但不包含高階管理性別比例。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-144",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "ISSB S1/S2 我國採用時程，下列何者錯誤？",
+    "options": {
+      "A": "上市櫃公司同時推動採用",
+      "B": "資本額 100 億以上：2026 編制、2027 揭露",
+      "C": "其餘上市櫃 2028 開始適用",
+      "D": "資本額 50–100 億：2027 編制、2028 揭露"
+    },
+    "answer": "A",
+    "explanation": "我國採用ISSB S1/S2的時程採分階段推動，並非所有上市櫃公司同時採用。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-145",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "台灣能源轉型挑戰，下列何者為非？",
+    "options": {
+      "A": "備轉容量警戒天數減少",
+      "B": "未來需求不確定性高",
+      "C": "天然氣接收站增建易行",
+      "D": "再生能源推動面臨多元課題"
+    },
+    "answer": "C",
+    "explanation": "台灣能源轉型面臨多項挑戰，包括再生能源推動的課題、未來需求的不確定性，以及天然氣接收站增建的困難等。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-146",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "推動何種能源系統可在地化生產與消耗？",
+    "options": {
+      "A": "集中式",
+      "B": "分散式",
+      "C": "陣列式",
+      "D": "地下化"
+    },
+    "answer": "B",
+    "explanation": "分散式能源系統強調在地化生產與消耗，可減少能源傳輸損耗，並提高能源自主性。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-147",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "COP28 主決議不包含以下何者？",
+    "options": {
+      "A": "逐步淘汰低效石化能源",
+      "B": "再生能源增加 2 倍",
+      "C": "增加核能比例",
+      "D": "能源效率提升 1 倍"
+    },
+    "answer": "B",
+    "explanation": "COP28的主決議呼籲各國到2030年將全球再生能源發電容量增加三倍，而非兩倍。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-148",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "COP28 對氣候投資之影響？",
+    "options": {
+      "A": "審慎評估企業風險與機會",
+      "B": "自願碳市場規範明確而成熟",
+      "C": "強化永續數據管理",
+      "D": "以上皆是"
+    },
+    "answer": "D",
+    "explanation": "COP28對氣候投資的影響包括：促使投資人更審慎評估企業的氣候風險與機會、推動自願碳市場的規範發展，以及強化企業的永續數據管理。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-149",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "台灣 2025 能源轉型目標：再生能源發電占比？",
+    "options": {
+      "A": "10 %",
+      "B": "15 %",
+      "C": "20 %",
+      "D": "25 %"
+    },
+    "answer": "C",
+    "explanation": "台灣能源轉型的目標是在2025年，再生能源發電占比達到20%。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-150",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "何謂國家自定貢獻（NDC）？",
+    "options": {
+      "A": "各國人民經濟所得貢獻比例",
+      "B": "進口商品須繳自定碳關稅",
+      "C": "各國衡量自身能力後訂定減碳目標",
+      "D": "歐盟替各國訂定減碳目標"
+    },
+    "answer": "C",
+    "explanation": "國家自定貢獻（NDC）是各國根據自身情況，自願設定的溫室氣體減量目標。 [1, 2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-151",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "全球前七大溫室氣體中，對地球威脅最大且最多來源為？",
+    "options": {
+      "A": "燃燒化石燃料",
+      "B": "反芻動物與垃圾填埋",
+      "C": "冷凍空調排放",
+      "D": "農業肥料使用"
+    },
+    "answer": "A",
+    "explanation": "在七大溫室氣體中，二氧化碳（CO2）的排放量最大，其主要來源是燃燒化石燃料。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-152",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "溫度上升不可逆，需何方法減少 CO₂ 才可緩解？",
+    "options": {
+      "A": "碳捕捉封存",
+      "B": "燃燒氫氣",
+      "C": "增加降雨",
+      "D": "減少排碳"
+    },
+    "answer": "D",
+    "explanation": "要緩解溫度上升，最根本的方法是減少二氧化碳等溫室氣體的排放。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-153",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "主管機關規範上市櫃公司揭露範疇 1 + 2 排放量，應揭露於？",
+    "options": {
+      "A": "股東會年報與永續報告書",
+      "B": "管理報表",
+      "C": "財務報告",
+      "D": "TCFD 報告書"
+    },
+    "answer": "A",
+    "explanation": "金管會要求上市櫃公司應於年報及永續報告書中，揭露其範疇1及範疇2的溫室氣體排放量。 [2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-154",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "永續揭露準則 S2 要求企業應揭露哪些範疇排放？",
+    "options": {
+      "A": "範疇 1",
+      "B": "範疇 1 + 2",
+      "C": "範疇 1 + 2 + 3",
+      "D": "以上皆非"
+    },
+    "answer": "C",
+    "explanation": "IFRS S2要求企業揭露其範疇1、範疇2及範疇3的溫室氣體排放量。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-155",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "《巴黎協定》第 2 條目標，下列哪一項不是？",
+    "options": {
+      "A": "追求 2050 年淨零排放",
+      "B": "限制溫升 < 2 °C 並追求 1.5 °C",
+      "C": "以不威脅糧食生產方式增強氣候韌性",
+      "D": "使資金流向符合低排放路徑"
+    },
+    "answer": "A",
+    "explanation": "《巴黎協定》第2條的目標包括限制溫升、增強氣候韌性、使資金流向符合低排放路徑等，但並未明確提出追求2050年淨零排放。 [1, 2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-156",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CFP 研究中的「一致性」原則要求：",
+    "options": {
+      "A": "所有產品使用相同的方法",
+      "B": "研究結果必須與之前的研究一致",
+      "C": "研究結果必須符合預期",
+      "D": "假設、方法及數據以相同方式應用於整個 CFP 研究中"
+    },
+    "answer": "D",
+    "explanation": "CFP研究中的「一致性」原則要求，在整個研究過程中，假設、方法及數據的應用方式應保持一致。 [1, 2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-157",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在 PCR 中，關於原料取得階段的數據收集要求是：",
+    "options": {
+      "A": "可以忽略這個階段的數據",
+      "B": "只能使用二級活動數據",
+      "C": "不強制要求收集一級活動數據，但應優先採用",
+      "D": "必須全部使用一級活動數據"
+    },
+    "answer": "C",
+    "explanation": "在PCR中，原料取得階段不強制要求收集一級活動數據，但應優先採用。 [2, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-158",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "對於中間產品，計算其使用階段排放時需要：",
+    "options": {
+      "A": "只計算最終消費者使用階段的排放",
+      "B": "忽略後續加工過程的排放",
+      "C": "考慮後續加工過程的排放並進行合理分配",
+      "D": "將所有排放歸責於最終產品製造商"
+    },
+    "answer": "C",
+    "explanation": "對於中間產品，計算其使用階段排放時，需要考慮後續加工過程的排放，並進行合理的分配。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-159",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在生命週期評估（LCA）的衝擊評估階段，溫室氣體排放與移除量應選擇哪種全球暖化潛勢（GWP）計算方法？",
+    "options": {
+      "A": "跨期 GWP 加權",
+      "B": "輸入‑輸出分析",
+      "C": "組織範疇分析",
+      "D": "直接排放量計算"
+    },
+    "answer": "A",
+    "explanation": "在LCA的衝擊評估階段，通常會使用GWP（全球暖化潛勢）將不同溫室氣體的排放量換算為二氧化碳當量，並可能考慮不同時間尺度的影響，因此跨期GWP加權是相關的計算方法。 [4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-160",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "使用「基於距離法」計算運輸排放時，不需要以下哪項數據？",
+    "options": {
+      "A": "運輸公司的財務報表",
+      "B": "運具排放係數",
+      "C": "運輸重量",
+      "D": "運輸距離"
+    },
+    "answer": "A",
+    "explanation": "使用「基於距離法」計算運輸排放時，需要運輸距離、運輸重量及運具排放係數等數據，而運輸公司的財務報表並非必要資訊。 [2, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-161",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "溫室氣體盤查報告書中，通常不包括以下哪個章節？",
+    "options": {
+      "A": "財務報表",
+      "B": "報告邊界",
+      "C": "組織邊界",
+      "D": "溫室氣體量化"
+    },
+    "answer": "A",
+    "explanation": "溫室氣體盤查報告書中，通常包括組織邊界、報告邊界、溫室氣體量化等章節，但不需要包含財務報表。 [1, 2, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-162",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在建構產品生命週期製程流程圖時，如何避免錯漏？",
+    "options": {
+      "A": "比對生產/品管用流程圖或清理計畫書，直接到現場了解",
+      "B": "只查看公司網站",
+      "C": "假設所有產品的流程都相同",
+      "D": "只依靠管理層的記憶"
+    },
+    "answer": "A",
+    "explanation": "為避免錯漏，在建構產品生命週期製程流程圖時，應比對生產、品管用的流程圖或清理計畫書，並親自到現場了解實際情況。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-163",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "計算運輸排放量時，下列哪項不屬於活動數據？",
+    "options": {
+      "A": "運輸費用金額",
+      "B": "運輸距離",
+      "C": "排放係數",
+      "D": "燃料消耗量"
+    },
+    "answer": "C",
+    "explanation": "計算運輸排放量時，活動數據包括運輸距離、燃料消耗量等，而排放係數是與活動數據相乘的因子，不屬於活動數據。 [3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-164",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "功能或宣告單位的主要目的是什麼？",
+    "options": {
+      "A": "確定產品的使用壽命",
+      "B": "確定產品的市場價值",
+      "C": "提供與其相關投入與產出之參考",
+      "D": "計算產品的生產成本"
+    },
+    "answer": "C",
+    "explanation": "功能或宣告單位的主要目的是提供一個量化的基準，以便與其相關的投入與產出進行參考與比較。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-165",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "第二階段現場查證通常包括以下哪項工作？",
+    "options": {
+      "A": "SRRA 缺失改善之覆核",
+      "B": "邊界範圍界定",
+      "C": "數據品質管理",
+      "D": "查證申請書審核"
+    },
+    "answer": "A",
+    "explanation": "第二階段現場查證通常包括對第一階段（文件審查及策略審查與風險分析，SRRA）所發現的缺失，進行改善後的覆核。 [4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-166",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "生命週期盤查分析（LCI）包括什麼？",
+    "options": {
+      "A": "只包括使用階段的排放",
+      "B": "只包括廢棄階段的排放",
+      "C": "只包括生產階段的排放",
+      "D": "產品整個生命週期階段的投入與產出的彙總與量化"
+    },
+    "answer": "D",
+    "explanation": "生命週期盤查分析（LCI）是對產品整個生命週期階段的投入與產出，進行彙總與量化。 [1, 2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-167",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列哪項不屬於計算由採購貨物產生的排放所需資訊？",
+    "options": {
+      "A": "供應商的財務報表",
+      "B": "採購原料重量",
+      "C": "原料生產過程的能源消耗",
+      "D": "原料相關排放係數"
+    },
+    "answer": "A",
+    "explanation": "計算採購貨物產生的排放時，主要需要原料重量、排放係數、能源消耗等數據，而供應商的財務報表並非直接相關的資訊。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-168",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "使用「混合法」計算採購貨物產生的排放時，可能包括以下哪項？",
+    "options": {
+      "A": "只使用行業平均數據",
+      "B": "根據採購金額估算排放量",
+      "C": "只使用供應商提供的數據",
+      "D": "供應商範疇 1 + 2 排放數據與次級數據結合"
+    },
+    "answer": "D",
+    "explanation": "混合法是指結合使用特定供應商的活動數據（如範疇1和範疇2的排放數據），並以次級數據（如行業平均數據）來填補數據缺口。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-169",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "京都議定書三大機制不包含以下哪者？",
+    "options": {
+      "A": "IET",
+      "B": "SDM",
+      "C": "CDM",
+      "D": "JI"
+    },
+    "answer": "B",
+    "explanation": "京都議定書的三大彈性機制為國際排放交易（IET）、共同減量機制（JI）和清潔發展機制（CDM）。 [2, 3, 5, 6]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-170",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "UNFCCC 主要原則不包括以下哪項？",
+    "options": {
+      "A": "促進永續發展",
+      "B": "促進開發中國家經濟發展",
+      "C": "共同但有區別的責任與各自能力",
+      "D": "促進有利且開放的國際經濟體系以支持永續增長"
+    },
+    "answer": "B",
+    "explanation": "UNFCCC的主要原則包括促進永續發展、共同但有區別的責任、促進有利且開放的國際經濟體系等，但並未將促進開發中國家經濟發展列為主要原則。 [1, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-171",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "京都議定書爭議點「共同但有區別的責任」下列何者不是爭議內容？",
+    "options": {
+      "A": "以累積排放貢獻來看",
+      "B": "以現今排放水平來看",
+      "C": "國際氣候協商強調共同但有區別的責任",
+      "D": "美國未加入京都議定書"
+    },
+    "answer": "D",
+    "explanation": "「共同但有區別的責任」的爭議點在於如何界定責任，例如應以累積排放貢獻還是現今排放水平來看，而美國未加入京都議定書是結果，而非爭議內容本身。 [5, 6]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-172",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "TCFD 氣候相關財務資訊揭露核心要素包含哪些？",
+    "options": {
+      "A": "治理",
+      "B": "策略",
+      "C": "風險管理及指標與目標",
+      "D": "以上皆是"
+    },
+    "answer": "D",
+    "explanation": "TCFD氣候相關財務資訊揭露的核心要素包括治理、策略、風險管理、指標與目標四大要素。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-173",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "TCFD 揭露中「董事會監督氣候相關風險」屬於哪個構面？",
+    "options": {
+      "A": "治理",
+      "B": "策略",
+      "C": "風險管理",
+      "D": "指標與目標"
+    },
+    "answer": "A",
+    "explanation": "「董事會監督氣候相關風險」屬於TCFD揭露中的治理構面。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-174",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "TCFD 建議的氣候風險中，投資人最關注哪一項？",
+    "options": {
+      "A": "現金流風險",
+      "B": "資金結構",
+      "C": "氣候風險",
+      "D": "產品利潤"
+    },
+    "answer": "A",
+    "explanation": "在TCFD建議的氣候風險中，投資人最關注的是可能對企業現金流造成的風險。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-175",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "IFRS S1/S2 規定，下列哪項敘述錯誤？",
+    "options": {
+      "A": "S1/S2 皆參考 TCFD 四大構面",
+      "B": "S1/S2 皆參考 SASB 特定產業指引",
+      "C": "S1 要求揭露永續與財務資訊之關聯",
+      "D": "S2 無需考量價值鏈中的氣候風險與機會"
+    },
+    "answer": "D",
+    "explanation": "IFRS S2要求企業應考量其價值鏈中的氣候相關風險與機會。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-176",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "IPCC 是由哪兩個組織共同成立？",
+    "options": {
+      "A": "世界銀行 (World Bank) 與國際能源署 (IEA)",
+      "B": "聯合國環境規劃署 (UNEP) 與世界氣象組織 (WMO)",
+      "C": "國際貨幣基金 (IMF) 與世界銀行 (World Bank)",
+      "D": "聯合國環境規劃署 (UNEP) 與世界銀行 (World Bank)"
+    },
+    "answer": "B",
+    "explanation": "IPCC是由聯合國環境規劃署（UNEP）與世界氣象組織（WMO）共同成立的。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-177",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品類別規則 (PCR) 的說明，以下何者為非？",
+    "options": {
+      "A": "為了使同性質產品能公平比較，計算碳足跡時要參考 PCR 的邊界設定",
+      "B": "PCR 是全球共通的",
+      "C": "經濟部工業局採用國際間使用的 EPD‑PCR",
+      "D": "國內申請碳標籤會用環保署的 CFP‑PCR"
+    },
+    "answer": "B",
+    "explanation": "PCR並非全球共通，不同地區或產品類別可能有不同的PCR。 [1, 2, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-178",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "關於產品碳足跡計算，下列敘述何者錯誤？",
+    "options": {
+      "A": "單位產品活動數據 × 排放係數 = 碳排放量 (二氧化碳當量)",
+      "B": "建立 LCA 流程圖 → 界定系統邊界與活動數據蒐集優先順序 → 確認排放係數 → 收集活動數據 → 計算與分析 → 評估數據品質",
+      "C": "單位產品活動數據是標的產品每單位造成溫室氣體排放的量測值",
+      "D": "排放係數僅可使用環保署提供之係數表"
+    },
+    "answer": "D",
+    "explanation": "排放係數除了可使用環保署提供的係數表外，也可引用國際資料庫或經由生命週期評估軟體計算求得。 [1, 2, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-179",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品碳足跡盤查原則中的「重複計算」，以下敘述何者錯誤？",
+    "options": {
+      "A": "若不同產品系統有共同製程，應確認此製程排放量分配規則",
+      "B": "透過分配規則將排放量分配到各產品避免重複計算",
+      "C": "可透過質量平衡確認是否重複計算，差異大於 10 % 則為異常",
+      "D": "若有異常可視為偶發現象，無需理會"
+    },
+    "answer": "D",
+    "explanation": "若透過質量平衡發現有異常，應進一步檢討數據的正確性，而非視為偶發現象不予理會。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-180",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "關於 ISO 14067 產品碳足跡規範，下列何者為非？",
+    "options": {
+      "A": "產品功能單位或宣告單位之碳足跡或部分碳足跡",
+      "B": "必要文件為清單與報告書",
+      "C": "依 ISO 14064‑3 指引進行查證",
+      "D": "保證等級需符合預期使用者需求，並依 ISO 14060 系列"
+    },
+    "answer": "D",
+    "explanation": "ISO 14067的保證等級需符合預期使用者需求，但並非依ISO 14060系列，而是依循ISO 14064-3的規範。 [2, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 4,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_4"
+  },
+  {
+    "id": "c2-181",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品碳足跡盤查流程與碳標籤申請，下列敘述何者錯誤？",
+    "options": {
+      "A": "若無相符 PCR 可直接依 ISO 14067",
+      "B": "若需碳標籤：引用 PCR → 計算 → 查證 → 申請",
+      "C": "查證只能由國內關鍵審查進行",
+      "D": "查證可由第三方或國內關鍵審查進行"
+    },
+    "answer": "C",
+    "explanation": "產品碳足跡的查證，可由第三方查證機構或國內的關鍵性審查進行。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-182",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品碳足跡一級活動數據，以下敘述何者錯誤？",
+    "options": {
+      "A": "活動數據的選擇會影響後續數據品質評估",
+      "B": "一級活動數據為組織直接量測所得",
+      "C": "台電電錶用電量屬二級數據",
+      "D": "台電電錶用電量屬一級數據"
+    },
+    "answer": "C",
+    "explanation": "台電電錶的用電量數據，是由組織直接量測所得，屬於一級活動數據。 [1, 2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-183",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品碳足跡評估數據蒐集期間，以下敘述何者錯誤？",
+    "options": {
+      "A": "持續供應產品應涵蓋至少一年",
+      "B": "可依產品特性調整期間",
+      "C": "季節性產品可只涵蓋其特定期間",
+      "D": "若評估期為一年則須以 1/1 至 12/31"
+    },
+    "answer": "D",
+    "explanation": "評估期間若為一年，不一定須以1月1日至12月31日為準，可依產品特性調整。 [2, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-184",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品碳足跡科學方法優先順序，下列敘述何者錯誤？",
+    "options": {
+      "A": "首選自然科學監測 (例：功率表測量用電)",
+      "B": "經濟價值比例為第二順位",
+      "C": "第二順位亦可依國際慣例",
+      "D": "第二順位可使用無物理關聯指標 (如行銷費)"
+    },
+    "answer": "D",
+    "explanation": "產品碳足跡的科學方法優先順序，應以具有物理關聯的指標為主，無物理關聯的指標（如行銷費）不應作為分配依據。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-185",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下何者不屬於產品生命週期階段？",
+    "options": {
+      "A": "製造",
+      "B": "研發",
+      "C": "運輸",
+      "D": "使用"
+    },
+    "answer": "B",
+    "explanation": "產品生命週期階段通常包括原料取得、製造、運輸、使用及廢棄處理，研發階段並非典型的生命週期階段。 [4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-186",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "B2B 型產品生命週期中包含哪個階段？",
+    "options": {
+      "A": "回收",
+      "B": "原料取得",
+      "C": "廢棄",
+      "D": "使用"
+    },
+    "answer": "B",
+    "explanation": "B2B（企業對企業）產品的生命週期通常採用「從搖籃到大門」（cradle-to-gate）的評估範圍，包含原料取得與製造階段，不包含後續的使用、回收或廢棄階段。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-187",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "原料取得過程不包含以下哪項？",
+    "options": {
+      "A": "主要原料",
+      "B": "耗材",
+      "C": "材料成型",
+      "D": "次要原料"
+    },
+    "answer": "C",
+    "explanation": "原料取得過程涵蓋了所有進入製程的物質，包括主要原料、次要原料及耗材等。「材料成型」通常屬於製造階段的一部分。 [4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-188",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品碳足跡計算基本上將排放係數乘上何種數據？",
+    "options": {
+      "A": "總生產產品重量",
+      "B": "活動數據",
+      "C": "總生產產品數量",
+      "D": "原物料金額"
+    },
+    "answer": "B",
+    "explanation": "產品碳足跡計算的基本公式為：碳排放量 = 活動數據 × 排放係數。活動數據是指造成溫室氣體排放的活動量值。 [1, 2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-189",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品碳足跡計算中排放係數相乘的活動數據為？",
+    "options": {
+      "A": "領用量",
+      "B": "生產使用量",
+      "C": "原料採購量",
+      "D": "回收量"
+    },
+    "answer": "B",
+    "explanation": "在計算產品碳足跡時，活動數據應為該產品在生產過程中實際使用的原物料量或能源消耗量，即「生產使用量」。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-190",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "環保署指引：一級數據佔上游排放至少多少 %？",
+    "options": {
+      "A": "5 %",
+      "B": "10 %",
+      "C": "15 %",
+      "D": "20 %"
+    },
+    "answer": "D",
+    "explanation": "根據環保署的產品碳足跡計算服務指引，建議企業收集的一級數據（主要原物料）應佔上游排放量的20%以上。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-191",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "原物料排放係數可由下列何種方式取得？",
+    "options": {
+      "A": "供應商查證數據",
+      "B": "環境部資料庫",
+      "C": "LCA 軟體資料庫",
+      "D": "以上皆是"
+    },
+    "answer": "D",
+    "explanation": "原物料的排放係數可以從多種來源取得，包括由供應商提供並經查證的數據、政府部門（如環境部）建立的資料庫，或是專業的生命週期評估（LCA）軟體資料庫。 [1, 2, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-192",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "ISO 14040:2006 生命週期評估最終階段稱為？",
+    "options": {
+      "A": "闡釋 (interpretation)",
+      "B": "結論 (conclusion)",
+      "C": "透明 (transparency)",
+      "D": "決策 (decision)"
+    },
+    "answer": "A",
+    "explanation": "根據ISO 14040:2006標準，生命週期評估的四個階段為：目標與範疇界定、盤查分析、衝擊評估，以及最終的「闡釋」（Interpretation）。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-193",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品碳足跡盤查過程中，數據確證不會採用哪種方式？",
+    "options": {
+      "A": "總量平衡",
+      "B": "能量平衡",
+      "C": "相似過程比較",
+      "D": "質量平衡"
+    },
+    "answer": "A",
+    "explanation": "數據確證的常用方法包括質量平衡、能量平衡、與相似過程或產品進行比較等，以確保數據的合理性。「總量平衡」不是一個標準的確證方法術語。 [2, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-194",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "使用 LCA 進行碳足跡評估不會經歷哪個重要階段？",
+    "options": {
+      "A": "實驗",
+      "B": "闡釋",
+      "C": "目標與範疇界定",
+      "D": "盤查分析"
+    },
+    "answer": "A",
+    "explanation": "生命週期評估（LCA）的四個主要階段是：目標與範疇界定、盤查分析、衝擊評估和闡釋。「實驗」並非LCA的標準階段。 [1, 2, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-195",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "功能單位於哪個階段被定義？",
+    "options": {
+      "A": "盤查分析",
+      "B": "目標與範疇界定",
+      "C": "實驗",
+      "D": "闡釋"
+    },
+    "answer": "B",
+    "explanation": "功能單位（Functional Unit）是在生命週期評估的「目標與範疇界定」階段被定義的，它提供了量化產品功能比較的基準。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-196",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "時間邊界的選擇原則不包括？",
+    "options": {
+      "A": "必須選產品開發初期數據",
+      "B": "多地點須考慮代表性",
+      "C": "客製或季節性產品選最近一批",
+      "D": "穩定生產者以整年優先"
+    },
+    "answer": "A",
+    "explanation": "選擇時間邊界時，應選取能代表產品正常生產狀況的數據。產品開發初期的數據可能不穩定，不具代表性，因此通常不被選用。 [2, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-197",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "制定碳足跡盤查目標時，下列哪項不是預期用途？",
+    "options": {
+      "A": "公司對外溝通",
+      "B": "向客戶或消費者溝通",
+      "C": "公司內部溝通",
+      "D": "產品定價策略"
+    },
+    "answer": "D",
+    "explanation": "碳足跡盤查的預期用途通常是為了內部管理、外部溝通或符合法規要求。雖然盤查結果可能影響成本，但「產品定價策略」本身是商業決策，而非盤查的直接目標或用途。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-198",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "產品碳足跡管理之國際標準？",
+    "options": {
+      "A": "ISO 50001",
+      "B": "ISO 14001",
+      "C": "ISO 14067",
+      "D": "ISO 9001"
+    },
+    "answer": "C",
+    "explanation": "ISO 14067是專門針對產品碳足跡量化與溝通的國際標準。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-199",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "確定宣告／標示單位時通常使用？",
+    "options": {
+      "A": "生產單位",
+      "B": "運輸單位",
+      "C": "產品銷售單位",
+      "D": "儲存單位"
+    },
+    "answer": "C",
+    "explanation": "宣告單位或標示單位是為了與消費者溝通，因此通常會以產品在市場上的「銷售單位」為基準，例如每瓶、每包或每公斤。 [3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-200",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "違反碳足跡標示規定之罰款為？",
+    "options": {
+      "A": "50 – 1000 萬元",
+      "B": "1 – 100 萬元",
+      "C": "5 – 50 萬元",
+      "D": "10 – 500 萬元"
+    },
+    "answer": "B",
+    "explanation": "根據《商品標示法》及相關子法，若碳足跡標示不實，可能被視為標示不實或誤導性標示，主管機關可依法處以罰鍰，其金額範圍可能落在此區間。",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-201",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "報告階段分析通常不包括？",
+    "options": {
+      "A": "敏感度分析",
+      "B": "熱點排名",
+      "C": "市場競爭分析",
+      "D": "數據品質指標評核"
+    },
+    "answer": "C",
+    "explanation": "碳足跡報告階段的分析重點在於盤查結果的詮釋，如熱點分析、敏感度分析及數據品質評估等。「市場競爭分析」屬於商業策略範疇，而非碳足跡報告的內容。 [2, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-202",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "活動數據整理時，投入量應包括？",
+    "options": {
+      "A": "僅產品產量",
+      "B": "主要原物料投入總量",
+      "C": "原物料投入、能源使用、廢棄物產出",
+      "D": "僅廢棄物產出量"
+    },
+    "answer": "C",
+    "explanation": "活動數據的整理應全面，盤查清冊需完整記錄製程中的所有投入（原物料、能源）與產出（產品、廢棄物、排放物）。 [2, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-203",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "無第一階供應商數據時，可使用？",
+    "options": {
+      "A": "模擬數據",
+      "B": "二級數據",
+      "C": "估算數據",
+      "D": "三級數據"
+    },
+    "answer": "B",
+    "explanation": "當無法從第一階供應商取得一級數據時，應使用二級數據，例如來自資料庫、文獻或行業平均值的數據。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-204",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "關於活動數據，下列何者錯誤？",
+    "options": {
+      "A": "所有數據需有佐證檔",
+      "B": "數據收集一次即可，不必檢核",
+      "C": "需提供實際使用量",
+      "D": "需考慮時間關聯性"
+    },
+    "answer": "B",
+    "explanation": "收集到的活動數據必須經過檢核，例如透過質量平衡或與歷史數據比較，以確保其準確性與合理性，並非收集一次即可。 [2, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-205",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "進行單位換算的主要原因？",
+    "options": {
+      "A": "配合使用之資料庫",
+      "B": "增加數據可信度",
+      "C": "滿足法規要求",
+      "D": "便於計算"
+    },
+    "answer": "A",
+    "explanation": "活動數據的單位必須與所選用的排放係數單位一致才能進行計算，因此常常需要進行單位換算以配合資料庫中排放係數的單位。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-206",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "排放係數常見單位為？",
+    "options": {
+      "A": "公斤 CO₂e/平方米",
+      "B": "公斤 CO₂e/單位活動數據",
+      "C": "公斤 CO₂e/單位產品",
+      "D": "公斤 CO₂e/年"
+    },
+    "answer": "B",
+    "explanation": "排放係數的定義是單位活動量所產生的溫室氣體排放量，因此其單位為「公斤 CO₂e / 單位活動數據」（例如：kgCO₂e/kWh 或 kgCO₂e/kg）。 [2, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-207",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "SBTi 設定目標應使用何種核算標準？",
+    "options": {
+      "A": "PAS 2060",
+      "B": "ISO 14064",
+      "C": "CDP 框架",
+      "D": "GHG 議定書企業標準"
+    },
+    "answer": "D",
+    "explanation": "科學基礎減量目標倡議（SBTi）要求企業在設定減量目標時，其溫室氣體盤查應遵循溫室氣體盤查議定書（GHG Protocol）的企業標準。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-208",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "SBTi 對運輸排放報告要求？",
+    "options": {
+      "A": "使用 cradle‑to‑grave 方法",
+      "B": "使用井到輪 (WTW) 方法",
+      "C": "僅報告直接排放",
+      "D": "僅報告間接排放"
+    },
+    "answer": "B",
+    "explanation": "SBTi建議企業在報告運輸相關排放時，應採用「井到輪（Well-to-Wheel, WTW）」的方法，以涵蓋燃料從開採到最終使用的完整生命週期排放。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-209",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下哪項非 SBTi 長期範疇 3 目標方法？",
+    "options": {
+      "A": "經濟強度減排",
+      "B": "供應商參與",
+      "C": "跨部門絕對減排",
+      "D": "物理強度減排"
+    },
+    "answer": "C",
+    "explanation": "SBTi 提供的範疇三減量目標設定方法主要有物理強度法、經濟強度法及供應商議合法等。「跨部門絕對減排」是範疇一和二的主要方法，不直接適用於範疇三。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-210",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "近期目標之範疇 3 須至少符合哪個情境？",
+    "options": {
+      "A": "1 °C",
+      "B": "2 °C",
+      "C": "遠低於 2 °C",
+      "D": "1.5 °C"
+    },
+    "answer": "C",
+    "explanation": "根據SBTi的標準，企業的近期範疇三減量目標，其企圖心至少要符合「遠低於2°C」的情境。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-211",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下哪個非 SBTi 範疇 2 目標方法？",
+    "options": {
+      "A": "基於市場的方法",
+      "B": "可再生電力採購",
+      "C": "碳補償",
+      "D": "基於位置的方法"
+    },
+    "answer": "C",
+    "explanation": "SBTi 不接受使用碳補償（Carbon Offsetting）或碳權來達成範疇一或範疇二的減量目標。企業必須透過自身的減量行動來達標。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-212",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下哪國不在 CBAM 管制範圍？",
+    "options": {
+      "A": "日本",
+      "B": "中國",
+      "C": "美國",
+      "D": "挪威"
+    },
+    "answer": "D",
+    "explanation": "CBAM 管制對象為從歐盟境外進口特定產品的進口商。但豁免國家包含歐洲自由貿易聯盟（EFTA）成員國如挪威、冰島、瑞士、列支敦斯登，因為他們已參與歐盟排放交易體系（EU ETS）。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-213",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "標準溫室氣體彙總方法包含？",
+    "options": {
+      "A": "財務控制法",
+      "B": "營運控制法",
+      "C": "股權法",
+      "D": "以上皆是"
+    },
+    "answer": "D",
+    "explanation": "根據 GHG Protocol 和 ISO 14064-1，設定組織邊界的三種標準彙總方法為營運控制法、財務控制法和股權比例法。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-214",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "環境部指引：我國列管事業應採何彙總方法？",
+    "options": {
+      "A": "財務控制法",
+      "B": "營運控制法",
+      "C": "股權法",
+      "D": "以上皆非"
+    },
+    "answer": "B",
+    "explanation": "根據環境部「溫室氣體排放量盤查登錄管理辦法」，應盤查登錄之事業應以其具有營運控制權之所有廠（場）進行盤查，即採用營運控制法。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-215",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列何者非 ISO 14064‑1:2018 強制揭露？",
+    "options": {
+      "A": "生物源溫室氣體排放",
+      "B": "生物源 CO₂ 移除處理",
+      "C": "電力之處理方式",
+      "D": "化石與生質碳排放與移除"
+    },
+    "answer": "C",
+    "explanation": "ISO 14064-1:2018 強制要求分別報告來自化石燃料和生物源的排放與移除量，但對於電力排放的計算處理方式（如位置基礎法 vs. 市場基礎法）並未強制規定揭露。 [1, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-216",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "桃園廠與小港廠屬何種邊界？",
+    "options": {
+      "A": "組織邊界",
+      "B": "營運邊界",
+      "C": "報告邊界",
+      "D": "系統邊界"
+    },
+    "answer": "A",
+    "explanation": "組織邊界界定了盤查所涵蓋的地理或法人實體範圍。指明包含桃園廠與小港廠，即是在界定盤查的組織邊界。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-217",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "ISO 14064‑1:2018 GWP 氣體中，下列何者為非？",
+    "options": {
+      "A": "二氧化碳",
+      "B": "氦氣",
+      "C": "氧化亞氮",
+      "D": "六氟化硫"
+    },
+    "answer": "B",
+    "explanation": "氦氣（Helium）是一種惰性氣體，不具有溫室效應，因此不屬於溫室氣體。其他選項皆為京都議定書及ISO 14064-1規範的溫室氣體。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-218",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "組織邊界設定可能依據？",
+    "options": {
+      "A": "法規要求",
+      "B": "供應鏈需求",
+      "C": "財務控制權",
+      "D": "公眾意見"
+    },
+    "answer": "C",
+    "explanation": "組織邊界的設定是基於明確的彙總方法，如營運控制權、財務控制權或股權比例法，而非依據供應鏈需求或公眾意見等較不具體的因素。 [1, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-219",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "建立報告邊界應包含？",
+    "options": {
+      "A": "直接排放與移除",
+      "B": "能源間接排放",
+      "C": "產品使用間接排放",
+      "D": "以上皆是"
+    },
+    "answer": "D",
+    "explanation": "報告邊界（或稱營運邊界）的建立應鑑別與組織營運相關的直接與間接排放源，包含範疇一（直接排放）、範疇二（能源間接排放）及範疇三（其他間接排放，如產品使用）。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-220",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "查證保證等級敘述哪項錯誤？",
+    "options": {
+      "A": "全部須達有限保證",
+      "B": "有限保證深度較淺",
+      "C": "合理保證範圍較大",
+      "D": "合理保證結論：「在所有重大方面皆符合」"
+    },
+    "answer": "A",
+    "explanation": "查證保證等級的要求依據不同法規或目的而異。例如，我國環境部對列管事業的要求是「合理保證」，而非所有盤查都只須達到「有限保證」。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-221",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "RE100 倡議主要目的？",
+    "options": {
+      "A": "100 % 減碳",
+      "B": "100 % 節能設備",
+      "C": "100 % 循環經濟",
+      "D": "100 % 使用再生能源"
+    },
+    "answer": "D",
+    "explanation": "RE100是由氣候組織（The Climate Group）與碳揭露計畫（CDP）所主導的全球再生能源倡議，目標是匯集全球具影響力的企業，共同承諾100%使用再生能源。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-222",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "GRI 三大揭露範疇，何者非其一？",
+    "options": {
+      "A": "經濟",
+      "B": "申報",
+      "C": "社會",
+      "D": "環境"
+    },
+    "answer": "B",
+    "explanation": "GRI準則的特定主題準則分為經濟（Economic）、環境（Environmental）、社會（Social）三大面向，「申報」並非其中一個範疇。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-223",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "Product Process Map 主要功能？",
+    "options": {
+      "A": "追蹤流程與範圍，確保碳足跡可追溯",
+      "B": "評估市場競爭力",
+      "C": "最小化原料使用",
+      "D": "規劃庫存與配送"
+    },
+    "answer": "A",
+    "explanation": "產品製程圖（Product Process Map）或流程圖，主要功能是詳細描繪產品從原料到產出的所有步驟，用以界定盤查的系統邊界、鑑別排放源，並確保碳足跡計算的完整性與可追溯性。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-224",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "半導體製程主要排放氣體？",
+    "options": {
+      "A": "CO₂",
+      "B": "N₂O",
+      "C": "PFCs",
+      "D": "CH₄"
+    },
+    "answer": "C",
+    "explanation": "半導體製程中，用於蝕刻或清潔的氣體常包含全氟化物（PFCs）、六氟化硫（SF6）等，這些氣體的全球暖化潛勢（GWP）極高，是該行業主要的溫室氣體排放源。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-225",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "淨零排放正確定義？",
+    "options": {
+      "A": "只計算 CO₂ 排放量",
+      "B": "完全消除所有排放",
+      "C": "只購買碳權即可",
+      "D": "減量＋移除，使排放與移除平衡"
+    },
+    "answer": "D",
+    "explanation": "淨零排放並非指完全不排放溫室氣體，而是指在特定時間內，透過各種減量措施最大限度地減少排放，並利用自然碳匯或負排放技術移除剩餘的排放，最終使人為的溫室氣體排放量與移除量達成平衡。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 5,
+      "verification_date": "2026-01-23"
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_5"
+  },
+  {
+    "id": "c2-226",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列何者非台灣推動之再生能源計畫？",
+    "options": {
+      "A": "核能延役計畫",
+      "B": "屋頂型太陽光電推動計畫",
+      "C": "地熱發電示範計畫",
+      "D": "離岸風電第三期區塊開發計畫"
+    },
+    "answer": "A",
+    "explanation": "台灣的能源轉型政策以「非核家園」為目標，致力於發展再生能源，因此核能電廠延役計畫並非當前推動的能源政策。 [3, 6]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-227",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列何者不是 COP28 提出的全球能源轉型策略？",
+    "options": {
+      "A": "再生能源快速布建計畫",
+      "B": "石油與天然氣脫碳憲章",
+      "C": "煤轉型加速器與脫碳聯盟",
+      "D": "公共電力淨零聯盟"
+    },
+    "answer": "D",
+    "explanation": "COP28期間提出了多項能源轉型相關的倡議，包括「全球再生能源與能源效率承諾」、「石油與天然氣脫碳憲章」以及「燃煤轉型加速器」等。「公共電力淨零聯盟」並非COP28的主要策略之一。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-228",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列何者不屬於 ISO 14068‑1 的範疇？",
+    "options": {
+      "A": "組織排放量",
+      "B": "產品排放量",
+      "C": "建築物排放量",
+      "D": "部門別排放量"
+    },
+    "answer": "D",
+    "explanation": "ISO 14068-1碳中和標準適用於組織、產品、建築物、城市、活動等特定主體，但通常不單獨針對組織內的「部門」進行宣告，部門的排放會被包含在整個組織的排放量中。 [1]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-229",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "根據 ISO 14068‑1，組織進行碳中和宣告時必須包含哪些關鍵資訊？",
+    "options": {
+      "A": "碳排放報告、能源使用數據、政府許可",
+      "B": "財務報表、環境政策、員工數量",
+      "C": "碳足跡量化方法、減量措施、碳權來源",
+      "D": "客戶反饋、產品質量、供應鏈資訊"
+    },
+    "answer": "C",
+    "explanation": "一份可信的碳中和宣告，必須清楚說明其碳足跡的量化方法與邊界、已執行的減量措施與成效，以及用於抵換剩餘排放的碳權來源與品質證明。 [1, 2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-230",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在產品碳足跡計算中，以下哪項通常被視為直接排放？",
+    "options": {
+      "A": "員工通勤排放",
+      "B": "購電間接排放",
+      "C": "原材料生產排放",
+      "D": "工廠使用化石燃料排放"
+    },
+    "answer": "D",
+    "explanation": "直接排放是指在組織邊界內，由組織擁有或控制的排放源所產生的排放。工廠在生產產品過程中燃燒化石燃料屬於直接排放。 [2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-231",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "ISO 14064‑1:2018 中，以下哪項不屬於 Category 1（直接排放與移除）？",
+    "options": {
+      "A": "固定式燃燒源直接排放",
+      "B": "土地使用變更排放與移除",
+      "C": "輸入電力間接排放",
+      "D": "產業製程直接排放與移除"
+    },
+    "answer": "C",
+    "explanation": "根據ISO 14064-1:2018，輸入電力所造成的間接排放屬於類別2（Category 2），而非類別1（直接排放與移除）。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-232",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "關於滅火器的溫室氣體排放計算，下列何者正確？",
+    "options": {
+      "A": "滅火器不屬於排放源",
+      "B": "所有類型滅火器都需計算排放",
+      "C": "只有使用過的滅火器才需計算排放",
+      "D": "CO₂ 滅火器需計算排放"
+    },
+    "answer": "D",
+    "explanation": "盤查時需鑑別含有溫室氣體的滅火器，如CO₂滅火器或含有氫氟碳化物（HFCs）的滅火器。其排放量應根據年度填充量或使用量來計算，視為逸散排放。 [1, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-233",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "排放源鑑別過程中，如排除部分間接排放源，組織應如何處理？",
+    "options": {
+      "A": "另行說明排除原因",
+      "B": "等比例分配到其他排放源",
+      "C": "直接刪除相關資訊",
+      "D": "委託第三方再評估"
+    },
+    "answer": "A",
+    "explanation": "根據盤查的完整性原則，若因故排除某些間接排放源（範疇三），組織應在盤查報告書中提出合理的解釋與說明。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-234",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在 GHG Protocol 中，範疇 2 排放對應環境部規範的哪類？",
+    "options": {
+      "A": "其他間接排放",
+      "B": "直接排放",
+      "C": "能源間接排放",
+      "D": "生物源排放"
+    },
+    "answer": "C",
+    "explanation": "GHG Protocol中的範疇2（Scope 2），即外購電力、蒸汽、熱或冷的使用所產生的間接排放，對應我國環境部規範的「能源間接溫室氣體排放」。 [2, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-235",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "環境部申報溫室氣體時，組織邊界應以何者為準？",
+    "options": {
+      "A": "公司登記地址",
+      "B": "管制編號",
+      "C": "員工人數",
+      "D": "股權結構"
+    },
+    "answer": "B",
+    "explanation": "依據環境部「溫室氣體排放量盤查登錄管理辦法」，應盤查登錄的事業，其組織邊界應以主管機關核發的管制編號所對應的廠（場）為準。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-236",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "根據 ISO 14067，二級數據不包括以下哪項？",
+    "options": {
+      "A": "主管機關確證之代表性數據",
+      "B": "文獻或資料庫數據",
+      "C": "未經驗證的個人估算",
+      "D": "國家盤查清冊預設排放係數"
+    },
+    "answer": "C",
+    "explanation": "二級數據是指非由執行研究的組織直接量測或收集的數據，來源應具公信力，如文獻、資料庫、國家清冊等。未經驗證的個人估算不符合數據品質要求，不應被採用。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-237",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列何種排放係數的不確定性最高？",
+    "options": {
+      "A": "自廠質量平衡係數",
+      "B": "區域排放係數",
+      "C": "同製程設備經驗係數",
+      "D": "國際排放係數"
+    },
+    "answer": "D",
+    "explanation": "排放係數的代表性越低，不確定性就越高。一般而言，國際通用的排放係數因未考慮地域或技術差異，其不確定性會高於區域性係數或更具體的製程經驗係數。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-238",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "進行組織溫室氣體盤查時，以下何種滅火器不需列入？",
+    "options": {
+      "A": "CO₂",
+      "B": "ABC",
+      "C": "BC",
+      "D": "FM200"
+    },
+    "answer": "B",
+    "explanation": "ABC乾粉滅火器的主要成分（如磷酸一銨）不屬於溫室氣體，因此在盤查時不需列入計算。而CO₂、BC（含碳酸氫鈉，受熱可能分解產生CO₂）及FM200（HFC-227ea）均涉及溫室氣體，需納入盤查。 [1, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-239",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "活動數據檢核中，關於燃料與電力說法何者正確？",
+    "options": {
+      "A": "電費單用電量即為當月實際用電量",
+      "B": "計算燃料運輸時須轉為重量單位",
+      "C": "不需提供燃料運輸資訊",
+      "D": "只需提供電力使用量"
+    },
+    "answer": "B",
+    "explanation": "許多運輸排放係數資料庫是以「噸-公里」為單位，因此在計算燃料運輸排放時，常需將體積單位（如公升）依其密度換算為重量單位（噸或公斤）。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-240",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "在數據收集過程中，進行數據確證的主要目的為何？",
+    "options": {
+      "A": "剔除不利數據",
+      "B": "減少數據量",
+      "C": "確認符合數據品質要求",
+      "D": "增加數據複雜性"
+    },
+    "answer": "C",
+    "explanation": "數據確證是為了檢核所收集的數據是否合理、準確、完整，以確保其符合數據品質的要求，進而提升盤查結果的可信度。 [2, 3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-241",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "進行溫室氣體排放量計算時，IPCC 全球暖化潛勢值應採用哪個時間界線？",
+    "options": {
+      "A": "50 年",
+      "B": "20 年",
+      "C": "200 年",
+      "D": "100 年"
+    },
+    "answer": "D",
+    "explanation": "國際上進行溫室氣體盤查與報告時，通用的標準是採用IPCC評估報告中100年時間尺度的全球暖化潛勢（GWP）值。 [5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-242",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "碳中和的三個主要步驟是什麼？",
+    "options": {
+      "A": "文件化 → 抵換 → 報告",
+      "B": "盤查 → 減量 → 抵換",
+      "C": "盤查 → 報告 → 驗證",
+      "D": "減量 → 抵換 → 文件化與確證"
+    },
+    "answer": "B",
+    "explanation": "達成碳中和的標準流程是：首先進行溫室氣體盤查（Measure），接著依據盤查結果實施減量措施（Reduce），最後針對無法避免的剩餘排放量，透過購買高品質碳權來進行抵換（Offset）。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-243",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下哪項不是 CBAM 納管的鋁中下游產品？",
+    "options": {
+      "A": "鋁製管配件",
+      "B": "鋁板",
+      "C": "鋁製容器",
+      "D": "鋁製家具"
+    },
+    "answer": "D",
+    "explanation": "根據歐盟CBAM法規附件一的產品清單，鋁製家具（稅則號碼 9403）目前並未被納入管制範圍。 [1, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-244",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "哪個政府單位設立了 CBAM 網站專區？",
+    "options": {
+      "A": "經濟部國際貿易署",
+      "B": "環境部",
+      "C": "財政部",
+      "D": "外交部"
+    },
+    "answer": "A",
+    "explanation": "為協助國內業者因應歐盟CBAM，經濟部國際貿易署在其「綠色貿易資訊網」上設立了CBAM專區，提供相關資訊與諮詢服務。 [1, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-245",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "本指引對於使用碳權進行抵換的要求是什麼？",
+    "options": {
+      "A": "鼓勵優先使用碳權而非自身減量",
+      "B": "抵換比例不得超過總排放量 50 %",
+      "C": "應先評估並採取所有可行減量措施",
+      "D": "只能使用國內碳權"
+    },
+    "answer": "C",
+    "explanation": "國際上對於碳中和或淨零宣告的普遍共識是，組織應優先透過自身營運改善與創新來達成實質減量，碳權抵換僅是用於處理無法避免的剩餘排放。 [4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-246",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CBAM 正式實施後，申報人必須保證 CBAM 帳戶餘額不小於多少？",
+    "options": {
+      "A": "實際值計算碳含量的 70 %",
+      "B": "實際值計算碳含量的 90 %",
+      "C": "預設值計算碳含量的 80 %",
+      "D": "預設值計算碳含量的 60 %"
+    },
+    "answer": "C",
+    "explanation": "根據CBAM法規，自2026年正式期起，進口商在每一季結束時，其CBAM帳戶中持有的憑證數量，必須至少涵蓋自年初以來進口貨物總排放量的80%。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-247",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CDP 如何幫助企業領先於監管要求？",
+    "options": {
+      "A": "提供法律諮詢",
+      "B": "減少政府監管",
+      "C": "促進環境創新",
+      "D": "提前滿足多地區報告規則"
+    },
+    "answer": "D",
+    "explanation": "CDP的問卷框架整合了全球主要的永續揭露準則（如TCFD、ISSB），企業透過回覆CDP問卷，可以提前準備並滿足未來可能實施的強制性監管要求。 [1, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-248",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "透過 CDP 揭露環境數據可帶來哪些商業利益？",
+    "options": {
+      "A": "減少員工數量",
+      "B": "增加產品銷量",
+      "C": "增加原材料消耗",
+      "D": "提高公司聲譽"
+    },
+    "answer": "D",
+    "explanation": "積極參與CDP並透明地揭露環境數據，有助於企業保護和提升其在投資人、客戶及公眾心中的聲譽，展現其對永續發展的承諾。 [1, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-249",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CBAM 正式實施後，第一次申報日期是？",
+    "options": {
+      "A": "2026 年 1 月 31 日",
+      "B": "2027 年 5 月 31 日",
+      "C": "2026 年 5 月 31 日",
+      "D": "2026 年 12 月 31 日"
+    },
+    "answer": "B",
+    "explanation": "CBAM將於2026年1月1日正式實施，第一個申報年度為2026年。根據規定，進口商需在隔年的5月31日前提交年度申報，因此第一次申報日期為2027年5月31日。 [3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-250",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "以下哪項是 CBAM 納管的間接排放來源？",
+    "options": {
+      "A": "外購蒸汽",
+      "B": "外購電力",
+      "C": "外購熱能",
+      "D": "外購原料"
+    },
+    "answer": "B",
+    "explanation": "根據CBAM法規，其計算的排放範圍除了生產過程的直接排放外，還包括了用於生產貨物所耗用的「外購電力」所產生的間接排放。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-251",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CBAM 過渡期第一次填報修正截止日期？",
+    "options": {
+      "A": "2024 年 6 月 30 日",
+      "B": "2024 年 3 月 31 日",
+      "C": "2024 年 4 月 30 日",
+      "D": "2024 年 7 月 31 日"
+    },
+    "answer": "D",
+    "explanation": "歐盟執委會考量申報系統穩定性及給予企業更多適應時間，將過渡期前兩次（2023Q4及2024Q1）報告的修正截止日期延後至2024年7月31日。 [4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-252",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "下列何項不是臺灣出口業者需提供給歐盟進口商的資料？",
+    "options": {
+      "A": "生產廠商與工廠資訊",
+      "B": "歐盟進口商公司註冊資料",
+      "C": "生產技術與製程資訊",
+      "D": "已支付的碳定價資訊"
+    },
+    "answer": "B",
+    "explanation": "台灣的出口業者需要向歐盟進口商提供自身工廠的資訊、產品的製程與排放數據，以及在台灣已支付的碳費/碳稅證明等。歐盟進口商的註冊資料應由進口商自行處理。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-253",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "2024 年 7 月 31 日之後，預設值最多可涵蓋申報總排放量多少比例？",
+    "options": {
+      "A": "20 %",
+      "B": "30 %",
+      "C": "50 %",
+      "D": "25 %"
+    },
+    "answer": "A",
+    "explanation": "根據CBAM過渡期規定，自2024年7月31日起（即從第三份季度報告開始），對於複雜貨物，進口商使用預設值計算的排放量不得超過總排放量的20%。 [2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-254",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "我國若課徵碳稅通常由哪個部門徵收？",
+    "options": {
+      "A": "財政部",
+      "B": "環境部",
+      "C": "行政院",
+      "D": "金管會"
+    },
+    "answer": "A",
+    "explanation": "稅收的徵收是財政部的權責。若我國未來開徵碳「稅」，將由財政部負責。目前我國規劃的是由環境部徵收碳「費」。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-255",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "關於間接電力排放，下列何者正確？",
+    "options": {
+      "A": "僅鋁產品需提供該數據",
+      "B": "過渡期即須申報，雖不納入憑證",
+      "C": "僅 2026 年後才需申報",
+      "D": "所有產品皆免提供"
+    },
+    "answer": "B",
+    "explanation": "在CBAM過渡期間，所有納管產品的進口商都必須申報其生產過程中所耗用電力的間接排放量。雖然此階段不需為此購買憑證，但仍是強制申報的項目。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-256",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "碳信用額度需在哪裡註冊以確保其獨一無二？",
+    "options": {
+      "A": "國際貿易組織",
+      "B": "專門的登錄處",
+      "C": "國家環保機構",
+      "D": "私人交易平台"
+    },
+    "answer": "B",
+    "explanation": "為了確保碳權的唯一性並避免重複計算或交易，每一單位的碳權都會在一個專門的登錄系統（Registry）中被賦予獨一無二的序號，並進行追蹤。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-257",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "總量管制排放交易中，多餘配額可如何利用？",
+    "options": {
+      "A": "作市場行銷",
+      "B": "排放權買賣交易",
+      "C": "投資回報分析",
+      "D": "編入減排行動計畫"
+    },
+    "answer": "B",
+    "explanation": "在總量管制與排放交易（Cap and Trade）制度下，若企業的實際排放量低於其被分配到的排放配額，可以將剩餘的配額在市場上出售給有需要的企業。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-258",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "過渡期未依規定填報 CBAM，處罰對象為？",
+    "options": {
+      "A": "臺灣出口業者",
+      "B": "臺灣政府",
+      "C": "歐盟政府",
+      "D": "歐盟進口商"
+    },
+    "answer": "D",
+    "explanation": "CBAM的申報義務人是歐盟的進口商或其指定的間接海關代表。因此，若在過渡期間未依規定提交報告，罰則將會施加在歐盟進口商身上。 [1, 2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-259",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "企業碳中和管理計畫應包含哪些要求？",
+    "options": {
+      "A": "完整策略與實施細節",
+      "B": "僅列出減排措施",
+      "C": "只說明碳權購買計畫",
+      "D": "僅做成本效益分析"
+    },
+    "answer": "A",
+    "explanation": "根據PAS 2060或ISO 14068-1，一份完整的碳中和管理計畫應包含碳足跡計算方法、減量目標與策略、實施時程、剩餘排放的抵換計畫等完整的策略與實施細節。 [1, 2, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-260",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "GRI 與 SASB 標準差異，何者為非？",
+    "options": {
+      "A": "GRI 主要與利害關係者議合",
+      "B": "二者須分開章節呈現",
+      "C": "SASB 著重投資人溝通",
+      "D": "GRI 包含通用、行業、主題準則"
+    },
+    "answer": "B",
+    "explanation": "GRI與SASB的揭露框架可以整合應用於同一份永續報告書中，並不需要強制分開章節呈現。許多企業會同時採用兩套準則以滿足不同利害關係人的需求。 [1, 2, 3, 4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-261",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "若企業碳中和宣告涉不實廣告，應如何處理？",
+    "options": {
+      "A": "向公平交易委員會申訴",
+      "B": "待年度報告後再處理",
+      "C": "直接向環境部舉報",
+      "D": "由國際組織仲裁"
+    },
+    "answer": "A",
+    "explanation": "在台灣，若企業的碳中和宣告或任何環保聲明涉及廣告不實，誤導消費者，屬於《公平交易法》的管轄範圍，可向公平交易委員會提出檢舉或申訴。 [4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-262",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "溫室氣體減量或移除計畫品質要求，何者為非？",
+    "options": {
+      "A": "需評估社會／環境衝擊",
+      "B": "採認可方法學並保守估算",
+      "C": "必須確保高投資效益才執行",
+      "D": "法規強制義務下無碳權產出"
+    },
+    "answer": "C",
+    "explanation": "一個高品質的減量計畫（或碳權專案）需符合外加性、永久性、避免重複計算等原則，並需評估其對社會與環境的共同效益或衝擊。投資效益是企業的考量，但並非判斷專案品質的必要條件。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-263",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "SBTi 推動企業淨零策略中，不包括哪項？",
+    "options": {
+      "A": "近期目標優先深度減排",
+      "B": "僅依賴碳抵消",
+      "C": "中和殘餘排放",
+      "D": "設定長期目標"
+    },
+    "answer": "B",
+    "explanation": "SBTi的淨零標準強調企業應優先透過價值鏈的深度減排來達成目標，碳抵消（或碳權）僅能用於中和達到淨零狀態後難以削減的殘餘排放，不能作為主要的減排手段。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-264",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "關於碳中和宣告查驗，下列何者最準確？",
+    "options": {
+      "A": "僅大型企業需查驗",
+      "B": "應由外部第三方查驗",
+      "C": "必須由環境部查驗",
+      "D": "企業內部自我查驗即可"
+    },
+    "answer": "B",
+    "explanation": "為確保碳中和宣告的公信力與透明度，相關的盤查數據、減量成效及抵換報告，都應該由獨立、公正的外部第三方機構進行查驗。 [1, 2, 3, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-265",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "SBTi 短期目標年限範圍為？",
+    "options": {
+      "A": "5–7 年",
+      "B": "3–5 年",
+      "C": "2–3 年",
+      "D": "5–10 年"
+    },
+    "answer": "D",
+    "explanation": "根據SBTi的標準，企業設定的近期減量目標（Near-term targets）的目標年份應為提交日起的5至10年之間。 [3]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-266",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CBAM 過渡期間為哪一年至哪一年？",
+    "options": {
+      "A": "2023 – 2025",
+      "B": "2021 – 2024",
+      "C": "2026 – 2030",
+      "D": "2020 – 2023"
+    },
+    "answer": "A",
+    "explanation": "歐盟碳邊境調整機制（CBAM）的過渡期自2023年10月1日開始，至2025年12月31日結束。 [1, 2, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-267",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "CDP 評分系統主要目的為？",
+    "options": {
+      "A": "降低環境訴訟風險",
+      "B": "測量企業與城市環境行動進展",
+      "C": "增加企業市場份額",
+      "D": "提升公司股票價值"
+    },
+    "answer": "B",
+    "explanation": "CDP的評分系統旨在透過標準化的方法，評估並揭露企業、城市、州和地區在應對氣候變遷、水安全和森林砍伐等方面的行動與進展，藉此激勵其採取更積極的作為。 [1, 3, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-268",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "台灣推動綠色金融與碳定價機制之目的？",
+    "options": {
+      "A": "限制民間資金運用",
+      "B": "減少國際合作",
+      "C": "增加政府收入",
+      "D": "加速溫室氣體減量"
+    },
+    "answer": "D",
+    "explanation": "綠色金融與碳定價（如碳費）是台灣2050淨零路徑中的兩大治理基礎，其主要目的是透過金融工具與經濟誘因，引導資金流向綠色產業，並使外部環境成本內部化，從而加速整體的溫室氣體減量。 [2, 4]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-269",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "碳中和 (Carbon Neutrality) 指？",
+    "options": {
+      "A": "人為 CO₂ 排放與移除達平衡",
+      "B": "僅監控碳排放量",
+      "C": "增加 CO₂ 吸收",
+      "D": "完全停止排放 CO₂"
+    },
+    "answer": "A",
+    "explanation": "碳中和是指一個主體（如組織或產品）在特定邊界內，其人為造成的二氧化碳（CO₂）排放量，經由減量措施後，再透過碳移除或碳權抵換的方式，使其淨排放量為零的狀態。 [1, 2]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  },
+  {
+    "id": "c2-270",
+    "subject": "考科二：淨零碳盤查範圍與程序概要",
+    "question": "導入 PAS 2060 / ISO 14068‑1 碳中和無法達到下列何效益？",
+    "options": {
+      "A": "提升聲譽與風險管控",
+      "B": "改善效率與成本管控",
+      "C": "量化並減少溫室氣體排放",
+      "D": "符合 CBAM 抵減碳關稅"
+    },
+    "answer": "D",
+    "explanation": "歐盟CBAM的抵減機制是基於出口國已支付的「外顯碳價」（如碳稅/費或總量管制交易下的成本）。而遵循PAS 2060或ISO 14068-1所達成的碳中和，屬於自願性行動，其使用的自願性碳權通常無法直接用來抵減CBAM的費用。 [4, 5]",
+    "metadata": {
+      "verified": true,
+      "verification_batch": 6,
+      "verification_date": "2026-01-23",
+      "correct_rate": 95.6
+    },
+    "verified": true,
+    "verification_date": "2026-01-23",
+    "verification_batch": "batch_6"
+  }
+]

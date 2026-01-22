@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>淨零碳排放題庫驗證檢視器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px 20px;
+            background: #f8f9fa;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card .number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .stat-card .label {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .content {
+            padding: 30px 20px;
+        }
+
+        .search-box {
+            margin-bottom: 30px;
+        }
+
+        .search-box input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .question-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .question-item {
+            border: 1px solid #eee;
+            border-left: 4px solid #667eea;
+            padding: 16px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .question-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-item.correct {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .question-item.questionable {
+            border-left-color: #ff9800;
+            background: #fff8f1;
+        }
+
+        .question-item.error {
+            border-left-color: #f44336;
+            background: #fef1f0;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .question-id {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-badge.correct {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .status-badge.questionable {
+            background: #ffe0b2;
+            color: #e65100;
+        }
+
+        .status-badge.error {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+
+        .question-text {
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .sources {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .sources strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-card .number {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 淨零碳排放題庫驗證檢視器</h1>
+            <p>多源交叉驗證結果展示</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="label">總驗證題數</div>
+                <div class="number" id="totalQuestions">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">✅ 確認正確</div>
+                <div class="number" id="correctCount">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">⚠️ 需澄清</div>
+                <div class="number" id="questionableCount">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">❌ 有誤</div>
+                <div class="number" id="errorCount">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">正確率</div>
+                <div class="number" id="correctRate">-</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="搜尋題號 (例: c2-001) 或主題..."
+                >
+            </div>
+
+            <div class="question-list" id="questionList">
+                <p style="text-align: center; color: #999;">載入中...</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>驗證時間: <span id="verificationTime">載入中...</span></p>
+            <p>本頁面自動整合所有批次驗證結果，每日更新</p>
+        </div>
+    </div>
+
+    <script>
+        // 模擬數據載入（實際應從 API 獲取）
+        async function loadVerificationData() {
+            try {
+                // 嘗試從 verification-output 目錄讀取結果
+                const response = await fetch('/verification-output/VERIFICATION_MERGED_RESULTS.json');
+                if (!response.ok) throw new Error('無法載入驗證結果');
+                return await response.json();
+            } catch (error) {
+                console.error('載入失敗:', error);
+                return {
+                    summary: {
+                        total_verified: 0,
+                        total_correct: 0,
+                        total_questionable: 0,
+                        total_errors: 0,
+                        correct_rate: 0
+                    },
+                    issues: []
+                };
+            }
+        }
+
+        function formatDate(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleString('zh-Hant-TW');
+        }
+
+        async function initializeViewer() {
+            const data = await loadVerificationData();
+            const summary = data.summary || {};
+
+            // 更新統計數字
+            document.getElementById('totalQuestions').textContent = summary.total_verified || 0;
+            document.getElementById('correctCount').textContent = summary.total_correct || 0;
+            document.getElementById('questionableCount').textContent = summary.total_questionable || 0;
+            document.getElementById('errorCount').textContent = summary.total_errors || 0;
+            document.getElementById('correctRate').textContent = (summary.correct_rate || 0) + '%';
+            document.getElementById('verificationTime').textContent = formatDate(data.timestamp || new Date());
+
+            // 初始化搜尋功能
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', (e) => {
+                filterQuestions(e.target.value, data.issues || []);
+            });
+
+            // 首次顯示所有問題
+            displayQuestions(data.issues || []);
+        }
+
+        function displayQuestions(issues) {
+            const list = document.getElementById('questionList');
+            if (issues.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: #999;">暫無驗證結果</p>';
+                return;
+            }
+
+            list.innerHTML = issues.map(issue => {
+                const type = issue.type || 'correct';
+                const className = type === 'error' ? 'error' : type === 'questionable' ? 'questionable' : 'correct';
+                const statusText = type === 'error' ? '❌ 有誤' : type === 'questionable' ? '⚠️ 需澄清' : '✅ 確認正確';
+
+                return `
+                    <div class="question-item ${className}">
+                        <div class="question-header">
+                            <span class="question-id">${issue.data?.id || '未知'}</span>
+                            <span class="status-badge ${className}">${statusText}</span>
+                        </div>
+                        <div class="question-text">
+                            ${issue.data?.question || issue.data?.recommendation || issue.data?.correction || '無'}
+                        </div>
+                        ${issue.data?.sources ? `
+                            <div class="sources">
+                                <strong>驗證來源:</strong>
+                                ${issue.data.sources.map(s => `<div>• ${s}</div>`).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterQuestions(keyword, issues) {
+            if (!keyword.trim()) {
+                displayQuestions(issues);
+                return;
+            }
+
+            const filtered = issues.filter(issue => {
+                const searchStr = keyword.toLowerCase();
+                const id = (issue.data?.id || '').toLowerCase();
+                const question = (issue.data?.question || '').toLowerCase();
+                return id.includes(searchStr) || question.includes(searchStr);
+            });
+
+            displayQuestions(filtered);
+        }
+
+        // 頁面載入時初始化
+        document.addEventListener('DOMContentLoaded', initializeViewer);
+    </script>
+</body>
+</html>

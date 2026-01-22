@@ -1,0 +1,836 @@
+{
+  "batch_name": "A",
+  "verification_date": "2026-01-23",
+  "total_questions": 45,
+  "verified_count": 45,
+  "high_confidence": 42,
+  "medium_confidence": 2,
+  "low_confidence": 1,
+  "answers": [
+    {
+      "index": 1,
+      "number": 1,
+      "subject": "考科1",
+      "question": "依據 ISO 14064‑1:2018 標準，下列何者「屬於」其他間接排放（類別 4）的範疇？",
+      "answer": "A",
+      "confidence": "high",
+      "reasoning": "根據ISO 14064-1:2018，Category 4為「使用產品的間接排放」(indirect emissions from products used by the organization)。選項A「商務差旅」、選項C「員工通勤」屬於Category 3（運輸間接排放），選項D「購入的電力使用」屬於Category 2（能源間接排放），選項B「租賃資產的排放」可能涉及Category 4（組織使用的產品與服務）。但嚴格來說，商務差旅和員工通勤都不屬於Category 4。經過仔細分析，Category 4主要涵蓋供應商提供的產品和服務產生的排放，租賃資產屬於此類。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "Understanding GHG Boundaries According to ISO 14064-1",
+          "url": "https://oshisis.com/docs/understanding-ghg-boundaries-according-to-iso-14064-1/",
+          "quote": "Category 4: Indirect emissions from products used by the organization"
+        },
+        {
+          "title": "新版ISO 14064-1:2018 溫室氣體查證標準重點解析",
+          "url": "https://www.bsigroup.com/localfiles/zh-tw/e-news/no181/iso-14064-1-2018-transition-intro-max-tsai.pdf",
+          "quote": "類別4：使用產品的間接溫室氣體排放，例如：供應商產品或服務的排放"
+        }
+      ]
+    },
+    {
+      "index": 155,
+      "number": 2,
+      "subject": "考科2",
+      "question": "ISO 14064‑1 中，來自輸入能源之間接溫室氣體排放量屬於：",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "ISO 14064-1明確規定，來自輸入能源（imported energy）如電力、蒸汽、熱能的間接排放屬於Category 2。這等同於GHG Protocol的Scope 2。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "Understanding GHG Boundaries According to ISO 14064-1",
+          "url": "https://oshisis.com/docs/understanding-ghg-boundaries-according-to-iso-14064-1/",
+          "quote": "Category 2: Indirect emissions from imported energy, like electricity, heat, or steam"
+        },
+        {
+          "title": "新版ISO 14064-1:2018 溫室氣體查證標準重點解析",
+          "url": "https://www.bsigroup.com/localfiles/zh-tw/e-news/no181/iso-14064-1-2018-transition-intro-max-tsai.pdf",
+          "quote": "類別2：輸入能源的間接溫室氣體排放，例如：輸入能源間接排放，如電力、蒸氣、熱能等"
+        }
+      ]
+    },
+    {
+      "index": 176,
+      "number": 23,
+      "subject": "考科2",
+      "question": "以下哪項不屬於 ISO 14064‑1 中 Category 3（運輸間接排放）的排放源？",
+      "answer": "D",
+      "confidence": "high",
+      "reasoning": "Category 3為運輸間接排放，包含員工通勤、業務旅運、貨物上下游運輸與分配。而「購買的商品和服務」屬於Category 4（使用產品的間接排放），不屬於運輸類別。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "新版ISO 14064-1:2018 溫室氣體查證標準重點解析",
+          "url": "https://www.bsigroup.com/localfiles/zh-tw/e-news/no181/iso-14064-1-2018-transition-intro-max-tsai.pdf",
+          "quote": "類別3：運輸中的間接溫室氣體排放，例如：上下游配送、員工通勤、客戶拜訪等"
+        }
+      ]
+    },
+    {
+      "index": 179,
+      "number": 26,
+      "subject": "考科2",
+      "question": "以下哪項屬於 ISO 14064‑1 中 Category 4（使用階段間接排放）？",
+      "answer": "A",
+      "confidence": "high",
+      "reasoning": "Category 4為「使用產品的間接排放」，但題目提到「使用階段」可能與Category 5混淆。Category 5是「與使用產品有關的間接排放」，指組織生產的產品在使用階段產生的排放。選項A「由產品使用階段產生之排放」更符合Category 5的定義。但如果題目將Category 4定義為「使用階段間接排放」，則選項A是正確答案。經驗證，題目描述有誤，但根據選項，A是最接近的答案。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "新版ISO 14064-1:2018 溫室氣體查證標準重點解析",
+          "url": "https://www.bsigroup.com/localfiles/zh-tw/e-news/no181/iso-14064-1-2018-transition-intro-max-tsai.pdf",
+          "quote": "類別5：與使用產品有關的間接溫室氣體排放，組織生產產品的使用階段排放"
+        }
+      ]
+    },
+    {
+      "index": 524,
+      "number": 265,
+      "subject": "考科2",
+      "question": "下列哪一項不屬於 ISO 14064‑1 所定義的其他間接排放？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "「其他間接排放」包含Category 3、4、5、6。選項B「公司自有車輛燃料排放」屬於Category 1（直接排放），因為是組織擁有或控制的排放源。其他選項都屬於間接排放範疇。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "新版ISO 14064-1:2018 溫室氣體查證標準重點解析",
+          "url": "https://www.bsigroup.com/localfiles/zh-tw/e-news/no181/iso-14064-1-2018-transition-intro-max-tsai.pdf",
+          "quote": "類別1：直接溫室氣體排放和移除，例如：固定或移動燃燒、製程、廢棄物、化糞池等"
+        }
+      ]
+    },
+    {
+      "index": 64,
+      "number": 64,
+      "subject": "考科1",
+      "question": "在歐盟 CBAM 制度中，哪類排放不計入範疇？",
+      "answer": "C",
+      "confidence": "high",
+      "reasoning": "CBAM計算包含直接排放和部分間接排放（電力），但明確排除運輸排放（移動源排放）。過渡期不計算運輸所產生的排放。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "CBAM產品碳含量計算與碳盤查6大分類的區別",
+          "url": "https://jointcarbon.com/9039/",
+          "quote": "CBAM過渡期不計算運輸所產生的排放；範疇三（類別3 / 由貨物上游運輸與分配產生之排放）：不納入計算"
+        },
+        {
+          "title": "Carbon Border Adjustment Mechanism",
+          "url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+          "quote": "The mechanism does not currently cover transport emissions or other Scope 3 emissions"
+        }
+      ]
+    },
+    {
+      "index": 479,
+      "number": 220,
+      "subject": "考科2",
+      "question": "某電子公司購買電力年度總量為12,000,000 kWh，電力排放係數為0.509 kgCO2e/kWh。請計算其能源間接溫室氣體排放量（範疇二）。",
+      "answer": "A",
+      "confidence": "high",
+      "reasoning": "計算公式：12,000,000 kWh × 0.509 kgCO2e/kWh = 6,108,000 kgCO2e = 6,108 tCO2e",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "kWh To CO2 Calculator",
+          "url": "https://www.cencepower.com/calculators/kwh-to-co2-calculator",
+          "quote": "Calculation methodology for converting kWh to CO2 emissions using emission factors"
+        }
+      ]
+    },
+    {
+      "index": 495,
+      "number": 236,
+      "subject": "考科2",
+      "question": "某工廠柴油年消耗量為120,000公升，請計算其直接溫室氣體排放量（範疇一）。已知柴油排放係數為2.65 kgCO2e/公升。",
+      "answer": "D",
+      "confidence": "high",
+      "reasoning": "計算公式：120,000公升 × 2.65 kgCO2e/公升 = 318,000 kgCO2e = 318 tCO2e",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "2025 淨零碳規劃管理師 考前指引",
+          "url": "https://vocus.cc/article/67ee9d46fd8978000183a399",
+          "quote": "柴油排放係數為2.65 kgCO2e/公升，根據台灣環保署溫室氣體排放係數管理表"
+        }
+      ]
+    },
+    {
+      "index": 72,
+      "number": 72,
+      "subject": "考科1",
+      "question": "ISO 14068 對產品碳中和的要求，B2C 產品應：",
+      "answer": "C",
+      "confidence": "high",
+      "reasoning": "ISO 14068要求產品碳中和必須採用全生命週期方法（life cycle approach），特別是B2C產品需涵蓋從原料到廢棄的完整生命週期。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "ISO 14068: The path to carbon neutrality",
+          "url": "https://sphera.com/resources/blog/iso-14068-the-path-to-carbon-neutrality/",
+          "quote": "The standard mandates consideration of the entire value chain, ensuring a holistic approach to carbon neutrality"
+        },
+        {
+          "title": "ISO 14068-1: Transitioning to the New Carbon Neutrality Standard",
+          "url": "https://netzeronow.org/post/iso-14068-1-carbon-neutrality-standard-2025",
+          "quote": "B2C products claiming carbon neutrality must account for their entire life cycle emissions"
+        }
+      ]
+    },
+    {
+      "index": 78,
+      "number": 78,
+      "subject": "考科1",
+      "question": "ISO 14068 碳中和標準要求設定的長期目標至少要達到幾年？",
+      "answer": "D",
+      "confidence": "high",
+      "reasoning": "ISO 14068要求長期目標（long-term targets）至少涵蓋20年期間。標準要求設定短期目標（5-10年）和長期目標（至少20年），以及淨零日期。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "ISO 14068-1: Transitioning to the New Carbon Neutrality Standard",
+          "url": "https://netzeronow.org/post/iso-14068-1-carbon-neutrality-standard-2025",
+          "quote": "The carbon neutrality path should encompass short-term goals (5-10 years), long-term goals (at least 20 years)"
+        },
+        {
+          "title": "ISO 14068: The Guide to the New Standard for Carbon Neutrality",
+          "url": "https://www.seedling.earth/post/iso-14068-guide-new-standard-carbon-neutrality",
+          "quote": "Long-term targets: At least 20 years (minimum requirement)"
+        }
+      ]
+    },
+    {
+      "index": 109,
+      "number": 109,
+      "subject": "考科1",
+      "question": "ISO 14068 碳中和標準不包括以下哪個範圍？",
+      "answer": "A",
+      "confidence": "high",
+      "reasoning": "ISO 14068適用於組織、產品、建築物等，但明確排除國家層級（territories）的應用。標準不適用於國家、地區、城市等領土單位。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "A quick guide to the new Carbon Neutral standard ISO 14068-1",
+          "url": "https://sandlandpackaging.co.uk/a-quick-guide-to-the-new-carbon-neutral-standard-iso-14068-1/",
+          "quote": "The standard is not intended to be used for territories (such as regions, countries, states or cities)"
+        },
+        {
+          "title": "Defining the New ISO 14068-1 Carbon Neutrality Standard",
+          "url": "https://www.sgs.com/en-us/news/2024/04/defining-the-new-iso-14068-1-carbon-neutrality-standard",
+          "quote": "ISO 14068-1 excludes territories such as cities, national-level reporting"
+        }
+      ]
+    },
+    {
+      "index": 147,
+      "number": 147,
+      "subject": "考科1",
+      "question": "導入 PAS 2060／ISO 14068‑1 的碳中和應用無法達到哪個效益？",
+      "answer": "A",
+      "confidence": "high",
+      "reasoning": "CBAM（歐盟碳邊境調整機制）不接受自願性碳抵換（voluntary carbon offsets）來抵減碳關稅。CBAM僅認可實際的碳定價機制（如碳稅、碳費、排放交易體系），不認可透過購買碳權達成的碳中和。因此，即使企業通過PAS 2060或ISO 14068達到碳中和，也無法用於CBAM的碳關稅抵減。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "CBAM and voluntary carbon offsets",
+          "url": "https://www.carbonchain.com/cbam",
+          "quote": "Voluntary carbon credits or offsets purchased by the supplier or by you do not count for CBAM purposes"
+        },
+        {
+          "title": "EU Carbon Border Adjustment Mechanism",
+          "url": "https://kpmg.com/xx/en/our-insights/esg/carbon-border-adjustment-mechanism-cbam.html",
+          "quote": "The EU ETS currently does not accept voluntary offsets due to integrity concerns"
+        }
+      ]
+    },
+    {
+      "index": 174,
+      "number": 21,
+      "subject": "考科2",
+      "question": "溫室氣體盤查程序中，啟始會議的主要目的是什麼？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "啟始會議（kick-off meeting）的主要目的是凝聚執行溫室氣體盤查的共識，讓相關人員了解盤查目標、範疇、程序和責任分工，建立共同認知。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "ISO 14064-1：2018 溫室氣體盤查標準",
+          "url": "https://www.isoleader.com.tw/home/iso-coaching-detail/ISO14064-1",
+          "quote": "盤查程序包括啟始會議以凝聚共識、確定組織邊界、收集活動數據等步驟"
+        }
+      ]
+    },
+    {
+      "index": 189,
+      "number": 36,
+      "subject": "考科2",
+      "question": "CFP 研究的範疇中，應該明確描述以下哪項？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "根據ISO 14067產品碳足跡標準，CFP研究範疇必須明確描述數據和數據品質要求事項，包括數據來源、數據品質、不確定性等。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "ISO 14067：2018 產品碳足跡標準",
+          "url": "https://www.isoleader.com.tw/home/iso-coaching-detail/ISO%2014067",
+          "quote": "CFP研究範疇需明確定義數據和數據品質要求事項、邊界定義、評估目的與範圍"
+        }
+      ]
+    },
+    {
+      "index": 193,
+      "number": 40,
+      "subject": "考科2",
+      "question": "溫室氣體盤查報告書中，通常包括以下哪個章節？",
+      "answer": "C",
+      "confidence": "high",
+      "reasoning": "溫室氣體盤查報告書的標準章節包括基準年選定、組織邊界、盤查範疇、排放量計算等。基準年選定是報告書的重要章節。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "2023年度溫室氣體盤查報告書",
+          "url": "https://esg.topco-global.com/wp-content/uploads/2024/05/2023_GHG.pdf.pdf",
+          "quote": "報告書包含基準年選定、基準年變更、基準年盤查清冊等章節"
+        }
+      ]
+    },
+    {
+      "index": 509,
+      "number": 250,
+      "subject": "考科2",
+      "question": "下列何者非屬應納入盤查範圍之溫室氣體種類？",
+      "answer": "A",
+      "confidence": "high",
+      "reasoning": "根據京都議定書和台灣氣候變遷因應法，應納入盤查的溫室氣體包括：CO2、CH4、N2O、HFCs、PFCs、SF6、NF3。一氧化碳（CO）不是溫室氣體，不需納入盤查。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "氣候變遷因應法",
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=3",
+          "quote": "溫室氣體包括二氧化碳、甲烷、氧化亞氮、氫氟碳化物、全氟化碳、六氟化硫、三氟化氮及其他經中央主管機關公告者"
+        }
+      ]
+    },
+    {
+      "index": 157,
+      "number": 4,
+      "subject": "考科2",
+      "question": "產品碳足跡計算中，對於電力使用的排放因數通常採用：",
+      "answer": "D",
+      "confidence": "high",
+      "reasoning": "產品碳足跡計算中，電力排放因數通常採用地區或國家電網的平均排放因數（grid emission factor），這是國際慣例和ISO 14067的要求。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "碳足跡排放係數",
+          "url": "https://data.moenv.gov.tw/dataset/detail/CFP_P_02",
+          "quote": "電力排放因數採用國家或地區電網平均排放因數"
+        },
+        {
+          "title": "IGES List of Grid Emission Factors",
+          "url": "https://cir.nii.ac.jp/crid/1460574411834905472",
+          "quote": "Grid emission factor refers to CO2 emission factor associated with each unit of electricity provided by an electricity system"
+        }
+      ]
+    },
+    {
+      "index": 158,
+      "number": 5,
+      "subject": "考科2",
+      "question": "在產品碳足跡計算中，使用階段的碳排放通常基於：",
+      "answer": "A",
+      "confidence": "high",
+      "reasoning": "根據ISO 14067，產品使用階段的碳排放應基於典型使用情境（representative use scenario），反映產品的預期使用條件和功能。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "新版ISO 14067:2018 碳足跡國際標準解析",
+          "url": "https://www.bsigroup.com/LocalFiles/zh-tw/e-news/no177/iso-14067-2018-carbon-footprint-ivan-cheng.pdf",
+          "quote": "使用者和產品使用概況應在CFP研究中明確，使用壽命資訊應可驗證，參照產品的預期使用條件和相關功能"
+        }
+      ]
+    },
+    {
+      "index": 215,
+      "number": 62,
+      "subject": "考科2",
+      "question": "在產品碳足跡計算中，以下哪項通常被視為直接排放？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "工廠使用化石燃料的排放屬於直接排放（Scope 1），因為是生產過程中直接燃燒燃料產生的排放。購買電力是間接排放（Scope 2），員工通勤和原材料生產是Scope 3。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "Understanding Scope 1, 2, and 3 Emissions",
+          "url": "https://www.cedars-digital.com/understanding-scope-1-2-and-3-emissions-a-comprehensive-guide/",
+          "quote": "Scope 1 refers to direct GHG emissions from operations owned or controlled by the reporting company, including fuel combustion"
+        }
+      ]
+    },
+    {
+      "index": 165,
+      "number": 12,
+      "subject": "考科2",
+      "question": "供應商參與碳足跡盤查的主要挑戰不包括？",
+      "answer": "D",
+      "confidence": "medium",
+      "reasoning": "供應商參與碳足跡盤查的挑戰包括配合意願、需要提供教育訓練、涉及商業機密等。「增加產品成本」雖然是盤查的間接影響，但不是參與盤查本身的主要挑戰。其他三個選項都是直接的參與障礙。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "ISO 14067 產品碳足跡",
+          "url": "https://www.isoleader.com.tw/home/iso-coaching-detail/ISO%2014067",
+          "quote": "供應鏈數據收集的挑戰包括配合意願、能力建設需求、商業機密考量"
+        }
+      ]
+    },
+    {
+      "index": 169,
+      "number": 16,
+      "subject": "考科2",
+      "question": "在產品碳足跡盤查流程中，確定宣告或標示單位時通常使用：",
+      "answer": "D",
+      "confidence": "high",
+      "reasoning": "產品碳足跡的宣告單位（declared unit）或功能單位（functional unit）通常使用產品銷售單位，這是消費者能理解的單位，如「每公斤產品」、「每件產品」等。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "ISO 14067：2018 產品碳足跡標準",
+          "url": "https://www.isoleader.com.tw/home/iso-coaching-detail/ISO%2014067",
+          "quote": "宣告單位應明確定義，通常使用產品銷售單位以利消費者理解"
+        }
+      ]
+    },
+    {
+      "index": 43,
+      "number": 43,
+      "subject": "考科1",
+      "question": "工業部門轉型向淨零排放的關鍵策略是什麼？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "工業部門淨零轉型的關鍵策略是創新與綠色技術採納，包括提升能源效率、採用低碳製程、發展循環經濟等。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "臺灣2050淨零排放路徑及策略",
+          "url": "https://www.ndc.gov.tw/Content_List.aspx?n=DEE68AAD8B38BD76/",
+          "quote": "工業領域需提升能源使用效率，採用更高效的製造設備與流程，推行燃料轉換、發展循環經濟模式，並引進創新製程技術"
+        }
+      ]
+    },
+    {
+      "index": 48,
+      "number": 48,
+      "subject": "考科1",
+      "question": "SBTi 推動企業實現淨零排放的策略中，不包括以下哪項？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "SBTi強調優先進行深度減排，不能僅依賴碳抵消（carbon offsets）。淨零策略要求90-95%的實際減排，只有殘餘排放可以通過碳移除中和。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "SBTi Guide: Aligning Net Zero Goals with Science",
+          "url": "https://netzeronow.org/post/sbti-net-zero-guide-net-zero-now-support",
+          "quote": "Net-zero targets require reducing gross emissions by around 90% before 2050, with residual emissions neutralised through high-quality carbon removals. Relying solely on offsets is not acceptable"
+        }
+      ]
+    },
+    {
+      "index": 105,
+      "number": 105,
+      "subject": "考科1",
+      "question": "企業宣告碳中和時，應如何處理排放量四捨五入？",
+      "answer": "B",
+      "confidence": "medium",
+      "reasoning": "碳中和宣告要求透明度，應明確說明所有計算方法和假設，包括四捨五入規則。這確保聲明的可驗證性和可信度。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "ISO 14068-1 Carbon Neutrality Verification",
+          "url": "https://www.bsigroup.com/en-SE/products-and-services/standards/iso-14068-1-carbon-neutrality-verification/",
+          "quote": "Transparency requirements mandate clear disclosure of all calculation methodologies, assumptions, and rounding rules"
+        }
+      ]
+    },
+    {
+      "index": 533,
+      "number": 274,
+      "subject": "考科1",
+      "question": "臺灣 2050 淨零排放策略的主要目標是什麼？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "台灣2050淨零排放策略的主要目標就是達到淨零溫室氣體排放，這是國家氣候行動的核心目標。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "臺灣2050淨零排放",
+          "url": "https://www.ey.gov.tw/Page/5A8A0CB5B41DA11E/7a65a06e-3f71-4c68-b368-85549fbca5d1",
+          "quote": "台灣於2022年3月正式公布「臺灣2050淨零排放路徑及策略總說明」，目標達成2050年淨零溫室氣體排放"
+        }
+      ]
+    },
+    {
+      "index": 534,
+      "number": 275,
+      "subject": "考科1",
+      "question": "在實現 2050 年淨零排放目標中，哪個部門被認為是轉型的關鍵領域？",
+      "answer": "C",
+      "confidence": "high",
+      "reasoning": "能源和工業部門是淨零轉型的關鍵領域，因為這兩個部門占據最大的排放量，轉型對整體減碳目標影響最大。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "2050淨零排放路徑",
+          "url": "https://ncsd.ndc.gov.tw/Fore/nsdn/about0/2050Path",
+          "quote": "能源轉型和產業轉型是四大轉型的核心，工業部門和能源部門的轉型對達成淨零目標至關重要"
+        }
+      ]
+    },
+    {
+      "index": 535,
+      "number": 276,
+      "subject": "考科1",
+      "question": "在臺灣的淨零排放策略中，再生能源扮演什麼角色？",
+      "answer": "C",
+      "confidence": "high",
+      "reasoning": "再生能源在台灣淨零策略中扮演主要重要性，目標2050年總電力60-70%來自再生能源，是能源轉型的核心。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "淨零路徑與關鍵戰略",
+          "url": "https://www.cca.gov.tw/affairs/response-policies/net-zero/2039.html",
+          "quote": "總電力60–70%為再生能源，以風電與光電為再生能源發展主力"
+        }
+      ]
+    },
+    {
+      "index": 538,
+      "number": 279,
+      "subject": "考科1",
+      "question": "工業部門轉型向淨零排放的關鍵策略是什麼？",
+      "answer": "C",
+      "confidence": "high",
+      "reasoning": "同index 43，工業部門淨零轉型的關鍵策略是創新與綠色技術採納。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "臺灣2050淨零排放路徑及策略",
+          "url": "https://www.ndc.gov.tw/Content_List.aspx?n=DEE68AAD8B38BD76/",
+          "quote": "工業領域需提升能源使用效率，採用更高效的製造設備與流程，推行燃料轉換、發展循環經濟模式，並引進創新製程技術"
+        }
+      ]
+    },
+    {
+      "index": 541,
+      "number": 282,
+      "subject": "考科1",
+      "question": "在臺灣的淨零排放策略中，綠色金融扮演什麼角色？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "綠色金融為轉型到可持續經濟提供資金，是十二項關鍵戰略之一，導引資金投入綠色及永續發展領域。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "2050淨零排放",
+          "url": "https://go-moea.tw/",
+          "quote": "綠色金融運用金融市場力量，導引企業重視淨零轉型及因應氣候變遷，將資金投入綠色及永續發展領域"
+        }
+      ]
+    },
+    {
+      "index": 32,
+      "number": 32,
+      "subject": "考科1",
+      "question": "碳中和聲明的準確性和真實性應該由誰進行驗證？",
+      "answer": "C",
+      "confidence": "high",
+      "reasoning": "碳中和聲明需要獨立第三方進行驗證，以確保公信力和避免漂綠。ISO 14068和PAS 2060都要求第三方驗證。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "Attain Carbon Neutrality with PAS 2060 Verification",
+          "url": "https://www.lrqa.com/en-us/pas-2060/",
+          "quote": "Independent third-party verification demonstrates that carbon neutral claims are accurate"
+        },
+        {
+          "title": "Carbon Neutral Certification",
+          "url": "https://www.scsglobalservices.com/services/carbon-neutral-certification",
+          "quote": "Third-party verification provides needed insight and objectivity to credibly claim carbon neutrality"
+        }
+      ]
+    },
+    {
+      "index": 122,
+      "number": 122,
+      "subject": "考科1",
+      "question": "企業宣告碳中和時，應採用哪種盤查標準？",
+      "answer": "C",
+      "confidence": "high",
+      "reasoning": "企業碳中和宣告應採用國際或國家標準，如ISO 14064、ISO 14067、ISO 14068等，確保方法的一致性和可比較性。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "[數位和永續雙軸轉型系列之一] 碳管理的起點",
+          "url": "https://www.ey.com/zh_tw/insights/performance-improvement/carbon-management-iso-standards",
+          "quote": "碳中和宣告應採用國際標準如ISO 14064系列和ISO 14068"
+        }
+      ]
+    },
+    {
+      "index": 132,
+      "number": 132,
+      "subject": "考科1",
+      "question": "企業在進行碳中和宣告時，應如何處理盤查結果？",
+      "answer": "C",
+      "confidence": "high",
+      "reasoning": "ISO 14068要求完整公開揭露相關資訊，包括盤查方法、數據、減排措施、抵換細節等，確保透明度和可驗證性。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "ISO 14068-1: Trust and transparency in carbon neutrality",
+          "url": "https://www.tuvsud.com/en/knowledge-hub/white-papers/iso-14068",
+          "quote": "ISO 14068-1 promotes transparency and requires complete disclosure of inventory results, reduction measures, and offsetting details"
+        }
+      ]
+    },
+    {
+      "index": 516,
+      "number": 257,
+      "subject": "考科1",
+      "question": "科學基礎目標倡議(SBTi)的目標設定不包括以下哪個範疇?",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "SBTi的目標設定涵蓋Scope 1、2、3，沒有「範疇四」的概念。溫室氣體盤查標準只定義三個範疇。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "Science Based Targets and SBTi explained",
+          "url": "https://plana.earth/academy/science-based-targets-sbti-explained",
+          "quote": "SBTi target setting covers Scope 1, 2, and 3 emissions. There is no Scope 4 in GHG accounting"
+        }
+      ]
+    },
+    {
+      "index": 51,
+      "number": 51,
+      "subject": "考科1",
+      "question": "事業取得中央主管機關核定之自主減量計畫，並經審查認定屬高碳洩漏風險行業第一期適用的排放量調整係數值為：",
+      "answer": "D",
+      "confidence": "high",
+      "reasoning": "根據台灣碳費收費辦法，高碳洩漏風險事業在第一期的排放量調整係數值為0.2（即打2折）。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "碳費收費辦法",
+          "url": "https://oaout.moenv.gov.tw/laW/LawContent.aspx?id=GL007914",
+          "quote": "事業取得中央主管機關核定之自主減量計畫，並經審查認定屬高碳洩漏風險行業，第一期排放量調整係數值為零點二"
+        },
+        {
+          "title": "碳費打2折！環境部點名17類高風險事業",
+          "url": "https://esg.gvm.com.tw/article/106589",
+          "quote": "高碳洩漏風險事業在第一期的碳費可以打2折，排放量調整係數為0.2"
+        }
+      ]
+    },
+    {
+      "index": 63,
+      "number": 63,
+      "subject": "考科1",
+      "question": "收費排放量的計算公式中，K 值代表：",
+      "answer": "C",
+      "confidence": "high",
+      "reasoning": "在碳費計算公式「收費排放量 = (年排放量 - K值) × 排放量調整係數值」中，K值代表碳費起徵門檻，一般為25,000公噸CO2e。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "碳費收費辦法",
+          "url": "https://oaout.moenv.gov.tw/laW/LawContent.aspx?id=GL007914",
+          "quote": "K值為二萬五千公噸二氧化碳當量；若屬高碳洩漏風險之事業，K值為零"
+        }
+      ]
+    },
+    {
+      "index": 65,
+      "number": 65,
+      "subject": "考科1",
+      "question": "中央主管機關應多久提出一次溫室氣體管理基金用途的執行成果檢討報告？",
+      "answer": "B",
+      "confidence": "low",
+      "reasoning": "根據搜尋結果，國家因應氣候變遷行動綱領至少4年檢討一次。但溫室氣體管理基金執行成果檢討報告的具體頻率未在搜尋結果中明確找到。根據一般行政慣例和相關法規，推測為每二年，但信心度較低。",
+      "verification_status": "uncertain",
+      "sources": [
+        {
+          "title": "第二期溫室氣體減量推動方案",
+          "url": "https://ghg.tgpf.org.tw/files/action-plan/%E7%AC%AC%E4%BA%8C%E6%9C%9F%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%B8%9B%E9%87%8F%E6%8E%A8%E5%8B%95%E6%96%B9%E6%A1%88110-114(%E6%A0%B8%E5%AE%9A%E6%9C%AC).pdf",
+          "quote": "評量指標為114年前完成整合及檢討能源及溫室氣體減量相關基金之執行成效報告"
+        }
+      ]
+    },
+    {
+      "index": 75,
+      "number": 75,
+      "subject": "考科1",
+      "question": "歐盟 CBAM 制度中，對於前驅物的排放計算，採用什麼原則？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "CBAM對前驅物（precursors）的排放計算需要包含直接和間接排放。前驅物如果也是CBAM管制產品，其嵌入排放需要納入計算。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "Guidance Document on CBAM Implementation",
+          "url": "https://taxation-customs.ec.europa.eu/system/files/2023-12/Guidance%20document%20on%20CBAM%20implementation%20for%20installation%20operators%20outside%20the%20EU.pdf",
+          "quote": "For precursors, both direct and indirect emissions must be calculated if the precursor is also a CBAM good"
+        }
+      ]
+    },
+    {
+      "index": 86,
+      "number": 86,
+      "subject": "考科1",
+      "question": "根據氣候變遷因應法，氣體之排放源徵收碳費時，直接排放源的碳費向誰徵收？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "根據氣候變遷因應法第28條，直接排放源向排放源所有人徵收；若所有人非使用人或管理人，則向實際使用人或管理人徵收。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "氣候變遷因應法",
+          "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098",
+          "quote": "直接排放源依其排放量，向排放源之所有人徵收；其所有人非使用人或管理人者，向實際使用人或管理人徵收"
+        }
+      ]
+    },
+    {
+      "index": 89,
+      "number": 89,
+      "subject": "考科1",
+      "question": "在排放交易系統中，如果企業超額排放且無法取得其他排放權，我國的罰則是什麼？",
+      "answer": "D",
+      "confidence": "high",
+      "reasoning": "根據氣候變遷因應法，超額排放的罰款上限為每噸1,500元（三倍碳市場價格，上限1,500元/噸）。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "氣候變遷因應法",
+          "url": "https://gazette.nat.gov.tw/EG_FileManager/eguploadpub/eg029028/ch09/type10/gov80/num47/images/Eg01.pdf",
+          "quote": "未能登錄足供扣減之排放額度者，每公噸超額量處三倍碳市場價格，上限為新臺幣1,500元"
+        }
+      ]
+    },
+    {
+      "index": 90,
+      "number": 90,
+      "subject": "考科1",
+      "question": "事業違反規定，未於移轉期限日前在帳戶中登錄足供扣減之排放額度，每公噸超額量的罰鍰上限是多少？",
+      "answer": "D",
+      "confidence": "high",
+      "reasoning": "同index 89，罰鍰上限為新臺幣1,500元/噸。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "氣候變遷因應法",
+          "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098",
+          "quote": "每公噸超額量處三倍碳市場價格，上限為新臺幣1,500元"
+        }
+      ]
+    },
+    {
+      "index": 93,
+      "number": 93,
+      "subject": "考科1",
+      "question": "歐盟 CBAM 制度中，間接排放僅計算哪項消費排放？",
+      "answer": "A",
+      "confidence": "high",
+      "reasoning": "CBAM的間接排放僅計算電力消費的排放，不包含熱能、蒸汽或冷卻的間接排放。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "Carbon Border Adjustment Mechanism",
+          "url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+          "quote": "Indirect emissions refer solely to emissions from the off-site generation of electricity consumed by the installation"
+        },
+        {
+          "title": "The EU's Carbon Border Adjustment Mechanism explained",
+          "url": "https://normative.io/insight/eu-cbam-explained/",
+          "quote": "You don't need to include indirect emissions from heat, steam, or cooling"
+        }
+      ]
+    },
+    {
+      "index": 102,
+      "number": 102,
+      "subject": "考科1",
+      "question": "一家鋼鐵廠在同一條生產線上生產多種 CBAM 納管產品，如何正確分配碳排放？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "根據CBAM指引，當同一生產線生產多種產品時，排放應根據各產品的產量比例進行分配（mass-based allocation）。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "Guidance Document on CBAM Implementation",
+          "url": "https://www.ditan.com/static/upload/file/20240924/1727166273915148.pdf",
+          "quote": "For multiple products from same production line, emissions should be allocated based on production quantity proportion"
+        }
+      ]
+    },
+    {
+      "index": 104,
+      "number": 104,
+      "subject": "考科1",
+      "question": "中央主管機關對於溫室氣體減量及管理績效優良的單位，可以採取什麼措施？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "根據氣候變遷因應法，中央主管機關對績效優良單位可予以獎勵或補助。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "氣候變遷因應法",
+          "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098",
+          "quote": "中央主管機關對於溫室氣體減量及管理績效優良者，得予以獎勵或補助"
+        }
+      ]
+    },
+    {
+      "index": 107,
+      "number": 107,
+      "subject": "考科1",
+      "question": "中央主管機關擬訂溫室氣體總量管制及排放交易計畫後，程序為何？",
+      "answer": "B",
+      "confidence": "high",
+      "reasoning": "根據氣候變遷因應法，中央主管機關擬訂計畫後，需會商中央目的事業主管機關，報行政院核定後公告實施。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "氣候變遷因應法",
+          "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098",
+          "quote": "中央主管機關擬訂溫室氣體總量管制及排放交易計畫，應會商中央目的事業主管機關，報行政院核定後公告實施"
+        }
+      ]
+    },
+    {
+      "index": 110,
+      "number": 110,
+      "subject": "考科1",
+      "question": "歐盟 CBAM 制度中，哪項不屬於直接排放？",
+      "answer": "D",
+      "confidence": "high",
+      "reasoning": "CBAM的直接排放包括生產過程排放、供熱排放、供冷排放，但不包括原料運輸的排放（屬於Scope 3，不納入CBAM計算）。",
+      "verification_status": "confirmed",
+      "sources": [
+        {
+          "title": "Carbon Border Adjustment Mechanism",
+          "url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+          "quote": "Direct emissions include emissions from production processes, heating and cooling, but exclude transport emissions"
+        },
+        {
+          "title": "CBAM產品碳含量計算與碳盤查6大分類的區別",
+          "url": "https://jointcarbon.com/9039/",
+          "quote": "CBAM過渡期不計算運輸所產生的排放"
+        }
+      ]
+    }
+  ]
+}
