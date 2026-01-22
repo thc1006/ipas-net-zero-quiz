@@ -31,9 +31,9 @@ test.describe('測驗流程', () => {
     // 選擇第一個選項
     await page.locator('.option-item').first().click();
 
-    // 練習模式下應看到答案回饋
+    // 練習模式下應看到答案回饋（至少有一個選項顯示正確或錯誤狀態）
     const optionWithFeedback = page.locator('.option-item.correct, .option-item.incorrect');
-    await expect(optionWithFeedback).toBeVisible();
+    await expect(optionWithFeedback.first()).toBeVisible();
   });
 
   test('應能導覽到下一題', async ({ page }) => {
