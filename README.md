@@ -1,6 +1,6 @@
 # 淨零碳備考神器 | iPAS 淨零碳規劃管理師考古題
 
-[![Deploy to GitHub Pages](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/deploy.yml/badge.svg)](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/deploy.yml)
+[![Deploy to GitHub Pages](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/pages.yml)
 
 線上測驗：**https://thc1006.github.io/ipas-net-zero-quiz/**
 
