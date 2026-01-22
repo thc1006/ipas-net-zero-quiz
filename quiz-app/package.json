@@ -55,10 +55,10 @@
       "prettier --write"
     ]
   },
-  "homepage": "https://thc1006.github.io/ipas_NZ/",
+  "homepage": "https://thc1006.github.io/ipas-net-zero-quiz/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thc1006/ipas_NZ.git"
+    "url": "https://github.com/thc1006/ipas-net-zero-quiz.git"
   },
   "license": "MIT",
   "pnpm": {
