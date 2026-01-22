@@ -1,7 +1,20 @@
 .cache/
-/data/
 __pycache__/
 *.pyc
 .venv/
 dist/
 build/
+
+# 驗證過程文件（不需要上傳到 production）
+/docs/
+/scripts/
+/data/
+PROGRESS_DASHBOARD.md
+*.jsonl
+
+# 臨時檔案
+*.tmp
+*.bak
+batch_*_raw.json
+REMAINING_*.json
+check_progress.sh
