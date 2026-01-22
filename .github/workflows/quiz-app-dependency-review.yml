@@ -1,0 +1,32 @@
+# 依賴審查
+# 檢查 PR 中新增的依賴是否有已知漏洞
+# 最後更新：2026-01-22
+
+name: Quiz App Dependency Review
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'quiz-app/package.json'
+      - 'quiz-app/pnpm-lock.yaml'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  dependency-review:
+    name: Review Dependencies
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+          allow-licenses: MIT, MIT-0, Apache-2.0, BSD-2-Clause, BSD-2-Clause-Views, BSD-3-Clause, ISC, 0BSD, CC-BY-4.0, CC0-1.0, Python-2.0, BlueOak-1.0.0, Unlicense, LGPL-2.1-or-later
+          comment-summary-in-pr: always

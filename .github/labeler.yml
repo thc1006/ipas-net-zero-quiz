@@ -1,0 +1,47 @@
+# PR Labeler 配置
+# 根據變更的檔案自動添加標籤
+
+quiz-app:
+  - changed-files:
+      - any-glob-to-any-file: 'quiz-app/**'
+
+quiz-app:frontend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'quiz-app/src/components/**'
+          - 'quiz-app/src/pages/**'
+          - 'quiz-app/src/styles/**'
+
+quiz-app:tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'quiz-app/tests/**'
+          - 'quiz-app/**/*.test.ts'
+          - 'quiz-app/**/*.test.tsx'
+
+quiz-app:ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/quiz-app-*.yml'
+          - 'quiz-app/.husky/**'
+
+quiz-app:data:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'quiz-app/src/data/**'
+
+quiz-app:config:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'quiz-app/package.json'
+          - 'quiz-app/tsconfig*.json'
+          - 'quiz-app/vite.config.ts'
+          - 'quiz-app/vitest.config.ts'
+          - 'quiz-app/playwright.config.ts'
+          - 'quiz-app/eslint.config.js'
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.md'
+          - 'quiz-app/README.md'

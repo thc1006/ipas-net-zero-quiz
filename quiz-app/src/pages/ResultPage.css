@@ -1,0 +1,523 @@
+/* ResultPage 樣式 */
+
+.result-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 分數區 */
+.score-section {
+  text-align: center;
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+.score-icon {
+  margin-bottom: var(--spacing-md);
+}
+
+.score-icon .material-icons {
+  font-size: 64px;
+}
+
+.score-value {
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+}
+
+.score-label {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-secondary);
+  margin: var(--spacing-xs) 0;
+}
+
+.score-comment {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  margin-top: var(--spacing-sm);
+}
+
+/* 分數等級顏色 */
+.score-section.excellent {
+  background: linear-gradient(135deg, #fff8e1 0%, #fffde7 100%);
+}
+
+.score-section.excellent .score-icon .material-icons {
+  color: #ffc107;
+}
+
+.score-section.excellent .score-value,
+.score-section.excellent .score-comment {
+  color: #f57c00;
+}
+
+.score-section.good {
+  background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+}
+
+.score-section.good .score-icon .material-icons,
+.score-section.good .score-value,
+.score-section.good .score-comment {
+  color: var(--color-success);
+}
+
+.score-section.pass {
+  background: linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 100%);
+}
+
+.score-section.pass .score-icon .material-icons,
+.score-section.pass .score-value,
+.score-section.pass .score-comment {
+  color: var(--color-info);
+}
+
+.score-section.fail {
+  background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
+}
+
+.score-section.fail .score-icon .material-icons,
+.score-section.fail .score-value,
+.score-section.fail .score-comment {
+  color: var(--color-error);
+}
+
+/* 統計區 */
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+}
+
+.stat-item .material-icons {
+  font-size: 32px;
+  margin-bottom: var(--spacing-xs);
+}
+
+.stat-item .stat-value {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.stat-item .stat-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.stat-item.correct .material-icons,
+.stat-item.correct .stat-value {
+  color: var(--color-success);
+}
+
+.stat-item.wrong .material-icons,
+.stat-item.wrong .stat-value {
+  color: var(--color-error);
+}
+
+.stat-item.total .material-icons {
+  color: var(--color-info);
+}
+
+.stat-item.time .material-icons {
+  color: var(--color-warning);
+}
+
+/* AI 免責聲明區 */
+.ai-disclaimer {
+  background: var(--color-surface-variant);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-sm);
+}
+
+.ai-disclaimer-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-weight: 600;
+  color: var(--color-info);
+  margin-bottom: var(--spacing-sm);
+}
+
+.ai-disclaimer-header .material-icons {
+  font-size: 20px;
+}
+
+.ai-disclaimer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.ai-disclaimer-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-xs);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.ai-disclaimer-list li .material-icons {
+  font-size: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.ai-disclaimer-list li .material-icons.sm {
+  color: var(--color-text-muted);
+}
+
+/* 錯題區 */
+.wrong-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.wrong-section h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+  color: var(--color-error);
+  margin-bottom: var(--spacing-md);
+}
+
+.wrong-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.wrong-item {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--color-surface-variant);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--color-error);
+}
+
+.wrong-number {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  min-width: 40px;
+}
+
+.wrong-content {
+  flex: 1;
+}
+
+.wrong-stem {
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.6;
+}
+
+.wrong-answers {
+  display: flex;
+  gap: var(--spacing-lg);
+  font-size: var(--font-size-sm);
+}
+
+.text-error {
+  color: var(--color-error);
+}
+
+.text-success {
+  color: var(--color-success);
+}
+
+/* 操作按鈕 */
+.action-section {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+/* AI 功能區（錯題內嵌） */
+.wrong-ai-section {
+  margin-top: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+  border-top: 1px dashed var(--color-divider);
+}
+
+.ai-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-sm);
+}
+
+.btn-small {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 4px 12px;
+  font-size: var(--font-size-xs);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-small.btn-ai:hover {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-small.btn-generate {
+  border-color: var(--accent-50);
+  color: var(--accent-50);
+}
+
+.btn-small.btn-generate:hover {
+  background: var(--accent-50);
+  color: white;
+  border-color: var(--accent-50);
+}
+
+.ai-loading-inline {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.ai-loading-inline .rotating {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.ai-response-inline {
+  margin-top: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-primary);
+}
+
+.ai-response-inline .ai-content {
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+}
+
+.ai-response-inline .ai-content p {
+  margin-bottom: var(--spacing-xs);
+}
+
+.ai-response-inline .ai-content p:last-child {
+  margin-bottom: 0;
+}
+
+.ai-response-inline .ai-content p:empty {
+  display: none;
+}
+
+.ai-response-inline.error {
+  border-color: var(--color-error);
+}
+
+.ai-response-inline .ai-error {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+}
+
+/* AI 回應標頭 */
+.ai-response-header-inline {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.ai-response-header-inline .material-icons {
+  font-size: 16px;
+}
+
+.confidence-inline {
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+.confidence-warning {
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  color: var(--color-warning);
+}
+
+/* AI 生成題目專用樣式 */
+.ai-response-inline.generated {
+  border-color: var(--accent-50);
+}
+
+.ai-response-inline.generated .ai-response-header-inline {
+  color: var(--accent-50);
+}
+
+.generated-content {
+  background: var(--color-surface-variant);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  margin-top: var(--spacing-xs);
+}
+
+/* Streaming 狀態樣式 */
+.ai-response-inline.streaming {
+  border-style: dashed;
+  opacity: 0.9;
+}
+
+.ai-response-inline.streaming .ai-content {
+  min-height: 60px;
+}
+
+/* 題庫相似題按鈕 */
+.btn-small.btn-bank {
+  border-color: var(--color-info);
+  color: var(--color-info);
+}
+
+.btn-small.btn-bank:hover {
+  background: var(--color-info);
+  color: white;
+  border-color: var(--color-info);
+}
+
+/* 題庫內相似題區塊 */
+.bank-similar-section {
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-info);
+}
+
+.bank-similar-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-info);
+  margin-bottom: var(--spacing-sm);
+}
+
+.bank-similar-header .material-icons {
+  font-size: 16px;
+}
+
+.bank-similar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.bank-similar-item {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: var(--color-surface-variant);
+  border-radius: var(--radius-sm);
+}
+
+.similar-index {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-info);
+  min-width: 24px;
+}
+
+.similar-content {
+  flex: 1;
+}
+
+.similar-stem {
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.similar-meta {
+  display: flex;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-xs);
+}
+
+.similar-subject {
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.similar-answer {
+  color: var(--color-success);
+  font-weight: 500;
+}
+
+.no-similar {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: var(--spacing-md);
+}
+
+/* 響應式 */
+@media (max-width: 768px) {
+  .stats-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .score-value {
+    font-size: 56px;
+  }
+
+  .wrong-answers {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .action-section {
+    flex-direction: column;
+  }
+
+  .action-section .btn {
+    width: 100%;
+  }
+}

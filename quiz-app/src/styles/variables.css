@@ -1,0 +1,194 @@
+/* CSS 變數定義 - 淨零碳備考神器主題 */
+/* 參考 k8s-ui Material Design 風格 */
+
+:root {
+  /* 主色調 - 綠色系（對應淨零碳主題） */
+  --primary-10: #002204;
+  --primary-20: #003a0a;
+  --primary-30: #005313;
+  --primary-40: #006d1d;
+  --primary-50: #2e7d32;
+  --primary-60: #4caf50;
+  --primary-70: #81c784;
+  --primary-80: #a5d6a7;
+  --primary-90: #c8e6c9;
+  --primary-95: #e8f5e9;
+
+  /* 主色（淺色模式） */
+  --color-primary: var(--primary-50);
+  --color-primary-dark: var(--primary-40);
+  --color-primary-light: var(--primary-70);
+  --color-on-primary: #ffffff;
+
+  /* 次要色 - 藍色 */
+  --secondary-50: #1976d2;
+  --secondary-60: #2196f3;
+  --secondary-80: #90caf9;
+
+  /* 強調色 - 琥珀色 */
+  --accent-50: #ff9800;
+  --accent-60: #ffb74d;
+
+  /* 語意色彩 */
+  --color-success: #4caf50;
+  --color-success-bg: rgba(76, 175, 80, 0.12);
+  --color-warning: #ff9800;
+  --color-warning-bg: rgba(255, 152, 0, 0.12);
+  --color-error: #f44336;
+  --color-error-bg: rgba(244, 67, 54, 0.12);
+  --color-info: #2196f3;
+  --color-info-bg: rgba(33, 150, 243, 0.12);
+
+  /* 中性色 */
+  --neutral-0: #000000;
+  --neutral-10: #1c1b1f;
+  --neutral-20: #313033;
+  --neutral-30: #484649;
+  --neutral-40: #605d62;
+  --neutral-50: #79767a;
+  --neutral-60: #938f94;
+  --neutral-70: #aeaaae;
+  --neutral-80: #c9c5ca;
+  --neutral-90: #e6e1e5;
+  --neutral-95: #f4eff4;
+  --neutral-100: #ffffff;
+
+  /* 背景與表面（淺色模式） */
+  --color-background: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-surface-variant: #f4eff4;
+
+  /* 文字（淺色模式） */
+  --color-text-primary: rgba(0, 0, 0, 0.87);
+  --color-text-secondary: rgba(0, 0, 0, 0.6);
+  --color-text-disabled: rgba(0, 0, 0, 0.38);
+  --color-text-on-dark: #ffffff;
+
+  /* 分隔線與邊框 */
+  --color-divider: rgba(0, 0, 0, 0.12);
+  --color-border: rgba(0, 0, 0, 0.12);
+
+  /* 陰影 */
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-2: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+  --shadow-3: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
+  --shadow-4: 0 15px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05);
+
+  /* 圓角 */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* 間距 */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+
+  /* 字體 */
+  --font-family: 'Noto Sans TC', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+
+  /* 動畫 */
+  --transition-fast: 150ms;
+  --transition-normal: 250ms;
+  --transition-slow: 400ms;
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* 深色模式 */
+[data-theme='dark'] {
+  --color-primary: var(--primary-70);
+  --color-primary-dark: var(--primary-60);
+  --color-primary-light: var(--primary-80);
+  --color-on-primary: var(--neutral-10);
+
+  --color-background: #121212;
+  --color-surface: #1e1e1e;
+  --color-surface-variant: #2d2d2d;
+
+  --color-text-primary: rgba(255, 255, 255, 0.87);
+  --color-text-secondary: rgba(255, 255, 255, 0.6);
+  --color-text-disabled: rgba(255, 255, 255, 0.38);
+
+  --color-divider: rgba(255, 255, 255, 0.12);
+  --color-border: rgba(255, 255, 255, 0.12);
+
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-2: 0 3px 6px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 高對比度模式 */
+[data-high-contrast='true'] {
+  --color-text-primary: #000000;
+  --color-text-secondary: #000000;
+  --color-background: #ffffff;
+  --color-surface: #ffffff;
+  --color-border: #000000;
+  --color-divider: #000000;
+}
+
+[data-theme='dark'][data-high-contrast='true'] {
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #ffffff;
+  --color-background: #000000;
+  --color-surface: #000000;
+  --color-border: #ffffff;
+  --color-divider: #ffffff;
+}
+
+/* CVD 色覺辨認障礙模式 */
+[data-cvd-mode='protanopia'] {
+  --color-success: #1976d2;
+  --color-success-bg: rgba(25, 118, 210, 0.12);
+  --color-error: #e65100;
+  --color-error-bg: rgba(230, 81, 0, 0.12);
+}
+
+[data-cvd-mode='deuteranopia'] {
+  --color-success: #0288d1;
+  --color-success-bg: rgba(2, 136, 209, 0.12);
+  --color-error: #d84315;
+  --color-error-bg: rgba(216, 67, 21, 0.12);
+}
+
+[data-cvd-mode='tritanopia'] {
+  --color-success: #00897b;
+  --color-success-bg: rgba(0, 137, 123, 0.12);
+  --color-error: #c62828;
+  --color-error-bg: rgba(198, 40, 40, 0.12);
+}
+
+/* 字體大小偏好 */
+[data-font-size='large'] {
+  --font-size-xs: 14px;
+  --font-size-sm: 16px;
+  --font-size-base: 18px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 28px;
+  --font-size-3xl: 36px;
+}
+
+[data-font-size='xlarge'] {
+  --font-size-xs: 16px;
+  --font-size-sm: 18px;
+  --font-size-base: 20px;
+  --font-size-lg: 24px;
+  --font-size-xl: 28px;
+  --font-size-2xl: 32px;
+  --font-size-3xl: 40px;
+}

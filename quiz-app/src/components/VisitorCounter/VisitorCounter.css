@@ -1,0 +1,29 @@
+/* VisitorCounter 樣式 */
+
+.visitor-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--color-surface-variant);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.visitor-counter .count {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.visitor-counter .label {
+  color: var(--color-text-secondary);
+}
+
+.visitor-counter.loading {
+  opacity: 0.7;
+}
+
+.visitor-counter .material-icons {
+  color: var(--color-primary);
+}

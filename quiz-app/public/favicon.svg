@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="45" fill="#2e7d32"/>
+  <g fill="white">
+    <!-- 葉子圖案 -->
+    <path d="M50 20 Q70 35 70 55 Q70 75 50 80 Q30 75 30 55 Q30 35 50 20" fill="#4caf50"/>
+    <path d="M50 25 L50 70" stroke="white" stroke-width="2" fill="none"/>
+    <path d="M50 35 Q40 40 35 50" stroke="white" stroke-width="1.5" fill="none"/>
+    <path d="M50 45 Q60 50 65 55" stroke="white" stroke-width="1.5" fill="none"/>
+    <path d="M50 55 Q40 60 38 65" stroke="white" stroke-width="1.5" fill="none"/>
+  </g>
+  <!-- 文字 NZ (Net Zero) -->
+  <text x="50" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2e7d32">NZ</text>
+</svg>

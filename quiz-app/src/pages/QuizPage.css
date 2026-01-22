@@ -1,0 +1,56 @@
+/* QuizPage 樣式 */
+
+.quiz-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 進度條 */
+.quiz-progress {
+  margin-bottom: var(--spacing-lg);
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* 導覽按鈕 */
+.quiz-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-lg);
+  gap: var(--spacing-md);
+}
+
+.nav-center {
+  flex: 1;
+  text-align: center;
+}
+
+.hint-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* 響應式 */
+@media (max-width: 768px) {
+  .quiz-navigation {
+    flex-wrap: wrap;
+  }
+
+  .quiz-navigation .btn {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .nav-center {
+    order: -1;
+    width: 100%;
+    margin-bottom: var(--spacing-sm);
+  }
+}

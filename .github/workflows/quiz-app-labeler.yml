@@ -1,0 +1,27 @@
+# 自動標籤
+# 根據檔案變更自動為 PR 加上標籤
+# 最後更新：2026-01-22
+
+name: Quiz App Labeler
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'quiz-app/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  labeler:
+    name: Label PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Apply labels
+        uses: actions/labeler@v5
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          configuration-path: .github/labeler.yml

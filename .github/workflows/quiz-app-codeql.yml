@@ -1,0 +1,51 @@
+# CodeQL 安全掃描
+# 自動分析程式碼找出安全漏洞
+# 最後更新：2026-01-22
+
+name: Quiz App CodeQL
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'quiz-app/src/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'quiz-app/src/**'
+  schedule:
+    # 每週一 UTC 00:00 執行
+    - cron: '0 0 * * 1'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['javascript-typescript']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          source-root: quiz-app/src
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{matrix.language}}"
