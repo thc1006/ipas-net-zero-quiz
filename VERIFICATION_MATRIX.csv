@@ -1,0 +1,28 @@
+Question_ID,Subject,Question_Brief,Current_Answer,Verification_Status,Accuracy,Priority,Recommendation,Authority_Source,Notes
+c1-001,ISO 14064-1:2018,ISO 14064-1類別4定義,B,Error,Incorrect,High,立即修正為A或重述,ISO 14064-1:2018 官方分類,"Category 4不包含租賃資產，是系統性知識誤解"
+c1-002,GRI vs SASB,GRI和SASB適用範圍,B,Verified,Correct,Medium,補充詳細說明,GRI/SASB 官方文件,答案正確但解釋不夠精確
+c1-003,半導體排放,半導體主要排放氣體,B,Verified,Correct,Low,精確題目措辭,IPCC/EPA報告,PFCs在製程排放中確實最主要
+c1-004,氣候資金,氣候資金流向,C,Verified,Correct,Low,無,UNFCCC 官方文件,已開發國家提供1000億美元
+c1-005,淨零定義,淨零排放定義,D,Verified,Correct,Low,無,IPCC/UNFCCC,排放與移除達到平衡
+c1-006,PCR規則,PCR邊界合理性,D,Verified,Correct,Low,無,ISO 14040/44,利害相關者會議確定
+c1-007,邊界控制,財務控制方法,B,Verified,Correct,Low,無,ISO 14064-1:2018,企業營運資產控制權
+c1-008,COP目的,聯合國氣候大會,A,Verified,Correct,Low,無,UNFCCC 官方文件,檢視進展並協商行動
+c1-009,COP功能,COP主要功能,A,Verified,Correct,Low,無,UNFCCC 官方文件,制定全球氣候政策
+c1-010,計算,能源排放計算,D,Verified,Correct,Low,無,無,數學驗證正確 195750kg
+c1-011,PCR目的,產品類別規則目的,C,Verified,Correct,Low,無,ISO標準,統一環境衝擊評估
+c1-012,碳標籤,申請碳標籤前置,A,Verified,Correct,Low,無,碳標籤規範,必須有適用的PCR
+c1-013,GRI框架,GRI三大揭露範疇,A,Verified,Correct,Low,無,GRI Standards,"經濟、環保、社會"
+c1-014,台灣政策,台灣2050治理基礎,C,Verified,Correct,Low,無,台灣CCA/NDC官方,"科技研發、氣候法制"
+c1-015,CCS技術,碳捕捉與封存,D,Verified,Correct,Low,無,業界報告,成本仍高昂
+c1-016,再生能源,台灣再生能源,A,Monitored,Correct,Medium,監測政策變化,台灣能源政策,「展綠、增氣、減煤、非核」
+c1-017,峇里路線圖,MRV機制,B,Verified,Correct,Low,無,UNFCCC COP 13,"Measurable, Reportable, Verifiable"
+c1-018,計算,複合能源計算,D,Verified,Correct,Low,無,無,數學驗證正確 53600kg
+c1-019,查證等級,溫室氣體查證保證,C,Verified,Correct,Low,無,台灣環境部,要求合理保證等級
+c1-020,自願減量,減量推動辦法內容,B,Verified,Correct,Low,無,台灣環境部,無罰則規定
+c1-021,PAS 2060,碳中和聲明要求,A,Verified,Correct,Medium,更新ISO 14068,"PAS 2060/ISO 14068","CFM Plan, 2025年11月停用"
+c1-022,京都議定書,彈性減量機制,C,Verified,Correct,Low,無,UNFCCC,IET/JI/CDM 三大機制
+c1-023,CDP評估,CDP評估方法,B,Verified,Correct,Low,無,CDP官方,獨立評分方法
+c1-024,ISO 14068,碳中和首要步驟,D,Verified,Correct,Low,無,ISO 14068-1:2023,確定範圍設定基線
+c1-025,SBTi,SBTi目標協議,B,Verified,Correct,Low,無,SBTi官方,巴黎協定1.5°C
+c1-026,CBAM,CBAM預設值公告,D,Verified,Correct,Low,無,EU委員會,2023年12月22日公布
+c1-027,CBAM稅則,CBAM稅則號碼,?,Pending,Unknown,Low,查證具體規範,EU CBAM 文件,需查證具體位數要求
