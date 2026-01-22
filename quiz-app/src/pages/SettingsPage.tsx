@@ -137,7 +137,7 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
         </p>
         <p>iPAS 淨零碳規劃管理師考古題練習工具</p>
         <p className="disclaimer">
-          本工具題庫僅供練習參考，題目著作權屬原作者所有。
+          本工具題庫僅供練習參考。
         </p>
         <div className="about-links">
           <a

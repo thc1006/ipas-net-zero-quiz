@@ -129,7 +129,7 @@ function App() {
             <VisitorCounter />
           </div>
           <p className="copyright">
-            題庫僅供練習參考，著作權屬原作者所有
+            題庫僅供練習參考
           </p>
         </div>
       </footer>
