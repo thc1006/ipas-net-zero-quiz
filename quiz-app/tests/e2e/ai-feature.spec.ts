@@ -3,7 +3,13 @@ import { test, expect } from '@playwright/test';
 /**
  * AI 功能 E2E 測試
  * 測試 AI 解析功能是否正常運作
+ *
+ * 注意：AI 相關測試需要 Puter.js 服務，在 CI 環境中會跳過
  */
+
+// 檢測是否在 CI 環境
+const isCI = !!process.env.CI;
+
 test.describe('AI 解析功能', () => {
   test.beforeEach(async ({ page }) => {
     // 監聽 console 輸出以便除錯
@@ -51,6 +57,9 @@ test.describe('AI 解析功能', () => {
   });
 
   test('AI 解析應能成功返回回應或顯示錯誤', async ({ page }) => {
+    // 跳過 CI 環境，因為 Puter.js 服務在 CI 中無法使用
+    test.skip(isCI, 'Puter.js not available in CI');
+
     // 設定較長的超時時間，因為 AI 回應可能需要時間
     test.setTimeout(90000);
 
@@ -108,6 +117,8 @@ test.describe('AI 解析功能', () => {
   });
 
   test('AI 解析應顯示信心度', async ({ page }) => {
+    // 跳過 CI 環境
+    test.skip(isCI, 'Puter.js not available in CI');
     test.setTimeout(60000);
 
     await page.getByRole('button', { name: /開始測驗/i }).click();
@@ -153,6 +164,8 @@ test.describe('AI 解析功能', () => {
   });
 
   test('切換題目後 AI 解析狀態應重置', async ({ page }) => {
+    // 跳過 CI 環境
+    test.skip(isCI, 'Puter.js not available in CI');
     test.setTimeout(90000);
 
     await page.getByRole('button', { name: /開始測驗/i }).click();
