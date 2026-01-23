@@ -6,20 +6,33 @@ import './QuestionCard.css';
 
 /**
  * 簡易 Markdown 轉 HTML
- * 支援：**粗體**、*斜體*、`程式碼`、- 清單
+ * 支援：**粗體**、*斜體*、`程式碼`、標題、清單
  */
 function renderMarkdown(text: string): string {
-  return text
-    // 粗體 **text** 或 __text__
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/__(.+?)__/g, '<strong>$1</strong>')
-    // 斜體 *text* 或 _text_（但不匹配已處理的粗體）
-    .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>')
-    .replace(/(?<!_)_(?!_)(.+?)(?<!_)_(?!_)/g, '<em>$1</em>')
+  if (!text) return '';
+
+  let result = text
+    // 標題 ### text 或 ## text
+    .replace(/^###\s+(.+)$/gm, '<strong>$1</strong>')
+    .replace(/^##\s+(.+)$/gm, '<strong>$1</strong>')
+    // 粗體 **text** 或 __text__（支援跨空格）
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/__([^_]+)__/g, '<strong>$1</strong>')
     // 行內程式碼 `code`
-    .replace(/`(.+?)`/g, '<code>$1</code>')
-    // 清單項目 - item 或 * item
-    .replace(/^[-*]\s+(.+)$/gm, '<li>$1</li>');
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    // 清單項目 - item（轉為 bullet point）
+    .replace(/^[-•]\s+/gm, '• ')
+    // 數字清單 1. item
+    .replace(/^\d+\.\s+/gm, '• ');
+
+  // 斜體 *text*（在粗體處理後，避免衝突）
+  // 只匹配單個星號包圍的文字，且不在單詞中間
+  result = result.replace(/(?:^|[\s>])(\*[^*\n]+\*)(?:[\s<]|$)/g, (match, p1) => {
+    const inner = p1.slice(1, -1);
+    return match.replace(p1, `<em>${inner}</em>`);
+  });
+
+  return result;
 }
 
 export interface QuestionCardProps {

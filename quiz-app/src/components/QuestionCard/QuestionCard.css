@@ -251,6 +251,23 @@
   display: none;
 }
 
+.ai-response-content strong {
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.ai-response-content code {
+  background: var(--color-surface);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 0.9em;
+}
+
+.ai-response-content em {
+  font-style: italic;
+}
+
 .ai-response-error {
   display: flex;
   align-items: center;
