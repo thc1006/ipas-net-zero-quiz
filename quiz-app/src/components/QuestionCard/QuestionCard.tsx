@@ -4,6 +4,24 @@ import type { QuizQuestion, QuizOption } from '../../types/quiz';
 import { explainQuestion, type AIResponse } from '../../utils/ai-helper';
 import './QuestionCard.css';
 
+/**
+ * 簡易 Markdown 轉 HTML
+ * 支援：**粗體**、*斜體*、`程式碼`、- 清單
+ */
+function renderMarkdown(text: string): string {
+  return text
+    // 粗體 **text** 或 __text__
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/__(.+?)__/g, '<strong>$1</strong>')
+    // 斜體 *text* 或 _text_（但不匹配已處理的粗體）
+    .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>')
+    .replace(/(?<!_)_(?!_)(.+?)(?<!_)_(?!_)/g, '<em>$1</em>')
+    // 行內程式碼 `code`
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    // 清單項目 - item 或 * item
+    .replace(/^[-*]\s+(.+)$/gm, '<li>$1</li>');
+}
+
 export interface QuestionCardProps {
   question: QuizQuestion;
   questionNumber: number;
@@ -159,7 +177,10 @@ export function QuestionCard({
               {aiResponse.success ? (
                 <div className="ai-response-content">
                   {aiResponse.content.split('\n').map((line, i) => (
-                    <p key={i}>{line}</p>
+                    <p
+                      key={i}
+                      dangerouslySetInnerHTML={{ __html: renderMarkdown(line) }}
+                    />
                   ))}
                 </div>
               ) : (
