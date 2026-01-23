@@ -1,4 +1,4 @@
-// AI 輔助功能模組 - 使用 Puter.js + Gemini
+// AI 輔助功能模組 - 使用 Puter.js + OpenAI
 // 提供題目講解和相似題目生成功能
 
 import type { QuizQuestion } from '../types/quiz';
@@ -18,20 +18,21 @@ declare global {
   }
 }
 
-// AI 模型設定
-const AI_MODEL = 'gemini-3-pro-preview';
+// AI 模型設定 - 使用 OpenAI GPT-5.2（目前最強模型）
+// 其他可用選項：'gpt-4o', 'o1', 'o3'
+const AI_MODEL = 'gpt-5.2-chat';
 const CONFIDENCE_THRESHOLD = 0.7;
 
 // 系統提示詞（中文）
 const SYSTEM_PROMPT = `你是一位專業的 iPAS 淨零碳規劃管理師考試輔導老師。
-你的任務是幫助考生理解題目、解釋概念、提供額外的學習資源。
+你的任務是幫助考生理解題目、解釋概念，並提供清晰的解答。
 
-重要原則：
-1. 只回答與淨零碳、碳中和、溫室氣體、ISO 14064、碳盤查、ESG 等相關的問題
-2. 如果不確定答案，請明確說明「我不確定」，不要編造資訊
-3. 回答要簡潔明瞭，適合考試準備
+回答原則：
+1. 針對淨零碳、碳中和、溫室氣體、ISO 14064、碳盤查、ESG、GRI、SASB 等主題提供專業解答
+2. 直接給出明確的答案和解釋，語氣自信且專業
+3. 回答需完整但不冗長，包含必要的專業術語
 4. 使用繁體中文回答
-5. 如果題目涉及最新法規或數據，請提醒考生確認最新資訊`;
+5. 每個選項都要分析對錯原因`;
 
 /**
  * 檢查 Puter.js 是否已載入
@@ -397,32 +398,46 @@ export async function generateSimilarQuestionStream(
 
 /**
  * 估算回應的信心分數
+ * 評估標準：長度、結構完整性、專業術語覆蓋
  */
 function estimateConfidence(content: string, _question: QuizQuestion): number {
   if (!content || content.length < 50) return 0.3;
 
   let score = 0.5;
 
-  // 回應長度適中（100-500 字）
-  if (content.length >= 100 && content.length <= 800) {
+  // 回應長度適中（80-1500 字，放寬區間）
+  if (content.length >= 80 && content.length <= 1500) {
+    score += 0.15;
+  }
+
+  // 包含選項分析（檢查是否有分析多個選項）
+  const hasOptionAnalysis =
+    (content.includes('A') || content.includes('選項A')) &&
+    (content.includes('B') || content.includes('選項B'));
+  if (hasOptionAnalysis) {
     score += 0.1;
   }
 
-  // 包含選項分析
-  if (content.includes('A') && content.includes('B')) {
-    score += 0.1;
-  }
-
-  // 包含淨零碳相關關鍵詞
-  const keywords = ['碳', '排放', 'ISO', '盤查', '溫室氣體', '淨零'];
+  // 擴充專業關鍵詞清單（涵蓋題庫主要主題）
+  const keywords = [
+    // 核心概念
+    '碳', '排放', '淨零', '碳中和', '減量', '移除',
+    // 標準與框架
+    'ISO', 'GRI', 'SASB', 'ESG', 'PCR', 'GWP',
+    // 盤查相關
+    '盤查', '溫室氣體', '範疇', '類別',
+    // 其他專業術語
+    '氣候', '永續', '低碳', '暖化', '調適', '碳權', '抵換'
+  ];
   const keywordCount = keywords.filter((k) => content.includes(k)).length;
-  score += keywordCount * 0.05;
+  // 每個關鍵詞 +0.03，上限 +0.25
+  score += Math.min(keywordCount * 0.03, 0.25);
 
-  // 不包含不確定詞彙
-  const uncertainWords = ['不確定', '可能', '也許', '大概'];
-  const hasUncertainty = uncertainWords.some((w) => content.includes(w));
-  if (hasUncertainty) {
-    score -= 0.1;
+  // 僅對明確表達不確定的詞彙扣分（移除「可能」，因為這是正常解釋用語）
+  const strongUncertainWords = ['我不確定', '無法確定', '不太清楚'];
+  const hasStrongUncertainty = strongUncertainWords.some((w) => content.includes(w));
+  if (hasStrongUncertainty) {
+    score -= 0.15;
   }
 
   return Math.min(1, Math.max(0, score));
