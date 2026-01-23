@@ -165,18 +165,39 @@ ${question.answer ? `正確答案：${question.answer}` : '（此題無標準答
         }
       } else {
         // 嘗試從物件中提取文字內容
+        // Puter.js 回應格式因模型而異：
+        // - 簡單格式：response (字串)
+        // - OpenAI/Grok 格式：response.message.content
+        // - Claude 格式：response.message.content[0].text
         const respObj = response as unknown as Record<string, unknown>;
-        if (typeof respObj.text === 'string') {
+
+        // 檢查 message.content 格式（最常見）
+        if (respObj.message && typeof respObj.message === 'object') {
+          const message = respObj.message as Record<string, unknown>;
+          if (typeof message.content === 'string') {
+            // OpenAI/Grok 格式
+            content = message.content;
+          } else if (Array.isArray(message.content) && message.content.length > 0) {
+            // Claude 格式：content 是陣列
+            const firstContent = message.content[0] as Record<string, unknown>;
+            if (typeof firstContent.text === 'string') {
+              content = firstContent.text;
+            } else if (typeof firstContent === 'string') {
+              content = firstContent;
+            }
+          }
+        }
+        // 直接屬性檢查（備用）
+        else if (typeof respObj.text === 'string') {
           content = respObj.text;
-        } else if (typeof respObj.message === 'string') {
-          content = respObj.message;
         } else if (typeof respObj.content === 'string') {
           content = respObj.content;
         } else if (typeof respObj.response === 'string') {
           content = respObj.response;
         } else {
-          // 最後嘗試：記錄未知格式
+          // 最後嘗試：記錄未知格式以便除錯
           console.warn('[AI Helper] Unknown response format, keys:', Object.keys(respObj));
+          console.warn('[AI Helper] Response object:', JSON.stringify(respObj, null, 2).slice(0, 500));
         }
       }
     }
@@ -348,11 +369,23 @@ export async function generateSimilarQuestion(
           }
         }
       } else {
+        // 處理各種 Puter.js 回應格式
         const respObj = response as unknown as Record<string, unknown>;
-        if (typeof respObj.text === 'string') {
+
+        if (respObj.message && typeof respObj.message === 'object') {
+          const message = respObj.message as Record<string, unknown>;
+          if (typeof message.content === 'string') {
+            content = message.content;
+          } else if (Array.isArray(message.content) && message.content.length > 0) {
+            const firstContent = message.content[0] as Record<string, unknown>;
+            if (typeof firstContent.text === 'string') {
+              content = firstContent.text;
+            } else if (typeof firstContent === 'string') {
+              content = firstContent;
+            }
+          }
+        } else if (typeof respObj.text === 'string') {
           content = respObj.text;
-        } else if (typeof respObj.message === 'string') {
-          content = respObj.message;
         } else if (typeof respObj.content === 'string') {
           content = respObj.content;
         } else if (typeof respObj.response === 'string') {
