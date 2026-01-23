@@ -6,15 +6,15 @@
       "Gist: hctsai1006/f8a1a64ab43be59b4d8297ee1afc11f2",
       "爬蟲題庫: dataset_verified.json"
     ],
-    "total_questions": 648,
+    "total_questions": 719,
     "gist_questions": 570,
-    "our_unique_questions": 78,
+    "our_unique_questions": 149,
     "corrections_applied": 2,
     "by_subject": {
-      "考科1": 340,
-      "考科2": 308
+      "考科1": 377,
+      "考科2": 342
     },
-    "with_answer": 648,
+    "with_answer": 719,
     "last_updated": "2026-01-23T05:38:13.350449"
   },
   "gist_items": [
@@ -19670,6 +19670,763 @@
       }
     },
     {
+      "item_id": "S_CHU_01-q005",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "2% Q4 《京都議定書》於哪㇐年正式生效？ 巴黎協定旨在將全球溫室氣體排放限制在遠低於幾度攝 氏的水平？ 由於COVID-19大流行，哪㇐年COP未能舉行實體會 議？",
+      "options": [
+        {
+          "key": "A",
+          "text": "1997 年"
+        },
+        {
+          "key": "B",
+          "text": "2001 年"
+        },
+        {
+          "key": "C",
+          "text": "2005 年"
+        },
+        {
+          "key": "D",
+          "text": "2008 年"
+        },
+        {
+          "key": "C",
+          "text": "2005 年"
+        },
+        {
+          "key": "A",
+          "text": "1℃"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_01",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "2% Q4 《京都議定書》於哪㇐年正式生效？ 巴黎"
+        }
+      },
+      "alt_sources": [
+        "S_CHU_03"
+      ],
+      "evidence_quote": "2% Q4 《京都議定書》於哪㇐年正式生效？ 巴黎",
+      "notes": "partial extraction (6 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q006",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "ISO14064 主要是規範什麼？ 體避免影響全球氣候嚴重暖化，國際上於 1997 年",
+      "options": [
+        {
+          "key": "A",
+          "text": "組織層級溫室氣體排放量盤查與查證 \n簽署以下何項議定書？"
+        },
+        {
+          "key": "A",
+          "text": "倫敦議定書"
+        },
+        {
+          "key": "B",
+          "text": "京都議定書"
+        },
+        {
+          "key": "C",
+          "text": "首爾議定書"
+        },
+        {
+          "key": "D",
+          "text": "多倫多議定書"
+        },
+        {
+          "key": "B",
+          "text": "產品碳足跡盤查與查證"
+        },
+        {
+          "key": "C",
+          "text": "溫室氣體減量專案設計與查證"
+        },
+        {
+          "key": "D",
+          "text": "企業社會責任報告書編制"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "ISO14064 主要是規範什麼？ 體避免影響全球"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "ISO14064 主要是規範什麼？ 體避免影響全球",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 0.67,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q002",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "下列何者不是台灣溫室氣體排放的主要來",
+      "options": [
+        {
+          "key": "B",
+          "text": "購買碳權來抵消自身碳排放 \n源？"
+        },
+        {
+          "key": "A",
+          "text": "能源產業"
+        },
+        {
+          "key": "B",
+          "text": "製造業"
+        },
+        {
+          "key": "C",
+          "text": "農業"
+        },
+        {
+          "key": "D",
+          "text": "建築業"
+        },
+        {
+          "key": "C",
+          "text": "透過支持減排專案來抵消自身碳排放"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "下列何者不是台灣溫室氣體排放的主要來"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "下列何者不是台灣溫室氣體排放的主要來",
+      "notes": "partial extraction (7 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q009",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什 麼 是 科 學 基 礎 減 量 目 標 (Science Based 量 Targets, SBTi)？",
+      "options": [
+        {
+          "key": "B",
+          "text": "產品整個生命週期中所產生的所有溫室氣體"
+        },
+        {
+          "key": "A",
+          "text": "企業根據自身產業特性設定的減碳目標 \n排放量"
+        },
+        {
+          "key": "B",
+          "text": "企業根據國際減碳趨勢設定的減碳目標"
+        },
+        {
+          "key": "C",
+          "text": "個人一年內所產生的所有溫室氣體排放量"
+        },
+        {
+          "key": "C",
+          "text": "企業根據科學證據設定的減碳目標，與將全"
+        },
+        {
+          "key": "D",
+          "text": "特定活動或組織在特定時間內所產生的所有\n球升溫控制在 2°C 以內目標一致 \n溫室氣體排放量"
+        },
+        {
+          "key": "D",
+          "text": "企業根據政府政策設定的減碳目標"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什 麼 是 科 學 基 礎 減 量 目 標 (Sc"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什 麼 是 科 學 基 礎 減 量 目 標 (Sc",
+      "notes": "partial extraction (7 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.75,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q010",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "下列何者是 PAS2060 碳中和宣告的必要條 因？",
+      "options": [
+        {
+          "key": "A",
+          "text": "降低營運成本"
+        },
+        {
+          "key": "B",
+          "text": "提升企業形象"
+        },
+        {
+          "key": "C",
+          "text": "符合法規要求"
+        },
+        {
+          "key": "D",
+          "text": "增加員工福利 \n件？"
+        },
+        {
+          "key": "A",
+          "text": "進行溫室氣體盤查"
+        },
+        {
+          "key": "B",
+          "text": "設定減量目標"
+        },
+        {
+          "key": "C",
+          "text": "採取減量行動"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "下列何者是 PAS2060 碳中和宣告的必要條 因"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "下列何者是 PAS2060 碳中和宣告的必要條 因",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.78,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q011",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "碳關稅(Carbon Border Adjustment Mechanism,",
+      "options": [
+        {
+          "key": "A",
+          "text": "對碳排放量設定價格，以鼓勵減排 \nCBAM)的主要目的是什麼？"
+        },
+        {
+          "key": "B",
+          "text": "對碳排放量設定上限，超過上限需支付罰款"
+        },
+        {
+          "key": "C",
+          "text": "對使用低碳能源的企業提供補貼"
+        },
+        {
+          "key": "A",
+          "text": "促進國際貿易"
+        },
+        {
+          "key": "B",
+          "text": "保護國內產業"
+        },
+        {
+          "key": "D",
+          "text": "對高碳排放產品徵收關稅"
+        },
+        {
+          "key": "C",
+          "text": "防止碳洩漏"
+        },
+        {
+          "key": "D",
+          "text": "增加政府收入 \nML (2024.08.16 整理) \n \n \n \n \n\n考科 1 淨零碳規劃管理基礎概論-模擬試題 \n(商研院 2024.08) \n2"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "碳關稅(Carbon Border Adjustm"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "碳關稅(Carbon Border Adjustm",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.71,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q017",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳捕集、利用與封存(Carbon Capture,",
+      "options": [
+        {
+          "key": "A",
+          "text": "綠色債券"
+        },
+        {
+          "key": "B",
+          "text": "永續連結貸款"
+        },
+        {
+          "key": "C",
+          "text": "碳權交易"
+        },
+        {
+          "key": "D",
+          "text": "股票選擇權 \nUtilization and Storage, CCUS)？"
+        },
+        {
+          "key": "A",
+          "text": "從大氣中移除二氧化碳的技術"
+        },
+        {
+          "key": "B",
+          "text": "將二氧化碳轉化為其他產品的技術"
+        },
+        {
+          "key": "C",
+          "text": "將二氧化碳長期儲存地下的技術"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳捕集、利用與封存(Carbon Captu"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳捕集、利用與封存(Carbon Captu",
+      "notes": "partial extraction (7 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q018",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "下列何者不是企業設定減碳目標的方法？",
+      "options": [
+        {
+          "key": "A",
+          "text": "企業揭露其碳排放量"
+        },
+        {
+          "key": "A",
+          "text": "基於強度的目標(Intensity-based targets)"
+        },
+        {
+          "key": "B",
+          "text": "企業揭露其氣候變遷風險與機會"
+        },
+        {
+          "key": "C",
+          "text": "企業揭露其減碳目標"
+        },
+        {
+          "key": "D",
+          "text": "企業揭露其永續發展策略"
+        },
+        {
+          "key": "B",
+          "text": "絕對目標(Absolute targets)"
+        },
+        {
+          "key": "C",
+          "text": "混合目標(Hybrid targets)"
+        },
+        {
+          "key": "D",
+          "text": "基於成本的目標(Cost-based targets)"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "下列何者不是企業設定減碳目標的方法？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "下列何者不是企業設定減碳目標的方法？",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.71,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q019",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是氣候韌性(Climate resilience)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "企業完全不排放溫室氣體"
+        },
+        {
+          "key": "B",
+          "text": "企業的碳排放量等於其碳抵換量"
+        },
+        {
+          "key": "C",
+          "text": "企業的碳排放量低於法規標準"
+        },
+        {
+          "key": "D",
+          "text": "企業的碳排放量逐年下降"
+        },
+        {
+          "key": "A",
+          "text": "減緩氣候變遷的能力"
+        },
+        {
+          "key": "B",
+          "text": "適應氣候變遷的能力"
+        },
+        {
+          "key": "C",
+          "text": "預測氣候變遷的能力"
+        },
+        {
+          "key": "D",
+          "text": "扭轉氣候變遷的能力"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是氣候韌性(Climate resilienc"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是氣候韌性(Climate resilienc",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.67,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q020",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳盤查查證？",
+      "options": [
+        {
+          "key": "A",
+          "text": "界定盤查邊界、蒐集活動數據、計算排放量、"
+        },
+        {
+          "key": "A",
+          "text": "由第三方機構確認企業的碳盤查結果是否符\n報告盤查結果 \n合相關標準"
+        },
+        {
+          "key": "B",
+          "text": "蒐集活動數據、界定盤查邊界、計算排放量、"
+        },
+        {
+          "key": "B",
+          "text": "由政府機構確認企業的碳盤查結果是否符合\n報告盤查結果 \n法規要求"
+        },
+        {
+          "key": "C",
+          "text": "計算排放量、蒐集活動數據、界定盤查邊界、"
+        },
+        {
+          "key": "C",
+          "text": "由企業內部人員確認碳盤查結果是否正確 \n報告盤查結果"
+        },
+        {
+          "key": "D",
+          "text": "由顧問公司協助企業進行碳盤查"
+        },
+        {
+          "key": "D",
+          "text": "報告盤查結果、計算排放量、蒐集活動數據、"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳盤查查證？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳盤查查證？",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "short_stem",
+        "too_many_options"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q016",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "下 列 何 者 不 是 生 命 週 期 評 估 (Life Cycle",
+      "options": [
+        {
+          "key": "B",
+          "text": "甲烷(CH4) \nAssessment, LC"
+        },
+        {
+          "key": "A",
+          "text": "目標與範疇定義"
+        },
+        {
+          "key": "B",
+          "text": "清單分析"
+        },
+        {
+          "key": "C",
+          "text": "衝擊評估"
+        },
+        {
+          "key": "D",
+          "text": "減量目標設定"
+        },
+        {
+          "key": "C",
+          "text": "氧化亞氮(N2O)"
+        },
+        {
+          "key": "D",
+          "text": "二氧化硫(SO2)"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "下 列 何 者 不 是 生 命 週 期 評 估 ("
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "下 列 何 者 不 是 生 命 週 期 評 估 (",
+      "notes": "partial extraction (7 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.5,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
       "item_id": "S_CHU_06-q022",
       "year": null,
       "year_confidence": "low",
@@ -19713,6 +20470,145 @@
       "notes": "complete extraction",
       "exam_subject": "考科1",
       "subject_confidence": 0.5,
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q029",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳風險？",
+      "options": [
+        {
+          "key": "A",
+          "text": "太陽能"
+        },
+        {
+          "key": "B",
+          "text": "風能"
+        },
+        {
+          "key": "C",
+          "text": "水力能"
+        },
+        {
+          "key": "D",
+          "text": "天然氣"
+        },
+        {
+          "key": "A",
+          "text": "企業因氣候變遷導致財務損失的風險"
+        },
+        {
+          "key": "B",
+          "text": "企業因碳排放超標被罰款的風險"
+        },
+        {
+          "key": "C",
+          "text": "企業因投資綠能產業失敗的風險"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳風險？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳風險？",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "short_stem",
+        "too_many_options"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q030",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什 麼 是 氣 候 變 遷 調 適 (Climate change",
+      "options": [
+        {
+          "key": "A",
+          "text": "使用較少能源產生相同產出的能力 \nadaptation)？"
+        },
+        {
+          "key": "B",
+          "text": "使用較多能源產生較少產出的能力"
+        },
+        {
+          "key": "C",
+          "text": "使用較少能源產生較少產出的能力"
+        },
+        {
+          "key": "D",
+          "text": "使用較多能源產生相同產出的能力"
+        },
+        {
+          "key": "A",
+          "text": "減緩氣候變遷的行動"
+        },
+        {
+          "key": "B",
+          "text": "適應氣候變遷的行動"
+        },
+        {
+          "key": "C",
+          "text": "預測氣候變遷的行動"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什 麼 是 氣 候 變 遷 調 適 (Climat"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什 麼 是 氣 候 變 遷 調 適 (Climat",
+      "notes": "partial extraction (7 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
       "_quality_score": 100,
       "metadata": {
         "answer_verified": true,
@@ -19777,6 +20673,320 @@
       }
     },
     {
+      "item_id": "S_CHU_06-q032",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳交易(Emissions trading)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "企業之間交易碳權的市場機制"
+        },
+        {
+          "key": "B",
+          "text": "政府對碳排放量設定上限的政策"
+        },
+        {
+          "key": "C",
+          "text": "將二氧化碳長期儲存地下的技術"
+        },
+        {
+          "key": "C",
+          "text": "企業對碳排放量設定目標的行動"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是 \nCCS是指將二氧化碳長期儲存地下的技術"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳交易(Emissions trading)"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳交易(Emissions trading)",
+      "notes": "partial extraction (6 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.6,
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q027",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "下列何者不是企業社會責任(Corporate Social",
+      "options": [
+        {
+          "key": "A",
+          "text": "企業將生產轉移到碳排放管制較寬鬆的國家 \nResponsibility, CSR)的範疇？"
+        },
+        {
+          "key": "B",
+          "text": "企業的碳排放量超過法規標準"
+        },
+        {
+          "key": "A",
+          "text": "環境保護"
+        },
+        {
+          "key": "B",
+          "text": "社會公益"
+        },
+        {
+          "key": "C",
+          "text": "公司治理"
+        },
+        {
+          "key": "D",
+          "text": "產品行銷"
+        },
+        {
+          "key": "C",
+          "text": "企業的碳排放量被低估"
+        },
+        {
+          "key": "D",
+          "text": "企業的碳排放量被高估"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "下列何者不是企業社會責任(Corporate So"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "下列何者不是企業社會責任(Corporate So",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q028",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是綠色供應鏈管理？",
+      "options": [
+        {
+          "key": "A",
+          "text": "管理供應鏈中的環境風險"
+        },
+        {
+          "key": "B",
+          "text": "管理供應鏈中的社會風險"
+        },
+        {
+          "key": "C",
+          "text": "管理供應鏈中的經濟風險"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        },
+        {
+          "key": "B",
+          "text": "購買有機食品的行為"
+        },
+        {
+          "key": "C",
+          "text": "購買節能家電的行為"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是 \nML (2024.08.16 整理) \n \n \n \n\n考科 1 淨零碳規劃管理基礎概論-模擬試題 \n(商研院 2024.08) \n4"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是綠色供應鏈管理？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是綠色供應鏈管理？",
+      "notes": "partial extraction (7 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "short_stem",
+        "too_many_options"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q041",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是環境、社會和公司治理(Environmental,",
+      "options": [
+        {
+          "key": "A",
+          "text": "在戶外工作的職業"
+        },
+        {
+          "key": "B",
+          "text": "對環境有益的工作"
+        },
+        {
+          "key": "C",
+          "text": "與植物相關的工作"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是 \nSocial, and Governance, ESG)？"
+        },
+        {
+          "key": "A",
+          "text": "企業評估投資風險的指標"
+        },
+        {
+          "key": "B",
+          "text": "企業評估永續發展績效的指標"
+        },
+        {
+          "key": "C",
+          "text": "政府評估企業社會責任的指標"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是環境、社會和公司治理(Environment"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是環境、社會和公司治理(Environment",
+      "notes": "partial extraction (7 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q043",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是綠色科技(Green technology)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "對環境友善的科技"
+        },
+        {
+          "key": "B",
+          "text": "對社會有益的科技"
+        },
+        {
+          "key": "C",
+          "text": "對經濟有貢獻的科技"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是綠色科技(Green technology)"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是綠色科技(Green technology)",
+      "notes": "partial extraction (3 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
       "item_id": "S_CHU_06-q044",
       "year": null,
       "year_confidence": "low",
@@ -19822,6 +21032,1724 @@
       "notes": "complete extraction",
       "exam_subject": "考科2",
       "subject_confidence": 1.0,
+      "_quality_issues": [
+        "short_stem"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q039",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是氣候變遷風險評估？",
+      "options": [
+        {
+          "key": "B",
+          "text": "購買有機食品的行為"
+        },
+        {
+          "key": "A",
+          "text": "評估企業因氣候變遷導致財務損失的風險"
+        },
+        {
+          "key": "C",
+          "text": "購買節能家電的行為"
+        },
+        {
+          "key": "B",
+          "text": "評估企業因碳排放超標被罰款的風險"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        },
+        {
+          "key": "C",
+          "text": "評估企業因投資綠能產業失敗的風險 \n綠色採購是指優先購買對環境友善的產品或服務"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是 \n的行為"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是氣候變遷風險評估？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是氣候變遷風險評估？",
+      "notes": "partial extraction (7 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "short_stem",
+        "too_many_options"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q046",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是淨零排放(Net-zero emissions)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "完全不排放溫室氣體的產品"
+        },
+        {
+          "key": "B",
+          "text": "其生命週期碳排放量為零的產品"
+        },
+        {
+          "key": "A",
+          "text": "完全不排放溫室氣體"
+        },
+        {
+          "key": "B",
+          "text": "碳排放量等於碳吸收量"
+        },
+        {
+          "key": "C",
+          "text": "其生命週期碳排放量低於法規標準的產品"
+        },
+        {
+          "key": "C",
+          "text": "碳排放量低於法規標準"
+        },
+        {
+          "key": "D",
+          "text": "其生命週期碳排放量經過碳抵換的產品"
+        },
+        {
+          "key": "D",
+          "text": "碳排放量逐年下降 \nML (2024.08.16 整理) \n \n \n\n考科 1 淨零碳規劃管理基礎概論-模擬試題 \n(商研院 2024.08) \n5"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是淨零排放(Net-zero emission"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是淨零排放(Net-zero emission",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.57,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q052",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是氣候變遷(Climate change)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "政府用於減碳的預算"
+        },
+        {
+          "key": "B",
+          "text": "企業用於減碳的預算"
+        },
+        {
+          "key": "A",
+          "text": "短期天氣變化"
+        },
+        {
+          "key": "B",
+          "text": "長期氣候平均狀態的顯著改變"
+        },
+        {
+          "key": "C",
+          "text": "為了將全球暖化控制在一定範圍內，所能排"
+        },
+        {
+          "key": "C",
+          "text": "地震等自然災害 \n放的二氧化碳總量"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是氣候變遷(Climate change)？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是氣候變遷(Climate change)？",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q048",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是氣候變遷情境分析(Climate change",
+      "options": [
+        {
+          "key": "A",
+          "text": "對環境友善的能源 \nscenario analysis)？"
+        },
+        {
+          "key": "B",
+          "text": "對社會有益的能源"
+        },
+        {
+          "key": "A",
+          "text": "分析不同氣候變遷情境對企業的影響"
+        },
+        {
+          "key": "C",
+          "text": "對經濟有貢獻的能源"
+        },
+        {
+          "key": "B",
+          "text": "分析不同氣候變遷情境對社會的影響"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        },
+        {
+          "key": "C",
+          "text": "分析不同氣候變遷情境對環境的影響"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是氣候變遷情境分析(Climate chang"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是氣候變遷情境分析(Climate chang",
+      "notes": "partial extraction (7 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q049",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳揭露專案(Carbon Disclosure Project, CDP)？",
+      "options": [
+        {
+          "key": "B",
+          "text": "以高碳、資源消耗和社會不平等為特徵的經\n濟"
+        },
+        {
+          "key": "A",
+          "text": "政府要求企業揭露碳排放量的計畫"
+        },
+        {
+          "key": "C",
+          "text": "以傳統產業為主的經濟"
+        },
+        {
+          "key": "B",
+          "text": "企業自願揭露碳排放量的計畫"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        },
+        {
+          "key": "C",
+          "text": "非營利組織推動企業揭露環境資訊的平台"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳揭露專案(Carbon Disclosur"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳揭露專案(Carbon Disclosur",
+      "notes": "partial extraction (6 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.67,
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q056",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是能源標籤？",
+      "options": [
+        {
+          "key": "B",
+          "text": "排放二氧化碳的自然或人工來源"
+        },
+        {
+          "key": "C",
+          "text": "減少二氧化碳排放的技術"
+        },
+        {
+          "key": "D",
+          "text": "測量二氧化碳排放的工具"
+        },
+        {
+          "key": "A",
+          "text": "標示產品碳排放量的標籤"
+        },
+        {
+          "key": "B",
+          "text": "標示產品能源效率的標籤"
+        },
+        {
+          "key": "C",
+          "text": "標示產品水足跡的標籤"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是能源標籤？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是能源標籤？",
+      "notes": "partial extraction (6 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "short_stem"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q057",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是綠色物流？",
+      "options": [
+        {
+          "key": "A",
+          "text": "使用環保運輸工具的物流"
+        },
+        {
+          "key": "B",
+          "text": "使用再生能源的物流"
+        },
+        {
+          "key": "D",
+          "text": "在不損害後代滿足其需求能力的前提下，滿"
+        },
+        {
+          "key": "C",
+          "text": "減少包裝材料的物流 \n足當代需求的發展"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是 \nML (2024.08.16 整理) \n \n \n\n考科 1 淨零碳規劃管理基礎概論-模擬試題 \n(商研院 2024.08) \n6"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是綠色物流？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是綠色物流？",
+      "notes": "partial extraction (5 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "short_stem"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q063",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是綠色供應鏈(Green supply chain)？ Adjustment Mechanism, CBAM)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "對進口產品徵收碳稅的機制"
+        },
+        {
+          "key": "A",
+          "text": "僅使用環保材料的供應鏈"
+        },
+        {
+          "key": "B",
+          "text": "僅使用再生能源的供應鏈"
+        },
+        {
+          "key": "B",
+          "text": "對出口產品提供碳補貼的機制"
+        },
+        {
+          "key": "C",
+          "text": "在整個供應鏈中納入環境考量的供應鏈"
+        },
+        {
+          "key": "C",
+          "text": "對高碳排放國家實施貿易制裁的機制"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是綠色供應鏈(Green supply cha"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是綠色供應鏈(Green supply cha",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q059",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是巴黎協定(Paris Agreement)？ Utilization, CCU)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "2015 年簽署的國際氣候協議，旨在將全球暖"
+        },
+        {
+          "key": "A",
+          "text": "從大氣中移除二氧化碳的技術 \n化控制在 2°C 以內"
+        },
+        {
+          "key": "B",
+          "text": "將二氧化碳轉化為其他產品的技術"
+        },
+        {
+          "key": "B",
+          "text": "2015 年簽署的國際貿易協議，旨在促進自由"
+        },
+        {
+          "key": "C",
+          "text": "將二氧化碳長期儲存地下的技術 \n貿易"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        },
+        {
+          "key": "C",
+          "text": "2015 年簽署的國際環境協議，旨在保護生物\nCCU 是指將二氧化碳轉化為其他產品的技術，例\n多樣性"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是巴黎協定(Paris Agreement)？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是巴黎協定(Paris Agreement)？",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q060",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什 麼 是 氣 候 變 遷 減 緩 (Climate change",
+      "options": [
+        {
+          "key": "A",
+          "text": "研究植物化學的學科 \nmitigation)？"
+        },
+        {
+          "key": "A",
+          "text": "減緩氣候變遷的行動"
+        },
+        {
+          "key": "B",
+          "text": "適應氣候變遷的行動"
+        },
+        {
+          "key": "C",
+          "text": "預測氣候變遷的行動"
+        },
+        {
+          "key": "D",
+          "text": "扭轉氣候變遷的行動"
+        },
+        {
+          "key": "B",
+          "text": "研究環境污染的學科"
+        },
+        {
+          "key": "C",
+          "text": "研究如何減少化學品對環境和人類健康影響\n的學科"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什 麼 是 氣 候 變 遷 減 緩 (Climat"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什 麼 是 氣 候 變 遷 減 緩 (Climat",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q061",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳排放交易系統 (Emissions Trading",
+      "options": [
+        {
+          "key": "A",
+          "text": "政府用於減碳的預算 \nSystem, ETS)？"
+        },
+        {
+          "key": "B",
+          "text": "企業用於減碳的預算"
+        },
+        {
+          "key": "A",
+          "text": "政府對碳排放設定上限並允許企業交易排放"
+        },
+        {
+          "key": "C",
+          "text": "為了將全球暖化控制在一定範圍內，所能排\n許可的市場機制 \n放的二氧化碳總量"
+        },
+        {
+          "key": "B",
+          "text": "政府對低碳產品提供補貼的政策工具"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        },
+        {
+          "key": "C",
+          "text": "政府對高碳排放產品徵收關稅的政策工具"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳排放交易系統 (Emissions Tra"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳排放交易系統 (Emissions Tra",
+      "notes": "partial extraction (7 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q062",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什 麼 是 企 業 碳 管 理 (Corporate carbon",
+      "options": [
+        {
+          "key": "A",
+          "text": "減少碳排放的技術 \nmanagement)？"
+        },
+        {
+          "key": "B",
+          "text": "從大氣中移除二氧化碳的技術"
+        },
+        {
+          "key": "A",
+          "text": "企業測量、報告和管理其碳排放的過程"
+        },
+        {
+          "key": "C",
+          "text": "增加碳匯的技術"
+        },
+        {
+          "key": "B",
+          "text": "政府對企業碳排放進行監管的過程"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        },
+        {
+          "key": "C",
+          "text": "非政府組織對企業碳排放進行評估的過程 \n負排放技術是能夠從大氣中移除二氧化碳，並將"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非 \n其儲存或利用的技術，包括造林、碳捕集與封存、\n直接空氣捕集等。 \nML (2024.08.16 整理) \n \n \n\n考科 1 淨零碳規劃管理基礎概論-模擬試題 \n(商研院 2024.08) \n7"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什 麼 是 企 業 碳 管 理 (Corporat"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什 麼 是 企 業 碳 管 理 (Corporat",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q074",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是綠色旅遊(Green tourism)？ disclosure)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "企業揭露其碳排放量"
+        },
+        {
+          "key": "A",
+          "text": "到自然景點旅遊"
+        },
+        {
+          "key": "B",
+          "text": "到生態保護區旅遊"
+        },
+        {
+          "key": "B",
+          "text": "企業揭露其氣候變遷風險與機會"
+        },
+        {
+          "key": "C",
+          "text": "在旅遊過程中減少對環境影響的旅遊"
+        },
+        {
+          "key": "C",
+          "text": "企業揭露其減碳目標"
+        },
+        {
+          "key": "D",
+          "text": "企業揭露其永續發展策略"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是綠色旅遊(Green tourism)？ d"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是綠色旅遊(Green tourism)？ d",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.71,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q069",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什 麼 是 氣 候 變 遷 調 適 (Climate change vulnerability assessment)？ adaptation)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "減緩氣候變遷的行動"
+        },
+        {
+          "key": "B",
+          "text": "適應氣候變遷的行動"
+        },
+        {
+          "key": "C",
+          "text": "預測氣候變遷的行動"
+        },
+        {
+          "key": "D",
+          "text": "扭轉氣候變遷的行動"
+        },
+        {
+          "key": "A",
+          "text": "評估企業因氣候變遷導致財務損失的風險"
+        },
+        {
+          "key": "B",
+          "text": "評估社區或生態系統對氣候變遷的敏感性和\n適應能力"
+        },
+        {
+          "key": "C",
+          "text": "評估政府氣候政策的有效性"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什 麼 是 氣 候 變 遷 調 適 (Climat"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什 麼 是 氣 候 變 遷 調 適 (Climat",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q076",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳揭露(Carbon disclosure)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "企業公開其碳排放資訊的行為"
+        },
+        {
+          "key": "B",
+          "text": "政府要求企業揭露碳排放資訊的法規"
+        },
+        {
+          "key": "C",
+          "text": "非營利組織收集和分析企業碳排放資訊的平"
+        },
+        {
+          "key": "D",
+          "text": "在保護環境、社會和經濟的前提下，生產糧\n台 \n食的農業"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳揭露(Carbon disclosure)"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳揭露(Carbon disclosure)",
+      "notes": "partial extraction (5 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q078",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什 麼 是 氣 候 變 遷 減 緩 (Climate change mitigation)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "減少溫室氣體排放和增加碳匯的行動"
+        },
+        {
+          "key": "B",
+          "text": "適應氣候變遷影響的行動"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什 麼 是 氣 候 變 遷 減 緩 (Climat"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什 麼 是 氣 候 變 遷 減 緩 (Climat",
+      "notes": "partial extraction (2 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q073",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是綠色交通(Green transportation)？",
+      "options": [
+        {
+          "key": "D",
+          "text": "促進國際合作應對氣候變遷的政策"
+        },
+        {
+          "key": "A",
+          "text": "使用電動車的交通"
+        },
+        {
+          "key": "B",
+          "text": "使用公共交通的交通"
+        },
+        {
+          "key": "C",
+          "text": "使用自行車或步行的交通"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是 \nML (2024.08.16 整理) \n \n \n\n考科 1 淨零碳規劃管理基礎概論-模擬試題 \n(商研院 2024.08) \n8"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是綠色交通(Green transportat"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是綠色交通(Green transportat",
+      "notes": "partial extraction (5 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q085",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是綠色金融(Green finance)？ adaptation)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "促進環境可持續發展的金融服務"
+        },
+        {
+          "key": "A",
+          "text": "減少溫室氣體排放和增加碳匯的行動"
+        },
+        {
+          "key": "B",
+          "text": "促進社會可持續發展的金融服務"
+        },
+        {
+          "key": "B",
+          "text": "適應氣候變遷影響的行動"
+        },
+        {
+          "key": "C",
+          "text": "促進經濟可持續發展的金融服務"
+        },
+        {
+          "key": "C",
+          "text": "預測未來氣候變化的科學研究"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        },
+        {
+          "key": "D",
+          "text": "促進國際合作應對氣候變遷的政策"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是綠色金融(Green finance)？ a"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是綠色金融(Green finance)？ a",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q081",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳稅(Carbon tax)？ investing, SRI)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "對碳排放設定價格的稅收"
+        },
+        {
+          "key": "B",
+          "text": "對低碳產品提供補貼的稅收"
+        },
+        {
+          "key": "A",
+          "text": "考慮環境、社會和治理(ESG)因素的投資"
+        },
+        {
+          "key": "B",
+          "text": "僅考慮財務回報的投資"
+        },
+        {
+          "key": "C",
+          "text": "對高碳排放產品徵收關稅的稅收"
+        },
+        {
+          "key": "C",
+          "text": "僅考慮社會影響的投資"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳稅(Carbon tax)？ invest"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳稅(Carbon tax)？ invest",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q088",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什 麼 是 責 任 投 資 原 則 (Principles for System, ETS)？ Responsible Investment, PRI)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "政府對碳排放設定上限並允許企業交易排放"
+        },
+        {
+          "key": "A",
+          "text": "聯合國支持的、由投資者發起的倡議，旨在\n許可的市場機制 \n將 ESG 因素納入投資決策"
+        },
+        {
+          "key": "B",
+          "text": "政府對低碳產品提供補貼的政策工具"
+        },
+        {
+          "key": "B",
+          "text": "政府規範企業社會責任的法規"
+        },
+        {
+          "key": "C",
+          "text": "政府對高碳排放產品徵收關稅的政策工具"
+        },
+        {
+          "key": "C",
+          "text": "非政府組織評估企業永續發展績效的標準"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什 麼 是 責 任 投 資 原 則 (Princi"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什 麼 是 責 任 投 資 原 則 (Princi",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q089",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是氣候風險(Climate risk)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "企業將生產轉移到碳排放管制較寬鬆的國家"
+        },
+        {
+          "key": "A",
+          "text": "企業因氣候變遷導致財務損失的風險"
+        },
+        {
+          "key": "B",
+          "text": "企業的碳排放量超過法規標準"
+        },
+        {
+          "key": "B",
+          "text": "企業因碳排放超標被罰款的風險"
+        },
+        {
+          "key": "C",
+          "text": "企業的碳排放量被低估"
+        },
+        {
+          "key": "D",
+          "text": "企業的碳排放量被高估"
+        },
+        {
+          "key": "C",
+          "text": "企業因投資綠能產業失敗的風險"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是氣候風險(Climate risk)？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是氣候風險(Climate risk)？",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.6,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q090",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳盤查？ Adjustment Mechanism, CBAM)？",
+      "options": [
+        {
+          "key": "A",
+          "text": "對進口產品徵收碳稅的機制"
+        },
+        {
+          "key": "A",
+          "text": "計算企業用水量的過程"
+        },
+        {
+          "key": "B",
+          "text": "計算企業用電量的過程"
+        },
+        {
+          "key": "B",
+          "text": "對出口產品提供碳補貼的機制"
+        },
+        {
+          "key": "C",
+          "text": "計算企業溫室氣體排放量的過程"
+        },
+        {
+          "key": "C",
+          "text": "對高碳排放國家實施貿易制裁的機制"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        },
+        {
+          "key": "D",
+          "text": "計算企業廢棄物產量的過程 \nML (2024.08.16 整理) \n \n \n\n考科 1 淨零碳規劃管理基礎概論-模擬試題 \n(商研院 2024.08) \n9"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳盤查？ Adjustment Mechan"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳盤查？ Adjustment Mechan",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 0.57,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q098",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳足跡盤查？",
+      "options": [
+        {
+          "key": "A",
+          "text": "企業直接產生的溫室氣體排放"
+        },
+        {
+          "key": "A",
+          "text": "計算企業溫室氣體排放量的過程"
+        },
+        {
+          "key": "B",
+          "text": "企業因使用外購電力產生的溫室氣體排放"
+        },
+        {
+          "key": "B",
+          "text": "計算產品生命週期碳排放量的過程"
+        },
+        {
+          "key": "C",
+          "text": "企業供應鏈產生的溫室氣體排放"
+        },
+        {
+          "key": "C",
+          "text": "計算個人碳排放量的過程"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳足跡盤查？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳足跡盤查？",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "short_stem",
+        "too_many_options"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q099",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳足跡管理？",
+      "options": [
+        {
+          "key": "A",
+          "text": "企業直接產生的溫室氣體排放"
+        },
+        {
+          "key": "A",
+          "text": "減少產品碳排放量的過程"
+        },
+        {
+          "key": "B",
+          "text": "企業因使用外購電力產生的溫室氣體排放"
+        },
+        {
+          "key": "C",
+          "text": "企業供應鏈產生的溫室氣體排放"
+        },
+        {
+          "key": "B",
+          "text": "抵換產品碳排放量的過程"
+        },
+        {
+          "key": "C",
+          "text": "規劃、執行、監測和報告產品碳足跡的過程"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳足跡管理？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳足跡管理？",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 0.8,
+      "_quality_issues": [
+        "short_stem",
+        "too_many_options"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q100",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳揭露專案(Carbon Disclosure Project,",
+      "options": [
+        {
+          "key": "C",
+          "text": "與其他年份進行比較的參考年份 \nCDP)？"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        },
+        {
+          "key": "A",
+          "text": "政府要求企業揭露碳排放量的計畫"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳揭露專案(Carbon Disclosur"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳揭露專案(Carbon Disclosur",
+      "notes": "partial extraction (3 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.67,
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_06-q095",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "什麼是碳排放因子？",
+      "options": [
+        {
+          "key": "C",
+          "text": "非營利組織推動企業揭露環境資訊的平台"
+        },
+        {
+          "key": "A",
+          "text": "計算溫室氣體排放量時使用的係數"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        },
+        {
+          "key": "B",
+          "text": "衡量溫室氣體排放強度的指標 \nCDP 是一個非營利組織，推動企業和城市揭露其"
+        },
+        {
+          "key": "C",
+          "text": "評估減碳潛力的工具"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非 \n環境影響資訊，包括碳排放、水資源管理和森林保\n護等"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_06",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "什麼是碳排放因子？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "什麼是碳排放因子？",
+      "notes": "partial extraction (6 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 0.6,
       "_quality_issues": [
         "short_stem"
       ],
@@ -19889,6 +22817,823 @@
       }
     },
     {
+      "item_id": "S_CHU_07-q006",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "組織如何確保其溫室氣體盤查的一致性，以 項？",
+      "options": [
+        {
+          "key": "A",
+          "text": "準確性"
+        },
+        {
+          "key": "B",
+          "text": "一致性"
+        },
+        {
+          "key": "C",
+          "text": "極大化"
+        },
+        {
+          "key": "D",
+          "text": "完整性"
+        },
+        {
+          "key": "A",
+          "text": "每年更換計算方法"
+        },
+        {
+          "key": "B",
+          "text": "維持使用相同的數據來源和計算方法"
+        },
+        {
+          "key": "C",
+          "text": "僅報告最大的排放源"
+        },
+        {
+          "key": "D",
+          "text": "忽略小規模排放源"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "組織如何確保其溫室氣體盤查的一致性，以 項？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "組織如何確保其溫室氣體盤查的一致性，以 項？",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q002",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "溫室氣體盤查報告原則中，何者是為了使溫 則？ 室氣體相關資訊能有意義比較，以及容許有意義",
+      "options": [
+        {
+          "key": "A",
+          "text": "僅報告對組織有利的信息 \n的跨年度或同產業排放比較？"
+        },
+        {
+          "key": "B",
+          "text": "隱藏計算方法"
+        },
+        {
+          "key": "A",
+          "text": "準確性"
+        },
+        {
+          "key": "B",
+          "text": "一致性"
+        },
+        {
+          "key": "C",
+          "text": "完整性"
+        },
+        {
+          "key": "D",
+          "text": "透明度"
+        },
+        {
+          "key": "C",
+          "text": "充分且適當地揭露溫室氣體相關資訊"
+        },
+        {
+          "key": "D",
+          "text": "避免公開不確定性數據"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "溫室氣體盤查報告原則中，何者是為了使溫 則？ 室氣"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "溫室氣體盤查報告原則中，何者是為了使溫 則？ 室氣",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 0.86,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q003",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "依據標準組織型溫室氣體盤查須納入所有相",
+      "options": [
+        {
+          "key": "A",
+          "text": "報告所有可能的數據 \n關的溫室氣體排放與移除。其遵循的盤查原則"
+        },
+        {
+          "key": "B",
+          "text": "基於預期使用者的需求選擇相關的溫室氣體\n是？"
+        },
+        {
+          "key": "A",
+          "text": "準確性"
+        },
+        {
+          "key": "B",
+          "text": "完整性"
+        },
+        {
+          "key": "C",
+          "text": "一致性"
+        },
+        {
+          "key": "D",
+          "text": "相關性 \n源和匯"
+        },
+        {
+          "key": "C",
+          "text": "僅報告國際間公認的溫室氣體"
+        },
+        {
+          "key": "D",
+          "text": "避免使用地方性的溫室氣體數據"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "依據標準組織型溫室氣體盤查須納入所有相"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "依據標準組織型溫室氣體盤查須納入所有相",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q004",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "企業進行溫室氣體盤查的第一步是什麼？",
+      "options": [
+        {
+          "key": "B",
+          "text": "資訊經過真實公正的考量"
+        },
+        {
+          "key": "A",
+          "text": "設定邊界鑑別排放源"
+        },
+        {
+          "key": "B",
+          "text": "收集活動數據與計算排放量"
+        },
+        {
+          "key": "C",
+          "text": "報告僅限於公開資料"
+        },
+        {
+          "key": "D",
+          "text": "忽略小規模排放源的影響"
+        },
+        {
+          "key": "C",
+          "text": "請高階主管指派溫室氣體盤查小組"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "企業進行溫室氣體盤查的第一步是什麼？"
+        }
+      },
+      "alt_sources": [
+        "S_YAMOL_020"
+      ],
+      "evidence_quote": "企業進行溫室氣體盤查的第一步是什麼？",
+      "notes": "partial extraction (6 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q005",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "在進行溫室氣體盤查時，如何確保報告的完 項？ 整性？",
+      "options": [
+        {
+          "key": "A",
+          "text": "報告主要排放源"
+        },
+        {
+          "key": "B",
+          "text": "僅關注直接排放"
+        },
+        {
+          "key": "C",
+          "text": "包括所有相關的直接和間接排放源"
+        },
+        {
+          "key": "D",
+          "text": "忽略間接排放源"
+        },
+        {
+          "key": "A",
+          "text": "ISO14064-1"
+        },
+        {
+          "key": "B",
+          "text": "ISO14064-2"
+        },
+        {
+          "key": "C",
+          "text": "ISO14067"
+        },
+        {
+          "key": "D",
+          "text": "ISO14064-3 \nML (2024.08.16 整理) \n \n \n \n\n考科 2 溫室氣體盤查規範與程序概要-模擬試題 \n(商研院 2024.08) \n2"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "在進行溫室氣體盤查時，如何確保報告的完 項？ 整性"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "在進行溫室氣體盤查時，如何確保報告的完 項？ 整性",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q016",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "C 公司在溫室氣體盤查報告書提到盤查的 項？",
+      "options": [
+        {
+          "key": "A",
+          "text": "財務控制法"
+        },
+        {
+          "key": "B",
+          "text": "營運控制法"
+        },
+        {
+          "key": "C",
+          "text": "股權持分法"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是 \n範圍包含桃園廠與小港廠。依據 ISO14064-1:2018\n最新條文規範，請問這段描述內容描述的是界定\n何種邊界？"
+        },
+        {
+          "key": "A",
+          "text": "組織邊界"
+        },
+        {
+          "key": "B",
+          "text": "營運邊界"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "C 公司在溫室氣體盤查報告書提到盤查的 項？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "C 公司在溫室氣體盤查報告書提到盤查的 項？",
+      "notes": "partial extraction (6 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q020",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "在溫室氣體盤查中，哪一項不是間接溫室氣 別排放？ 體排放與移除的來源之一？",
+      "options": [
+        {
+          "key": "A",
+          "text": "類別 1 直接溫室氣體排放"
+        },
+        {
+          "key": "A",
+          "text": "來自輸入能源的間接溫室氣體排放量"
+        },
+        {
+          "key": "B",
+          "text": "類別 2 來自輸入能源之間接溫室氣體排放量"
+        },
+        {
+          "key": "B",
+          "text": "來自組織使用的產品的間接溫室氣體排放量"
+        },
+        {
+          "key": "C",
+          "text": "類別 3 來自運輸之間接溫室氣體排放量"
+        },
+        {
+          "key": "C",
+          "text": "來自運輸的間接溫室氣體排放量"
+        },
+        {
+          "key": "D",
+          "text": "類別 4 來自組織使用的產品之間接溫室氣體"
+        },
+        {
+          "key": "D",
+          "text": "來自直接排放源的間接溫室氣體排放量 \n排放量 \nML (2024.08.16 整理) \n \n \n\n考科 2 溫室氣體盤查規範與程序概要-模擬試題 \n(商研院 2024.08) \n3"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "在溫室氣體盤查中，哪一項不是間接溫室氣 別排放？ "
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "在溫室氣體盤查中，哪一項不是間接溫室氣 別排放？ ",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q027",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "下列何者為基準年溫室氣體盤查清冊的目 氣體盤查清冊？",
+      "options": [
+        {
+          "key": "A",
+          "text": "報告邊界改變"
+        },
+        {
+          "key": "B",
+          "text": "與隔壁廠房合併 \n的？"
+        },
+        {
+          "key": "A",
+          "text": "降低未來報告的準確性"
+        },
+        {
+          "key": "B",
+          "text": "增加報告的複雜度"
+        },
+        {
+          "key": "C",
+          "text": "量化方法改變導致溫室氣體排放量發生很大"
+        },
+        {
+          "key": "C",
+          "text": "符合預期使用者的要求 \n改變"
+        },
+        {
+          "key": "D",
+          "text": "減少報告的透明度"
+        },
+        {
+          "key": "D",
+          "text": "生產產量發生重大變化"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "下列何者為基準年溫室氣體盤查清冊的目 氣體盤查清冊"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "下列何者為基準年溫室氣體盤查清冊的目 氣體盤查清冊",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q022",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "請說明溫室氣體量化方法中，排放係數法的 和流率來量測溫室氣體排放量？ 計算公式，何者正確？",
+      "options": [
+        {
+          "key": "A",
+          "text": "直接監測法"
+        },
+        {
+          "key": "A",
+          "text": "CO2 排放當量=活動數據×排放係數×GWP"
+        },
+        {
+          "key": "B",
+          "text": "質量平衡法"
+        },
+        {
+          "key": "B",
+          "text": "CO2 排放當量=活動數據×人口數量×GWP"
+        },
+        {
+          "key": "C",
+          "text": "排放係數法"
+        },
+        {
+          "key": "C",
+          "text": "CO2 排放當量=活動數據×面積占比×GWP"
+        },
+        {
+          "key": "D",
+          "text": "估算方法"
+        },
+        {
+          "key": "D",
+          "text": "CO2 排放當量=活動數據×重量占比×GWP"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "請說明溫室氣體量化方法中，排放係數法的 和流率來量"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "請說明溫室氣體量化方法中，排放係數法的 和流率來量",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q029",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": ".組織建立基準年溫室氣體排放量與移除量 的歷史基準時，應考慮哪些因素？",
+      "options": [
+        {
+          "key": "A",
+          "text": "國際排放係數"
+        },
+        {
+          "key": "B",
+          "text": "量測/質能平衡係數"
+        },
+        {
+          "key": "C",
+          "text": "區域排放係數"
+        },
+        {
+          "key": "D",
+          "text": "國家排放係數"
+        },
+        {
+          "key": "A",
+          "text": "選擇公司創立年作為基準年"
+        },
+        {
+          "key": "B",
+          "text": "使用代表性且可驗證的數據"
+        },
+        {
+          "key": "C",
+          "text": "僅基於預算決定"
+        },
+        {
+          "key": "D",
+          "text": "選擇任意一年作為基準年"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": ".組織建立基準年溫室氣體排放量與移除量 的歷史基準"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": ".組織建立基準年溫室氣體排放量與移除量 的歷史基準",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q030",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "直接監測法與質量平衡法在溫室氣體量化 全球暖化潛勢值得選用時，應挑選對環境影響幾 中有什麼區別？ 年的？",
+      "options": [
+        {
+          "key": "A",
+          "text": "50 年"
+        },
+        {
+          "key": "B",
+          "text": "100 年"
+        },
+        {
+          "key": "C",
+          "text": "200 年"
+        },
+        {
+          "key": "D",
+          "text": "500 年"
+        },
+        {
+          "key": "A",
+          "text": "直接監測法不考慮化學反應"
+        },
+        {
+          "key": "B",
+          "text": "質量平衡法僅適用於能源消耗"
+        },
+        {
+          "key": "C",
+          "text": "功能單位或宣告單位"
+        },
+        {
+          "key": "D",
+          "text": "質量平衡法更適用於小規模排放源 \n直接監測法主要用於實際測量，而質量平衡法以"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "直接監測法與質量平衡法在溫室氣體量化 全球暖化潛勢"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "直接監測法與質量平衡法在溫室氣體量化 全球暖化潛勢",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 0.83,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q031",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "碳足跡量化資訊應於碳足跡研究報告中揭 露，以下何者可以不包含於報告之中？",
+      "options": [
+        {
+          "key": "A",
+          "text": "針對電力之處理"
+        },
+        {
+          "key": "C",
+          "text": "文件化納入所有相關的溫室氣體排放與移除"
+        },
+        {
+          "key": "B",
+          "text": "選定的分配方法"
+        },
+        {
+          "key": "D",
+          "text": "僅關注能源消耗相關的排放"
+        },
+        {
+          "key": "C",
+          "text": "內外部議題"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "碳足跡量化資訊應於碳足跡研究報告中揭 露，以下何者"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "碳足跡量化資訊應於碳足跡研究報告中揭 露，以下何者",
+      "notes": "partial extraction (5 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
       "item_id": "S_CHU_07-q026",
       "year": null,
       "year_confidence": "low",
@@ -19937,6 +23682,927 @@
       "_quality_issues": [
         "short_stem"
       ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q037",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "CFP 研究中，當需要做出決定時，為什麼 露，以下何者應包含於報告之中？ 應優先參照自然科學方法？",
+      "options": [
+        {
+          "key": "A",
+          "text": "數據收集資訊，包括數據來源"
+        },
+        {
+          "key": "A",
+          "text": "自然科學方法成本較低"
+        },
+        {
+          "key": "B",
+          "text": "生產排程"
+        },
+        {
+          "key": "C",
+          "text": "ISO9001"
+        },
+        {
+          "key": "D",
+          "text": "審查會議結論"
+        },
+        {
+          "key": "B",
+          "text": "增加研究的創新性"
+        },
+        {
+          "key": "C",
+          "text": "保證結果的客觀性與可靠性"
+        },
+        {
+          "key": "D",
+          "text": "簡化研究過程"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "CFP 研究中，當需要做出決定時，為什麼 露，以下"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "CFP 研究中，當需要做出決定時，為什麼 露，以下",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q038",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "CFP 研究如何確保完整性？ 依據哪份 ISO 標準文件？",
+      "options": [
+        {
+          "key": "A",
+          "text": "ISO14040"
+        },
+        {
+          "key": "B",
+          "text": "ISO50001"
+        },
+        {
+          "key": "C",
+          "text": "場址特定數據"
+        },
+        {
+          "key": "D",
+          "text": "ISO14064-1"
+        },
+        {
+          "key": "A",
+          "text": "僅關注主要 GHG 排放源"
+        },
+        {
+          "key": "B",
+          "text": "忽略不重要的 GHG 排放源"
+        },
+        {
+          "key": "C",
+          "text": "適當揭露假設、方法及數據的使用"
+        },
+        {
+          "key": "D",
+          "text": "僅計算直接排放"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "CFP 研究如何確保完整性？ 依據哪份 ISO 標"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "CFP 研究如何確保完整性？ 依據哪份 ISO 標",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 0.91,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q034",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "在組織邊界外所獲得的數據稱之為",
+      "options": [
+        {
+          "key": "A",
+          "text": "初級數據"
+        },
+        {
+          "key": "B",
+          "text": "次級數據"
+        },
+        {
+          "key": "A",
+          "text": "僅報告最終結果"
+        },
+        {
+          "key": "B",
+          "text": "不揭露敏感數據"
+        },
+        {
+          "key": "C",
+          "text": "適當揭露假設、方法及數據的應用"
+        },
+        {
+          "key": "C",
+          "text": "確保量化結果的全面性和準確性"
+        },
+        {
+          "key": "D",
+          "text": "避免使用專業術語"
+        },
+        {
+          "key": "D",
+          "text": "網路資料庫數據"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "在組織邊界外所獲得的數據稱之為"
+        }
+      },
+      "alt_sources": [
+        "S_YAMOL_018"
+      ],
+      "evidence_quote": "在組織邊界外所獲得的數據稱之為",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科1",
+      "subject_confidence": 0.5,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q035",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "產品碳足跡(CFP)量化時，為何需要考慮產 的重複計算？ 品/活動的整個生命週期？",
+      "options": [
+        {
+          "key": "A",
+          "text": "忽略所有間接排放"
+        },
+        {
+          "key": "A",
+          "text": "降低成本"
+        },
+        {
+          "key": "B",
+          "text": "簡化分析過程"
+        },
+        {
+          "key": "C",
+          "text": "增加報告的複雜度"
+        },
+        {
+          "key": "D",
+          "text": "增加報告的頁數"
+        },
+        {
+          "key": "B",
+          "text": "僅計算一次相同的 GHG 排放與移除"
+        },
+        {
+          "key": "C",
+          "text": "功能單位或宣告單位"
+        },
+        {
+          "key": "D",
+          "text": "僅關注直接排放"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "產品碳足跡(CFP)量化時，為何需要考慮產 的重複"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "產品碳足跡(CFP)量化時，為何需要考慮產 的重複",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q042",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "產品碳足跡過程盤查中，繪製製程地圖是一",
+      "options": [
+        {
+          "key": "C",
+          "text": "保證結果的客觀性和可靠性 \n關鍵步驟，針對此一步驟以下描述何者為非？"
+        },
+        {
+          "key": "D",
+          "text": "僅為了滿足標準要求"
+        },
+        {
+          "key": "A",
+          "text": "列出流程各關卡負責單位與人員"
+        },
+        {
+          "key": "B",
+          "text": "列出流程內的投入與產出"
+        },
+        {
+          "key": "C",
+          "text": "確定繪製標的及其功能/宣告單位"
+        },
+        {
+          "key": "D",
+          "text": "列出製造產品，須經過哪些步驟 \nML (2024.08.16 整理) \n \n\n考科 2 溫室氣體盤查規範與程序概要-模擬試題 \n(商研院 2024.08) \n5"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "產品碳足跡過程盤查中，繪製製程地圖是一"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "產品碳足跡過程盤查中，繪製製程地圖是一",
+      "notes": "partial extraction (6 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q049",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "在考慮未來盤查複雜度時，應如何處理製程 但 B2B 產品不需被納入的生命週期階段 流程圖？",
+      "options": [
+        {
+          "key": "A",
+          "text": "產品使用階段"
+        },
+        {
+          "key": "B",
+          "text": "原料取得階段"
+        },
+        {
+          "key": "C",
+          "text": "生產製造階段"
+        },
+        {
+          "key": "D",
+          "text": "以上皆須列入計算"
+        },
+        {
+          "key": "A",
+          "text": "完全不進行簡化"
+        },
+        {
+          "key": "B",
+          "text": "隨意刪除一些看似不重要的步驟"
+        },
+        {
+          "key": "C",
+          "text": "做適度簡化，保留重要信息"
+        },
+        {
+          "key": "D",
+          "text": "僅保留開頭和結尾的步驟"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "在考慮未來盤查複雜度時，應如何處理製程 但 B2B"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "在考慮未來盤查複雜度時，應如何處理製程 但 B2B",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q050",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "系統邊界的選擇應基於什麼原則？ 式？",
+      "options": [
+        {
+          "key": "A",
+          "text": "從搖籃到大門"
+        },
+        {
+          "key": "B",
+          "text": "從搖籃到墳墓"
+        },
+        {
+          "key": "C",
+          "text": "從搖籃到天堂"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非"
+        },
+        {
+          "key": "A",
+          "text": "個人喜好"
+        },
+        {
+          "key": "B",
+          "text": "研究目標一致性"
+        },
+        {
+          "key": "C",
+          "text": "最簡單的製程"
+        },
+        {
+          "key": "D",
+          "text": "最低成本"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "系統邊界的選擇應基於什麼原則？ 式？"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "系統邊界的選擇應基於什麼原則？ 式？",
+      "notes": "partial extraction (8 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q045",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "以下何者為 B2B 產品在生命週期的描述方 式？ 務進行環境宣告之生命週期範疇界定的作業程序 文件。目的在使相同功能產品/服務就其環境衝擊",
+      "options": [
+        {
+          "key": "A",
+          "text": "從搖籃到大門"
+        },
+        {
+          "key": "B",
+          "text": "從搖籃到墳墓"
+        },
+        {
+          "key": "C",
+          "text": "從搖籃到天堂"
+        },
+        {
+          "key": "D",
+          "text": "以上皆非 \n量化後之環境宣告，具有一致的比較基礎。這份文\n件稱之為何？"
+        },
+        {
+          "key": "A",
+          "text": "生命週期評估(LC"
+        },
+        {
+          "key": "B",
+          "text": "物質安全資料表(MSDS)"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "以下何者為 B2B 產品在生命週期的描述方 式？ "
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "以下何者為 B2B 產品在生命週期的描述方 式？ ",
+      "notes": "partial extraction (6 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q052",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "計算產品碳足跡時，須事先找尋符合的產品 類別規則嗎？",
+      "options": [
+        {
+          "key": "A",
+          "text": "需要"
+        },
+        {
+          "key": "B",
+          "text": "不需要"
+        }
+      ],
+      "answer": "A",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "計算產品碳足跡時，須事先找尋符合的產品 類別規則嗎"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "計算產品碳足跡時，須事先找尋符合的產品 類別規則嗎",
+      "notes": "partial extraction (2 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q048",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "提供服務時，應如何確保製程流程圖的完整",
+      "options": [
+        {
+          "key": "D",
+          "text": "確定產品的市場定位 \n性？"
+        },
+        {
+          "key": "A",
+          "text": "假設所有服務流程相同"
+        },
+        {
+          "key": "B",
+          "text": "僅記錄服務開始和結束"
+        },
+        {
+          "key": "C",
+          "text": "思考被服務對象在系統中的全程體驗"
+        },
+        {
+          "key": "D",
+          "text": "僅考慮服務的主要部分 \nML (2024.08.16 整理) \n \n\n考科 2 溫室氣體盤查規範與程序概要-模擬試題 \n(商研院 2024.08) \n6"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "提供服務時，應如何確保製程流程圖的完整"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "提供服務時，應如何確保製程流程圖的完整",
+      "notes": "partial extraction (5 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_score": 90,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q060",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "在產品類別規則(PCR)中，設定「系統邊界」",
+      "options": [
+        {
+          "key": "A",
+          "text": "產品的銷售範圍 \n的主要目的是為了什麼？"
+        },
+        {
+          "key": "B",
+          "text": "產品製造過程中使用的技術類型"
+        },
+        {
+          "key": "A",
+          "text": "確認產品的銷售區域和目標市場"
+        },
+        {
+          "key": "C",
+          "text": "決定哪些階段的範疇納入碳足跡計算"
+        },
+        {
+          "key": "B",
+          "text": "計算產品的市場價值和銷售利潤"
+        },
+        {
+          "key": "D",
+          "text": "產品的利潤邊界"
+        },
+        {
+          "key": "C",
+          "text": "選擇產品的原材料來源和供應商"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "在產品類別規則(PCR)中，設定「系統邊界」"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "在產品類別規則(PCR)中，設定「系統邊界」",
+      "notes": "partial extraction (7 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_issues": [
+        "too_many_options"
+      ],
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q061",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "衝擊評估階段屬於生命週期評估作業 LCA",
+      "options": [
+        {
+          "key": "B",
+          "text": "忽略碳足跡計算中的重要階段"
+        },
+        {
+          "key": "C",
+          "text": "允許忽略對總排放貢獻微小的過程"
+        },
+        {
+          "key": "D",
+          "text": "增加碳足跡計算的準確性 \n的第幾階段？"
+        },
+        {
+          "key": "A",
+          "text": "第一階段"
+        },
+        {
+          "key": "B",
+          "text": "第二階段"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "衝擊評估階段屬於生命週期評估作業 LCA"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "衝擊評估階段屬於生命週期評估作業 LCA",
+      "notes": "partial extraction (5 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q056",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "在 PCR 中，「分配規則」是指？",
+      "options": [
+        {
+          "key": "D",
+          "text": "第四階段"
+        },
+        {
+          "key": "A",
+          "text": "決定產品價格的機制"
+        },
+        {
+          "key": "B",
+          "text": "根據物理性質分配投入和產出的方法"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "在 PCR 中，「分配規則」是指？"
+        }
+      },
+      "alt_sources": [
+        "S_YAMOL_016"
+      ],
+      "evidence_quote": "在 PCR 中，「分配規則」是指？",
+      "notes": "partial extraction (3 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "_quality_score": 80,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q057",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "根據環境部的產品類別規則，對於生命週期",
+      "options": [
+        {
+          "key": "C",
+          "text": "第三階段 \n各階段數據蒐集的要求，以下哪一項描述是正確"
+        },
+        {
+          "key": "D",
+          "text": "第四階段 \n的？"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "根據環境部的產品類別規則，對於生命週期"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "根據環境部的產品類別規則，對於生命週期",
+      "notes": "partial extraction (2 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 0.67,
+      "_quality_score": 80,
+      "metadata": {
+        "answer_verified": true,
+        "verification_date": "2026-01-23",
+        "verification_source": "batch_verification",
+        "confidence": "medium"
+      }
+    },
+    {
+      "item_id": "S_CHU_07-q064",
+      "year": null,
+      "year_confidence": "low",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "unknown",
+      "stem": "使用生命週期評估進行產品碳足跡評估不",
+      "options": [
+        {
+          "key": "B",
+          "text": "詳述產品的市場定位和銷售策略 \n會經歷哪個重要階段？"
+        },
+        {
+          "key": "C",
+          "text": "計算產品的生產成本和價格"
+        },
+        {
+          "key": "D",
+          "text": "確定產品的銷售地區和目標客戶"
+        },
+        {
+          "key": "A",
+          "text": "盤查分析"
+        },
+        {
+          "key": "B",
+          "text": "目標範疇定義"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_CHU_07",
+        "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
+        "publisher": "CHU",
+        "authority": "edu_public",
+        "evidence": {
+          "page": 1,
+          "quote": "使用生命週期評估進行產品碳足跡評估不"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "使用生命週期評估進行產品碳足跡評估不",
+      "notes": "partial extraction (5 options)",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
       "_quality_score": 90,
       "metadata": {
         "answer_verified": true,

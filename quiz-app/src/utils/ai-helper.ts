@@ -146,8 +146,42 @@ ${question.answer ? `正確答案：${question.answer}` : '（此題無標準答
   try {
     const response = await window.puter.ai.chat(prompt, { model: AI_MODEL });
 
-    // 處理回應
-    const content = typeof response === 'string' ? response : '';
+    // 除錯：記錄 Puter.js 回應格式
+    console.log('[AI Helper] Response type:', typeof response);
+    console.log('[AI Helper] Response:', response);
+
+    // 處理回應 - Puter.js 可能返回字串、物件 { text: string } 或其他格式
+    let content = '';
+    if (typeof response === 'string') {
+      content = response;
+    } else if (response && typeof response === 'object') {
+      // 排除 AsyncIterable（streaming 模式的回應）
+      if (Symbol.asyncIterator in response) {
+        // 如果是 streaming 回應，逐一收集
+        for await (const part of response) {
+          if (part?.text) {
+            content += part.text;
+          }
+        }
+      } else {
+        // 嘗試從物件中提取文字內容
+        const respObj = response as unknown as Record<string, unknown>;
+        if (typeof respObj.text === 'string') {
+          content = respObj.text;
+        } else if (typeof respObj.message === 'string') {
+          content = respObj.message;
+        } else if (typeof respObj.content === 'string') {
+          content = respObj.content;
+        } else if (typeof respObj.response === 'string') {
+          content = respObj.response;
+        } else {
+          // 最後嘗試：記錄未知格式
+          console.warn('[AI Helper] Unknown response format, keys:', Object.keys(respObj));
+        }
+      }
+    }
+
+    console.log('[AI Helper] Extracted content length:', content.length);
 
     // 簡單的信心分數估算（基於回應長度和是否包含關鍵詞）
     const confidence = estimateConfidence(content, question);
@@ -301,7 +335,31 @@ export async function generateSimilarQuestion(
 
   try {
     const response = await window.puter.ai.chat(prompt, { model: AI_MODEL });
-    const content = typeof response === 'string' ? response : '';
+    // 處理回應 - Puter.js 可能返回字串或物件
+    let content = '';
+    if (typeof response === 'string') {
+      content = response;
+    } else if (response && typeof response === 'object') {
+      // 排除 AsyncIterable（streaming 模式的回應）
+      if (Symbol.asyncIterator in response) {
+        for await (const part of response) {
+          if (part?.text) {
+            content += part.text;
+          }
+        }
+      } else {
+        const respObj = response as unknown as Record<string, unknown>;
+        if (typeof respObj.text === 'string') {
+          content = respObj.text;
+        } else if (typeof respObj.message === 'string') {
+          content = respObj.message;
+        } else if (typeof respObj.content === 'string') {
+          content = respObj.content;
+        } else if (typeof respObj.response === 'string') {
+          content = respObj.response;
+        }
+      }
+    }
     const confidence = content.length > 100 ? 0.8 : 0.5;
 
     return {

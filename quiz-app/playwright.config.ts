@@ -40,7 +40,7 @@ export default defineConfig({
 
   // 本地開發時自動啟動預覽伺服器
   webServer: {
-    command: 'pnpm preview',
+    command: 'npm run preview',
     url: 'http://localhost:4173',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
