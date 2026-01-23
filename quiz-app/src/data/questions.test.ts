@@ -16,7 +16,8 @@ import {
 describe('題庫資料模組', () => {
   describe('stats 統計資料', () => {
     it('應該有正確的總題數', () => {
-      expect(stats.total).toBe(719);
+      // 更新：移除有問題的題目後，總數從 719 降為 648
+      expect(stats.total).toBe(648);
     });
 
     it('考科一和考科二題數加總應等於總題數', () => {
