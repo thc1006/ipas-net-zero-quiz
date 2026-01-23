@@ -146,9 +146,13 @@ ${question.answer ? `正確答案：${question.answer}` : '（此題無標準答
   try {
     const response = await window.puter.ai.chat(prompt, { model: AI_MODEL });
 
-    // 除錯：記錄 Puter.js 回應格式
+    // 除錯：詳細記錄 Puter.js 回應格式
     console.log('[AI Helper] Response type:', typeof response);
-    console.log('[AI Helper] Response:', response);
+    console.log('[AI Helper] Full response:', JSON.stringify(response, null, 2));
+    if (response && typeof response === 'object' && 'message' in response) {
+      const msg = (response as { message?: unknown }).message;
+      console.log('[AI Helper] response.message:', JSON.stringify(msg, null, 2));
+    }
 
     // 處理回應 - Puter.js 可能返回字串、物件 { text: string } 或其他格式
     let content = '';
@@ -156,13 +160,19 @@ ${question.answer ? `正確答案：${question.answer}` : '（此題無標準答
       content = response;
     } else if (response && typeof response === 'object') {
       // 排除 AsyncIterable（streaming 模式的回應）
-      if (Symbol.asyncIterator in response) {
+      const isAsyncIterable = Symbol.asyncIterator in response;
+      console.log('[AI Helper] Is AsyncIterable:', isAsyncIterable);
+
+      if (isAsyncIterable) {
         // 如果是 streaming 回應，逐一收集
+        console.log('[AI Helper] Processing as streaming response...');
         for await (const part of response) {
+          console.log('[AI Helper] Stream part:', part);
           if (part?.text) {
             content += part.text;
           }
         }
+        console.log('[AI Helper] Streaming done, content length:', content.length);
       } else {
         // 嘗試從物件中提取文字內容
         // Puter.js 回應格式因模型而異：
@@ -203,6 +213,7 @@ ${question.answer ? `正確答案：${question.answer}` : '（此題無標準答
     }
 
     console.log('[AI Helper] Extracted content length:', content.length);
+    console.log('[AI Helper] Content preview:', content.slice(0, 200));
 
     // 簡單的信心分數估算（基於回應長度和是否包含關鍵詞）
     const confidence = estimateConfidence(content, question);
