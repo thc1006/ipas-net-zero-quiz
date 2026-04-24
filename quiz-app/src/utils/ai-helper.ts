@@ -18,9 +18,8 @@ declare global {
   }
 }
 
-// AI 模型設定 - 使用 OpenAI GPT-5.2（目前最強模型）
-// 其他可用選項：'gpt-4o', 'o1', 'o3'
-const AI_MODEL = 'gpt-5.2-chat';
+// AI 模型設定 - 使用 OpenAI GPT-5.4（透過 Puter.js）
+const AI_MODEL = 'openai/gpt-5.4';
 const CONFIDENCE_THRESHOLD = 0.7;
 
 // 系統提示詞（中文）
