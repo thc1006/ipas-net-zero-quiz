@@ -51,9 +51,13 @@
         "confidence": "high",
         "sources_count": 2,
         "verification_source": "ISO 14064-1:2018 §5.2.4; cross-check vs gist_items[546]",
-        "prior_answer": "A"
+        "prior_answer": "A",
+        "sources": [
+          "https://www.iso.org/standard/66453.html"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "ISO 14064-1:2018 類別 4「使用自組織之產品所致之間接排放」涵蓋採購之貨物與服務、設備、委外活動，以及作為承租人之租賃資產等。商務差旅與員工通勤屬類別 3（運輸造成之間接排放），購入電力屬類別 2。故本題正解為租賃資產的排放（B）。"
+      "explanation": "ISO 14064-1:2018 類別 4「使用自組織之產品所致之間接排放」涵蓋採購之貨物與服務、設備、委外活動，以及作為承租人之租賃資產等。商務差旅與員工通勤屬類別 3（運輸造成之間接排放），購入電力屬類別 2。故本題正解為租賃資產的排放（B）。\n\n資料來源：https://www.iso.org/standard/66453.html"
     },
     {
       "index": 2,
@@ -2774,9 +2778,13 @@
         "confidence": "medium",
         "sources_count": 2,
         "verification_source": "CBAM Omnibus 修正案（Regulation (EU) 2025/XXX, 2025-10-20 生效）將憑證繳交期限由 5/31 延至 9/30；首次繳交為 2027-09-30（涵蓋 2026 進口）。",
-        "prior_answer": "D"
+        "prior_answer": "D",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "依 CBAM Omnibus 修正案（2025/10 生效），進口商請求回購（buy-back）多餘 CBAM 憑證之截止日為每年 10 月 31 日，11 月 1 日系統自動註銷未用憑證（原規定為 6/30）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）"
+      "explanation": "依 CBAM Omnibus 修正案（2025/10 生效），進口商請求回購（buy-back）多餘 CBAM 憑證之截止日為每年 10 月 31 日，11 月 1 日系統自動註銷未用憑證（原規定為 6/30）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
     },
     {
       "index": 82,
@@ -2846,9 +2854,13 @@
         "sources_count": 2,
         "verification_source": "Reg (EU) 2023/956 Art. 1(1)",
         "prior_answer": "B",
-        "answer_ambiguity_note": "B 與 D 皆可對應條文；若題意問『直接目的』選 D，『整體目的』可接受 B"
+        "answer_ambiguity_note": "B 與 D 皆可對應條文；若題意問『直接目的』選 D，『整體目的』可接受 B",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "依 Regulation (EU) 2023/956 Article 1(1)：CBAM 直接目的為『防止碳洩漏（prevent carbon leakage）』，藉此『降低全球碳排放（thereby reducing global carbon emissions）』並支持巴黎協定目標。四選項中以 D『保護本地產業競爭力』最貼近『防碳洩漏』意涵；B『降低碳排放』亦為條文明列之間接目的，屬可接受答案。本題因無『防止碳洩漏』選項，官方建議以 D 為最佳解。"
+      "explanation": "依 Regulation (EU) 2023/956 Article 1(1)：CBAM 直接目的為『防止碳洩漏（prevent carbon leakage）』，藉此『降低全球碳排放（thereby reducing global carbon emissions）』並支持巴黎協定目標。四選項中以 D『保護本地產業競爭力』最貼近『防碳洩漏』意涵；B『降低碳排放』亦為條文明列之間接目的，屬可接受答案。本題因無『防止碳洩漏』選項，官方建議以 D 為最佳解。\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
     },
     {
       "index": 84,
@@ -3053,9 +3065,14 @@
         "confidence": "high",
         "sources_count": 1,
         "verification_source": "氣候變遷因應法 §56 罰鍰上限",
-        "prior_answer": "D"
+        "prior_answer": "D",
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=56",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "依《氣候變遷因應法》第 56 條規定，事業違反排放額度扣減義務，未於移轉期限日前在帳戶中登錄足供扣減之排放額度者，每公噸超額量之罰鍰上限為新臺幣 1,500 元。（註：§52 規範溫室氣體抵換不實、高 GWP 物質禁限制等，罰額另計）"
+      "explanation": "依《氣候變遷因應法》第 56 條規定，事業違反排放額度扣減義務，未於移轉期限日前在帳戶中登錄足供扣減之排放額度者，每公噸超額量之罰鍰上限為新臺幣 1,500 元。（註：§52 規範溫室氣體抵換不實、高 GWP 物質禁限制等，罰額另計）\n\n資料來源：https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=56 ; https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098"
     },
     {
       "index": 90,
@@ -3123,9 +3140,13 @@
         "verification_batch": "D",
         "confidence": "medium",
         "sources_count": 2,
-        "verification_source": "CBAM Omnibus 修正案（Regulation (EU) 2025/XXX, 2025-10-20 生效）將憑證繳交期限由 5/31 延至 9/30；首次繳交為 2027-09-30（涵蓋 2026 進口）。"
+        "verification_source": "CBAM Omnibus 修正案（Regulation (EU) 2025/XXX, 2025-10-20 生效）將憑證繳交期限由 5/31 延至 9/30；首次繳交為 2027-09-30（涵蓋 2026 進口）。",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "依 CBAM Omnibus 修正案（2025/10 生效），進口商須於每年 9 月底前（9/30）支付前一年度 CBAM 憑證（原為 5/31）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）"
+      "explanation": "依 CBAM Omnibus 修正案（2025/10 生效），進口商須於每年 9 月底前（9/30）支付前一年度 CBAM 憑證（原為 5/31）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
     },
     {
       "index": 92,
@@ -4826,9 +4847,13 @@
         "confidence": "high",
         "sources_count": 3,
         "verification_source": "CBAM 過渡期結束日為 2025/12/31",
-        "prior_answer": "A"
+        "prior_answer": "A",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "CBAM 過渡期自 2023 年 10 月 1 日至 2025 年 12 月 31 日。2026 年 1 月 1 日起進入定價期（正式期）。"
+      "explanation": "CBAM 過渡期自 2023 年 10 月 1 日至 2025 年 12 月 31 日。2026 年 1 月 1 日起進入定價期（正式期）。\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
     },
     {
       "index": 142,
@@ -5000,9 +5025,13 @@
         "sources_count": 3,
         "verification_source": "題幹修潤使對應影子碳定價定義",
         "stem_fixed": true,
-        "prior_stem": "內部碳定價的一種實施方式是對每噸 CO₂ 徵收費用，這稱為什麼模式？"
+        "prior_stem": "內部碳定價的一種實施方式是對每噸 CO₂ 徵收費用，這稱為什麼模式？",
+        "sources": [
+          "https://www.cdp.net/en"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "影子碳定價（Shadow Carbon Price）為企業內部假設性、非實際課徵之碳價格，用於評估長期投資之碳風險與機會；與實際課徵之碳稅、碳費及碳交易模式不同。"
+      "explanation": "影子碳定價（Shadow Carbon Price）為企業內部假設性、非實際課徵之碳價格，用於評估長期投資之碳風險與機會；與實際課徵之碳稅、碳費及碳交易模式不同。\n\n資料來源：https://www.cdp.net/en"
     },
     {
       "index": 147,
@@ -5104,9 +5133,13 @@
         "verification_batch": "E",
         "confidence": "medium",
         "sources_count": 3,
-        "verification_source": "CBAM Omnibus 修正案（Regulation (EU) 2025/XXX, 2025-10-20 生效）將憑證繳交期限由 5/31 延至 9/30；首次繳交為 2027-09-30（涵蓋 2026 進口）。"
+        "verification_source": "CBAM Omnibus 修正案（Regulation (EU) 2025/XXX, 2025-10-20 生效）將憑證繳交期限由 5/31 延至 9/30；首次繳交為 2027-09-30（涵蓋 2026 進口）。",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "依 CBAM Omnibus 修正案（2025/10 生效），過渡期後進口商須於每年 9 月 30 日前繳交足夠之 CBAM 憑證（原規定為 5/31）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）"
+      "explanation": "依 CBAM Omnibus 修正案（2025/10 生效），過渡期後進口商須於每年 9 月 30 日前繳交足夠之 CBAM 憑證（原規定為 5/31）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
     },
     {
       "index": 150,
@@ -5143,9 +5176,14 @@
         "verification_source": "環部氣字第 1139101260 號公告(113/2/22) 納管門檻 2.5 萬噸",
         "prior_answer": "C",
         "stem_fixed": true,
-        "prior_stem": "如果製造業的直接與間接排放量超過 2 萬噸，該企業需要被納管，此門檻為？"
+        "prior_stem": "如果製造業的直接與間接排放量超過 2 萬噸，該企業需要被納管，此門檻為？",
+        "sources": [
+          "https://www.cca.gov.tw/",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "依環境部 113 年 2 月 22 日環部氣字第 1139101260 號公告「事業應盤查登錄及查驗溫室氣體排放量之排放源」：全廠（場）化石燃料燃燒之固定污染源直接排放及使用電力、熱或蒸汽之能源間接排放，年排放量合計達 2 萬 5 千公噸 CO₂e 以上之製造業，應辦理溫室氣體排放量盤查登錄與查驗。"
+      "explanation": "依環境部 113 年 2 月 22 日環部氣字第 1139101260 號公告「事業應盤查登錄及查驗溫室氣體排放量之排放源」：全廠（場）化石燃料燃燒之固定污染源直接排放及使用電力、熱或蒸汽之能源間接排放，年排放量合計達 2 萬 5 千公噸 CO₂e 以上之製造業，應辦理溫室氣體排放量盤查登錄與查驗。\n\n資料來源：https://www.cca.gov.tw/ ; https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
     },
     {
       "index": 151,
@@ -6133,9 +6171,13 @@
         "sources_count": 1,
         "verification_source": "ISO 14064-1:2018 §5.2.4 Cat 4/5 定義",
         "stem_fixed": true,
-        "prior_stem": "以下哪項屬於 ISO 14064‑1 中 Category 4（使用階段間接排放）？"
+        "prior_stem": "以下哪項屬於 ISO 14064‑1 中 Category 4（使用階段間接排放）？",
+        "sources": [
+          "https://www.iso.org/standard/66453.html"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "ISO 14064-1:2018 §5.2.4：Category 5 為『使用自組織產品所致之間接排放』（下游使用階段）；Category 4 為『使用自組織之產品（上游）所致之間接排放』（採購商品與服務、廢棄物處理、作為承租人之租賃資產等）。由產品使用階段產生之排放屬 Cat 5。"
+      "explanation": "ISO 14064-1:2018 §5.2.4：Category 5 為『使用自組織產品所致之間接排放』（下游使用階段）；Category 4 為『使用自組織之產品（上游）所致之間接排放』（採購商品與服務、廢棄物處理、作為承租人之租賃資產等）。由產品使用階段產生之排放屬 Cat 5。\n\n資料來源：https://www.iso.org/standard/66453.html"
     },
     {
       "index": 180,
@@ -16378,9 +16420,15 @@
         "sources_count": 1,
         "verification_source": "IPCC AR5 WG1 Table 8.A.1; 環部授氣字第 1139101231 號公告",
         "options_fixed": true,
-        "stem_fixed_v2": true
+        "stem_fixed_v2": true,
+        "sources": [
+          "https://www.ipcc.ch/report/ar5/wg1/",
+          "https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter08_FINAL.pdf",
+          "https://ghgregistry.moenv.gov.tw/"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "50 kg SF₆ × 23,500 kgCO₂e/kgSF₆ = 1,175,000 kgCO₂e = 1,175 tCO₂e。本題採 IPCC AR5（2013）SF₆ GWP100 值 23,500，亦為我國環境部 113/2/5 環部授氣字第 1139101231 號公告採用之版本。（註：先前題目所用 22,800 為 AR4 值，已更新）"
+      "explanation": "50 kg SF₆ × 23,500 kgCO₂e/kgSF₆ = 1,175,000 kgCO₂e = 1,175 tCO₂e。本題採 IPCC AR5（2013）SF₆ GWP100 值 23,500，亦為我國環境部 113/2/5 環部授氣字第 1139101231 號公告採用之版本。（註：先前題目所用 22,800 為 AR4 值，已更新）\n\n資料來源：https://www.ipcc.ch/report/ar5/wg1/ ; https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter08_FINAL.pdf ; https://ghgregistry.moenv.gov.tw/"
     },
     {
       "index": 481,
@@ -16688,9 +16736,13 @@
         "sources_count": 1,
         "verification_source": "題幹修潤使與選項 B 計算結果一致",
         "stem_fixed": true,
-        "prior_stem": "某農業公司年度水稻種植甲烷排放量為200噸，甲烷排放係數為5.0 kgCH₄/噸稻草，甲烷全球暖化潛勢為25。請計算其溫室氣體排放量。"
+        "prior_stem": "某農業公司年度水稻種植甲烷排放量為200噸，甲烷排放係數為5.0 kgCH₄/噸稻草，甲烷全球暖化潛勢為25。請計算其溫室氣體排放量。",
+        "sources": [
+          "https://www.ipcc.ch/report/ar5/wg1/"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "200 噸稻草 × 5.0 kgCH₄/噸 = 1,000 kgCH₄ = 1 tCH₄；1 tCH₄ × 25 GWP = 25 tCO₂e。故答 B。"
+      "explanation": "200 噸稻草 × 5.0 kgCH₄/噸 = 1,000 kgCH₄ = 1 tCH₄；1 tCH₄ × 25 GWP = 25 tCO₂e。故答 B。\n\n資料來源：https://www.ipcc.ch/report/ar5/wg1/"
     },
     {
       "index": 490,
@@ -16862,9 +16914,14 @@
         "sources_count": 1,
         "verification_source": "IPCC AR5 WG1 Table 8.A.1",
         "options_fixed": true,
-        "stem_fixed_v2": true
+        "stem_fixed_v2": true,
+        "sources": [
+          "https://www.ipcc.ch/report/ar5/wg1/",
+          "https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter08_FINAL.pdf"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "60 kg SF₆ × 23,500 kgCO₂e/kgSF₆ = 1,410,000 kgCO₂e = 1,410 tCO₂e。本題採 IPCC AR5（2013）SF₆ GWP100 值 23,500，亦為我國環境部 113/2/5 公告採用之版本。（註：先前題目所用 22,800 為 AR4 值，已更新）"
+      "explanation": "60 kg SF₆ × 23,500 kgCO₂e/kgSF₆ = 1,410,000 kgCO₂e = 1,410 tCO₂e。本題採 IPCC AR5（2013）SF₆ GWP100 值 23,500，亦為我國環境部 113/2/5 公告採用之版本。（註：先前題目所用 22,800 為 AR4 值，已更新）\n\n資料來源：https://www.ipcc.ch/report/ar5/wg1/ ; https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter08_FINAL.pdf"
     },
     {
       "index": 495,
@@ -18428,9 +18485,13 @@
         "verification_batch": "F",
         "confidence": "high",
         "sources_count": 2,
-        "verification_source": "NDC 3.0 (2025)"
+        "verification_source": "NDC 3.0 (2025)",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/response-policies/ndc/2029.html"
+        ],
+        "sources_verified_date": "2026-04-25"
       },
-      "explanation": "NDC 3.0（2025 公布）將 2030 年減排目標由 24±1% 提升為 28±2%（相較 2005 基準年）。"
+      "explanation": "NDC 3.0（2025 公布）將 2030 年減排目標由 24±1% 提升為 28±2%（相較 2005 基準年）。\n\n資料來源：https://www.cca.gov.tw/affairs/response-policies/ndc/2029.html"
     },
     {
       "index": 541,
@@ -19002,13 +19063,17 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "今日（2026-04）CBAM 已進入定價期（2026/01 起），依 Regulation (EU) 2023/956 Art. 19：授權 CBAM 申報人之申報、憑證繳交、核實與罰則由各會員國指定之主管機關（National Competent Authority, NCA）初審負責，歐盟執委會負責總籌與監督。過渡期（2023/10–2025/12）則由執委會直接受理季報。",
+      "explanation": "今日（2026-04）CBAM 已進入定價期（2026/01 起），依 Regulation (EU) 2023/956 Art. 19：授權 CBAM 申報人之申報、憑證繳交、核實與罰則由各會員國指定之主管機關（National Competent Authority, NCA）初審負責，歐盟執委會負責總籌與監督。過渡期（2023/10–2025/12）則由執委會直接受理季報。\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
       "metadata": {
         "answer_verified": true,
         "verification_date": "2026-04-25",
         "verification_source": "CBAM 定價期由會員國主管機關初審",
         "original_id": "c1-029",
-        "prior_answer": "C"
+        "prior_answer": "C",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
+        ],
+        "sources_verified_date": "2026-04-25"
       }
     },
     {
