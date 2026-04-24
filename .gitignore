@@ -9,6 +9,7 @@ build/
 /docs/
 /scripts/
 /data/
+/audit/
 PROGRESS_DASHBOARD.md
 *.jsonl
 
