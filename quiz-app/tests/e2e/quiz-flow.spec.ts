@@ -3,9 +3,18 @@ import { test, expect } from '@playwright/test';
 /**
  * 測驗流程 E2E 測試
  */
+// PR #37 加了首次自動彈 PracticeOptInDialog；e2e test 需先設定 seen flag
+// 才能 click 主畫面元件不被 dialog overlay 擋住
+async function gotoHome(page: import('@playwright/test').Page): Promise<void> {
+  await page.addInitScript(() => {
+    window.localStorage.setItem('practice-pool-disclosure-seen', '1');
+  });
+  await page.goto('/');
+}
+
 test.describe('測驗流程', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await gotoHome(page);
   });
 
   test('首頁應顯示標題', async ({ page }) => {
@@ -76,7 +85,7 @@ test.describe('測驗流程', () => {
 
 test.describe('無障礙功能', () => {
   test('應能切換深色模式', async ({ page }) => {
-    await page.goto('/');
+    await gotoHome(page);
 
     // 找到深色模式切換按鈕
     const darkModeToggle = page.getByRole('button', { name: /深色|dark/i });
@@ -87,7 +96,7 @@ test.describe('無障礙功能', () => {
   });
 
   test('鍵盤導覽應正常運作', async ({ page }) => {
-    await page.goto('/');
+    await gotoHome(page);
     await page.getByRole('button', { name: /開始測驗/i }).click();
     await expect(page.locator('.question-card')).toBeVisible();
 
@@ -101,7 +110,7 @@ test.describe('無障礙功能', () => {
   });
 
   test('選項應有正確的 ARIA 屬性', async ({ page }) => {
-    await page.goto('/');
+    await gotoHome(page);
     await page.getByRole('button', { name: /開始測驗/i }).click();
 
     // 應有 radiogroup
@@ -117,7 +126,7 @@ test.describe('無障礙功能', () => {
 test.describe('響應式設計', () => {
   test('行動裝置應正常顯示', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('/');
+    await gotoHome(page);
 
     // 標題應可見
     await expect(page.locator('h1')).toBeVisible();
