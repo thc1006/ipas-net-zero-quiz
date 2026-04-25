@@ -125,6 +125,8 @@ export interface QuizConfig {
   questionCount: number;
   shuffleQuestions: boolean;
   shuffleOptions: boolean;
+  /** 是否將加強練習池題目混入抽題範圍（須使用者已 opt-in） */
+  includePracticePool?: boolean;
   showAnswerImmediately: boolean;
 }
 

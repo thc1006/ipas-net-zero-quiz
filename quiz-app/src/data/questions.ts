@@ -113,6 +113,25 @@ export function getRandomQuestions(
 
   return shuffled.slice(0, Math.min(count, shuffled.length));
 }
+/**
+ * 從自訂題庫池中隨機抽題（用於混合主題庫 + 練習池等情境）
+ */
+export function getRandomQuestionsFromPool(
+  pool: QuizQuestion[],
+  count: number,
+  subject: ExamSubject | 'all' = 'all',
+  onlyWithAnswer = false
+): QuizQuestion[] {
+  let filtered = subject === 'all' ? pool : pool.filter((q) => q.subject === subject);
+  if (onlyWithAnswer) filtered = filtered.filter((q) => q.hasAnswer);
+  const shuffled = [...filtered];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled.slice(0, Math.min(count, shuffled.length));
+}
+
 
 /**
  * 依據 ID 取得題目

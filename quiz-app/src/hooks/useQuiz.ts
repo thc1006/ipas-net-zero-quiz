@@ -6,7 +6,13 @@ import type {
   AnswerRecord,
   QuizResult,
 } from '../types/quiz';
-import { getRandomQuestions, getQuestionsBySubject } from '../data/questions';
+import {
+  getRandomQuestions,
+  getQuestionsBySubject,
+  getRandomQuestionsFromPool,
+  allQuestions,
+} from '../data/questions';
+import { loadPracticePool, toQuizQuestion } from '../utils/practice-pool';
 
 /** 測驗狀態 */
 export interface QuizState {
@@ -62,6 +68,64 @@ export function useQuiz() {
     }
 
     // 如果需要打亂選項順序
+    if (config.shuffleOptions) {
+      questions = questions.map((q) => ({
+        ...q,
+        options: shuffleArray([...q.options]),
+      }));
+    }
+
+    setState({
+      isActive: true,
+      questions,
+      currentIndex: 0,
+      answers: [],
+      startTime: Date.now(),
+      config,
+    });
+    setQuestionStartTime(Date.now());
+  }, []);
+
+  /**
+   * 開始測驗（async 版本）：當 config.includePracticePool 為 true 時，
+   * 動態載入練習池並混入抽題範圍；否則行為等同 startQuiz。
+   * 練習池僅在使用者於 settings 啟用後才應傳入 includePracticePool=true。
+   */
+  const startQuizWithPool = useCallback(async (config: QuizConfig) => {
+    let questions: QuizQuestion[];
+
+    if (config.includePracticePool) {
+      const pool = await loadPracticePool();
+      const poolItems = pool.items
+        .map(toQuizQuestion)
+        .filter((q) => {
+          // 只在 'all' 或明確映射 subject 一致時納入；排除 unmapped_subject
+          if (config.subject === 'all') return true;
+          if (q.qualityFlags?.includes('unmapped_subject')) return false;
+          return q.subject === config.subject;
+        });
+      const combined: QuizQuestion[] = [...allQuestions, ...poolItems];
+
+      questions = config.shuffleQuestions
+        ? getRandomQuestionsFromPool(
+            combined,
+            config.questionCount,
+            config.subject,
+            config.mode === 'exam'
+          )
+        : (config.subject === 'all' ? combined : combined.filter((q) => q.subject === config.subject))
+            .slice(0, config.questionCount);
+    } else {
+      // 不混練習池 — fallback 到 startQuiz 邏輯
+      questions = config.shuffleQuestions
+        ? getRandomQuestions(
+            config.questionCount,
+            config.subject,
+            config.mode === 'exam'
+          )
+        : getQuestionsBySubject(config.subject).slice(0, config.questionCount);
+    }
+
     if (config.shuffleOptions) {
       questions = questions.map((q) => ({
         ...q,
