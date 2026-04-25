@@ -39,6 +39,9 @@ interface LoggerOptions {
    * 若提供 key，ring buffer 會持久化到 localStorage[key]，並在 constructor
    * 從中還原 — 讓 production 可在 reload 後仍看到上次崩潰的 error。
    * 預設 undefined（純 in-memory）。
+   *
+   * 持久化前會自動 sanitize PII-looking keys（email/password/token/auth/...）
+   * 把 value 改成 `'[redacted]'`，避免 logger 不慎洩漏使用者個資。
    */
   persistKey?: string;
 }
@@ -47,6 +50,40 @@ const LEVEL_RANK: Record<LogLevel, number> = { info: 0, warn: 1, error: 2 };
 
 /** 序列化 size 上限（bytes）— 防 localStorage quota；超過會 reset buffer */
 const PERSIST_MAX_BYTES = 32 * 1024;
+
+/** 持久化前 redact 的 key 模式（不分大小寫，整個 key 配對 substring） */
+const PII_KEY_PATTERNS = [
+  /password/i,
+  /passwd/i,
+  /token/i,
+  /auth/i,
+  /secret/i,
+  /api[_-]?key/i,
+  /credential/i,
+  /session/i,
+  /cookie/i,
+  /email/i,
+  /phone/i,
+  /ssn/i,
+  /身分證|身份證/,
+  /credit[_-]?card/i,
+];
+
+function isPiiKey(key: string): boolean {
+  return PII_KEY_PATTERNS.some((re) => re.test(key));
+}
+
+/** 遞迴 sanitize：把 PII-looking key 的 value 改成 '[redacted]' */
+function sanitizeForPersist(input: unknown, depth = 0): unknown {
+  if (depth > 4) return '[truncated]'; // 防深度循環
+  if (input === null || typeof input !== 'object') return input;
+  if (Array.isArray(input)) return input.map((v) => sanitizeForPersist(v, depth + 1));
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(input)) {
+    out[k] = isPiiKey(k) ? '[redacted]' : sanitizeForPersist(v, depth + 1);
+  }
+  return out;
+}
 
 function serializeError(err: unknown): string | undefined {
   if (err === undefined || err === null) return undefined;
@@ -178,7 +215,15 @@ export class Logger {
     }
 
     if (this.persistKey) {
-      safeWritePersisted(this.persistKey, this.buffer);
+      // 持久化前 sanitize：避免 context 中的 PII (email/token/etc) 落地 localStorage
+      const sanitized = this.buffer.map((e) => ({
+        ...e,
+        context:
+          e.context === undefined
+            ? undefined
+            : (sanitizeForPersist(e.context) as Record<string, unknown>),
+      }));
+      safeWritePersisted(this.persistKey, sanitized);
     }
 
     if (!this.shouldLog('error')) return;
