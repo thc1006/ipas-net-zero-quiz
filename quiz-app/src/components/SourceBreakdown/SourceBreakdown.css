@@ -1,0 +1,104 @@
+/* ResultPage 按題目來源的正確率分組 */
+.source-breakdown {
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.source-breakdown__title {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  margin: 0 0 var(--spacing-sm);
+  color: var(--color-text-primary);
+}
+
+.source-breakdown__rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.source-breakdown__row {
+  display: grid;
+  grid-template-columns: 6em 5em 1fr 4em auto;
+  gap: var(--spacing-sm);
+  align-items: center;
+  font-size: var(--font-size-sm);
+}
+
+.source-breakdown__label {
+  font-variation-settings: 'wght' 540;
+  color: var(--color-text-primary);
+}
+
+.source-breakdown__count {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+  text-align: right;
+}
+
+.source-breakdown__bar-track {
+  height: 10px;
+  background: var(--color-surface-variant);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.source-breakdown__bar {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 220ms ease;
+}
+
+.source-breakdown__row--main .source-breakdown__bar { background: var(--color-success); }
+.source-breakdown__row--mock .source-breakdown__bar { background: var(--color-info); }
+.source-breakdown__row--ai .source-breakdown__bar { background: var(--color-warning); }
+.source-breakdown__row--low .source-breakdown__bar { background: var(--color-error); }
+
+.source-breakdown__pct {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  text-align: right;
+  color: var(--color-text-primary);
+}
+
+.source-breakdown__note {
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+}
+
+.source-breakdown__hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  margin: var(--spacing-md) 0 0;
+  padding-top: var(--spacing-sm);
+  border-top: 1px dashed var(--color-border);
+}
+
+@media (max-width: 640px) {
+  .source-breakdown {
+    padding: var(--spacing-sm);
+  }
+  .source-breakdown__row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'label count'
+      'bar pct'
+      'note note';
+    row-gap: 4px;
+  }
+  .source-breakdown__label { grid-area: label; }
+  .source-breakdown__count { grid-area: count; text-align: right; }
+  .source-breakdown__bar-track { grid-area: bar; height: 8px; }
+  .source-breakdown__pct { grid-area: pct; min-width: 3em; }
+  .source-breakdown__note { grid-area: note; font-size: 0.7rem; }
+  .source-breakdown__title {
+    font-size: var(--font-size-sm);
+  }
+}
