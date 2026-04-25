@@ -81,8 +81,8 @@ describe('ResultPage', () => {
     expect(screen.getByText(/DR \/ 答錯/)).toBeInTheDocument();
     expect(screen.getByText(/Σ \/ 總題數/)).toBeInTheDocument();
     expect(screen.getByText(/τ \/ 用時/)).toBeInTheDocument();
-    // 用時格式化（visible row + 隱藏 legacy block 都會 render，故 getAllByText）
-    expect(screen.getAllByText(/2 分 5 秒/).length).toBeGreaterThan(0);
+    // 用時格式化（legacy hidden block 已刪，只剩 ledger row）
+    expect(screen.getByText(/2 分 5 秒/)).toBeInTheDocument();
   });
 
   it('shows BAND B for score 70-89', () => {

@@ -2,6 +2,7 @@
 // 設計概念：頁面像一本「碳審計年鑑」的扉頁；配置區像填寫測驗工作單。
 import { useState, useCallback } from 'react';
 import { stats } from '../data/questions';
+import { PRACTICE_POOL_COUNTS } from '../data/practice-pool-counts';
 import { defaultConfig } from '../hooks/useQuiz';
 import { usePracticeMode } from '../hooks/usePracticeMode';
 import type { QuizConfig, ExamSubject } from '../types/quiz';
@@ -150,7 +151,7 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
           <div className="cl-hero__stat cl-hero__stat--addendum">
             <dt className="cl-eyebrow">補充 / Addendum</dt>
             <dd>
-              <span className="cl-figure cl-hero__stat-num">+153</span>
+              <span className="cl-figure cl-hero__stat-num">+{PRACTICE_POOL_COUNTS.total}</span>
               <span className="cl-hero__stat-unit">加強練習池</span>
             </dd>
           </div>
@@ -161,7 +162,7 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
             <span className="cl-fn-marker">±</span>
             <span>
               <strong className="cl-hero__practice-label">加強練習池啟用中</strong>
-              ：本場測驗將額外混入 153 題（55 模擬 + 98 AI 產題；每題附來源徽章）。
+              ：本場測驗將額外混入 {PRACTICE_POOL_COUNTS.total} 題（{PRACTICE_POOL_COUNTS.externalMock} 模擬 + {PRACTICE_POOL_COUNTS.aiGenerated} AI 產題；每題附來源徽章）。
               於設定頁可關閉。
             </span>
           </aside>
@@ -319,8 +320,8 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
             <span className="cl-fn-marker">i</span>
             <span>
               {practiceMode.enabled
-                ? '加強練習池已啟用 — 抽題範圍將包含 153 題補充題（含 AI 產題揭露徽章）。'
-                : '預設僅抽自主題庫；前往「設定 → 加強練習池」可加入 153 題補充題。'}
+                ? `加強練習池已啟用 — 抽題範圍將包含 ${PRACTICE_POOL_COUNTS.total} 題補充題（含 AI 產題揭露徽章）。`
+                : `預設僅抽自主題庫；前往「設定 → 加強練習池」可加入 ${PRACTICE_POOL_COUNTS.total} 題補充題。`}
             </span>
           </p>
         </div>

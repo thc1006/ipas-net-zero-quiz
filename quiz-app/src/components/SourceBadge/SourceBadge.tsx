@@ -13,10 +13,10 @@ interface SourceBadgeProps {
 
 const SOURCE_LABEL: Record<
   PracticePoolSourceType,
-  { text: string; icon: string; tone: string; abbrev: string }
+  { text: string; tone: string; abbrev: string }
 > = {
-  external_mock: { text: '模擬題', icon: 'menu_book', tone: 'mock', abbrev: 'EM' },
-  ai_generated: { text: 'AI 產題', icon: 'auto_awesome', tone: 'ai', abbrev: 'AI' },
+  external_mock: { text: '模擬題', tone: 'mock', abbrev: 'EM' },
+  ai_generated: { text: 'AI 產題', tone: 'ai', abbrev: 'AI' },
 };
 
 const FLAG_LABEL: Partial<Record<PracticePoolQualityFlag, string>> = {

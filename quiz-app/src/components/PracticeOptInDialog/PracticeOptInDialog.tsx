@@ -2,6 +2,7 @@
 // 設計：兩欄佈局；左欄視覺敘事（兩種來源視覺化條形）、右欄文字解說與 CTA。
 // 對應 EU AI Act Art.50（2026-08-02 起）對 AI 生成文字之揭露義務。
 import { useEffect, useRef } from 'react';
+import { PRACTICE_POOL_COUNTS } from '../../data/practice-pool-counts';
 import './PracticeOptInDialog.css';
 
 interface PracticeOptInDialogProps {
@@ -60,9 +61,10 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
 
   if (!open) return null;
 
-  // 條形比例：54:89 為實際數字
-  const mockPct = (54 / 143) * 100;
-  const aiPct = (89 / 143) * 100;
+  // 條形比例：以實際 pool 計數為單一事實來源
+  const { externalMock, aiGenerated, total } = PRACTICE_POOL_COUNTS;
+  const mockPct = (externalMock / total) * 100;
+  const aiPct = (aiGenerated / total) * 100;
 
   return (
     <div
@@ -94,7 +96,7 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
                     <span className="optin-source-row__dot tone-mock" />
                     模擬題
                   </span>
-                  <span className="cl-figure optin-source-row__count">54</span>
+                  <span className="cl-figure optin-source-row__count">{externalMock}</span>
                 </div>
                 <div
                   className="optin-source-bar"
@@ -109,7 +111,7 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
                     <span className="optin-source-row__dot tone-ai" />
                     AI 產題
                   </span>
-                  <span className="cl-figure optin-source-row__count">89</span>
+                  <span className="cl-figure optin-source-row__count">{aiGenerated}</span>
                 </div>
                 <div
                   className="optin-source-bar tone-ai"
@@ -120,7 +122,7 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
 
               <div className="optin-source-total">
                 <span className="cl-eyebrow">total addendum</span>
-                <span className="cl-figure optin-source-total__num">143</span>
+                <span className="cl-figure optin-source-total__num">{total}</span>
               </div>
             </div>
           </aside>
@@ -129,7 +131,7 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
           <div className="optin-dialog__copy">
             <p id="optin-desc" className="optin-dialog__lead">
               這是一份<em>獨立於主題庫</em>的補充題庫。
-              啟用後，下一場練習的抽題範圍會混入這 143 題，每一題都會帶來源徽章——
+              啟用後，下一場練習的抽題範圍會混入這 {total} 題，每一題都會帶來源徽章——
               你隨時看得出眼前這題出自哪裡。
             </p>
 

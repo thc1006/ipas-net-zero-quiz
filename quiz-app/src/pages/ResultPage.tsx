@@ -223,11 +223,6 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
             {formattedTime}
           </span>
         </div>
-        <div className="stat-item time" hidden aria-hidden="true">
-          <span className="material-icons">timer</span>
-          <span className="stat-value">{formattedTime}</span>
-          <span className="stat-label">用時</span>
-        </div>
       </section>
 
       {/* 錯題列表 */}
