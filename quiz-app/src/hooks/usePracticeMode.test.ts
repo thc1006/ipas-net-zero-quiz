@@ -1,5 +1,5 @@
 // usePracticeMode test — localStorage-backed enable/optIn state
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { renderHook, act, cleanup } from '@testing-library/react';
 import { usePracticeMode } from './usePracticeMode';
 
