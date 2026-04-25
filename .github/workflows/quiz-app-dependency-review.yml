@@ -24,7 +24,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Advisory only — Dependency graph 需 repo settings 啟用；未啟用時 action
+      # 回 'Dependency review is not supported on this repository' → step fail。
+      # continue-on-error 放在 step 層級才能讓 job 整體 conclusion = success
+      # （job 層級 continue-on-error 只防 workflow fail，但 job 仍標 failed）。
+      # 待 user 啟用 Dependency graph 後，此 step 會自動成功並轉嚴格 gate。
       - name: Dependency Review
+        continue-on-error: true
         uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: high

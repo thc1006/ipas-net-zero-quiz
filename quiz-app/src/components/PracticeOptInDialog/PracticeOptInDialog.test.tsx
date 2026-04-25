@@ -72,19 +72,20 @@ describe('PracticeOptInDialog', () => {
     });
   });
 
-  it('sets aria-hidden on #root while open and restores on close', () => {
-    // create #root
+  it('does NOT set aria-hidden on #root (relies on aria-modal=true on dialog itself)', () => {
+    // 故意不設 aria-hidden — dialog 是 #root 的子孫，若把 #root aria-hidden=true，
+    // dialog 本身也會被視為隱藏，導致 a11y tree 找不到 dialog。
+    // aria-modal="true" 已足以告知 SR 把 modal 外的內容當 inert。
     const root = document.createElement('div');
     root.id = 'root';
     document.body.appendChild(root);
 
-    const { rerender } = render(
-      <PracticeOptInDialog open onAccept={() => {}} onDecline={() => {}} />
-    );
-    expect(root.getAttribute('aria-hidden')).toBe('true');
-
-    rerender(<PracticeOptInDialog open={false} onAccept={() => {}} onDecline={() => {}} />);
+    render(<PracticeOptInDialog open onAccept={() => {}} onDecline={() => {}} />);
     expect(root.getAttribute('aria-hidden')).toBeNull();
+
+    // dialog 本身仍可透過 role + aria-modal 找到
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toHaveAttribute('aria-modal', 'true');
 
     document.body.removeChild(root);
   });

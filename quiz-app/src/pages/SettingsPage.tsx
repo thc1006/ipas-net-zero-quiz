@@ -4,7 +4,10 @@ import type { useAccessibility } from '../hooks/useAccessibility';
 import { usePracticeMode } from '../hooks/usePracticeMode';
 import { usePracticePool } from '../hooks/usePracticePool';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
+import packageJson from '../../package.json';
 import './SettingsPage.css';
+
+const APP_VERSION = packageJson.version;
 
 interface SettingsPageProps {
   accessibility: ReturnType<typeof useAccessibility>;
@@ -187,7 +190,7 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
       <section className="settings-section card about-section">
         <h2>關於</h2>
         <p>
-          <strong>淨零碳備考神器</strong> v1.0.0
+          <strong>淨零碳備考神器</strong> v{APP_VERSION}
         </p>
         <p>iPAS 淨零碳規劃管理師考古題練習工具</p>
         <p className="disclaimer">

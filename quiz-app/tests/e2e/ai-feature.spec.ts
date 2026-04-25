@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 /**
  * AI 功能 E2E 測試
@@ -10,6 +10,15 @@ import { test, expect } from '@playwright/test';
 // 檢測是否在 CI 環境
 const isCI = !!process.env.CI;
 
+// PR #37 加了首次自動彈 PracticeOptInDialog；e2e test 需先設定 seen flag
+// 才能 click 主畫面元件不被 dialog overlay 擋住
+async function gotoHome(page: Page): Promise<void> {
+  await page.addInitScript(() => {
+    window.localStorage.setItem('practice-pool-disclosure-seen', '1');
+  });
+  await page.goto('/');
+}
+
 test.describe('AI 解析功能', () => {
   test.beforeEach(async ({ page }) => {
     // 監聽 console 輸出以便除錯
@@ -19,7 +28,7 @@ test.describe('AI 解析功能', () => {
       }
     });
 
-    await page.goto('/');
+    await gotoHome(page);
   });
 
   test('練習模式下應顯示 AI 解析按鈕', async ({ page }) => {
@@ -199,7 +208,7 @@ test.describe('AI 解析功能', () => {
 test.describe('題目選項驗證', () => {
   test('所有題目應有 4 個選項', async ({ page }) => {
     // 設定題數為 10 題來抽樣檢查
-    await page.goto('/');
+    await gotoHome(page);
     await page.getByLabel(/題數/i).fill('10');
     await page.getByRole('button', { name: /開始測驗/i }).click();
 
@@ -230,7 +239,7 @@ test.describe('題目選項驗證', () => {
   });
 
   test('選項不應有重複的 key', async ({ page }) => {
-    await page.goto('/');
+    await gotoHome(page);
     await page.getByLabel(/題數/i).fill('5');
     await page.getByRole('button', { name: /開始測驗/i }).click();
 
@@ -254,7 +263,7 @@ test.describe('題目選項驗證', () => {
 
 test.describe('平台功能完整性', () => {
   test('首頁應顯示正確的題目統計', async ({ page }) => {
-    await page.goto('/');
+    await gotoHome(page);
 
     // 應顯示題目數量
     const statsText = await page.locator('.stats-badges').textContent();
@@ -265,7 +274,7 @@ test.describe('平台功能完整性', () => {
   });
 
   test('考試模式不應立即顯示答案', async ({ page }) => {
-    await page.goto('/');
+    await gotoHome(page);
 
     // 選擇考試模式
     await page.getByLabel(/測驗模式/i).selectOption('exam');

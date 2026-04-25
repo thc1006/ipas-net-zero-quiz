@@ -1,10 +1,17 @@
 // 首頁元件 - 測驗配置與開始
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { stats } from '../data/questions';
+import { PRACTICE_POOL_COUNTS } from '../data/practice-pool-counts';
 import { defaultConfig } from '../hooks/useQuiz';
 import { usePracticeMode } from '../hooks/usePracticeMode';
+import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
+import { readBool, writeBool } from '../utils/local-storage';
 import type { QuizConfig, ExamSubject } from '../types/quiz';
 import './HomePage.css';
+
+// localStorage key：使用者是否曾看過揭露 dialog（accept/decline 都算看過）
+// 用來避免每次進首頁都自動彈 — 一次就夠
+const DISCLOSURE_SEEN_KEY = 'practice-pool-disclosure-seen';
 
 interface HomePageProps {
   onStartQuiz: (config: QuizConfig) => void;
@@ -13,6 +20,39 @@ interface HomePageProps {
 export function HomePage({ onStartQuiz }: HomePageProps) {
   const [config, setConfig] = useState<QuizConfig>(defaultConfig);
   const practiceMode = usePracticeMode();
+  const [optInDialogOpen, setOptInDialogOpen] = useState(false);
+
+  // 首次進首頁、尚未 opt-in、尚未看過揭露 → 自動彈 dialog
+  // 已 opt-in 過或已 dismissed 過則不彈
+  useEffect(() => {
+    if (practiceMode.hasOptedIn) return;
+    if (readBool(DISCLOSURE_SEEN_KEY)) return;
+    setOptInDialogOpen(true);
+  }, [practiceMode.hasOptedIn]);
+
+  const handlePracticeToggle = useCallback(() => {
+    if (practiceMode.enabled) {
+      practiceMode.disable();
+      return;
+    }
+    if (practiceMode.hasOptedIn) {
+      // 已揭露過，直接啟用不再彈 dialog
+      practiceMode.enable();
+      return;
+    }
+    setOptInDialogOpen(true);
+  }, [practiceMode]);
+
+  const handleAcceptOptIn = useCallback(() => {
+    writeBool(DISCLOSURE_SEEN_KEY, true);
+    practiceMode.acceptOptIn();
+    setOptInDialogOpen(false);
+  }, [practiceMode]);
+
+  const handleDeclineOptIn = useCallback(() => {
+    writeBool(DISCLOSURE_SEEN_KEY, true);
+    setOptInDialogOpen(false);
+  }, []);
 
   const handleSubjectChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -75,14 +115,96 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
           <span className="badge badge-info">
             考科二 {stats.subject2} 題
           </span>
-          {practiceMode.enabled && (
-            <span className="badge badge-warning" title="加強練習池啟用中：包含模擬題與 AI 產題">
+          {practiceMode.enabled ? (
+            <button
+              type="button"
+              className="badge badge-warning badge-button"
+              onClick={handlePracticeToggle}
+              aria-label="停用加強練習池"
+              title="加強練習池啟用中：包含模擬題與 AI 產題（點擊可停用）"
+            >
               <span className="material-icons sm">auto_awesome</span>
               加強練習池啟用中
-            </span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="badge badge-info badge-button"
+              onClick={handlePracticeToggle}
+              aria-label="啟用加強練習池"
+              title={`加強練習池：含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章）`}
+            >
+              <span className="material-icons sm">auto_awesome</span>
+              +{PRACTICE_POOL_COUNTS.total} 題加強練習
+            </button>
           )}
         </div>
       </section>
+
+      {/* 加強練習池 tip card — 隨啟用狀態切換內容，避免突然消失造成困惑 */}
+      {(() => {
+        const { enabled, hasOptedIn } = practiceMode;
+        let title: string;
+        let desc: string;
+        let ctaLabel: string;
+        let ctaIcon: string;
+        let modifierClass: string;
+
+        if (enabled) {
+          title = '加強練習池已啟用';
+          desc = `下一場測驗會額外混入 ${PRACTICE_POOL_COUNTS.total} 題（${PRACTICE_POOL_COUNTS.externalMock} 模擬 + ${PRACTICE_POOL_COUNTS.aiGenerated} AI 產題；每題附來源徽章）。`;
+          ctaLabel = '停用加強練習';
+          ctaIcon = 'remove_circle_outline';
+          modifierClass = 'practice-pool-tip--enabled';
+        } else if (hasOptedIn) {
+          title = '想多練？啟用加強練習池';
+          desc = `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章），啟用後下一場練習會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
+          ctaLabel = `啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習`;
+          ctaIcon = 'add_circle_outline';
+          modifierClass = '';
+        } else {
+          title = '想多練？啟用加強練習池';
+          desc = `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題；AI 產題依 EU AI Act Art.50 揭露，每題經獨立驗證且附 primary-source URL。`;
+          ctaLabel = `了解並啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習`;
+          ctaIcon = 'add_circle_outline';
+          modifierClass = '';
+        }
+
+        return (
+          <section
+            className={`practice-pool-tip card ${modifierClass}`}
+            data-testid="practice-pool-tip"
+            aria-labelledby="practice-pool-tip-heading"
+          >
+            <div className="practice-pool-tip__icon">
+              <span className="material-icons">
+                {enabled ? 'check_circle' : 'auto_awesome'}
+              </span>
+            </div>
+            <div className="practice-pool-tip__body">
+              <h3 id="practice-pool-tip-heading" className="practice-pool-tip__title">
+                {title}
+              </h3>
+              <p className="practice-pool-tip__desc">{desc}</p>
+              <button
+                type="button"
+                className={`btn ${enabled ? 'btn-secondary' : 'btn-primary'} practice-pool-tip__cta`}
+                onClick={handlePracticeToggle}
+              >
+                <span className="material-icons sm">{ctaIcon}</span>
+                {ctaLabel}
+              </button>
+            </div>
+          </section>
+        );
+      })()}
+
+      {/* AI 產題揭露對話框（首次自動彈，或從 badge / tip card CTA 觸發） */}
+      <PracticeOptInDialog
+        open={optInDialogOpen}
+        onAccept={handleAcceptOptIn}
+        onDecline={handleDeclineOptIn}
+      />
 
       {/* 測驗配置 */}
       <section className="config-section card">

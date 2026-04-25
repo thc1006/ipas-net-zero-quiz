@@ -1,0 +1,39 @@
+# Codecov 設定
+# - patch coverage threshold: 80% (PR 改動的行)
+# - project coverage threshold: 不退步 (auto)
+# - ignore: 設定檔、測試檔本身、entry-point bootstrap、generated assets
+coverage:
+  status:
+    patch:
+      default:
+        target: 80%
+        threshold: 1%
+    project:
+      default:
+        target: auto
+        threshold: 1%
+
+ignore:
+  # Vite / Vitest / ESLint 等 build 設定檔不該算 coverage
+  - "**/*.config.ts"
+  - "**/*.config.js"
+  - "**/*.config.mjs"
+  - "**/.eslintrc*"
+  # 測試 setup 與測試檔本身
+  - "**/test-setup.ts"
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+  # Entry point — bootstrap-only side effects；E2E 覆蓋
+  - "quiz-app/src/main.tsx"
+  # 純資料 / 型別宣告
+  - "quiz-app/src/data/*.json"
+  - "quiz-app/src/types/**"
+  # 文件
+  - "**/*.md"
+  - "audit/**"
+  - "scripts/**"
+
+comment:
+  layout: "diff, flags, files"
+  behavior: default
+  require_changes: false

@@ -39,6 +39,104 @@
   flex-wrap: wrap;
 }
 
+/* 可點擊的 badge（reset button defaults，hover 效果） */
+.badge-button {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+  transition: transform var(--transition-fast), filter var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+.badge-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.95);
+  box-shadow: var(--shadow-1);
+}
+.badge-button:active {
+  transform: translateY(0);
+  filter: brightness(0.9);
+}
+.badge-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* 加強練習池 tip card — 隨啟用狀態切換內容，永遠顯示讓使用者有 stable feedback */
+.practice-pool-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  background: var(--color-warning-bg);
+  border-left: 4px solid var(--color-warning);
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.practice-pool-tip--enabled {
+  background: var(--color-success-bg);
+  border-left-color: var(--color-success);
+}
+
+.practice-pool-tip__icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-warning);
+  color: var(--color-on-primary);
+  border-radius: var(--radius-full);
+  transition: background-color 200ms ease;
+}
+
+.practice-pool-tip--enabled .practice-pool-tip__icon {
+  background: var(--color-success);
+}
+
+.practice-pool-tip__icon .material-icons {
+  font-size: 24px;
+}
+
+.practice-pool-tip__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.practice-pool-tip__title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin: 0 0 var(--spacing-xs);
+  color: var(--color-text-primary);
+}
+
+.practice-pool-tip__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-md);
+  line-height: 1.6;
+}
+
+.practice-pool-tip__cta {
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 640px) {
+  .practice-pool-tip {
+    flex-direction: column;
+    padding: var(--spacing-md);
+  }
+  .practice-pool-tip__icon {
+    width: 40px;
+    height: 40px;
+  }
+  .practice-pool-tip__cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* 測驗配置區 */
 .config-section {
   margin-bottom: var(--spacing-xl);
