@@ -80,3 +80,71 @@ describe('installGlobalErrorHandlers', () => {
     uninstall();
   });
 });
+
+describe('installGlobalErrorHandlers dedupe / burst protection', () => {
+  it('1 秒內同訊息 6 次 → 第 6 次起 dedupe（不再 push 到 ring buffer）', () => {
+    const logger = new Logger({ isDev: true });
+    const errSpy = vi.spyOn(logger, 'error');
+    const warnSpy = vi.spyOn(logger, 'warn');
+    const { uninstall } = installGlobalErrorHandlers({
+      logger,
+      dedupeBurstThreshold: 5,
+    });
+
+    for (let i = 0; i < 8; i++) {
+      window.dispatchEvent(new ErrorEvent('error', { message: 'loop-err' }));
+    }
+    // 前 5 次正常記，第 6 次起 dedupe
+    expect(errSpy).toHaveBeenCalledTimes(5);
+    // 跨 threshold 那次發 1 個 warn 'error burst muted'
+    expect(warnSpy).toHaveBeenCalledOnce();
+    expect(warnSpy.mock.calls[0][0]).toMatch(/burst muted/);
+    uninstall();
+  });
+
+  it('不同訊息分別計 — A 多次不會 mute B', () => {
+    const logger = new Logger({ isDev: true });
+    const errSpy = vi.spyOn(logger, 'error');
+    const { uninstall } = installGlobalErrorHandlers({
+      logger,
+      dedupeBurstThreshold: 3,
+    });
+
+    for (let i = 0; i < 5; i++) {
+      window.dispatchEvent(new ErrorEvent('error', { message: 'A' }));
+    }
+    window.dispatchEvent(new ErrorEvent('error', { message: 'B' }));
+    expect(errSpy).toHaveBeenCalledTimes(4);
+    uninstall();
+  });
+
+  it('dedupeBurstThreshold = 0 → 關閉 dedupe', () => {
+    const logger = new Logger({ isDev: true });
+    const errSpy = vi.spyOn(logger, 'error');
+    const { uninstall } = installGlobalErrorHandlers({
+      logger,
+      dedupeBurstThreshold: 0,
+    });
+    for (let i = 0; i < 10; i++) {
+      window.dispatchEvent(new ErrorEvent('error', { message: 'no-cap' }));
+    }
+    expect(errSpy).toHaveBeenCalledTimes(10);
+    uninstall();
+  });
+
+  it('rejection burst 也 dedupe', () => {
+    const logger = new Logger({ isDev: true });
+    const errSpy = vi.spyOn(logger, 'error');
+    const { uninstall } = installGlobalErrorHandlers({
+      logger,
+      dedupeBurstThreshold: 2,
+    });
+    for (let i = 0; i < 5; i++) {
+      const ev = new Event('unhandledrejection') as unknown as PromiseRejectionEvent;
+      Object.defineProperty(ev, 'reason', { value: new Error('rej-loop') });
+      window.dispatchEvent(ev);
+    }
+    expect(errSpy).toHaveBeenCalledTimes(2);
+    uninstall();
+  });
+});
