@@ -1,51 +1,123 @@
-/* SourceBadge 樣式 */
+/*
+ * SourceBadge — Carbon Ledger 樣式
+ * 礦物色 dot + 等寬縮寫 (EM/AI) + 微體標籤；AI 產題用 oxide rust + 邊框警示
+ */
 
 .source-badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-xs);
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-xs);
-  font-weight: 500;
+  gap: 0.4rem;
+  padding: 3px 8px;
+  border-radius: 2px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
   line-height: 1.4;
   vertical-align: middle;
+  border: 1px solid transparent;
+  background: var(--color-surface-elevated);
+}
+
+.source-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: currentColor;
+}
+
+.source-badge__abbrev {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: inherit;
+  opacity: 0.7;
 }
 
 .source-badge .badge-text {
   white-space: nowrap;
+  font-variation-settings: 'wght' 540;
 }
 
+/* === Light tones === */
+
 .source-badge.tone-mock {
-  background: var(--color-info-bg, #e0f2fe);
-  color: var(--color-info-fg, #0369a1);
+  background: var(--color-info-bg);
+  color: var(--color-info-fg);
+  border-color: var(--color-info-bg);
 }
 
 .source-badge.tone-ai {
-  background: var(--color-warning-bg, #fef3c7);
-  color: var(--color-warning-fg, #92400e);
-  border: 1px solid var(--color-warning-fg, #92400e);
+  background: var(--color-warning-bg);
+  color: var(--color-warning-fg);
+  border-color: var(--color-warning);
+  /* slight inset emboss 表「需注意」*/
+  box-shadow: inset 0 0 0 1px var(--color-warning-bg);
 }
 
-/* 與 useAccessibility 對齊：使用 [data-theme="dark"]，不靠 system prefers */
-[data-theme="dark"] .source-badge.tone-mock {
-  background: rgba(59, 130, 246, 0.15);
-  color: #93c5fd;
+.source-badge.tone-ai .source-badge__dot {
+  background: var(--color-warning);
+  /* 跳動的小光圈 — 視線吸引 */
+  animation: cl-ai-pulse 2.4s ease-in-out infinite;
+  box-shadow: 0 0 0 0 var(--color-warning);
 }
-[data-theme="dark"] .source-badge.tone-ai {
-  background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
-  border-color: rgba(245, 158, 11, 0.4);
+
+@keyframes cl-ai-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(168, 91, 26, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(168, 91, 26, 0);
+  }
 }
+
+/* === Dark mode（依 [data-theme="dark"]）=== */
+
+[data-theme='dark'] .source-badge.tone-mock {
+  background: var(--color-info-bg);
+  color: var(--color-info-fg);
+  border-color: rgba(179, 197, 199, 0.3);
+}
+
+[data-theme='dark'] .source-badge.tone-ai {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-fg);
+  border-color: var(--color-warning);
+}
+
+/* === quality flag chips === */
 
 .flag-chip {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   padding: 0 6px;
-  border-radius: var(--radius-sm, 4px);
-  font-size: 0.85em;
-  background: rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  font-variation-settings: 'wght' 500;
+  background: var(--color-rule-soft);
+  color: var(--color-text-quiet);
 }
 
-.flag-time_sensitive { background: rgba(239, 68, 68, 0.15); color: #b91c1c; }
-.flag-ambiguous     { background: rgba(168, 85, 247, 0.15); color: #6b21a8; }
-.flag-low_confidence{ background: rgba(107, 114, 128, 0.15); color: #4b5563; }
+.flag-time_sensitive {
+  background: var(--color-error-bg);
+  color: var(--color-error-fg);
+}
+
+.flag-ambiguous {
+  background: var(--color-info-bg);
+  color: var(--color-info-fg);
+  font-style: italic;
+}
+
+.flag-low_confidence {
+  background: var(--color-rule-soft);
+  color: var(--color-text-quiet);
+}
+
+/* prefer-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .source-badge.tone-ai .source-badge__dot {
+    animation: none;
+  }
+}

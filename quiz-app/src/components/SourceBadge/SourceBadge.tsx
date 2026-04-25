@@ -1,5 +1,6 @@
-// 練習池題目來源徽章。
-// 對 ai_generated 題顯示「AI 產題」並符合 EU AI Act Art.50（2026-08-02 起）揭露要求。
+// 練習池題目來源徽章 — Carbon Ledger 精緻版
+// 設計：礦物色 dot + serif italic label；AI 產題用 oxide rust 警示色 + 編號註腳風
+// 對 ai_generated 題符合 EU AI Act Art.50（2026-08-02 起）揭露要求。
 import './SourceBadge.css';
 import type { PracticePoolSourceType, PracticePoolQualityFlag } from '../../types/practicePool';
 
@@ -10,9 +11,12 @@ interface SourceBadgeProps {
   compact?: boolean;
 }
 
-const SOURCE_LABEL: Record<PracticePoolSourceType, { text: string; icon: string; tone: string }> = {
-  external_mock: { text: '模擬題', icon: 'menu_book', tone: 'mock' },
-  ai_generated: { text: 'AI 產題', icon: 'auto_awesome', tone: 'ai' },
+const SOURCE_LABEL: Record<
+  PracticePoolSourceType,
+  { text: string; icon: string; tone: string; abbrev: string }
+> = {
+  external_mock: { text: '模擬題', icon: 'menu_book', tone: 'mock', abbrev: 'EM' },
+  ai_generated: { text: 'AI 產題', icon: 'auto_awesome', tone: 'ai', abbrev: 'AI' },
 };
 
 const FLAG_LABEL: Partial<Record<PracticePoolQualityFlag, string>> = {
@@ -30,8 +34,9 @@ export function SourceBadge({ sourceType, qualityFlags = [], compact = false }: 
 
   return (
     <span className={`source-badge tone-${meta.tone}`} title={title} aria-label={title}>
-      <span className="material-icons sm" aria-hidden="true">
-        {meta.icon}
+      <span className="source-badge__dot" aria-hidden="true" />
+      <span className="source-badge__abbrev cl-figure" aria-hidden="true">
+        {meta.abbrev}
       </span>
       {!compact && <span className="badge-text">{meta.text}</span>}
       {qualityFlags

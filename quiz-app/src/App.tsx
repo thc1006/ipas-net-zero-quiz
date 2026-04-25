@@ -115,34 +115,55 @@ function App() {
         )}
       </main>
 
-      {/* 頁尾 */}
-      <footer className="app-footer">
-        <div className="container">
-          <div className="footer-links">
-            <a
-              href="https://github.com/thc1006/ipas-net-zero-quiz"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub 專案連結"
-            >
-              <span className="material-icons sm">code</span>
-              GitHub
-            </a>
-            <span className="divider">·</span>
-            <a
-              href="https://github.com/thc1006/ipas-net-zero-quiz/discussions/1"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              問題回報
-            </a>
-            <span className="divider">·</span>
-            <VisitorCounter />
+      {/* 頁尾 — Carbon Ledger 簽署列 */}
+      <footer className="app-footer cl-footer">
+        <div className="container cl-footer__container">
+          <div className="cl-footer__col cl-footer__col--brand">
+            <span className="cl-eyebrow cl-footer__mark">— END OF DOCUMENT</span>
+            <p className="cl-footer__disclaimer">
+              題庫僅供練習參考；非 iPAS 官方教材。每題答案皆附第一手 primary-source 引證。
+            </p>
           </div>
-          <p className="copyright">
-            題庫僅供練習參考
-          </p>
+
+          <div className="cl-footer__col cl-footer__col--links">
+            <span className="cl-eyebrow">索引</span>
+            <ul className="cl-footer__links">
+              <li>
+                <a
+                  href="https://github.com/thc1006/ipas-net-zero-quiz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub 專案連結"
+                >
+                  <span className="material-icons sm">code</span>
+                  原始碼
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/thc1006/ipas-net-zero-quiz/discussions/1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="material-icons sm">forum</span>
+                  社群討論 / 問題回報
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div className="cl-footer__col cl-footer__col--meta">
+            <span className="cl-eyebrow">登錄</span>
+            <div className="cl-footer__counter">
+              <VisitorCounter />
+              <span className="cl-footer__counter-caption">累積訪客（per-session 去重）</span>
+            </div>
+          </div>
         </div>
+        <hr className="cl-rule cl-rule--soft cl-footer__sig" aria-hidden="true" />
+        <p className="copyright cl-footer__copy cl-figure" aria-label="copyright">
+          NZ-Q · ARCHIVE EDITION 2026 / Q2 · v1.0.0
+        </p>
       </footer>
     </div>
   );

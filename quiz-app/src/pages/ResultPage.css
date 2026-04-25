@@ -521,3 +521,310 @@
     width: 100%;
   }
 }
+
+/* ==============================================================
+ * Carbon Ledger 覆蓋層 — Audit Report style
+ * ============================================================== */
+
+.cl-result-head {
+  margin-bottom: 2rem;
+}
+
+.cl-result-head__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.75rem;
+}
+
+.cl-result-head__meta .cl-figure {
+  color: var(--color-text-quiet);
+}
+
+.cl-score-card {
+  display: grid;
+  grid-template-columns: minmax(200px, auto) 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  padding: 2rem 0 0;
+}
+
+.cl-score-card__numerals {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-primary);
+}
+
+.cl-score-card__num {
+  font-size: clamp(5rem, 14vw, 10rem);
+  font-weight: 600;
+  letter-spacing: -0.06em;
+  line-height: 0.85;
+}
+
+.cl-score-card__total {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--color-text-quiet);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.cl-score-card__verdict {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cl-score-card__band {
+  display: inline-block;
+  width: max-content;
+  padding: 0.2rem 0.6rem;
+  background: var(--color-text-primary);
+  color: var(--color-on-primary);
+  letter-spacing: 0.18em;
+  font-size: 0.65rem;
+  border-radius: 1px;
+}
+
+.cl-score-card--excellent .cl-score-card__band {
+  background: var(--color-primary);
+}
+.cl-score-card--excellent .cl-score-card__num {
+  color: var(--color-primary);
+}
+.cl-score-card--good .cl-score-card__band {
+  background: var(--color-success);
+}
+.cl-score-card--pass .cl-score-card__band {
+  background: var(--color-info);
+}
+.cl-score-card--fail .cl-score-card__band {
+  background: var(--color-error);
+}
+.cl-score-card--fail .cl-score-card__num {
+  color: var(--color-error);
+}
+
+.cl-score-card__comment {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  margin: 0;
+  font-variation-settings: 'opsz' 96, 'wght' 460, 'SOFT' 50;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--color-text-primary);
+}
+
+.cl-score-card__sub {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  max-width: 38em;
+  font-size: 0.92rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0.5rem 0 0;
+}
+
+.cl-score-card__sub .material-icons.sm {
+  font-size: 18px;
+  color: var(--color-text-quiet);
+  margin-top: 0.15em;
+}
+
+@media (max-width: 720px) {
+  .cl-score-card {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-top: 1rem;
+  }
+}
+
+/* === ledger-style stat row === */
+
+.cl-result-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0;
+  margin: 1.5rem 0 2.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-rule-strong);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.cl-result-stats__row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  border-right: 1px solid var(--color-rule-soft);
+}
+
+.cl-result-stats__row:last-child {
+  border-right: 0;
+}
+
+.cl-result-stats__num {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.cl-result-stats__num--time {
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+}
+
+.cl-result-stats__row--correct .cl-result-stats__num {
+  color: var(--color-success);
+}
+.cl-result-stats__row--wrong .cl-result-stats__num {
+  color: var(--color-error);
+}
+
+@media (max-width: 720px) {
+  .cl-result-stats__row {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-rule-soft);
+  }
+  .cl-result-stats__row:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* ==============================================================
+ * Carbon Ledger 覆蓋層 — Audit Report style
+ * ============================================================== */
+
+.cl-result-head { margin-bottom: 2rem; }
+
+.cl-result-head__meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 0.75rem;
+}
+
+.cl-result-head__meta .cl-figure { color: var(--color-text-quiet); }
+
+.cl-score-card {
+  display: grid;
+  grid-template-columns: minmax(200px, auto) 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  padding: 2rem 0 0;
+}
+
+.cl-score-card__numerals {
+  display: flex; align-items: baseline; gap: 0.5rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-primary);
+}
+
+.cl-score-card__num {
+  font-size: clamp(5rem, 14vw, 10rem);
+  font-weight: 600;
+  letter-spacing: -0.06em;
+  line-height: 0.85;
+}
+
+.cl-score-card__total {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--color-text-quiet);
+  font-weight: 400;
+}
+
+.cl-score-card__verdict {
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+
+.cl-score-card__band {
+  display: inline-block; width: max-content;
+  padding: 0.2rem 0.6rem;
+  background: var(--color-text-primary);
+  color: var(--color-on-primary);
+  letter-spacing: 0.18em;
+  font-size: 0.65rem;
+  border-radius: 1px;
+}
+
+.cl-score-card--excellent .cl-score-card__band { background: var(--color-primary); }
+.cl-score-card--excellent .cl-score-card__num  { color: var(--color-primary); }
+.cl-score-card--good      .cl-score-card__band { background: var(--color-success); }
+.cl-score-card--pass      .cl-score-card__band { background: var(--color-info); }
+.cl-score-card--fail      .cl-score-card__band { background: var(--color-error); }
+.cl-score-card--fail      .cl-score-card__num  { color: var(--color-error); }
+
+.cl-score-card__comment {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  margin: 0;
+  font-variation-settings: 'opsz' 96, 'wght' 460, 'SOFT' 50;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--color-text-primary);
+}
+
+.cl-score-card__sub {
+  display: flex; gap: 0.5rem; align-items: flex-start;
+  max-width: 38em;
+  font-size: 0.92rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0.5rem 0 0;
+}
+
+.cl-score-card__sub .material-icons.sm {
+  font-size: 18px; color: var(--color-text-quiet);
+  margin-top: 0.15em;
+}
+
+@media (max-width: 720px) {
+  .cl-score-card {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-top: 1rem;
+  }
+}
+
+.cl-result-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0;
+  margin: 1.5rem 0 2.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-rule-strong);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.cl-result-stats__row {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  border-right: 1px solid var(--color-rule-soft);
+}
+
+.cl-result-stats__row:last-child { border-right: 0; }
+
+.cl-result-stats__num {
+  font-size: 2rem; font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.cl-result-stats__num--time {
+  font-size: 1.3rem; letter-spacing: 0.02em;
+}
+
+.cl-result-stats__row--correct .cl-result-stats__num { color: var(--color-success); }
+.cl-result-stats__row--wrong   .cl-result-stats__num { color: var(--color-error); }
+
+@media (max-width: 720px) {
+  .cl-result-stats__row {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-rule-soft);
+  }
+  .cl-result-stats__row:last-child { border-bottom: 0; }
+}

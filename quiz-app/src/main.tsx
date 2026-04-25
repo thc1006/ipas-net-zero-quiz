@@ -3,6 +3,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import './styles/global.css';
+import './styles/carbon-ledger.css';
 import { assertPracticePoolValid } from './utils/practice-pool-schema';
 import { assertMainBankValid } from './utils/main-bank-schema';
 

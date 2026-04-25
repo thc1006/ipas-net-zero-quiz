@@ -89,3 +89,85 @@
     padding: var(--spacing-xs) var(--spacing-sm);
   }
 }
+
+/* ==============================================================
+ * Carbon Ledger 覆蓋層
+ * ============================================================== */
+
+.cl-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-rule-strong);
+  box-shadow: none;
+}
+
+.cl-header__container {
+  align-items: stretch;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  min-height: 64px;
+}
+
+.cl-header__brand {
+  gap: 0.85rem;
+  padding: 0.5rem 0.5rem 0.5rem 0;
+  align-items: center;
+}
+
+.cl-header__brand:hover {
+  background: transparent;
+}
+.cl-header__brand:hover .cl-header__title {
+  color: var(--color-primary);
+}
+
+.cl-header__mark {
+  color: var(--color-primary);
+  flex-shrink: 0;
+  transition: transform 240ms ease;
+}
+.cl-header__brand:hover .cl-header__mark {
+  transform: rotate(-8deg);
+}
+
+.cl-header__words {
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+
+.cl-header__title {
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 24, 'wght' 540, 'SOFT' 30;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+  line-height: 1;
+  transition: color 100ms ease;
+}
+
+.cl-header__subtitle {
+  font-size: 0.62rem !important;
+  color: var(--color-text-quiet) !important;
+  letter-spacing: 0.16em !important;
+  margin-top: 0.2rem;
+}
+
+.cl-header__nav {
+  gap: 0;
+  border-left: 1px solid var(--color-rule-soft);
+  padding-left: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.cl-header__icon-btn {
+  border-radius: 2px !important;
+  color: var(--color-text-secondary) !important;
+}
+
+.cl-header__icon-btn:hover {
+  background: var(--color-surface-variant) !important;
+  color: var(--color-primary) !important;
+}
+
+@media (max-width: 480px) {
+  .cl-header__subtitle { display: none; }
+  .cl-header__title { font-size: 0.95rem; }
+}

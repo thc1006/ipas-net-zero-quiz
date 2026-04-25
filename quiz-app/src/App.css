@@ -53,3 +53,107 @@
     padding: var(--spacing-md) var(--spacing-sm);
   }
 }
+
+/* ==============================================================
+ * Carbon Ledger Footer 簽署列
+ * ============================================================== */
+
+.cl-footer {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-rule-strong);
+  margin-top: 4rem;
+  padding: 2rem clamp(1rem, 4vw, 3rem) 1rem;
+}
+
+.cl-footer__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 720px) {
+  .cl-footer__container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.cl-footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cl-footer__mark {
+  letter-spacing: 0.2em;
+  color: var(--color-text-quiet);
+}
+
+.cl-footer__disclaimer {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-style: italic;
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 14, 'wght' 360;
+}
+
+.cl-footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cl-footer__links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 0.88rem;
+  border-bottom: 1px solid transparent;
+  transition: color 100ms ease, border-color 100ms ease;
+}
+
+.cl-footer__links a:hover {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.cl-footer__links .material-icons.sm {
+  font-size: 16px;
+  color: var(--color-text-quiet);
+}
+
+.cl-footer__counter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-start;
+}
+
+.cl-footer__counter-caption {
+  font-size: 0.72rem;
+  color: var(--color-text-quiet);
+  font-style: italic;
+}
+
+.cl-footer__sig {
+  margin: 1.5rem 0 0.75rem;
+}
+
+.cl-footer__copy {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--color-text-quiet);
+  text-align: center;
+  margin: 0;
+  text-transform: uppercase;
+}

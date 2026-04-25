@@ -169,35 +169,61 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
   }, [score]);
 
   return (
-    <div className="result-page animate-fade-in">
-      {/* 分數區 */}
-      <section className={`score-section card ${scoreComment.class}`}>
-        <div className="score-icon">
-          <span className="material-icons">{scoreComment.icon}</span>
+    <div className="result-page cl-page animate-fade-in">
+      {/* CARBON LEDGER 報告頁首 */}
+      <section className="cl-result-head">
+        <div className="cl-result-head__meta">
+          <span className="cl-eyebrow">AUDIT REPORT</span>
+          <span className="cl-eyebrow cl-figure">
+            {new Date().toISOString().slice(0, 10)} · NZ-Q
+          </span>
         </div>
-        <h1 className="score-value">{score}</h1>
-        <p className="score-label">分</p>
-        <p className="score-comment">{scoreComment.text}</p>
+        <hr className="cl-rule" aria-hidden="true" />
+
+        <div className={`cl-score-card cl-score-card--${scoreComment.class}`}>
+          <div className="cl-score-card__numerals" aria-label={`分數 ${score} 分`}>
+            <span className="cl-figure cl-score-card__num">{score}</span>
+            <span className="cl-score-card__total cl-figure">/ 100</span>
+          </div>
+          <div className="cl-score-card__verdict">
+            <span className="cl-eyebrow cl-score-card__band">
+              {score >= 90 ? 'BAND A' : score >= 70 ? 'BAND B' : score >= 60 ? 'BAND C' : 'BAND D'}
+            </span>
+            <h1 className="cl-display cl-score-card__comment">{scoreComment.text}</h1>
+            <p className="cl-score-card__sub">
+              <span className="material-icons sm">{scoreComment.icon}</span>
+              <span>
+                {score >= 90 ? '本次表現名列前段；建議鎖定弱項細節提升一致性。'
+                : score >= 70 ? '掌握度良好；針對個別錯題深化理解可進一步提升。'
+                : score >= 60 ? '及格達標；建議重做錯題並精讀相關法規條文。'
+                : '建議重新從基礎概念走過一遍；錯題列表可作為複習索引。'}
+              </span>
+            </p>
+          </div>
+        </div>
       </section>
 
-      {/* 統計區 */}
-      <section className="stats-section">
-        <div className="stat-item correct">
-          <span className="material-icons">check_circle</span>
-          <span className="stat-value">{correctCount}</span>
-          <span className="stat-label">答對</span>
+      {/* LEDGER 統計列 */}
+      <section className="cl-result-stats" aria-label="本次測驗統計">
+        <div className="cl-result-stats__row cl-result-stats__row--correct">
+          <span className="cl-eyebrow">CR / 答對</span>
+          <span className="cl-figure cl-result-stats__num">{correctCount}</span>
         </div>
-        <div className="stat-item wrong">
-          <span className="material-icons">cancel</span>
-          <span className="stat-value">{wrongCount}</span>
-          <span className="stat-label">答錯</span>
+        <div className="cl-result-stats__row cl-result-stats__row--wrong">
+          <span className="cl-eyebrow">DR / 答錯</span>
+          <span className="cl-figure cl-result-stats__num">{wrongCount}</span>
         </div>
-        <div className="stat-item total">
-          <span className="material-icons">quiz</span>
-          <span className="stat-value">{totalAnswerable}</span>
-          <span className="stat-label">總題數</span>
+        <div className="cl-result-stats__row">
+          <span className="cl-eyebrow">Σ / 總題數</span>
+          <span className="cl-figure cl-result-stats__num">{totalAnswerable}</span>
         </div>
-        <div className="stat-item time">
+        <div className="cl-result-stats__row">
+          <span className="cl-eyebrow">τ / 用時</span>
+          <span className="cl-figure cl-result-stats__num cl-result-stats__num--time">
+            {formattedTime}
+          </span>
+        </div>
+        <div className="stat-item time" hidden aria-hidden="true">
           <span className="material-icons">timer</span>
           <span className="stat-value">{formattedTime}</span>
           <span className="stat-label">用時</span>

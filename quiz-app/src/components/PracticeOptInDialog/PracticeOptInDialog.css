@@ -1,56 +1,332 @@
-/* PracticeOptInDialog 樣式 */
+/*
+ * PracticeOptInDialog — Carbon Ledger 版
+ * 兩欄佈局：左欄為視覺化來源條形比例，右欄為文字解說 + CTA。
+ */
 
 .optin-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(15, 27, 31, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: var(--spacing-md);
+  padding: clamp(1rem, 4vw, 3rem);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  animation: cl-overlay-in 220ms ease both;
+}
+
+@keyframes cl-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .optin-dialog {
   background: var(--color-surface);
   color: var(--color-text-primary);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
-  max-width: 560px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  max-width: 780px;
   width: 100%;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  box-shadow: var(--shadow-4);
+  animation: cl-dialog-in 280ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  position: relative;
 }
 
-.optin-dialog h2 {
-  margin-top: 0;
-  margin-bottom: var(--spacing-md);
+@keyframes cl-dialog-in {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-.optin-dialog p,
-.optin-dialog ul {
-  font-size: var(--font-size-sm);
-  line-height: 1.6;
-  margin: var(--spacing-sm) 0;
+/* archive corner mark */
+.optin-dialog::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--color-primary);
 }
 
-.optin-dialog ul {
-  padding-left: 1.25em;
+.optin-dialog__head {
+  padding: 1.75rem 2rem 1.25rem;
+  border-bottom: 1px solid var(--color-rule-soft);
 }
 
-.optin-dialog li {
-  margin-bottom: var(--spacing-xs);
+.optin-dialog__title {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  margin: 0.4rem 0 0;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
-.optin-note {
-  font-size: var(--font-size-xs);
+.optin-dialog__body {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 2rem;
+  padding: 1.5rem 2rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 720px) {
+  .optin-dialog__body {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* === left panel: source bars === */
+
+.optin-source-panel {
+  background: var(--color-surface-variant);
+  padding: 1.25rem;
+  border-radius: 3px;
+  border: 1px solid var(--color-rule-soft);
+}
+
+.optin-source-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.optin-source-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.optin-source-row__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.85rem;
+}
+
+.optin-source-row__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-variation-settings: 'wght' 540;
+  color: var(--color-text-primary);
+}
+
+.optin-source-row__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.optin-source-row__dot.tone-mock {
+  background: var(--color-info);
+}
+.optin-source-row__dot.tone-ai {
+  background: var(--color-warning);
+}
+
+.optin-source-row__count {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+}
+
+.optin-source-bar {
+  height: 8px;
+  background: var(--color-info);
+  border-radius: 1px;
+  position: relative;
+  /* 條形帶斜紋紋理 — 像會計賬本的網點 */
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 4px,
+    rgba(0, 0, 0, 0.08) 4px,
+    rgba(0, 0, 0, 0.08) 5px
+  );
+  background-color: var(--color-info);
+  animation: cl-bar-grow 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-origin: left center;
+}
+.optin-source-bar.tone-ai {
+  background-color: var(--color-warning);
+}
+
+@keyframes cl-bar-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.optin-source-row__caption {
+  font-size: 0.75rem;
+  color: var(--color-text-quiet);
+  font-style: italic;
+}
+
+.optin-source-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-rule-strong);
+}
+
+.optin-source-total__num {
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--color-primary);
+}
+
+/* === right panel: copy === */
+
+.optin-dialog__copy {
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.optin-dialog__lead {
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 24, 'wght' 380;
+  font-size: 1.1rem;
+  line-height: 1.45;
+  margin: 0 0 1.25rem;
+  color: var(--color-text-primary);
+}
+
+.optin-dialog__lead em {
+  font-style: italic;
+  font-variation-settings: 'opsz' 24, 'wght' 360, 'SOFT' 100;
+  color: var(--color-primary);
+  margin: 0 0.05em;
+}
+
+.optin-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.optin-bullets li {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 0.65rem;
+  align-items: flex-start;
+  font-size: 0.9rem;
   color: var(--color-text-secondary);
-  border-top: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
-  padding-top: var(--spacing-sm);
+  line-height: 1.55;
 }
+
+.optin-bullets em {
+  font-style: italic;
+  color: var(--color-text-primary);
+}
+
+.optin-bullets .cl-fn-marker {
+  margin-top: 0.2em;
+}
+
+.optin-bullets .cl-figure {
+  font-size: 0.86em;
+  background: var(--color-rule-soft);
+  padding: 0 0.3em;
+  border-radius: 1px;
+  color: var(--color-text-primary);
+}
+
+.optin-disclosure {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.78rem;
+  background: var(--color-primary-soft);
+  color: var(--color-text-primary);
+  border-left: 2px solid var(--color-primary);
+  border-radius: 1px;
+}
+
+.optin-disclosure .material-icons.sm {
+  font-size: 16px;
+  color: var(--color-primary);
+}
+
+/* === actions === */
 
 .optin-actions {
   display: flex;
   justify-content: flex-end;
-  gap: var(--spacing-sm);
-  margin-top: var(--spacing-md);
+  gap: 0.75rem;
+  padding: 1.25rem 2rem;
+  border-top: 1px solid var(--color-rule-soft);
+  background: var(--color-surface-variant);
+}
+
+.cl-btn-primary,
+.cl-btn-secondary {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-variation-settings: 'wght' 540;
+  padding: 0.6rem 1.1rem;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 80ms ease, box-shadow 100ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.cl-btn-secondary {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+.cl-btn-secondary:hover {
+  border-color: var(--color-text-secondary);
+  background: var(--color-surface);
+}
+
+.cl-btn-primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  box-shadow: 0 1px 0 var(--color-primary-dark);
+}
+.cl-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 var(--color-primary-dark);
+}
+.cl-btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 0 var(--color-primary-dark);
+}
+
+.cl-btn-primary__arrow {
+  font-size: 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .optin-overlay,
+  .optin-dialog,
+  .optin-source-bar {
+    animation: none !important;
+  }
+}
+
+.optin-dialog__sub {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 24, 'wght' 360, 'SOFT' 100;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--color-text-secondary);
 }

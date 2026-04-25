@@ -1,0 +1,282 @@
+/*
+ * Carbon Ledger / Atmospheric Archive — design system overlay
+ * 碳審計檔案風格設計系統，覆蓋既有 variables.css 之色票
+ *
+ * 概念：每題像研究檔案的條目；分數像會計收支表；來源像學術引文。
+ * 字體：Fraunces (display, variable serif w/ optical-size + soft axis)
+ *       Public Sans (body, US government font — dignified humanist sans)
+ *       JetBrains Mono (figures — tabular numerals)
+ * 配色：避免淨零陳腔濫調的葉綠；改用地殼礦物色（charcoal-teal、parchment、mineral-teal accent、oxide rust）
+ */
+
+:root {
+  /* ----- 字體系統 ----- */
+  --font-display: 'Fraunces', 'Noto Serif TC', 'Songti TC', Georgia, serif;
+  --font-body: 'Public Sans', 'Noto Sans TC', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Roboto Mono', 'Cascadia Code', Consolas, monospace;
+
+  /* Fraunces variable axes preset — display headlines */
+  --display-axes: 'opsz' 96, 'wght' 480, 'SOFT' 50;
+  --display-axes-tight: 'opsz' 144, 'wght' 360, 'SOFT' 0;
+  --body-axes: 'opsz' 14, 'wght' 420;
+
+  /* ----- 礦物色票（Carbon Ledger）— LIGHT ----- */
+  /* Surfaces */
+  --color-background: #efe9dc;        /* warm parchment */
+  --color-surface: #fbf6e9;            /* paper */
+  --color-surface-variant: #e6dfce;    /* aged paper */
+  --color-surface-elevated: #fdfbf2;   /* lifted card */
+
+  /* Inks */
+  --color-text-primary: #0f1b1f;       /* charcoal-teal */
+  --color-text-secondary: #495d61;     /* mid teal-grey */
+  --color-text-quiet: #6b7d80;         /* muted */
+  --color-text-disabled: #97a4a6;
+  --color-text-on-dark: #fbf6e9;
+
+  /* Mineral teal accent (verified / primary) */
+  --color-primary: #0e5c5c;
+  --color-primary-dark: #07383a;
+  --color-primary-light: #2c8079;
+  --color-primary-soft: #c7d9d6;
+  --color-on-primary: #fbf6e9;
+
+  /* Oxide rust accent (AI 揭露 + 警示) */
+  --color-warning: #a85b1a;
+  --color-warning-fg: #6e3a0d;
+  --color-warning-bg: #f0d9c0;
+
+  /* Slate (external_mock badge) */
+  --color-info: #38545a;
+  --color-info-fg: #1f3034;
+  --color-info-bg: #d6dee0;
+  --color-info-fg-dark: #b3c5c7;
+
+  /* Verified/correct (used sparingly) */
+  --color-success: #2c6041;
+  --color-success-fg: #173324;
+  --color-success-bg: #d2dfd5;
+
+  /* Errors / wrong answers */
+  --color-error: #8a2a23;
+  --color-error-fg: #5a1611;
+  --color-error-bg: #ecd1cd;
+
+  /* Rules / borders / hairlines */
+  --color-divider: #c8c0ad;
+  --color-border: #d4cfc2;
+  --color-rule-strong: #0f1b1f;
+  --color-rule-soft: rgba(15, 27, 31, 0.08);
+
+  /* Sidenote / footnote */
+  --color-footnote-marker: #0e5c5c;
+
+  /* ----- Shadows — quiet, paper-pressed ----- */
+  --shadow-1: 0 1px 0 rgba(15, 27, 31, 0.06), 0 0 0 1px rgba(15, 27, 31, 0.04);
+  --shadow-2: 0 2px 6px rgba(15, 27, 31, 0.08), 0 0 0 1px rgba(15, 27, 31, 0.05);
+  --shadow-3: 0 8px 18px rgba(15, 27, 31, 0.10), 0 0 0 1px rgba(15, 27, 31, 0.05);
+  --shadow-4: 0 18px 40px rgba(15, 27, 31, 0.18), 0 0 0 1px rgba(15, 27, 31, 0.05);
+  --shadow-press: inset 0 1px 0 rgba(15, 27, 31, 0.06);
+
+  /* ----- Grain (SVG data URI, ~1.6KB inline) ----- */
+  --grain-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.42'/></svg>");
+}
+
+/* ----- 礦物色票 — DARK ----- */
+[data-theme='dark'] {
+  --color-background: #0c1517;        /* deep teal-black */
+  --color-surface: #15211f;
+  --color-surface-variant: #1d2a28;
+  --color-surface-elevated: #1a2725;
+
+  --color-text-primary: #ebe4d2;       /* warm parchment ink (low contrast on warm bg) */
+  --color-text-secondary: #b8b0a0;
+  --color-text-quiet: #8a847a;
+  --color-text-disabled: #5a554d;
+  --color-text-on-dark: #ebe4d2;
+
+  --color-primary: #5dbab2;
+  --color-primary-dark: #3a8a82;
+  --color-primary-light: #93d6cf;
+  --color-primary-soft: rgba(93, 186, 178, 0.16);
+  --color-on-primary: #0c1517;
+
+  --color-warning: #d88e5a;
+  --color-warning-fg: #f0b08a;
+  --color-warning-bg: rgba(216, 142, 90, 0.16);
+
+  --color-info: #b3c5c7;
+  --color-info-fg: #d8e3e5;
+  --color-info-bg: rgba(179, 197, 199, 0.12);
+
+  --color-success: #7eb691;
+  --color-success-fg: #b3d4be;
+  --color-success-bg: rgba(126, 182, 145, 0.14);
+
+  --color-error: #e08a82;
+  --color-error-fg: #f0b3ad;
+  --color-error-bg: rgba(224, 138, 130, 0.14);
+
+  --color-divider: #2a3735;
+  --color-border: #2a3735;
+  --color-rule-strong: #ebe4d2;
+  --color-rule-soft: rgba(235, 228, 210, 0.08);
+
+  --color-footnote-marker: #5dbab2;
+
+  --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.5);
+  --shadow-2: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-3: 0 10px 24px rgba(0, 0, 0, 0.6);
+  --shadow-4: 0 22px 48px rgba(0, 0, 0, 0.7);
+}
+
+/* ===============================================================
+ *  全域排版風格 — apply only inside .app to avoid clobbering tests
+ * =============================================================== */
+
+html,
+body {
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-feature-settings: 'ss01', 'cv11', 'tnum';
+  font-variation-settings: var(--body-axes);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  /* Subtle paper grain — fixed so it doesn't tile-jitter on scroll */
+  background-image: var(--grain-image);
+  background-size: 240px;
+  background-attachment: fixed;
+  background-blend-mode: multiply;
+  background-color: var(--color-background);
+}
+
+/* Display headlines use Fraunces — serif w/ optical-size axis */
+.cl-display {
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+.cl-display--tight {
+  font-variation-settings: var(--display-axes-tight);
+  letter-spacing: -0.04em;
+}
+
+/* Italic display — for "verified" emphasis */
+.cl-display em {
+  font-style: italic;
+  font-variation-settings: 'opsz' 144, 'wght' 320, 'SOFT' 100;
+}
+
+/* Tabular numerals — numbers everywhere, especially scores */
+.cl-figure {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: 0;
+}
+
+/* Smallcaps eyebrow labels */
+.cl-eyebrow {
+  font-family: var(--font-body);
+  font-variation-settings: 'wght' 580;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-quiet);
+}
+
+/* Hairline rule — page-level horizontal divider */
+.cl-rule {
+  border: 0;
+  border-top: 1px solid var(--color-rule-strong);
+  margin: 0;
+  height: 1px;
+}
+
+.cl-rule--soft {
+  border-top-color: var(--color-rule-soft);
+}
+
+/* Footnote marker — academic citation style */
+.cl-fn-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.4em;
+  padding: 0 0.3em;
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-on-primary);
+  background: var(--color-footnote-marker);
+  border-radius: 2px;
+  vertical-align: 0.45em;
+  letter-spacing: 0.04em;
+}
+
+/* Ledger entry — DR/CR style row */
+.cl-ledger-row {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dotted var(--color-rule-soft);
+  font-size: 0.92rem;
+}
+
+.cl-ledger-row__index {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-quiet);
+  text-align: right;
+}
+
+.cl-ledger-row__label {
+  font-variation-settings: 'wght' 500;
+}
+
+.cl-ledger-row__value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+  font-variation-settings: 'wght' 600;
+}
+
+/* Section eyebrow with leading dot */
+.cl-section-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.cl-section-mark::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+/* Focus outlines — high-contrast box, matches archive aesthetic */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
