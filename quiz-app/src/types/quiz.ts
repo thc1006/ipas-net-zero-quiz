@@ -130,6 +130,9 @@ export interface QuizConfig {
   showAnswerImmediately: boolean;
 }
 
+/** 答題來源分類 — ResultPage 用來分組統計，主題庫 vs 模擬 vs AI 產題 */
+export type AnswerSourceCategory = 'main_bank' | 'external_mock' | 'ai_generated';
+
 /** 答題紀錄 */
 export interface AnswerRecord {
   questionId: string;
@@ -138,6 +141,11 @@ export interface AnswerRecord {
   isCorrect: boolean | null;
   timeSpent: number;
   timestamp: number;
+  /**
+   * 題目來源分類（記錄當下從題目推導，避免 ResultPage 反查時找不到 pool 題目）
+   * 'main_bank' = 主題庫；'external_mock' / 'ai_generated' = 練習池
+   */
+  sourceCategory?: AnswerSourceCategory;
 }
 
 /** 測驗結果 */
