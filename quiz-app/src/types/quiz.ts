@@ -63,7 +63,7 @@ export interface QuizQuestion {
   options: QuizOption[];
   answer: string | null;
   subject: ExamSubject;
-  sourceType: 'gist' | 'unique';
+  sourceType: 'gist' | 'unique' | 'practice_pool';
   year?: number | null;
   hasAnswer: boolean;
 }

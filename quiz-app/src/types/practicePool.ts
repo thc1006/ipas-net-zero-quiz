@@ -22,15 +22,15 @@ export type PracticePoolVerdict =
 
 /** AI 產題時的模型與生成資訊（用於合規揭露 / 審計） */
 export interface AIMetadata {
+  /** 若模型身份未確認，使用 'unspecified' */
   model_family: string;
   generation_date: string;
   /** 1 = 第一輪原始產題；2 = 經人工/代理重寫 */
   verifier_round: number;
 }
 
-/** 來源溯源資訊 — UI 顯示徽章與 AI 揭露之依據 */
-export interface PracticePoolProvenance {
-  source_type: PracticePoolSourceType;
+/** 共用 provenance 欄位 */
+interface ProvenanceBase {
   /** 來源批次識別（vocus_hackmd_yamol、industry_round1 等） */
   source_origin: string;
   /** YYYY-MM-DD */
@@ -39,9 +39,15 @@ export interface PracticePoolProvenance {
   verify_verdict: PracticePoolVerdict;
   /** 上游檔的原始 ID（如有） */
   original_id: string;
-  /** 僅 ai_generated 帶 */
-  ai_metadata?: AIMetadata;
 }
+
+/** Discriminated union — ai_generated 強制帶 ai_metadata */
+export type PracticePoolProvenance =
+  | (ProvenanceBase & { source_type: 'external_mock' })
+  | (ProvenanceBase & {
+      source_type: 'ai_generated';
+      ai_metadata: AIMetadata;
+    });
 
 /** UI 渲染徽章用的 quality flags */
 export type PracticePoolQualityFlag =
@@ -57,6 +63,7 @@ export interface PracticePoolItem {
   options: QuizOption[];
   answer: string | null;
   explanation: string;
+  /** 考科類別；可能為 ExamSubject、自由字串、或 null（練習池來源不統一） */
   subject: ExamSubject | string | null;
   topic_tags: string[];
   difficulty: PracticePoolDifficulty;

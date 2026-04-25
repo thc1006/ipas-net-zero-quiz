@@ -92,24 +92,27 @@ export function toQuizQuestion(item: PracticePoolItem): QuizQuestion & {
   qualityFlags: PracticePoolItem['quality_flags'];
   sources: string[];
 } {
-  // subject 在練習池可能是中文「考科一/考科二」或 null；映射到既有 ExamSubject。
-  let subject: QuizQuestion['subject'];
-  const raw = item.subject ?? '';
-  if (typeof raw === 'string' && raw.includes('1')) subject = '考科1';
-  else if (typeof raw === 'string' && (raw.includes('一') || raw.toLowerCase().includes('subject 1')))
+  // subject 映射：明確匹配才設值；不明者回傳 null（避免誤歸類）
+  const raw = typeof item.subject === 'string' ? item.subject : '';
+  let subject: QuizQuestion['subject'] | null = null;
+  if (raw.includes('1') || raw.includes('一') || raw.toLowerCase().includes('subject 1')) {
     subject = '考科1';
-  else if (typeof raw === 'string' && raw.includes('2')) subject = '考科2';
-  else if (typeof raw === 'string' && (raw.includes('二') || raw.toLowerCase().includes('subject 2')))
+  } else if (raw.includes('2') || raw.includes('二') || raw.toLowerCase().includes('subject 2')) {
     subject = '考科2';
-  else subject = '考科2'; // 大宗 fallback
+  }
+  if (subject === null && item.subject !== null && import.meta.env?.DEV) {
+    // eslint-disable-next-line no-console
+    console.warn(`[practice-pool] 題 ${item.id} subject 值無法映射：`, item.subject);
+  }
 
   return {
     id: item.id,
     stem: item.stem,
     options: item.options,
     answer: item.answer,
-    subject,
-    sourceType: 'unique',
+    // 若無法映射，預設『考科2』但已經過 warn，避免 silent 誤分類
+    subject: subject ?? '考科2',
+    sourceType: 'practice_pool',
     year: null,
     hasAnswer: item.answer != null,
     provenance: item.provenance,
