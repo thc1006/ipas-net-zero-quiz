@@ -17,6 +17,17 @@ interface ProviderResult {
   provider: Provider;
 }
 
+/**
+ * 模組級別：同一 app 生命週期內已 bump 或正在 bump 的 key。
+ * 用於防 React 18 strict mode useEffect 雙觸發導致遠端計數 +2；
+ * 並補充 sessionStorage（跨頁面 reload 生效）的 in-memory 快速查驗。
+ */
+const inflightOrBumpedKeys = new Set<string>();
+
+function isAbortError(err: unknown): boolean {
+  return (err as { name?: string })?.name === 'AbortError';
+}
+
 async function fromAbacus(
   ns: string,
   key: string,
@@ -27,8 +38,8 @@ async function fromAbacus(
   const url = `https://abacus.jasoncameron.dev/${endpoint}/${encodeURIComponent(ns)}/${encodeURIComponent(key)}`;
   const res = await fetch(url, { signal });
   if (!res.ok) {
-    // 首次呼叫 get 會是 404，改用 hit 建立並遞增
     if (endpoint === 'get' && res.status === 404) {
+      // 首次 get 找不到 key → 轉 hit 建立；僅允許一次遞迴避免 stack 過深
       return fromAbacus(ns, key, true, signal);
     }
     throw new Error(`abacus ${res.status}`);
@@ -63,16 +74,25 @@ export function VisitorCounter({
 
   useEffect(() => {
     isMountedRef.current = true;
+    // deps 變更時重設 loading 旗標，避免顯示舊 count
+    setIsLoading(true);
+
+    const inflightKey = `${namespace}:${counterKey}`;
     const sessionKey = `visited-${namespace}-${counterKey}`;
     const visitedThisSession = sessionStorage.getItem(sessionKey) === 'true';
-    const shouldBump = !visitedThisSession;
+    const alreadyBumpedInApp = inflightOrBumpedKeys.has(inflightKey);
+    // strict-mode 雙觸發時：第一次 effect 加 inflightKey；第二次 effect 看到 Set 裡已有
+    // key，改走 get 只讀值，不 bump
+    const shouldBump = !visitedThisSession && !alreadyBumpedInApp;
+    if (shouldBump) inflightOrBumpedKeys.add(inflightKey);
+
     const ac = new AbortController();
 
     const run = async () => {
       try {
         const result = await fromAbacus(namespace, counterKey, shouldBump, ac.signal).catch(
           (err) => {
-            if (err?.name === 'AbortError') throw err;
+            if (isAbortError(err)) throw err;
             return fromCounterApi(namespace, counterKey, shouldBump, ac.signal);
           }
         );
@@ -80,8 +100,7 @@ export function VisitorCounter({
         setCount(result.count);
         if (shouldBump) sessionStorage.setItem(sessionKey, 'true');
       } catch (err: unknown) {
-        if ((err as { name?: string })?.name === 'AbortError') return;
-        // 所有計數服務皆失敗：不顯示假數字，直接隱藏元件
+        if (isAbortError(err)) return;
         if (isMountedRef.current) setCount(null);
       } finally {
         if (isMountedRef.current) setIsLoading(false);
