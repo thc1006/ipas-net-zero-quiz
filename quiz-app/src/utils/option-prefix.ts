@@ -5,9 +5,14 @@
 // 並僅當該詞同時出現在 stem 才視為冗餘（否則可能是必要 disambiguation）。
 
 /**
- * 找出選項中冗餘的共同首字（首詞）。
+ * 找出選項中冗餘的共同前綴（一或多個 whitespace-separated 詞）。
  *
  * @returns 共同前綴字串（不含 trailing whitespace），若無則 null。
+ *
+ * 演算法：
+ * 1. 把每個選項拆 token（splitting on \s+）
+ * 2. 從左找最長共同 token 序列（multi-token）
+ * 3. 整段 join 後若 ≥2 字元 AND stem 包含該整段 → 回傳；否則 null
  */
 export function findRedundantPrefix(
   stem: string,
@@ -15,23 +20,32 @@ export function findRedundantPrefix(
 ): string | null {
   if (optionTexts.length < 2) return null;
 
-  // 取每個選項的第一個 non-whitespace token
-  const firstWords = optionTexts.map((t) => {
-    const m = t.match(/^(\S+)/);
-    return m ? m[1] : null;
+  // 拆每個選項為 token 陣列；以 leading whitespace 為偏離信號 → reject
+  const tokenized = optionTexts.map((t) => {
+    if (/^\s/.test(t)) return null; // leading whitespace → 視為破壞共享
+    return t.split(/\s+/).filter((tok) => tok.length > 0);
   });
+  if (tokenized.some((toks) => toks === null || toks.length === 0)) return null;
 
-  // 任一選項無法 match（空字串 / 開頭 whitespace） → 不算共享
-  if (firstWords.some((w) => w === null)) return null;
+  const tokens0 = tokenized[0] as string[];
 
-  const candidate = firstWords[0]!;
-  if (candidate.length < 2) return null; // 單字元 prefix 不 dim 避免過度
+  // 找最長共同 token 序列
+  let commonLen = 0;
+  for (let i = 0; i < tokens0.length; i++) {
+    const tok = tokens0[i];
+    const allMatch = tokenized.every((toks) => (toks as string[])[i] === tok);
+    if (!allMatch) break;
+    commonLen = i + 1;
+  }
+  if (commonLen === 0) return null;
 
-  const allShare = firstWords.every((w) => w === candidate);
-  if (!allShare) return null;
+  // 不能整個選項都是 prefix（commonLen === tokens.length 表示某選項只有 prefix 本身）
+  // 若任一選項長度等於 commonLen，說明該選項只有 prefix 沒其他內容 → 不適合 dim
+  if (tokenized.some((toks) => (toks as string[]).length === commonLen)) return null;
 
-  // 僅當 stem 包含此 token 才算冗餘（否則可能是必要 marker）
-  if (!stem.includes(candidate)) return null;
+  const prefix = tokens0.slice(0, commonLen).join(' ');
+  if (prefix.length < 2) return null; // 太短不 dim
+  if (!stem.includes(prefix)) return null; // 必須出現在 stem 才算冗餘
 
-  return candidate;
+  return prefix;
 }

@@ -21,7 +21,9 @@ export function PracticePoolHistogram({
   mainBankCount,
   subject,
 }: PracticePoolHistogramProps): JSX.Element {
-  const poolCounts = POOL_BY_SUBJECT[subject];
+  // POOL_BY_SUBJECT 目前只有 '考科1' / '考科2' / 'all'；未來新增 subject
+  // 若忘了補常數，fallback 到 all 全集（避免 runtime crash）
+  const poolCounts = POOL_BY_SUBJECT[subject] ?? POOL_BY_SUBJECT.all;
   const rows: Row[] = [
     { label: '主題庫', count: mainBankCount, cls: 'main' },
     { label: '模擬題', count: poolCounts.externalMock, cls: 'mock' },

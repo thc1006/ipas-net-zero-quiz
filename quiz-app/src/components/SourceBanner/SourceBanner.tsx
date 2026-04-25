@@ -24,7 +24,7 @@ const SOURCE_META: Record<
     tone: 'mock',
     icon: 'menu_book',
     label: '模擬題',
-    hint: '取自 vocus / HackMD / yamol 等公開模擬題；非官方歷屆試題（iPAS 不公開歷屆）。',
+    hint: '公開模擬題（非官方歷屆，iPAS 不公開歷屆）。',
   },
   ai_generated: {
     tone: 'ai',
