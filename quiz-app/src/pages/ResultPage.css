@@ -821,7 +821,8 @@
 .cl-result-stats__row--correct .cl-result-stats__num { color: var(--color-success); }
 .cl-result-stats__row--wrong   .cl-result-stats__num { color: var(--color-error); }
 
-@media (max-width: 720px) {
+/* Stats border — tablet 範圍（641–720）：4 欄變單欄堆疊，row 之間用底線分隔 */
+@media (min-width: 641px) and (max-width: 720px) {
   .cl-result-stats__row {
     border-right: 0;
     border-bottom: 1px solid var(--color-rule-soft);
@@ -832,7 +833,8 @@
 /* ============== MOBILE TUNING (≤640px) ============== */
 @media (max-width: 640px) {
   .result-page.cl-page {
-    padding: 0 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   /* Score card — 已在 720 stack；縮數字字級 + 對齊 */
@@ -852,18 +854,19 @@
     font-size: 0.86rem;
   }
 
-  /* Stats — 單列拉長太空，改 2x2 grid */
+  /* Stats — 2x2 grid；border：每 row 都有右框/底框，
+     右欄消右框、最後兩 row 消底框（純 cascade，無 !important） */
   .cl-result-stats {
     grid-template-columns: 1fr 1fr;
     margin-bottom: 2rem;
   }
   .cl-result-stats__row {
     padding: 0.85rem 1rem;
-    border-right: 1px solid var(--color-rule-soft) !important;
-    border-bottom: 1px solid var(--color-rule-soft) !important;
+    border-right: 1px solid var(--color-rule-soft);
+    border-bottom: 1px solid var(--color-rule-soft);
   }
-  .cl-result-stats__row:nth-child(2n) { border-right: 0 !important; }
-  .cl-result-stats__row:nth-last-child(-n + 2) { border-bottom: 0 !important; }
+  .cl-result-stats__row:nth-child(2n) { border-right: 0; }
+  .cl-result-stats__row:nth-last-child(-n + 2) { border-bottom: 0; }
   .cl-result-stats__num {
     font-size: 1.6rem;
   }

@@ -50,8 +50,8 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
           </svg>
           <div className="logo-text cl-header__words">
             <span className="logo-title cl-header__title">淨零碳備考神器</span>
-            <span className="logo-subtitle cl-header__subtitle cl-eyebrow">
-              ARCHIVE / iPAS-NZ
+            <span className="logo-subtitle cl-header__subtitle">
+              iPAS 考古題
             </span>
           </div>
         </button>
@@ -59,7 +59,7 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
         {/* 功能按鈕 */}
         <nav className="header-actions cl-header__nav" aria-label="功能選單">
           <button
-            className="btn btn-text icon-btn cl-header__icon-btn"
+            className="cl-header__icon-btn"
             onClick={toggleDarkMode}
             aria-label={settings.darkMode ? '切換淺色模式' : '切換深色模式'}
             title={settings.darkMode ? '淺色模式' : '深色模式'}
@@ -70,7 +70,7 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
           </button>
 
           <button
-            className="btn btn-text icon-btn cl-header__icon-btn"
+            className="cl-header__icon-btn"
             onClick={onOpenSettings}
             aria-label="開啟設定"
             title="設定"
@@ -83,7 +83,7 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
             href="https://github.com/thc1006/ipas-net-zero-quiz/discussions/1"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-text icon-btn cl-header__icon-btn"
+            className="cl-header__icon-btn"
             aria-label="社群討論 / 回報題目"
             title="社群討論"
           >

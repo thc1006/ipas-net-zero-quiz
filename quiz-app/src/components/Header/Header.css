@@ -144,27 +144,50 @@
 }
 
 .cl-header__subtitle {
-  font-size: 0.62rem !important;
-  color: var(--color-text-quiet) !important;
-  letter-spacing: 0.16em !important;
+  font-size: 0.78rem;
+  color: var(--color-text-quiet);
+  letter-spacing: 0.02em;
   margin-top: 0.2rem;
+  font-weight: 400;
 }
 
 .cl-header__nav {
+  display: inline-flex;
+  align-items: center;
   gap: 0;
   border-left: 1px solid var(--color-rule-soft);
   padding-left: 0.5rem;
   margin-left: 0.5rem;
 }
 
+/* Icon button — 自包含樣式（不再依賴 .btn .btn-text .icon-btn 全域樣式，
+   也不需 !important 來壓 cascade）*/
 .cl-header__icon-btn {
-  border-radius: 2px !important;
-  color: var(--color-text-secondary) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  padding: 0.55rem;
+  border-radius: 2px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background-color 100ms ease, color 100ms ease;
+  text-decoration: none;
 }
 
 .cl-header__icon-btn:hover {
-  background: var(--color-surface-variant) !important;
-  color: var(--color-primary) !important;
+  background: var(--color-surface-variant);
+  color: var(--color-primary);
+}
+
+.cl-header__icon-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.cl-header__icon-btn .material-icons {
+  font-size: 22px;
 }
 
 @media (max-width: 640px) {
@@ -174,7 +197,7 @@
   .cl-header__mark { width: 30px; height: 30px; }
   .cl-header__brand { gap: 0.6rem; }
   .cl-header__nav { gap: 0.15rem; }
-  .cl-header__icon-btn { padding: 0.45rem !important; }
+  .cl-header__icon-btn { padding: 0.45rem; }
 }
 
 @media (max-width: 380px) {

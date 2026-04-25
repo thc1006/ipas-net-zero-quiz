@@ -675,7 +675,9 @@
 /* Carbon Ledger 在大螢幕優雅，小螢幕需收緊間距、調整字級、單欄排版 */
 @media (max-width: 640px) {
   .cl-page {
-    padding: 0 1rem;
+    /* 只壓 horizontal padding；vertical 維持 base style 的 clamp 上下值 */
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   /* Hero — 縮 padding、防 meta 溢出 */
