@@ -148,8 +148,9 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
             <div>
               <p className="setting-title">啟用加強練習</p>
               <p className="setting-desc">
-                {pool._meta.totals.total} 題補充題（{pool._meta.totals.external_mock} 題模擬題、
-                {pool._meta.totals.ai_generated} 題 AI 產題）；獨立於主題庫，每題附來源徽章。
+                {pool
+                  ? `${pool._meta.totals.total} 題補充題（${pool._meta.totals.external_mock} 題模擬題、${pool._meta.totals.ai_generated} 題 AI 產題）；獨立於主題庫，每題附來源徽章。`
+                  : '載入練習池中…'}
               </p>
             </div>
           </div>

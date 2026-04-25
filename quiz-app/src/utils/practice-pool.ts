@@ -1,7 +1,6 @@
-// 加強練習池工具：載入、過濾、normalize、轉換為 QuizQuestion
+// 加強練習池工具：lazy 載入、過濾、normalize、轉換為 QuizQuestion
 // 不直接依賴 React；可在 hook 與其他 utils 共用。
 
-import practicePoolJson from '../data/practice_pool.json';
 import type {
   PracticePool,
   PracticePoolItem,
@@ -10,12 +9,30 @@ import type {
 } from '../types/practicePool';
 import type { QuizQuestion } from '../types/quiz';
 
-// 直接強型別轉型（Vite/TS 對 JSON import 預設為 any-ish）
-const POOL: PracticePool = practicePoolJson as unknown as PracticePool;
+// Lazy load: 使用 dynamic import 避免 170 KB 常駐於 main bundle
+// Vite 會自動拆 chunk；僅在第一次 callers 呼叫 loadPracticePool 時載入
+let poolPromise: Promise<PracticePool> | null = null;
 
-/** 取得整個練習池（含 _meta） */
-export function getPracticePool(): PracticePool {
-  return POOL;
+export function loadPracticePool(): Promise<PracticePool> {
+  if (!poolPromise) {
+    poolPromise = import('../data/practice_pool.json').then(
+      (m) => m.default as unknown as PracticePool
+    );
+  }
+  return poolPromise;
+}
+
+/** 供同步 caller（已確認 pool 載入完成）存取已快取的 pool */
+let poolCached: PracticePool | null = null;
+export function getPracticePoolSync(): PracticePool | null {
+  return poolCached;
+}
+
+/** 預載入（UI 可於 opt-in 時呼叫，讓 quiz 啟動前 chunk 已進快取） */
+export async function prefetchPracticePool(): Promise<PracticePool> {
+  const p = await loadPracticePool();
+  poolCached = p;
+  return p;
 }
 
 /** 過濾條件 */
@@ -27,18 +44,20 @@ export interface PoolFilterOptions {
   excludeFlags?: string[];
 }
 
-/** 將不同代理寫法的 topic tag 正規化（lowercased、移除空白與標點） */
+/**
+ * 將不同代理寫法的 topic tag 正規化。
+ * - 移除空白、常見標點（半形 + 全形 + CJK）
+ * - 轉小寫
+ */
 export function normalizeTopicTag(tag: string): string {
   return tag
     .toLowerCase()
     .replace(/\s+/g, '')
-    .replace(/[　-〿＀-￯()（）「」『』、，。\.\-_/]/g, '');
+    .replace(/[　-〿＀-￯()（）「」『』、，。,;:!?！？\.\-_/]/g, '');
 }
 
 /**
  * 根據條件過濾練習池。
- * - 任何 array 為空或 undefined 視為「不過濾此維度」
- * - excludeFlags 用於排除帶特定 quality_flag 的題（如 'time_sensitive'）
  */
 export function filterPool(
   items: PracticePoolItem[],
@@ -65,9 +84,7 @@ export function filterPool(
   });
 }
 
-/**
- * Fisher-Yates shuffle in-place clone。確定性可選 seed（測試用）。
- */
+/** Fisher-Yates shuffle */
 export function shuffle<T>(arr: T[], rng: () => number = Math.random): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -77,22 +94,18 @@ export function shuffle<T>(arr: T[], rng: () => number = Math.random): T[] {
   return a;
 }
 
-/** 隨機抽樣 n 題（不重複）。若 items 不足 n，回傳全部。 */
+/** 隨機抽樣 n 題 */
 export function randomSample<T>(items: T[], n: number, rng?: () => number): T[] {
   if (items.length <= n) return [...items];
   return shuffle(items, rng).slice(0, n);
 }
 
-/**
- * 把 PracticePoolItem 轉成現有 quiz 流程吃的 QuizQuestion 形狀。
- * UI 仍能透過 item.provenance / item.quality_flags 額外渲染來源徽章。
- */
+/** 把 PracticePoolItem 轉成 QuizQuestion 形狀 */
 export function toQuizQuestion(item: PracticePoolItem): QuizQuestion & {
   provenance: PracticePoolItem['provenance'];
   qualityFlags: PracticePoolItem['quality_flags'];
   sources: string[];
 } {
-  // subject 映射：明確匹配才設值；不明者回傳 null（避免誤歸類）
   const raw = typeof item.subject === 'string' ? item.subject : '';
   let subject: QuizQuestion['subject'] | null = null;
   if (raw.includes('1') || raw.includes('一') || raw.toLowerCase().includes('subject 1')) {
@@ -110,7 +123,6 @@ export function toQuizQuestion(item: PracticePoolItem): QuizQuestion & {
     stem: item.stem,
     options: item.options,
     answer: item.answer,
-    // 若無法映射，預設『考科2』但已經過 warn，避免 silent 誤分類
     subject: subject ?? '考科2',
     sourceType: 'practice_pool',
     year: null,
@@ -121,12 +133,19 @@ export function toQuizQuestion(item: PracticePoolItem): QuizQuestion & {
   };
 }
 
-/** Convenience：依條件抽 n 題並轉換為 QuizQuestion 形狀 */
-export function pickQuizQuestions(
+/** Convenience：依條件抽 n 題並轉換為 QuizQuestion 形狀（async） */
+export async function pickQuizQuestions(
   count: number,
   opts: PoolFilterOptions = {},
   rng?: () => number
-): ReturnType<typeof toQuizQuestion>[] {
-  const filtered = filterPool(POOL.items, opts);
+): Promise<ReturnType<typeof toQuizQuestion>[]> {
+  const pool = await loadPracticePool();
+  const filtered = filterPool(pool.items, opts);
   return randomSample(filtered, count, rng).map(toQuizQuestion);
+}
+
+/** 測試專用：重置 lazy-loaded promise cache（勿於 production 使用） */
+export function __resetPracticePoolCacheForTesting(): void {
+  poolPromise = null;
+  poolCached = null;
 }
