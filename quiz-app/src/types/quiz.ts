@@ -81,6 +81,15 @@ export interface QuizQuestion {
   sources?: string[];
   /** 解析文字（給 AI helper 與 UI 參考），可能為空 */
   explanation?: string | null;
+  /** 練習池題目專屬：UI 用以渲染來源徽章；主題庫題不帶 */
+  provenance?: {
+    source_type: 'external_mock' | 'ai_generated';
+    source_origin?: string;
+    verified_date?: string;
+    verify_verdict?: string;
+  };
+  /** 練習池題目品質旗標（時效 / 爭議 / 低信心 / 等） */
+  qualityFlags?: string[];
 }
 
 /** 題庫資料集 */
