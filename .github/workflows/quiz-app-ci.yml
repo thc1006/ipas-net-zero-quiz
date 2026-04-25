@@ -40,12 +40,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js (preliminary, for npm)
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期；先升級到最新
+      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期
       - name: Upgrade Corepack to latest
         run: npm install -g corepack@latest
 
@@ -55,12 +55,17 @@ jobs:
           package_json_file: quiz-app/package.json
           run_install: false
 
-      - name: Re-setup Node.js (with pnpm store cache)
-        uses: actions/setup-node@v4
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
         with:
-          node-version-file: 'quiz-app/.nvmrc'
-          cache: 'pnpm'
-          cache-dependency-path: 'quiz-app/pnpm-lock.yaml'
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('quiz-app/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -79,12 +84,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js (preliminary, for npm)
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期；先升級到最新
+      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期
       - name: Upgrade Corepack to latest
         run: npm install -g corepack@latest
 
@@ -94,12 +99,17 @@ jobs:
           package_json_file: quiz-app/package.json
           run_install: false
 
-      - name: Re-setup Node.js (with pnpm store cache)
-        uses: actions/setup-node@v4
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
         with:
-          node-version-file: 'quiz-app/.nvmrc'
-          cache: 'pnpm'
-          cache-dependency-path: 'quiz-app/pnpm-lock.yaml'
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('quiz-app/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -133,12 +143,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js (preliminary, for npm)
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期；先升級到最新
+      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期
       - name: Upgrade Corepack to latest
         run: npm install -g corepack@latest
 
@@ -148,12 +158,17 @@ jobs:
           package_json_file: quiz-app/package.json
           run_install: false
 
-      - name: Re-setup Node.js (with pnpm store cache)
-        uses: actions/setup-node@v4
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
         with:
-          node-version-file: 'quiz-app/.nvmrc'
-          cache: 'pnpm'
-          cache-dependency-path: 'quiz-app/pnpm-lock.yaml'
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('quiz-app/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -214,12 +229,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js (preliminary, for npm)
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期；先升級到最新
+      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期
       - name: Upgrade Corepack to latest
         run: npm install -g corepack@latest
 
@@ -229,12 +244,17 @@ jobs:
           package_json_file: quiz-app/package.json
           run_install: false
 
-      - name: Re-setup Node.js (with pnpm store cache)
-        uses: actions/setup-node@v4
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
         with:
-          node-version-file: 'quiz-app/.nvmrc'
-          cache: 'pnpm'
-          cache-dependency-path: 'quiz-app/pnpm-lock.yaml'
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('quiz-app/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
