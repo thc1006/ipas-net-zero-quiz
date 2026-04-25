@@ -2,6 +2,7 @@
 import { useState, useCallback } from 'react';
 import { stats } from '../data/questions';
 import { defaultConfig } from '../hooks/useQuiz';
+import { usePracticeMode } from '../hooks/usePracticeMode';
 import type { QuizConfig, ExamSubject } from '../types/quiz';
 import './HomePage.css';
 
@@ -11,6 +12,7 @@ interface HomePageProps {
 
 export function HomePage({ onStartQuiz }: HomePageProps) {
   const [config, setConfig] = useState<QuizConfig>(defaultConfig);
+  const practiceMode = usePracticeMode();
 
   const handleSubjectChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -73,6 +75,12 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
           <span className="badge badge-info">
             考科二 {stats.subject2} 題
           </span>
+          {practiceMode.enabled && (
+            <span className="badge badge-warning" title="加強練習池啟用中：包含模擬題與 AI 產題">
+              <span className="material-icons sm">auto_awesome</span>
+              加強練習池啟用中
+            </span>
+          )}
         </div>
       </section>
 
