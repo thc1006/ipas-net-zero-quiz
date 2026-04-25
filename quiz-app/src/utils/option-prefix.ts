@@ -1,51 +1,60 @@
 // 偵測選項中冗餘的共同前綴關鍵字（例如題幹已說「GRI 準則」，每個選項又重複
 // 以「GRI ...」開頭）。讓 UI 把這個前綴 dim 化降低視覺噪音。
 //
-// 設計：保守取「所有選項的第一個 whitespace-separated 詞」作為 prefix，
-// 並僅當該詞同時出現在 stem 才視為冗餘（否則可能是必要 disambiguation）。
+// 設計：找最長共同 starting string，trim 結尾分隔符（半形 + CJK 標點 + 空白），
+// 必須出現在 stem 才視為冗餘。
+
+/** trim 用的分隔字元集：半形 whitespace + CJK 標點 + 半形標點 */
+const TRIM_SEP_RE = /[\s、，；。：（）「」『』,;.:()[\]{}!?！？]+$/;
+
+/** 找出兩字串的最長共同 starting string */
+function commonStartingString(a: string, b: string): string {
+  const len = Math.min(a.length, b.length);
+  let i = 0;
+  while (i < len && a[i] === b[i]) i++;
+  return a.slice(0, i);
+}
 
 /**
- * 找出選項中冗餘的共同前綴（一或多個 whitespace-separated 詞）。
+ * 找出選項中冗餘的共同前綴。
  *
- * @returns 共同前綴字串（不含 trailing whitespace），若無則 null。
+ * @returns 共同前綴字串（已 trim 結尾分隔符），若無則 null。
  *
  * 演算法：
- * 1. 把每個選項拆 token（splitting on \s+）
- * 2. 從左找最長共同 token 序列（multi-token）
- * 3. 整段 join 後若 ≥2 字元 AND stem 包含該整段 → 回傳；否則 null
+ * 1. 從第一個選項開始，跟其他每個選項算 commonStartingString
+ * 2. 取所有 pairwise 結果的最短 = 全體共同 prefix
+ * 3. trim 結尾分隔符（避免「GRI 」勾留 trailing space）
+ * 4. ≥2 字元 AND stem 包含此 prefix → 回傳；否則 null
+ *
+ * 處理 CJK punctuation：例「GRI、環境」「GRI、社會」commonStartingString 是
+ * 「GRI、」trim 後得「GRI」。
  */
 export function findRedundantPrefix(
   stem: string,
   optionTexts: readonly string[],
 ): string | null {
   if (optionTexts.length < 2) return null;
+  if (optionTexts.some((t) => t.length === 0)) return null;
 
-  // 拆每個選項為 token 陣列；以 leading whitespace 為偏離信號 → reject
-  const tokenized = optionTexts.map((t) => {
-    if (/^\s/.test(t)) return null; // leading whitespace → 視為破壞共享
-    return t.split(/\s+/).filter((tok) => tok.length > 0);
-  });
-  if (tokenized.some((toks) => toks === null || toks.length === 0)) return null;
+  // 任一選項以分隔符開頭 → 視為破壞共享（避免空 prefix）
+  if (optionTexts.some((t) => /^[\s、，；。：（）「」『』,;.:!?！？]/.test(t))) return null;
 
-  const tokens0 = tokenized[0] as string[];
-
-  // 找最長共同 token 序列
-  let commonLen = 0;
-  for (let i = 0; i < tokens0.length; i++) {
-    const tok = tokens0[i];
-    const allMatch = tokenized.every((toks) => (toks as string[])[i] === tok);
-    if (!allMatch) break;
-    commonLen = i + 1;
+  // pairwise 求最長共同 starting string
+  let common = optionTexts[0];
+  for (let i = 1; i < optionTexts.length; i++) {
+    common = commonStartingString(common, optionTexts[i]);
+    if (common.length === 0) return null;
   }
-  if (commonLen === 0) return null;
 
-  // 不能整個選項都是 prefix（commonLen === tokens.length 表示某選項只有 prefix 本身）
-  // 若任一選項長度等於 commonLen，說明該選項只有 prefix 沒其他內容 → 不適合 dim
-  if (tokenized.some((toks) => (toks as string[]).length === commonLen)) return null;
+  // trim trailing 分隔符
+  const trimmed = common.replace(TRIM_SEP_RE, '');
+  if (trimmed.length < 2) return null;
 
-  const prefix = tokens0.slice(0, commonLen).join(' ');
-  if (prefix.length < 2) return null; // 太短不 dim
-  if (!stem.includes(prefix)) return null; // 必須出現在 stem 才算冗餘
+  // 整選項 == prefix → 該選項沒剩餘內容，不適合 dim
+  if (optionTexts.some((t) => t === trimmed || t === common)) return null;
 
-  return prefix;
+  // 必須出現在 stem 才算冗餘（防止選項是必要 disambiguation marker）
+  if (!stem.includes(trimmed)) return null;
+
+  return trimmed;
 }
