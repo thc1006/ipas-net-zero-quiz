@@ -288,3 +288,77 @@ describe('Logger persistence (persistKey)', () => {
     expect(log.getRecentErrors()[0].message).toBe('e7');
   });
 });
+
+describe('Logger persist sanitizer (PII redaction)', () => {
+  function installRealLocalStorage() {
+    const store = new Map<string, string>();
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: (k: string) => store.get(k) ?? null,
+        setItem: (k: string, v: string) => { store.set(k, v); },
+        removeItem: (k: string) => { store.delete(k); },
+        clear: () => { store.clear(); },
+        key: (i: number) => Array.from(store.keys())[i] ?? null,
+        get length() { return store.size; },
+      },
+      writable: true,
+      configurable: true,
+    });
+  }
+  beforeEach(() => { installRealLocalStorage(); });
+  afterEach(() => { localStorage.clear(); });
+
+  it('redacts password / token / email in context before persist', () => {
+    const log = new Logger({ isDev: false, persistKey: 'pii-log' });
+    log.error('login failed', new Error('bad creds'), {
+      userEmail: 'a@b.com',
+      apiToken: 'sk-xyz',
+      sessionId: 'abc',
+      quizId: '123',
+    });
+    const stored = JSON.parse(localStorage.getItem('pii-log')!);
+    expect(stored[0].context.userEmail).toBe('[redacted]');
+    expect(stored[0].context.apiToken).toBe('[redacted]');
+    expect(stored[0].context.sessionId).toBe('[redacted]');
+    // 非 PII key 保留原值
+    expect(stored[0].context.quizId).toBe('123');
+  });
+
+  it('redacts nested objects recursively', () => {
+    const log = new Logger({ isDev: false, persistKey: 'pii-log' });
+    log.error('nested', undefined, {
+      payload: { auth: 'bearer xxx', other: 'safe' },
+    });
+    const stored = JSON.parse(localStorage.getItem('pii-log')!);
+    expect(stored[0].context.payload.auth).toBe('[redacted]');
+    expect(stored[0].context.payload.other).toBe('safe');
+  });
+
+  it('in-memory buffer stays unredacted (DEV debug 仍可看到原 value)', () => {
+    const log = new Logger({ isDev: true, persistKey: 'pii-log' });
+    log.error('msg', undefined, { password: 'p1' });
+    // In-memory unredacted
+    expect(log.getRecentErrors()[0].context?.password).toBe('p1');
+    // localStorage redacted
+    const stored = JSON.parse(localStorage.getItem('pii-log')!);
+    expect(stored[0].context.password).toBe('[redacted]');
+  });
+
+  it('handles arrays in context', () => {
+    const log = new Logger({ isDev: false, persistKey: 'pii-log' });
+    log.error('msg', undefined, {
+      tokens: ['t1', 't2'],  // key matches /token/i → entire value redacted
+      users: [{ email: 'a@b' }, { email: 'c@d' }],
+    });
+    const stored = JSON.parse(localStorage.getItem('pii-log')!);
+    expect(stored[0].context.tokens).toBe('[redacted]');
+    expect(stored[0].context.users[0].email).toBe('[redacted]');
+  });
+
+  it('Chinese 身分證 key also redacted', () => {
+    const log = new Logger({ isDev: false, persistKey: 'pii-log' });
+    log.error('msg', undefined, { 身分證: 'A123456789' });
+    const stored = JSON.parse(localStorage.getItem('pii-log')!);
+    expect(stored[0].context.身分證).toBe('[redacted]');
+  });
+});
