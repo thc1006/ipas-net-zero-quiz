@@ -20,6 +20,11 @@ jobs:
     name: Review Dependencies
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # Advisory only — Dependency graph 需 repo settings 啟用；未啟用時 action
+    # 會回 'Dependency review is not supported on this repository'。設成
+    # continue-on-error 讓此 job 不阻擋 PR；待 user 啟用 Dependency graph 後
+    # 此 job 自動轉成嚴格 gate（fail-on-severity: high）。
+    continue-on-error: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
