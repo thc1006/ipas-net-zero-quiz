@@ -14,12 +14,18 @@ if (!rootElement) {
 // Production 模式不執行此驗證（節省 bundle / 啟動時間）
 if (import.meta.env.DEV) {
   // 不加 .catch — 讓 schema 錯誤透過 unhandledrejection 在 DevTools 醒目顯示
-  // (PR #22 assertPracticePoolValid 在 dev throw、production warn)
+  // 兩支：練習池 + 主題庫
   void Promise.all([
     import('./data/practice_pool.json'),
     import('./utils/practice-pool-schema'),
   ]).then(([poolModule, schemaModule]) => {
     schemaModule.assertPracticePoolValid(poolModule.default);
+  });
+  void Promise.all([
+    import('./data/integrated_dataset.json'),
+    import('./utils/main-bank-schema'),
+  ]).then(([dsModule, schemaModule]) => {
+    schemaModule.assertMainBankValid(dsModule.default);
   });
 }
 
