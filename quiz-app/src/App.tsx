@@ -2,6 +2,7 @@
 import { useState, useCallback } from 'react';
 import { useQuiz } from './hooks/useQuiz';
 import { useAccessibility } from './hooks/useAccessibility';
+import { usePracticeMode } from './hooks/usePracticeMode';
 import { HomePage } from './pages/HomePage';
 import { QuizPage } from './pages/QuizPage';
 import { ResultPage } from './pages/ResultPage';
@@ -19,14 +20,20 @@ function App() {
 
   const quiz = useQuiz();
   const accessibility = useAccessibility();
+  const practiceMode = usePracticeMode();
 
-  // 開始測驗
+  // 開始測驗 — 若使用者已啟用「加強練習池」（settings toggle），自動把練習池
+  // 題目混入抽題範圍（async startQuizWithPool）；否則沿用同步 startQuiz。
   const handleStartQuiz = useCallback(
-    (config: QuizConfig) => {
-      quiz.startQuiz(config);
+    async (config: QuizConfig) => {
+      if (practiceMode.enabled) {
+        await quiz.startQuizWithPool({ ...config, includePracticePool: true });
+      } else {
+        quiz.startQuiz(config);
+      }
       setCurrentView('quiz');
     },
-    [quiz]
+    [quiz, practiceMode.enabled]
   );
 
   // 完成測驗
@@ -46,12 +53,16 @@ function App() {
   }, [quiz]);
 
   // 重新測驗
-  const handleRetry = useCallback(() => {
+  const handleRetry = useCallback(async () => {
     if (lastResult?.config) {
-      quiz.startQuiz(lastResult.config);
+      if (practiceMode.enabled) {
+        await quiz.startQuizWithPool({ ...lastResult.config, includePracticePool: true });
+      } else {
+        quiz.startQuiz(lastResult.config);
+      }
       setCurrentView('quiz');
     }
-  }, [quiz, lastResult]);
+  }, [quiz, lastResult, practiceMode.enabled]);
 
   // 開啟設定
   const handleOpenSettings = useCallback(() => {
