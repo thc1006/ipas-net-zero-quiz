@@ -1,0 +1,88 @@
+// 加強練習池（practice pool）型別
+// 對應 src/data/practice_pool.json 的 schema
+// 此池獨立於主題庫；只在使用者明確開啟「加強練習」模式時提供。
+
+import type { QuizOption, ExamSubject } from './quiz';
+
+/** 來源類型：external_mock 為第三方公開模擬題、ai_generated 為 LLM 代理產生 */
+export type PracticePoolSourceType = 'external_mock' | 'ai_generated';
+
+/** 題目難度（代理估算） */
+export type PracticePoolDifficulty = 'easy' | 'medium' | 'hard';
+
+/** 驗證代理結論 */
+export type PracticePoolVerdict =
+  | 'CONFIRMED'
+  | 'AMBIGUOUS'
+  | 'TIME_SENSITIVE'
+  | 'OUTDATED_SOURCE'
+  | 'HALLUCINATED'
+  | 'REFUTED'
+  | 'DUPLICATE';
+
+/** AI 產題時的模型與生成資訊（用於合規揭露 / 審計） */
+export interface AIMetadata {
+  model_family: string;
+  generation_date: string;
+  /** 1 = 第一輪原始產題；2 = 經人工/代理重寫 */
+  verifier_round: number;
+}
+
+/** 來源溯源資訊 — UI 顯示徽章與 AI 揭露之依據 */
+export interface PracticePoolProvenance {
+  source_type: PracticePoolSourceType;
+  /** 來源批次識別（vocus_hackmd_yamol、industry_round1 等） */
+  source_origin: string;
+  /** YYYY-MM-DD */
+  verified_date: string;
+  verifier: string;
+  verify_verdict: PracticePoolVerdict;
+  /** 上游檔的原始 ID（如有） */
+  original_id: string;
+  /** 僅 ai_generated 帶 */
+  ai_metadata?: AIMetadata;
+}
+
+/** UI 渲染徽章用的 quality flags */
+export type PracticePoolQualityFlag =
+  | 'time_sensitive'
+  | 'ambiguous'
+  | 'low_confidence'
+  | 'duplicate_topic';
+
+/** 加強練習單題 */
+export interface PracticePoolItem {
+  id: string;
+  stem: string;
+  options: QuizOption[];
+  answer: string | null;
+  explanation: string;
+  subject: ExamSubject | string | null;
+  topic_tags: string[];
+  difficulty: PracticePoolDifficulty;
+  provenance: PracticePoolProvenance;
+  /** Curl 實測通過的引用 URL */
+  sources: string[];
+  quality_flags: PracticePoolQualityFlag[];
+}
+
+/** 練習池檔案頂層 */
+export interface PracticePool {
+  _meta: {
+    version: string;
+    generated_at: string;
+    description: string;
+    source_types: PracticePoolSourceType[];
+    compliance: {
+      eu_ai_act_art50_effective: string;
+      ai_generated_disclosure: string;
+    };
+    totals: {
+      external_mock: number;
+      ai_generated: number;
+      total: number;
+    };
+    policy: string;
+  };
+  items: PracticePoolItem[];
+}
