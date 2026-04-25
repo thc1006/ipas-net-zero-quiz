@@ -20,9 +20,28 @@ function installRealLocalStorage() {
   });
 }
 
+// test-setup.ts 已 mock matchMedia，但 vi.restoreAllMocks 會清掉；每個 test 重新確保
+function ensureMatchMedia() {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    configurable: true,
+    value: (query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: () => {},
+      removeListener: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      dispatchEvent: () => false,
+    }),
+  });
+}
+
 beforeAll(() => { installRealLocalStorage(); });
 
 beforeEach(() => {
+  ensureMatchMedia();
   // mock fetch（VisitorCounter 啟動時呼叫）— 預設失敗讓元件回 null
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 503 }));
 });
@@ -30,7 +49,7 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
   localStorage.clear();
-  vi.restoreAllMocks();
+  vi.unstubAllGlobals();
 });
 
 describe('App', () => {
