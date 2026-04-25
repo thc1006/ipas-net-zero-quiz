@@ -174,4 +174,62 @@ describe('HomePage', () => {
     fireEvent.click(within(tip).getByRole('button'));
     expect(localStorage.getItem('practice-pool-enabled')).toBe('0');
   });
+
+  // === Config 控制元件 onChange handlers (補覆蓋) ===
+
+  it('subject select change updates config.subject', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    const select = screen.getByLabelText(/考科範圍/) as HTMLSelectElement;
+    fireEvent.change(select, { target: { value: '考科1' } });
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    expect(onStartQuiz.mock.calls[0][0].subject).toBe('考科1');
+  });
+
+  it('mode select change updates config.mode + showAnswerImmediately', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    const select = screen.getByLabelText(/測驗模式/) as HTMLSelectElement;
+    fireEvent.change(select, { target: { value: 'exam' } });
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    const cfg = onStartQuiz.mock.calls[0][0];
+    expect(cfg.mode).toBe('exam');
+    expect(cfg.showAnswerImmediately).toBe(false);
+  });
+
+  it('count input change updates config.questionCount (clamped 1-100)', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    const input = screen.getByLabelText(/題數/) as HTMLInputElement;
+    fireEvent.change(input, { target: { value: '25' } });
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    expect(onStartQuiz.mock.calls[0][0].questionCount).toBe(25);
+  });
+
+  it('count input clamps NaN to default 20', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    const input = screen.getByLabelText(/題數/) as HTMLInputElement;
+    fireEvent.change(input, { target: { value: 'abc' } });
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    expect(onStartQuiz.mock.calls[0][0].questionCount).toBe(20);
+  });
+
+  it('count input clamps over-max to 100', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    const input = screen.getByLabelText(/題數/) as HTMLInputElement;
+    fireEvent.change(input, { target: { value: '500' } });
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    expect(onStartQuiz.mock.calls[0][0].questionCount).toBe(100);
+  });
+
+  it('shuffle checkbox toggles config.shuffleQuestions', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    const cb = screen.getByRole('checkbox') as HTMLInputElement;
+    fireEvent.change(cb, { target: { checked: true } });
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    expect(onStartQuiz.mock.calls[0][0].shuffleQuestions).toBe(true);
+  });
 });
