@@ -18,9 +18,17 @@ declare global {
   }
 }
 
-// AI 模型設定 - 使用 OpenAI GPT-5.2（目前最強模型）
-// 其他可用選項：'gpt-4o', 'o1', 'o3'
-const AI_MODEL = 'gpt-5.2-chat';
+// Puter.js 接受 vendor 前綴或 bare model name；本專案統一使用前綴格式以
+// 明確 vendor。新增模型須先加進 union 並更新此常數。
+type PuterModel =
+  | 'openai/gpt-5.4'
+  | 'openai/gpt-5.4-nano'
+  | 'openai/gpt-5.2-chat'
+  | 'anthropic/claude-sonnet-4-5'
+  | 'google/gemini-2.5-flash-lite';
+
+// AI 模型設定 - 使用 OpenAI GPT-5.4（透過 Puter.js）
+const AI_MODEL: PuterModel = 'openai/gpt-5.4';
 const CONFIDENCE_THRESHOLD = 0.7;
 
 // 系統提示詞（中文）

@@ -32,6 +32,12 @@ export interface GistQuestion {
   source: string;
   original_section: string;
   exam_subject: ExamSubject;
+  explanation?: string;
+  metadata?: {
+    sources?: string[];
+    sources_verified_date?: string;
+    [k: string]: unknown;
+  };
 }
 
 /** 補充題目格式 */
@@ -54,7 +60,15 @@ export interface UniqueQuestion {
   exam_subject: ExamSubject;
   subject_confidence?: number;
   _quality_score?: number;
+  metadata?: {
+    sources?: string[];
+    sources_verified_date?: string;
+    [k: string]: unknown;
+  };
 }
+
+/** 注意：此處用 type-only import 避免循環依賴 */
+import type { PracticePoolQualityFlag } from './practicePool';
 
 /** 統一的題目格式（用於測驗邏輯） */
 export interface QuizQuestion {
@@ -63,9 +77,22 @@ export interface QuizQuestion {
   options: QuizOption[];
   answer: string | null;
   subject: ExamSubject;
-  sourceType: 'gist' | 'unique';
+  sourceType: 'gist' | 'unique' | 'practice_pool';
   year?: number | null;
   hasAnswer: boolean;
+  /** Curl 實測通過的引用 URL（來自 metadata.sources），UI 渲染為「參考來源」 */
+  sources?: string[];
+  /** 解析文字（給 AI helper 與 UI 參考），可能為空 */
+  explanation?: string | null;
+  /** 練習池題目專屬：UI 用以渲染來源徽章；主題庫題不帶 */
+  provenance?: {
+    source_type: 'external_mock' | 'ai_generated';
+    source_origin?: string;
+    verified_date?: string;
+    verify_verdict?: string;
+  };
+  /** 練習池題目品質旗標（時效 / 爭議 / 低信心 / 等） */
+  qualityFlags?: PracticePoolQualityFlag[];
 }
 
 /** 題庫資料集 */
@@ -98,6 +125,8 @@ export interface QuizConfig {
   questionCount: number;
   shuffleQuestions: boolean;
   shuffleOptions: boolean;
+  /** 是否將加強練習池題目混入抽題範圍（須使用者已 opt-in） */
+  includePracticePool?: boolean;
   showAnswerImmediately: boolean;
 }
 

@@ -1,0 +1,56 @@
+/* PracticeOptInDialog 樣式 */
+
+.optin-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-md);
+}
+
+.optin-dialog {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  max-width: 560px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.optin-dialog h2 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+}
+
+.optin-dialog p,
+.optin-dialog ul {
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  margin: var(--spacing-sm) 0;
+}
+
+.optin-dialog ul {
+  padding-left: 1.25em;
+}
+
+.optin-dialog li {
+  margin-bottom: var(--spacing-xs);
+}
+
+.optin-note {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  border-top: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+  padding-top: var(--spacing-sm);
+}
+
+.optin-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}

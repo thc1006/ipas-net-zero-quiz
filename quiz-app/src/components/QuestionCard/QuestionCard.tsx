@@ -1,7 +1,9 @@
 // QuestionCard 元件 - 顯示單一題目和選項
-import { useCallback, useId, useState } from 'react';
+import { useCallback, useId, useMemo, useState } from 'react';
 import type { QuizQuestion, QuizOption } from '../../types/quiz';
 import { explainQuestion, type AIResponse } from '../../utils/ai-helper';
+import { SourceBadge } from '../SourceBadge/SourceBadge';
+import { LAW_PCODE_LABELS } from '../../data/law-pcode-labels';
 import './QuestionCard.css';
 
 /**
@@ -52,6 +54,11 @@ export function QuestionCard({
 }: QuestionCardProps) {
   const labelId = useId();
   const [aiResponse, setAiResponse] = useState<AIResponse | null>(null);
+  const sourceLabels = useMemo(
+    () =>
+      (question.sources ?? []).map((url) => ({ url, label: prettifySourceUrl(url) })),
+    [question.sources]
+  );
   const [isLoadingAI, setIsLoadingAI] = useState(false);
 
   const getOptionStatus = useCallback(
@@ -121,6 +128,12 @@ export function QuestionCard({
         <span className={`badge badge-info subject-tag subject-${question.subject === '考科1' ? '1' : '2'}`}>
           {question.subject === '考科1' ? '考科一' : '考科二'}
         </span>
+        {question.provenance && (
+          <SourceBadge
+            sourceType={question.provenance.source_type}
+            qualityFlags={question.qualityFlags ?? []}
+          />
+        )}
       </header>
 
       {/* 題幹 */}
@@ -204,10 +217,75 @@ export function QuestionCard({
               )}
             </div>
           )}
+
+          {question.sources && question.sources.length > 0 && (
+            <div className="question-sources" aria-label="參考來源">
+              <div className="question-sources-header">
+                <span className="material-icons sm">menu_book</span>
+                <span>參考來源</span>
+              </div>
+              <ul className="question-sources-list">
+                {sourceLabels.map(({ url, label }) => (
+                  <li key={url}>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="source-link"
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </article>
   );
+}
+
+/** 將 URL 轉成短而可讀的標籤；export 供測試使用 */
+export function prettifySourceUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    const host = u.hostname;
+    if (host.includes('law.moj.gov.tw')) {
+      const pcode = u.searchParams.get('pcode');
+      const flno = u.searchParams.get('flno');
+      const name = pcode && LAW_PCODE_LABELS[pcode] ? LAW_PCODE_LABELS[pcode] : '法規';
+      return flno ? `${name} §${flno}` : name;
+    }
+    if (host.includes('eur-lex.europa.eu')) {
+      const celex = u.searchParams.get('uri') || '';
+      // CELEX 格式：3{year}R{number}，第一碼 3=legal acts；strip leading zeros from number
+      const m = celex.match(/3(\d{4})R(\d+)/);
+      if (m) {
+        const year = m[1];
+        const num = m[2].replace(/^0+/, '') || '0';
+        return `EU Reg ${year}/${num}`;
+      }
+      return 'EUR-Lex';
+    }
+    if (host.includes('ipcc.ch')) return 'IPCC';
+    if (host.includes('iso.org')) return 'ISO';
+    if (host.includes('cca.gov.tw')) return '環境部 氣候變遷署';
+    if (host.includes('moenv.gov.tw')) return '環境部';
+    if (host.includes('greentrade.org.tw')) return '綠色貿易資訊網';
+    if (host.includes('cdp.net')) return 'CDP';
+    if (host.includes('vocus.cc')) return 'vocus 文章';
+    if (host.includes('github.com')) {
+      // 細分 path：discussions / issues / pulls / 其他
+      if (u.pathname.includes('/discussions/')) return 'GitHub Discussion';
+      if (u.pathname.includes('/issues/')) return 'GitHub Issue';
+      if (u.pathname.includes('/pull/')) return 'GitHub PR';
+      return 'GitHub';
+    }
+    return host.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
 }
 
 // 選項按鈕子元件

@@ -1,0 +1,51 @@
+/* SourceBadge 樣式 */
+
+.source-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  line-height: 1.4;
+  vertical-align: middle;
+}
+
+.source-badge .badge-text {
+  white-space: nowrap;
+}
+
+.source-badge.tone-mock {
+  background: var(--color-info-bg, #e0f2fe);
+  color: var(--color-info-fg, #0369a1);
+}
+
+.source-badge.tone-ai {
+  background: var(--color-warning-bg, #fef3c7);
+  color: var(--color-warning-fg, #92400e);
+  border: 1px solid var(--color-warning-fg, #92400e);
+}
+
+/* 與 useAccessibility 對齊：使用 [data-theme="dark"]，不靠 system prefers */
+[data-theme="dark"] .source-badge.tone-mock {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+}
+[data-theme="dark"] .source-badge.tone-ai {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.flag-chip {
+  display: inline-block;
+  padding: 0 6px;
+  border-radius: var(--radius-sm, 4px);
+  font-size: 0.85em;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.flag-time_sensitive { background: rgba(239, 68, 68, 0.15); color: #b91c1c; }
+.flag-ambiguous     { background: rgba(168, 85, 247, 0.15); color: #6b21a8; }
+.flag-low_confidence{ background: rgba(107, 114, 128, 0.15); color: #4b5563; }

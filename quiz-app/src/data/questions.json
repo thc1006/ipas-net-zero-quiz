@@ -373,8 +373,16 @@
       "C": "歐盟執委會",
       "D": "主管機關"
     },
-    "answer": "C",
-    "explanation": "歐盟執委會負責總籌協調制定法規，而執行面則由各歐盟會員國指定其主管機關負責執行。 [1, 2, 4]"
+    "answer": "D",
+    "explanation": "今日（2026-04）CBAM 已進入定價期（2026/01 起），依 Regulation (EU) 2023/956 Art. 19：授權 CBAM 申報人之申報、憑證繳交、核實與罰則由各會員國指定之主管機關（National Competent Authority, NCA）初審負責，歐盟執委會負責總籌與監督。過渡期（2023/10–2025/12）則由執委會直接受理季報。\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956 ; https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083 ; https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+    "metadata": {
+      "sources": [
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en"
+      ],
+      "sources_verified_date": "2026-04-25"
+    }
   },
   {
     "id": "c1-030",
@@ -487,11 +495,18 @@
     "options": {
       "A": "3 月 31 日",
       "B": "6 月 30 日",
-      "C": "5 月 31 日",
+      "C": "9 月 30 日",
       "D": "4 月 30 日"
     },
     "answer": "C",
-    "explanation": "CBAM正式實施後，申報人需在每年5月31日前提交前一年度的CBAM申報單並繳納相應的憑證費用。 [2, 3, 5]"
+    "explanation": "CBAM 正式期自 2026 年起實施。依 Omnibus 修正案（2025/10 生效），進口商應於每年 9 月 30 日前繳納前一年度 CBAM 憑證費用（原規定為 5/31，經 Omnibus 延後）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083 ; https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+    "metadata": {
+      "sources": [
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
+      ],
+      "sources_verified_date": "2026-04-25"
+    }
   },
   {
     "id": "c1-039",
@@ -512,12 +527,18 @@
     "question": "CBAM 正式期第一次申報日期是？",
     "options": {
       "A": "2026 年 1 月 31 日",
-      "B": "2027 年 5 月 31 日",
+      "B": "2027 年 9 月 30 日",
       "C": "2026 年 5 月 31 日",
       "D": "2026 年 12 月 31 日"
     },
     "answer": "B",
-    "explanation": "CBAM自2026年1月起正式實施，進口商應於每年5月31日前提交前一年度的CBAM申報單，因此第一次申報日期為2027年5月31日。 [3, 5]"
+    "explanation": "CBAM 自 2026 年 1 月 1 日起進入定價期，第一個申報年度為 2026 年。依 Omnibus 修正案，首次 CBAM 申報及憑證繳交期限為 2027 年 9 月 30 日（原為 2027/05/31）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+    "metadata": {
+      "sources": [
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+      ],
+      "sources_verified_date": "2026-04-25"
+    }
   },
   {
     "id": "c2-001",
@@ -594,8 +615,15 @@
       "C": "6 年",
       "D": "3 年"
     },
-    "answer": "A",
-    "explanation": "根據《溫室氣體排放量盤查登錄及查驗管理辦法》第14條，查驗機構指派執行查驗作業之主導查驗員，不得連續五年執行同一事業同一廠（場）之查驗作業。 [2, 3]"
+    "answer": "C",
+    "explanation": "依《溫室氣體排放量盤查登錄及查驗管理辦法》第 8 條第 2 項第 2 款（民國 114 年 12 月 19 日最新修正版）：查驗機構指派執行查驗作業之主導查驗員，不得連續六年執行同一事業同一廠（場）之查驗作業。故正解為 6 年。\n\n資料來源：https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=8 ; https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+    "metadata": {
+      "sources": [
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=8",
+        "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+      ],
+      "sources_verified_date": "2026-04-25"
+    }
   },
   {
     "id": "c2-007",
@@ -1630,12 +1658,19 @@
     "question": "臺灣 NDC：相較 2005 基準年應減排多少以達 2050 淨零？",
     "options": {
       "A": "20 % ± 1 %",
-      "B": "24 % ± 1 %",
+      "B": "28 % ± 2 %",
       "C": "30 % ± 1 %",
       "D": "40 % ± 1 %"
     },
     "answer": "B",
-    "explanation": "我國於2022年12月28日正式公布淨零轉型之2030年階段目標，提升至較基準年（2005年）減少24±1%。 [3, 5]"
+    "explanation": "我國 NDC 3.0（2025 年公布）將 2030 年減排目標由 NDC 2.0 之 24±1%（較 2005 基準年）提升為 28±2%，並設定 2035 年目標為 38±2%。\n\n資料來源：https://www.cca.gov.tw/affairs/response-policies/ndc/2029.html ; https://www.cca.gov.tw/",
+    "metadata": {
+      "sources": [
+        "https://www.cca.gov.tw/affairs/response-policies/ndc/2029.html",
+        "https://www.cca.gov.tw/"
+      ],
+      "sources_verified_date": "2026-04-25"
+    }
   },
   {
     "id": "c2-087",
@@ -2008,11 +2043,17 @@
     "options": {
       "A": "每年 1 月 31 日前",
       "B": "每年 3 月 31 日前",
-      "C": "每年 5 月 31 日前",
+      "C": "每年 9 月 30 日前",
       "D": "每年 12 月 31 日前"
     },
     "answer": "C",
-    "explanation": "CBAM正式實施後，申報人需在每年5月31日前提交前一年度的CBAM申報單並繳交相應的憑證費用。 [2, 3, 5]"
+    "explanation": "依 CBAM Omnibus 修正案（2025/10 生效），進口商應於每年 9 月 30 日前繳交前一年度 CBAM 憑證（原為 5/31）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+    "metadata": {
+      "sources": [
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+      ],
+      "sources_verified_date": "2026-04-25"
+    }
   },
   {
     "id": "c2-116",
@@ -2082,15 +2123,25 @@
   {
     "id": "c2-121",
     "subject": "考科二：淨零碳盤查範圍與程序概要",
-    "question": "依規定，環境部納管或自願登錄企業應使用哪種邊界設定法？",
+    "question": "依《溫室氣體排放量盤查登錄及查驗管理辦法》及 ISO 14064-1:2018，事業辦理組織型溫室氣體盤查時，組織邊界得採用下列哪一種控制方法？",
     "options": {
-      "A": "組織邊界設定法",
-      "B": "產品邊界設定法",
-      "C": "活動邊界設定法",
-      "D": "範疇邊界設定法"
+      "A": "營運控制法",
+      "B": "產品生命週期法",
+      "C": "分子量比例法",
+      "D": "稅務結構法"
     },
-    "answer": "B",
-    "explanation": "根據環境部規範，應以目的事業主管機關核准設立、登記或營運之邊界，辦理排放源之排放量盤查。 [3]"
+    "answer": "A",
+    "explanation": "ISO 14064-1:2018 §5.1 與 GHG Protocol 規定組織邊界可採：(1) 營運控制法 (operational control)、(2) 財務控制法 (financial control)、(3) 股權比例法 (equity share)。我國《溫管辦法》實務以營運控制法為主。\n\n資料來源：https://www.iso.org/standard/66453.html ; https://ghgprotocol.org/corporate-standard",
+    "metadata": {
+      "sources": [
+        "https://www.iso.org/standard/66453.html",
+        "https://ghgprotocol.org/corporate-standard"
+      ],
+      "sources_verified_date": "2026-04-25",
+      "question_rewritten": true,
+      "question_rewritten_date": "2026-04-25",
+      "question_rewritten_reason": "選項分類不符 ISO 14064-1 / GHG Protocol 官方組織邊界（營運/財務/股權控制法）；整題重寫"
+    }
   },
   {
     "id": "c2-122",
@@ -2232,8 +2283,15 @@
       "C": "水",
       "D": "塑膠"
     },
-    "answer": "D",
-    "explanation": "CDP的揭露範疇主要包括氣候變遷、水安全及森林，塑膠並非其主要揭露領域。 [1, 5]"
+    "answer": "A",
+    "explanation": "CDP 原為 Carbon Disclosure Project（碳揭露計畫），核心揭露領域包含氣候變遷、水安全、森林；自 2024 年起將塑膠與生物多樣性納入單一整合企業問卷（暫不評分，屬揭露主題）。土壤從未列入 CDP 任何揭露主題，故為非揭露範疇。\n\n資料來源：https://www.cdp.net/en ; https://www.cdp.net/en/info/about-us",
+    "metadata": {
+      "sources": [
+        "https://www.cdp.net/en",
+        "https://www.cdp.net/en/info/about-us"
+      ],
+      "sources_verified_date": "2026-04-25"
+    }
   },
   {
     "id": "c2-133",
@@ -2814,8 +2872,8 @@
     "options": {
       "A": "為了使同性質產品能公平比較，計算碳足跡時要參考 PCR 的邊界設定",
       "B": "PCR 是全球共通的",
-      "C": "經濟部工業局採用國際間使用的 EPD‑PCR",
-      "D": "國內申請碳標籤會用環保署的 CFP‑PCR"
+      "C": "經濟部產業發展署採用國際間使用的 EPD‑PCR",
+      "D": "國內申請碳標籤會用環境部的 CFP‑PCR"
     },
     "answer": "B",
     "explanation": "PCR並非全球共通，不同地區或產品類別可能有不同的PCR。 [1, 2, 3, 5]"
@@ -2828,10 +2886,10 @@
       "A": "單位產品活動數據 × 排放係數 = 碳排放量 (二氧化碳當量)",
       "B": "建立 LCA 流程圖 → 界定系統邊界與活動數據蒐集優先順序 → 確認排放係數 → 收集活動數據 → 計算與分析 → 評估數據品質",
       "C": "單位產品活動數據是標的產品每單位造成溫室氣體排放的量測值",
-      "D": "排放係數僅可使用環保署提供之係數表"
+      "D": "排放係數僅可使用環境部提供之係數表"
     },
     "answer": "D",
-    "explanation": "排放係數除了可使用環保署提供的係數表外，也可引用國際資料庫或經由生命週期評估軟體計算求得。 [1, 2, 4, 5]"
+    "explanation": "排放係數除了可使用環境部提供的係數表外，也可引用國際資料庫或經由生命週期評估軟體計算求得。 [1, 2, 4, 5]"
   },
   {
     "id": "c2-179",
@@ -2979,15 +3037,23 @@
   {
     "id": "c2-190",
     "subject": "考科二：淨零碳盤查範圍與程序概要",
-    "question": "環保署指引：一級數據佔上游排放至少多少 %？",
+    "question": "環境部指引：一級數據佔上游排放至少多少 %？",
     "options": {
       "A": "5 %",
       "B": "10 %",
       "C": "15 %",
       "D": "20 %"
     },
-    "answer": "D",
-    "explanation": "根據環保署的產品碳足跡計算服務指引，建議企業收集的一級數據（主要原物料）應佔上游排放量的20%以上。 [3]"
+    "answer": "B",
+    "explanation": "依環境部（原環保署）產品碳足跡計算服務指引及經濟部工業局（現產業發展署）產品碳足跡計算指引：若製造階段所擁有、營運或控制之製程的溫室氣體排放量，未達原料取得及製造階段溫室氣體總排放量 10% 以上之貢獻率，則原料取得階段須納入一級活動數據蒐集，直到蒐集之排放量達總排放量 10% 以上貢獻率為止。故一級數據應佔上游排放至少 10%。\n\n資料來源：https://vocus.cc/article/68b53f5efd89780001e60438 ; https://www.smartmachinery.tw/upload/doc/202309130959490.pdf ; https://github.com/thc1006/ipas-net-zero-quiz/discussions/1#discussioncomment-16697053",
+    "metadata": {
+      "sources": [
+        "https://vocus.cc/article/68b53f5efd89780001e60438",
+        "https://www.smartmachinery.tw/upload/doc/202309130959490.pdf",
+        "https://github.com/thc1006/ipas-net-zero-quiz/discussions/1#discussioncomment-16697053"
+      ],
+      "sources_verified_date": "2026-04-25"
+    }
   },
   {
     "id": "c2-191",
@@ -3749,12 +3815,18 @@
     "question": "CBAM 正式實施後，第一次申報日期是？",
     "options": {
       "A": "2026 年 1 月 31 日",
-      "B": "2027 年 5 月 31 日",
+      "B": "2027 年 9 月 30 日",
       "C": "2026 年 5 月 31 日",
       "D": "2026 年 12 月 31 日"
     },
     "answer": "B",
-    "explanation": "CBAM將於2026年1月1日正式實施，第一個申報年度為2026年。根據規定，進口商需在隔年的5月31日前提交年度申報，因此第一次申報日期為2027年5月31日。 [3, 5]"
+    "explanation": "CBAM 自 2026 年 1 月 1 日起進入定價期，第一個申報年度為 2026 年。依 Omnibus 修正案，首次 CBAM 申報及憑證繳交期限為 2027 年 9 月 30 日（原為 2027/05/31）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+    "metadata": {
+      "sources": [
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+      ],
+      "sources_verified_date": "2026-04-25"
+    }
   },
   {
     "id": "c2-250",

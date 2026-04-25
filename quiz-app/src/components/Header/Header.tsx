@@ -47,14 +47,14 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
             <span className="material-icons">settings</span>
           </button>
 
-          {/* GitHub 連結 */}
+          {/* 社群討論 / 回報題目 */}
           <a
-            href="https://github.com/thc1006/ipas-net-zero-quiz"
+            href="https://github.com/thc1006/ipas-net-zero-quiz/discussions/1"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-text icon-btn"
-            aria-label="GitHub 專案"
-            title="GitHub"
+            aria-label="社群討論 / 回報題目"
+            title="社群討論"
           >
             <svg
               viewBox="0 0 24 24"

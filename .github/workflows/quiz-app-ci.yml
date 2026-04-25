@@ -5,8 +5,8 @@
 name: Quiz App CI
 
 on:
+  # 移除 branches filter — stacked PRs (base != main) 也須跑 CI
   pull_request:
-    branches: [main]
     paths:
       - 'quiz-app/**'
       - '.github/workflows/quiz-app-*.yml'
@@ -16,6 +16,12 @@ on:
       - 'quiz-app/**'
       - '.github/workflows/quiz-app-*.yml'
   workflow_dispatch:
+
+# 顯式宣告最小權限
+permissions:
+  contents: read
+  pull-requests: read
+  checks: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -39,8 +45,9 @@ jobs:
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      - name: Enable Corepack
-        run: corepack enable
+      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期
+      - name: Upgrade Corepack to latest
+        run: npm install -g corepack@latest
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -50,8 +57,7 @@ jobs:
 
       - name: Get pnpm store directory
         shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
         uses: actions/cache@v4
@@ -83,8 +89,9 @@ jobs:
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      - name: Enable Corepack
-        run: corepack enable
+      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期
+      - name: Upgrade Corepack to latest
+        run: npm install -g corepack@latest
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -94,8 +101,7 @@ jobs:
 
       - name: Get pnpm store directory
         shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
         uses: actions/cache@v4
@@ -111,13 +117,23 @@ jobs:
       - name: Unit tests with coverage
         run: pnpm test:coverage
 
-      - name: Upload coverage report
+      - name: Upload coverage report (artifact)
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: coverage-report
           path: quiz-app/coverage/
           retention-days: 7
+
+      # Codecov upload — 若 repo 未設 CODECOV_TOKEN，action 會 silently 跳過
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        if: always()
+        continue-on-error: true
+        with:
+          files: ./quiz-app/coverage/coverage-final.json
+          flags: unit
+          fail_ci_if_error: false
 
   build:
     name: Build & Bundle Size
@@ -132,8 +148,9 @@ jobs:
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      - name: Enable Corepack
-        run: corepack enable
+      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期
+      - name: Upgrade Corepack to latest
+        run: npm install -g corepack@latest
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -143,8 +160,7 @@ jobs:
 
       - name: Get pnpm store directory
         shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
         uses: actions/cache@v4
@@ -187,11 +203,15 @@ jobs:
             fi
           done
           limit=$((600 * 1024))
+          js_kb=$((js_total / 1024))
+          limit_kb=$((limit / 1024))
           if [ "$js_total" -gt "$limit" ]; then
-            echo "::warning::JavaScript bundle ($js_total bytes) exceeds 600KB limit"
+            echo "::warning::JavaScript bundle ${js_kb}KB exceeds ${limit_kb}KB limit"
+            echo "BUNDLE_OVER_LIMIT=true" >> $GITHUB_ENV
           else
-            echo "Bundle size OK: $js_total bytes"
+            echo "Bundle size OK: ${js_kb}KB (limit ${limit_kb}KB)"
           fi
+          echo "BUNDLE_JS_KB=${js_kb}" >> $GITHUB_ENV
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -214,8 +234,9 @@ jobs:
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      - name: Enable Corepack
-        run: corepack enable
+      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期
+      - name: Upgrade Corepack to latest
+        run: npm install -g corepack@latest
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -225,8 +246,7 @@ jobs:
 
       - name: Get pnpm store directory
         shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
         uses: actions/cache@v4
