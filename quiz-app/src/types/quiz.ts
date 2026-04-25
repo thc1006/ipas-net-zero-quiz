@@ -32,6 +32,12 @@ export interface GistQuestion {
   source: string;
   original_section: string;
   exam_subject: ExamSubject;
+  explanation?: string;
+  metadata?: {
+    sources?: string[];
+    sources_verified_date?: string;
+    [k: string]: unknown;
+  };
 }
 
 /** 補充題目格式 */
@@ -54,6 +60,11 @@ export interface UniqueQuestion {
   exam_subject: ExamSubject;
   subject_confidence?: number;
   _quality_score?: number;
+  metadata?: {
+    sources?: string[];
+    sources_verified_date?: string;
+    [k: string]: unknown;
+  };
 }
 
 /** 統一的題目格式（用於測驗邏輯） */
@@ -66,6 +77,10 @@ export interface QuizQuestion {
   sourceType: 'gist' | 'unique' | 'practice_pool';
   year?: number | null;
   hasAnswer: boolean;
+  /** Curl 實測通過的引用 URL（來自 metadata.sources），UI 渲染為「參考來源」 */
+  sources?: string[];
+  /** 解析文字（給 AI helper 與 UI 參考），可能為空 */
+  explanation?: string | null;
 }
 
 /** 題庫資料集 */

@@ -304,3 +304,47 @@
     font-size: var(--font-size-sm);
   }
 }
+
+/* 參考來源區塊 */
+.question-sources {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-surface-variant);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--color-info-fg, #0369a1);
+}
+
+.question-sources-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.question-sources-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs) var(--spacing-md);
+}
+
+.source-link {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  border-bottom: 1px dashed currentColor;
+  transition: color 0.15s ease;
+}
+.source-link:hover {
+  color: var(--color-info-fg, #0369a1);
+}
+
+[data-theme="dark"] .question-sources {
+  background: rgba(59, 130, 246, 0.08);
+  border-left-color: #93c5fd;
+}

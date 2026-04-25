@@ -204,10 +204,69 @@ export function QuestionCard({
               )}
             </div>
           )}
+
+          {question.sources && question.sources.length > 0 && (
+            <div className="question-sources" aria-label="參考來源">
+              <div className="question-sources-header">
+                <span className="material-icons sm">menu_book</span>
+                <span>參考來源</span>
+              </div>
+              <ul className="question-sources-list">
+                {question.sources.map((url) => (
+                  <li key={url}>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="source-link"
+                    >
+                      {prettifySourceUrl(url)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </article>
   );
+}
+
+/** 將 URL 轉成短而可讀的標籤（host + 路徑摘要） */
+function prettifySourceUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('law.moj.gov.tw')) {
+      const pcode = u.searchParams.get('pcode');
+      const flno = u.searchParams.get('flno');
+      const pcodeLabel: Record<string, string> = {
+        O0020098: '氣候變遷因應法',
+        O0020102: '溫管辦法',
+        O0020139: '碳費收費辦法',
+        O0020137: '自願減量專案管理辦法',
+        O0020140: '自主減量計畫管理辦法',
+      };
+      const name = pcode && pcodeLabel[pcode] ? pcodeLabel[pcode] : '法規';
+      return flno ? `${name} §${flno}` : name;
+    }
+    if (u.hostname.includes('eur-lex.europa.eu')) {
+      const celex = u.searchParams.get('uri') || '';
+      const m = celex.match(/3?(\d{4})R(\d+)/);
+      return m ? `EU Reg ${m[1]}/${m[2]}` : 'EUR-Lex';
+    }
+    if (u.hostname.includes('ipcc.ch')) return 'IPCC';
+    if (u.hostname.includes('iso.org')) return 'ISO';
+    if (u.hostname.includes('cca.gov.tw')) return '環境部 氣候變遷署';
+    if (u.hostname.includes('moenv.gov.tw')) return '環境部';
+    if (u.hostname.includes('greentrade.org.tw')) return '綠色貿易資訊網';
+    if (u.hostname.includes('cdp.net')) return 'CDP';
+    if (u.hostname.includes('vocus.cc')) return 'vocus 文章';
+    if (u.hostname.includes('github.com')) return 'GitHub Discussion';
+    return u.hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
 }
 
 // 選項按鈕子元件

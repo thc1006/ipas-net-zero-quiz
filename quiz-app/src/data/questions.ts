@@ -39,6 +39,8 @@ function convertGistQuestion(q: GistQuestion): QuizQuestion {
     sourceType: 'gist',
     year: null,
     hasAnswer: q.answer !== null,
+    sources: q.metadata?.sources,
+    explanation: q.explanation,
   };
 }
 
@@ -55,6 +57,8 @@ function convertUniqueQuestion(q: UniqueQuestion): QuizQuestion {
     sourceType: 'unique',
     year: q.year,
     hasAnswer: q.answer !== null,
+    sources: q.metadata?.sources,
+    explanation: q.explanation ?? undefined,
   };
 }
 
