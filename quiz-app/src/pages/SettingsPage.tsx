@@ -1,5 +1,9 @@
 // 設定頁面元件
+import { useState } from 'react';
 import type { useAccessibility } from '../hooks/useAccessibility';
+import { usePracticeMode } from '../hooks/usePracticeMode';
+import { usePracticePool } from '../hooks/usePracticePool';
+import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
 import './SettingsPage.css';
 
 interface SettingsPageProps {
@@ -16,6 +20,20 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
     setFontSize,
     resetToDefault,
   } = accessibility;
+
+  const practiceMode = usePracticeMode();
+  const { pool } = usePracticePool();
+  const [optInOpen, setOptInOpen] = useState(false);
+
+  const onTogglePractice = () => {
+    if (practiceMode.enabled) {
+      practiceMode.disable();
+    } else if (practiceMode.hasOptedIn) {
+      practiceMode.enable();
+    } else {
+      setOptInOpen(true);
+    }
+  };
 
   return (
     <div className="settings-page animate-fade-in">
@@ -120,6 +138,41 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
           </select>
         </div>
       </section>
+
+      {/* 加強練習池 */}
+      <section className="settings-section card">
+        <h2>加強練習池</h2>
+        <div className="setting-item">
+          <div className="setting-info">
+            <span className="material-icons">auto_awesome</span>
+            <div>
+              <p className="setting-title">啟用加強練習</p>
+              <p className="setting-desc">
+                {pool._meta.totals.total} 題補充題（{pool._meta.totals.external_mock} 題模擬題、
+                {pool._meta.totals.ai_generated} 題 AI 產題）；獨立於主題庫，每題附來源徽章。
+              </p>
+            </div>
+          </div>
+          <label className="toggle-switch">
+            <input
+              type="checkbox"
+              checked={practiceMode.enabled}
+              onChange={onTogglePractice}
+              aria-label="啟用加強練習池"
+            />
+            <span className="toggle-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <PracticeOptInDialog
+        open={optInOpen}
+        onAccept={() => {
+          practiceMode.acceptOptIn();
+          setOptInOpen(false);
+        }}
+        onDecline={() => setOptInOpen(false)}
+      />
 
       {/* 重置 */}
       <section className="settings-section">
