@@ -218,3 +218,49 @@ describe('QuestionCard 元件', () => {
     });
   });
 });
+
+describe('QuestionCard 冗餘前綴 dim 化', () => {
+  it('當所有選項共享題幹中的 prefix 時 → 渲染 dim span', () => {
+    const griQuestion: QuizQuestion = {
+      id: 'test-gri-67',
+      stem: 'GRI 準則 2021 之系統架構分為三個系列準則，下列何者正確？',
+      options: [
+        { key: 'A', text: 'GRI 環境準則、GRI 社會準則、GRI 治理準則' },
+        { key: 'B', text: 'GRI 環境準則、GRI 社會準則、GRI 經濟準則' },
+        { key: 'C', text: 'GRI 通用準則、GRI 進階準則、GRI 特殊準則' },
+        { key: 'D', text: 'GRI 通用準則、GRI 行業準則、GRI 主題準則' },
+      ],
+      answer: 'D',
+      subject: '考科1',
+      sourceType: 'gist',
+      year: null,
+      hasAnswer: true,
+    };
+    const { container } = render(
+      <QuestionCard
+        question={griQuestion}
+        questionNumber={67}
+        onSelectAnswer={vi.fn()}
+      />
+    );
+    const dimSpans = container.querySelectorAll('.option-text__redundant');
+    // 4 個選項都該有 dim 前綴
+    expect(dimSpans.length).toBe(4);
+    dimSpans.forEach((s) => expect(s.textContent).toBe('GRI'));
+  });
+
+  it('題幹未含共享 prefix 時 → 不 dim（避免誤殺）', () => {
+    const noShareQuestion: QuizQuestion = {
+      ...mockQuestion,
+      // 題幹是溫室氣體，選項首字各不同，沒共享前綴
+    };
+    const { container } = render(
+      <QuestionCard
+        question={noShareQuestion}
+        questionNumber={1}
+        onSelectAnswer={vi.fn()}
+      />
+    );
+    expect(container.querySelectorAll('.option-text__redundant').length).toBe(0);
+  });
+});

@@ -5,6 +5,7 @@ import { explainQuestion, type AIResponse } from '../../utils/ai-helper';
 import { SourceBadge } from '../SourceBadge/SourceBadge';
 import { SourceBanner } from '../SourceBanner/SourceBanner';
 import { LAW_PCODE_LABELS } from '../../data/law-pcode-labels';
+import { findRedundantPrefix } from '../../utils/option-prefix';
 import './QuestionCard.css';
 
 /**
@@ -59,6 +60,10 @@ export function QuestionCard({
     () =>
       (question.sources ?? []).map((url) => ({ url, label: prettifySourceUrl(url) })),
     [question.sources]
+  );
+  const redundantPrefix = useMemo(
+    () => findRedundantPrefix(question.stem, question.options.map((o) => o.text)),
+    [question.stem, question.options],
   );
   const [isLoadingAI, setIsLoadingAI] = useState(false);
 
@@ -164,6 +169,7 @@ export function QuestionCard({
             status={getOptionStatus(option.key)}
             isSelected={selectedAnswer === option.key}
             isDisabled={showAnswer}
+            redundantPrefix={redundantPrefix}
             onClick={() => handleOptionClick(option.key)}
             onKeyDown={(e) => handleKeyDown(e, option.key)}
           />
@@ -304,6 +310,8 @@ interface OptionButtonProps {
   status: 'default' | 'selected' | 'correct' | 'incorrect';
   isSelected: boolean;
   isDisabled: boolean;
+  /** 全選項共有的冗餘前綴關鍵字（例如「GRI」），UI 渲染時 dim 化 */
+  redundantPrefix?: string | null;
   onClick: () => void;
   onKeyDown: (e: React.KeyboardEvent) => void;
 }
@@ -313,6 +321,7 @@ function OptionButton({
   status,
   isSelected,
   isDisabled,
+  redundantPrefix,
   onClick,
   onKeyDown,
 }: OptionButtonProps) {
@@ -334,7 +343,18 @@ function OptionButton({
         aria-label={`${option.key}: ${option.text}`}
       />
       <span className="option-key">{option.key}</span>
-      <span className="option-text">{option.text}</span>
+      <span className="option-text">
+        {redundantPrefix && option.text.startsWith(redundantPrefix) ? (
+          <>
+            <span className="option-text__redundant" aria-hidden="true">
+              {redundantPrefix}
+            </span>
+            {option.text.slice(redundantPrefix.length)}
+          </>
+        ) : (
+          option.text
+        )}
+      </span>
       {status === 'correct' && (
         <span className="option-icon material-icons" aria-label="正確答案">
           check_circle
