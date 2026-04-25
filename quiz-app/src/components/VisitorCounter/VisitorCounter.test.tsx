@@ -85,6 +85,9 @@ describe('VisitorCounter', () => {
     const fetchMock = mockFetchAbacusOk(1);
     vi.stubGlobal('fetch', fetchMock);
     render(<VisitorCounter namespace="ns/with slash" counterKey="key#hash" />);
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalled();
+    });
     const url = fetchMock.mock.calls[0]?.[0] as string;
     expect(url).toContain('ns%2Fwith%20slash');
     expect(url).toContain('key%23hash');
