@@ -309,3 +309,21 @@ textarea {
     padding: var(--spacing-md);
   }
 }
+
+/* Tap-target accessibility — WCAG 2.5.5 AAA: targets ≥44×44px on touch devices */
+@media (max-width: 640px) {
+  button, .btn, [role="button"], a.btn {
+    min-height: 44px;
+  }
+  .card {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+  /* 防止 input/select 在 iOS Safari 自動 zoom — 字級 ≥16px 不觸發 */
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  select,
+  textarea {
+    font-size: max(16px, var(--font-size-base));
+  }
+}

@@ -54,3 +54,29 @@
     margin-bottom: var(--spacing-sm);
   }
 }
+
+/* 小螢幕（≤640px）— quiz-page padding 收緊、navigation 全寬 stack */
+@media (max-width: 640px) {
+  .quiz-page {
+    padding: 0 var(--spacing-sm);
+  }
+  .quiz-navigation {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  .quiz-navigation .btn {
+    width: 100%;
+    flex: none;
+  }
+  .nav-center {
+    order: 0;
+    width: 100%;
+    margin-bottom: 0;
+  }
+  .progress-info {
+    font-size: var(--font-size-sm);
+  }
+  .hint-text {
+    font-size: var(--font-size-xs);
+  }
+}
