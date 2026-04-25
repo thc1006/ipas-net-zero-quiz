@@ -2387,7 +2387,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-001",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -2435,7 +2435,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-002",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -2483,7 +2483,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-003",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -2531,7 +2531,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-004",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -2584,7 +2584,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-005",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -2637,7 +2637,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-006",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -2690,7 +2690,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-007",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -2738,7 +2738,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-008",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -2791,7 +2791,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-009",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -2839,7 +2839,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-010",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -2887,7 +2887,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-012",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -2935,7 +2935,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-013",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -2983,7 +2983,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-015",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3036,7 +3036,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-016",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3084,7 +3084,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-017",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3137,7 +3137,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-018",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3185,7 +3185,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-019",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3233,7 +3233,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-020",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3286,7 +3286,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-021",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3334,7 +3334,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-022",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3382,7 +3382,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-023",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3435,7 +3435,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-024",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3483,7 +3483,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-025",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3531,7 +3531,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-026",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3579,7 +3579,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-027",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3627,7 +3627,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-029",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3675,7 +3675,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-030",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3728,7 +3728,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-031",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3776,7 +3776,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-032",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3829,7 +3829,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-033",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3877,7 +3877,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-034",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3925,7 +3925,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-035",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -3982,7 +3982,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-001",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4031,7 +4031,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-002",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4080,7 +4080,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-003",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4130,7 +4130,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-004",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4180,7 +4180,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-005",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4230,7 +4230,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-006",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4280,7 +4280,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-007",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4329,7 +4329,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-008",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4378,7 +4378,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-009",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4427,7 +4427,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-010",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4476,7 +4476,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-011",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4525,7 +4525,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-012",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4574,7 +4574,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-014",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4624,7 +4624,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-015",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4673,7 +4673,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-016",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4722,7 +4722,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-017",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4771,7 +4771,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-019",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4820,7 +4820,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-020",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4869,7 +4869,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-021",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4918,7 +4918,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-022",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -4967,7 +4967,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-023",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -5016,7 +5016,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-024",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -5066,7 +5066,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-025",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -5115,7 +5115,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-027",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -5164,7 +5164,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-028",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -5213,7 +5213,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-029",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -5262,7 +5262,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-030",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -5312,7 +5312,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-032",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
         }
@@ -5361,7 +5361,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_00-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -5411,7 +5411,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_01-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -5461,7 +5461,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_02-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -5511,7 +5511,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_03-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -5561,7 +5561,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_04-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -5611,7 +5611,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_05-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -5659,7 +5659,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_06-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -5709,7 +5709,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_07-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -5758,7 +5758,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_09-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -5807,7 +5807,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_10-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -5857,7 +5857,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_12-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -5905,7 +5905,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_13-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -5954,7 +5954,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_14-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6004,7 +6004,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_15-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6052,7 +6052,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_16-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6102,7 +6102,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_19-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6151,7 +6151,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_24-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6200,7 +6200,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_27-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6250,7 +6250,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_28-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6299,7 +6299,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_29-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6349,7 +6349,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_32-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6398,7 +6398,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_33-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6447,7 +6447,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_35-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6497,7 +6497,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_36-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6546,7 +6546,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_37-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6596,7 +6596,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_38-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6645,7 +6645,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_44-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6695,7 +6695,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_45-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }
@@ -6744,7 +6744,7 @@
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_46-v2",
         "ai_metadata": {
-          "model_family": "claude-opus-4-7",
+          "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
         }

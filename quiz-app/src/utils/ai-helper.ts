@@ -18,8 +18,18 @@ declare global {
   }
 }
 
+// 已知可用之 Puter.js 模型字串（依官方 docs）；新增模型先加進 union
+type PuterModel =
+  | 'openai/gpt-5.4'
+  | 'openai/gpt-5.4-nano'
+  | 'openai/gpt-5.2-chat'
+  | 'gpt-5.4-nano'
+  | 'gpt-5.4'
+  | 'claude-sonnet-4-5'
+  | 'gemini-2.5-flash-lite';
+
 // AI 模型設定 - 使用 OpenAI GPT-5.4（透過 Puter.js）
-const AI_MODEL = 'openai/gpt-5.4';
+const AI_MODEL: PuterModel = 'openai/gpt-5.4';
 const CONFIDENCE_THRESHOLD = 0.7;
 
 // 系統提示詞（中文）

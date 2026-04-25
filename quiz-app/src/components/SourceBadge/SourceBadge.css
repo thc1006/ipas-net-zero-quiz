@@ -27,16 +27,15 @@
   border: 1px solid var(--color-warning-fg, #92400e);
 }
 
-@media (prefers-color-scheme: dark) {
-  .source-badge.tone-mock {
-    background: rgba(59, 130, 246, 0.15);
-    color: #93c5fd;
-  }
-  .source-badge.tone-ai {
-    background: rgba(245, 158, 11, 0.15);
-    color: #fbbf24;
-    border-color: rgba(245, 158, 11, 0.4);
-  }
+/* 與 useAccessibility 對齊：使用 [data-theme="dark"]，不靠 system prefers */
+[data-theme="dark"] .source-badge.tone-mock {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+}
+[data-theme="dark"] .source-badge.tone-ai {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.4);
 }
 
 .flag-chip {
