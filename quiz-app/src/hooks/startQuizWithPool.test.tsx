@@ -20,10 +20,10 @@ describe('useQuiz.startQuizWithPool', () => {
         includePracticePool: false,
       });
     });
-    expect(result.current.state.questions).toHaveLength(5);
-    expect(result.current.state.isActive).toBe(true);
+    expect(result.current.questions).toHaveLength(5);
+    expect(result.current.isActive).toBe(true);
     // none of the picked questions should be from practice pool
-    for (const q of result.current.state.questions) {
+    for (const q of result.current.questions) {
       expect(q.sourceType).not.toBe('practice_pool');
     }
   });
@@ -41,7 +41,7 @@ describe('useQuiz.startQuizWithPool', () => {
         includePracticePool: true,
       });
     });
-    expect(result.current.state.questions).toHaveLength(30);
+    expect(result.current.questions).toHaveLength(30);
   });
 
   it('exam mode filters out questions without answer', async () => {
@@ -57,7 +57,7 @@ describe('useQuiz.startQuizWithPool', () => {
         includePracticePool: true,
       });
     });
-    for (const q of result.current.state.questions) {
+    for (const q of result.current.questions) {
       expect(q.hasAnswer).toBe(true);
     }
   });
@@ -75,7 +75,7 @@ describe('useQuiz.startQuizWithPool', () => {
         includePracticePool: true,
       });
     });
-    for (const q of result.current.state.questions) {
+    for (const q of result.current.questions) {
       // 全部都應該是考科1 + 不應帶 unmapped_subject 旗標
       if (q.sourceType === 'practice_pool') {
         expect(q.qualityFlags?.includes('unmapped_subject')).not.toBe(true);

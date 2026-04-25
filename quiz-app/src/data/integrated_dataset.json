@@ -6142,7 +6142,7 @@
     {
       "index": 179,
       "number": 26,
-      "stem": "以下哪項屬於 ISO 14064‑1 中 Category 4（使用階段間接排放）？",
+      "stem": "以下哪項屬於 ISO 14064‑1 中 Category 5（使用階段間接排放）？",
       "options": [
         {
           "key": "A",
@@ -6177,7 +6177,8 @@
         "sources": [
           "https://www.iso.org/standard/66453.html"
         ],
-        "sources_verified_date": "2026-04-25"
+        "sources_verified_date": "2026-04-25",
+        "stem_fixed_v2_us202f": true
       },
       "explanation": "ISO 14064-1:2018 §5.2.4：Category 5 為『使用自組織產品所致之間接排放』（下游使用階段）；Category 4 為『使用自組織之產品（上游）所致之間接排放』（採購商品與服務、廢棄物處理、作為承租人之租賃資產等）。由產品使用階段產生之排放屬 Cat 5。\n\n資料來源：https://www.iso.org/standard/66453.html"
     },
