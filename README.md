@@ -96,6 +96,22 @@ pnpm lint && pnpm type-check
 - 每題支援 `metadata.sources_verified_date` 與 `provenance.verify_verdict` 審計欄位
 - Schema validator 於 dev 模式啟動時自動驗證主題庫與練習池
 
+### Time-sensitive 題目維護
+
+帶 `quality_flags: ["time_sensitive"]` 的題目（如 `pool-aig-industry_round1_rescued-ind-014` RE100 台灣會員）內容會隨時間變動，建議每季 re-verify：
+
+```bash
+# 列出所有 time_sensitive 題目
+jq '.items[] | select(.quality_flags | index("time_sensitive")) | {id, stem: (.stem | .[0:60]), sources}' \
+  quiz-app/src/data/practice_pool.json
+```
+
+維護動作：
+1. 對每筆 source URL 跑 `curl -sIL --max-time 10 -A "Mozilla/5.0" <url>` 確認 200 OK
+2. 比對最新內容跟題目選項是否仍一致
+3. 不一致時：更新 `provenance.verified_date` + 修正答案（並照 commit policy 附 source URL）
+4. 若 source 已失效：移除題目（同時更新 `_meta.totals` 與 `practice-pool-counts.ts`）
+
 ## 授權
 
 本工具僅供練習參考；題庫資料為個人整理，非官方發布。
