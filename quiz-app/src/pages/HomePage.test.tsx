@@ -62,4 +62,69 @@ describe('HomePage', () => {
     expect(config).toHaveProperty('subject');
     expect(config).toHaveProperty('questionCount');
   });
+
+  it('subject card click switches subject (pickSubject)', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    // 點考科一卡片
+    const subj1Card = screen.getAllByRole('radio').find(
+      (el) => el.getAttribute('aria-label') !== '測驗模式'
+        && el.textContent?.includes('§01')
+    );
+    expect(subj1Card).toBeTruthy();
+    fireEvent.click(subj1Card!);
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    expect(onStartQuiz.mock.calls[0][0].subject).toBe('考科1');
+  });
+
+  it('mode card click switches mode + showAnswerImmediately (pickMode)', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    // 找 exam mode card（含「考試」文字）
+    const examCard = screen.getAllByRole('radio').find(
+      (el) => el.textContent?.includes('考試')
+    );
+    expect(examCard).toBeTruthy();
+    fireEvent.click(examCard!);
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    const cfg = onStartQuiz.mock.calls[0][0];
+    expect(cfg.mode).toBe('exam');
+    expect(cfg.showAnswerImmediately).toBe(false);
+  });
+
+  it('count input change updates questionCount (handleCountChange)', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    const countInput = screen.getByLabelText(/題數/) as HTMLInputElement;
+    fireEvent.change(countInput, { target: { value: '25' } });
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    expect(onStartQuiz.mock.calls[0][0].questionCount).toBe(25);
+  });
+
+  it('shuffle checkbox toggles shuffleQuestions (handleShuffleChange)', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    const shuffleCb = screen.getByRole('checkbox') as HTMLInputElement;
+    fireEvent.click(shuffleCb);
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    expect(onStartQuiz.mock.calls[0][0].shuffleQuestions).toBe(true);
+  });
+
+  it('hidden subject select onChange path (handleSubjectChange)', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    const select = screen.getByLabelText(/考科範圍 \(備援 select\)/) as HTMLSelectElement;
+    fireEvent.change(select, { target: { value: '考科2' } });
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    expect(onStartQuiz.mock.calls[0][0].subject).toBe('考科2');
+  });
+
+  it('hidden mode select onChange path (handleModeChange)', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    const select = screen.getByLabelText(/測驗模式 \(備援 select\)/) as HTMLSelectElement;
+    fireEvent.change(select, { target: { value: 'exam' } });
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    expect(onStartQuiz.mock.calls[0][0].mode).toBe('exam');
+  });
 });
