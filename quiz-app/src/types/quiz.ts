@@ -67,6 +67,9 @@ export interface UniqueQuestion {
   };
 }
 
+/** 注意：此處用 type-only import 避免循環依賴 */
+import type { PracticePoolQualityFlag } from './practicePool';
+
 /** 統一的題目格式（用於測驗邏輯） */
 export interface QuizQuestion {
   id: string;
@@ -89,7 +92,7 @@ export interface QuizQuestion {
     verify_verdict?: string;
   };
   /** 練習池題目品質旗標（時效 / 爭議 / 低信心 / 等） */
-  qualityFlags?: string[];
+  qualityFlags?: PracticePoolQualityFlag[];
 }
 
 /** 題庫資料集 */

@@ -1,10 +1,6 @@
 // QuestionCard 元件 - 顯示單一題目和選項
 import { useCallback, useId, useMemo, useState } from 'react';
 import type { QuizQuestion, QuizOption } from '../../types/quiz';
-import type {
-  PracticePoolSourceType,
-  PracticePoolQualityFlag,
-} from '../../types/practicePool';
 import { explainQuestion, type AIResponse } from '../../utils/ai-helper';
 import { SourceBadge } from '../SourceBadge/SourceBadge';
 import './QuestionCard.css';
@@ -133,8 +129,8 @@ export function QuestionCard({
         </span>
         {question.provenance && (
           <SourceBadge
-            sourceType={question.provenance.source_type as PracticePoolSourceType}
-            qualityFlags={(question.qualityFlags ?? []) as PracticePoolQualityFlag[]}
+            sourceType={question.provenance.source_type}
+            qualityFlags={question.qualityFlags ?? []}
           />
         )}
       </header>

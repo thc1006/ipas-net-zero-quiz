@@ -54,7 +54,9 @@ export type PracticePoolQualityFlag =
   | 'time_sensitive'
   | 'ambiguous'
   | 'low_confidence'
-  | 'duplicate_topic';
+  | 'duplicate_topic'
+  /** subject 無法明確映射時設此 flag；filter 時可排除 */
+  | 'unmapped_subject';
 
 /** 加強練習單題 */
 export interface PracticePoolItem {

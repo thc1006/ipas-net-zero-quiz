@@ -140,3 +140,118 @@ describe('validatePracticePool — synthetic invalid', () => {
     expect(errs.some((e) => e.path === '_meta.totals.total')).toBe(true);
   });
 });
+
+describe('validatePracticePool — additional invalid cases', () => {
+  const validProvExternal = {
+    source_type: 'external_mock',
+    source_origin: 'x',
+    verified_date: '2026-04-25',
+    verifier: 'x',
+    verify_verdict: 'CONFIRMED',
+    original_id: '1',
+  };
+
+  it('detects missing provenance', () => {
+    const bad = {
+      _meta: { version: '1', totals: { total: 1 } },
+      items: [
+        {
+          id: 'x',
+          stem: 's',
+          options: [{ key: 'A', text: 'a' }, { key: 'B', text: 'b' }],
+          answer: 'A',
+          explanation: '',
+          subject: null,
+          topic_tags: [],
+          difficulty: 'medium',
+          sources: [],
+          quality_flags: [],
+          // provenance missing
+        },
+      ],
+    };
+    const errs = validatePracticePool(bad);
+    expect(errs.some((e) => e.path.includes('provenance'))).toBe(true);
+  });
+
+  it('detects empty options array', () => {
+    const bad = {
+      _meta: { version: '1', totals: { total: 1 } },
+      items: [
+        {
+          id: 'x',
+          stem: 's',
+          options: [],
+          answer: null,
+          explanation: '',
+          subject: null,
+          topic_tags: [],
+          difficulty: 'medium',
+          sources: [],
+          quality_flags: [],
+          provenance: validProvExternal,
+        },
+      ],
+    };
+    const errs = validatePracticePool(bad);
+    expect(errs.some((e) => e.path.includes('options') && /non-empty/.test(e.message))).toBe(true);
+  });
+
+  it('detects non-string subject (number)', () => {
+    const bad = {
+      _meta: { version: '1', totals: { total: 1 } },
+      items: [
+        {
+          id: 'x',
+          stem: 's',
+          options: [{ key: 'A', text: 'a' }, { key: 'B', text: 'b' }],
+          answer: 'A',
+          explanation: '',
+          subject: 42, // invalid type
+          topic_tags: [],
+          difficulty: 'medium',
+          sources: [],
+          quality_flags: [],
+          provenance: validProvExternal,
+        },
+      ],
+    };
+    const errs = validatePracticePool(bad);
+    expect(errs.some((e) => e.path.includes('subject'))).toBe(true);
+  });
+
+  it('detects ai_metadata missing verifier_round', () => {
+    const bad = {
+      _meta: { version: '1', totals: { total: 1 } },
+      items: [
+        {
+          id: 'x',
+          stem: 's',
+          options: [{ key: 'A', text: 'a' }, { key: 'B', text: 'b' }],
+          answer: 'A',
+          explanation: '',
+          subject: null,
+          topic_tags: [],
+          difficulty: 'medium',
+          sources: [],
+          quality_flags: [],
+          provenance: {
+            source_type: 'ai_generated',
+            source_origin: 'x',
+            verified_date: '2026-04-25',
+            verifier: 'x',
+            verify_verdict: 'CONFIRMED',
+            original_id: '1',
+            ai_metadata: {
+              model_family: 'unspecified',
+              generation_date: '2026-04-25',
+              // verifier_round missing
+            },
+          },
+        },
+      ],
+    };
+    const errs = validatePracticePool(bad);
+    expect(errs.some((e) => e.path.includes('verifier_round'))).toBe(true);
+  });
+});

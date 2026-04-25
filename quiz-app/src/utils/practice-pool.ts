@@ -114,6 +114,14 @@ export function toQuizQuestion(item: PracticePoolItem): QuizQuestion & {
   } else if (raw.includes('2') || raw.includes('二') || raw.toLowerCase().includes('subject 2')) {
     subject = '考科2';
   }
+
+  // subject 無法映射時加 quality flag — caller 可在 subject 篩選排除
+  // 預設 fallback 為 '考科2' 純為滿足 QuizQuestion strict subject type；
+  // 真正的「未分類」資訊在 qualityFlags 中
+  const qualityFlags = subject === null
+    ? [...(item.quality_flags ?? []), 'unmapped_subject' as const]
+    : item.quality_flags;
+
   if (subject === null && item.subject !== null && import.meta.env?.DEV) {
     // eslint-disable-next-line no-console
     console.warn(`[practice-pool] 題 ${item.id} subject 值無法映射：`, item.subject);
@@ -129,7 +137,7 @@ export function toQuizQuestion(item: PracticePoolItem): QuizQuestion & {
     year: null,
     hasAnswer: item.answer != null,
     provenance: item.provenance,
-    qualityFlags: item.quality_flags,
+    qualityFlags,
     sources: item.sources,
   };
 }

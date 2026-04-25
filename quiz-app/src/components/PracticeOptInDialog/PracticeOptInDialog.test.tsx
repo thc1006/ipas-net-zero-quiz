@@ -1,6 +1,6 @@
 // PracticeOptInDialog 元件測試（focus trap / ESC / overlay click / aria）
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup, waitFor } from '@testing-library/react';
 import { PracticeOptInDialog } from './PracticeOptInDialog';
 
 afterEach(() => cleanup());
@@ -50,12 +50,10 @@ describe('PracticeOptInDialog', () => {
       <PracticeOptInDialog open onAccept={() => {}} onDecline={onDecline} />
     );
     const overlay = container.querySelector('.optin-overlay') as HTMLElement;
-    // Click overlay element itself (not children)
-    fireEvent.click(overlay, { target: overlay, currentTarget: overlay });
-    // jsdom event target is the actual element clicked; use bubbled click on overlay
-    // Re-trigger via direct dispatch — bypass React synthetic event detail issues
-    // Above call is the standard approach
-    expect(onDecline).toHaveBeenCalled();
+    // 直接點擊 overlay：jsdom 會自動把 e.target 設為被點的元素（overlay 自己），
+    // 觸發程式碼裡 e.target === e.currentTarget 的判斷
+    fireEvent.click(overlay);
+    expect(onDecline).toHaveBeenCalledOnce();
   });
 
   it('does NOT call onDecline when clicking inside the dialog', () => {
@@ -67,10 +65,11 @@ describe('PracticeOptInDialog', () => {
 
   it('focuses first focusable element on open', async () => {
     render(<PracticeOptInDialog open onAccept={() => {}} onDecline={() => {}} />);
-    // First focusable button is "暫不啟用"
     const decline = screen.getByRole('button', { name: /暫不啟用/ });
-    // useEffect runs synchronously enough in jsdom for focus to land
-    expect(document.activeElement).toBe(decline);
+    // useEffect 在 jsdom 中時機可能不確定；用 waitFor 容錯
+    await waitFor(() => {
+      expect(document.activeElement).toBe(decline);
+    });
   });
 
   it('sets aria-hidden on #root while open and restores on close', () => {

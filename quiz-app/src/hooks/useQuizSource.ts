@@ -61,7 +61,12 @@ export function useQuizSource(subject: ExamSubject | 'all' = 'all'): UseQuizSour
 
   const poolItems = useMemo<QuizQuestion[]>(() => {
     if (!enabled || poolRaw.length === 0) return [];
-    return poolRaw.map(toQuizQuestion).filter((q) => subject === 'all' || q.subject === subject);
+    return poolRaw.map(toQuizQuestion).filter((q) => {
+      if (subject === 'all') return true;
+      // 排除 subject 無法明確映射的題目於 specific subject 查詢，避免誤分類偏差
+      if (q.qualityFlags?.includes('unmapped_subject')) return false;
+      return q.subject === subject;
+    });
   }, [enabled, poolRaw, subject]);
 
   const combined = useMemo(() => [...mainBank, ...poolItems], [mainBank, poolItems]);
