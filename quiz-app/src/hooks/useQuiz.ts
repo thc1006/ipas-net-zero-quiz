@@ -171,6 +171,11 @@ export function useQuiz() {
       const isCorrect =
         question.answer !== null ? selectedAnswer === question.answer : null;
 
+      const sourceCategory: AnswerRecord['sourceCategory'] =
+        question.sourceType === 'practice_pool'
+          ? question.provenance?.source_type ?? 'main_bank'
+          : 'main_bank';
+
       const record: AnswerRecord = {
         questionId: question.id,
         selectedAnswer,
@@ -178,6 +183,7 @@ export function useQuiz() {
         isCorrect,
         timeSpent,
         timestamp: Date.now(),
+        sourceCategory,
       };
 
       setState((prev) => ({

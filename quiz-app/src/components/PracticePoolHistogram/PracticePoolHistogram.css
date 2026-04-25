@@ -1,0 +1,93 @@
+/* 加強練習池抽題分佈條形 */
+.pool-histogram {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+}
+
+.pool-histogram__title {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-sm);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.pool-histogram__rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.pool-histogram__row {
+  display: grid;
+  grid-template-columns: 5em 3em 1fr 3em;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.pool-histogram__label {
+  color: var(--color-text-primary);
+  font-variation-settings: 'wght' 540;
+}
+
+.pool-histogram__count {
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.pool-histogram__bar-track {
+  height: 8px;
+  background: var(--color-surface-variant);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.pool-histogram__bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 200ms ease;
+}
+
+.pool-histogram__row--main .pool-histogram__bar { background: var(--color-success); }
+.pool-histogram__row--mock .pool-histogram__bar { background: var(--color-info); }
+.pool-histogram__row--ai .pool-histogram__bar { background: var(--color-warning); }
+
+.pool-histogram__pct {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-quiet);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.pool-histogram__total {
+  margin: var(--spacing-sm) 0 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* Mobile (≤640px) — 改 2 行布局：label/count 一行、bar/pct 一行 */
+@media (max-width: 640px) {
+  .pool-histogram {
+    padding: var(--spacing-sm);
+  }
+  .pool-histogram__row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'label count'
+      'bar   pct';
+    row-gap: 4px;
+  }
+  .pool-histogram__label { grid-area: label; }
+  .pool-histogram__count { grid-area: count; }
+  .pool-histogram__bar-track { grid-area: bar; }
+  .pool-histogram__pct { grid-area: pct; min-width: 3em; }
+}

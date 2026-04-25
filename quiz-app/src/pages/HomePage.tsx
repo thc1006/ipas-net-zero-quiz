@@ -5,9 +5,16 @@ import { PRACTICE_POOL_COUNTS } from '../data/practice-pool-counts';
 import { defaultConfig } from '../hooks/useQuiz';
 import { usePracticeMode } from '../hooks/usePracticeMode';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
+import { PracticePoolHistogram } from '../components/PracticePoolHistogram/PracticePoolHistogram';
 import { readBool, writeBool } from '../utils/local-storage';
 import type { QuizConfig, ExamSubject } from '../types/quiz';
 import './HomePage.css';
+
+function mainBankCountForSubject(subject: ExamSubject | 'all'): number {
+  if (subject === '考科1') return stats.subject1;
+  if (subject === '考科2') return stats.subject2;
+  return stats.total;
+}
 
 // localStorage key：使用者是否曾看過揭露 dialog（accept/decline 都算看過）
 // 用來避免每次進首頁都自動彈 — 一次就夠
@@ -186,6 +193,12 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
                 {title}
               </h3>
               <p className="practice-pool-tip__desc">{desc}</p>
+              {enabled && (
+                <PracticePoolHistogram
+                  mainBankCount={mainBankCountForSubject(config.subject)}
+                  subject={config.subject}
+                />
+              )}
               <button
                 type="button"
                 className={`btn ${enabled ? 'btn-secondary' : 'btn-primary'} practice-pool-tip__cta`}

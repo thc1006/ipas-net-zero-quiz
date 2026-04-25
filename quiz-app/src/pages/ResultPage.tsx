@@ -6,6 +6,7 @@ import {
   generateSimilarQuestionStream,
   type AIResponse,
 } from '../utils/ai-helper';
+import { SourceBreakdown } from '../components/SourceBreakdown/SourceBreakdown';
 import type { QuizResult, QuizQuestion } from '../types/quiz';
 import './ResultPage.css';
 
@@ -203,6 +204,9 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
           <span className="stat-label">用時</span>
         </div>
       </section>
+
+      {/* 按題目來源分組的正確率（僅啟用練習池且抽到池題時顯示） */}
+      <SourceBreakdown answers={answers} />
 
       {/* 錯題列表 */}
       {wrongAnswers.length > 0 && (

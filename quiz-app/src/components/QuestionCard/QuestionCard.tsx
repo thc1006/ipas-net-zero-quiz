@@ -3,6 +3,7 @@ import { useCallback, useId, useMemo, useState } from 'react';
 import type { QuizQuestion, QuizOption } from '../../types/quiz';
 import { explainQuestion, type AIResponse } from '../../utils/ai-helper';
 import { SourceBadge } from '../SourceBadge/SourceBadge';
+import { SourceBanner } from '../SourceBanner/SourceBanner';
 import { LAW_PCODE_LABELS } from '../../data/law-pcode-labels';
 import './QuestionCard.css';
 
@@ -135,6 +136,15 @@ export function QuestionCard({
           />
         )}
       </header>
+
+      {/* 練習池來源 banner — 主題庫題不顯示 */}
+      {question.provenance && (
+        <SourceBanner
+          sourceType={question.provenance.source_type}
+          qualityFlags={question.qualityFlags ?? []}
+          sourceCount={question.sources?.length ?? 0}
+        />
+      )}
 
       {/* 題幹 */}
       <div className="question-stem" id={labelId}>
