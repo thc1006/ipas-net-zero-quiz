@@ -87,3 +87,23 @@ describe('findRedundantPrefix', () => {
     expect(findRedundantPrefix(stem, opts)).toBeNull();
   });
 });
+
+describe('findRedundantPrefix CJK separator support', () => {
+  it('CJK 標點 separator: 「GRI、環境」「GRI、社會」共享 GRI', () => {
+    const stem = 'GRI 之三大類';
+    const opts = ['GRI、環境', 'GRI、社會', 'GRI、治理', 'GRI、經濟'];
+    expect(findRedundantPrefix(stem, opts)).toBe('GRI');
+  });
+
+  it('CJK 全形括號 separator: 「TCFD（治理）」', () => {
+    const stem = 'TCFD 四大支柱';
+    const opts = ['TCFD（治理）', 'TCFD（策略）', 'TCFD（風險）', 'TCFD（指標）'];
+    expect(findRedundantPrefix(stem, opts)).toBe('TCFD');
+  });
+
+  it('無 separator 純連寫: 「GRI環境」「GRI社會」', () => {
+    const stem = 'GRI 三大類';
+    const opts = ['GRI環境', 'GRI社會', 'GRI治理', 'GRI經濟'];
+    expect(findRedundantPrefix(stem, opts)).toBe('GRI');
+  });
+});
