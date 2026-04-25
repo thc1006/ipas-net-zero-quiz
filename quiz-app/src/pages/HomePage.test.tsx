@@ -31,9 +31,10 @@ afterEach(() => {
 describe('HomePage', () => {
   it('renders title and stats badges', () => {
     render(<HomePage onStartQuiz={() => {}} />);
-    // h1 含 <em> 子節點 → 用 getByRole 的 accessible name (==textContent)
+    // h1 含 <em> 子節點 → jsdom accessible-name 會在 inline element 兩側補空白
+    // 所以 "淨零碳<em>備考</em>神器" 的 name 是 "淨零碳 備考 神器"
     expect(
-      screen.getByRole('heading', { level: 1, name: /淨零碳備考神器/ })
+      screen.getByRole('heading', { level: 1, name: /淨零碳\s*備考\s*神器/ })
     ).toBeInTheDocument();
     expect(screen.getAllByText(/考科一/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/考科二/).length).toBeGreaterThan(0);
