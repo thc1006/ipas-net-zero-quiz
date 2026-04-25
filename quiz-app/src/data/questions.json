@@ -3042,10 +3042,11 @@
       "D": "20 %"
     },
     "answer": "B",
-    "explanation": "依環境部（原環境部）產品碳足跡計算服務指引及經濟部產業發展署產品碳足跡計算指引：若製造階段所擁有、營運或控制之製程的溫室氣體排放量，未達原料取得及製造階段溫室氣體總排放量 10% 以上之貢獻率，則原料取得階段須納入一級活動數據蒐集，直到蒐集之排放量達總排放量 10% 以上貢獻率為止。故一級數據應佔上游排放至少 10%。\n\n資料來源：https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098 ; https://github.com/thc1006/ipas-net-zero-quiz/discussions/1#discussioncomment-16697053",
+    "explanation": "依環境部（原環保署）產品碳足跡計算服務指引及經濟部工業局（現產業發展署）產品碳足跡計算指引：若製造階段所擁有、營運或控制之製程的溫室氣體排放量，未達原料取得及製造階段溫室氣體總排放量 10% 以上之貢獻率，則原料取得階段須納入一級活動數據蒐集，直到蒐集之排放量達總排放量 10% 以上貢獻率為止。故一級數據應佔上游排放至少 10%。\n\n資料來源：https://vocus.cc/article/68b53f5efd89780001e60438 ; https://www.smartmachinery.tw/upload/doc/202309130959490.pdf ; https://github.com/thc1006/ipas-net-zero-quiz/discussions/1#discussioncomment-16697053",
     "metadata": {
       "sources": [
-        "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098",
+        "https://vocus.cc/article/68b53f5efd89780001e60438",
+        "https://www.smartmachinery.tw/upload/doc/202309130959490.pdf",
         "https://github.com/thc1006/ipas-net-zero-quiz/discussions/1#discussioncomment-16697053"
       ],
       "sources_verified_date": "2026-04-25"
