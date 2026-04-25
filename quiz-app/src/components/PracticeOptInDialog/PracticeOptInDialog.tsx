@@ -24,10 +24,9 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
     const focusables = dialogRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
     focusables?.[0]?.focus();
 
-    // aria-hide everything OUTSIDE the dialog so SR not reading both
-    const root = document.getElementById('root');
-    const prevAriaHidden = root?.getAttribute('aria-hidden') ?? null;
-    root?.setAttribute('aria-hidden', 'true');
+    // 註：故意不設 aria-hidden 於 #root —— dialog 自己已有 aria-modal="true"，
+    // 螢幕閱讀器會把 modal 外的內容視為 inert。若再設 root 的 aria-hidden，
+    // dialog 本身（render 在 root 內）也會被誤判為隱藏，導致 a11y tree 找不到 dialog。
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -53,8 +52,6 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
 
     return () => {
       document.removeEventListener('keydown', onKey);
-      if (prevAriaHidden === null) root?.removeAttribute('aria-hidden');
-      else root?.setAttribute('aria-hidden', prevAriaHidden);
       previouslyFocused?.focus?.();
     };
   }, [open, onDecline]);
