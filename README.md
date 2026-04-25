@@ -112,6 +112,12 @@ jq '.items[] | select(.quality_flags | index("time_sensitive")) | {id, stem: (.s
 3. 不一致時：更新 `provenance.verified_date` + 修正答案（並照 commit policy 附 source URL）
 4. 若 source 已失效：移除題目（同時更新 `_meta.totals` 與 `practice-pool-counts.ts`）
 
+#### 自動季度 verify (GitHub Action)
+
+`.github/workflows/quarterly-time-sensitive-verify.yml` 每季 1/1, 4/1, 7/1, 10/1 04:00 UTC 自動跑：jq 抓 `time_sensitive` 題目 → curl 每條 URL → 失敗自動開 / 更新 issue。也可手動觸發：`gh workflow run quarterly-time-sensitive-verify.yml`。
+
+需在 repo Settings → Actions → General → Workflow permissions 啟用 **Read and write permissions**（否則 workflow 無法開 issue）。
+
 ## 授權
 
 本工具僅供練習參考；題庫資料為個人整理，非官方發布。
