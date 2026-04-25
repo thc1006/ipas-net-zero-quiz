@@ -113,17 +113,33 @@ export function useQuiz() {
             config.subject,
             config.mode === 'exam'
           )
-        : (config.subject === 'all' ? combined : combined.filter((q) => q.subject === config.subject))
-            .slice(0, config.questionCount);
+        : (() => {
+            const subjectFiltered =
+              config.subject === 'all'
+                ? combined
+                : combined.filter((q) => q.subject === config.subject);
+            const answerFiltered =
+              config.mode === 'exam'
+                ? subjectFiltered.filter((q) => q.hasAnswer)
+                : subjectFiltered;
+            return answerFiltered.slice(0, config.questionCount);
+          })();
     } else {
       // 不混練習池 — fallback 到 startQuiz 邏輯
-      questions = config.shuffleQuestions
-        ? getRandomQuestions(
-            config.questionCount,
-            config.subject,
-            config.mode === 'exam'
-          )
-        : getQuestionsBySubject(config.subject).slice(0, config.questionCount);
+      if (config.shuffleQuestions) {
+        questions = getRandomQuestions(
+          config.questionCount,
+          config.subject,
+          config.mode === 'exam'
+        );
+      } else {
+        const subjectFiltered = getQuestionsBySubject(config.subject);
+        const answerFiltered =
+          config.mode === 'exam'
+            ? subjectFiltered.filter((q) => q.hasAnswer)
+            : subjectFiltered;
+        questions = answerFiltered.slice(0, config.questionCount);
+      }
     }
 
     if (config.shuffleOptions) {
