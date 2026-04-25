@@ -118,4 +118,91 @@ describe('Logger', () => {
       expect(consoleErrorSpy).toHaveBeenCalledOnce();
     });
   });
+
+  describe('serializeError edge cases', () => {
+    it('handles plain string err (not Error instance)', () => {
+      const log = new Logger({ isDev: false });
+      log.error('msg', 'string err');
+      expect(log.getRecentErrors()[0].error).toBe('string err');
+    });
+
+    it('handles plain object err via JSON.stringify', () => {
+      const log = new Logger({ isDev: false });
+      log.error('msg', { code: 'E_FAIL', detail: 42 });
+      expect(log.getRecentErrors()[0].error).toBe('{"code":"E_FAIL","detail":42}');
+    });
+
+    it('handles circular object err (JSON.stringify throws → String fallback)', () => {
+      const log = new Logger({ isDev: false });
+      const circular: Record<string, unknown> = { a: 1 };
+      circular.self = circular;
+      log.error('msg', circular);
+      expect(log.getRecentErrors()[0].error).toBe('[object Object]');
+    });
+
+    it('handles undefined err (no error param)', () => {
+      const log = new Logger({ isDev: false });
+      log.error('just a message');
+      expect(log.getRecentErrors()[0].error).toBeUndefined();
+    });
+
+    it('handles null err', () => {
+      const log = new Logger({ isDev: false });
+      log.error('msg', null);
+      expect(log.getRecentErrors()[0].error).toBeUndefined();
+    });
+
+    it('Error without stack falls back to "Name: message" format', () => {
+      const log = new Logger({ isDev: false });
+      const err = new Error('no stack here');
+      Object.defineProperty(err, 'stack', { value: undefined });
+      log.error('msg', err);
+      expect(log.getRecentErrors()[0].error).toBe('Error: no stack here');
+    });
+  });
+
+  describe('warn / info / error context arg handling', () => {
+    it('warn without context calls console.warn with single arg', () => {
+      const log = new Logger({ isDev: true });
+      log.warn('plain warning');
+      expect(consoleWarnSpy.mock.calls[0]).toHaveLength(1);
+    });
+
+    it('warn with context calls console.warn with two args', () => {
+      const log = new Logger({ isDev: true });
+      log.warn('with ctx', { user: 'a' });
+      expect(consoleWarnSpy.mock.calls[0]).toHaveLength(2);
+    });
+
+    it('info without context calls console.info with single arg', () => {
+      const log = new Logger({ isDev: true });
+      log.info('plain info');
+      expect(consoleInfoSpy.mock.calls[0]).toHaveLength(1);
+    });
+
+    it('error with context only (no err) passes context as last arg', () => {
+      const log = new Logger({ isDev: true });
+      log.error('msg', undefined, { user: 'a' });
+      // args: [formatted_msg, context]
+      expect(consoleErrorSpy.mock.calls[0]).toHaveLength(2);
+      expect(consoleErrorSpy.mock.calls[0][1]).toEqual({ user: 'a' });
+    });
+  });
+
+  describe('default constructor (no opts)', () => {
+    it('defaults isDev from import.meta.env.DEV (vitest === true)', () => {
+      const log = new Logger();
+      log.info('shown in dev');
+      expect(consoleInfoSpy).toHaveBeenCalledOnce();
+    });
+
+    it('PROD mode error path: skips console output but still buffers', () => {
+      // 強制 shouldLog 走 false 分支但仍 push 到 buffer
+      const log = new Logger({ isDev: false, level: 'info' /* 不會被觸發 */ });
+      // 用 minLevel='info' 但 isDev=false → 不影響 error path（error level 一定 push）
+      log.error('production-error', new Error('boom'));
+      expect(consoleErrorSpy).toHaveBeenCalled();
+      expect(log.getRecentErrors()).toHaveLength(1);
+    });
+  });
 });

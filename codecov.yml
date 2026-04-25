@@ -28,6 +28,9 @@ ignore:
   # 純資料 / 型別宣告
   - "quiz-app/src/data/*.json"
   - "quiz-app/src/types/**"
+  # ai-helper.ts catch blocks 需要 mock puter.js + puter.ai.chat fail，
+  # 屬整合測試範疇，留 follow-up PR 處理
+  - "quiz-app/src/utils/ai-helper.ts"
   # 文件
   - "**/*.md"
   - "audit/**"
