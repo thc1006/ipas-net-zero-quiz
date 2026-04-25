@@ -58,6 +58,9 @@ export type PracticePoolQualityFlag =
   /** subject 無法明確映射時設此 flag；filter 時可排除 */
   | 'unmapped_subject';
 
+/** 練習池 subject 可能值：official ExamSubject、自由字串（如 vocus 講師原文「考科一：…」）、或 null（無分類） */
+export type PracticePoolSubject = ExamSubject | string | null;
+
 /** 加強練習單題 */
 export interface PracticePoolItem {
   id: string;
@@ -65,8 +68,8 @@ export interface PracticePoolItem {
   options: QuizOption[];
   answer: string | null;
   explanation: string;
-  /** 考科類別；可能為 ExamSubject、自由字串、或 null（練習池來源不統一） */
-  subject: ExamSubject | string | null;
+  /** 考科類別；toQuizQuestion 會嘗試映射，無法映射時於 qualityFlags 加 unmapped_subject */
+  subject: PracticePoolSubject;
   topic_tags: string[];
   difficulty: PracticePoolDifficulty;
   provenance: PracticePoolProvenance;

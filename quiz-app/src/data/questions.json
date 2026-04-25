@@ -2137,7 +2137,10 @@
         "https://www.iso.org/standard/66453.html",
         "https://ghgprotocol.org/corporate-standard"
       ],
-      "sources_verified_date": "2026-04-25"
+      "sources_verified_date": "2026-04-25",
+      "question_rewritten": true,
+      "question_rewritten_date": "2026-04-25",
+      "question_rewritten_reason": "選項分類不符 ISO 14064-1 / GHG Protocol 官方組織邊界（營運/財務/股權控制法）；整題重寫"
     }
   },
   {

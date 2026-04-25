@@ -346,5 +346,5 @@
 
 [data-theme="dark"] .question-sources {
   background: rgba(59, 130, 246, 0.08);
-  border-left-color: #93c5fd;
+  border-left-color: var(--color-info-fg-dark, #93c5fd);
 }

@@ -3,6 +3,7 @@ import { useCallback, useId, useMemo, useState } from 'react';
 import type { QuizQuestion, QuizOption } from '../../types/quiz';
 import { explainQuestion, type AIResponse } from '../../utils/ai-helper';
 import { SourceBadge } from '../SourceBadge/SourceBadge';
+import { LAW_PCODE_LABELS } from '../../data/law-pcode-labels';
 import './QuestionCard.css';
 
 /**
@@ -253,14 +254,7 @@ export function prettifySourceUrl(url: string): string {
     if (host.includes('law.moj.gov.tw')) {
       const pcode = u.searchParams.get('pcode');
       const flno = u.searchParams.get('flno');
-      const pcodeLabel: Record<string, string> = {
-        O0020098: '氣候變遷因應法',
-        O0020102: '溫管辦法',
-        O0020139: '碳費收費辦法',
-        O0020137: '自願減量專案管理辦法',
-        O0020140: '自主減量計畫管理辦法',
-      };
-      const name = pcode && pcodeLabel[pcode] ? pcodeLabel[pcode] : '法規';
+      const name = pcode && LAW_PCODE_LABELS[pcode] ? LAW_PCODE_LABELS[pcode] : '法規';
       return flno ? `${name} §${flno}` : name;
     }
     if (host.includes('eur-lex.europa.eu')) {

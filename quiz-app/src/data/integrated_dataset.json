@@ -2782,7 +2782,9 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
-        "sources_verified_date": "2026-04-25"
+        "sources_verified_date": "2026-04-25",
+        "option_text_changed_on": "2026-04-25",
+        "option_text_change_note": "選項 D 文字由錯誤的『8/31』改為正確的『10/31』(CBAM Omnibus 回購截止)；答案字母 D 不變"
       },
       "explanation": "依 CBAM Omnibus 修正案（2025/10 生效），進口商請求回購（buy-back）多餘 CBAM 憑證之截止日為每年 10 月 31 日，11 月 1 日系統自動註銷未用憑證（原規定為 6/30）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
     },
@@ -10769,7 +10771,9 @@
         "verification_date": "2026-04-25",
         "verification_source": "題目重寫以符合 ISO 14064-1 / GHG Protocol 官方組織邊界分類",
         "original_id": "c2-121",
-        "question_rewritten": true
+        "question_rewritten": true,
+        "question_rewritten_date": "2026-04-25",
+        "question_rewritten_reason": "選項分類不符 ISO 14064-1 / GHG Protocol 官方組織邊界；整題重寫"
       }
     },
     {
