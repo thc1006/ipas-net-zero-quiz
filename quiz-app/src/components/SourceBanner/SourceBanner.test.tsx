@@ -11,7 +11,7 @@ describe('SourceBanner', () => {
     const banner = screen.getByTestId('source-banner');
     expect(banner.className).toMatch(/source-banner--mock/);
     expect(banner.textContent).toContain('模擬題');
-    expect(banner.textContent).toMatch(/vocus|HackMD|yamol/);
+    expect(banner.textContent).toMatch(/公開模擬題/);
   });
 
   it('ai_generated — 顯示「AI 產題」標籤 + 驗證提醒', () => {

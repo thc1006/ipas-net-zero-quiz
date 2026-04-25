@@ -2,6 +2,7 @@
 // React 18 沒有 hook 版的 boundary，class component 是唯一手段
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { logger as defaultLogger, type Logger } from '../../utils/logger';
+import { BUG_REPORT_URL } from '../../data/app-meta';
 import './ErrorBoundary.css';
 
 interface Props {
@@ -50,7 +51,7 @@ export class ErrorBoundary extends Component<Props, State> {
         </div>
         <p className="error-boundary__message">
           頁面渲染時發生錯誤。請點選「重試」重新載入；若仍持續，
-          請<a href="https://github.com/thc1006/ipas-net-zero-quiz/discussions/1" target="_blank" rel="noopener noreferrer">回報</a>給我們。
+          請<a href={BUG_REPORT_URL} target="_blank" rel="noopener noreferrer">回報</a>給我們。
         </p>
         <div className="error-boundary__actions">
           <button

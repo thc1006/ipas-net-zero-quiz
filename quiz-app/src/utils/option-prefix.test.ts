@@ -64,4 +64,26 @@ describe('findRedundantPrefix', () => {
     ];
     expect(findRedundantPrefix(stem, opts)).toBeNull();
   });
+
+  it('multi-token: 共享 2 個 token (e.g., GRI 準則)', () => {
+    const stem = 'GRI 準則之系統架構分為三大類';
+    const opts = [
+      'GRI 準則 環境',
+      'GRI 準則 社會',
+      'GRI 準則 治理',
+      'GRI 準則 經濟',
+    ];
+    expect(findRedundantPrefix(stem, opts)).toBe('GRI 準則');
+  });
+
+  it('multi-token: 不超出最短選項長度（防整個選項都是 prefix）', () => {
+    const stem = 'GRI 準則';
+    const opts = [
+      'GRI 準則', // 整個選項就是 prefix
+      'GRI 準則 環境',
+      'GRI 準則 社會',
+    ];
+    // commonLen 會是 2，但第一個選項只有 2 token → reject
+    expect(findRedundantPrefix(stem, opts)).toBeNull();
+  });
 });

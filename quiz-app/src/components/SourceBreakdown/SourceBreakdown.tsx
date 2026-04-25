@@ -3,8 +3,13 @@
 import type { AnswerRecord } from '../../types/quiz';
 import './SourceBreakdown.css';
 
+/** 池題正確率低於此 threshold (%) 顯示 ⚠ 偏低警示。主題庫不適用。 */
+export const LOW_ACCURACY_THRESHOLD_PCT = 60;
+
 interface SourceBreakdownProps {
   answers: AnswerRecord[];
+  /** 自訂 low-accuracy threshold；預設 60 (%) */
+  lowAccuracyThresholdPct?: number;
 }
 
 interface Group {
@@ -41,7 +46,10 @@ export function computeBreakdown(answers: AnswerRecord[]): Group[] {
     .filter((m) => m.total > 0);
 }
 
-export function SourceBreakdown({ answers }: SourceBreakdownProps): JSX.Element | null {
+export function SourceBreakdown({
+  answers,
+  lowAccuracyThresholdPct = LOW_ACCURACY_THRESHOLD_PCT,
+}: SourceBreakdownProps): JSX.Element | null {
   const groups = computeBreakdown(answers);
 
   // 只有「主題庫」一組（沒啟用練習池或練習池沒抽到）→ 不顯示（避免冗餘）
@@ -53,7 +61,7 @@ export function SourceBreakdown({ answers }: SourceBreakdownProps): JSX.Element 
       <ul className="source-breakdown__rows">
         {groups.map((g) => {
           const pct = g.total > 0 ? Math.round((g.correct / g.total) * 100) : 0;
-          const lowAccuracy = pct < 60 && g.key !== 'main_bank';
+          const lowAccuracy = pct < lowAccuracyThresholdPct && g.key !== 'main_bank';
           return (
             <li
               key={g.key}

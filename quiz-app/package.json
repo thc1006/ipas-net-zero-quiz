@@ -66,5 +66,8 @@
     "overrides": {
       "esbuild": ">=0.25.0"
     }
+  },
+  "bugs": {
+    "url": "https://github.com/thc1006/ipas-net-zero-quiz/discussions/1"
   }
 }
