@@ -19,3 +19,4 @@ PROGRESS_DASHBOARD.md
 batch_*_raw.json
 REMAINING_*.json
 check_progress.sh
+.claude/
