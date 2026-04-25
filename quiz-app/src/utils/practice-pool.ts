@@ -161,3 +161,22 @@ export function __resetPracticePoolCacheForTesting(): void {
   poolPromise = null;
   poolCached = null;
 }
+
+/**
+ * 測試專用：直接注入 fixture pool，跳過 dynamic import('../data/practice_pool.json')。
+ * jsdom 對 200KB JSON 動態 import 有時序敏感性（race / flaky CI）；用此 helper
+ * 注入小型 fixture 即可乾淨測 hook 整合層而不依賴實際 JSON 載入。
+ *
+ * 傳 null 等同 __resetPracticePoolCacheForTesting()
+ */
+export function __setPracticePoolForTesting(pool: PracticePool | null): void {
+  const env = (import.meta as ImportMeta).env;
+  if (env?.PROD) return;
+  if (pool === null) {
+    poolPromise = null;
+    poolCached = null;
+    return;
+  }
+  poolCached = pool;
+  poolPromise = Promise.resolve(pool);
+}

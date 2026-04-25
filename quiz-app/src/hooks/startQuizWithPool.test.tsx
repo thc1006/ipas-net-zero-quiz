@@ -1,11 +1,25 @@
 // startQuizWithPool 測試 — async 開始測驗、混入練習池
-import { describe, it, expect, beforeEach } from 'vitest';
+//
+// 之前的 it.skip 因為動態 import('../data/practice_pool.json') 在 jsdom 環境
+// 有時序敏感性 → flaky CI。改用 __setPracticePoolForTesting 注入小型 fixture，
+// 直接測 hook 整合層而不依賴實際 200KB JSON 動態載入。
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useQuiz } from './useQuiz';
-import { __resetPracticePoolCacheForTesting } from '../utils/practice-pool';
+import {
+  __resetPracticePoolCacheForTesting,
+  __setPracticePoolForTesting,
+} from '../utils/practice-pool';
+import { buildFixturePool } from '../utils/__fixtures__/practice-pool-fixture';
 
 describe('useQuiz.startQuizWithPool', () => {
-  beforeEach(() => __resetPracticePoolCacheForTesting());
+  beforeEach(() => {
+    __setPracticePoolForTesting(buildFixturePool());
+  });
+
+  afterEach(() => {
+    __resetPracticePoolCacheForTesting();
+  });
 
   it('without includePracticePool behaves like startQuiz (uses main bank)', async () => {
     const { result } = renderHook(() => useQuiz());
@@ -28,29 +42,39 @@ describe('useQuiz.startQuizWithPool', () => {
     }
   });
 
-  it.skip('with includePracticePool can mix in pool items (integration; covered by practice-pool.test)', async () => {
+  it('with includePracticePool can mix in pool items (questionCount 對 + 機率高足以抽到 pool)', async () => {
     const { result } = renderHook(() => useQuiz());
+    // 抽 600 題（接近主題庫總量 648 + fixture pool 6 = 654）→ 接近全抽，
+    // 高機率包含 pool 題（隨機抽樣，機率 = 1 - C(648, 600)/C(654, 600) ≈ 100%）
     await act(async () => {
       await result.current.startQuizWithPool({
         mode: 'practice',
         subject: 'all',
-        questionCount: 30,
-        shuffleQuestions: false, // ordered: mainBank first then pool
+        questionCount: 600,
+        shuffleQuestions: true,
         shuffleOptions: false,
         showAnswerImmediately: true,
         includePracticePool: true,
       });
     });
-    expect(result.current.questions).toHaveLength(30);
+    expect(result.current.questions).toHaveLength(600);
+    expect(result.current.isActive).toBe(true);
+    // 600 picks 從 654 抽 → 至少 (600+6-654) = ≥0；用 hasAnswer fixture 推估
+    // fixture-1 / fixture-2 / fixture-3 / fixture-4 / fixture-5 都有答案
+    // 600/654 ≈ 91.7% 機率每題被抽，期望 5-6 fixture 入選
+    const poolCount = result.current.questions.filter(
+      (q) => q.sourceType === 'practice_pool',
+    ).length;
+    expect(poolCount).toBeGreaterThan(0);
   });
 
-  it.skip('exam mode filters out questions without answer (integration)', async () => {
+  it('exam mode filters out questions without answer', async () => {
     const { result } = renderHook(() => useQuiz());
     await act(async () => {
       await result.current.startQuizWithPool({
         mode: 'exam',
         subject: 'all',
-        questionCount: 10,
+        questionCount: 30,
         shuffleQuestions: false,
         shuffleOptions: false,
         showAnswerImmediately: false,
@@ -60,9 +84,11 @@ describe('useQuiz.startQuizWithPool', () => {
     for (const q of result.current.questions) {
       expect(q.hasAnswer).toBe(true);
     }
+    // fixture 中 item-6 沒答案 → 不應出現在 picked questions
+    expect(result.current.questions.find((q) => q.id === 'fixture-6')).toBeUndefined();
   });
 
-  it.skip('subject filter excludes unmapped_subject pool items (integration)', async () => {
+  it('subject filter excludes unmapped_subject pool items', async () => {
     const { result } = renderHook(() => useQuiz());
     await act(async () => {
       await result.current.startQuizWithPool({
