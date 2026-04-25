@@ -79,13 +79,30 @@
   height: 24px;
 }
 
-/* 響應式 */
+/* 響應式 — 中等手機（≤640px）保留 logo-text，但 subtitle 隱藏 */
+@media (max-width: 640px) {
+  .header-container {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-height: 56px;
+  }
+  .logo-subtitle {
+    display: none;
+  }
+  .logo-title {
+    font-size: var(--font-size-base);
+  }
+  .header-actions {
+    gap: 0;
+  }
+  .icon-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* 小手機（≤480px）— logo-text 完全隱藏只留 icon */
 @media (max-width: 480px) {
   .logo-text {
     display: none;
-  }
-
-  .header-container {
-    padding: var(--spacing-xs) var(--spacing-sm);
   }
 }

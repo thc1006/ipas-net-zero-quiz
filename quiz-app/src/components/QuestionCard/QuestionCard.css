@@ -348,3 +348,41 @@
   background: rgba(59, 130, 246, 0.08);
   border-left-color: var(--color-info-fg-dark, #93c5fd);
 }
+
+/* 小螢幕（≤640px）— question-card padding 收緊、option-item tap target */
+@media (max-width: 640px) {
+  .question-card {
+    padding: var(--spacing-md);
+  }
+  .question-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+  .question-stem p {
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+  }
+  .option-item {
+    padding: var(--spacing-md);
+    min-height: 48px; /* tap target */
+  }
+  .option-key {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+  .question-actions {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  .question-actions .btn {
+    width: 100%;
+  }
+  .ai-response-content {
+    font-size: var(--font-size-sm);
+  }
+  .question-sources {
+    font-size: var(--font-size-xs);
+  }
+}
