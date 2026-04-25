@@ -20,5 +20,16 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
+    // 提高 warning threshold；practice_pool.json 已 dynamic split，main bundle
+    // 仍含 React + 主題庫 (integrated_dataset.json) ~640KB。
+    chunkSizeWarningLimit: 700,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // React 生態獨立 chunk — 變動少，瀏覽器可長期 cache
+          'react-vendor': ['react', 'react-dom', 'react-dom/client'],
+        },
+      },
+    },
   },
 })
