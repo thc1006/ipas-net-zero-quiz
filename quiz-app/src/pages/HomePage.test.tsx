@@ -105,7 +105,8 @@ describe('HomePage', () => {
     const onStartQuiz = vi.fn();
     render(<HomePage onStartQuiz={onStartQuiz} />);
     const shuffleCb = screen.getByRole('checkbox') as HTMLInputElement;
-    fireEvent.click(shuffleCb);
+    // jsdom 對 fireEvent.click 不一定 toggle checked → 直接 dispatch change with checked=true
+    fireEvent.change(shuffleCb, { target: { checked: true } });
     fireEvent.click(screen.getByRole('button', { name: /開始/ }));
     expect(onStartQuiz.mock.calls[0][0].shuffleQuestions).toBe(true);
   });
