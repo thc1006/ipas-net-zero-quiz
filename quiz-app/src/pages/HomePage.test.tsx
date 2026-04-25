@@ -32,9 +32,9 @@ describe('HomePage', () => {
   it('renders title and stats badges', () => {
     render(<HomePage onStartQuiz={() => {}} />);
     expect(screen.getByText(/淨零碳備考神器/)).toBeInTheDocument();
-    // stats badges
-    expect(screen.getByText(/考科一/)).toBeInTheDocument();
-    expect(screen.getByText(/考科二/)).toBeInTheDocument();
+    // 考科一 / 考科二 出現多次（select option + badge），用 getAllByText
+    expect(screen.getAllByText(/考科一/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/考科二/).length).toBeGreaterThan(0);
   });
 
   it('does NOT show practice-pool indicator when disabled', () => {
