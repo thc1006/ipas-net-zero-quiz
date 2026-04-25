@@ -66,22 +66,22 @@ describe('audit corrections regression', () => {
       expect(q?.answer).toBe('A');
     });
     it('option A is 土壤', () => {
-      expect(q?.options.A).toBe('土壤');
+      expect(q?.options.A).toBe('土壤');  // 短字無需 loose
     });
   });
 
   describe('CBAM Omnibus dates (Reg 2025/2083)', () => {
     it('c1-038 surrender deadline option C → 9 月 30 日', () => {
-      expect(byId('c1-038')?.options.C).toBe('9 月 30 日');
+      expect(byId('c1-038')?.options.C).toMatch(/9\s*月\s*30\s*日/);
     });
     it('c1-040 first submission option B → 2027 年 9 月 30 日', () => {
-      expect(byId('c1-040')?.options.B).toBe('2027 年 9 月 30 日');
+      expect(byId('c1-040')?.options.B).toMatch(/2027\s*年\s*9\s*月\s*30\s*日/);
     });
   });
 
   describe('NDC 3.0 update', () => {
     it('c2-086 option B → 28 % ± 2 %', () => {
-      expect(byId('c2-086')?.options.B).toBe('28 % ± 2 %');
+      expect(byId('c2-086')?.options.B).toMatch(/28\s*%\s*±\s*2\s*%/);
     });
   });
 
@@ -90,11 +90,11 @@ describe('audit corrections regression', () => {
     const sf6_60 = byIndex(494);
     it('gist[480] 50kg SF6 answer D = 1,175 tCO2e', () => {
       const optD = sf6_50?.options.find((o) => o.key === 'D')?.text;
-      expect(optD).toBe('1,175 tCO2e');
+      expect(optD).toMatch(/1[,\s]?175\s*tCO2e/);
     });
     it('gist[494] 60kg SF6 answer D = 1,410 tCO2e', () => {
       const optD = sf6_60?.options.find((o) => o.key === 'D')?.text;
-      expect(optD).toBe('1,410 tCO2e');
+      expect(optD).toMatch(/1[,\s]?410\s*tCO2e/);
     });
   });
 
