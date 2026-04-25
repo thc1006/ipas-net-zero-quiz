@@ -1,5 +1,6 @@
 // 加強練習池 opt-in 對話框：首次啟用時揭露 AI 產題與第三方模擬題之來源
 // 對應 EU AI Act Art.50（2026-08-02 起）對 AI 生成文字之揭露義務
+import { useEffect, useRef } from 'react';
 import './PracticeOptInDialog.css';
 
 interface PracticeOptInDialogProps {
@@ -8,11 +9,71 @@ interface PracticeOptInDialogProps {
   onDecline: () => void;
 }
 
+const FOCUSABLE_SELECTOR =
+  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptInDialogProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const firstFocusableRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+
+    // Move focus into dialog
+    const focusables = dialogRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+    const first = focusables?.[0] ?? null;
+    firstFocusableRef.current = first;
+    first?.focus();
+
+    // aria-hide everything OUTSIDE the dialog so SR not reading both
+    const root = document.getElementById('root');
+    const prevAriaHidden = root?.getAttribute('aria-hidden') ?? null;
+    root?.setAttribute('aria-hidden', 'true');
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onDecline();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      // Simple focus trap
+      const nodes = dialogRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+      if (!nodes || nodes.length === 0) return;
+      const f = nodes[0];
+      const l = nodes[nodes.length - 1];
+      if (e.shiftKey && document.activeElement === f) {
+        e.preventDefault();
+        l.focus();
+      } else if (!e.shiftKey && document.activeElement === l) {
+        e.preventDefault();
+        f.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      if (prevAriaHidden === null) root?.removeAttribute('aria-hidden');
+      else root?.setAttribute('aria-hidden', prevAriaHidden);
+      previouslyFocused?.focus?.();
+    };
+  }, [open, onDecline]);
+
   if (!open) return null;
   return (
-    <div className="optin-overlay" role="dialog" aria-modal="true" aria-labelledby="optin-title">
-      <div className="optin-dialog">
+    <div
+      className="optin-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="optin-title"
+      onClick={(e) => {
+        // 點擊 overlay 外圍視為 decline（保留 dialog 內點擊）
+        if (e.target === e.currentTarget) onDecline();
+      }}
+    >
+      <div className="optin-dialog" ref={dialogRef} tabIndex={-1}>
         <h2 id="optin-title">啟用加強練習池</h2>
         <p>
           加強練習池是<strong>獨立於主題庫的補充題目</strong>，總計 143 題。題目來自兩種來源：
