@@ -9,6 +9,7 @@ import { ResultPage } from './pages/ResultPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { Header } from './components/Header';
 import { VisitorCounter } from './components/VisitorCounter';
+import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import type { QuizConfig, QuizResult } from './types/quiz';
 import './App.css';
 
@@ -88,31 +89,33 @@ function App() {
       />
 
       <main id="main-content" className="main-content">
-        {currentView === 'home' && (
-          <HomePage onStartQuiz={handleStartQuiz} />
-        )}
+        <ErrorBoundary>
+          {currentView === 'home' && (
+            <HomePage onStartQuiz={handleStartQuiz} />
+          )}
 
-        {currentView === 'quiz' && quiz.currentQuestion && (
-          <QuizPage
-            quiz={quiz}
-            onFinish={handleFinishQuiz}
-          />
-        )}
+          {currentView === 'quiz' && quiz.currentQuestion && (
+            <QuizPage
+              quiz={quiz}
+              onFinish={handleFinishQuiz}
+            />
+          )}
 
-        {currentView === 'result' && lastResult && (
-          <ResultPage
-            result={lastResult}
-            onGoHome={handleGoHome}
-            onRetry={handleRetry}
-          />
-        )}
+          {currentView === 'result' && lastResult && (
+            <ResultPage
+              result={lastResult}
+              onGoHome={handleGoHome}
+              onRetry={handleRetry}
+            />
+          )}
 
-        {currentView === 'settings' && (
-          <SettingsPage
-            accessibility={accessibility}
-            onClose={handleCloseSettings}
-          />
-        )}
+          {currentView === 'settings' && (
+            <SettingsPage
+              accessibility={accessibility}
+              onClose={handleCloseSettings}
+            />
+          )}
+        </ErrorBoundary>
       </main>
 
       {/* 頁尾 */}
