@@ -2,6 +2,7 @@
 // 提供題目講解和相似題目生成功能
 
 import type { QuizQuestion } from '../types/quiz';
+import { logger } from './logger';
 
 // Puter.js 全域物件型別定義
 declare global {
@@ -221,7 +222,7 @@ ${question.answer ? `正確答案：${question.answer}` : '（此題無標準答
       confidence,
     };
   } catch (error) {
-    console.error('AI 請求失敗:', error);
+    logger.error('AI 請求失敗', error);
     return {
       success: false,
       content: '',
@@ -309,7 +310,7 @@ ${question.answer ? `正確答案：${question.answer}` : '（此題無標準答
       confidence,
     };
   } catch (error) {
-    console.error('AI 請求失敗:', error);
+    logger.error('AI 請求失敗', error);
     return {
       success: false,
       content: '',
@@ -399,7 +400,7 @@ export async function generateSimilarQuestion(
       confidence,
     };
   } catch (error) {
-    console.error('AI 生成題目失敗:', error);
+    logger.error('AI 生成題目失敗', error);
     return {
       success: false,
       content: '',
@@ -475,7 +476,7 @@ export async function generateSimilarQuestionStream(
       confidence,
     };
   } catch (error) {
-    console.error('AI 生成題目失敗:', error);
+    logger.error('AI 生成題目失敗', error);
     return {
       success: false,
       content: '',
