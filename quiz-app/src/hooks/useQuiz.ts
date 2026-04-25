@@ -330,6 +330,7 @@ export function useQuiz() {
 
     // 操作
     startQuiz,
+    startQuizWithPool,
     submitAnswer,
     nextQuestion,
     prevQuestion,
