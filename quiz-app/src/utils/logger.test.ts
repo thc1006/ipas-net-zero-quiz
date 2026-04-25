@@ -206,3 +206,85 @@ describe('Logger', () => {
     });
   });
 });
+
+describe('Logger persistence (persistKey)', () => {
+  // 還原真實 localStorage（test-setup mock 是 vi.fn）
+  function installRealLocalStorage() {
+    const store = new Map<string, string>();
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: (k: string) => store.get(k) ?? null,
+        setItem: (k: string, v: string) => { store.set(k, v); },
+        removeItem: (k: string) => { store.delete(k); },
+        clear: () => { store.clear(); },
+        key: (i: number) => Array.from(store.keys())[i] ?? null,
+        get length() { return store.size; },
+      },
+      writable: true,
+      configurable: true,
+    });
+  }
+
+  beforeEach(() => {
+    installRealLocalStorage();
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it('persists ring buffer to localStorage on error()', () => {
+    const log = new Logger({ isDev: false, persistKey: 'test-log' });
+    log.error('boom', new Error('details'));
+    const stored = localStorage.getItem('test-log');
+    expect(stored).toBeTruthy();
+    const parsed = JSON.parse(stored!);
+    expect(Array.isArray(parsed)).toBe(true);
+    expect(parsed[0].message).toBe('boom');
+  });
+
+  it('restores buffer from localStorage on construct', () => {
+    // 先寫一筆假資料
+    const seed = [
+      { level: 'error', message: 'old-error', timestamp: 123, error: 'stack' },
+    ];
+    localStorage.setItem('test-log', JSON.stringify(seed));
+    const log = new Logger({ isDev: false, persistKey: 'test-log' });
+    expect(log.getRecentErrors()).toHaveLength(1);
+    expect(log.getRecentErrors()[0].message).toBe('old-error');
+  });
+
+  it('handles malformed localStorage (non-JSON / non-array) gracefully', () => {
+    localStorage.setItem('test-log', 'not-json{{{');
+    expect(
+      () => new Logger({ isDev: false, persistKey: 'test-log' }),
+    ).not.toThrow();
+    const log = new Logger({ isDev: false, persistKey: 'test-log' });
+    expect(log.getRecentErrors()).toEqual([]);
+  });
+
+  it('clearRecentErrors removes localStorage entry too', () => {
+    const log = new Logger({ isDev: false, persistKey: 'test-log' });
+    log.error('boom');
+    log.clearRecentErrors();
+    expect(localStorage.getItem('test-log')).toBeNull();
+  });
+
+  it('without persistKey: does NOT touch localStorage', () => {
+    const log = new Logger({ isDev: false });
+    log.error('boom');
+    expect(localStorage.getItem('app-error-log')).toBeNull();
+  });
+
+  it('respects bufferSize when restoring (truncate to last N)', () => {
+    const seed = Array.from({ length: 10 }, (_, i) => ({
+      level: 'error',
+      message: `e${i}`,
+      timestamp: i,
+    }));
+    localStorage.setItem('test-log', JSON.stringify(seed));
+    const log = new Logger({ isDev: false, persistKey: 'test-log', bufferSize: 3 });
+    expect(log.getRecentErrors()).toHaveLength(3);
+    expect(log.getRecentErrors()[0].message).toBe('e7');
+  });
+});
