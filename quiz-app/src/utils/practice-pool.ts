@@ -12,27 +12,28 @@ import type { QuizQuestion } from '../types/quiz';
 // Lazy load: 使用 dynamic import 避免 170 KB 常駐於 main bundle
 // Vite 會自動拆 chunk；僅在第一次 callers 呼叫 loadPracticePool 時載入
 let poolPromise: Promise<PracticePool> | null = null;
+/** 同步 cache：透過 loadPracticePool 與 prefetchPracticePool 都會寫入 */
+let poolCached: PracticePool | null = null;
 
 export function loadPracticePool(): Promise<PracticePool> {
   if (!poolPromise) {
-    poolPromise = import('../data/practice_pool.json').then(
-      (m) => m.default as unknown as PracticePool
-    );
+    poolPromise = import('../data/practice_pool.json').then((m) => {
+      const pool = m.default as unknown as PracticePool;
+      poolCached = pool;
+      return pool;
+    });
   }
   return poolPromise;
 }
 
 /** 供同步 caller（已確認 pool 載入完成）存取已快取的 pool */
-let poolCached: PracticePool | null = null;
 export function getPracticePoolSync(): PracticePool | null {
   return poolCached;
 }
 
 /** 預載入（UI 可於 opt-in 時呼叫，讓 quiz 啟動前 chunk 已進快取） */
 export async function prefetchPracticePool(): Promise<PracticePool> {
-  const p = await loadPracticePool();
-  poolCached = p;
-  return p;
+  return loadPracticePool();
 }
 
 /** 過濾條件 */
@@ -146,6 +147,9 @@ export async function pickQuizQuestions(
 
 /** 測試專用：重置 lazy-loaded promise cache（勿於 production 使用） */
 export function __resetPracticePoolCacheForTesting(): void {
+  // 僅供測試環境（vitest）；production build 呼叫會 no-op
+  const env = (import.meta as ImportMeta).env;
+  if (env?.PROD) return;
   poolPromise = null;
   poolCached = null;
 }

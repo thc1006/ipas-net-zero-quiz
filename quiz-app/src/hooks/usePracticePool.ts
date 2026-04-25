@@ -1,7 +1,7 @@
 // 加強練習池 React hook：依過濾條件回傳題目陣列。
 // 內部用 dynamic import 懶載入（170 KB JSON 不進 main bundle）
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   filterPool,
   loadPracticePool,
@@ -18,7 +18,7 @@ interface UsePracticePoolResult {
   error: Error | null;
 }
 
-/** 對 opts 做淺比較，避免 caller 傳 literal 物件導致 useMemo 每次失效 */
+/** 對 opts 做穩定 key，避免 caller 傳 literal 物件導致 useMemo 每次失效 */
 function stableKey(opts: PoolFilterOptions): string {
   return JSON.stringify({
     sourceTypes: opts.sourceTypes ?? null,
@@ -29,14 +29,34 @@ function stableKey(opts: PoolFilterOptions): string {
   });
 }
 
+/** 從 stableKey 還原 opts（避免 render-time mutate ref 違反 React 18 純粹原則） */
+function parseStableKey(key: string): PoolFilterOptions {
+  try {
+    const o = JSON.parse(key) as PoolFilterOptions & {
+      sourceTypes: PoolFilterOptions['sourceTypes'] | null;
+      topicTags: PoolFilterOptions['topicTags'] | null;
+      subjects: PoolFilterOptions['subjects'] | null;
+      difficulties: PoolFilterOptions['difficulties'] | null;
+      excludeFlags: PoolFilterOptions['excludeFlags'] | null;
+    };
+    return {
+      sourceTypes: o.sourceTypes ?? undefined,
+      topicTags: o.topicTags ?? undefined,
+      subjects: o.subjects ?? undefined,
+      difficulties: o.difficulties ?? undefined,
+      excludeFlags: o.excludeFlags ?? undefined,
+    };
+  } catch {
+    return {};
+  }
+}
+
 export function usePracticePool(opts: PoolFilterOptions = {}): UsePracticePoolResult {
   const [pool, setPool] = useState<PracticePool | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   const key = stableKey(opts);
-  const optsRef = useRef(opts);
-  optsRef.current = opts;
 
   useEffect(() => {
     let cancelled = false;
@@ -60,9 +80,9 @@ export function usePracticePool(opts: PoolFilterOptions = {}): UsePracticePoolRe
     };
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // 純由 stable key 決定 — 避免 ref 在 render 期間 mutate
   const items = useMemo(
-    () => (pool ? filterPool(pool.items, optsRef.current) : []),
+    () => (pool ? filterPool(pool.items, parseStableKey(key)) : []),
     [pool, key]
   );
 

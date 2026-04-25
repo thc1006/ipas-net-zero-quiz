@@ -14,17 +14,14 @@ const FOCUSABLE_SELECTOR =
 
 export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptInDialogProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
-  const firstFocusableRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!open) return;
     const previouslyFocused = document.activeElement as HTMLElement | null;
 
-    // Move focus into dialog
+    // Move focus into the first focusable element inside dialog
     const focusables = dialogRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
-    const first = focusables?.[0] ?? null;
-    firstFocusableRef.current = first;
-    first?.focus();
+    focusables?.[0]?.focus();
 
     // aria-hide everything OUTSIDE the dialog so SR not reading both
     const root = document.getElementById('root');
@@ -68,6 +65,7 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
       role="dialog"
       aria-modal="true"
       aria-labelledby="optin-title"
+      aria-describedby="optin-desc"
       onClick={(e) => {
         // 點擊 overlay 外圍視為 decline（保留 dialog 內點擊）
         if (e.target === e.currentTarget) onDecline();
@@ -75,7 +73,7 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
     >
       <div className="optin-dialog" ref={dialogRef} tabIndex={-1}>
         <h2 id="optin-title">啟用加強練習池</h2>
-        <p>
+        <p id="optin-desc">
           加強練習池是<strong>獨立於主題庫的補充題目</strong>，總計 143 題。題目來自兩種來源：
         </p>
         <ul>

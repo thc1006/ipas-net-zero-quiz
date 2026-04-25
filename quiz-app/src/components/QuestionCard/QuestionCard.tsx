@@ -1,5 +1,5 @@
 // QuestionCard 元件 - 顯示單一題目和選項
-import { useCallback, useId, useState } from 'react';
+import { useCallback, useId, useMemo, useState } from 'react';
 import type { QuizQuestion, QuizOption } from '../../types/quiz';
 import { explainQuestion, type AIResponse } from '../../utils/ai-helper';
 import './QuestionCard.css';
@@ -52,6 +52,11 @@ export function QuestionCard({
 }: QuestionCardProps) {
   const labelId = useId();
   const [aiResponse, setAiResponse] = useState<AIResponse | null>(null);
+  const sourceLabels = useMemo(
+    () =>
+      (question.sources ?? []).map((url) => ({ url, label: prettifySourceUrl(url) })),
+    [question.sources]
+  );
   const [isLoadingAI, setIsLoadingAI] = useState(false);
 
   const getOptionStatus = useCallback(
@@ -212,7 +217,7 @@ export function QuestionCard({
                 <span>參考來源</span>
               </div>
               <ul className="question-sources-list">
-                {question.sources.map((url) => (
+                {sourceLabels.map(({ url, label }) => (
                   <li key={url}>
                     <a
                       href={url}
@@ -220,7 +225,7 @@ export function QuestionCard({
                       rel="noopener noreferrer"
                       className="source-link"
                     >
-                      {prettifySourceUrl(url)}
+                      {label}
                     </a>
                   </li>
                 ))}
@@ -233,11 +238,12 @@ export function QuestionCard({
   );
 }
 
-/** 將 URL 轉成短而可讀的標籤（host + 路徑摘要） */
-function prettifySourceUrl(url: string): string {
+/** 將 URL 轉成短而可讀的標籤；export 供測試使用 */
+export function prettifySourceUrl(url: string): string {
   try {
     const u = new URL(url);
-    if (u.hostname.includes('law.moj.gov.tw')) {
+    const host = u.hostname;
+    if (host.includes('law.moj.gov.tw')) {
       const pcode = u.searchParams.get('pcode');
       const flno = u.searchParams.get('flno');
       const pcodeLabel: Record<string, string> = {
@@ -250,20 +256,32 @@ function prettifySourceUrl(url: string): string {
       const name = pcode && pcodeLabel[pcode] ? pcodeLabel[pcode] : '法規';
       return flno ? `${name} §${flno}` : name;
     }
-    if (u.hostname.includes('eur-lex.europa.eu')) {
+    if (host.includes('eur-lex.europa.eu')) {
       const celex = u.searchParams.get('uri') || '';
-      const m = celex.match(/3?(\d{4})R(\d+)/);
-      return m ? `EU Reg ${m[1]}/${m[2]}` : 'EUR-Lex';
+      // CELEX 格式：3{year}R{number}，第一碼 3=legal acts；strip leading zeros from number
+      const m = celex.match(/3(\d{4})R(\d+)/);
+      if (m) {
+        const year = m[1];
+        const num = m[2].replace(/^0+/, '') || '0';
+        return `EU Reg ${year}/${num}`;
+      }
+      return 'EUR-Lex';
     }
-    if (u.hostname.includes('ipcc.ch')) return 'IPCC';
-    if (u.hostname.includes('iso.org')) return 'ISO';
-    if (u.hostname.includes('cca.gov.tw')) return '環境部 氣候變遷署';
-    if (u.hostname.includes('moenv.gov.tw')) return '環境部';
-    if (u.hostname.includes('greentrade.org.tw')) return '綠色貿易資訊網';
-    if (u.hostname.includes('cdp.net')) return 'CDP';
-    if (u.hostname.includes('vocus.cc')) return 'vocus 文章';
-    if (u.hostname.includes('github.com')) return 'GitHub Discussion';
-    return u.hostname.replace(/^www\./, '');
+    if (host.includes('ipcc.ch')) return 'IPCC';
+    if (host.includes('iso.org')) return 'ISO';
+    if (host.includes('cca.gov.tw')) return '環境部 氣候變遷署';
+    if (host.includes('moenv.gov.tw')) return '環境部';
+    if (host.includes('greentrade.org.tw')) return '綠色貿易資訊網';
+    if (host.includes('cdp.net')) return 'CDP';
+    if (host.includes('vocus.cc')) return 'vocus 文章';
+    if (host.includes('github.com')) {
+      // 細分 path：discussions / issues / pulls / 其他
+      if (u.pathname.includes('/discussions/')) return 'GitHub Discussion';
+      if (u.pathname.includes('/issues/')) return 'GitHub Issue';
+      if (u.pathname.includes('/pull/')) return 'GitHub PR';
+      return 'GitHub';
+    }
+    return host.replace(/^www\./, '');
   } catch {
     return url;
   }
