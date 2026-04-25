@@ -33,12 +33,10 @@ function mockFetchAllFail() {
 describe('VisitorCounter', () => {
   beforeEach(() => {
     sessionStorage.clear();
-    vi.useFakeTimers();
   });
 
   afterEach(() => {
     cleanup();
-    vi.useRealTimers();
     vi.restoreAllMocks();
   });
 
@@ -46,7 +44,6 @@ describe('VisitorCounter', () => {
     vi.stubGlobal('fetch', mockFetchAbacusOk(42));
     render(<VisitorCounter namespace="test-ns" counterKey="visits" />);
     expect(screen.getByLabelText('載入中')).toBeInTheDocument();
-    await vi.runAllTimersAsync();
     await waitFor(() => {
       expect(screen.getByLabelText(/訪客人次：42/)).toBeInTheDocument();
     });
@@ -55,7 +52,6 @@ describe('VisitorCounter', () => {
   it('falls back to counterapi.dev when Abacus 5xx', async () => {
     vi.stubGlobal('fetch', mockFetchAbacusFailThenCounterapiOk(99));
     render(<VisitorCounter namespace="test-ns2" counterKey="visits" />);
-    await vi.runAllTimersAsync();
     await waitFor(() => {
       expect(screen.getByLabelText(/訪客人次：99/)).toBeInTheDocument();
     });
@@ -66,7 +62,6 @@ describe('VisitorCounter', () => {
     const { container } = render(
       <VisitorCounter namespace="test-ns3" counterKey="visits" />
     );
-    await vi.runAllTimersAsync();
     await waitFor(() => {
       // After loading completes, container should be empty (returns null)
       expect(container.querySelector('.visitor-counter')).toBeNull();
@@ -78,7 +73,6 @@ describe('VisitorCounter', () => {
     const fetchMock = mockFetchAbacusOk(7);
     vi.stubGlobal('fetch', fetchMock);
     render(<VisitorCounter namespace="test-ns4" counterKey="visits" />);
-    await vi.runAllTimersAsync();
     await waitFor(() => {
       expect(screen.getByLabelText(/訪客人次：7/)).toBeInTheDocument();
     });
@@ -91,7 +85,6 @@ describe('VisitorCounter', () => {
     const fetchMock = mockFetchAbacusOk(1);
     vi.stubGlobal('fetch', fetchMock);
     render(<VisitorCounter namespace="ns/with slash" counterKey="key#hash" />);
-    await vi.runAllTimersAsync();
     const url = fetchMock.mock.calls[0]?.[0] as string;
     expect(url).toContain('ns%2Fwith%20slash');
     expect(url).toContain('key%23hash');

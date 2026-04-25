@@ -3,6 +3,8 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import './styles/global.css';
+import { assertPracticePoolValid } from './utils/practice-pool-schema';
+import { assertMainBankValid } from './utils/main-bank-schema';
 
 const rootElement = document.getElementById('root');
 
@@ -10,22 +12,15 @@ if (!rootElement) {
   throw new Error('找不到 root 元素');
 }
 
-// Dev 模式啟動時驗證練習池 schema — 失敗會以 unhandled rejection 浮現
-// Production 模式不執行此驗證（節省 bundle / 啟動時間）
+// Dev 模式啟動時驗證 schema — 失敗以 unhandled rejection 浮現
+// Production 模式：assertXxxValid 內 PROD guard 會降級為 warn，不 throw
+// 用靜態 import 取得 asserts function（dynamic import 會丟失 asserts type）
 if (import.meta.env.DEV) {
-  // 不加 .catch — 讓 schema 錯誤透過 unhandledrejection 在 DevTools 醒目顯示
-  // 兩支：練習池 + 主題庫
-  void Promise.all([
-    import('./data/practice_pool.json'),
-    import('./utils/practice-pool-schema'),
-  ]).then(([poolModule, schemaModule]) => {
-    schemaModule.assertPracticePoolValid(poolModule.default);
+  void import('./data/practice_pool.json').then((m) => {
+    assertPracticePoolValid(m.default);
   });
-  void Promise.all([
-    import('./data/integrated_dataset.json'),
-    import('./utils/main-bank-schema'),
-  ]).then(([dsModule, schemaModule]) => {
-    schemaModule.assertMainBankValid(dsModule.default);
+  void import('./data/integrated_dataset.json').then((m) => {
+    assertMainBankValid(m.default);
   });
 }
 

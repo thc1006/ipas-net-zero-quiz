@@ -1,11 +1,16 @@
 // useQuizSource hook test — practice mode flag drives pool inclusion
-import { afterEach, describe, expect, it, vi, beforeEach } from 'vitest';
+import { afterEach, describe, expect, it, beforeEach } from 'vitest';
 import { renderHook, waitFor, cleanup } from '@testing-library/react';
 import { useQuizSource } from './useQuizSource';
+import { __resetPracticePoolCacheForTesting } from '../utils/practice-pool';
 
 afterEach(() => {
   cleanup();
   localStorage.clear();
+});
+
+beforeEach(() => {
+  __resetPracticePoolCacheForTesting();
 });
 
 describe('useQuizSource', () => {

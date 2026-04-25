@@ -2394,11 +2394,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News"
       ],
       "quality_flags": []
     },
@@ -2442,11 +2438,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://cgc.twse.com.tw/responsibilityRoadMap/listCh",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://cgc.twse.com.tw/responsibilityRoadMap/listCh"
       ],
       "quality_flags": []
     },
@@ -2490,11 +2482,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://dsp.tpex.org.tw/storage/education_event/IFRS%E6%B0%B8%E7%BA%8C%E6%BA%96%E5%89%87%E5%95%8F%E7%AD%94%E9%9B%86.pdf",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://dsp.tpex.org.tw/storage/education_event/IFRS%E6%B0%B8%E7%BA%8C%E6%BA%96%E5%89%87%E5%95%8F%E7%AD%94%E9%9B%86.pdf"
       ],
       "quality_flags": []
     },
@@ -2538,16 +2526,8 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202505130005&dtable=News",
-          "http_status": "verified_via_search",
-          "accessible": true
-        },
-        {
-          "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202510280004&dtable=News",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202505130005&dtable=News",
+        "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202510280004&dtable=News"
       ],
       "quality_flags": []
     },
@@ -2591,16 +2571,8 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.tcx.com.tw/zh/",
-          "http_status": "200",
-          "accessible": true
-        },
-        {
-          "url": "https://netzero.cna.com.tw/news/202409250044/",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.tcx.com.tw/zh/",
+        "https://netzero.cna.com.tw/news/202409250044/"
       ],
       "quality_flags": []
     },
@@ -2644,16 +2616,8 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.tcx.com.tw/zh/",
-          "http_status": "200",
-          "accessible": true
-        },
-        {
-          "url": "https://csr.cw.com.tw/article/43549",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.tcx.com.tw/zh/",
+        "https://csr.cw.com.tw/article/43549"
       ],
       "quality_flags": []
     },
@@ -2697,11 +2661,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "http_status": "200",
-          "accessible": true
-        }
+        "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
       ],
       "quality_flags": []
     },
@@ -2745,16 +2705,8 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "http_status": "200",
-          "accessible": true
-        },
-        {
-          "url": "https://csr.cw.com.tw/article/42974",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+        "https://csr.cw.com.tw/article/42974"
       ],
       "quality_flags": []
     },
@@ -2798,11 +2750,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.trec.org.tw/",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.trec.org.tw/"
       ],
       "quality_flags": []
     },
@@ -2846,11 +2794,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.trec.org.tw/faq",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.trec.org.tw/faq"
       ],
       "quality_flags": []
     },
@@ -2894,11 +2838,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.moeaea.gov.tw/ECW/populace/content/Content.aspx?menu_id=14438",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.moeaea.gov.tw/ECW/populace/content/Content.aspx?menu_id=14438"
       ],
       "quality_flags": []
     },
@@ -2942,11 +2882,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.re100.org.tw/",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.re100.org.tw/"
       ],
       "quality_flags": []
     },
@@ -2990,16 +2926,8 @@
         }
       },
       "sources": [
-        {
-          "url": "https://pr.tsmc.com/english/news/3227",
-          "http_status": "verified_via_search",
-          "accessible": true
-        },
-        {
-          "url": "https://csr.cw.com.tw/article/44131",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://pr.tsmc.com/english/news/3227",
+        "https://csr.cw.com.tw/article/44131"
       ],
       "quality_flags": []
     },
@@ -3043,11 +2971,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://sciencebasedtargets.org/resources/files/SBTi-criteria.pdf",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://sciencebasedtargets.org/resources/files/SBTi-criteria.pdf"
       ],
       "quality_flags": []
     },
@@ -3091,16 +3015,8 @@
         }
       },
       "sources": [
-        {
-          "url": "https://sciencebasedtargets.org/sectors/forest-land-and-agriculture",
-          "http_status": "verified_via_search",
-          "accessible": true
-        },
-        {
-          "url": "https://files.sciencebasedtargets.org/production/files/SBTiFLAGGuidance.pdf",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://sciencebasedtargets.org/sectors/forest-land-and-agriculture",
+        "https://files.sciencebasedtargets.org/production/files/SBTiFLAGGuidance.pdf"
       ],
       "quality_flags": []
     },
@@ -3144,11 +3060,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://support.ecovadis.com/hc/en-us/articles/210460227-Understanding-EcoVadis-Medals-and-Badges",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://support.ecovadis.com/hc/en-us/articles/210460227-Understanding-EcoVadis-Medals-and-Badges"
       ],
       "quality_flags": []
     },
@@ -3192,11 +3104,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202412310005&dtable=News",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202412310005&dtable=News"
       ],
       "quality_flags": []
     },
@@ -3240,16 +3148,8 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202412310005&dtable=News",
-          "http_status": "verified_via_search",
-          "accessible": true
-        },
-        {
-          "url": "https://csr.cw.com.tw/article/43998",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202412310005&dtable=News",
+        "https://csr.cw.com.tw/article/43998"
       ],
       "quality_flags": []
     },
@@ -3293,11 +3193,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en"
       ],
       "quality_flags": []
     },
@@ -3341,11 +3237,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
       ],
       "quality_flags": []
     },
@@ -3389,16 +3281,8 @@
         }
       },
       "sources": [
-        {
-          "url": "https://cfp.moenv.gov.tw/",
-          "http_status": "TLS_cert_issue_but_service_exists",
-          "accessible": false
-        },
-        {
-          "url": "https://cfp.moenv.gov.tw/WebPage/Index.aspx",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://cfp.moenv.gov.tw/",
+        "https://cfp.moenv.gov.tw/WebPage/Index.aspx"
       ],
       "quality_flags": []
     },
@@ -3442,11 +3326,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://cfp.moenv.gov.tw/WebPage/Index.aspx",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://cfp.moenv.gov.tw/WebPage/Index.aspx"
       ],
       "quality_flags": []
     },
@@ -3490,11 +3370,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures.html",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures.html"
       ],
       "quality_flags": []
     },
@@ -3538,11 +3414,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures.html",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures.html"
       ],
       "quality_flags": []
     },
@@ -3586,11 +3458,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.iea.org/reports/net-zero-by-2050",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.iea.org/reports/net-zero-by-2050"
       ],
       "quality_flags": []
     },
@@ -3634,11 +3502,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://km.twenergy.org.tw/ReadFile/?p=KLBase&n=20230308154314.pdf",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://km.twenergy.org.tw/ReadFile/?p=KLBase&n=20230308154314.pdf"
       ],
       "quality_flags": []
     },
@@ -3682,16 +3546,8 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.abri.gov.tw/News_Content.aspx?n=745&s=323435",
-          "http_status": "verified_via_search",
-          "accessible": true
-        },
-        {
-          "url": "https://nzb.bers.tw/efficiency",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.abri.gov.tw/News_Content.aspx?n=745&s=323435",
+        "https://nzb.bers.tw/efficiency"
       ],
       "quality_flags": []
     },
@@ -3735,11 +3591,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.abri.gov.tw/",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.abri.gov.tw/"
       ],
       "quality_flags": []
     },
@@ -3783,16 +3635,8 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.ey.gov.tw/File/D2A731DDD7EC55EC?A=C",
-          "http_status": "verified_via_search",
-          "accessible": true
-        },
-        {
-          "url": "https://www.ey.gov.tw/Page/5A8A0CB5B41DA11E/46de50e1-7381-4634-93e7-4cd320ec308b",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.ey.gov.tw/File/D2A731DDD7EC55EC?A=C",
+        "https://www.ey.gov.tw/Page/5A8A0CB5B41DA11E/46de50e1-7381-4634-93e7-4cd320ec308b"
       ],
       "quality_flags": []
     },
@@ -3836,11 +3680,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://ghg.tgpf.org.tw/",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://ghg.tgpf.org.tw/"
       ],
       "quality_flags": []
     },
@@ -3884,11 +3724,7 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.iaasb.org/publications/international-standard-assurance-engagements-isae-3410-assurance-engagements-greenhouse-gas-statements",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.iaasb.org/publications/international-standard-assurance-engagements-isae-3410-assurance-engagements-greenhouse-gas-statements"
       ],
       "quality_flags": []
     },
@@ -3932,16 +3768,8 @@
         }
       },
       "sources": [
-        {
-          "url": "https://www.environdec.com/",
-          "http_status": "verified_via_search",
-          "accessible": true
-        },
-        {
-          "url": "https://www.iso.org/standard/38131.html",
-          "http_status": "verified_via_search",
-          "accessible": true
-        }
+        "https://www.environdec.com/",
+        "https://www.iso.org/standard/38131.html"
       ],
       "quality_flags": []
     },

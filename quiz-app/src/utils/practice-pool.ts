@@ -54,7 +54,7 @@ export function normalizeTopicTag(tag: string): string {
   return tag
     .toLowerCase()
     .replace(/\s+/g, '')
-    .replace(/[　-〿＀-￯()（）「」『』、，。,;:!?！？\.\-_/]/g, '');
+    .replace(/[\u3000-\u303F\uFF00-\uFFEF()（）「」『』、，。,;:!?！？.\-_/]/g, '');
 }
 
 /**
