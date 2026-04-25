@@ -135,6 +135,31 @@
     width: 100%;
     justify-content: center;
   }
+  /* hero subtitle 收緊 */
+  .hero-subtitle {
+    font-size: var(--font-size-base);
+  }
+  /* stats badges 緊湊化、防止單行溢出 */
+  .stats-badges {
+    gap: var(--spacing-xs);
+  }
+  /* config-grid 強制單欄（base auto-fit minmax(250px, 1fr) 在 360-414px 仍可能擠） */
+  .config-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+  .config-section {
+    margin-bottom: var(--spacing-lg);
+  }
+  /* start button 全寬已有；padding 縮減避免過大 */
+  .start-btn {
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-base);
+  }
+  /* info-cards 兩欄 → 單欄 */
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* 測驗配置區 */

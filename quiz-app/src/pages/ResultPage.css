@@ -521,3 +521,48 @@
     width: 100%;
   }
 }
+
+/* 小螢幕（≤640px）— score 區更緊湊、stats 維持 2x2 grid 但 padding 縮 */
+@media (max-width: 640px) {
+  .score-section {
+    padding: var(--spacing-lg);
+  }
+  .score-icon .material-icons {
+    font-size: 48px;
+  }
+  .score-value {
+    font-size: 48px;
+  }
+  .stats-section {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+  .stat-item {
+    padding: var(--spacing-sm);
+  }
+  .stat-item .material-icons {
+    font-size: 24px;
+  }
+  /* wrong-list — wrong-answers 已在 768 stack；item padding 收緊 */
+  .wrong-item {
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
+  }
+  .wrong-answers {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .ai-buttons {
+    gap: var(--spacing-xs);
+  }
+  .btn-small {
+    padding: 6px 10px;
+  }
+  .action-section {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  .action-section .btn {
+    width: 100%;
+  }
+}

@@ -159,6 +159,27 @@
 }
 
 /* 響應式 */
+@media (max-width: 640px) {
+  .settings-page {
+    padding: 0 var(--spacing-sm);
+  }
+  .settings-page h1 {
+    font-size: var(--font-size-2xl);
+  }
+  .settings-page h2 {
+    font-size: var(--font-size-lg);
+  }
+  /* setting-item 在 480 已經 stack；640 補 padding 收緊 */
+  .setting-item {
+    padding: var(--spacing-sm) 0;
+  }
+  /* 設定頁的 select / input 全寬 */
+  .setting-item select,
+  .setting-item input[type="number"] {
+    width: 100%;
+  }
+}
+
 @media (max-width: 480px) {
   .setting-item {
     flex-direction: column;
