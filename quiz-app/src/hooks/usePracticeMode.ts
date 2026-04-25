@@ -1,27 +1,10 @@
 // 加強練習模式狀態：以 localStorage 持久化是否啟用、是否已 opt-in 揭露
 // 依 EU AI Act Art.50（2026-08-02 起）：使用 AI 產題前須揭露給使用者
 import { useCallback, useEffect, useState } from 'react';
+import { readBool, writeBool } from '../utils/local-storage';
 
 const ENABLED_KEY = 'practice-pool-enabled';
 const OPTED_IN_KEY = 'practice-pool-ai-opt-in';
-
-function readBool(key: string): boolean {
-  if (typeof window === 'undefined') return false;
-  try {
-    return window.localStorage.getItem(key) === '1';
-  } catch {
-    return false;
-  }
-}
-
-function writeBool(key: string, value: boolean) {
-  if (typeof window === 'undefined') return;
-  try {
-    window.localStorage.setItem(key, value ? '1' : '0');
-  } catch {
-    /* quota or disabled — silently ignore */
-  }
-}
 
 export interface UsePracticeModeResult {
   /** 使用者是否啟用加強練習池 */

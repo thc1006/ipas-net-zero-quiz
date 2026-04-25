@@ -1,6 +1,6 @@
 // HomePage component test — practice mode indicator + start callback
 import { beforeAll, afterEach, describe, expect, it, vi } from 'vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup, within } from '@testing-library/react';
 import { HomePage } from './HomePage';
 
 
@@ -137,25 +137,41 @@ describe('HomePage', () => {
     expect(screen.queryByRole('dialog', { name: /啟用加強練習池/ })).toBeNull();
   });
 
-  it('shows persistent tip card describing practice pool when !enabled', () => {
+  it('tip card always renders (never silently disappears) — disabled state', () => {
     localStorage.setItem('practice-pool-disclosure-seen', '1'); // 不彈 dialog
     render(<HomePage onStartQuiz={() => {}} />);
-    expect(screen.getByTestId('practice-pool-tip')).toBeInTheDocument();
-    expect(screen.getByTestId('practice-pool-tip').textContent).toMatch(/55.*模擬.*96.*AI/);
+    const tip = screen.getByTestId('practice-pool-tip');
+    expect(tip).toBeInTheDocument();
+    expect(tip.textContent).toMatch(/55.*模擬.*96.*AI/);
+    expect(tip.className).not.toMatch(/practice-pool-tip--enabled/);
   });
 
-  it('tip card hides when practice mode is enabled', () => {
+  it('tip card switches to enabled state (no disappearance) when practice mode is on', () => {
     localStorage.setItem('practice-pool-enabled', '1');
     localStorage.setItem('practice-pool-ai-opt-in', '1');
     render(<HomePage onStartQuiz={() => {}} />);
-    expect(screen.queryByTestId('practice-pool-tip')).toBeNull();
+    const tip = screen.getByTestId('practice-pool-tip');
+    // 改用 modifier class 標記狀態，不再 unmount
+    expect(tip.className).toMatch(/practice-pool-tip--enabled/);
+    expect(tip.textContent).toMatch(/已啟用/);
+    // CTA 變成停用按鈕（用 within 限定在 tip card 內，避免跟 badge 撞）
+    expect(within(tip).getByRole('button')).toHaveTextContent(/停用加強練習/);
   });
 
-  it('tip card CTA opens dialog (when not yet seen)', () => {
+  it('tip card CTA opens dialog (when not yet seen, !opted-in)', () => {
     localStorage.setItem('practice-pool-disclosure-seen', '1');
     render(<HomePage onStartQuiz={() => {}} />);
     const cta = screen.getByRole('button', { name: /了解並啟用/ });
     fireEvent.click(cta);
     expect(screen.getByRole('dialog', { name: /啟用加強練習池/ })).toBeInTheDocument();
+  });
+
+  it('tip card CTA disables practice mode when enabled', () => {
+    localStorage.setItem('practice-pool-enabled', '1');
+    localStorage.setItem('practice-pool-ai-opt-in', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    const tip = screen.getByTestId('practice-pool-tip');
+    fireEvent.click(within(tip).getByRole('button'));
+    expect(localStorage.getItem('practice-pool-enabled')).toBe('0');
   });
 });

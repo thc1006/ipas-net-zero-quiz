@@ -1,6 +1,7 @@
 // 加強練習池 opt-in 對話框：首次啟用時揭露 AI 產題與第三方模擬題之來源
 // 對應 EU AI Act Art.50（2026-08-02 起）對 AI 生成文字之揭露義務
 import { useEffect, useRef } from 'react';
+import { PRACTICE_POOL_COUNTS } from '../../data/practice-pool-counts';
 import './PracticeOptInDialog.css';
 
 interface PracticeOptInDialogProps {
@@ -74,15 +75,15 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
       <div className="optin-dialog" ref={dialogRef} tabIndex={-1}>
         <h2 id="optin-title">啟用加強練習池</h2>
         <p id="optin-desc">
-          加強練習池是<strong>獨立於主題庫的補充題目</strong>，總計 143 題。題目來自兩種來源：
+          加強練習池是<strong>獨立於主題庫的補充題目</strong>，總計 {PRACTICE_POOL_COUNTS.total} 題。題目來自兩種來源：
         </p>
         <ul>
           <li>
-            <strong>模擬題（54 題）</strong>：取自 vocus 講師、HackMD、yamol 等公開模擬題，
+            <strong>模擬題（{PRACTICE_POOL_COUNTS.externalMock} 題）</strong>：取自 vocus 講師、HackMD、yamol 等公開模擬題，
             非官方歷屆試題（iPAS 不公開歷屆）。
           </li>
           <li>
-            <strong>AI 產題（89 題）</strong>：由語言模型依環境部、CBAM、ISO 等法規與標準
+            <strong>AI 產題（{PRACTICE_POOL_COUNTS.aiGenerated} 題）</strong>：由語言模型依環境部、CBAM、ISO 等法規與標準
             產生，並經獨立驗證代理逐題以權威來源（law.moj.gov.tw、EUR-Lex、IPCC、ISO 等）
             交叉比對通過。
           </li>

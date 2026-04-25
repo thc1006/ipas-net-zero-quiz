@@ -61,19 +61,21 @@
   outline-offset: 2px;
 }
 
-/* 加強練習池介紹卡 — discoverable entry，不啟用時顯示 */
+/* 加強練習池 tip card — 隨啟用狀態切換內容，永遠顯示讓使用者有 stable feedback */
 .practice-pool-tip {
   display: flex;
   align-items: flex-start;
   gap: var(--spacing-md);
   padding: var(--spacing-md) var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
-  background: linear-gradient(
-    135deg,
-    var(--color-warning-bg) 0%,
-    var(--color-info-bg) 100%
-  );
+  background: var(--color-warning-bg);
   border-left: 4px solid var(--color-warning);
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.practice-pool-tip--enabled {
+  background: var(--color-success-bg);
+  border-left-color: var(--color-success);
 }
 
 .practice-pool-tip__icon {
@@ -86,6 +88,11 @@
   background: var(--color-warning);
   color: var(--color-on-primary);
   border-radius: var(--radius-full);
+  transition: background-color 200ms ease;
+}
+
+.practice-pool-tip--enabled .practice-pool-tip__icon {
+  background: var(--color-success);
 }
 
 .practice-pool-tip__icon .material-icons {

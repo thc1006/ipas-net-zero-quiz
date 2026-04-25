@@ -1,39 +1,17 @@
 // 首頁元件 - 測驗配置與開始
 import { useState, useCallback, useEffect } from 'react';
 import { stats } from '../data/questions';
+import { PRACTICE_POOL_COUNTS } from '../data/practice-pool-counts';
 import { defaultConfig } from '../hooks/useQuiz';
 import { usePracticeMode } from '../hooks/usePracticeMode';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
+import { readBool, writeBool } from '../utils/local-storage';
 import type { QuizConfig, ExamSubject } from '../types/quiz';
 import './HomePage.css';
-
-// 加強練習池總題數 — 與 src/data/practice_pool.json _meta.totals.total 同步
-// (55 external_mock + 96 ai_generated)
-const PRACTICE_POOL_TOTAL = 151;
-const PRACTICE_POOL_MOCK = 55;
-const PRACTICE_POOL_AI = 96;
 
 // localStorage key：使用者是否曾看過揭露 dialog（accept/decline 都算看過）
 // 用來避免每次進首頁都自動彈 — 一次就夠
 const DISCLOSURE_SEEN_KEY = 'practice-pool-disclosure-seen';
-
-function readDisclosureSeen(): boolean {
-  if (typeof window === 'undefined') return false;
-  try {
-    return window.localStorage.getItem(DISCLOSURE_SEEN_KEY) === '1';
-  } catch {
-    return false;
-  }
-}
-
-function markDisclosureSeen(): void {
-  if (typeof window === 'undefined') return;
-  try {
-    window.localStorage.setItem(DISCLOSURE_SEEN_KEY, '1');
-  } catch {
-    /* quota or disabled — silently ignore */
-  }
-}
 
 interface HomePageProps {
   onStartQuiz: (config: QuizConfig) => void;
@@ -48,7 +26,7 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
   // 已 opt-in 過或已 dismissed 過則不彈
   useEffect(() => {
     if (practiceMode.hasOptedIn) return;
-    if (readDisclosureSeen()) return;
+    if (readBool(DISCLOSURE_SEEN_KEY)) return;
     setOptInDialogOpen(true);
   }, [practiceMode.hasOptedIn]);
 
@@ -66,13 +44,13 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
   }, [practiceMode]);
 
   const handleAcceptOptIn = useCallback(() => {
-    markDisclosureSeen();
+    writeBool(DISCLOSURE_SEEN_KEY, true);
     practiceMode.acceptOptIn();
     setOptInDialogOpen(false);
   }, [practiceMode]);
 
   const handleDeclineOptIn = useCallback(() => {
-    markDisclosureSeen();
+    writeBool(DISCLOSURE_SEEN_KEY, true);
     setOptInDialogOpen(false);
   }, []);
 
@@ -154,45 +132,72 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
               className="badge badge-info badge-button"
               onClick={handlePracticeToggle}
               aria-label="啟用加強練習池"
-              title="加強練習池：含 55 題公開模擬題 + 96 題 AI 產題（每題附來源徽章）"
+              title={`加強練習池：含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章）`}
             >
               <span className="material-icons sm">auto_awesome</span>
-              +{PRACTICE_POOL_TOTAL} 題加強練習
+              +{PRACTICE_POOL_COUNTS.total} 題加強練習
             </button>
           )}
         </div>
       </section>
 
-      {/* 加強練習池介紹 tip card —— 未啟用時顯示，提供 discoverable 入口 */}
-      {!practiceMode.enabled && (
-        <section
-          className="practice-pool-tip card"
-          data-testid="practice-pool-tip"
-          aria-labelledby="practice-pool-tip-heading"
-        >
-          <div className="practice-pool-tip__icon">
-            <span className="material-icons">auto_awesome</span>
-          </div>
-          <div className="practice-pool-tip__body">
-            <h3 id="practice-pool-tip-heading" className="practice-pool-tip__title">
-              想多練？啟用加強練習池
-            </h3>
-            <p className="practice-pool-tip__desc">
-              {practiceMode.hasOptedIn
-                ? `加強練習池含 ${PRACTICE_POOL_MOCK} 題公開模擬題 + ${PRACTICE_POOL_AI} 題 AI 產題（每題附來源徽章），啟用後下一場練習會混入這 ${PRACTICE_POOL_TOTAL} 題。`
-                : `加強練習池含 ${PRACTICE_POOL_MOCK} 題公開模擬題 + ${PRACTICE_POOL_AI} 題 AI 產題；AI 產題依 EU AI Act Art.50 揭露，每題經獨立驗證且附 primary-source URL。`}
-            </p>
-            <button
-              type="button"
-              className="btn btn-primary practice-pool-tip__cta"
-              onClick={handlePracticeToggle}
-            >
-              <span className="material-icons sm">add_circle_outline</span>
-              {practiceMode.hasOptedIn ? `啟用 +${PRACTICE_POOL_TOTAL} 題加強練習` : `了解並啟用 +${PRACTICE_POOL_TOTAL} 題加強練習`}
-            </button>
-          </div>
-        </section>
-      )}
+      {/* 加強練習池 tip card — 隨啟用狀態切換內容，避免突然消失造成困惑 */}
+      {(() => {
+        const { enabled, hasOptedIn } = practiceMode;
+        let title: string;
+        let desc: string;
+        let ctaLabel: string;
+        let ctaIcon: string;
+        let modifierClass: string;
+
+        if (enabled) {
+          title = '加強練習池已啟用';
+          desc = `下一場測驗會額外混入 ${PRACTICE_POOL_COUNTS.total} 題（${PRACTICE_POOL_COUNTS.externalMock} 模擬 + ${PRACTICE_POOL_COUNTS.aiGenerated} AI 產題；每題附來源徽章）。`;
+          ctaLabel = '停用加強練習';
+          ctaIcon = 'remove_circle_outline';
+          modifierClass = 'practice-pool-tip--enabled';
+        } else if (hasOptedIn) {
+          title = '想多練？啟用加強練習池';
+          desc = `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章），啟用後下一場練習會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
+          ctaLabel = `啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習`;
+          ctaIcon = 'add_circle_outline';
+          modifierClass = '';
+        } else {
+          title = '想多練？啟用加強練習池';
+          desc = `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題；AI 產題依 EU AI Act Art.50 揭露，每題經獨立驗證且附 primary-source URL。`;
+          ctaLabel = `了解並啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習`;
+          ctaIcon = 'add_circle_outline';
+          modifierClass = '';
+        }
+
+        return (
+          <section
+            className={`practice-pool-tip card ${modifierClass}`}
+            data-testid="practice-pool-tip"
+            aria-labelledby="practice-pool-tip-heading"
+          >
+            <div className="practice-pool-tip__icon">
+              <span className="material-icons">
+                {enabled ? 'check_circle' : 'auto_awesome'}
+              </span>
+            </div>
+            <div className="practice-pool-tip__body">
+              <h3 id="practice-pool-tip-heading" className="practice-pool-tip__title">
+                {title}
+              </h3>
+              <p className="practice-pool-tip__desc">{desc}</p>
+              <button
+                type="button"
+                className={`btn ${enabled ? 'btn-secondary' : 'btn-primary'} practice-pool-tip__cta`}
+                onClick={handlePracticeToggle}
+              >
+                <span className="material-icons sm">{ctaIcon}</span>
+                {ctaLabel}
+              </button>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* AI 產題揭露對話框（首次自動彈，或從 badge / tip card CTA 觸發） */}
       <PracticeOptInDialog
