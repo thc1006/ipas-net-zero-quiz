@@ -31,8 +31,10 @@ afterEach(() => {
 describe('HomePage', () => {
   it('renders title and stats badges', () => {
     render(<HomePage onStartQuiz={() => {}} />);
-    expect(screen.getByText(/淨零碳備考神器/)).toBeInTheDocument();
-    // 考科一 / 考科二 出現多次（select option + badge），用 getAllByText
+    // h1 含 <em> 子節點 → 用 getByRole 的 accessible name (==textContent)
+    expect(
+      screen.getByRole('heading', { level: 1, name: /淨零碳備考神器/ })
+    ).toBeInTheDocument();
     expect(screen.getAllByText(/考科一/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/考科二/).length).toBeGreaterThan(0);
   });
