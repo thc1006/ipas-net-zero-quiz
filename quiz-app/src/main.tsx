@@ -5,6 +5,12 @@ import App from './App';
 import './styles/global.css';
 import { assertPracticePoolValid } from './utils/practice-pool-schema';
 import { assertMainBankValid } from './utils/main-bank-schema';
+import { logger } from './utils/logger';
+import { installGlobalErrorHandlers } from './utils/global-error-handlers';
+
+// 補捕 React Error Boundary 抓不到的錯誤類型（async / event handler /
+// promise rejection / 第三方 script throw）→ 一律記入 logger ring buffer
+installGlobalErrorHandlers({ logger });
 
 const rootElement = document.getElementById('root');
 
