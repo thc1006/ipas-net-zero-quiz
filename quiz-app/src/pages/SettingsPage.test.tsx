@@ -1,9 +1,29 @@
 // SettingsPage component test — practice toggle + opt-in dialog flow
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { beforeAll, afterEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent, cleanup, waitFor } from '@testing-library/react';
 import { SettingsPage } from './SettingsPage';
 import { useAccessibility } from '../hooks/useAccessibility';
 import { renderHook } from '@testing-library/react';
+
+
+// 還原真實 localStorage 行為（test-setup.ts 把它 mock 成空函式）
+function installRealLocalStorage() {
+  const store = new Map<string, string>();
+  Object.defineProperty(window, 'localStorage', {
+    value: {
+      getItem: (k: string): string | null => store.get(k) ?? null,
+      setItem: (k: string, v: string): void => { store.set(k, v); },
+      removeItem: (k: string): void => { store.delete(k); },
+      clear: (): void => { store.clear(); },
+      key: (i: number): string | null => Array.from(store.keys())[i] ?? null,
+      get length(): number { return store.size; },
+    },
+    writable: true,
+    configurable: true,
+  });
+}
+
+beforeAll(() => { installRealLocalStorage(); });
 
 afterEach(() => {
   cleanup();
