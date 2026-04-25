@@ -13,11 +13,11 @@
     },
     "totals": {
       "external_mock": 55,
-      "ai_generated": 98,
-      "total": 153
+      "ai_generated": 96,
+      "total": 151
     },
     "policy": "AI 產題不進主題庫；本檔僅在使用者明確開啟『加強練習』時提供，並顯示來源徽章。",
-    "last_rescue_round": "2026-04-25 (intl 4 + industry 3 + iPAS 1 + tw_regs 2)"
+    "last_rescue_round": "2026-04-25 (intl 4 + industry 3 + iPAS 1 + tw_regs 2; -2 industry removed for answer/explanation conflict)"
   },
   "items": [
     {
@@ -6790,48 +6790,6 @@
       ]
     },
     {
-      "id": "pool-aig-industry_round1_rescued-ind-011",
-      "stem": "依經濟部能源署「離岸風力發電區塊開發場址容量分配作業要點」，第三階段 3-2 期（R3.2）規劃之容量上限與本次（2024）實際分配容量為何？",
-      "options": [
-        {
-          "key": "A",
-          "text": "上限 2.0 GW，分配 1.5 GW"
-        },
-        {
-          "key": "B",
-          "text": "上限 3.6 GW，分配 2.7 GW"
-        },
-        {
-          "key": "C",
-          "text": "上限 5.5 GW，分配 5.5 GW"
-        },
-        {
-          "key": "D",
-          "text": "3 GW（R3.2 容量上限）"
-        }
-      ],
-      "answer": "B",
-      "explanation": "離岸風電區塊開發 R3.2 期（2024-2025）容量上限為 3 GW；經濟部標準局完成分配 2.7 GW。原版本選項誤植 R3.3 之 3.6 GW。",
-      "subject": "考科一：淨零碳規劃管理基礎概論",
-      "topic_tags": [],
-      "difficulty": "medium",
-      "provenance": {
-        "source_type": "ai_generated",
-        "source_origin": "industry_round1_rescued",
-        "verified_date": "2026-04-25",
-        "verifier": "manual_post_review_fix",
-        "verify_verdict": "CONFIRMED",
-        "original_id": "ind-011",
-        "ai_metadata": {
-          "model_family": "unspecified",
-          "generation_date": "2026-04-25",
-          "verifier_round": 2
-        }
-      },
-      "sources": [],
-      "quality_flags": []
-    },
-    {
       "id": "pool-aig-industry_round1_rescued-ind-014",
       "stem": "下列何者「不是」公開資料中已加入 RE100 倡議的台灣總部會員企業？",
       "options": [
@@ -6870,53 +6828,11 @@
           "verifier_round": 2
         }
       },
-      "sources": [],
+      "sources": [
+        "https://www.there100.org/re100-members"
+      ],
       "quality_flags": [
         "time_sensitive"
-      ]
-    },
-    {
-      "id": "pool-aig-industry_round1_rescued-ind-028",
-      "stem": "依環境部「半導體業 PFCs 排放量計算指引」與業界自願協議，半導體製程廠對含氟溫室氣體（PFCs、SF6、NF3）之「去除效率（DRE）」之常見要求為何？",
-      "options": [
-        {
-          "key": "A",
-          "text": "≥ 30%"
-        },
-        {
-          "key": "B",
-          "text": "≥ 60%"
-        },
-        {
-          "key": "C",
-          "text": "≥ 95%"
-        },
-        {
-          "key": "D",
-          "text": "不要求"
-        }
-      ],
-      "answer": "C",
-      "explanation": "依 World Semiconductor Council (WSC) 1999 年共識，半導體產業 PFC 排放破壞去除效率（DRE）國際底線為 ≥90%。台積電（TSMC）等先進廠商內部目標達 95-99%，但業界共識值與多數教材引用為 **90%**。若題目問「國際共識」「業界標準」，正解為 90%；若問「TSMC 目標」則 95% 較貼近。本題以業界共識為準。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
-      "topic_tags": [],
-      "difficulty": "medium",
-      "provenance": {
-        "source_type": "ai_generated",
-        "source_origin": "industry_round1_rescued",
-        "verified_date": "2026-04-25",
-        "verifier": "manual_post_review_fix",
-        "verify_verdict": "CONFIRMED",
-        "original_id": "ind-028",
-        "ai_metadata": {
-          "model_family": "unspecified",
-          "generation_date": "2026-04-25",
-          "verifier_round": 2
-        }
-      },
-      "sources": [],
-      "quality_flags": [
-        "ambiguous"
       ]
     },
     {
