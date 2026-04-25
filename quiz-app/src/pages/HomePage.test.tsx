@@ -59,4 +59,103 @@ describe('HomePage', () => {
     expect(config).toHaveProperty('subject');
     expect(config).toHaveProperty('questionCount');
   });
+
+  // === 加強練習池入口（clickable badge）===
+
+  it('shows clickable opt-in badge on disabled state', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    const optInBtn = screen.getByRole('button', { name: '啟用加強練習池' });
+    expect(optInBtn).toBeInTheDocument();
+    // 應顯示題數（151，與 practice_pool.json _meta.totals.total 同步）
+    expect(optInBtn.textContent).toMatch(/151/);
+  });
+
+  it('clicking opt-in badge opens PracticeOptInDialog (first-time flow)', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    const optInBtn = screen.getByRole('button', { name: '啟用加強練習池' });
+    fireEvent.click(optInBtn);
+    // dialog 出現（aria-labelledby 指向 optin-title）
+    expect(screen.getByRole('dialog', { name: /啟用加強練習池/ })).toBeInTheDocument();
+  });
+
+  it('accepting dialog enables practice mode + persists opt-in', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: '啟用加強練習池' }));
+    fireEvent.click(screen.getByRole('button', { name: /我已了解/ }));
+    expect(localStorage.getItem('practice-pool-enabled')).toBe('1');
+    expect(localStorage.getItem('practice-pool-ai-opt-in')).toBe('1');
+    // dialog 關閉、原 opt-in badge 消失
+    expect(screen.queryByRole('dialog', { name: /啟用加強練習池/ })).toBeNull();
+  });
+
+  it('once opted-in but disabled: clicking re-enables without re-opening dialog', () => {
+    localStorage.setItem('practice-pool-ai-opt-in', '1');
+    localStorage.setItem('practice-pool-enabled', '0');
+    render(<HomePage onStartQuiz={() => {}} />);
+    const optInBtn = screen.getByRole('button', { name: '啟用加強練習池' });
+    fireEvent.click(optInBtn);
+    expect(localStorage.getItem('practice-pool-enabled')).toBe('1');
+    // 沒重開 dialog
+    expect(screen.queryByRole('dialog', { name: /啟用加強練習池/ })).toBeNull();
+  });
+
+  it('clicking enabled-state badge disables practice mode', () => {
+    localStorage.setItem('practice-pool-enabled', '1');
+    localStorage.setItem('practice-pool-ai-opt-in', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    const enabledBadge = screen.getByRole('button', { name: /停用加強練習池/ });
+    fireEvent.click(enabledBadge);
+    expect(localStorage.getItem('practice-pool-enabled')).toBe('0');
+  });
+
+  // === 首次自動彈窗 + 永久持續 tip card ===
+
+  it('first visit (no seen flag, no opt-in) auto-opens disclosure dialog', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    expect(screen.getByRole('dialog', { name: /啟用加強練習池/ })).toBeInTheDocument();
+  });
+
+  it('declining first-visit dialog records seen flag (no re-popup)', () => {
+    const { unmount } = render(<HomePage onStartQuiz={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: /暫不啟用/ }));
+    expect(localStorage.getItem('practice-pool-disclosure-seen')).toBe('1');
+    unmount();
+    // 第二次進首頁，dialog 不再自動彈
+    render(<HomePage onStartQuiz={() => {}} />);
+    expect(screen.queryByRole('dialog', { name: /啟用加強練習池/ })).toBeNull();
+  });
+
+  it('does NOT auto-popup if already opted-in', () => {
+    localStorage.setItem('practice-pool-ai-opt-in', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    expect(screen.queryByRole('dialog', { name: /啟用加強練習池/ })).toBeNull();
+  });
+
+  it('does NOT auto-popup if seen flag already set', () => {
+    localStorage.setItem('practice-pool-disclosure-seen', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    expect(screen.queryByRole('dialog', { name: /啟用加強練習池/ })).toBeNull();
+  });
+
+  it('shows persistent tip card describing practice pool when !enabled', () => {
+    localStorage.setItem('practice-pool-disclosure-seen', '1'); // 不彈 dialog
+    render(<HomePage onStartQuiz={() => {}} />);
+    expect(screen.getByTestId('practice-pool-tip')).toBeInTheDocument();
+    expect(screen.getByTestId('practice-pool-tip').textContent).toMatch(/55.*模擬.*96.*AI/);
+  });
+
+  it('tip card hides when practice mode is enabled', () => {
+    localStorage.setItem('practice-pool-enabled', '1');
+    localStorage.setItem('practice-pool-ai-opt-in', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    expect(screen.queryByTestId('practice-pool-tip')).toBeNull();
+  });
+
+  it('tip card CTA opens dialog (when not yet seen)', () => {
+    localStorage.setItem('practice-pool-disclosure-seen', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    const cta = screen.getByRole('button', { name: /了解並啟用/ });
+    fireEvent.click(cta);
+    expect(screen.getByRole('dialog', { name: /啟用加強練習池/ })).toBeInTheDocument();
+  });
 });

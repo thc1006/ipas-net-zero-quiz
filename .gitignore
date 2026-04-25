@@ -5,6 +5,9 @@ __pycache__/
 dist/
 build/
 
+# Claude Code 本地設定（不上傳）
+.claude/
+
 # 驗證過程文件（不需要上傳到 production）
 /docs/
 /scripts/

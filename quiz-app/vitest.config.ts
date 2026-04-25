@@ -12,7 +12,13 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      exclude: ['node_modules/', 'src/test-setup.ts'],
+      exclude: [
+        'node_modules/',
+        'src/test-setup.ts',
+        // Entry point — bootstrap-only side effects (createRoot + DEV-mode
+        // schema validate dynamic imports)；由 E2E 整合測試覆蓋
+        'src/main.tsx',
+      ],
     },
   },
   resolve: {
