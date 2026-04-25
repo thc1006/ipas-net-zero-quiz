@@ -828,3 +828,51 @@
   }
   .cl-result-stats__row:last-child { border-bottom: 0; }
 }
+
+/* ============== MOBILE TUNING (≤640px) ============== */
+@media (max-width: 640px) {
+  .result-page.cl-page {
+    padding: 0 1rem;
+  }
+
+  /* Score card — 已在 720 stack；縮數字字級 + 對齊 */
+  .cl-score-card {
+    text-align: left;
+  }
+  .cl-score-card__num {
+    font-size: clamp(4.5rem, 22vw, 6.5rem);
+  }
+  .cl-score-card__total {
+    font-size: 1.4rem;
+  }
+  .cl-score-card__comment {
+    font-size: clamp(1.6rem, 7vw, 2.4rem);
+  }
+  .cl-score-card__sub {
+    font-size: 0.86rem;
+  }
+
+  /* Stats — 單列拉長太空，改 2x2 grid */
+  .cl-result-stats {
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 2rem;
+  }
+  .cl-result-stats__row {
+    padding: 0.85rem 1rem;
+    border-right: 1px solid var(--color-rule-soft) !important;
+    border-bottom: 1px solid var(--color-rule-soft) !important;
+  }
+  .cl-result-stats__row:nth-child(2n) { border-right: 0 !important; }
+  .cl-result-stats__row:nth-last-child(-n + 2) { border-bottom: 0 !important; }
+  .cl-result-stats__num {
+    font-size: 1.6rem;
+  }
+
+  /* Action buttons — 全寬 stack */
+  .action-section {
+    flex-direction: column;
+  }
+  .action-section .btn {
+    width: 100%;
+  }
+}

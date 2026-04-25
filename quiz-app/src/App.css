@@ -81,6 +81,26 @@
   }
 }
 
+@media (max-width: 640px) {
+  .cl-footer {
+    margin-top: 2.5rem;
+    padding: 1.5rem 1rem 0.85rem;
+  }
+  .cl-footer__container {
+    gap: 1.25rem;
+  }
+  .cl-footer__disclaimer {
+    font-size: 0.78rem;
+  }
+  .cl-footer__sig {
+    margin: 1rem 0 0.6rem;
+  }
+  .cl-footer__copy {
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+  }
+}
+
 .cl-footer__col {
   display: flex;
   flex-direction: column;

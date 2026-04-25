@@ -167,7 +167,16 @@
   color: var(--color-primary) !important;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .cl-header__subtitle { display: none; }
-  .cl-header__title { font-size: 0.95rem; }
+  .cl-header__title { font-size: 1rem; }
+  .cl-header__container { min-height: 56px; padding: 0 0.85rem; }
+  .cl-header__mark { width: 30px; height: 30px; }
+  .cl-header__brand { gap: 0.6rem; }
+  .cl-header__nav { gap: 0.15rem; }
+  .cl-header__icon-btn { padding: 0.45rem !important; }
+}
+
+@media (max-width: 380px) {
+  .cl-header__title { font-size: 0.92rem; }
 }

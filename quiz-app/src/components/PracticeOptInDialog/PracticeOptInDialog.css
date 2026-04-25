@@ -330,3 +330,55 @@
   font-size: 1.05rem;
   color: var(--color-text-secondary);
 }
+
+/* ============== MOBILE TUNING (≤640px) ============== */
+@media (max-width: 640px) {
+  .optin-overlay {
+    padding: 0.75rem;
+    align-items: flex-end; /* 從底部滑上來，較像原生 mobile sheet */
+  }
+  .optin-dialog {
+    max-height: calc(100vh - 1.5rem);
+    border-radius: 4px 4px 0 0;
+  }
+  .optin-dialog__head {
+    padding: 1.25rem 1.25rem 1rem;
+  }
+  .optin-dialog__title {
+    font-size: 1.5rem;
+  }
+  .optin-dialog__sub {
+    font-size: 0.95rem;
+  }
+  .optin-dialog__body {
+    padding: 1rem 1.25rem;
+    gap: 1rem;
+  }
+  .optin-source-panel {
+    padding: 0.85rem;
+  }
+  .optin-source-row__count {
+    font-size: 1.2rem;
+  }
+  .optin-dialog__lead {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .optin-bullets li {
+    font-size: 0.86rem;
+  }
+  .optin-disclosure {
+    font-size: 0.74rem;
+    padding: 0.55rem 0.7rem;
+  }
+  .optin-actions {
+    padding: 1rem 1.25rem;
+    flex-direction: column-reverse; /* primary CTA 在上 */
+    gap: 0.5rem;
+  }
+  .optin-actions .cl-btn-primary,
+  .optin-actions .cl-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
