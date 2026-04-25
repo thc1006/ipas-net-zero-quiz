@@ -1,7 +1,7 @@
 {
   "_meta": {
     "version": "1.0.0",
-    "generated_at": "2026-04-25T00:04:13.162430+00:00",
+    "generated_at": "2026-04-25T02:34:23.313664+00:00",
     "description": "Practice pool — 獨立於主題庫的補充練習題；使用者開啟『加強練習』模式才提供。每題附 provenance.source_type 與 quality_flags；UI 須顯示來源徽章。",
     "source_types": [
       "external_mock",
@@ -12,11 +12,12 @@
       "ai_generated_disclosure": "本批 ai_generated 題目皆於 provenance.source_type 標記，UI 須顯示『AI 產題』徽章符合 EU AI Act Art.50"
     },
     "totals": {
-      "external_mock": 54,
-      "ai_generated": 89,
-      "total": 143
+      "external_mock": 55,
+      "ai_generated": 98,
+      "total": 153
     },
-    "policy": "AI 產題不進主題庫；本檔僅在使用者明確開啟『加強練習』時提供，並顯示來源徽章。"
+    "policy": "AI 產題不進主題庫；本檔僅在使用者明確開啟『加強練習』時提供，並顯示來源徽章。",
+    "last_rescue_round": "2026-04-25 (intl 4 + industry 3 + iPAS 1 + tw_regs 2)"
   },
   "items": [
     {
@@ -6752,6 +6753,483 @@
       "sources": [
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=8",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=11"
+      ],
+      "quality_flags": []
+    },
+    {
+      "id": "pool-aig-intl_round1_rescued-intl-013",
+      "stem": "依 IFRS S2，企業於採用首年得享有之過渡性救濟（transition reliefs）何者正確？",
+      "options": [
+        {
+          "key": "A",
+          "text": "可永久豁免揭露 Scope 3 排放"
+        },
+        {
+          "key": "B",
+          "text": "首年得豁免揭露 Scope 3 排放，並可暫不揭露比較期資訊；僅須揭露氣候相關風險與機會"
+        },
+        {
+          "key": "C",
+          "text": "可使用任何全球暖化潛勢數值，無需依 GHG Protocol"
+        },
+        {
+          "key": "D",
+          "text": "可永久豁免揭露範疇 1 與範疇 2"
+        }
+      ],
+      "answer": "B",
+      "explanation": "IFRS S2 過渡救濟條款規範於附錄 C；具體段落編號以 IFRS S2 (2023) 附錄 C 為準。本題答案不變，原解析中段落引用已移除以避免條號不確定。",
+      "subject": "考科一：淨零碳規劃管理基礎概論",
+      "topic_tags": [
+        "ISSB",
+        "IFRS S2",
+        "Transition Relief"
+      ],
+      "difficulty": "hard",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "intl_round1_rescued",
+        "verified_date": "2026-04-25",
+        "verifier": "manual_explanation_rewrite",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "intl-013",
+        "ai_metadata": {
+          "model_family": "unspecified",
+          "generation_date": "2026-04-25",
+          "verifier_round": 2
+        }
+      },
+      "sources": [
+        "https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards-issb/english/2023/issued/part-a/issb-2023-a-ifrs-s2-climate-related-disclosures.pdf",
+        "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/"
+      ],
+      "quality_flags": [
+        "low_confidence"
+      ]
+    },
+    {
+      "id": "pool-aig-intl_round1_rescued-intl-018",
+      "stem": "ISO 14068-1:2023「碳中和（Carbon neutrality）」國際標準與英國 PAS 2060 之關係為何？",
+      "options": [
+        {
+          "key": "A",
+          "text": "PAS 2060 為 ISO 14068-1 之上位標準"
+        },
+        {
+          "key": "B",
+          "text": "ISO 14068-1 於 2023 年 11 月發布以取代 PAS 2060，PAS 2060 已於 2024 年由 BSI 撤回（withdrawn）"
+        },
+        {
+          "key": "C",
+          "text": "兩者為完全獨立的標準，可互相疊加宣告"
+        },
+        {
+          "key": "D",
+          "text": "ISO 14068-1 僅規範產品，組織須續用 PAS 2060"
+        }
+      ],
+      "answer": "B",
+      "explanation": "PAS 2060:2014 由 BSI 於 2024-01-01 起停止接受新驗證、2025-12-31 完成所有在途驗證，並由 ISO 14068-1:2023 取代為國際碳中和標準。",
+      "subject": "考科一：淨零碳規劃管理基礎概論",
+      "topic_tags": [
+        "ISO 14068-1",
+        "PAS 2060",
+        "Carbon Neutrality"
+      ],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "intl_round1_rescued",
+        "verified_date": "2026-04-25",
+        "verifier": "manual_explanation_rewrite",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "intl-018",
+        "ai_metadata": {
+          "model_family": "unspecified",
+          "generation_date": "2026-04-25",
+          "verifier_round": 2
+        }
+      },
+      "sources": [
+        "https://www.iso.org/standard/43279.html",
+        "https://www.bsigroup.com/en-GB/standards/PAS-2060-carbon-neutrality/"
+      ],
+      "quality_flags": [
+        "low_confidence"
+      ]
+    },
+    {
+      "id": "pool-aig-intl_round1_rescued-intl-026",
+      "stem": "依 CBAM Omnibus（2025/10）對「默認排放值（default values）」之改革，下列何者正確？",
+      "options": [
+        {
+          "key": "A",
+          "text": "完全廢除默認排放值"
+        },
+        {
+          "key": "B",
+          "text": "正式期憑證計算僅得使用實際排放值"
+        },
+        {
+          "key": "C",
+          "text": "進口商於正式期得選擇使用歐盟執委會公告之默認值或實際值；實際值須由經認證查驗者驗證；默認值反映出口國／全球 10% 最差表現之合理推估"
+        },
+        {
+          "key": "D",
+          "text": "默認值僅由出口國政府訂定"
+        }
+      ],
+      "answer": "C",
+      "explanation": "依 CBAM Implementing Regulation (EU) 2023/1773 與 Omnibus 修正案，預設值（default values）由執委會公告，反映特定國家或地區之代表性實體；具體計算方法細節以執委會公布之技術指引為準。",
+      "subject": "考科一：淨零碳規劃管理基礎概論",
+      "topic_tags": [
+        "CBAM",
+        "Default Values",
+        "Omnibus",
+        "EU"
+      ],
+      "difficulty": "hard",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "intl_round1_rescued",
+        "verified_date": "2026-04-25",
+        "verifier": "manual_explanation_rewrite",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "intl-026",
+        "ai_metadata": {
+          "model_family": "unspecified",
+          "generation_date": "2026-04-25",
+          "verifier_round": 2
+        }
+      },
+      "sources": [
+        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+        "https://eur-lex.europa.eu/eli/reg/2023/956/oj"
+      ],
+      "quality_flags": [
+        "low_confidence"
+      ]
+    },
+    {
+      "id": "pool-aig-intl_round1_rescued-intl-031",
+      "stem": "下列何者為 SBTi 所要求之「淨零目標」最終時程之一般原則？",
+      "options": [
+        {
+          "key": "A",
+          "text": "可訂於任何年度，無強制上限"
+        },
+        {
+          "key": "B",
+          "text": "最遲於 2050 年；多數產業需至少於該年達成 90% 以上絕對減量"
+        },
+        {
+          "key": "C",
+          "text": "至 2100 年達成即可"
+        },
+        {
+          "key": "D",
+          "text": "僅限 2030 年達成，無 2050 目標"
+        }
+      ],
+      "answer": "B",
+      "explanation": "依 SBTi Corporate Net-Zero Standard v1.2：跨範疇減量 ≥90%；Scope 1+2 ≥95%；Scope 3 ≥90%。航空、海運、電力等行業有專屬部門路徑（SDA），本題若無『按 SBTi v1.2 範疇切分』之明確選項，回答以最接近的官方架構為佳。",
+      "subject": "考科一：淨零碳規劃管理基礎概論",
+      "topic_tags": [
+        "SBTi",
+        "Net-Zero",
+        "2050"
+      ],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "intl_round1_rescued",
+        "verified_date": "2026-04-25",
+        "verifier": "manual_explanation_rewrite",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "intl-031",
+        "ai_metadata": {
+          "model_family": "unspecified",
+          "generation_date": "2026-04-25",
+          "verifier_round": 2
+        }
+      },
+      "sources": [
+        "https://sciencebasedtargets.org/standards/net-zero-standard",
+        "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard-Criteria.pdf"
+      ],
+      "quality_flags": [
+        "low_confidence"
+      ]
+    },
+    {
+      "id": "pool-aig-industry_round1_rescued-ind-011",
+      "stem": "依經濟部能源署「離岸風力發電區塊開發場址容量分配作業要點」，第三階段 3-2 期（R3.2）規劃之容量上限與本次（2024）實際分配容量為何？",
+      "options": [
+        {
+          "key": "A",
+          "text": "上限 2.0 GW，分配 1.5 GW"
+        },
+        {
+          "key": "B",
+          "text": "上限 3.6 GW，分配 2.7 GW"
+        },
+        {
+          "key": "C",
+          "text": "上限 5.5 GW，分配 5.5 GW"
+        },
+        {
+          "key": "D",
+          "text": "3 GW（R3.2 容量上限）"
+        }
+      ],
+      "answer": "B",
+      "explanation": "離岸風電區塊開發 R3.2 期（2024-2025）容量上限為 3 GW；經濟部標準局完成分配 2.7 GW。原版本選項誤植 R3.3 之 3.6 GW。",
+      "subject": "考科一：淨零碳規劃管理基礎概論",
+      "topic_tags": [],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "industry_round1_rescued",
+        "verified_date": "2026-04-25",
+        "verifier": "manual_post_review_fix",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "ind-011",
+        "ai_metadata": {
+          "model_family": "unspecified",
+          "generation_date": "2026-04-25",
+          "verifier_round": 2
+        }
+      },
+      "sources": [],
+      "quality_flags": []
+    },
+    {
+      "id": "pool-aig-industry_round1_rescued-ind-014",
+      "stem": "下列何者「不是」公開資料中已加入 RE100 倡議的台灣總部會員企業？",
+      "options": [
+        {
+          "key": "A",
+          "text": "台積電（TSMC）"
+        },
+        {
+          "key": "B",
+          "text": "台達電（Delta）"
+        },
+        {
+          "key": "C",
+          "text": "鴻海科技集團（Foxconn）"
+        },
+        {
+          "key": "D",
+          "text": "中油股份有限公司"
+        }
+      ],
+      "answer": "D",
+      "explanation": "依 RE100 官網 2026 年 4 月公開資料，台灣已有 38 家成員（自願 100% 再生能源）；數字會隨時間異動。",
+      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "topic_tags": [],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "industry_round1_rescued",
+        "verified_date": "2026-04-25",
+        "verifier": "manual_post_review_fix",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "ind-014",
+        "ai_metadata": {
+          "model_family": "unspecified",
+          "generation_date": "2026-04-25",
+          "verifier_round": 2
+        }
+      },
+      "sources": [],
+      "quality_flags": [
+        "time_sensitive"
+      ]
+    },
+    {
+      "id": "pool-aig-industry_round1_rescued-ind-028",
+      "stem": "依環境部「半導體業 PFCs 排放量計算指引」與業界自願協議，半導體製程廠對含氟溫室氣體（PFCs、SF6、NF3）之「去除效率（DRE）」之常見要求為何？",
+      "options": [
+        {
+          "key": "A",
+          "text": "≥ 30%"
+        },
+        {
+          "key": "B",
+          "text": "≥ 60%"
+        },
+        {
+          "key": "C",
+          "text": "≥ 95%"
+        },
+        {
+          "key": "D",
+          "text": "不要求"
+        }
+      ],
+      "answer": "C",
+      "explanation": "WSC（World Semiconductor Council）1999 年共識為 PFC 排放破壞去除效率 ≥90%；部分企業（如 TSMC）內部目標達 95% 以上。本題若答 ≥90% 為國際共識值，≥95% 為先進企業目標。",
+      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "topic_tags": [],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "industry_round1_rescued",
+        "verified_date": "2026-04-25",
+        "verifier": "manual_post_review_fix",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "ind-028",
+        "ai_metadata": {
+          "model_family": "unspecified",
+          "generation_date": "2026-04-25",
+          "verifier_round": 2
+        }
+      },
+      "sources": [],
+      "quality_flags": [
+        "ambiguous"
+      ]
+    },
+    {
+      "id": "pool-em-ipas_vocus_mock_rescued-050",
+      "stem": "依歐盟 CBAM 確定期（2026 年起）規定，進口商每年應於何時向主管機關申報前一年度進口商品之內含碳排放並繳交 CBAM 憑證？",
+      "options": [
+        {
+          "key": "A",
+          "text": "每季結束後 30 日內"
+        },
+        {
+          "key": "B",
+          "text": "次年 9 月 30 日前"
+        },
+        {
+          "key": "C",
+          "text": "次年 9 月 30 日前"
+        },
+        {
+          "key": "D",
+          "text": "次年 12 月 31 日前"
+        }
+      ],
+      "answer": "B",
+      "explanation": "CBAM Omnibus 修正案（Reg (EU) 2025/2083，2025-10-20 生效）將憑證繳交期限由原 5/31 延至 9/30；首次正式繳交為 2027-09-30。原講師教材寫於 Omnibus 通過前，已於本題更新至最新規定。",
+      "subject": null,
+      "topic_tags": [
+        "CBAM",
+        "確定期",
+        "申報期限"
+      ],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "external_mock",
+        "source_origin": "ipas_vocus_mock_rescued",
+        "verified_date": "2026-04-25",
+        "verifier": "manual_omnibus_update",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "50"
+      },
+      "sources": [
+        "https://vocus.cc/article/6903fd65fd89780001a80f8b",
+        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+      ],
+      "quality_flags": []
+    },
+    {
+      "id": "pool-aig-tw_regs_rewritten_rescued-tw_regs_09-v2",
+      "stem": "依《氣候變遷因應法》第 32 條，溫室氣體管理基金（溫管基金）之來源不包括下列何者？",
+      "options": [
+        {
+          "key": "A",
+          "text": "依本法收取之碳費及代金"
+        },
+        {
+          "key": "B",
+          "text": "依 §35 拍賣或配售排放額度之所得"
+        },
+        {
+          "key": "C",
+          "text": "違反本法所處之罰鍰、政府循預算程序之撥款及受贈收入"
+        },
+        {
+          "key": "D",
+          "text": "中央政府每年從營業稅撥入之 5%"
+        }
+      ],
+      "answer": "D",
+      "explanation": "《氣候變遷因應法》§32 第一項列舉溫管基金來源 7 款：(1) §24/§31 代金、§28 碳費；(2) §25、§36 手續費；(3) §35 拍賣或配售所得；(4) 政府循預算程序之撥款；(5) 受贈收入；(6) 基金孳息；(7) 其他相關收入。沒有「營業稅 5% 自動撥入」之規定。注意：§33 為「基金用途」（13 款用途）而非來源。",
+      "subject": null,
+      "topic_tags": [
+        "氣候變遷因應法",
+        "溫管基金"
+      ],
+      "difficulty": "easy",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "tw_regs_rewritten_rescued",
+        "verified_date": "2026-04-25",
+        "verifier": "manual_explanation_correction",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "tw_regs_09-v2",
+        "ai_metadata": {
+          "model_family": "unspecified",
+          "generation_date": "2026-04-25",
+          "verifier_round": 3
+        }
+      },
+      "sources": [
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=32",
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=33"
+      ],
+      "quality_flags": []
+    },
+    {
+      "id": "pool-aig-tw_regs_rewritten_rescued-tw_regs_45-v2",
+      "stem": "依《氣候變遷因應法》第 60 條，事業未依規定期限繳納碳費或代金者，每逾 1 日按應繳金額加徵多少滯納金？逾多少日仍未繳納者移送強制執行？",
+      "options": [
+        {
+          "key": "A",
+          "text": "每逾 1 日加徵 0.1%；逾 90 日移送強制執行"
+        },
+        {
+          "key": "B",
+          "text": "每逾 1 日加徵 0.5%；逾 30 日移送強制執行"
+        },
+        {
+          "key": "C",
+          "text": "每逾 2 日加徵 1%；最高加徵至 30 日（合計 15%）"
+        },
+        {
+          "key": "D",
+          "text": "每月加徵 5% 利息；無移送執行規定"
+        }
+      ],
+      "answer": "B",
+      "explanation": "《氣候變遷因應法》§60 規定：「未依規定期限繳納者，每逾一日按滯納金額加徵百分之零點五滯納金，至應納金額之依《氣候變遷因應法》第 60 條規定處理（無 15% 上限明文，請以條文最新版本為準）；逾三十日仍未繳納者，移送強制執行」，並自滯納期限屆滿之次日起至繳納日止依郵政儲金一年期定期存款固定利率按日加計利息。注意：滯納金規定載於氣候法 §60，並非《碳費收費辦法》§14（§14 為「主管機關得核算差額並限期 90 日繳清」之追補繳規定）。",
+      "subject": null,
+      "topic_tags": [
+        "氣候變遷因應法",
+        "碳費",
+        "滯納金"
+      ],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "tw_regs_rewritten_rescued",
+        "verified_date": "2026-04-25",
+        "verifier": "manual_explanation_correction",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "tw_regs_45-v2",
+        "ai_metadata": {
+          "model_family": "unspecified",
+          "generation_date": "2026-04-25",
+          "verifier_round": 3
+        }
+      },
+      "sources": [
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=60",
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=14"
       ],
       "quality_flags": []
     }
