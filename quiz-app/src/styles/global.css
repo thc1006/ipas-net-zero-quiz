@@ -311,7 +311,7 @@ textarea {
 }
 
 /* Tap-target accessibility — WCAG 2.5.5 AAA: targets ≥44×44px on touch devices */
-@media (max-width: 640px) and (pointer: coarse), (max-width: 640px) {
+@media (max-width: 640px) {
   button, .btn, [role="button"], a.btn {
     min-height: 44px;
   }
