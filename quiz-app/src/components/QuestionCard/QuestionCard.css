@@ -386,3 +386,14 @@
     font-size: var(--font-size-xs);
   }
 }
+
+/* 冗餘前綴 dim 化 — 例如題幹說「GRI 準則」，所有選項又重複 "GRI" 前綴 */
+.option-text__redundant {
+  opacity: 0.45;
+  font-weight: 400;
+  margin-right: 0.05em;
+}
+.option-item.correct .option-text__redundant,
+.option-item.incorrect .option-text__redundant {
+  opacity: 0.6;
+}
