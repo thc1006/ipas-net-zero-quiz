@@ -2,7 +2,11 @@
 import { afterEach, beforeAll, describe, expect, it, beforeEach } from 'vitest';
 import { renderHook, waitFor, cleanup } from '@testing-library/react';
 import { useQuizSource } from './useQuizSource';
-import { __resetPracticePoolCacheForTesting } from '../utils/practice-pool';
+import {
+  __resetPracticePoolCacheForTesting,
+  __setPracticePoolForTesting,
+} from '../utils/practice-pool';
+import { buildFixturePool } from '../utils/__fixtures__/practice-pool-fixture';
 
 
 // 還原真實 localStorage 行為（test-setup.ts 把它 mock 成空函式）
@@ -47,11 +51,9 @@ describe('useQuizSource', () => {
     expect(result.current.combined.length).toBe(result.current.mainBank.length);
   });
 
-  // useQuizSource 內含 dynamic import('../data/practice_pool.json')；
-  // vitest jsdom 環境對此互動有時序敏感性。練習池載入邏輯本身已由
-  // practice-pool.test.ts 的 loadPracticePool 測試覆蓋；此處 skip 避免
-  // CI flakiness，留 it.skip 作 placeholder 提示後續可改 mock 直接注入 pool。
-  it.skip('loads pool when practice mode enabled (integration; covered by practice-pool.test)', async () => {
+  // 之前 it.skip 因 dynamic import flaky；改用 fixture 注入直接測 hook 整合層
+  it('loads pool when practice mode enabled', async () => {
+    __setPracticePoolForTesting(buildFixturePool());
     localStorage.setItem('practice-pool-enabled', '1');
     const { result } = renderHook(() => useQuizSource('all'));
     await waitFor(() => {
@@ -63,7 +65,8 @@ describe('useQuizSource', () => {
     );
   });
 
-  it.skip('excludes unmapped_subject items from specific subject query (integration)', async () => {
+  it('excludes unmapped_subject items from specific subject query', async () => {
+    __setPracticePoolForTesting(buildFixturePool());
     localStorage.setItem('practice-pool-enabled', '1');
     const { result } = renderHook(() => useQuizSource('考科1'));
     await waitFor(() => {
