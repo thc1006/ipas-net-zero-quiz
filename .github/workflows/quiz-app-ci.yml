@@ -5,8 +5,8 @@
 name: Quiz App CI
 
 on:
+  # 移除 branches filter — stacked PRs (base != main) 也須跑 CI
   pull_request:
-    branches: [main]
     paths:
       - 'quiz-app/**'
       - '.github/workflows/quiz-app-*.yml'
@@ -16,6 +16,12 @@ on:
       - 'quiz-app/**'
       - '.github/workflows/quiz-app-*.yml'
   workflow_dispatch:
+
+# 顯式宣告最小權限
+permissions:
+  contents: read
+  pull-requests: read
+  checks: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -34,13 +40,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js (preliminary, for npm)
         uses: actions/setup-node@v4
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      - name: Enable Corepack
-        run: corepack enable
+      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期；先升級到最新
+      - name: Upgrade Corepack to latest
+        run: npm install -g corepack@latest
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -48,18 +55,12 @@ jobs:
           package_json_file: quiz-app/package.json
           run_install: false
 
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
+      - name: Re-setup Node.js (with pnpm store cache)
+        uses: actions/setup-node@v4
         with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('quiz-app/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          node-version-file: 'quiz-app/.nvmrc'
+          cache: 'pnpm'
+          cache-dependency-path: 'quiz-app/pnpm-lock.yaml'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -78,13 +79,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js (preliminary, for npm)
         uses: actions/setup-node@v4
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      - name: Enable Corepack
-        run: corepack enable
+      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期；先升級到最新
+      - name: Upgrade Corepack to latest
+        run: npm install -g corepack@latest
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -92,18 +94,12 @@ jobs:
           package_json_file: quiz-app/package.json
           run_install: false
 
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
+      - name: Re-setup Node.js (with pnpm store cache)
+        uses: actions/setup-node@v4
         with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('quiz-app/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          node-version-file: 'quiz-app/.nvmrc'
+          cache: 'pnpm'
+          cache-dependency-path: 'quiz-app/pnpm-lock.yaml'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -111,13 +107,23 @@ jobs:
       - name: Unit tests with coverage
         run: pnpm test:coverage
 
-      - name: Upload coverage report
+      - name: Upload coverage report (artifact)
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: coverage-report
           path: quiz-app/coverage/
           retention-days: 7
+
+      # Codecov upload — 若 repo 未設 CODECOV_TOKEN，action 會 silently 跳過
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        if: always()
+        continue-on-error: true
+        with:
+          files: ./quiz-app/coverage/coverage-final.json
+          flags: unit
+          fail_ci_if_error: false
 
   build:
     name: Build & Bundle Size
@@ -127,13 +133,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js (preliminary, for npm)
         uses: actions/setup-node@v4
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      - name: Enable Corepack
-        run: corepack enable
+      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期；先升級到最新
+      - name: Upgrade Corepack to latest
+        run: npm install -g corepack@latest
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -141,18 +148,12 @@ jobs:
           package_json_file: quiz-app/package.json
           run_install: false
 
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
+      - name: Re-setup Node.js (with pnpm store cache)
+        uses: actions/setup-node@v4
         with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('quiz-app/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          node-version-file: 'quiz-app/.nvmrc'
+          cache: 'pnpm'
+          cache-dependency-path: 'quiz-app/pnpm-lock.yaml'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -187,11 +188,15 @@ jobs:
             fi
           done
           limit=$((600 * 1024))
+          js_kb=$((js_total / 1024))
+          limit_kb=$((limit / 1024))
           if [ "$js_total" -gt "$limit" ]; then
-            echo "::warning::JavaScript bundle ($js_total bytes) exceeds 600KB limit"
+            echo "::warning::JavaScript bundle ${js_kb}KB exceeds ${limit_kb}KB limit"
+            echo "BUNDLE_OVER_LIMIT=true" >> $GITHUB_ENV
           else
-            echo "Bundle size OK: $js_total bytes"
+            echo "Bundle size OK: ${js_kb}KB (limit ${limit_kb}KB)"
           fi
+          echo "BUNDLE_JS_KB=${js_kb}" >> $GITHUB_ENV
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -209,13 +214,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js (preliminary, for npm)
         uses: actions/setup-node@v4
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      - name: Enable Corepack
-        run: corepack enable
+      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期；先升級到最新
+      - name: Upgrade Corepack to latest
+        run: npm install -g corepack@latest
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -223,18 +229,12 @@ jobs:
           package_json_file: quiz-app/package.json
           run_install: false
 
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
+      - name: Re-setup Node.js (with pnpm store cache)
+        uses: actions/setup-node@v4
         with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('quiz-app/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          node-version-file: 'quiz-app/.nvmrc'
+          cache: 'pnpm'
+          cache-dependency-path: 'quiz-app/pnpm-lock.yaml'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile

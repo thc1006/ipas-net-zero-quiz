@@ -9,8 +9,8 @@ on:
     branches: [main]
     paths:
       - 'quiz-app/src/**'
+  # stacked PRs (base != main) 也應掃描；移除 branches filter
   pull_request:
-    branches: [main]
     paths:
       - 'quiz-app/src/**'
   schedule:
