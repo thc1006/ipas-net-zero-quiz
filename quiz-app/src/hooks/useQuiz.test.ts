@@ -111,6 +111,87 @@ describe('useQuiz Hook', () => {
         1000
       );
     });
+
+    // === Regression: GH issue #59 — 回到上一題重新作答時不可重複新增紀錄 ===
+    it('重新作答同一題應覆蓋舊紀錄、不應追加（GH #59）', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+
+      // 第 1 題答 A → 下一題答 B → 回上一題改答 C
+      act(() => { result.current.submitAnswer('A'); });
+      act(() => { result.current.nextQuestion(); });
+      act(() => { result.current.submitAnswer('B'); });
+      act(() => { result.current.prevQuestion(); });
+      act(() => { result.current.submitAnswer('C'); });
+
+      // useQuiz 不直接公開 answers — 透過 progress.answered 與 finishQuiz() 驗證
+      expect(result.current.progress.answered).toBe(2);
+
+      let quizResult: ReturnType<typeof result.current.finishQuiz> = null;
+      act(() => {
+        quizResult = result.current.finishQuiz();
+      });
+      expect(quizResult!.answers).toHaveLength(2);
+
+      // 第 1 題保留最新的 C
+      const q1Record = quizResult!.answers.find(
+        (a) => a.selectedAnswer === 'C'
+      );
+      expect(q1Record).toBeDefined();
+      // 「A」紀錄應已被 C 覆蓋、不存在於最終結果
+      expect(quizResult!.answers.some((a) => a.selectedAnswer === 'A')).toBe(false);
+    });
+
+    it('currentAnswer 在重新作答後應反映最新選擇而非首次選擇（GH #59）', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+
+      // 第 1 題答 A
+      act(() => { result.current.submitAnswer('A'); });
+      expect(result.current.currentAnswer?.selectedAnswer).toBe('A');
+
+      // 移到 Q2 再回 Q1，改答 'C'
+      act(() => { result.current.nextQuestion(); });
+      act(() => { result.current.prevQuestion(); });
+      act(() => { result.current.submitAnswer('C'); });
+
+      // currentAnswer 應顯示 'C'（最新），而非 'A'（首次）。修法前 .find() 會回第一個 match → 'A'
+      expect(result.current.currentAnswer?.selectedAnswer).toBe('C');
+    });
+
+    it('finishQuiz 在重新作答後計分不應重複計算（GH #59）', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+
+      // 三題都先答錯（用一個不可能對的字串），再回去把第 1 題改成正解
+      act(() => { result.current.submitAnswer('Z'); });
+      act(() => { result.current.nextQuestion(); });
+      act(() => { result.current.submitAnswer('Z'); });
+      act(() => { result.current.nextQuestion(); });
+      act(() => { result.current.submitAnswer('Z'); });
+
+      // 回第 1 題，改答正解
+      act(() => { result.current.goToQuestion(0); });
+      const correctAnswer = result.current.currentQuestion?.answer;
+      if (correctAnswer == null) return; // 該題無答案則略過此 assertion
+      act(() => { result.current.submitAnswer(correctAnswer); });
+
+      let quizResult: ReturnType<typeof result.current.finishQuiz> = null;
+      act(() => {
+        quizResult = result.current.finishQuiz();
+      });
+
+      // 重點：3 題測驗作答 4 次（其中 1 題被覆蓋），最終 answers 應為 3 筆
+      expect(quizResult!.answers).toHaveLength(3);
+      // skippedCount 不應為負（修法前的 questions.length - answers.length 會算成負數）
+      expect(quizResult!.skippedCount).toBeGreaterThanOrEqual(0);
+    });
   });
 
   describe('nextQuestion / prevQuestion', () => {
@@ -234,12 +315,11 @@ describe('useQuiz Hook', () => {
         result.current.startQuiz({ ...defaultConfig, questionCount: 3 });
       });
 
-      // 作答幾題
-      act(() => {
-        result.current.submitAnswer('A');
-        result.current.nextQuestion();
-        result.current.submitAnswer('B');
-      });
+      // 注意：必須拆成獨立 act() — 同一個 act 內的多次呼叫會共享 stale closure，
+      // 兩次 submitAnswer 都會打到 questions[0]（currentIndex 還沒 flush）。
+      act(() => { result.current.submitAnswer('A'); });
+      act(() => { result.current.nextQuestion(); });
+      act(() => { result.current.submitAnswer('B'); });
 
       let quizResult: ReturnType<typeof result.current.finishQuiz> = null;
       act(() => {

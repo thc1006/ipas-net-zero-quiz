@@ -186,10 +186,17 @@ export function useQuiz() {
         sourceCategory,
       };
 
-      setState((prev) => ({
-        ...prev,
-        answers: [...prev.answers, record],
-      }));
+      // 同一題重新作答（使用者點「上一題」回到已作答題目改答案）時，
+      // 用 questionId 去重 — 覆蓋舊紀錄而非追加。否則 finishQuiz 的
+      // correctCount / wrongCount / skippedCount 都會把同一題算多次。
+      setState((prev) => {
+        const idx = prev.answers.findIndex((a) => a.questionId === record.questionId);
+        const answers =
+          idx >= 0
+            ? prev.answers.map((a, i) => (i === idx ? record : a))
+            : [...prev.answers, record];
+        return { ...prev, answers };
+      });
 
       // 練習模式下立即顯示答案
       if (config?.showAnswerImmediately) {
