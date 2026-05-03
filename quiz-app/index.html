@@ -2,18 +2,137 @@
 <html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="iPAS 淨零碳規劃管理師備考神器 - 719 題考古題線上測驗，支援 AI 輔助學習" />
-    <meta name="keywords" content="iPAS,淨零碳,規劃管理師,考古題,線上測驗,備考" />
+    <link rel="icon" type="image/svg+xml" href="/ipas-net-zero-quiz/favicon.svg" />
+    <link rel="canonical" href="https://thc1006.github.io/ipas-net-zero-quiz/" />
     <meta name="theme-color" content="#2e7d32" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="format-detection" content="telephone=no" />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="淨零碳備考神器 | iPAS 淨零碳規劃管理師考古題" />
-    <meta property="og:description" content="719 題考古題線上測驗，支援 AI 輔助學習" />
+    <title>淨零碳規劃管理師備考神器 | iPAS 初級考古題（IFRS S1/S2、ISSB、TCFD、CBAM）</title>
+    <meta
+      name="description"
+      content="iPAS 淨零碳規劃管理師「初級」考古題線上測驗：719 題官方考古題 + 151 題加強練習，涵蓋 2026 熱點 IFRS S1/S2、ISSB 整合 TCFD、永續揭露準則（金管會 2026 編制、2027 申報、100 億以上上市櫃強制適用）、ISO 14064、CBAM、SBTi、GRI、ESRS、碳足跡與情境分析。每題附 primary-source URL，AI 解析符合 EU AI Act Art.50 揭露。"
+    />
+    <meta
+      name="keywords"
+      content="iPAS 淨零碳,淨零碳規劃管理師,淨零碳規劃管理師 初級,iPAS 初級,考古題,線上測驗,IFRS S1,IFRS S2,ISSB,永續揭露準則,TCFD,SBTi,GRI,ESRS,ISO 14064,CBAM,溫室氣體盤查,碳足跡,碳定價,碳中和,情境分析,排放源界定,組織邊界,內部查證,Net Zero,氣候變遷,ESG"
+    />
+    <meta name="author" content="thc1006" />
+    <meta
+      name="robots"
+      content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"
+    />
+
+    <!-- Open Graph
+         注意：刻意不宣告 og:image —— Facebook / LinkedIn / Discord 等平台不支援
+         SVG 格式，宣告 SVG 會顯示「破圖佔位」而非「無圖」，比沒宣告更糟。
+         待設計 1200×630 PNG 後再補。 -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:site_name" content="淨零碳規劃管理師備考神器" />
+    <meta property="og:url" content="https://thc1006.github.io/ipas-net-zero-quiz/" />
+    <meta property="og:title" content="淨零碳規劃管理師備考神器 | iPAS 初級考古題" />
+    <meta
+      property="og:description"
+      content="iPAS 淨零碳規劃管理師「初級」備考工具：719 題考古題 + 151 題加強練習（含 2026 熱點 IFRS S1/S2、ISSB、永續揭露準則）。"
+    />
 
-    <title>淨零碳備考神器 | iPAS 淨零碳規劃管理師考古題</title>
+    <!-- Twitter Card：summary（小卡）— X 不支援 SVG，待 PNG 完成再升級 summary_large_image -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="淨零碳規劃管理師備考神器 | iPAS 初級考古題" />
+    <meta
+      name="twitter:description"
+      content="iPAS 淨零碳規劃管理師「初級」備考工具：719 題考古題 + 151 題加強練習（含 IFRS S1/S2、永續揭露準則）。"
+    />
+
+    <!--
+      Schema.org JSON-LD（@graph 多節點）：
+      - WebApplication 描述「應用本身」（SPA、EducationalApplication 類別）
+      - LearningResource (Quiz subtype) 描述「題庫內容」、教育級別與目標族群
+      - Organization 描述開發者
+      不嵌入個別 Question 實體 — Google Practice Problem schema 要求「一頁一題」，
+      SPA 入口頁不適用；強塞會在 Search Console 觸發驗證錯誤。
+      Ref: https://developers.google.com/search/docs/appearance/structured-data/practice-problems
+    -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "@id": "https://thc1006.github.io/ipas-net-zero-quiz/#app",
+            "name": "淨零碳規劃管理師備考神器",
+            "alternateName": ["iPAS 淨零碳備考神器", "淨零碳備考神器"],
+            "url": "https://thc1006.github.io/ipas-net-zero-quiz/",
+            "applicationCategory": "EducationalApplication",
+            "operatingSystem": "Web Browser",
+            "browserRequirements": "Requires JavaScript. Requires HTML5.",
+            "isAccessibleForFree": true,
+            "inLanguage": "zh-TW",
+            "author": { "@id": "https://github.com/thc1006/#person" }
+          },
+          {
+            "@type": "LearningResource",
+            "@id": "https://thc1006.github.io/ipas-net-zero-quiz/#quiz",
+            "additionalType": "https://schema.org/Quiz",
+            "name": "iPAS 淨零碳規劃管理師初級考古題測驗",
+            "description": "719 題官方考古題（考科一：淨零碳規劃管理基礎概論；考科二：淨零碳盤查範圍與程序概要）+ 151 題加強練習（含 IFRS S1/S2、ISSB、永續揭露準則、TCFD、SBTi、GRI、ESRS、ISO 14064、CBAM、碳足跡、情境分析等 2026 重點議題）。",
+            "url": "https://thc1006.github.io/ipas-net-zero-quiz/",
+            "inLanguage": "zh-TW",
+            "isAccessibleForFree": true,
+            "learningResourceType": "Quiz",
+            "educationalLevel": "初級 (Beginner)",
+            "educationalUse": ["exam preparation", "self-study", "professional development"],
+            "competencyRequired": "iPAS 淨零碳規劃管理師初級認證能力鑑定",
+            "teaches": [
+              "淨零排放國際發展與政策趨勢",
+              "永續發展與碳中和目標",
+              "溫室氣體基礎知識",
+              "碳管理策略與工具",
+              "IFRS S1 一般永續揭露準則",
+              "IFRS S2 氣候相關揭露準則",
+              "ISSB 整合 TCFD 四大核心要素（治理／策略／風險管理／指標與目標）",
+              "金管會接軌 IFRS 永續揭露準則時程（2026 編制、2027 申報、100 億以上上市櫃強制適用）",
+              "SBTi 科學基礎減量目標倡議",
+              "GRI 永續報告準則",
+              "歐盟 ESRS 永續報告準則",
+              "歐盟 CBAM 碳邊境調整機制",
+              "ISO 14064 溫室氣體盤查標準",
+              "組織碳盤查範疇與邊界",
+              "排放係數與計算方法",
+              "碳盤查報告與查證",
+              "碳足跡與碳定價",
+              "氣候相關情境分析"
+            ],
+            "audience": {
+              "@type": "EducationalAudience",
+              "educationalRole": "student",
+              "audienceType": "iPAS 淨零碳規劃管理師「初級」能力鑑定應試者；永續/ESG 從業人員；ISO 14064 查驗員受訓者"
+            },
+            "about": [
+              { "@type": "Thing", "name": "iPAS 淨零碳規劃管理師", "sameAs": "https://www.ipas.org.tw/NZ/" },
+              { "@type": "Thing", "name": "IFRS S1" },
+              { "@type": "Thing", "name": "IFRS S2" },
+              { "@type": "Thing", "name": "ISSB" },
+              { "@type": "Thing", "name": "TCFD" },
+              { "@type": "Thing", "name": "ISO 14064" },
+              { "@type": "Thing", "name": "CBAM" },
+              { "@type": "Thing", "name": "SBTi" },
+              { "@type": "Thing", "name": "永續揭露準則" }
+            ],
+            "provider": { "@id": "https://github.com/thc1006/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://github.com/thc1006/#person",
+            "name": "thc1006",
+            "url": "https://github.com/thc1006",
+            "sameAs": ["https://github.com/thc1006/ipas-net-zero-quiz"]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

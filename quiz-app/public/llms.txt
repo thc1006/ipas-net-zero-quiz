@@ -1,0 +1,71 @@
+# 淨零碳規劃管理師備考神器
+
+> iPAS 淨零碳規劃管理師「初級」能力鑑定考古題線上測驗工具。719 題官方考古題 + 151 題加強練習（含 IFRS S1/S2、ISSB 整合 TCFD、永續揭露準則、ISO 14064、CBAM、SBTi、GRI、ESRS、碳足跡、情境分析等 2026 重點議題）。每題附 primary-source URL，AI 解析符合 EU AI Act Art.50 揭露要求。
+
+本檔遵循 [llms.txt](https://llmstxt.org/) 提案格式，協助 LLM 代理人（Cursor、GitHub Copilot、Claude、ChatGPT search、Perplexity 等）以最少 token 理解本站用途與內容範圍。
+
+## 主要資源
+
+- [線上測驗 SPA](https://thc1006.github.io/ipas-net-zero-quiz/)：React + TypeScript 單頁應用，提供考古題練習、考試模擬、AI 輔助解析、來源追溯
+- [GitHub Repo](https://github.com/thc1006/ipas-net-zero-quiz)：MIT 授權、開源、含完整題庫 JSON 與 schema 驗證
+
+## 適用對象
+
+- iPAS 淨零碳規劃管理師「初級」能力鑑定應試者（兩科：基礎概論 + 盤查程序，各 50 題單選、各 75 分鐘）
+- 永續/ESG 從業人員自學
+- ISO 14064 查驗員受訓者
+- 企業 ESG 內訓參考
+
+## 考試範圍（2026 年 iPAS 初級）
+
+### 考科一：淨零碳規劃管理基礎概論
+- 淨零排放國際發展與政策趨勢
+- 永續發展與碳中和目標
+- 溫室氣體基礎知識
+- 碳管理策略與工具
+- IFRS S1（一般永續揭露準則）
+- IFRS S2（氣候相關揭露準則）
+- ISSB 整合 TCFD 四大核心要素：治理、策略、風險管理、指標與目標
+- TCFD（氣候相關財務揭露建議）
+- SBTi（科學基礎減量目標倡議）
+- GRI（全球永續報告倡議組織準則）
+- 歐盟 ESRS（永續報告準則）
+- 歐盟 CBAM（碳邊境調整機制）
+- 碳定價、碳費、碳交易
+- 碳足跡與生命週期評估
+
+### 考科二：淨零碳盤查範圍與程序概要
+- ISO 14064-1 組織型溫室氣體盤查
+- ISO 14064-2 專案型減量
+- ISO 14064-3 查驗
+- 排放源界定與組織邊界劃定
+- 排放係數與計算方法（質量平衡、物量計算、實測等）
+- 數據品質分析與不確定性
+- 碳盤查報告與查證
+- 內部查證程序
+
+## 2026 年熱點議題
+
+- **金管會接軌 IFRS 永續揭露準則時程**：100 億以上上市櫃公司 2026 年度編制、2027 年度申報；分階段擴及全部上市櫃
+- **ISSB 整合 TCFD**：2023 年 6 月 ISSB 發布 IFRS S1/S2，整合 TCFD 四大核心要素
+- **IFRS S2 情境分析**：要求企業執行氣候相關情境分析，揭露轉型風險與實體風險
+- **歐盟 CBAM 過渡期**：2026 年正式實施，影響鋼鐵、鋁、水泥、肥料、電力、氫氣輸歐
+- **EU AI Act Art.50**：AI 生成內容揭露要求 — 本站 AI 產題已合規
+
+## 題庫來源
+
+- **719 題主題庫**（`integrated_dataset.json`）：iPAS 公開考古題（gist：[https://gist.github.com/thc1006](https://gist.github.com/thc1006)）+ 自行驗證題目
+- **151 題加強練習池**（`practice_pool.json`）：
+  - 55 題 `external_mock`：網路公開模擬題（非官方歷屆，iPAS 不公開歷屆）
+  - 96 題 `ai_generated`：LLM 代理依 ISO/CBAM/環境部等法規與標準產生，每題經獨立驗證代理 cross-check 通過、附 ≥1 條 primary-source URL（law.moj.gov.tw、EUR-Lex、IPCC、ISO 等，curl 實測可達）
+
+## 技術細節
+
+- 純前端 SPA（React 18 + TypeScript + Vite），部署於 GitHub Pages
+- 資料 schema 啟動時於 dev 模式 fail-fast 驗證
+- AI 輔助解析使用 puter.js（OpenAI / Anthropic / Google 等多模型）
+- 來源徽章區分主題庫 / 模擬 / AI 產題；AI 產題附 quality_flags（時效性 / 爭議 / 低信心）
+
+## 授權
+
+MIT License — 商用與修改自由，題庫資料來源於公開政府文件與引用標註，請保留原 attribution。
