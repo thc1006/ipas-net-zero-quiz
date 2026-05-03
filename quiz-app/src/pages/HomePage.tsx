@@ -20,27 +20,39 @@ function mainBankCountForSubject(subject: ExamSubject | 'all'): number {
 // 用來避免每次進首頁都自動彈 — 一次就夠
 const DISCLOSURE_SEEN_KEY = 'practice-pool-disclosure-seen';
 
-/** 可開始測驗時回傳 1–100（含超過 100 時夾為 100）；空白或非有效正整數則為 null */
+/** 題數上限 */
+const QUESTION_COUNT_MAX = 100;
+
+/**
+ * 可開始測驗時回傳 1–100（超過 100 夾為 100）；空白、非純整數、< 1 皆為 null。
+ * 嚴格只接受純十進位整數字串，避免 "12abc"、"1.5"、"-5" 等被 parseInt 誤判。
+ */
 function parseClampedQuestionCount(raw: string): number | null {
   const s = raw.trim();
-  if (s === '') return null;
+  if (!/^\d+$/.test(s)) return null;
   const n = Number.parseInt(s, 10);
-  if (!Number.isFinite(n) || n < 1) return null;
-  return Math.min(100, n);
+  if (n < 1) return null;
+  return Math.min(QUESTION_COUNT_MAX, n);
 }
 
 interface HomePageProps {
   onStartQuiz: (config: QuizConfig) => void;
 }
 
+// `questionCount` 在此頁的 source-of-truth 是 questionCountInput（字串），
+// 故從 config state 移除以避免兩個來源並存。送出時才補上 parsed 數值。
+type HomePageConfig = Omit<QuizConfig, 'questionCount'>;
+const { questionCount: _defaultQuestionCount, ...defaultHomeConfig } = defaultConfig;
+
 export function HomePage({ onStartQuiz }: HomePageProps) {
-  const [config, setConfig] = useState<QuizConfig>(defaultConfig);
+  const [config, setConfig] = useState<HomePageConfig>(defaultHomeConfig);
   const [questionCountInput, setQuestionCountInput] = useState(() =>
     String(defaultConfig.questionCount)
   );
   const practiceMode = usePracticeMode();
   const [optInDialogOpen, setOptInDialogOpen] = useState(false);
-  const canStartQuiz = parseClampedQuestionCount(questionCountInput) !== null;
+  const parsedQuestionCount = parseClampedQuestionCount(questionCountInput);
+  const canStartQuiz = parsedQuestionCount !== null;
 
   // 首次進首頁、尚未 opt-in、尚未看過揭露 → 自動彈 dialog
   // 已 opt-in 過或已 dismissed 過則不彈
@@ -89,6 +101,15 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
     []
   );
 
+  // 失焦時把合法輸入正規化（去前後空白、去前導零、超過 100 夾為 100），
+  // 避免「打 500、實際只跑 100」或「  20  」殘留空白的視覺落差
+  const handleCountBlur = useCallback(() => {
+    setQuestionCountInput((prev) => {
+      const n = parseClampedQuestionCount(prev);
+      return n !== null && String(n) !== prev ? String(n) : prev;
+    });
+  }, []);
+
   const handleModeChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       const mode = e.target.value as QuizConfig['mode'];
@@ -109,10 +130,11 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
   );
 
   const handleStart = useCallback(() => {
-    const n = parseClampedQuestionCount(questionCountInput);
-    if (n === null) return;
-    onStartQuiz({ ...config, questionCount: n });
-  }, [config, onStartQuiz, questionCountInput]);
+    if (parsedQuestionCount === null) return;
+    onStartQuiz({ ...config, questionCount: parsedQuestionCount });
+  }, [config, onStartQuiz, parsedQuestionCount]);
+
+  const countHintId = 'count-hint';
 
   return (
     <div className="home-page animate-fade-in">
@@ -272,11 +294,25 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
               type="number"
               id="count"
               min={1}
-              max={100}
+              max={QUESTION_COUNT_MAX}
               value={questionCountInput}
               onChange={handleCountChange}
+              onBlur={handleCountBlur}
               aria-label="題數"
+              aria-invalid={!canStartQuiz}
+              aria-describedby={countHintId}
             />
+            <p
+              id={countHintId}
+              className={`config-item__hint${canStartQuiz ? '' : ' config-item__hint--error'}`}
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {canStartQuiz
+                ? `請輸入 1–${QUESTION_COUNT_MAX} 之間的整數`
+                : `請輸入 1–${QUESTION_COUNT_MAX} 之間的題數才能開始測驗`}
+            </p>
           </div>
 
           {/* 隨機排序 */}

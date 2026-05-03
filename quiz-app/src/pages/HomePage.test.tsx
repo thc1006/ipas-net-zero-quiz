@@ -235,6 +235,67 @@ describe('HomePage', () => {
     expect(onStartQuiz.mock.calls[0][0].questionCount).toBe(100);
   });
 
+  it('count input over-max syncs displayed value to 100 on blur', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    const input = screen.getByLabelText(/題數/) as HTMLInputElement;
+    fireEvent.change(input, { target: { value: '500' } });
+    expect(input.value).toBe('500');
+    fireEvent.blur(input);
+    expect(input.value).toBe('100');
+  });
+
+  it('count input rejects decimals and trailing text (button disabled)', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    const input = screen.getByLabelText(/題數/) as HTMLInputElement;
+    const startBtn = screen.getByRole('button', { name: /開始測驗/ });
+
+    fireEvent.change(input, { target: { value: '1.5' } });
+    expect(startBtn).toBeDisabled();
+
+    fireEvent.change(input, { target: { value: '12abc' } });
+    expect(startBtn).toBeDisabled();
+
+    fireEvent.change(input, { target: { value: '-5' } });
+    expect(startBtn).toBeDisabled();
+
+    fireEvent.click(startBtn);
+    expect(onStartQuiz).not.toHaveBeenCalled();
+  });
+
+  it('count input invalid → aria-invalid=true and hint is a polite live region', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    const input = screen.getByLabelText(/題數/) as HTMLInputElement;
+    fireEvent.change(input, { target: { value: '' } });
+    expect(input.getAttribute('aria-invalid')).toBe('true');
+    const hintId = input.getAttribute('aria-describedby');
+    expect(hintId).toBeTruthy();
+    const hint = document.getElementById(hintId!);
+    expect(hint).not.toBeNull();
+    // 常駐 live region：role=status + aria-live=polite，避免 role 切換時 SR 不可靠 announce
+    expect(hint?.getAttribute('role')).toBe('status');
+    expect(hint?.getAttribute('aria-live')).toBe('polite');
+    expect(hint?.textContent).toMatch(/才能開始測驗/);
+  });
+
+  it('count input invalid → valid: aria-invalid recovers to false', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    const input = screen.getByLabelText(/題數/) as HTMLInputElement;
+    fireEvent.change(input, { target: { value: '' } });
+    expect(input.getAttribute('aria-invalid')).toBe('true');
+    fireEvent.change(input, { target: { value: '20' } });
+    expect(input.getAttribute('aria-invalid')).toBe('false');
+    expect(screen.getByRole('button', { name: /開始測驗/ })).not.toBeDisabled();
+  });
+
+  it('count input blur normalizes leading zeros', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    const input = screen.getByLabelText(/題數/) as HTMLInputElement;
+    fireEvent.change(input, { target: { value: '050' } });
+    fireEvent.blur(input);
+    expect(input.value).toBe('50');
+  });
+
   it('shuffle checkbox toggles config.shuffleQuestions', () => {
     const onStartQuiz = vi.fn();
     render(<HomePage onStartQuiz={onStartQuiz} />);
