@@ -2,6 +2,9 @@
 # - patch coverage threshold: 80% (PR 改動的行)
 # - project coverage threshold: 不退步 (auto)
 # - ignore: 設定檔、測試檔本身、entry-point bootstrap、generated assets
+#
+# 此清單與 quiz-app/vitest.config.ts 的 coverage.exclude 同步維護，
+# 兩邊不對齊會造成 codecov 顯示與本地數字不一致。
 coverage:
   status:
     patch:
@@ -14,20 +17,32 @@ coverage:
         threshold: 1%
 
 ignore:
-  # Vite / Vitest / ESLint 等 build 設定檔不該算 coverage
+  # Vite / Vitest / ESLint / Playwright 等 build & tooling 設定檔
   - "**/*.config.ts"
   - "**/*.config.js"
   - "**/*.config.mjs"
+  - "**/*.config.cjs"
+  - "**/eslint.config.js"
+  - "**/eslint.config.ts"
+  - "**/eslint.config.mjs"
   - "**/.eslintrc*"
+  - "quiz-app/playwright.config.ts"
+  - "quiz-app/vite.config.ts"
+  - "quiz-app/vitest.config.ts"
   # 測試 setup 與測試檔本身
   - "**/test-setup.ts"
   - "**/*.test.ts"
   - "**/*.test.tsx"
+  # E2E spec — Playwright runtime，不在 unit coverage 範疇
+  - "quiz-app/tests/**"
   # Entry point — bootstrap-only side effects；E2E 覆蓋
   - "quiz-app/src/main.tsx"
+  # 純 re-export barrel files（index.ts 無邏輯，覆蓋率無意義）
+  - "quiz-app/src/**/index.ts"
   # 純資料 / 型別宣告
   - "quiz-app/src/data/*.json"
   - "quiz-app/src/types/**"
+  - "**/*.d.ts"
   # ai-helper.ts catch blocks 需要 mock puter.js + puter.ai.chat fail，
   # 屬整合測試範疇，留 follow-up PR 處理
   - "quiz-app/src/utils/ai-helper.ts"

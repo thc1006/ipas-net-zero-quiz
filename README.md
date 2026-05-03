@@ -1,4 +1,4 @@
-# 淨零碳備考神器 | iPAS 淨零碳規劃管理師考古題
+# 淨零碳規劃管理師備考神器 | iPAS 淨零碳規劃管理師考古題
 
 [![Deploy Quiz App to GitHub Pages](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-deploy.yml/badge.svg)](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-deploy.yml)
 [![Quiz App CI](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-ci.yml/badge.svg?branch=main)](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-ci.yml)
@@ -23,7 +23,7 @@
 
 | 來源 | 題數 | 說明 |
 |---|---|---|
-| `external_mock` | 55 | 取自 vocus 講師、HackMD、yamol 等公開模擬題（非官方歷屆，iPAS 不公開歷屆）|
+| `external_mock` | 55 | 取自網路公開之模擬題（非官方歷屆，iPAS 不公開歷屆）|
 | `ai_generated` | 96 | 由 LLM 代理依 ISO/CBAM/環境部等法規與標準產生，每題經獨立驗證代理 cross-check 通過，並附 ≥1 條 primary-source URL（law.moj.gov.tw、EUR-Lex、IPCC、ISO 等，curl 實測可達）|
 
 每題顯示來源徽章（「模擬題」/「AI 產題」），AI 產題用警示色 + 邊框與 quality_flags（時效性 / 爭議 / 低信心）chips。資料 schema 在啟動時於 dev 模式 fail-fast 驗證。
