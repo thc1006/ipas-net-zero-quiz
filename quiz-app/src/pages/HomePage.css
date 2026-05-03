@@ -120,6 +120,56 @@
 
 .practice-pool-tip__cta {
   font-size: var(--font-size-sm);
+  /* 確保與上方元素（desc 或 details）有間隔，避免邊框沾連 */
+  margin-top: var(--spacing-md);
+}
+
+/* === Progressive disclosure：抽題分布預設收摺 ===
+   用原生 <details>/<summary> 取得免費 a11y（鍵盤、aria-expanded、SR），
+   並避免「已啟用」狀態時 histogram 永遠占據版面。 */
+.practice-pool-tip__details {
+  margin: var(--spacing-md) 0 0;
+  /* 收摺時 details 自身為 inline 標題行，避免額外背景擾動 tip card 視覺 */
+}
+
+.practice-pool-tip__details-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-primary);
+  user-select: none;
+  /* 隱去原生 ::-webkit-details-marker，改用我們的箭頭 */
+  list-style: none;
+  padding: var(--spacing-xs) 0;
+}
+.practice-pool-tip__details-summary::-webkit-details-marker {
+  display: none;
+}
+.practice-pool-tip__details-summary:hover {
+  text-decoration: underline;
+}
+.practice-pool-tip__details-summary:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* 自製箭頭 — 開合時旋轉 */
+.practice-pool-tip__details-summary::before {
+  content: '▸';
+  display: inline-block;
+  font-size: 0.85em;
+  transition: transform 150ms ease;
+}
+.practice-pool-tip__details[open] > .practice-pool-tip__details-summary::before {
+  transform: rotate(90deg);
+}
+
+.practice-pool-tip__details-content {
+  margin-top: var(--spacing-sm);
 }
 
 @media (max-width: 640px) {
