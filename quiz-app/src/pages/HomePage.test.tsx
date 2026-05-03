@@ -48,10 +48,10 @@ describe('HomePage', () => {
     expect(screen.getByText(/加強練習池啟用中/)).toBeInTheDocument();
   });
 
-  it('calls onStartQuiz with current config when 開始 clicked', () => {
+  it('calls onStartQuiz with current config when 開始測驗 clicked', () => {
     const onStartQuiz = vi.fn();
     render(<HomePage onStartQuiz={onStartQuiz} />);
-    const startBtn = screen.getByRole('button', { name: /開始/ });
+    const startBtn = screen.getByRole('button', { name: /開始測驗/ });
     fireEvent.click(startBtn);
     expect(onStartQuiz).toHaveBeenCalledOnce();
     const config = onStartQuiz.mock.calls[0][0];
@@ -182,7 +182,7 @@ describe('HomePage', () => {
     render(<HomePage onStartQuiz={onStartQuiz} />);
     const select = screen.getByLabelText(/考科範圍/) as HTMLSelectElement;
     fireEvent.change(select, { target: { value: '考科1' } });
-    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
     expect(onStartQuiz.mock.calls[0][0].subject).toBe('考科1');
   });
 
@@ -191,7 +191,7 @@ describe('HomePage', () => {
     render(<HomePage onStartQuiz={onStartQuiz} />);
     const select = screen.getByLabelText(/測驗模式/) as HTMLSelectElement;
     fireEvent.change(select, { target: { value: 'exam' } });
-    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
     const cfg = onStartQuiz.mock.calls[0][0];
     expect(cfg.mode).toBe('exam');
     expect(cfg.showAnswerImmediately).toBe(false);
@@ -202,17 +202,28 @@ describe('HomePage', () => {
     render(<HomePage onStartQuiz={onStartQuiz} />);
     const input = screen.getByLabelText(/題數/) as HTMLInputElement;
     fireEvent.change(input, { target: { value: '25' } });
-    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
     expect(onStartQuiz.mock.calls[0][0].questionCount).toBe(25);
   });
 
-  it('count input clamps NaN to default 20', () => {
+  it('count input below minimum (0): 開始測驗 disabled', () => {
     const onStartQuiz = vi.fn();
     render(<HomePage onStartQuiz={onStartQuiz} />);
     const input = screen.getByLabelText(/題數/) as HTMLInputElement;
-    fireEvent.change(input, { target: { value: 'abc' } });
-    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
-    expect(onStartQuiz.mock.calls[0][0].questionCount).toBe(20);
+    const startBtn = screen.getByRole('button', { name: /開始測驗/ });
+    fireEvent.change(input, { target: { value: '0' } });
+    expect(input.value).toBe('0');
+    expect(startBtn).toBeDisabled();
+    fireEvent.click(startBtn);
+    expect(onStartQuiz).not.toHaveBeenCalled();
+  });
+
+  it('count input empty: 開始測驗 disabled', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    const input = screen.getByLabelText(/題數/) as HTMLInputElement;
+    const startBtn = screen.getByRole('button', { name: /開始測驗/ });
+    fireEvent.change(input, { target: { value: '' } });
+    expect(startBtn).toBeDisabled();
   });
 
   it('count input clamps over-max to 100', () => {
@@ -220,7 +231,7 @@ describe('HomePage', () => {
     render(<HomePage onStartQuiz={onStartQuiz} />);
     const input = screen.getByLabelText(/題數/) as HTMLInputElement;
     fireEvent.change(input, { target: { value: '500' } });
-    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
     expect(onStartQuiz.mock.calls[0][0].questionCount).toBe(100);
   });
 
@@ -229,7 +240,7 @@ describe('HomePage', () => {
     render(<HomePage onStartQuiz={onStartQuiz} />);
     const cb = screen.getByRole('checkbox') as HTMLInputElement;
     fireEvent.change(cb, { target: { checked: true } });
-    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
     expect(onStartQuiz.mock.calls[0][0].shuffleQuestions).toBe(true);
   });
 });

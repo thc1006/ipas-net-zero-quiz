@@ -20,14 +20,27 @@ function mainBankCountForSubject(subject: ExamSubject | 'all'): number {
 // 用來避免每次進首頁都自動彈 — 一次就夠
 const DISCLOSURE_SEEN_KEY = 'practice-pool-disclosure-seen';
 
+/** 可開始測驗時回傳 1–100（含超過 100 時夾為 100）；空白或非有效正整數則為 null */
+function parseClampedQuestionCount(raw: string): number | null {
+  const s = raw.trim();
+  if (s === '') return null;
+  const n = Number.parseInt(s, 10);
+  if (!Number.isFinite(n) || n < 1) return null;
+  return Math.min(100, n);
+}
+
 interface HomePageProps {
   onStartQuiz: (config: QuizConfig) => void;
 }
 
 export function HomePage({ onStartQuiz }: HomePageProps) {
   const [config, setConfig] = useState<QuizConfig>(defaultConfig);
+  const [questionCountInput, setQuestionCountInput] = useState(() =>
+    String(defaultConfig.questionCount)
+  );
   const practiceMode = usePracticeMode();
   const [optInDialogOpen, setOptInDialogOpen] = useState(false);
+  const canStartQuiz = parseClampedQuestionCount(questionCountInput) !== null;
 
   // 首次進首頁、尚未 opt-in、尚未看過揭露 → 自動彈 dialog
   // 已 opt-in 過或已 dismissed 過則不彈
@@ -71,8 +84,7 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
 
   const handleCountChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = Math.max(1, Math.min(100, parseInt(e.target.value) || 20));
-      setConfig((prev) => ({ ...prev, questionCount: value }));
+      setQuestionCountInput(e.target.value);
     },
     []
   );
@@ -97,8 +109,10 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
   );
 
   const handleStart = useCallback(() => {
-    onStartQuiz(config);
-  }, [config, onStartQuiz]);
+    const n = parseClampedQuestionCount(questionCountInput);
+    if (n === null) return;
+    onStartQuiz({ ...config, questionCount: n });
+  }, [config, onStartQuiz, questionCountInput]);
 
   return (
     <div className="home-page animate-fade-in">
@@ -259,7 +273,7 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
               id="count"
               min={1}
               max={100}
-              value={config.questionCount}
+              value={questionCountInput}
               onChange={handleCountChange}
               aria-label="題數"
             />
@@ -279,7 +293,12 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
         </div>
 
         {/* 開始按鈕 */}
-        <button className="btn btn-primary start-btn" onClick={handleStart}>
+        <button
+          type="button"
+          className="btn btn-primary start-btn"
+          onClick={handleStart}
+          disabled={!canStartQuiz}
+        >
           <span className="material-icons">play_arrow</span>
           開始測驗
         </button>
