@@ -163,7 +163,7 @@ export function useQuiz() {
   /** 回答題目 */
   const submitAnswer = useCallback(
     (selectedAnswer: string | null) => {
-      const { questions, currentIndex, config } = state;
+      const { questions, currentIndex } = state;
       const question = questions[currentIndex];
       if (!question) return;
 
@@ -197,11 +197,6 @@ export function useQuiz() {
             : [...prev.answers, record];
         return { ...prev, answers };
       });
-
-      // 練習模式下立即顯示答案
-      if (config?.showAnswerImmediately) {
-        return record;
-      }
 
       return record;
     },
