@@ -175,6 +175,39 @@ describe('HomePage', () => {
     expect(localStorage.getItem('practice-pool-enabled')).toBe('0');
   });
 
+  // === 抽題分布 disclosure（progressive disclosure 預設收摺）===
+
+  it('啟用練習池時，抽題分布預設為收摺（details not open）', () => {
+    localStorage.setItem('practice-pool-enabled', '1');
+    localStorage.setItem('practice-pool-ai-opt-in', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    const tip = screen.getByTestId('practice-pool-tip');
+    const details = tip.querySelector('details');
+    expect(details).not.toBeNull();
+    expect(details?.hasAttribute('open')).toBe(false);
+    // summary 文字存在、可被使用者點擊
+    expect(within(tip).getByText(/查看抽題分布/)).toBeInTheDocument();
+  });
+
+  it('點擊 summary 會展開 details，histogram 變為 open 狀態', () => {
+    localStorage.setItem('practice-pool-enabled', '1');
+    localStorage.setItem('practice-pool-ai-opt-in', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    const tip = screen.getByTestId('practice-pool-tip');
+    const details = tip.querySelector('details') as HTMLDetailsElement;
+    const summary = tip.querySelector('summary') as HTMLElement;
+    expect(details.open).toBe(false);
+    fireEvent.click(summary);
+    expect(details.open).toBe(true);
+  });
+
+  it('未啟用練習池時不渲染 details disclosure', () => {
+    localStorage.setItem('practice-pool-disclosure-seen', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    const tip = screen.getByTestId('practice-pool-tip');
+    expect(tip.querySelector('details')).toBeNull();
+  });
+
   // === Config 控制元件 onChange handlers (補覆蓋) ===
 
   it('subject select change updates config.subject', () => {

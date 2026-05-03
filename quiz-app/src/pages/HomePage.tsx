@@ -230,10 +230,17 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
               </h3>
               <p className="practice-pool-tip__desc">{desc}</p>
               {enabled && (
-                <PracticePoolHistogram
-                  mainBankCount={mainBankCountForSubject(config.subject)}
-                  subject={config.subject}
-                />
+                <details className="practice-pool-tip__details">
+                  <summary className="practice-pool-tip__details-summary">
+                    查看抽題分布
+                  </summary>
+                  <div className="practice-pool-tip__details-content">
+                    <PracticePoolHistogram
+                      mainBankCount={mainBankCountForSubject(config.subject)}
+                      subject={config.subject}
+                    />
+                  </div>
+                </details>
               )}
               <button
                 type="button"
