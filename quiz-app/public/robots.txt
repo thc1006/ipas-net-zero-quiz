@@ -1,0 +1,51 @@
+# 本站為公開教育資源（iPAS 淨零碳規劃管理師備考），預設允許所有爬蟲。
+# 顯式列出 2026 年主要 AI 代理人 user-agent 以便未來細部調整。
+
+User-agent: *
+Allow: /
+
+# === OpenAI ===
+# GPTBot：訓練資料抓取
+User-agent: GPTBot
+Allow: /
+# OAI-SearchBot：ChatGPT search 索引（阻擋會消失於 ChatGPT 搜尋）
+User-agent: OAI-SearchBot
+Allow: /
+# ChatGPT-User：使用者點擊 ChatGPT 內連結時即時抓取
+User-agent: ChatGPT-User
+Allow: /
+
+# === Anthropic（Claude）3-bot 架構 ===
+# ClaudeBot：訓練
+User-agent: ClaudeBot
+Allow: /
+# Claude-SearchBot：Claude search 索引
+User-agent: Claude-SearchBot
+Allow: /
+# Claude-User：使用者觸發即時抓取
+User-agent: Claude-User
+Allow: /
+
+# === Perplexity ===
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+
+# === Google Gemini 訓練（Google-Extended 控制是否允許 Gemini 訓練） ===
+User-agent: Google-Extended
+Allow: /
+
+# === Common Crawl（多家 LLM 訓練資料來源） ===
+User-agent: CCBot
+Allow: /
+
+# === 其他常見 AI / 搜尋代理 ===
+User-agent: Bytespider
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://thc1006.github.io/ipas-net-zero-quiz/sitemap.xml
