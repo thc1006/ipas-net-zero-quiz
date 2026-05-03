@@ -231,10 +231,7 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
               <p className="practice-pool-tip__desc">{desc}</p>
               {enabled && (
                 <details className="practice-pool-tip__details">
-                  <summary
-                    className="practice-pool-tip__details-summary"
-                    aria-label="展開或收摺抽題分布"
-                  >
+                  <summary className="practice-pool-tip__details-summary">
                     查看抽題分布
                   </summary>
                   <div className="practice-pool-tip__details-content">

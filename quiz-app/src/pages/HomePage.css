@@ -168,6 +168,13 @@
   transform: rotate(90deg);
 }
 
+/* 尊重使用者「減少動態效果」設定（OS 層級 a11y 偏好） */
+@media (prefers-reduced-motion: reduce) {
+  .practice-pool-tip__details-summary::before {
+    transition: none;
+  }
+}
+
 .practice-pool-tip__details-content {
   margin-top: var(--spacing-sm);
 }
