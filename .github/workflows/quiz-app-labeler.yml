@@ -1,11 +1,23 @@
 # 自動標籤
 # 根據檔案變更自動為 PR 加上標籤
-# 最後更新：2026-01-22
+# 最後更新：2026-05-03
+#
+# 為何使用 pull_request_target：
+# - 從 fork 來的 PR 在 `pull_request` 事件下，GITHUB_TOKEN 會被 GitHub 強制降為唯讀，
+#   即使 workflow 宣告 `pull-requests: write` 也不生效，labeler 會回 403
+#   「Resource not accessible by integration」。
+# - 改用 pull_request_target 讓此 workflow 在 base repo 權限下執行 → labeler 可加 label。
+#
+# ⚠️ 安全注意：pull_request_target 會以 base repo 的高權限執行。
+# - 此 workflow **故意不 checkout PR 程式碼**（actions/labeler 只透過 GitHub API 讀
+#   changed-files metadata，不需要原始碼），所以不會執行任何 fork 提供的程式碼。
+# - 若未來新增 step，**禁止**做 `actions/checkout` ref 指向 PR HEAD
+#   （`github.event.pull_request.head.sha` 或類似），那會把 fork 的程式碼以高權限執行。
 
 name: Quiz App Labeler
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened]
     paths:
       - 'quiz-app/**'
