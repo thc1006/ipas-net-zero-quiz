@@ -11457,8 +11457,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-141"
-      }
+        "original_id": "c2-141",
+        "sources": [
+          "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/"
+        ],
+        "sources_verified_date": "2026-05-04"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 335,
@@ -11491,8 +11498,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-142"
-      }
+        "original_id": "c2-142",
+        "sources": [
+          "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/"
+        ],
+        "sources_verified_date": "2026-05-04"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 336,
@@ -11525,8 +11539,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-143"
-      }
+        "original_id": "c2-143",
+        "sources": [
+          "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/"
+        ],
+        "sources_verified_date": "2026-05-04"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 337,
@@ -11559,8 +11580,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-144"
-      }
+        "original_id": "c2-144",
+        "sources": [
+          "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News",
+          "https://isds.tpex.org.tw/"
+        ],
+        "sources_verified_date": "2026-05-04"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 338,
@@ -11865,8 +11894,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-153"
-      }
+        "original_id": "c2-153",
+        "sources": [
+          "https://cgc.twse.com.tw/responsibilityRoadMap/listCh",
+          "https://www.fsc.gov.tw/ch/home.jsp?id=2&parentpath=0&mcustomize=news_view.jsp&dataserno=202303280001&dtable=News"
+        ],
+        "sources_verified_date": "2026-05-04"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 347,
@@ -11899,8 +11936,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-154"
-      }
+        "original_id": "c2-154",
+        "sources": [
+          "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/"
+        ],
+        "sources_verified_date": "2026-05-04"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 348,
@@ -12511,8 +12555,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-172"
-      }
+        "original_id": "c2-172",
+        "sources": [
+          "https://www.fsb-tcfd.org/recommendations/",
+          "https://assets.bbhub.io/company/sites/60/2021/10/FINAL-2017-TCFD-Report.pdf"
+        ],
+        "sources_verified_date": "2026-05-04"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 366,
@@ -12545,8 +12597,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-173"
-      }
+        "original_id": "c2-173",
+        "sources": [
+          "https://www.fsb-tcfd.org/recommendations/"
+        ],
+        "sources_verified_date": "2026-05-04"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 367,
@@ -12579,8 +12638,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-174"
-      }
+        "original_id": "c2-174",
+        "sources": [
+          "https://www.fsb-tcfd.org/recommendations/"
+        ],
+        "sources_verified_date": "2026-05-04"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 368,
@@ -12613,8 +12679,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-175"
-      }
+        "original_id": "c2-175",
+        "sources": [
+          "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/",
+          "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/"
+        ],
+        "sources_verified_date": "2026-05-04"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 369,
@@ -15068,8 +15142,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-247"
-      }
+        "original_id": "c2-247",
+        "sources": [
+          "https://www.cdp.net/zh",
+          "https://www.cdp.net/"
+        ],
+        "sources_verified_date": "2026-05-04"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 441,
@@ -20574,7 +20656,10 @@
         "verification_date": "2026-01-23",
         "verification_source": "batch_verification",
         "confidence": "medium"
-      }
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "item_id": "S_YAMOL_023-q079",

@@ -2,6 +2,14 @@
 # 對 quality_flags=time_sensitive 的題目，curl 每條 source URL 看是否仍 200 OK，
 # 失敗時自動開 GitHub issue 列出失效的題目供人工 re-verify。
 #
+# 掃描範圍（2026-05-04 起擴充）：
+# 1. quiz-app/src/data/practice_pool.json — pool items 的 sources[] 陣列
+# 2. quiz-app/src/data/integrated_dataset.json — 主庫
+#    - gist_items[]：透過 metadata.sources[] 陣列（若有）
+#    - our_unique_items[]：透過 source.url (object) + metadata.sources[]
+#    - URL-less gist items 仍可帶 time_sensitive flag 供人工 review，但
+#      workflow 不會 curl 驗證（無 URL 可驗）
+#
 # 觸發：每季 1 號 04:00 UTC（02:00 / 12:00 台北 — 視 dst）跑一次；
 # 也可手動透過 workflow_dispatch 觸發。
 
@@ -35,32 +43,84 @@ jobs:
         id: list
         run: |
           set -euo pipefail
+          : > pairs.tsv
+
+          # Pool items：sources[] 陣列
+          # URL scheme whitelist：只允許 http/https，避免 file:// 等 SSRF 面
           jq -r '
             .items[]
-            | select(.quality_flags | index("time_sensitive"))
+            | select((.quality_flags // []) | index("time_sensitive"))
             | .id as $id
-            | (.sources // [])[] | "\($id)\t\(.)"
-          ' quiz-app/src/data/practice_pool.json > urls.tsv
-          count=$(wc -l < urls.tsv)
-          echo "count=$count" >> "$GITHUB_OUTPUT"
-          echo "Found $count URL(s) to verify"
+            | (.sources // [])[]
+            | select(type=="string" and (startswith("https://") or startswith("http://")))
+            | "\($id)\t\(.)"
+          ' quiz-app/src/data/practice_pool.json >> pairs.tsv
+
+          # Main bank：gist_items + our_unique_items
+          # URL 來源 fallback：source.url (our_unique 結構化)、metadata.sources[] (兩者皆可)
+          # 無 URL 的 gist 題目即使有 time_sensitive flag 也跳過（workflow 不能驗證無 URL 項）
+          jq -r '
+            ([.gist_items // [], .our_unique_items // []] | add)[]
+            | select((.quality_flags // []) | index("time_sensitive"))
+            | (.item_id // ("gist-" + ((.index // 0) | tostring))) as $id
+            | (
+                [(.source | if type=="object" then .url else empty end)]
+                + [(.metadata.sources // [])[]]
+              )
+            | map(select(type=="string" and (startswith("https://") or startswith("http://"))))
+            | unique
+            | .[] as $u
+            | "\($id)\t\($u)"
+          ' quiz-app/src/data/integrated_dataset.json >> pairs.tsv
+
+          # 以 URL 為 key 真正去重 — 同 URL 出現在多題只 curl 一次，
+          # 失敗時報告會列出所有受影響題目 id（合併欄）
+          # 輸出格式：url\tid1,id2,id3
+          awk -F'\t' '
+            { ids[$2] = ids[$2] ? ids[$2]","$1 : $1 }
+            END { for (u in ids) print u "\t" ids[u] }
+          ' pairs.tsv | sort > urls.tsv
+
+          unique_count=$(wc -l < urls.tsv)
+          total_pairs=$(wc -l < pairs.tsv)
+          echo "count=$unique_count" >> "$GITHUB_OUTPUT"
+          echo "Found $unique_count unique URL(s) across $total_pairs (id, url) pairs"
           cat urls.tsv
 
-      - name: Curl-check URLs
+      - name: Curl-check URLs (parallel, with HEAD→GET fallback)
         id: curl
         run: |
           set -euo pipefail
-          : > failures.tsv
-          while IFS=$'\t' read -r id url; do
-            [ -z "$id" ] && continue
-            status=$(curl -sIL --max-time 15 -A "Mozilla/5.0" -o /dev/null -w "%{http_code}" "$url" || echo "000")
-            if [ "$status" != "200" ]; then
-              echo -e "$id\t$url\t$status" >> failures.tsv
-              echo "❌ $id $url → HTTP $status"
-            else
-              echo "✅ $id $url"
+
+          # Per-URL check 函式：
+          # - HEAD 先試（省流量）；CDN/WAF 拒 HEAD（403/405/000）→ fallback GET
+          # - --connect-timeout 5 + --max-time 10：總耗時上限約 20s/URL（HEAD+GET 兩次）
+          # - stdout：失敗時輸出 TSV（url\tids\tstatus），由 xargs 收集為 failures.tsv
+          # - stderr：人類可讀 log（✅/❌），由 GitHub Actions 顯示在 step output
+          check_url() {
+            local line="$1"
+            local url ids status
+            url="${line%%$'\t'*}"
+            ids="${line#*$'\t'}"
+            [ -z "$url" ] && return
+            status=$(curl -sIL --connect-timeout 5 --max-time 10 -A "Mozilla/5.0" -o /dev/null -w "%{http_code}" "$url" 2>/dev/null || echo "000")
+            if [ "$status" = "403" ] || [ "$status" = "405" ] || [ "$status" = "000" ]; then
+              status=$(curl -sL --connect-timeout 5 --max-time 10 -A "Mozilla/5.0" -o /dev/null -w "%{http_code}" "$url" 2>/dev/null || echo "000")
             fi
-          done < urls.tsv
+            if [ "$status" != "200" ]; then
+              printf '%s\t%s\t%s\n' "$url" "$ids" "$status"
+              printf '❌ %s (ids: %s) → HTTP %s\n' "$url" "$ids" "$status" >&2
+            else
+              printf '✅ %s (ids: %s)\n' "$url" "$ids" >&2
+            fi
+          }
+          export -f check_url
+
+          # 並行 4 worker：32 URLs ÷ 4 ≈ 8 rounds × 最壞 20s = 160s（job timeout-minutes: 10 充裕）
+          # POSIX 規定 < PIPE_BUF (4096) bytes 的 write 為 atomic，每行遠低於此 → 無交錯風險
+          : > failures.tsv
+          xargs -d '\n' -P 4 -I{} bash -c 'check_url "$@"' _ {} < urls.tsv > failures.tsv
+
           fail_count=$(wc -l < failures.tsv)
           echo "fail_count=$fail_count" >> "$GITHUB_OUTPUT"
 
@@ -72,8 +132,9 @@ jobs:
             const fs = require('fs');
             const lines = fs.readFileSync('failures.tsv', 'utf8').trim().split('\n').filter(Boolean);
             const items = lines.map(l => {
-              const [id, url, status] = l.split('\t');
-              return `- \`${id}\` — [${url}](${url}) HTTP ${status}`;
+              const [url, ids, status] = l.split('\t');
+              const idList = (ids || '').split(',').filter(Boolean).map(i => `\`${i}\``).join(', ');
+              return `- [${url}](${url}) HTTP ${status} — affected: ${idList}`;
             }).join('\n');
 
             const today = new Date().toISOString().slice(0, 10);
