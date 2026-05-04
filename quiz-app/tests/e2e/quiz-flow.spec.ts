@@ -73,8 +73,9 @@ test.describe('測驗流程', () => {
       }
     }
 
-    // 完成測驗
-    await page.getByRole('button', { name: /完成|結束/i }).click();
+    // 完成測驗（match「完成測驗」substring，避免撞到 PR #75 新加的「結束並返回首頁」
+    // abort 按鈕；舊 regex /完成|結束/i 會兩個都中觸發 strict mode violation）
+    await page.getByRole('button', { name: /完成測驗/i }).click();
 
     // 應看到結果頁面（顯示分數和評語）
     await expect(page.locator('.result-page')).toBeVisible();
@@ -104,9 +105,13 @@ test.describe('無障礙功能', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
 
-    // 第一個選項應獲得焦點
+    // 焦點應在 page 上的可 focus 元素（attached）。
+    // 不用 toBeVisible —— radio inputs 是 sr-only 樣式（用 label 顯示），
+    // tab order 在 PR #75 加 abort button 後可能落在 radio 上，會被
+    // playwright 視為 invisible（sr-only 計算 visibility=hidden）但仍
+    // attached + 可被 keyboard 操作。
     const focusedElement = page.locator(':focus');
-    await expect(focusedElement).toBeVisible();
+    await expect(focusedElement).toBeAttached();
   });
 
   test('選項應有正確的 ARIA 屬性', async ({ page }) => {
