@@ -102,11 +102,15 @@ test.describe('無障礙功能', () => {
     await expect(page.locator('.question-card')).toBeVisible();
 
     // 使用 Tab 鍵連續按到打進 quiz 互動元件（最多 12 次 — 超過代表 tab order 異常）。
-    // 期待焦點落在以下任一可互動元件：abort button / radio input / 上下題 button。
+    // 期待焦點落在以下任一 quiz 內可互動元件（純 CSS selector，避免 Playwright-only
+    // 偽類在 Element.matches 失效）：
+    //   - .quiz-abort-btn（abort button）
+    //   - .quiz-navigation button（上一題 / 下一題 / 完成）
+    //   - input[type="radio"][name="quiz-option"]（題目選項，sr-only 但 keyboard 可操作）
     // 不用 :focus toBeVisible — radio 用 sr-only 樣式（用 label 顯示），
     // playwright 視為 invisible 但 keyboard 仍可操作。
     const interactiveSelector =
-      'button.quiz-abort-btn, [role="radio"], input[type="radio"][name="quiz-option"], button:has-text("下一題"), button:has-text("上一題")';
+      '.quiz-abort-btn, .quiz-navigation button, input[type="radio"][name="quiz-option"]';
 
     let landed = false;
     for (let i = 0; i < 12; i++) {
