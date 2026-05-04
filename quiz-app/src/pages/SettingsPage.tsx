@@ -1,5 +1,5 @@
 // 設定頁面元件
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { useAccessibility } from '../hooks/useAccessibility';
 import { usePracticeMode } from '../hooks/usePracticeMode';
 import { usePracticePool } from '../hooks/usePracticePool';
@@ -28,6 +28,18 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
   const practiceMode = usePracticeMode();
   const { pool } = usePracticePool();
   const [optInOpen, setOptInOpen] = useState(false);
+  // Refs #64：清除作答統計確認 dialog（取代 window.confirm，與 quiz-abort-dialog 同 pattern）
+  const [clearStatsConfirmOpen, setClearStatsConfirmOpen] = useState(false);
+
+  // ESC 關閉 clear-stats dialog（a11y 期待行為，對齊 QuizPage abort dialog）
+  useEffect(() => {
+    if (!clearStatsConfirmOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setClearStatsConfirmOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [clearStatsConfirmOpen]);
 
   const onTogglePractice = () => {
     if (practiceMode.enabled) {
@@ -205,18 +217,52 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
           </div>
           <button
             className="btn btn-secondary"
-            onClick={() => {
-              // 不可逆動作 — 用 native confirm 與 abort flow 一致地點對齊
-              if (window.confirm('確定要清除所有作答統計嗎？此動作無法復原。')) {
-                clearStats();
-              }
-            }}
+            onClick={() => setClearStatsConfirmOpen(true)}
           >
             <span className="material-icons" aria-hidden="true">delete_sweep</span>
             清除作答統計
           </button>
         </div>
       </section>
+
+      {/* 清除作答統計確認 dialog（Refs #64）— 取代 window.confirm 對齊既有 dialog pattern */}
+      {clearStatsConfirmOpen && (
+        <div
+          className="settings-confirm-dialog-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="clear-stats-confirm-title"
+          onClick={() => setClearStatsConfirmOpen(false)}
+        >
+          <div className="settings-confirm-dialog" onClick={(e) => e.stopPropagation()}>
+            <h2 id="clear-stats-confirm-title">清除作答統計？</h2>
+            <p>
+              所有題目的累積答對率紀錄將被刪除，此動作無法復原。
+              （資料僅儲存在本機，不會上傳）
+            </p>
+            <div className="settings-confirm-dialog__actions">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => setClearStatsConfirmOpen(false)}
+              >
+                取消
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                  clearStats();
+                  setClearStatsConfirmOpen(false);
+                }}
+                autoFocus
+              >
+                確定清除
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 重置 */}
       <section className="settings-section">

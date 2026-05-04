@@ -7,7 +7,7 @@ import { SourceBanner } from '../SourceBanner/SourceBanner';
 import { LAW_PCODE_LABELS } from '../../data/law-pcode-labels';
 import { findRedundantPrefix } from '../../utils/option-prefix';
 import { buildFeedbackUrl } from '../../utils/question-feedback-url';
-import { loadStats } from '../../utils/question-stats-storage';
+import { useAllQuestionStats } from '../../hooks/useQuestionStats';
 import './QuestionCard.css';
 
 /**
@@ -67,13 +67,13 @@ export function QuestionCard({
     () => findRedundantPrefix(question.stem, question.options.map((o) => o.text)),
     [question.stem, question.options],
   );
-  // 每題作答統計 chip（Refs #64）— 只在 mount 時 / question.id 變動時讀
-  // 一次 localStorage，不隨 selectedAnswer 等狀態 re-render 重讀
-  const stat = useMemo(() => {
-    if (!question.hasAnswer) return null;
-    const s = loadStats()[question.id];
-    return s ?? null;
-  }, [question.id, question.hasAnswer]);
+  // 每題作答統計 chip（Refs #64）— 透過 useAllQuestionStats 訂閱跨 tab 變更
+  // （另一分頁 clearStats / 完成 quiz 時自動 refresh），無答案題不顯示
+  const allStats = useAllQuestionStats();
+  const stat = useMemo(
+    () => (question.hasAnswer ? allStats[question.id] ?? null : null),
+    [question.id, question.hasAnswer, allStats]
+  );
   const [isLoadingAI, setIsLoadingAI] = useState(false);
 
   const getOptionStatus = useCallback(

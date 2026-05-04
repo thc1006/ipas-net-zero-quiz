@@ -9,7 +9,8 @@ import {
 import { SourceBreakdown } from '../components/SourceBreakdown/SourceBreakdown';
 import type { QuizResult, QuizQuestion } from '../types/quiz';
 import { buildFeedbackUrl } from '../utils/question-feedback-url';
-import { loadStats, selectWeakQuestions } from '../utils/question-stats-storage';
+import { selectWeakQuestions } from '../utils/question-stats-storage';
+import { useAllQuestionStats } from '../hooks/useQuestionStats';
 import './ResultPage.css';
 
 const WEAK_MIN_ATTEMPTS = 3;
@@ -64,10 +65,10 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
 
   // 累積最常答錯（Refs #64）— pure 篩選/排序在 selectWeakQuestions，
   // 此處只負責 id → 題幹查找（沒查到的就過濾掉，多為已被刪除題或 pool 題未載入）
-  // 注意：finishQuiz 已寫入本次 quiz 的 stats，所以這裡讀到的含本場結果累積值
+  // 透過 useAllQuestionStats 訂閱跨 tab 變更：別的分頁清除統計時，本頁也即時更新
+  const allStats = useAllQuestionStats();
   const weakQuestions = useMemo(() => {
-    const stats = loadStats();
-    const weak = selectWeakQuestions(stats, {
+    const weak = selectWeakQuestions(allStats, {
       minAttempts: WEAK_MIN_ATTEMPTS,
       maxRate: WEAK_MAX_RATE,
       limit: WEAK_LIST_LIMIT,
@@ -78,7 +79,7 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
         return q ? { ...w, stem: q.stem } : null;
       })
       .filter((x): x is NonNullable<typeof x> => x !== null);
-  }, []);
+  }, [allStats]);
 
   // 請求 AI 解釋特定題目（Streaming）
   const handleAskAI = useCallback(async (question: QuizQuestion) => {
