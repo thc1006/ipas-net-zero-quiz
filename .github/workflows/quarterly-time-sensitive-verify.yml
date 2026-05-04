@@ -87,25 +87,40 @@ jobs:
           echo "Found $unique_count unique URL(s) across $total_pairs (id, url) pairs"
           cat urls.tsv
 
-      - name: Curl-check URLs
+      - name: Curl-check URLs (parallel, with HEAD→GET fallback)
         id: curl
         run: |
           set -euo pipefail
-          : > failures.tsv
-          while IFS=$'\t' read -r url ids; do
-            [ -z "$url" ] && continue
-            # HEAD 先試（省流量）；遇到 CDN/WAF 拒絕 HEAD（403/405/000）再 fallback 到 GET
-            status=$(curl -sIL --max-time 15 -A "Mozilla/5.0" -o /dev/null -w "%{http_code}" "$url" || echo "000")
+
+          # Per-URL check 函式：
+          # - HEAD 先試（省流量）；CDN/WAF 拒 HEAD（403/405/000）→ fallback GET
+          # - --connect-timeout 5 + --max-time 10：總耗時上限約 20s/URL（HEAD+GET 兩次）
+          # - stdout：失敗時輸出 TSV（url\tids\tstatus），由 xargs 收集為 failures.tsv
+          # - stderr：人類可讀 log（✅/❌），由 GitHub Actions 顯示在 step output
+          check_url() {
+            local line="$1"
+            local url ids status
+            url="${line%%$'\t'*}"
+            ids="${line#*$'\t'}"
+            [ -z "$url" ] && return
+            status=$(curl -sIL --connect-timeout 5 --max-time 10 -A "Mozilla/5.0" -o /dev/null -w "%{http_code}" "$url" 2>/dev/null || echo "000")
             if [ "$status" = "403" ] || [ "$status" = "405" ] || [ "$status" = "000" ]; then
-              status=$(curl -sL --max-time 15 -A "Mozilla/5.0" -o /dev/null -w "%{http_code}" "$url" || echo "000")
+              status=$(curl -sL --connect-timeout 5 --max-time 10 -A "Mozilla/5.0" -o /dev/null -w "%{http_code}" "$url" 2>/dev/null || echo "000")
             fi
             if [ "$status" != "200" ]; then
-              echo -e "$url\t$ids\t$status" >> failures.tsv
-              echo "❌ $url (ids: $ids) → HTTP $status"
+              printf '%s\t%s\t%s\n' "$url" "$ids" "$status"
+              printf '❌ %s (ids: %s) → HTTP %s\n' "$url" "$ids" "$status" >&2
             else
-              echo "✅ $url (ids: $ids)"
+              printf '✅ %s (ids: %s)\n' "$url" "$ids" >&2
             fi
-          done < urls.tsv
+          }
+          export -f check_url
+
+          # 並行 4 worker：32 URLs ÷ 4 ≈ 8 rounds × 最壞 20s = 160s（job timeout-minutes: 10 充裕）
+          # POSIX 規定 < PIPE_BUF (4096) bytes 的 write 為 atomic，每行遠低於此 → 無交錯風險
+          : > failures.tsv
+          xargs -d '\n' -P 4 -I{} bash -c 'check_url "$@"' _ {} < urls.tsv > failures.tsv
+
           fail_count=$(wc -l < failures.tsv)
           echo "fail_count=$fail_count" >> "$GITHUB_OUTPUT"
 
