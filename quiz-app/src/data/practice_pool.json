@@ -2,6 +2,7 @@
   "_meta": {
     "version": "1.0.0",
     "generated_at": "2026-04-25T02:34:23.313664+00:00",
+    "last_updated": "2026-05-04T13:30:00+08:00",
     "description": "Practice pool — 獨立於主題庫的補充練習題；使用者開啟『加強練習』模式才提供。每題附 provenance.source_type 與 quality_flags；UI 須顯示來源徽章。",
     "source_types": [
       "external_mock",

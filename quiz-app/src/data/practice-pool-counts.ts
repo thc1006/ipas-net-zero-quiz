@@ -13,15 +13,15 @@ export const PRACTICE_POOL_COUNTS = {
 /**
  * Pool 題依 subject filter 後的可抽題數
  *
- * - `考科1` / `考科2`: 該考科 mapped 的題目（不含 `unmapped_subject` flag）
- * - `all`: 全部 157 題（含 unmapped_subject）
+ * Subject filter 邏輯（依 practice-pool.ts `getQuestionsForSubject`）：
+ *   - `考科1` / `考科2`: 僅取 `item.subject` 以「考科一」/「考科二」開頭之題目
+ *   - `all`: 全部 pool 題（含 subject 為 null 或非「考科一/二」字首者，均歸 unknown bucket）
  *
- * 來源計算（jq）：
- *   group_by(subject + "|" + provenance.source_type)
+ * 來源計算（jq group_by(subject 字首 + "|" + provenance.source_type)）：
  *   - 考科一/ai_generated: 47  (+6 自 ifrs_s1_s2_round_2026q2)
  *   - 考科二/ai_generated: 24
- *   - unknown/ai_generated: 31  (unmapped_subject flag — 只在 all 出現)
- *   - unknown/external_mock: 55 (unmapped_subject flag — 只在 all 出現)
+ *   - unknown/ai_generated: 31  (subject 為 null 或非「考科一/二」字首；只在 all 出現)
+ *   - unknown/external_mock: 55 (同上；只在 all 出現)
  */
 export const POOL_BY_SUBJECT = {
   '考科1': { externalMock: 0, aiGenerated: 47, total: 47 },
