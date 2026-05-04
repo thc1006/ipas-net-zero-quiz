@@ -337,4 +337,77 @@ describe('HomePage', () => {
     fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
     expect(onStartQuiz.mock.calls[0][0].shuffleQuestions).toBe(true);
   });
+
+  // === Resume hint（Refs #71）===
+
+  it('localStorage 無進度時不顯示 resume hint', () => {
+    render(<HomePage onStartQuiz={() => {}} onResumeQuiz={() => {}} />);
+    expect(screen.queryByTestId('resume-hint')).toBeNull();
+  });
+
+  it('localStorage 有有效進度時顯示 resume hint + 繼續測驗 link', () => {
+    localStorage.setItem(
+      'ipas-quiz-in-progress',
+      JSON.stringify({
+        version: 1,
+        savedAt: Date.now() - 5 * 60_000, // 5 分鐘前
+        state: {
+          isActive: true,
+          questions: new Array(20).fill(null),
+          currentIndex: 7,
+          answers: new Array(7).fill({ questionId: 'x' }),
+          startTime: Date.now(),
+          config: null,
+        },
+      })
+    );
+    render(<HomePage onStartQuiz={() => {}} onResumeQuiz={() => {}} />);
+    const hint = screen.getByTestId('resume-hint');
+    expect(hint).toBeInTheDocument();
+    expect(hint.textContent).toMatch(/已答 7 \/ 20 題/);
+    expect(hint.textContent).toMatch(/分鐘前/);
+    expect(within(hint).getByRole('button', { name: /繼續測驗/ })).toBeInTheDocument();
+  });
+
+  it('點擊「繼續測驗」呼叫 onResumeQuiz', () => {
+    localStorage.setItem(
+      'ipas-quiz-in-progress',
+      JSON.stringify({
+        version: 1,
+        savedAt: Date.now(),
+        state: {
+          isActive: true,
+          questions: new Array(10).fill(null),
+          currentIndex: 3,
+          answers: new Array(3).fill({ questionId: 'x' }),
+          startTime: Date.now(),
+          config: null,
+        },
+      })
+    );
+    const onResume = vi.fn();
+    render(<HomePage onStartQuiz={() => {}} onResumeQuiz={onResume} />);
+    fireEvent.click(screen.getByRole('button', { name: /繼續測驗/ }));
+    expect(onResume).toHaveBeenCalledOnce();
+  });
+
+  it('未提供 onResumeQuiz prop 時即使有進度也不顯示 hint（避免悬空 link）', () => {
+    localStorage.setItem(
+      'ipas-quiz-in-progress',
+      JSON.stringify({
+        version: 1,
+        savedAt: Date.now(),
+        state: {
+          isActive: true,
+          questions: new Array(5).fill(null),
+          currentIndex: 1,
+          answers: [],
+          startTime: Date.now(),
+          config: null,
+        },
+      })
+    );
+    render(<HomePage onStartQuiz={() => {}} />);
+    expect(screen.queryByTestId('resume-hint')).toBeNull();
+  });
 });

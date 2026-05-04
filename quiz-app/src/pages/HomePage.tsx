@@ -7,6 +7,7 @@ import { usePracticeMode } from '../hooks/usePracticeMode';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
 import { PracticePoolHistogram } from '../components/PracticePoolHistogram/PracticePoolHistogram';
 import { readBool, writeBool } from '../utils/local-storage';
+import { loadProgress, formatRelativeTime } from '../utils/quiz-progress-storage';
 import type { QuizConfig, ExamSubject } from '../types/quiz';
 import './HomePage.css';
 
@@ -37,6 +38,8 @@ function parseClampedQuestionCount(raw: string): number | null {
 
 interface HomePageProps {
   onStartQuiz: (config: QuizConfig) => void;
+  /** 使用者點「繼續測驗」時呼叫；App.tsx 接住後 resume + 切到 quiz view（Refs #71） */
+  onResumeQuiz?: () => void;
 }
 
 // `questionCount` 在此頁的 source-of-truth 是 questionCountInput（字串），
@@ -44,8 +47,10 @@ interface HomePageProps {
 type HomePageConfig = Omit<QuizConfig, 'questionCount'>;
 const { questionCount: _defaultQuestionCount, ...defaultHomeConfig } = defaultConfig;
 
-export function HomePage({ onStartQuiz }: HomePageProps) {
+export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   const [config, setConfig] = useState<HomePageConfig>(defaultHomeConfig);
+  // Resume hint：mount 時讀一次 localStorage（不訂閱、不輪詢）
+  const [savedProgress] = useState(() => loadProgress());
   const [questionCountInput, setQuestionCountInput] = useState(() =>
     String(defaultConfig.questionCount)
   );
@@ -183,6 +188,29 @@ export function HomePage({ onStartQuiz }: HomePageProps) {
           )}
         </div>
       </section>
+
+      {/* 未完成測驗 resume hint（極簡：一行字 + 一個 link、不彈 dialog） */}
+      {savedProgress && onResumeQuiz && (
+        <section
+          className="resume-hint card"
+          data-testid="resume-hint"
+          aria-live="polite"
+        >
+          <span className="material-icons sm">history</span>
+          <span className="resume-hint__text">
+            您有未完成測驗（已答 {savedProgress.state.answers.length} /{' '}
+            {savedProgress.state.questions.length} 題，
+            {formatRelativeTime(savedProgress.savedAt)}）
+          </span>
+          <button
+            type="button"
+            className="btn btn-text resume-hint__cta"
+            onClick={onResumeQuiz}
+          >
+            繼續測驗
+          </button>
+        </section>
+      )}
 
       {/* 加強練習池 tip card — 隨啟用狀態切換內容，避免突然消失造成困惑 */}
       {(() => {

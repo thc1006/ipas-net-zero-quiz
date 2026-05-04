@@ -1,5 +1,5 @@
 // 測驗邏輯 Hook
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import type {
   QuizQuestion,
   QuizConfig,
@@ -13,6 +13,11 @@ import {
   allQuestions,
 } from '../data/questions';
 import { loadPracticePool, toQuizQuestion } from '../utils/practice-pool';
+import {
+  saveProgress,
+  loadProgress,
+  clearProgress,
+} from '../utils/quiz-progress-storage';
 
 /** 測驗狀態 */
 export interface QuizState {
@@ -49,6 +54,13 @@ export const defaultConfig: QuizConfig = {
 export function useQuiz() {
   const [state, setState] = useState<QuizState>(initialState);
   const [questionStartTime, setQuestionStartTime] = useState<number>(0);
+
+  // 持久化 in-progress 測驗（Refs #71）：
+  // 每次 state 變動且 isActive=true 時寫入 localStorage；isActive=false 不動
+  // （清除由 finishQuiz / resetQuiz 主動呼叫，避免初始 mount 誤清舊進度）
+  useEffect(() => {
+    if (state.isActive) saveProgress(state);
+  }, [state]);
 
   /** 開始測驗 */
   const startQuiz = useCallback((config: QuizConfig) => {
@@ -280,14 +292,29 @@ export function useQuiz() {
       skippedCount: questions.length - answers.length,
     };
 
+    clearProgress();
     setState(initialState);
 
     return result;
   }, [state]);
 
-  /** 重置測驗 */
+  /** 重置測驗（亦會清除持久化進度） */
   const resetQuiz = useCallback(() => {
+    clearProgress();
     setState(initialState);
+  }, []);
+
+  /**
+   * 從 localStorage 還原中斷的測驗（Refs #71）。
+   * 找到合法 saved progress 時 restore 並回 true；否則回 false。
+   * 由 App.tsx 在使用者點「繼續測驗」時呼叫。
+   */
+  const resumeQuiz = useCallback((): boolean => {
+    const saved = loadProgress();
+    if (!saved || !saved.state.isActive) return false;
+    setState(saved.state);
+    setQuestionStartTime(Date.now());
+    return true;
   }, []);
 
   // 衍生狀態
@@ -345,6 +372,7 @@ export function useQuiz() {
     goToQuestion,
     finishQuiz,
     resetQuiz,
+    resumeQuiz,
   };
 }
 

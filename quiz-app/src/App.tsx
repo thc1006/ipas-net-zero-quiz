@@ -46,11 +46,25 @@ function App() {
     }
   }, [quiz]);
 
-  // 返回首頁
+  // 返回首頁（重置 quiz + 清持久化進度）
   const handleGoHome = useCallback(() => {
     quiz.resetQuiz();
     setLastResult(null);
     setCurrentView('home');
+  }, [quiz]);
+
+  // 結束測驗但保留進度（Refs #71）— 不清 localStorage、回首頁
+  // 與 handleGoHome 的差異：abort 不呼叫 resetQuiz（resetQuiz 會 clearProgress）
+  const handleAbortQuiz = useCallback(() => {
+    setLastResult(null);
+    setCurrentView('home');
+  }, []);
+
+  // 從首頁 resume hint 點「繼續測驗」（Refs #71）
+  const handleResumeQuiz = useCallback(() => {
+    if (quiz.resumeQuiz()) {
+      setCurrentView('quiz');
+    }
   }, [quiz]);
 
   // 重新測驗
@@ -91,13 +105,17 @@ function App() {
       <main id="main-content" className="main-content">
         <ErrorBoundary>
           {currentView === 'home' && (
-            <HomePage onStartQuiz={handleStartQuiz} />
+            <HomePage
+              onStartQuiz={handleStartQuiz}
+              onResumeQuiz={handleResumeQuiz}
+            />
           )}
 
           {currentView === 'quiz' && quiz.currentQuestion && (
             <QuizPage
               quiz={quiz}
               onFinish={handleFinishQuiz}
+              onAbort={handleAbortQuiz}
             />
           )}
 
