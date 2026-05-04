@@ -298,9 +298,18 @@ export function useQuiz() {
     return result;
   }, [state]);
 
-  /** 重置測驗（亦會清除持久化進度） */
+  /** 重置測驗（亦會清除持久化進度）— 用於 user 主動「重來」/ result 後返家 */
   const resetQuiz = useCallback(() => {
     clearProgress();
+    setState(initialState);
+  }, []);
+
+  /**
+   * 軟重置 in-memory state 但**保留** localStorage 進度（Refs #71）。
+   * 用於 abort flow：使用者點「結束並返回首頁」時，state 歸零但 localStorage
+   * 保留供下次 resume。避免 quiz hook 在 abort 後仍殘留 isActive=true 狀態。
+   */
+  const softReset = useCallback(() => {
     setState(initialState);
   }, []);
 
@@ -372,6 +381,7 @@ export function useQuiz() {
     goToQuestion,
     finishQuiz,
     resetQuiz,
+    softReset,
     resumeQuiz,
   };
 }

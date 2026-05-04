@@ -506,5 +506,36 @@ describe('useQuiz Hook', () => {
       });
       expect(returned).toBe(false);
     });
+
+    // softReset：abort flow 用 — in-memory state 歸零但保留 localStorage
+    it('softReset 重置 state 但**保留** localStorage 進度（abort flow）', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3 });
+      });
+      act(() => {
+        result.current.submitAnswer('A');
+      });
+      // 確認 localStorage 已寫入
+      expect(window.localStorage.getItem(STORAGE_KEY)).not.toBeNull();
+
+      act(() => {
+        result.current.softReset();
+      });
+
+      // in-memory state 歸零
+      expect(result.current.isActive).toBe(false);
+      expect(result.current.questions.length).toBe(0);
+      // localStorage **保留**（vs resetQuiz 會清）
+      expect(window.localStorage.getItem(STORAGE_KEY)).not.toBeNull();
+
+      // softReset 後仍可 resume（localStorage 還在）
+      let returned = false;
+      act(() => {
+        returned = result.current.resumeQuiz();
+      });
+      expect(returned).toBe(true);
+      expect(result.current.isActive).toBe(true);
+    });
   });
 });
