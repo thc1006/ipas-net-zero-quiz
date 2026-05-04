@@ -279,7 +279,9 @@
         "https://vocus.cc/article/6901a506fd89780001c2a960",
         "https://www.ifrs.org/"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-em-ipas_vocus_mock-007",
@@ -1701,7 +1703,9 @@
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-em-ipas_vocus_mock-042",
@@ -1744,7 +1748,9 @@
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-em-ipas_vocus_mock-043",
@@ -1875,7 +1881,9 @@
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
         "https://www.ifrs.org/"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-em-ipas_vocus_mock-046",
@@ -2396,7 +2404,9 @@
       "sources": [
         "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-002",
@@ -2440,7 +2450,9 @@
       "sources": [
         "https://cgc.twse.com.tw/responsibilityRoadMap/listCh"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-003",
@@ -2484,7 +2496,9 @@
       "sources": [
         "https://dsp.tpex.org.tw/storage/education_event/IFRS%E6%B0%B8%E7%BA%8C%E6%BA%96%E5%89%87%E5%95%8F%E7%AD%94%E9%9B%86.pdf"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-004",
@@ -2529,7 +2543,9 @@
         "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202505130005&dtable=News",
         "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202510280004&dtable=News"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-005",
@@ -3106,7 +3122,9 @@
       "sources": [
         "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202412310005&dtable=News"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-020",
@@ -3372,7 +3390,9 @@
       "sources": [
         "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures.html"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-026",
@@ -3416,7 +3436,9 @@
       "sources": [
         "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures.html"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-027",
@@ -3460,7 +3482,9 @@
       "sources": [
         "https://www.iea.org/reports/net-zero-by-2050"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-029",
@@ -3682,7 +3706,9 @@
       "sources": [
         "https://ghg.tgpf.org.tw/"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-034",
@@ -3726,7 +3752,9 @@
       "sources": [
         "https://www.iaasb.org/publications/international-standard-assurance-engagements-isae-3410-assurance-engagements-greenhouse-gas-statements"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-035",
@@ -4363,7 +4391,9 @@
         "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/",
         "https://www.fsb.org/2023/07/fsb-welcomes-issb-standards-as-culmination-of-its-work-on-climate-related-disclosures/"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-014",
@@ -4462,7 +4492,9 @@
         "https://www.efrag.org/en/sustainability-reporting/esrs-workstreams/european-sustainability-reporting-standards-1st-set",
         "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202302772"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-016",
@@ -4953,7 +4985,9 @@
         "https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards-issb/english/2023/issued/part-a/issb-2023-a-ifrs-s2-climate-related-disclosures.pdf",
         "https://ghgprotocol.org/corporate-standard"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-028",
@@ -5051,7 +5085,9 @@
         "https://www.efrag.org/Assets/Download?assetUrl=%2Fsites%2Fwebpublishing%2FSiteAssets%2FESRS-ISSB%2520Standards%2520Interoperability%2520Guidance.pdf",
         "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-030",
@@ -6236,7 +6272,9 @@
         "https://www.fsc.gov.tw/ch/home.jsp?id=130&parentpath=0,2",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=36"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-tw_regs_35-v2",
@@ -6632,7 +6670,8 @@
         "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/"
       ],
       "quality_flags": [
-        "low_confidence"
+        "low_confidence",
+        "time_sensitive"
       ]
     },
     {
