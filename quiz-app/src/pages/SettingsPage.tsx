@@ -46,9 +46,10 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
           設定
         </h1>
         {/*
-          使用 visible text「返回首頁」當 accessible name（不加 aria-label，
-          避免 WCAG SC 2.5.3「Label in Name」違反 — 見
-          memory/feedback_wcag_label_in_name.md）。
+          使用 visible text「返回首頁」當 accessible name（不加 aria-label）。
+          若 aria-label 與 visible text 不一致，voice-control 使用者說 visible
+          name 將無法觸發此元素 — WCAG 2.1 SC 2.5.3「Label in Name」(Level A)：
+          https://www.w3.org/WAI/WCAG21/Understanding/label-in-name.html
           原本是 icon-only X button，使用者反映 #72 找不到返回入口。
         */}
         <button
