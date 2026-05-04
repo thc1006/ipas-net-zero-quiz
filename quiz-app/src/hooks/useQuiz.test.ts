@@ -538,4 +538,151 @@ describe('useQuiz Hook', () => {
       expect(result.current.isActive).toBe(true);
     });
   });
+
+  // === per-question stats（Refs #64） ===
+  // finishQuiz 寫入 question-stats；softReset / resetQuiz 不寫
+  describe('per-question stats', () => {
+    const STATS_KEY = 'ipas-question-stats';
+
+    beforeEach(() => {
+      const store = new Map<string, string>();
+      Object.defineProperty(window, 'localStorage', {
+        value: {
+          getItem: (k: string): string | null => store.get(k) ?? null,
+          setItem: (k: string, v: string): void => {
+            store.set(k, v);
+          },
+          removeItem: (k: string): void => {
+            store.delete(k);
+          },
+          clear: (): void => {
+            store.clear();
+          },
+          key: (i: number): string | null => Array.from(store.keys())[i] ?? null,
+          get length(): number {
+            return store.size;
+          },
+        },
+        writable: true,
+        configurable: true,
+      });
+    });
+
+    function readStats(): Record<string, { attempts: number; correct: number; lastTriedAt: number }> {
+      const raw = window.localStorage.getItem(STATS_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw) as { items: Record<string, { attempts: number; correct: number; lastTriedAt: number }> };
+      return parsed.items;
+    }
+
+    it('finishQuiz 後寫入 attempts + correct', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+
+      const q1 = result.current.currentQuestion;
+      act(() => { result.current.submitAnswer(q1?.answer ?? 'Z'); });
+      act(() => { result.current.nextQuestion(); });
+      const q2 = result.current.currentQuestion;
+      act(() => { result.current.submitAnswer('Z'); }); // 故意錯
+      act(() => { result.current.finishQuiz(); });
+
+      const stats = readStats();
+      // q1 答對：attempts=1, correct=1（僅當該題有標準答案）
+      if (q1?.answer != null) {
+        expect(stats[q1.id]?.attempts).toBe(1);
+        expect(stats[q1.id]?.correct).toBe(1);
+      }
+      // q2 答錯：attempts=1, correct=0（僅當該題有標準答案）
+      if (q2?.answer != null) {
+        expect(stats[q2.id]?.attempts).toBe(1);
+        expect(stats[q2.id]?.correct).toBe(0);
+      }
+    });
+
+    it('跳過的題目（沒呼叫 submitAnswer）不寫 stats', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+
+      const q1 = result.current.currentQuestion;
+      // 只答 q1，q2 q3 跳過
+      act(() => { result.current.submitAnswer(q1?.answer ?? 'Z'); });
+      act(() => { result.current.finishQuiz(); });
+
+      const stats = readStats();
+      // q1 之外不應有其他項目（cap 1 個）
+      const keys = Object.keys(stats);
+      expect(keys.length).toBeLessThanOrEqual(1);
+    });
+
+    it('同一題在同一 quiz 內被覆寫（GH #59）只算 1 次 attempt', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+      const q1 = result.current.currentQuestion;
+      if (q1?.answer == null) return; // 該題無標準答案則略過
+
+      // 同題答 3 次（最後留 q1.answer）
+      act(() => { result.current.submitAnswer('Z'); });
+      act(() => { result.current.submitAnswer('Y'); });
+      act(() => { result.current.submitAnswer(q1.answer!); });
+      act(() => { result.current.finishQuiz(); });
+
+      const stats = readStats();
+      expect(stats[q1.id]?.attempts).toBe(1);
+      expect(stats[q1.id]?.correct).toBe(1);
+    });
+
+    it('跨 quiz session attempts 累計', () => {
+      const { result } = renderHook(() => useQuiz());
+
+      // 第一輪
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 1, shuffleQuestions: false });
+      });
+      const q1 = result.current.currentQuestion;
+      if (q1?.answer == null) return;
+      act(() => { result.current.submitAnswer(q1.answer!); });
+      act(() => { result.current.finishQuiz(); });
+
+      // 第二輪同題（shuffleQuestions=false 順序穩定）
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 1, shuffleQuestions: false });
+      });
+      act(() => { result.current.submitAnswer('Z'); }); // 故意錯
+      act(() => { result.current.finishQuiz(); });
+
+      const stats = readStats();
+      expect(stats[q1.id]?.attempts).toBe(2);
+      expect(stats[q1.id]?.correct).toBe(1);
+    });
+
+    it('resetQuiz 不寫 stats', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+      const q1 = result.current.currentQuestion;
+      act(() => { result.current.submitAnswer(q1?.answer ?? 'Z'); });
+      act(() => { result.current.resetQuiz(); });
+
+      expect(window.localStorage.getItem(STATS_KEY)).toBeNull();
+    });
+
+    it('softReset（abort）不寫 stats', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+      const q1 = result.current.currentQuestion;
+      act(() => { result.current.submitAnswer(q1?.answer ?? 'Z'); });
+      act(() => { result.current.softReset(); });
+
+      expect(window.localStorage.getItem(STATS_KEY)).toBeNull();
+    });
+  });
 });

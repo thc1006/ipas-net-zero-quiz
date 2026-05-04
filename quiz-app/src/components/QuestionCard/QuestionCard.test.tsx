@@ -217,6 +217,71 @@ describe('QuestionCard 元件', () => {
       expect(options).toHaveLength(4);
     });
   });
+
+  describe('作答歷史 chip（Refs #64）', () => {
+    // 這些測試在 question-stats-storage 真實 mock 下跑
+    // (test-setup 的 vi.fn() 預設會回 undefined → loadStats 視為空)
+    it('未作答過的題目顯示「新題目」', () => {
+      render(
+        <QuestionCard
+          question={mockQuestion}
+          questionNumber={1}
+          onSelectAnswer={vi.fn()}
+        />
+      );
+      expect(screen.getByTestId('question-stat-chip')).toHaveTextContent('新題目');
+    });
+
+    it('無標準答案題目（hasAnswer=false）不渲染 chip', () => {
+      render(
+        <QuestionCard
+          question={{ ...mockQuestion, answer: null, hasAnswer: false }}
+          questionNumber={1}
+          onSelectAnswer={vi.fn()}
+        />
+      );
+      expect(screen.queryByTestId('question-stat-chip')).not.toBeInTheDocument();
+    });
+
+    it('已有 stats 時顯示答對率 + 次數', () => {
+      // 安裝 real localStorage 並寫入該題 stats
+      const store = new Map<string, string>();
+      store.set(
+        'ipas-question-stats',
+        JSON.stringify({
+          version: 1,
+          items: { [mockQuestion.id]: { attempts: 5, correct: 3, lastTriedAt: 0 } },
+        })
+      );
+      Object.defineProperty(globalThis, 'localStorage', {
+        value: {
+          getItem: (k: string) => store.get(k) ?? null,
+          setItem: (k: string, v: string) => store.set(k, v),
+          removeItem: (k: string) => {
+            store.delete(k);
+          },
+          clear: () => store.clear(),
+          key: (i: number) => Array.from(store.keys())[i] ?? null,
+          get length() {
+            return store.size;
+          },
+        },
+        writable: true,
+        configurable: true,
+      });
+
+      render(
+        <QuestionCard
+          question={mockQuestion}
+          questionNumber={1}
+          onSelectAnswer={vi.fn()}
+        />
+      );
+      const chip = screen.getByTestId('question-stat-chip');
+      expect(chip).toHaveTextContent(/答對率\s*60%/);
+      expect(chip).toHaveTextContent(/5 次/);
+    });
+  });
 });
 
 describe('QuestionCard 冗餘前綴 dim 化', () => {
