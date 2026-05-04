@@ -1,10 +1,28 @@
 // 題庫資料型別定義
 // 對應 data/out/integrated_dataset.json 結構
 
+import type { PracticePoolQualityFlag } from './practicePool';
+
 /** 選項 */
 export interface QuizOption {
   key: 'A' | 'B' | 'C' | 'D';
   text: string;
+}
+
+/**
+ * 主庫題目共用 metadata（PR #68 加 sources + sources_verified_date；
+ * Refs #69 — 改為明列欄位、移除 `[k: string]: unknown` 索引簽章使型別更嚴）
+ */
+export interface MainBankItemMetadata {
+  answer_verified?: boolean;
+  verification_date?: string;
+  verification_source?: string;
+  original_id?: string;
+  confidence?: string;
+  /** 該題對應的 primary-source URL 陣列（PR #68 起寫入；季度 workflow 會 curl 驗） */
+  sources?: string[];
+  /** sources 上次 curl 驗 200 OK 的日期（YYYY-MM-DD） */
+  sources_verified_date?: string;
 }
 
 /** 來源資訊 */
@@ -33,11 +51,9 @@ export interface GistQuestion {
   original_section: string;
   exam_subject: ExamSubject;
   explanation?: string;
-  metadata?: {
-    sources?: string[];
-    sources_verified_date?: string;
-    [k: string]: unknown;
-  };
+  /** 品質旗標（PR #68 起部分主庫題目寫入 'time_sensitive' 等；Refs #69） */
+  quality_flags?: PracticePoolQualityFlag[];
+  metadata?: MainBankItemMetadata;
 }
 
 /** 補充題目格式 */
@@ -60,15 +76,10 @@ export interface UniqueQuestion {
   exam_subject: ExamSubject;
   subject_confidence?: number;
   _quality_score?: number;
-  metadata?: {
-    sources?: string[];
-    sources_verified_date?: string;
-    [k: string]: unknown;
-  };
+  /** 品質旗標（PR #68 起部分主庫題目寫入 'time_sensitive' 等；Refs #69） */
+  quality_flags?: PracticePoolQualityFlag[];
+  metadata?: MainBankItemMetadata;
 }
-
-/** 注意：此處用 type-only import 避免循環依賴 */
-import type { PracticePoolQualityFlag } from './practicePool';
 
 /** 統一的題目格式（用於測驗邏輯） */
 export interface QuizQuestion {
