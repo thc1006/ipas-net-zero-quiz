@@ -1313,9 +1313,16 @@
       "metadata": {
         "answer_verified": true,
         "verification_date": "2026-04-25",
-        "verification_source": "CBAM Omnibus 修正案（Regulation (EU) 2025/XXX, 2025-10-20 生效）將憑證繳交期限由 5/31 延至 9/30；首次繳交為 2027-09-30（涵蓋 2026 進口）。",
-        "original_id": "c1-038"
-      }
+        "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
+        "original_id": "c1-038",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "sources_verified_date": "2026-05-05"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 39,
@@ -1381,9 +1388,16 @@
       "metadata": {
         "answer_verified": true,
         "verification_date": "2026-04-25",
-        "verification_source": "CBAM Omnibus 修正案（Regulation (EU) 2025/XXX, 2025-10-20 生效）將憑證繳交期限由 5/31 延至 9/30；首次繳交為 2027-09-30（涵蓋 2026 進口）。",
-        "original_id": "c1-040"
-      }
+        "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
+        "original_id": "c1-040",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "sources_verified_date": "2026-05-05"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 41,
@@ -2777,7 +2791,7 @@
         "verification_batch": "D",
         "confidence": "medium",
         "sources_count": 2,
-        "verification_source": "CBAM Omnibus 修正案（Regulation (EU) 2025/XXX, 2025-10-20 生效）將憑證繳交期限由 5/31 延至 9/30；首次繳交為 2027-09-30（涵蓋 2026 進口）。",
+        "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
         "prior_answer": "D",
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
@@ -2786,6 +2800,9 @@
         "option_text_changed_on": "2026-04-25",
         "option_text_change_note": "選項 D 文字由錯誤的『8/31』改為正確的『10/31』(CBAM Omnibus 回購截止)；答案字母 D 不變"
       },
+      "quality_flags": [
+        "time_sensitive"
+      ],
       "explanation": "依 CBAM Omnibus 修正案（2025/10 生效），進口商請求回購（buy-back）多餘 CBAM 憑證之截止日為每年 10 月 31 日，11 月 1 日系統自動註銷未用憑證（原規定為 6/30）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
     },
     {
@@ -3142,12 +3159,15 @@
         "verification_batch": "D",
         "confidence": "medium",
         "sources_count": 2,
-        "verification_source": "CBAM Omnibus 修正案（Regulation (EU) 2025/XXX, 2025-10-20 生效）將憑證繳交期限由 5/31 延至 9/30；首次繳交為 2027-09-30（涵蓋 2026 進口）。",
+        "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
         "sources_verified_date": "2026-04-25"
       },
+      "quality_flags": [
+        "time_sensitive"
+      ],
       "explanation": "依 CBAM Omnibus 修正案（2025/10 生效），進口商須於每年 9 月底前（9/30）支付前一年度 CBAM 憑證（原為 5/31）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
     },
     {
@@ -5135,12 +5155,15 @@
         "verification_batch": "E",
         "confidence": "medium",
         "sources_count": 3,
-        "verification_source": "CBAM Omnibus 修正案（Regulation (EU) 2025/XXX, 2025-10-20 生效）將憑證繳交期限由 5/31 延至 9/30；首次繳交為 2027-09-30（涵蓋 2026 進口）。",
+        "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
         "sources_verified_date": "2026-04-25"
       },
+      "quality_flags": [
+        "time_sensitive"
+      ],
       "explanation": "依 CBAM Omnibus 修正案（2025/10 生效），過渡期後進口商須於每年 9 月 30 日前繳交足夠之 CBAM 憑證（原規定為 5/31）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
     },
     {
@@ -10566,9 +10589,16 @@
       "metadata": {
         "answer_verified": true,
         "verification_date": "2026-04-25",
-        "verification_source": "CBAM Omnibus 修正案（Regulation (EU) 2025/XXX, 2025-10-20 生效）將憑證繳交期限由 5/31 延至 9/30；首次繳交為 2027-09-30（涵蓋 2026 進口）。",
-        "original_id": "c2-115"
-      }
+        "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
+        "original_id": "c2-115",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "sources_verified_date": "2026-05-05"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 309,
@@ -15217,9 +15247,16 @@
       "metadata": {
         "answer_verified": true,
         "verification_date": "2026-04-25",
-        "verification_source": "CBAM Omnibus 修正案（Regulation (EU) 2025/XXX, 2025-10-20 生效）將憑證繳交期限由 5/31 延至 9/30；首次繳交為 2027-09-30（涵蓋 2026 進口）。",
-        "original_id": "c2-249"
-      }
+        "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
+        "original_id": "c2-249",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "sources_verified_date": "2026-05-05"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 443,
