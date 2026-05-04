@@ -101,6 +101,29 @@ describe('question-stats-storage', () => {
       );
       expect(loadStats()).toEqual(items);
     });
+
+    it('shape 不符且 removeItem throw 也靜默回 {}', () => {
+      // 走 isValidPayload=false → removeItem catch 路徑
+      localStorage.setItem(
+        'ipas-question-stats',
+        JSON.stringify({ version: 999, items: {} })
+      );
+      vi.spyOn(localStorage, 'removeItem').mockImplementation(() => {
+        throw new Error('boom');
+      });
+      expect(() => loadStats()).not.toThrow();
+      expect(loadStats()).toEqual({});
+    });
+
+    it('JSON.parse throw 且 removeItem 也 throw → 靜默回 {}', () => {
+      // 走 outer catch → 內層 removeItem catch 路徑
+      localStorage.setItem('ipas-question-stats', 'definitely{not}json');
+      vi.spyOn(localStorage, 'removeItem').mockImplementation(() => {
+        throw new Error('boom');
+      });
+      expect(() => loadStats()).not.toThrow();
+      expect(loadStats()).toEqual({});
+    });
   });
 
   describe('recordAttempts', () => {

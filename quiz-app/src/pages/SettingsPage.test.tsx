@@ -77,4 +77,32 @@ describe('SettingsPage', () => {
     fireEvent.click(toggle);
     expect(localStorage.getItem('practice-pool-enabled')).toBe('0');
   });
+
+  // 清除作答統計按鈕（Refs #64）
+  describe('清除作答統計', () => {
+    const STATS_KEY = 'ipas-question-stats';
+    const sampleStats = JSON.stringify({
+      version: 1,
+      items: { q1: { attempts: 3, correct: 1, lastTriedAt: 1 } },
+    });
+
+    it('confirm 確認時呼叫 clearStats，移除 localStorage 紀錄', () => {
+      localStorage.setItem(STATS_KEY, sampleStats);
+      const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
+      renderSettings();
+      fireEvent.click(screen.getByRole('button', { name: /清除作答統計/ }));
+      expect(confirmSpy).toHaveBeenCalled();
+      expect(localStorage.getItem(STATS_KEY)).toBeNull();
+      confirmSpy.mockRestore();
+    });
+
+    it('confirm 取消時不清除', () => {
+      localStorage.setItem(STATS_KEY, sampleStats);
+      const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(false);
+      renderSettings();
+      fireEvent.click(screen.getByRole('button', { name: /清除作答統計/ }));
+      expect(localStorage.getItem(STATS_KEY)).toBe(sampleStats);
+      confirmSpy.mockRestore();
+    });
+  });
 });

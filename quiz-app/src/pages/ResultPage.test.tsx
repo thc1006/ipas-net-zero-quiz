@@ -7,26 +7,35 @@ import type { QuizResult, QuizQuestion, AnswerRecord } from '../types/quiz';
 
 // 在 import ResultPage 前先 mock 資料層，否則 ResultPage import 時會吃真實題庫
 vi.mock('../data/questions', () => {
+  const baseOptions = [
+    { key: 'A', text: 'CO2' },
+    { key: 'B', text: 'O2' },
+    { key: 'C', text: 'N2' },
+    { key: 'D', text: 'Ar' },
+  ];
   const fixture: QuizQuestion = {
     id: 'fx-001',
     number: 1,
     stem: '測試題目：下列何者為溫室氣體？',
-    options: [
-      { key: 'A', text: 'CO2' },
-      { key: 'B', text: 'O2' },
-      { key: 'C', text: 'N2' },
-      { key: 'D', text: 'Ar' },
-    ],
+    options: baseOptions,
     answer: 'A',
     subject: '考科1',
     section: 'fixture',
     explanation: '二氧化碳為主要溫室氣體',
   } as unknown as QuizQuestion;
+  // Refs #64：weak-section 測試需要多個可解析的 id
+  const weakFixtures: Record<string, QuizQuestion> = {
+    'fx-weak-1': { ...fixture, id: 'fx-weak-1', stem: '弱題一：題幹一' },
+    'fx-weak-2': { ...fixture, id: 'fx-weak-2', stem: '弱題二：題幹二' },
+    'fx-strong': { ...fixture, id: 'fx-strong', stem: '強題（不該出現）' },
+  };
+  const all = [fixture, ...Object.values(weakFixtures)];
   return {
-    allQuestions: [fixture],
-    getQuestionById: (id: string) => (id === 'fx-001' ? fixture : undefined),
+    allQuestions: all,
+    getQuestionById: (id: string) =>
+      id === 'fx-001' ? fixture : weakFixtures[id] ?? undefined,
     getSimilarQuestions: () => [],
-    stats: { total: 1, subject1: 1, subject2: 0 },
+    stats: { total: all.length, subject1: all.length, subject2: 0 },
   };
 });
 
@@ -211,5 +220,79 @@ describe('ResultPage', () => {
     );
     // section 仍渲染，但內部沒有 wrong-item
     expect(screen.getByText(/錯誤題目 \(1 題\)/)).toBeInTheDocument();
+  });
+
+  // === 最常答錯 weak-section（Refs #64）===
+  describe('最常答錯 section', () => {
+    function installStatsLocalStorage(
+      items: Record<string, { attempts: number; correct: number; lastTriedAt: number }>
+    ) {
+      const store = new Map<string, string>();
+      if (Object.keys(items).length > 0) {
+        store.set('ipas-question-stats', JSON.stringify({ version: 1, items }));
+      }
+      Object.defineProperty(globalThis, 'localStorage', {
+        value: {
+          getItem: (k: string) => store.get(k) ?? null,
+          setItem: (k: string, v: string) => store.set(k, v),
+          removeItem: (k: string) => {
+            store.delete(k);
+          },
+          clear: () => store.clear(),
+          key: (i: number) => Array.from(store.keys())[i] ?? null,
+          get length() {
+            return store.size;
+          },
+        },
+        writable: true,
+        configurable: true,
+      });
+    }
+
+    it('完全沒 stats 時不渲染 weak-section', () => {
+      installStatsLocalStorage({});
+      render(<ResultPage result={makeResult()} onGoHome={() => {}} onRetry={() => {}} />);
+      expect(screen.queryByTestId('weak-section')).not.toBeInTheDocument();
+    });
+
+    it('attempts < 3 或 rate >= 0.5 時不渲染 weak-section', () => {
+      installStatsLocalStorage({
+        'fx-strong': { attempts: 5, correct: 5, lastTriedAt: 1 }, // 100% 過濾
+        'fx-weak-1': { attempts: 2, correct: 0, lastTriedAt: 2 }, // attempts 不足
+      });
+      render(<ResultPage result={makeResult()} onGoHome={() => {}} onRetry={() => {}} />);
+      expect(screen.queryByTestId('weak-section')).not.toBeInTheDocument();
+    });
+
+    it('有 weak 題目時渲染 + 題幹 + 答對率 + 順序（rate 升冪）', () => {
+      installStatsLocalStorage({
+        'fx-weak-1': { attempts: 5, correct: 1, lastTriedAt: 100 }, // 20%
+        'fx-weak-2': { attempts: 4, correct: 1, lastTriedAt: 200 }, // 25%
+        'fx-strong': { attempts: 5, correct: 5, lastTriedAt: 300 }, // 100% 過濾
+      });
+      render(<ResultPage result={makeResult()} onGoHome={() => {}} onRetry={() => {}} />);
+
+      const section = screen.getByTestId('weak-section');
+      expect(section).toBeInTheDocument();
+      expect(section).toHaveTextContent('弱題一');
+      expect(section).toHaveTextContent('弱題二');
+      expect(section).not.toHaveTextContent('強題');
+      expect(section).toHaveTextContent('20%');
+      expect(section).toHaveTextContent('25%');
+      // rate 升冪：20% 在 25% 之前
+      const html = section.innerHTML;
+      expect(html.indexOf('弱題一')).toBeLessThan(html.indexOf('弱題二'));
+    });
+
+    it('找不到題幹（getQuestionById 回 undefined）的 stats 被過濾', () => {
+      installStatsLocalStorage({
+        'unknown-orphan': { attempts: 10, correct: 0, lastTriedAt: 1 },
+        'fx-weak-1': { attempts: 5, correct: 2, lastTriedAt: 2 }, // 40%
+      });
+      render(<ResultPage result={makeResult()} onGoHome={() => {}} onRetry={() => {}} />);
+      const section = screen.getByTestId('weak-section');
+      expect(section).toHaveTextContent('弱題一');
+      expect(section).not.toHaveTextContent('unknown-orphan');
+    });
   });
 });
