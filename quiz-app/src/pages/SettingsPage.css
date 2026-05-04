@@ -20,6 +20,15 @@
   margin: 0;
 }
 
+/* 返回首頁按鈕（Refs #72）— icon + 文字明確標示，避免 X icon-only 不直覺 */
+.settings-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+
 /* 設定區塊 */
 .settings-section {
   margin-bottom: var(--spacing-lg);
@@ -177,6 +186,15 @@
   .setting-item select,
   .setting-item input[type="number"] {
     width: 100%;
+  }
+  /* 返回首頁按鈕在小螢幕換行時全寬，更易點擊（Refs #72） */
+  .settings-header {
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+  .settings-back-btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 

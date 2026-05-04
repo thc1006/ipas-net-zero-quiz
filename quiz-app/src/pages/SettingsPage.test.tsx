@@ -43,10 +43,12 @@ describe('SettingsPage', () => {
     expect(screen.getByText(/加強練習池/)).toBeInTheDocument();
   });
 
-  it('clicking close button calls onClose', () => {
+  it('clicking 「返回首頁」 button calls onClose', () => {
     const onClose = vi.fn();
     renderSettings(onClose);
-    fireEvent.click(screen.getByLabelText('關閉設定'));
+    // Refs #72：原 X icon-only 按鈕改為「返回首頁」明確文字按鈕，
+    // 走 visible text 為 accessible name（無 aria-label，避免 WCAG SC 2.5.3 違反）
+    fireEvent.click(screen.getByRole('button', { name: /返回首頁/ }));
     expect(onClose).toHaveBeenCalledOnce();
   });
 
