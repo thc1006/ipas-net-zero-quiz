@@ -9,7 +9,7 @@
 ## 功能特色
 
 - **648 題主題庫**：涵蓋考科一（淨零碳規劃管理基礎）與考科二（碳盤查範圍與程序）
-- **加強練習池（選用）**：開啟後額外提供 151 題補充題（55 題公開模擬題 + 96 題 AI 產題），每題附來源徽章
+- **加強練習池（選用）**：開啟後額外提供 157 題補充題（55 題公開模擬題 + 102 題 AI 產題），每題附來源徽章
 - **練習/考試模式**：即時答案反饋或最後顯示結果
 - **參考來源連結**：每題答題後顯示權威引證（環境部、EUR-Lex、IPCC、ISO 等），URL 全部 curl 實測通過
 - **AI 解析**：透過 Puter.js 呼叫 OpenAI GPT-5.4 提供題目分析（無需 API key 設定）
@@ -19,12 +19,12 @@
 
 ## 加強練習池
 
-額外的 151 題補充題庫，**獨立於主題庫**，使用者於設定頁明確 opt-in 才啟用：
+額外的 157 題補充題庫，**獨立於主題庫**，使用者於設定頁明確 opt-in 才啟用：
 
 | 來源 | 題數 | 說明 |
 |---|---|---|
 | `external_mock` | 55 | 取自網路公開之模擬題（非官方歷屆，iPAS 不公開歷屆）|
-| `ai_generated` | 96 | 由 LLM 代理依 ISO/CBAM/環境部等法規與標準產生，每題經獨立驗證代理 cross-check 通過，並附 ≥1 條 primary-source URL（law.moj.gov.tw、EUR-Lex、IPCC、ISO 等，curl 實測可達）|
+| `ai_generated` | 102 | 由 LLM 代理依 ISO/CBAM/環境部/IFRS Foundation/IAASB 等法規與標準產生，每題經獨立驗證代理 cross-check 通過，並附 ≥1 條 primary-source URL（law.moj.gov.tw、EUR-Lex、IPCC、ISO、ifrs.org、iaasb.org 等，curl 實測可達）|
 
 每題顯示來源徽章（「模擬題」/「AI 產題」），AI 產題用警示色 + 邊框與 quality_flags（時效性 / 爭議 / 低信心）chips。資料 schema 在啟動時於 dev 模式 fail-fast 驗證。
 

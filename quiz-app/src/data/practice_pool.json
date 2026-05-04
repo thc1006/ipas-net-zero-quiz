@@ -13,11 +13,11 @@
     },
     "totals": {
       "external_mock": 55,
-      "ai_generated": 96,
-      "total": 151
+      "ai_generated": 102,
+      "total": 157
     },
     "policy": "AI 產題不進主題庫；本檔僅在使用者明確開啟『加強練習』時提供，並顯示來源徽章。",
-    "last_rescue_round": "2026-04-25 (intl 4 + industry 3 + iPAS 1 + tw_regs 2; -2 industry removed for answer/explanation conflict)"
+    "last_rescue_round": "2026-05-04 (ifrs_s1_s2_round_2026q2: +6 questions covering Assurance, Materiality, Climate Risk Quantification — Refs #62)"
   },
   "items": [
     {
@@ -7015,6 +7015,316 @@
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=14"
       ],
       "quality_flags": []
+    },
+    {
+      "id": "pool-aig-ifrs2026-001",
+      "stem": "依金管會 2023 年 8 月公告之「我國接軌 IFRS 永續揭露準則藍圖」，關於「永續資訊確信」之規劃，下列敘述何者「最」正確？",
+      "options": [
+        {
+          "key": "A",
+          "text": "第一階段（資本額 100 億以上）公司自 2026 年會計年度起即須取得獨立合理確信"
+        },
+        {
+          "key": "B",
+          "text": "我國要求所有上市櫃公司自 2026 年起即取得獨立有限確信"
+        },
+        {
+          "key": "C",
+          "text": "IFRS 永續揭露準則本身尚未要求對永續資訊進行確信；我國主管機關將持續關注 ISSA 5000 之發展，再評估確信案件之可行性"
+        },
+        {
+          "key": "D",
+          "text": "我國要求企業自行對永續資訊進行內部確信，無須委由外部會計師"
+        }
+      ],
+      "answer": "C",
+      "explanation": "依金管會官網「我國接軌 IFRS 永續揭露準則藍圖」公告，IFRS 永續揭露準則本身（IFRS S1/S2）並未強制要求對永續資訊進行外部確信；金管會表示將持續關注 IAASB 之 ISSA 5000（2026/12/15 生效）發展，再評估永續主題確信案件之可行性。題目選項 A、B 之強制確信時程為錯誤敘述。",
+      "subject": "考科一：淨零碳規劃管理基礎概論",
+      "topic_tags": [
+        "IFRS S1",
+        "IFRS S2",
+        "金管會",
+        "永續確信",
+        "ISSA 5000"
+      ],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "ifrs_s1_s2_round_2026q2",
+        "verified_date": "2026-05-04",
+        "verifier": "adversarial_subagent",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "ifrs2026-001",
+        "ai_metadata": {
+          "model_family": "claude-opus-4-7",
+          "generation_date": "2026-05-04",
+          "verifier_round": 1
+        }
+      },
+      "sources": [
+        "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News",
+        "https://www.iaasb.org/publications/international-standard-sustainability-assurance-5000-general-requirements-sustainability-assurance"
+      ],
+      "quality_flags": [
+        "time_sensitive"
+      ]
+    },
+    {
+      "id": "pool-aig-ifrs2026-002",
+      "stem": "依 IAASB 2024 年公告，下列關於永續資訊確信標準之敘述何者「正確」？",
+      "options": [
+        {
+          "key": "A",
+          "text": "ISAE 3410（GHG 確信）將於 2026 年 12 月 15 日 ISSA 5000 生效時撤回"
+        },
+        {
+          "key": "B",
+          "text": "ISSA 5000 僅適用於合理確信，不適用於有限確信"
+        },
+        {
+          "key": "C",
+          "text": "ISSA 5000 須與 ISAE 3000（修正版）併行使用，無法獨立執行"
+        },
+        {
+          "key": "D",
+          "text": "ISSA 5000 僅適用於依 IFRS 永續揭露準則編製之資訊，不適用於 GRI 等其他框架"
+        }
+      ],
+      "answer": "A",
+      "explanation": "IAASB 已公告 ISSA 5000「永續確信案件之一般規定」自 2026 年 12 月 15 日起生效；同時 ISAE 3410（GHG 統計確信）將於同日撤回，由 ISSA 5000 統一規範。ISSA 5000 同時涵蓋有限確信與合理確信、不依賴特定 reporting framework、且為 standalone standard 不需配合 ISAE 3000。",
+      "subject": "考科一：淨零碳規劃管理基礎概論",
+      "topic_tags": [
+        "ISSA 5000",
+        "ISAE 3410",
+        "IAASB",
+        "永續確信"
+      ],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "ifrs_s1_s2_round_2026q2",
+        "verified_date": "2026-05-04",
+        "verifier": "adversarial_subagent",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "ifrs2026-002",
+        "ai_metadata": {
+          "model_family": "claude-opus-4-7",
+          "generation_date": "2026-05-04",
+          "verifier_round": 1
+        }
+      },
+      "sources": [
+        "https://www.iaasb.org/publications/international-standard-sustainability-assurance-5000-general-requirements-sustainability-assurance",
+        "https://www.iaasb.org/news-events/2025-05/iaasb-announces-withdrawal-isae-3410-assurance-engagements-greenhouse-gas-statements"
+      ],
+      "quality_flags": [
+        "time_sensitive"
+      ]
+    },
+    {
+      "id": "pool-aig-ifrs2026-003",
+      "stem": "依 IFRS S1（2023）§17–§18 之「重大性（materiality）」概念，企業應揭露下列何者範圍之永續相關資訊？",
+      "options": [
+        {
+          "key": "A",
+          "text": "任何對人類或環境有顯著影響之永續議題，無論對企業現金流是否有影響"
+        },
+        {
+          "key": "B",
+          "text": "可合理預期影響企業未來現金流、融資成本或資金成本之永續相關風險與機會"
+        },
+        {
+          "key": "C",
+          "text": "僅限於依國際刑事法院認定之氣候相關犯罪事項"
+        },
+        {
+          "key": "D",
+          "text": "凡企業內部認為重要之 ESG 議題，無須客觀標準"
+        }
+      ],
+      "answer": "B",
+      "explanation": "依 IFRS S1 §17，企業應揭露「could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital over the short, medium or long term」之永續相關風險與機會 — 此即 ISSB 採用之「單一財務重大性」(single financial materiality)。選項 A 描述為 ESRS「雙重重大性」之 impact materiality 面向，非 IFRS S1 範圍。",
+      "subject": "考科一：淨零碳規劃管理基礎概論",
+      "topic_tags": [
+        "IFRS S1",
+        "Materiality",
+        "財務重大性"
+      ],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "ifrs_s1_s2_round_2026q2",
+        "verified_date": "2026-05-04",
+        "verifier": "adversarial_subagent",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "ifrs2026-003",
+        "ai_metadata": {
+          "model_family": "claude-opus-4-7",
+          "generation_date": "2026-05-04",
+          "verifier_round": 1
+        }
+      },
+      "sources": [
+        "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/",
+        "https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards-issb/english/2023/issued/part-a/issb-2023-a-ifrs-s1-general-requirements-for-disclosure-of-sustainability-related-financial-information.pdf"
+      ],
+      "quality_flags": [
+        "time_sensitive"
+      ]
+    },
+    {
+      "id": "pool-aig-ifrs2026-004",
+      "stem": "關於「重大性」概念，IFRS S1 與歐盟 ESRS 之主要差異為何？",
+      "options": [
+        {
+          "key": "A",
+          "text": "IFRS S1 採「雙重重大性」；ESRS 採「單一財務重大性」"
+        },
+        {
+          "key": "B",
+          "text": "兩者皆採「雙重重大性」，僅用語不同"
+        },
+        {
+          "key": "C",
+          "text": "IFRS S1 採「單一財務重大性」（投資人視角）；ESRS 採「雙重重大性」（財務 + 影響重大性）"
+        },
+        {
+          "key": "D",
+          "text": "兩者皆採「單一影響重大性」，僅關注企業對環境之影響"
+        }
+      ],
+      "answer": "C",
+      "explanation": "IFRS S1 依 §18 採「單一財務重大性」(single materiality / financial materiality)，聚焦影響企業價值之 outside-in 視角；歐盟 ESRS 1 §3 採「雙重重大性」(double materiality)，包含「財務重大性」（outside-in：對企業財務影響）與「影響重大性」（inside-out：企業對人類/環境之影響）。EFRAG 與 ISSB 已聯合確認兩者於財務重大性面向為對齊，但 ESRS 額外要求揭露 impact materiality。",
+      "subject": "考科一：淨零碳規劃管理基礎概論",
+      "topic_tags": [
+        "IFRS S1",
+        "ESRS",
+        "Materiality",
+        "雙重重大性"
+      ],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "ifrs_s1_s2_round_2026q2",
+        "verified_date": "2026-05-04",
+        "verifier": "adversarial_subagent",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "ifrs2026-004",
+        "ai_metadata": {
+          "model_family": "claude-opus-4-7",
+          "generation_date": "2026-05-04",
+          "verifier_round": 1
+        }
+      },
+      "sources": [
+        "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/",
+        "https://www.efrag.org/sites/default/files/sites/webpublishing/SiteAssets/IG%201%20Materiality%20Assessment_final.pdf"
+      ],
+      "quality_flags": [
+        "time_sensitive"
+      ]
+    },
+    {
+      "id": "pool-aig-ifrs2026-005",
+      "stem": "依 IFRS S2（2023）§15–§16，企業就氣候相關風險與機會「對企業財務狀況之預期影響」應如何揭露？",
+      "options": [
+        {
+          "key": "A",
+          "text": "僅須以定性敘述方式揭露，無須量化"
+        },
+        {
+          "key": "B",
+          "text": "須揭露當期及預期未來之財務影響定量資訊（含財務狀況、財務績效、現金流量）；無法精確估計時得以區間呈現"
+        },
+        {
+          "key": "C",
+          "text": "僅須揭露歷史影響，未來預期影響為自願揭露"
+        },
+        {
+          "key": "D",
+          "text": "須以單一精確金額揭露，不允許使用區間或範圍估計"
+        }
+      ],
+      "answer": "B",
+      "explanation": "依 IFRS S2 §15(a)–(b)，企業應揭露氣候相關風險與機會對「當期財務狀況、財務績效及現金流量」與「預期影響」之定量資訊；§16 進一步指出，當無法精確估計時，得以「單一金額或區間」(single amount or range) 呈現。選項 A 屬定性 only 為過時 TCFD 早期實務、非 IFRS S2 強制要求；D 之「不允許區間」與 §16 直接衝突。",
+      "subject": "考科一：淨零碳規劃管理基礎概論",
+      "topic_tags": [
+        "IFRS S2",
+        "量化揭露",
+        "氣候風險財務影響"
+      ],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "ifrs_s1_s2_round_2026q2",
+        "verified_date": "2026-05-04",
+        "verifier": "adversarial_subagent",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "ifrs2026-005",
+        "ai_metadata": {
+          "model_family": "claude-opus-4-7",
+          "generation_date": "2026-05-04",
+          "verifier_round": 1
+        }
+      },
+      "sources": [
+        "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/",
+        "https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards-issb/english/2023/issued/part-a/issb-2023-a-ifrs-s2-climate-related-disclosures.pdf"
+      ],
+      "quality_flags": [
+        "time_sensitive"
+      ]
+    },
+    {
+      "id": "pool-aig-ifrs2026-006",
+      "stem": "依 IFRS S2 之 Appendix B（B16–B19）關於「衡量不確定性 (measurement uncertainty)」，企業就氣候相關財務影響量化資訊應揭露下列哪一項？",
+      "options": [
+        {
+          "key": "A",
+          "text": "不確定性揭露為自願事項，僅在企業認為必要時提供"
+        },
+        {
+          "key": "B",
+          "text": "須揭露所使用之關鍵假設、判斷及不確定性來源，但無須說明為何無法以精確金額提供"
+        },
+        {
+          "key": "C",
+          "text": "須揭露衡量不確定性之程度，並說明所使用之輸入值、假設、估計技術，以及（適用時）為何無法以精確金額提供"
+        },
+        {
+          "key": "D",
+          "text": "衡量不確定性僅針對範疇 1 排放適用，不適用於範疇 2、3"
+        }
+      ],
+      "answer": "C",
+      "explanation": "依 IFRS S2 §B16-§B19，當以區間或估計方式揭露氣候相關財務影響時，企業應揭露：(1) 衡量不確定性的程度；(2) 所使用之輸入值、假設與估計技術；(3) 必要時說明為何無法提供更精確之金額；(4) 預計後續期間之影響因素。此屬強制揭露項目，並適用於所有範疇排放對應之財務影響，非僅限範疇 1。",
+      "subject": "考科一：淨零碳規劃管理基礎概論",
+      "topic_tags": [
+        "IFRS S2",
+        "衡量不確定性",
+        "量化揭露"
+      ],
+      "difficulty": "medium",
+      "provenance": {
+        "source_type": "ai_generated",
+        "source_origin": "ifrs_s1_s2_round_2026q2",
+        "verified_date": "2026-05-04",
+        "verifier": "adversarial_subagent",
+        "verify_verdict": "CONFIRMED",
+        "original_id": "ifrs2026-006",
+        "ai_metadata": {
+          "model_family": "claude-opus-4-7",
+          "generation_date": "2026-05-04",
+          "verifier_round": 1
+        }
+      },
+      "sources": [
+        "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/",
+        "https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards-issb/english/2023/issued/part-a/issb-2023-a-ifrs-s2-climate-related-disclosures.pdf"
+      ],
+      "quality_flags": [
+        "time_sensitive"
+      ]
     }
   ]
 }

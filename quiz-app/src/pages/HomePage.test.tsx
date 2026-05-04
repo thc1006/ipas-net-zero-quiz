@@ -66,8 +66,8 @@ describe('HomePage', () => {
     render(<HomePage onStartQuiz={() => {}} />);
     const optInBtn = screen.getByRole('button', { name: '啟用加強練習池' });
     expect(optInBtn).toBeInTheDocument();
-    // 應顯示題數（151，與 practice_pool.json _meta.totals.total 同步）
-    expect(optInBtn.textContent).toMatch(/151/);
+    // 應顯示題數（157，與 practice_pool.json _meta.totals.total 同步）
+    expect(optInBtn.textContent).toMatch(/157/);
   });
 
   it('clicking opt-in badge opens PracticeOptInDialog (first-time flow)', () => {
@@ -142,7 +142,7 @@ describe('HomePage', () => {
     render(<HomePage onStartQuiz={() => {}} />);
     const tip = screen.getByTestId('practice-pool-tip');
     expect(tip).toBeInTheDocument();
-    expect(tip.textContent).toMatch(/55.*模擬.*96.*AI/);
+    expect(tip.textContent).toMatch(/55.*模擬.*102.*AI/);
     expect(tip.className).not.toMatch(/practice-pool-tip--enabled/);
   });
 
