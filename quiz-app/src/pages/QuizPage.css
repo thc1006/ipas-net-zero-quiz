@@ -13,9 +13,82 @@
 .progress-info {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   margin-bottom: var(--spacing-xs);
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.progress-info__right {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+/* 結束測驗按鈕：不喧賓奪主、放進度條同行 */
+.quiz-abort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.quiz-abort-btn:hover {
+  border-color: var(--color-error, #d32f2f);
+  color: var(--color-error, #d32f2f);
+}
+.quiz-abort-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* 結束確認 dialog — 與既有 PracticeOptInDialog 同 pattern */
+.quiz-abort-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-md);
+}
+
+.quiz-abort-dialog {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  max-width: 480px;
+  width: 100%;
+  box-shadow: var(--shadow-2);
+}
+
+.quiz-abort-dialog h2 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin: 0 0 var(--spacing-sm);
+  color: var(--color-text-primary);
+}
+
+.quiz-abort-dialog p {
+  margin: 0 0 var(--spacing-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.quiz-abort-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
 }
 
 /* 導覽按鈕 */
@@ -57,6 +130,13 @@
 
 /* 小螢幕（≤640px）— quiz-page padding 收緊、navigation 全寬 stack */
 @media (max-width: 640px) {
+  /* abort dialog 按鈕全寬縱排（Refs #71） */
+  .quiz-abort-dialog__actions {
+    flex-direction: column-reverse;
+  }
+  .quiz-abort-dialog__actions .btn {
+    width: 100%;
+  }
   .quiz-page {
     padding: 0 var(--spacing-sm);
   }

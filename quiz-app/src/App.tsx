@@ -46,11 +46,30 @@ function App() {
     }
   }, [quiz]);
 
-  // 返回首頁
+  // 返回首頁（從 Header 或 ResultPage 觸發）— **不主動清 quiz state**
+  // 設計依據（Refs #71）：
+  // - 從 Result 來：finishQuiz 已 reset + clearProgress，多餘 reset 為 idempotent no-op
+  // - 從 Header 在 quiz 中按：使用者期待「離開但保留進度」與 abort button 一致；
+  //   若此時呼叫 resetQuiz 會清掉 localStorage 進度，違反 PR 對使用者的承諾
+  // → 統一不主動 reset；徹底重來由「開始新測驗」自然覆寫，或 finishQuiz 完成清除
   const handleGoHome = useCallback(() => {
-    quiz.resetQuiz();
     setLastResult(null);
     setCurrentView('home');
+  }, []);
+
+  // 結束測驗但保留進度（Refs #71）— softReset in-memory state，localStorage 不動
+  // 避免 abort 後 quiz hook 仍殘留 isActive=true 狀態（M1 修補）
+  const handleAbortQuiz = useCallback(() => {
+    quiz.softReset();
+    setLastResult(null);
+    setCurrentView('home');
+  }, [quiz]);
+
+  // 從首頁 resume hint 點「繼續測驗」（Refs #71）
+  const handleResumeQuiz = useCallback(() => {
+    if (quiz.resumeQuiz()) {
+      setCurrentView('quiz');
+    }
   }, [quiz]);
 
   // 重新測驗
@@ -91,13 +110,17 @@ function App() {
       <main id="main-content" className="main-content">
         <ErrorBoundary>
           {currentView === 'home' && (
-            <HomePage onStartQuiz={handleStartQuiz} />
+            <HomePage
+              onStartQuiz={handleStartQuiz}
+              onResumeQuiz={handleResumeQuiz}
+            />
           )}
 
           {currentView === 'quiz' && quiz.currentQuestion && (
             <QuizPage
               quiz={quiz}
               onFinish={handleFinishQuiz}
+              onAbort={handleAbortQuiz}
             />
           )}
 

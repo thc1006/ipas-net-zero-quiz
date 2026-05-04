@@ -61,6 +61,29 @@
   outline-offset: 2px;
 }
 
+/* 未完成測驗 resume hint — 極簡一行字 + link，不喧賓奪主 */
+.resume-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  background: var(--color-info-bg, var(--color-surface));
+  border-left: 3px solid var(--color-info, var(--color-primary));
+  font-size: var(--font-size-sm);
+}
+
+.resume-hint__text {
+  flex: 1;
+  color: var(--color-text-primary);
+}
+
+.resume-hint__cta {
+  flex-shrink: 0;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
 /* 加強練習池 tip card — 隨啟用狀態切換內容，永遠顯示讓使用者有 stable feedback */
 .practice-pool-tip {
   display: flex;
@@ -180,6 +203,13 @@
 }
 
 @media (max-width: 640px) {
+  /* resume hint 行動裝置斷行（Refs #71） */
+  .resume-hint {
+    flex-wrap: wrap;
+  }
+  .resume-hint__cta {
+    margin-left: auto;
+  }
   .practice-pool-tip {
     flex-direction: column;
     padding: var(--spacing-md);
