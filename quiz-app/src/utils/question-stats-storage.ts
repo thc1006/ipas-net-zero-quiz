@@ -134,7 +134,9 @@ function isValidPayload(v: unknown): v is PersistedStats {
   for (const [, stat] of Object.entries(p.items)) {
     if (!stat || typeof stat !== 'object') return false;
     const s = stat as Partial<QuestionStat>;
-    if (typeof s.attempts !== 'number' || !Number.isFinite(s.attempts) || s.attempts < 0) return false;
+    // attempts >= 1：recordAttempts 一律 +1，正常路徑寫不出 0；
+    // 拒絕 0 防手動竄改 / 殘留資料導致 correct/attempts = NaN（Copilot PR #80）
+    if (typeof s.attempts !== 'number' || !Number.isFinite(s.attempts) || s.attempts < 1) return false;
     if (typeof s.correct !== 'number' || !Number.isFinite(s.correct) || s.correct < 0) return false;
     if (s.correct > s.attempts) return false;
     if (typeof s.lastTriedAt !== 'number' || !Number.isFinite(s.lastTriedAt)) return false;

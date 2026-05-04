@@ -149,10 +149,12 @@ export function QuestionCard({
             qualityFlags={question.qualityFlags ?? []}
           />
         )}
-        {/* 個人作答歷史 chip（Refs #64）— 只在有標準答案的題目顯示 */}
+        {/* 個人作答歷史 chip（Refs #64）— 只在有標準答案的題目顯示
+            stat.attempts > 0 雙重保險：storage validator 已拒絕 attempts<1，
+            這裡再 guard 避免任何漏網路徑導致 NaN%（Copilot PR #80） */}
         {question.hasAnswer && (
           <span className="question-stat-chip" data-testid="question-stat-chip">
-            {stat ? (
+            {stat && stat.attempts > 0 ? (
               <>
                 答對率 {Math.round((stat.correct / stat.attempts) * 100)}%
                 <span className="question-stat-chip__count">（{stat.attempts} 次）</span>

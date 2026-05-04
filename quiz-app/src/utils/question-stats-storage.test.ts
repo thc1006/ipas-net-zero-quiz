@@ -69,8 +69,9 @@ describe('question-stats-storage', () => {
       expect(loadStats()).toEqual({});
     });
 
-    it('拒絕 attempts < 0 / 非數字 / NaN', () => {
+    it('拒絕 attempts < 1 / 非數字 / NaN（含 attempts=0 防 NaN%；Copilot PR #80）', () => {
       const bad = [
+        { version: 1, items: { q1: { attempts: 0, correct: 0, lastTriedAt: 1 } } },
         { version: 1, items: { q1: { attempts: -1, correct: 0, lastTriedAt: 1 } } },
         { version: 1, items: { q1: { attempts: 'x', correct: 0, lastTriedAt: 1 } } },
         { version: 1, items: { q1: { attempts: NaN, correct: 0, lastTriedAt: 1 } } },

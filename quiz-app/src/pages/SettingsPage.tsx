@@ -213,7 +213,7 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
             }}
           >
             <span className="material-icons" aria-hidden="true">delete_sweep</span>
-            清除
+            清除作答統計
           </button>
         </div>
       </section>
