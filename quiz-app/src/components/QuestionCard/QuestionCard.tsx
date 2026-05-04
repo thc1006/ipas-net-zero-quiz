@@ -6,6 +6,7 @@ import { SourceBadge } from '../SourceBadge/SourceBadge';
 import { SourceBanner } from '../SourceBanner/SourceBanner';
 import { LAW_PCODE_LABELS } from '../../data/law-pcode-labels';
 import { findRedundantPrefix } from '../../utils/option-prefix';
+import { buildFeedbackUrl } from '../../utils/question-feedback-url';
 import './QuestionCard.css';
 
 /**
@@ -140,6 +141,23 @@ export function QuestionCard({
             qualityFlags={question.qualityFlags ?? []}
           />
         )}
+        {/* 回報此題（Refs #63）— 開新分頁不打斷答題 flow；icon-only 但有 aria-label */}
+        <a
+          className="question-feedback-link"
+          href={buildFeedbackUrl({
+            questionId: question.id,
+            stem: question.stem,
+            fromPage: 'quiz',
+          })}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="回報此題的問題"
+          title="此題有問題？回報維護者"
+        >
+          <span className="material-icons sm" aria-hidden="true">
+            flag
+          </span>
+        </a>
       </header>
 
       {/* 練習池來源 banner — 主題庫題不顯示 */}

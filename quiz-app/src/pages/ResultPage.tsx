@@ -8,6 +8,7 @@ import {
 } from '../utils/ai-helper';
 import { SourceBreakdown } from '../components/SourceBreakdown/SourceBreakdown';
 import type { QuizResult, QuizQuestion } from '../types/quiz';
+import { buildFeedbackUrl } from '../utils/question-feedback-url';
 import './ResultPage.css';
 
 interface ResultPageProps {
@@ -255,7 +256,26 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                 <article key={answer.questionId} className="wrong-item">
                   <div className="wrong-number">#{index + 1}</div>
                   <div className="wrong-content">
-                    <p className="wrong-stem">{question.stem}</p>
+                    <div className="wrong-stem-row">
+                      <p className="wrong-stem">{question.stem}</p>
+                      {/* 回報此題（Refs #63）— 開新分頁、不打斷使用者瀏覽結果頁 */}
+                      <a
+                        className="question-feedback-link wrong-feedback-link"
+                        href={buildFeedbackUrl({
+                          questionId: question.id,
+                          stem: question.stem,
+                          fromPage: 'result',
+                        })}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="回報此題的問題"
+                        title="此題有問題？回報維護者"
+                      >
+                        <span className="material-icons sm" aria-hidden="true">
+                          flag
+                        </span>
+                      </a>
+                    </div>
                     <div className="wrong-answers">
                       <span className="your-answer">
                         你的答案：
