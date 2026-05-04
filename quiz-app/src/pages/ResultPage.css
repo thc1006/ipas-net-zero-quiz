@@ -224,10 +224,40 @@
   flex: 1;
 }
 
+.wrong-stem-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
 .wrong-stem {
+  flex: 1;
   font-size: var(--font-size-sm);
   margin-bottom: var(--spacing-sm);
   line-height: 1.6;
+}
+
+/* 回報此題 icon button（#63）— 與 QuestionCard.css 同 rule，
+   ResultPage 不 import QuestionCard.css 故此處重定義（小規則、不易漂移） */
+.wrong-feedback-link.question-feedback-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+.wrong-feedback-link.question-feedback-link:hover {
+  background: var(--color-divider);
+  color: var(--color-text-primary);
+}
+.wrong-feedback-link.question-feedback-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .wrong-answers {

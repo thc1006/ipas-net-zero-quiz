@@ -21,6 +21,28 @@
   color: var(--color-text-secondary);
 }
 
+/* 回報此題 icon button（#63）— 低調 icon-only、開新分頁不打斷答題 flow */
+.question-feedback-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+.question-feedback-link:hover {
+  background: var(--color-divider);
+  color: var(--color-text-primary);
+}
+.question-feedback-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .subject-tag {
   font-size: var(--font-size-xs);
 }
