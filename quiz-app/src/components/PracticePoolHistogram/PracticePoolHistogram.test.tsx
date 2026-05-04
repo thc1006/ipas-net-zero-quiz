@@ -13,31 +13,31 @@ describe('PracticePoolHistogram', () => {
     expect(screen.getByText('AI 產題')).toBeInTheDocument();
   });
 
-  it('shows mainBankCount + pool counts (考科1: 340 + 0 mock + 41 AI)', () => {
+  it('shows mainBankCount + pool counts (考科1: 340 + 0 mock + 47 AI)', () => {
     const { container } = render(
       <PracticePoolHistogram mainBankCount={340} subject="考科1" />,
     );
     const counts = container.querySelectorAll('.pool-histogram__count');
     expect(counts[0].textContent).toBe('340'); // 主題庫
     expect(counts[1].textContent).toBe('0');   // 模擬題（考科1 沒 external_mock）
-    expect(counts[2].textContent).toBe('41');  // AI 產題
+    expect(counts[2].textContent).toBe('47');  // AI 產題（含 ifrs_s1_s2_round_2026q2 +6）
   });
 
-  it('shows all subject totals (648 + 55 + 96)', () => {
+  it('shows all subject totals (648 + 55 + 102)', () => {
     const { container } = render(
       <PracticePoolHistogram mainBankCount={648} subject="all" />,
     );
     const counts = container.querySelectorAll('.pool-histogram__count');
     expect(counts[0].textContent).toBe('648');
     expect(counts[1].textContent).toBe('55');
-    expect(counts[2].textContent).toBe('96');
+    expect(counts[2].textContent).toBe('102');
   });
 
   it('shows total 題 sum at bottom', () => {
     const { container } = render(<PracticePoolHistogram mainBankCount={340} subject="考科1" />);
-    // 總計 380 + 41 = 381（broken across <strong> 元素，用 textContent normalize 比對）
+    // 總計 340 + 47 = 387（broken across <strong> 元素，用 textContent normalize 比對）
     const total = container.querySelector('.pool-histogram__total');
-    expect(total?.textContent).toMatch(/共\s*381\s*題/);
+    expect(total?.textContent).toMatch(/共\s*387\s*題/);
   });
 
   it('handles 0 mainBank gracefully (no NaN%)', () => {
