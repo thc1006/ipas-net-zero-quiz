@@ -196,7 +196,9 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           data-testid="resume-hint"
           aria-live="polite"
         >
-          <span className="material-icons sm">history</span>
+          <span className="material-icons sm" aria-hidden="true">
+            history
+          </span>
           <span className="resume-hint__text">
             您有未完成測驗（已答 {savedProgress.state.answers.length} /{' '}
             {savedProgress.state.questions.length} 題，

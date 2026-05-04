@@ -357,7 +357,7 @@ describe('HomePage', () => {
           currentIndex: 7,
           answers: new Array(7).fill({ questionId: 'x' }),
           startTime: Date.now(),
-          config: null,
+          config: { mode: 'practice', subject: 'all', questionCount: 10, shuffleQuestions: false, shuffleOptions: false, showAnswerImmediately: true },
         },
       })
     );
@@ -381,7 +381,7 @@ describe('HomePage', () => {
           currentIndex: 3,
           answers: new Array(3).fill({ questionId: 'x' }),
           startTime: Date.now(),
-          config: null,
+          config: { mode: 'practice', subject: 'all', questionCount: 10, shuffleQuestions: false, shuffleOptions: false, showAnswerImmediately: true },
         },
       })
     );
@@ -403,7 +403,7 @@ describe('HomePage', () => {
           currentIndex: 1,
           answers: [],
           startTime: Date.now(),
-          config: null,
+          config: { mode: 'practice', subject: 'all', questionCount: 10, shuffleQuestions: false, shuffleOptions: false, showAnswerImmediately: true },
         },
       })
     );

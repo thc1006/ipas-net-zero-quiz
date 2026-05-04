@@ -104,9 +104,10 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
               type="button"
               className="quiz-abort-btn"
               onClick={() => setAbortConfirmOpen(true)}
-              aria-label="結束測驗並返回首頁"
             >
-              <span className="material-icons sm">close</span>
+              <span className="material-icons sm" aria-hidden="true">
+                close
+              </span>
               結束並返回首頁
             </button>
           </span>

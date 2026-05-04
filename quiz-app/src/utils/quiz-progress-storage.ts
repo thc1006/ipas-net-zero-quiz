@@ -47,6 +47,13 @@ export function loadProgress(): PersistedProgress | null {
     }
     return parsed;
   } catch {
+    // JSON.parse 失敗（壞掉的 JSON）也清掉，避免下次載入重複吃同一筆壞資料
+    // 巢狀 try：removeItem 在 quota / private mode 下亦可能 throw
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* ignore */
+    }
     return null;
   }
 }
@@ -67,12 +74,31 @@ function isValidPayload(v: unknown): v is PersistedProgress {
   if (typeof p.savedAt !== 'number') return false;
   const s = p.state;
   if (!s || typeof s !== 'object') return false;
-  return (
-    typeof (s as QuizState).isActive === 'boolean' &&
-    Array.isArray((s as QuizState).questions) &&
-    typeof (s as QuizState).currentIndex === 'number' &&
-    Array.isArray((s as QuizState).answers)
-  );
+
+  const st = s as QuizState;
+  // 基本 shape
+  if (typeof st.isActive !== 'boolean') return false;
+  if (!Array.isArray(st.questions)) return false;
+  if (typeof st.currentIndex !== 'number') return false;
+  if (!Array.isArray(st.answers)) return false;
+
+  // currentIndex 必須在 questions 範圍內（避免 resume 後 currentQuestion=null
+  // 觸發 QuizPage 的「載入中...」永遠 stuck）
+  if (st.currentIndex < 0) return false;
+  if (st.questions.length === 0) {
+    // 空題庫只能允許 currentIndex=0 + isActive=false 這種 idle 不該被 resume 的狀態
+    if (st.isActive) return false;
+  } else if (st.currentIndex >= st.questions.length) {
+    return false;
+  }
+
+  // active 狀態下必要欄位（避免 finishQuiz 算分失敗回 null）
+  if (st.isActive) {
+    if (typeof st.startTime !== 'number') return false;
+    if (st.config === null || typeof st.config !== 'object') return false;
+  }
+
+  return true;
 }
 
 /** 計算「N 分鐘 / 小時 / 天前」相對時間字串，用於 resume hint */

@@ -101,17 +101,27 @@ test.describe('無障礙功能', () => {
     await page.getByRole('button', { name: /開始測驗/i }).click();
     await expect(page.locator('.question-card')).toBeVisible();
 
-    // 使用 Tab 鍵導覽
-    await page.keyboard.press('Tab');
-    await page.keyboard.press('Tab');
+    // 使用 Tab 鍵連續按到打進 quiz 互動元件（最多 12 次 — 超過代表 tab order 異常）。
+    // 期待焦點落在以下任一可互動元件：abort button / radio input / 上下題 button。
+    // 不用 :focus toBeVisible — radio 用 sr-only 樣式（用 label 顯示），
+    // playwright 視為 invisible 但 keyboard 仍可操作。
+    const interactiveSelector =
+      'button.quiz-abort-btn, [role="radio"], input[type="radio"][name="quiz-option"], button:has-text("下一題"), button:has-text("上一題")';
 
-    // 焦點應在 page 上的可 focus 元素（attached）。
-    // 不用 toBeVisible —— radio inputs 是 sr-only 樣式（用 label 顯示），
-    // tab order 在 PR #75 加 abort button 後可能落在 radio 上，會被
-    // playwright 視為 invisible（sr-only 計算 visibility=hidden）但仍
-    // attached + 可被 keyboard 操作。
-    const focusedElement = page.locator(':focus');
-    await expect(focusedElement).toBeAttached();
+    let landed = false;
+    for (let i = 0; i < 12; i++) {
+      await page.keyboard.press('Tab');
+      const focused = await page.evaluate((sel) => {
+        const el = document.activeElement;
+        if (!el || el === document.body) return false;
+        return el.matches(sel);
+      }, interactiveSelector);
+      if (focused) {
+        landed = true;
+        break;
+      }
+    }
+    expect(landed, 'Tab 序列應在 12 次內到達 quiz 互動元件').toBe(true);
   });
 
   test('選項應有正確的 ARIA 屬性', async ({ page }) => {

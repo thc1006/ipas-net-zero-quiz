@@ -40,14 +40,32 @@ beforeAll(() => {
   installRealLocalStorage();
 });
 
+// 使用真實 shape 的 config + questions 才能通過新加深的 isValidPayload 檢查
+// （isActive=true 時要求 startTime: number、config: object、currentIndex 在 questions 範圍內）
+const fakeConfig: QuizState['config'] = {
+  mode: 'practice',
+  subject: 'all',
+  questionCount: 10,
+  shuffleQuestions: false,
+  shuffleOptions: false,
+  showAnswerImmediately: true,
+};
+const fakeQuestions = Array.from({ length: 10 }, (_, i) => ({
+  id: `q-${i}`,
+  stem: `題目 ${i}`,
+  options: [],
+  answer: null,
+  subject: '考科1',
+})) as unknown as QuizState['questions'];
+
 function makeState(overrides: Partial<QuizState> = {}): QuizState {
   return {
     isActive: true,
-    questions: [],
+    questions: fakeQuestions,
     currentIndex: 0,
     answers: [],
     startTime: Date.now(),
-    config: null,
+    config: fakeConfig,
     ...overrides,
   };
 }
