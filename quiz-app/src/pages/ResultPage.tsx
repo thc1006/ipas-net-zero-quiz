@@ -240,7 +240,7 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
             最常答錯
           </h2>
           <p className="weak-section__hint">
-            根據你過去作答紀錄（≥ {WEAK_MIN_ATTEMPTS} 次且答對率低於 50%）
+            根據你過去作答紀錄（≥ {WEAK_MIN_ATTEMPTS} 次且答對率低於 {Math.round(WEAK_MAX_RATE * 100)}%）
           </p>
           <ul className="weak-list">
             {weakQuestions.map((w, i) => (
