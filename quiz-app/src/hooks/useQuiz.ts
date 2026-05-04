@@ -18,6 +18,10 @@ import {
   loadProgress,
   clearProgress,
 } from '../utils/quiz-progress-storage';
+import {
+  recordAttempts,
+  type AttemptUpdate,
+} from '../utils/question-stats-storage';
 
 /** 測驗狀態 */
 export interface QuizState {
@@ -291,6 +295,17 @@ export function useQuiz() {
       wrongCount,
       skippedCount: questions.length - answers.length,
     };
+
+    // 累積每題作答統計（Refs #64）— 跳題（selectedAnswer=null）與
+    // 無標準答案題（correctAnswer=null）都不算 attempt
+    const statUpdates: AttemptUpdate[] = answers
+      .filter((a) => a.correctAnswer !== null && a.selectedAnswer !== null)
+      .map((a) => ({
+        id: a.questionId,
+        isCorrect: a.isCorrect === true,
+        at: a.timestamp,
+      }));
+    recordAttempts(statUpdates);
 
     clearProgress();
     setState(initialState);

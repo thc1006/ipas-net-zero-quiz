@@ -4,6 +4,7 @@ import type { useAccessibility } from '../hooks/useAccessibility';
 import { usePracticeMode } from '../hooks/usePracticeMode';
 import { usePracticePool } from '../hooks/usePracticePool';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
+import { clearStats } from '../utils/question-stats-storage';
 import packageJson from '../../package.json';
 import './SettingsPage.css';
 
@@ -188,6 +189,34 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
         }}
         onDecline={() => setOptInOpen(false)}
       />
+
+      {/* 作答統計（Refs #64）*/}
+      <section className="settings-section card">
+        <h2>作答統計</h2>
+        <div className="setting-item">
+          <div className="setting-info">
+            <span className="material-icons">insights</span>
+            <div>
+              <p className="setting-title">清除作答統計</p>
+              <p className="setting-desc">
+                清除所有題目的累積答對率紀錄。資料僅儲存在本機（localStorage），不會上傳。
+              </p>
+            </div>
+          </div>
+          <button
+            className="btn btn-secondary"
+            onClick={() => {
+              // 不可逆動作 — 用 native confirm 與 abort flow 一致地點對齊
+              if (window.confirm('確定要清除所有作答統計嗎？此動作無法復原。')) {
+                clearStats();
+              }
+            }}
+          >
+            <span className="material-icons" aria-hidden="true">delete_sweep</span>
+            清除
+          </button>
+        </div>
+      </section>
 
       {/* 重置 */}
       <section className="settings-section">
