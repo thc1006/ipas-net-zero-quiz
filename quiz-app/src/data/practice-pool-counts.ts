@@ -13,11 +13,14 @@ export const PRACTICE_POOL_COUNTS = {
 /**
  * Pool 題依 subject filter 後的可抽題數
  *
- * Subject filter 邏輯（依 practice-pool.ts `getQuestionsForSubject`）：
- *   - `考科1` / `考科2`: 僅取 `item.subject` 以「考科一」/「考科二」開頭之題目
- *   - `all`: 全部 pool 題（含 subject 為 null 或非「考科一/二」字首者，均歸 unknown bucket）
+ * Subject mapping & filter 實作位於 `utils/practice-pool.ts`：
+ *   - `toQuizQuestion(item)` 將 `item.subject` 字串（如「考科一：...」）映射為
+ *     QuizQuestion 的 subject 列舉（'考科1' / '考科2'）；映射不出則在 runtime
+ *     注入 'unmapped_subject' quality flag（**JSON 不存此 flag**，是計算欄位）
+ *   - `filterPool(items, opts)` 依 opts.subjects（PracticePoolItem.subject 原值）
+ *     做精確 set-membership 過濾
  *
- * 來源計算（jq group_by(subject 字首 + "|" + provenance.source_type)）：
+ * 下方數值之分組規則（jq group_by(subject 字首 + "|" + provenance.source_type)）：
  *   - 考科一/ai_generated: 47  (+6 自 ifrs_s1_s2_round_2026q2)
  *   - 考科二/ai_generated: 24
  *   - unknown/ai_generated: 31  (subject 為 null 或非「考科一/二」字首；只在 all 出現)
