@@ -2,7 +2,7 @@
 // 重點：score 評語分支、stats 渲染、wrongAnswers 分支、handleExport、操作按鈕。
 // AI streaming 路徑需要 puter.js 全 mock，屬整合測試範疇，不在此檔涵蓋。
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup, within } from '@testing-library/react';
 import type { QuizResult, QuizQuestion, AnswerRecord } from '../types/quiz';
 
 // 在 import ResultPage 前先 mock 資料層，否則 ResultPage import 時會吃真實題庫
@@ -22,10 +22,29 @@ vi.mock('../data/questions', () => {
     section: 'fixture',
     explanation: '二氧化碳為主要溫室氣體',
   } as unknown as QuizQuestion;
+
+  const similarFixture: QuizQuestion = {
+    id: 'fx-sim-001',
+    stem: '題庫相似題測試：下列何者是再生能源？',
+    options: [
+      { key: 'A', text: '燃煤' },
+      { key: 'B', text: '太陽能' },
+      { key: 'C', text: '燃油' },
+      { key: 'D', text: '天然氣' },
+    ],
+    answer: 'B',
+    subject: '考科1',
+    sourceType: 'gist',
+    hasAnswer: true,
+  };
+
   return {
     allQuestions: [fixture],
     getQuestionById: (id: string) => (id === 'fx-001' ? fixture : undefined),
-    getSimilarQuestions: () => [],
+    getSimilarQuestions: (questionId: string, maxResults = 5) => {
+      if (questionId !== 'fx-001') return [];
+      return [similarFixture].slice(0, maxResults);
+    },
     stats: { total: 1, subject1: 1, subject2: 0 },
   };
 });
@@ -156,10 +175,16 @@ describe('ResultPage', () => {
     expect(screen.getByRole('button', { name: /AI 解析/ })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /AI 生成相似題/ })).toBeInTheDocument();
 
-    // toggle 題庫相似題（getSimilarQuestions 已 mock 為空陣列，分支仍走過）
     const bankBtn = screen.getByRole('button', { name: /題庫相似題/ });
     fireEvent.click(bankBtn);
     expect(screen.getByRole('button', { name: /收起題庫相似題/ })).toBeInTheDocument();
+    expect(screen.getByText(/題庫相似題測試/)).toBeInTheDocument();
+    expect(screen.getByTestId('bank-similar-option-A')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('bank-similar-option-A'));
+    const reveal = screen.getByTestId('bank-similar-reveal');
+    expect(within(reveal).getByText(/正確答案/)).toBeInTheDocument();
+    expect(within(reveal).getByText(/您選擇了 A/)).toBeInTheDocument();
   });
 
   it('onGoHome / onRetry 按鈕觸發 callback', () => {

@@ -8,6 +8,7 @@ import {
 } from '../utils/ai-helper';
 import { SourceBreakdown } from '../components/SourceBreakdown/SourceBreakdown';
 import type { QuizResult, QuizQuestion } from '../types/quiz';
+import { BankSimilarQuestionItem } from '../components/BankSimilarQuestionItem/BankSimilarQuestionItem';
 import './ResultPage.css';
 
 interface ResultPageProps {
@@ -398,22 +399,11 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                             return (
                               <ul className="bank-similar-list">
                                 {similarQs.map((sq, idx) => (
-                                  <li key={sq.id} className="bank-similar-item">
-                                    <span className="similar-index">{idx + 1}.</span>
-                                    <div className="similar-content">
-                                      <p className="similar-stem">{sq.stem}</p>
-                                      <div className="similar-meta">
-                                        <span className="similar-subject">
-                                          {sq.subject === '考科1' ? '考科一' : '考科二'}
-                                        </span>
-                                        {sq.answer && (
-                                          <span className="similar-answer">
-                                            答案：{sq.answer}
-                                          </span>
-                                        )}
-                                      </div>
-                                    </div>
-                                  </li>
+                                  <BankSimilarQuestionItem
+                                    key={sq.id}
+                                    question={sq}
+                                    index={idx + 1}
+                                  />
                                 ))}
                               </ul>
                             );
