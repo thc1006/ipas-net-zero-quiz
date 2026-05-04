@@ -387,4 +387,124 @@ describe('useQuiz Hook', () => {
       expect(result.current.progress.percentage).toBe(20);
     });
   });
+
+  // === resumeQuiz（Refs #71）===
+  // 此區需要真實 localStorage 行為（test-setup mock 會讓 getItem 回 undefined）
+  describe('resumeQuiz', () => {
+    const STORAGE_KEY = 'ipas-quiz-in-progress';
+
+    beforeEach(() => {
+      // 同 quiz-progress-storage.test.ts 的 real localStorage 安裝
+      const store = new Map<string, string>();
+      Object.defineProperty(window, 'localStorage', {
+        value: {
+          getItem: (k: string): string | null => store.get(k) ?? null,
+          setItem: (k: string, v: string): void => {
+            store.set(k, v);
+          },
+          removeItem: (k: string): void => {
+            store.delete(k);
+          },
+          clear: (): void => {
+            store.clear();
+          },
+          key: (i: number): string | null => Array.from(store.keys())[i] ?? null,
+          get length(): number {
+            return store.size;
+          },
+        },
+        writable: true,
+        configurable: true,
+      });
+    });
+
+    it('localStorage 無進度時 resumeQuiz 回 false、不改 state', () => {
+      const { result } = renderHook(() => useQuiz());
+      let returned = true;
+      act(() => {
+        returned = result.current.resumeQuiz();
+      });
+      expect(returned).toBe(false);
+      expect(result.current.isActive).toBe(false);
+    });
+
+    it('localStorage 有合法進度時 resumeQuiz 還原 state、回 true', () => {
+      // 先以 startQuiz 建立 state（會自動寫入 localStorage via useEffect）
+      const { result, unmount } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 5 });
+      });
+      act(() => {
+        result.current.submitAnswer('A');
+      });
+      act(() => {
+        result.current.nextQuestion();
+      });
+      const expectedIndex = result.current.currentIndex;
+      const expectedQuestionCount = result.current.questions.length;
+
+      // unmount 模擬 reload；新 hook 進來後 localStorage 仍有資料
+      unmount();
+      const fresh = renderHook(() => useQuiz());
+      expect(fresh.result.current.isActive).toBe(false); // 初始未 active
+
+      let returned = false;
+      act(() => {
+        returned = fresh.result.current.resumeQuiz();
+      });
+      expect(returned).toBe(true);
+      expect(fresh.result.current.isActive).toBe(true);
+      expect(fresh.result.current.currentIndex).toBe(expectedIndex);
+      expect(fresh.result.current.questions.length).toBe(expectedQuestionCount);
+    });
+
+    it('localStorage 有壞掉資料時 resumeQuiz 回 false', () => {
+      window.localStorage.setItem(STORAGE_KEY, 'not-json');
+      const { result } = renderHook(() => useQuiz());
+      let returned = true;
+      act(() => {
+        returned = result.current.resumeQuiz();
+      });
+      expect(returned).toBe(false);
+      expect(result.current.isActive).toBe(false);
+    });
+
+    it('finishQuiz 後 localStorage 被清，後續 resumeQuiz 回 false', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3 });
+      });
+      act(() => {
+        result.current.submitAnswer('A');
+      });
+      act(() => {
+        result.current.finishQuiz();
+      });
+      // localStorage 已被 clearProgress 清掉
+      expect(window.localStorage.getItem(STORAGE_KEY)).toBeNull();
+
+      let returned = true;
+      act(() => {
+        returned = result.current.resumeQuiz();
+      });
+      expect(returned).toBe(false);
+    });
+
+    it('resetQuiz 後 localStorage 被清，後續 resumeQuiz 回 false', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3 });
+      });
+      act(() => {
+        result.current.resetQuiz();
+      });
+      expect(window.localStorage.getItem(STORAGE_KEY)).toBeNull();
+
+      let returned = true;
+      act(() => {
+        returned = result.current.resumeQuiz();
+      });
+      expect(returned).toBe(false);
+    });
+  });
 });
