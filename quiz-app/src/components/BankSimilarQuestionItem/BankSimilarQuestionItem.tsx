@@ -93,7 +93,9 @@ export function BankSimilarQuestionItem({
   index,
 }: BankSimilarQuestionItemProps) {
   const labelId = useId();
-  const radioGroupName = `bank-similar-${question.id}`;
+  // radio group name 綁 useId 而非 question.id：同一相似題若同時出現在多個
+  // 展開的錯題面板，各實例 radio 不會併入同一原生 group 而互相取消勾選
+  const radioGroupName = `bank-similar-${labelId}`;
   const [picked, setPicked] = useState<string | null>(null);
   const revealed = picked !== null;
 
