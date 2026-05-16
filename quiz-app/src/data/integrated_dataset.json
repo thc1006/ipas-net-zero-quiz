@@ -1591,17 +1591,26 @@
           "text": "監控（Monitoring）、報告（Reporting）、驗證（Verification）"
         }
       ],
-      "answer": "D",
+      "answer": "A",
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
         "answer_verified": true,
-        "verification_date": "2026-01-23",
+        "verification_date": "2026-05-13",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 3,
+        "prior_answer": "D",
+        "answer_correction_reason": "前版答案 D (Monitoring/Reporting/Verification) 採 EU 法規體系，跟同題庫 q17 (Bali Action Plan, ans B) 及 q44 (ans D = Measurable/Reportable/Verifiable) 矛盾。經 2026-05 深度調研確認 iPAS 教材依 UNFCCC 體系，正解為 A。",
+        "sources": [
+          "https://unfccc.int/resource/docs/2007/cop13/eng/06a01.pdf",
+          "https://www.ipas.org.tw/NZ/",
+          "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL005954"
+        ],
+        "sources_verified_date": "2026-05-13"
+      },
+      "explanation": "MRV 一詞最早出自 UNFCCC 2007 年峇里路線圖（Bali Action Plan, Decision 1/CP.13）§1(b)(ii) 條約原文，使用形容詞型「measurable, reportable and verifiable」描述開發中國家減緩行動應達成的特性。iPAS 淨零碳教材依此 UNFCCC 體系，正解為 A「可測量、可報告、可查證」。注意：EU MRV Regulation 2015/757（海運）、EU ETS、CBAM 等操作層級法規改用名詞型「Monitoring / Reporting / Verification」(D)，是另一個治理體系的用詞，不適用 iPAS。"
     },
     {
       "index": 47,
