@@ -9198,12 +9198,17 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "《巴黎協定》於2016年11月4日正式生效。 [1, 2, 3, 4]",
+      "explanation": "《巴黎協定》於 2015 年 12 月 12 日在 COP21 通過，2016 年 11 月 4 日正式生效（依第 21(1) 條：批准書達 55 國且涵蓋全球 55% 排放量後 30 日生效；門檻於 2016 年 10 月 5 日達成）。2020 年起為 NDC 第一輪實施期之開端（不是生效時點）。",
       "metadata": {
         "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c2-074"
+        "verification_date": "2026-05-16",
+        "verification_source": "issue_82_un_treaty_collection",
+        "original_id": "c2-074",
+        "sources": [
+          "https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XXVII-7-d&chapter=27&clang=_en",
+          "https://unfccc.int/process-and-meetings/the-paris-agreement"
+        ],
+        "sources_verified_date": "2026-05-16"
       }
     },
     {
