@@ -6,16 +6,16 @@
       "Gist: hctsai1006/f8a1a64ab43be59b4d8297ee1afc11f2",
       "爬蟲題庫: dataset_verified.json"
     ],
-    "total_questions": 648,
-    "gist_questions": 570,
+    "total_questions": 647,
+    "gist_questions": 569,
     "our_unique_questions": 78,
     "corrections_applied": 2,
     "by_subject": {
-      "考科1": 340,
+      "考科1": 339,
       "考科2": 308
     },
-    "with_answer": 648,
-    "last_updated": "2026-01-23T05:38:13.350449"
+    "with_answer": 647,
+    "last_updated": "2026-05-16T00:00:00.000000"
   },
   "gist_items": [
     {
@@ -9685,40 +9685,6 @@
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
         "original_id": "c2-088"
-      }
-    },
-    {
-      "index": 282,
-      "number": 23,
-      "stem": "AR6 指出：地表溫度每上升 0.5 °C，對融冰、海平面、物種減少的影響呈何次方成長？",
-      "options": [
-        {
-          "key": "A",
-          "text": "2 次方"
-        },
-        {
-          "key": "B",
-          "text": "5 次方"
-        },
-        {
-          "key": "C",
-          "text": "10 次方"
-        },
-        {
-          "key": "D",
-          "text": "20 次方"
-        }
-      ],
-      "answer": "C",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "explanation": "根據IPCC第六次評估報告（AR6），地表溫度每上升0.5°C，對融冰、海平面上升、物種減少等影響將呈10次方成長。",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c2-089"
       }
     },
     {
