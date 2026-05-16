@@ -37,7 +37,7 @@ vi.mock('../data/questions', () => {
     subject: '考科1',
     sourceType: 'gist',
     hasAnswer: true,
-  } as unknown as QuizQuestion;
+  };
 
   // Refs #64：weak-section 測試需要多個可解析的 id
   const weakFixtures: Record<string, QuizQuestion> = {
