@@ -1,9 +1,10 @@
 // 設定頁面元件
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { useAccessibility } from '../hooks/useAccessibility';
 import { usePracticeMode } from '../hooks/usePracticeMode';
 import { usePracticePool } from '../hooks/usePracticePool';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
+import { clearStats } from '../utils/question-stats-storage';
 import packageJson from '../../package.json';
 import './SettingsPage.css';
 
@@ -27,6 +28,18 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
   const practiceMode = usePracticeMode();
   const { pool } = usePracticePool();
   const [optInOpen, setOptInOpen] = useState(false);
+  // Refs #64：清除作答統計確認 dialog（取代 window.confirm，與 quiz-abort-dialog 同 pattern）
+  const [clearStatsConfirmOpen, setClearStatsConfirmOpen] = useState(false);
+
+  // ESC 關閉 clear-stats dialog（a11y 期待行為，對齊 QuizPage abort dialog）
+  useEffect(() => {
+    if (!clearStatsConfirmOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setClearStatsConfirmOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [clearStatsConfirmOpen]);
 
   const onTogglePractice = () => {
     if (practiceMode.enabled) {
@@ -42,11 +55,22 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
     <div className="settings-page animate-fade-in">
       <header className="settings-header">
         <h1>
-          <span className="material-icons">settings</span>
+          <span className="material-icons" aria-hidden="true">settings</span>
           設定
         </h1>
-        <button className="btn btn-text" onClick={onClose} aria-label="關閉設定">
-          <span className="material-icons">close</span>
+        {/*
+          使用 visible text「返回首頁」當 accessible name（不加 aria-label）。
+          若 aria-label 與 visible text 不一致，voice-control 使用者說 visible
+          name 將無法觸發此元素 — WCAG 2.1 SC 2.5.3「Label in Name」(Level A)：
+          https://www.w3.org/WAI/WCAG21/Understanding/label-in-name.html
+          原本是 icon-only X button，使用者反映 #72 找不到返回入口。
+        */}
+        <button
+          className="btn btn-secondary settings-back-btn"
+          onClick={onClose}
+        >
+          <span className="material-icons" aria-hidden="true">arrow_back</span>
+          返回首頁
         </button>
       </header>
 
@@ -177,6 +201,68 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
         }}
         onDecline={() => setOptInOpen(false)}
       />
+
+      {/* 作答統計（Refs #64）*/}
+      <section className="settings-section card">
+        <h2>作答統計</h2>
+        <div className="setting-item">
+          <div className="setting-info">
+            <span className="material-icons">insights</span>
+            <div>
+              <p className="setting-title">清除作答統計</p>
+              <p className="setting-desc">
+                清除所有題目的累積答對率紀錄。資料僅儲存在本機（localStorage），不會上傳。
+              </p>
+            </div>
+          </div>
+          <button
+            className="btn btn-secondary"
+            onClick={() => setClearStatsConfirmOpen(true)}
+          >
+            <span className="material-icons" aria-hidden="true">delete_sweep</span>
+            清除作答統計
+          </button>
+        </div>
+      </section>
+
+      {/* 清除作答統計確認 dialog（Refs #64）— 取代 window.confirm 對齊既有 dialog pattern */}
+      {clearStatsConfirmOpen && (
+        <div
+          className="settings-confirm-dialog-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="clear-stats-confirm-title"
+          onClick={() => setClearStatsConfirmOpen(false)}
+        >
+          <div className="settings-confirm-dialog" onClick={(e) => e.stopPropagation()}>
+            <h2 id="clear-stats-confirm-title">清除作答統計？</h2>
+            <p>
+              所有題目的累積答對率紀錄將被刪除，此動作無法復原。
+              （資料僅儲存在本機，不會上傳）
+            </p>
+            <div className="settings-confirm-dialog__actions">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => setClearStatsConfirmOpen(false)}
+              >
+                取消
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                  clearStats();
+                  setClearStatsConfirmOpen(false);
+                }}
+                autoFocus
+              >
+                確定清除
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 重置 */}
       <section className="settings-section">

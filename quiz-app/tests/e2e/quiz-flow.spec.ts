@@ -73,8 +73,9 @@ test.describe('測驗流程', () => {
       }
     }
 
-    // 完成測驗
-    await page.getByRole('button', { name: /完成|結束/i }).click();
+    // 完成測驗（match「完成測驗」substring，避免撞到 PR #75 新加的「結束並返回首頁」
+    // abort 按鈕；舊 regex /完成|結束/i 會兩個都中觸發 strict mode violation）
+    await page.getByRole('button', { name: /完成測驗/i }).click();
 
     // 應看到結果頁面（顯示分數和評語）
     await expect(page.locator('.result-page')).toBeVisible();
@@ -100,13 +101,31 @@ test.describe('無障礙功能', () => {
     await page.getByRole('button', { name: /開始測驗/i }).click();
     await expect(page.locator('.question-card')).toBeVisible();
 
-    // 使用 Tab 鍵導覽
-    await page.keyboard.press('Tab');
-    await page.keyboard.press('Tab');
+    // 使用 Tab 鍵連續按到打進 quiz 互動元件（最多 12 次 — 超過代表 tab order 異常）。
+    // 期待焦點落在以下任一 quiz 內可互動元件（純 CSS selector，避免 Playwright-only
+    // 偽類在 Element.matches 失效）：
+    //   - .quiz-abort-btn（abort button）
+    //   - .quiz-navigation button（上一題 / 下一題 / 完成）
+    //   - input[type="radio"][name="quiz-option"]（題目選項，sr-only 但 keyboard 可操作）
+    // 不用 :focus toBeVisible — radio 用 sr-only 樣式（用 label 顯示），
+    // playwright 視為 invisible 但 keyboard 仍可操作。
+    const interactiveSelector =
+      '.quiz-abort-btn, .quiz-navigation button, input[type="radio"][name="quiz-option"]';
 
-    // 第一個選項應獲得焦點
-    const focusedElement = page.locator(':focus');
-    await expect(focusedElement).toBeVisible();
+    let landed = false;
+    for (let i = 0; i < 12; i++) {
+      await page.keyboard.press('Tab');
+      const focused = await page.evaluate((sel) => {
+        const el = document.activeElement;
+        if (!el || el === document.body) return false;
+        return el.matches(sel);
+      }, interactiveSelector);
+      if (focused) {
+        landed = true;
+        break;
+      }
+    }
+    expect(landed, 'Tab 序列應在 12 次內到達 quiz 互動元件').toBe(true);
   });
 
   test('選項應有正確的 ARIA 屬性', async ({ page }) => {

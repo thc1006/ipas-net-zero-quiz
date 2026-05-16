@@ -1,0 +1,66 @@
+name: 題目回報
+description: 回報題庫中某題的問題（答案錯、條號過時、source 失效、選項歧義等）
+title: "[題目回報] "
+labels: ["question-feedback", "quiz-app:data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感謝協助維護題庫！從測驗 / 結果頁的「回報此題」按鈕跳來時，下方欄位多數會自動帶入。
+        若 q_id / q_stem 為空，請貼到該欄位裡的「題目開頭」幫助我們定位題目。
+
+  - type: input
+    id: q_id
+    attributes:
+      label: 題目 ID
+      description: 通常自動帶入。範例 `gist-334` / `pool-aig-ifrs2026-001` / `S_YAMOL_023-q078`
+      placeholder: gist-XXX 或 pool-XXX
+    validations:
+      required: false
+
+  - type: textarea
+    id: q_stem
+    attributes:
+      label: 題目開頭（題幹前 60–100 字）
+      description: 通常自動帶入；若 ID 不確定，貼題幹開頭幫助定位
+      placeholder: 例如「ISSB S1/S2 我國採用時程，下列何者錯誤？」
+    validations:
+      required: false
+
+  - type: dropdown
+    id: feedback_type
+    attributes:
+      label: 回報類型
+      description: 選最貼近的一項；若選「其他」請於補充說明描述
+      options:
+        - 答案錯誤（標準答案不對）
+        - 條號 / 法規過時（IFRS、金管會、ISO 等已修訂）
+        - Source URL 失效（連結 404 / redirect 錯)
+        - 選項歧義（多個選項都可能對 / 全錯）
+        - 題幹不清楚 / 排版錯誤
+        - 重複題目
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: 補充說明
+      description: 您觀察到的具體問題、預期答案、可信來源連結等
+      placeholder: |
+        例如：
+        - 我認為正解應為 B（依 IFRS S2 §29(d) 內部碳定價揭露）
+        - source URL 已 redirect 到首頁、原條文不存在
+        - https://www.ifrs.org/.../ifrs-s2 ...
+    validations:
+      required: true
+
+  - type: input
+    id: from_page
+    attributes:
+      label: 從哪個頁面回報？
+      description: 可選；自動帶入「測驗中」或「結果頁錯題列表」
+      placeholder: quiz / result
+    validations:
+      required: false

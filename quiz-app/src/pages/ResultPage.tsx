@@ -9,7 +9,14 @@ import {
 import { SourceBreakdown } from '../components/SourceBreakdown/SourceBreakdown';
 import type { QuizResult, QuizQuestion } from '../types/quiz';
 import { BankSimilarQuestionItem } from '../components/BankSimilarQuestionItem/BankSimilarQuestionItem';
+import { buildFeedbackUrl } from '../utils/question-feedback-url';
+import { selectWeakQuestions } from '../utils/question-stats-storage';
+import { useAllQuestionStats } from '../hooks/useQuestionStats';
 import './ResultPage.css';
+
+const WEAK_MIN_ATTEMPTS = 3;
+const WEAK_MAX_RATE = 0.5;
+const WEAK_LIST_LIMIT = 10;
 
 interface ResultPageProps {
   result: QuizResult;
@@ -56,6 +63,24 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
     () => answers.filter((a) => a.isCorrect === false),
     [answers]
   );
+
+  // 累積最常答錯（Refs #64）— pure 篩選/排序在 selectWeakQuestions，
+  // 此處只負責 id → 題幹查找（沒查到的就過濾掉，多為已被刪除題或 pool 題未載入）
+  // 透過 useAllQuestionStats 訂閱跨 tab 變更：別的分頁清除統計時，本頁也即時更新
+  const allStats = useAllQuestionStats();
+  const weakQuestions = useMemo(() => {
+    const weak = selectWeakQuestions(allStats, {
+      minAttempts: WEAK_MIN_ATTEMPTS,
+      maxRate: WEAK_MAX_RATE,
+      limit: WEAK_LIST_LIMIT,
+    });
+    return weak
+      .map((w) => {
+        const q = getQuestionById(w.id);
+        return q ? { ...w, stem: q.stem } : null;
+      })
+      .filter((x): x is NonNullable<typeof x> => x !== null);
+  }, [allStats]);
 
   // 請求 AI 解釋特定題目（Streaming）
   const handleAskAI = useCallback(async (question: QuizQuestion) => {
@@ -209,6 +234,31 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
       {/* 按題目來源分組的正確率（僅啟用練習池且抽到池題時顯示） */}
       <SourceBreakdown answers={answers} />
 
+      {/* 最常答錯（Refs #64）— 累積 ≥3 次且答對率 <50% 的歷史弱題 */}
+      {weakQuestions.length > 0 && (
+        <section className="weak-section card" data-testid="weak-section">
+          <h2>
+            <span className="material-icons" aria-hidden="true">trending_down</span>
+            最常答錯
+          </h2>
+          <p className="weak-section__hint">
+            根據你過去作答紀錄（≥ {WEAK_MIN_ATTEMPTS} 次且答對率低於 {Math.round(WEAK_MAX_RATE * 100)}%）
+          </p>
+          <ul className="weak-list">
+            {weakQuestions.map((w, i) => (
+              <li key={w.id} className="weak-item">
+                <span className="weak-rank">#{i + 1}</span>
+                <p className="weak-stem">{w.stem}</p>
+                <span className="weak-rate" aria-label={`答對 ${w.correct} 次、共 ${w.attempts} 次`}>
+                  {Math.round(w.rate * 100)}%
+                  <span className="weak-rate__count">（{w.correct}/{w.attempts}）</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {/* 錯題列表 */}
       {wrongAnswers.length > 0 && (
         <section className="wrong-section card">
@@ -256,7 +306,26 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                 <article key={answer.questionId} className="wrong-item">
                   <div className="wrong-number">#{index + 1}</div>
                   <div className="wrong-content">
-                    <p className="wrong-stem">{question.stem}</p>
+                    <div className="wrong-stem-row">
+                      <p className="wrong-stem">{question.stem}</p>
+                      {/* 回報此題（Refs #63）— 開新分頁、不打斷使用者瀏覽結果頁 */}
+                      <a
+                        className="question-feedback-link wrong-feedback-link"
+                        href={buildFeedbackUrl({
+                          questionId: question.id,
+                          stem: question.stem,
+                          fromPage: 'result',
+                        })}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="回報此題的問題"
+                        title="此題有問題？回報維護者"
+                      >
+                        <span className="material-icons sm" aria-hidden="true">
+                          flag
+                        </span>
+                      </a>
+                    </div>
                     <div className="wrong-answers">
                       <span className="your-answer">
                         你的答案：

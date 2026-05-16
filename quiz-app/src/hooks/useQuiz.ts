@@ -1,5 +1,5 @@
 // 測驗邏輯 Hook
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import type {
   QuizQuestion,
   QuizConfig,
@@ -13,6 +13,15 @@ import {
   allQuestions,
 } from '../data/questions';
 import { loadPracticePool, toQuizQuestion } from '../utils/practice-pool';
+import {
+  saveProgress,
+  loadProgress,
+  clearProgress,
+} from '../utils/quiz-progress-storage';
+import {
+  recordAttempts,
+  type AttemptUpdate,
+} from '../utils/question-stats-storage';
 
 /** 測驗狀態 */
 export interface QuizState {
@@ -49,6 +58,13 @@ export const defaultConfig: QuizConfig = {
 export function useQuiz() {
   const [state, setState] = useState<QuizState>(initialState);
   const [questionStartTime, setQuestionStartTime] = useState<number>(0);
+
+  // 持久化 in-progress 測驗（Refs #71）：
+  // 每次 state 變動且 isActive=true 時寫入 localStorage；isActive=false 不動
+  // （清除由 finishQuiz / resetQuiz 主動呼叫，避免初始 mount 誤清舊進度）
+  useEffect(() => {
+    if (state.isActive) saveProgress(state);
+  }, [state]);
 
   /** 開始測驗 */
   const startQuiz = useCallback((config: QuizConfig) => {
@@ -280,14 +296,49 @@ export function useQuiz() {
       skippedCount: questions.length - answers.length,
     };
 
+    // 累積每題作答統計（Refs #64）— 跳題（selectedAnswer=null）與
+    // 無標準答案題（correctAnswer=null）都不算 attempt
+    const statUpdates: AttemptUpdate[] = answers
+      .filter((a) => a.correctAnswer !== null && a.selectedAnswer !== null)
+      .map((a) => ({
+        id: a.questionId,
+        isCorrect: a.isCorrect === true,
+        at: a.timestamp,
+      }));
+    recordAttempts(statUpdates);
+
+    clearProgress();
     setState(initialState);
 
     return result;
   }, [state]);
 
-  /** 重置測驗 */
+  /** 重置測驗（亦會清除持久化進度）— 用於 user 主動「重來」/ result 後返家 */
   const resetQuiz = useCallback(() => {
+    clearProgress();
     setState(initialState);
+  }, []);
+
+  /**
+   * 軟重置 in-memory state 但**保留** localStorage 進度（Refs #71）。
+   * 用於 abort flow：使用者點「結束並返回首頁」時，state 歸零但 localStorage
+   * 保留供下次 resume。避免 quiz hook 在 abort 後仍殘留 isActive=true 狀態。
+   */
+  const softReset = useCallback(() => {
+    setState(initialState);
+  }, []);
+
+  /**
+   * 從 localStorage 還原中斷的測驗（Refs #71）。
+   * 找到合法 saved progress 時 restore 並回 true；否則回 false。
+   * 由 App.tsx 在使用者點「繼續測驗」時呼叫。
+   */
+  const resumeQuiz = useCallback((): boolean => {
+    const saved = loadProgress();
+    if (!saved || !saved.state.isActive) return false;
+    setState(saved.state);
+    setQuestionStartTime(Date.now());
+    return true;
   }, []);
 
   // 衍生狀態
@@ -345,6 +396,8 @@ export function useQuiz() {
     goToQuestion,
     finishQuiz,
     resetQuiz,
+    softReset,
+    resumeQuiz,
   };
 }
 

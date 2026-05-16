@@ -6,6 +6,8 @@ import { SourceBadge } from '../SourceBadge/SourceBadge';
 import { SourceBanner } from '../SourceBanner/SourceBanner';
 import { LAW_PCODE_LABELS } from '../../data/law-pcode-labels';
 import { findRedundantPrefix } from '../../utils/option-prefix';
+import { buildFeedbackUrl } from '../../utils/question-feedback-url';
+import { useAllQuestionStats } from '../../hooks/useQuestionStats';
 import './QuestionCard.css';
 
 /**
@@ -64,6 +66,13 @@ export function QuestionCard({
   const redundantPrefix = useMemo(
     () => findRedundantPrefix(question.stem, question.options.map((o) => o.text)),
     [question.stem, question.options],
+  );
+  // 每題作答統計 chip（Refs #64）— 透過 useAllQuestionStats 訂閱跨 tab 變更
+  // （另一分頁 clearStats / 完成 quiz 時自動 refresh），無答案題不顯示
+  const allStats = useAllQuestionStats();
+  const stat = useMemo(
+    () => (question.hasAnswer ? allStats[question.id] ?? null : null),
+    [question.id, question.hasAnswer, allStats]
   );
   const [isLoadingAI, setIsLoadingAI] = useState(false);
 
@@ -140,6 +149,38 @@ export function QuestionCard({
             qualityFlags={question.qualityFlags ?? []}
           />
         )}
+        {/* 個人作答歷史 chip（Refs #64）— 只在有標準答案的題目顯示
+            stat.attempts > 0 雙重保險：storage validator 已拒絕 attempts<1，
+            這裡再 guard 避免任何漏網路徑導致 NaN%（Copilot PR #80） */}
+        {question.hasAnswer && (
+          <span className="question-stat-chip" data-testid="question-stat-chip">
+            {stat && stat.attempts > 0 ? (
+              <>
+                答對率 {Math.round((stat.correct / stat.attempts) * 100)}%
+                <span className="question-stat-chip__count">（{stat.attempts} 次）</span>
+              </>
+            ) : (
+              '新題目'
+            )}
+          </span>
+        )}
+        {/* 回報此題（Refs #63）— 開新分頁不打斷答題 flow；icon-only 但有 aria-label */}
+        <a
+          className="question-feedback-link"
+          href={buildFeedbackUrl({
+            questionId: question.id,
+            stem: question.stem,
+            fromPage: 'quiz',
+          })}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="回報此題的問題"
+          title="此題有問題？回報維護者"
+        >
+          <span className="material-icons sm" aria-hidden="true">
+            flag
+          </span>
+        </a>
       </header>
 
       {/* 練習池來源 banner — 主題庫題不顯示 */}

@@ -21,6 +21,46 @@
   color: var(--color-text-secondary);
 }
 
+/* 個人作答歷史 chip（Refs #64） */
+.question-stat-chip {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  background: var(--color-surface-variant);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  margin-left: auto;
+}
+.question-stat-chip__count {
+  margin-left: 2px;
+  opacity: 0.75;
+}
+
+/* 回報此題 icon button（#63）— 低調 icon-only、開新分頁不打斷答題 flow */
+.question-feedback-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  /* 兩個 margin-left:auto 並存 — 渲染時前者「先佔」剩餘空間，
+     兩者同時存在時 chip 把自己 + feedback link 推到右側群組；
+     無 chip 時 feedback link 自己貼右 */
+  margin-left: auto;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+.question-feedback-link:hover {
+  background: var(--color-divider);
+  color: var(--color-text-primary);
+}
+.question-feedback-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .subject-tag {
   font-size: var(--font-size-xs);
 }

@@ -387,4 +387,302 @@ describe('useQuiz Hook', () => {
       expect(result.current.progress.percentage).toBe(20);
     });
   });
+
+  // === resumeQuiz（Refs #71）===
+  // 此區需要真實 localStorage 行為（test-setup mock 會讓 getItem 回 undefined）
+  describe('resumeQuiz', () => {
+    const STORAGE_KEY = 'ipas-quiz-in-progress';
+
+    beforeEach(() => {
+      // 同 quiz-progress-storage.test.ts 的 real localStorage 安裝
+      const store = new Map<string, string>();
+      Object.defineProperty(window, 'localStorage', {
+        value: {
+          getItem: (k: string): string | null => store.get(k) ?? null,
+          setItem: (k: string, v: string): void => {
+            store.set(k, v);
+          },
+          removeItem: (k: string): void => {
+            store.delete(k);
+          },
+          clear: (): void => {
+            store.clear();
+          },
+          key: (i: number): string | null => Array.from(store.keys())[i] ?? null,
+          get length(): number {
+            return store.size;
+          },
+        },
+        writable: true,
+        configurable: true,
+      });
+    });
+
+    it('localStorage 無進度時 resumeQuiz 回 false、不改 state', () => {
+      const { result } = renderHook(() => useQuiz());
+      let returned = true;
+      act(() => {
+        returned = result.current.resumeQuiz();
+      });
+      expect(returned).toBe(false);
+      expect(result.current.isActive).toBe(false);
+    });
+
+    it('localStorage 有合法進度時 resumeQuiz 還原 state、回 true', () => {
+      // 先以 startQuiz 建立 state（會自動寫入 localStorage via useEffect）
+      const { result, unmount } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 5 });
+      });
+      act(() => {
+        result.current.submitAnswer('A');
+      });
+      act(() => {
+        result.current.nextQuestion();
+      });
+      const expectedIndex = result.current.currentIndex;
+      const expectedQuestionCount = result.current.questions.length;
+
+      // unmount 模擬 reload；新 hook 進來後 localStorage 仍有資料
+      unmount();
+      const fresh = renderHook(() => useQuiz());
+      expect(fresh.result.current.isActive).toBe(false); // 初始未 active
+
+      let returned = false;
+      act(() => {
+        returned = fresh.result.current.resumeQuiz();
+      });
+      expect(returned).toBe(true);
+      expect(fresh.result.current.isActive).toBe(true);
+      expect(fresh.result.current.currentIndex).toBe(expectedIndex);
+      expect(fresh.result.current.questions.length).toBe(expectedQuestionCount);
+    });
+
+    it('localStorage 有壞掉資料時 resumeQuiz 回 false', () => {
+      window.localStorage.setItem(STORAGE_KEY, 'not-json');
+      const { result } = renderHook(() => useQuiz());
+      let returned = true;
+      act(() => {
+        returned = result.current.resumeQuiz();
+      });
+      expect(returned).toBe(false);
+      expect(result.current.isActive).toBe(false);
+    });
+
+    it('finishQuiz 後 localStorage 被清，後續 resumeQuiz 回 false', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3 });
+      });
+      act(() => {
+        result.current.submitAnswer('A');
+      });
+      act(() => {
+        result.current.finishQuiz();
+      });
+      // localStorage 已被 clearProgress 清掉
+      expect(window.localStorage.getItem(STORAGE_KEY)).toBeNull();
+
+      let returned = true;
+      act(() => {
+        returned = result.current.resumeQuiz();
+      });
+      expect(returned).toBe(false);
+    });
+
+    it('resetQuiz 後 localStorage 被清，後續 resumeQuiz 回 false', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3 });
+      });
+      act(() => {
+        result.current.resetQuiz();
+      });
+      expect(window.localStorage.getItem(STORAGE_KEY)).toBeNull();
+
+      let returned = true;
+      act(() => {
+        returned = result.current.resumeQuiz();
+      });
+      expect(returned).toBe(false);
+    });
+
+    // softReset：abort flow 用 — in-memory state 歸零但保留 localStorage
+    it('softReset 重置 state 但**保留** localStorage 進度（abort flow）', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3 });
+      });
+      act(() => {
+        result.current.submitAnswer('A');
+      });
+      // 確認 localStorage 已寫入
+      expect(window.localStorage.getItem(STORAGE_KEY)).not.toBeNull();
+
+      act(() => {
+        result.current.softReset();
+      });
+
+      // in-memory state 歸零
+      expect(result.current.isActive).toBe(false);
+      expect(result.current.questions.length).toBe(0);
+      // localStorage **保留**（vs resetQuiz 會清）
+      expect(window.localStorage.getItem(STORAGE_KEY)).not.toBeNull();
+
+      // softReset 後仍可 resume（localStorage 還在）
+      let returned = false;
+      act(() => {
+        returned = result.current.resumeQuiz();
+      });
+      expect(returned).toBe(true);
+      expect(result.current.isActive).toBe(true);
+    });
+  });
+
+  // === per-question stats（Refs #64） ===
+  // finishQuiz 寫入 question-stats；softReset / resetQuiz 不寫
+  describe('per-question stats', () => {
+    const STATS_KEY = 'ipas-question-stats';
+
+    beforeEach(() => {
+      const store = new Map<string, string>();
+      Object.defineProperty(window, 'localStorage', {
+        value: {
+          getItem: (k: string): string | null => store.get(k) ?? null,
+          setItem: (k: string, v: string): void => {
+            store.set(k, v);
+          },
+          removeItem: (k: string): void => {
+            store.delete(k);
+          },
+          clear: (): void => {
+            store.clear();
+          },
+          key: (i: number): string | null => Array.from(store.keys())[i] ?? null,
+          get length(): number {
+            return store.size;
+          },
+        },
+        writable: true,
+        configurable: true,
+      });
+    });
+
+    function readStats(): Record<string, { attempts: number; correct: number; lastTriedAt: number }> {
+      const raw = window.localStorage.getItem(STATS_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw) as { items: Record<string, { attempts: number; correct: number; lastTriedAt: number }> };
+      return parsed.items;
+    }
+
+    it('finishQuiz 後寫入 attempts + correct', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+
+      const q1 = result.current.currentQuestion;
+      act(() => { result.current.submitAnswer(q1?.answer ?? 'Z'); });
+      act(() => { result.current.nextQuestion(); });
+      const q2 = result.current.currentQuestion;
+      act(() => { result.current.submitAnswer('Z'); }); // 故意錯
+      act(() => { result.current.finishQuiz(); });
+
+      const stats = readStats();
+      // q1 答對：attempts=1, correct=1（僅當該題有標準答案）
+      if (q1?.answer != null) {
+        expect(stats[q1.id]?.attempts).toBe(1);
+        expect(stats[q1.id]?.correct).toBe(1);
+      }
+      // q2 答錯：attempts=1, correct=0（僅當該題有標準答案）
+      if (q2?.answer != null) {
+        expect(stats[q2.id]?.attempts).toBe(1);
+        expect(stats[q2.id]?.correct).toBe(0);
+      }
+    });
+
+    it('跳過的題目（沒呼叫 submitAnswer）不寫 stats', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+
+      const q1 = result.current.currentQuestion;
+      // 只答 q1，q2 q3 跳過
+      act(() => { result.current.submitAnswer(q1?.answer ?? 'Z'); });
+      act(() => { result.current.finishQuiz(); });
+
+      const stats = readStats();
+      // q1 之外不應有其他項目（cap 1 個）
+      const keys = Object.keys(stats);
+      expect(keys.length).toBeLessThanOrEqual(1);
+    });
+
+    it('同一題在同一 quiz 內被覆寫（GH #59）只算 1 次 attempt', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+      const q1 = result.current.currentQuestion;
+      if (q1?.answer == null) return; // 該題無標準答案則略過
+
+      // 同題答 3 次（最後留 q1.answer）
+      act(() => { result.current.submitAnswer('Z'); });
+      act(() => { result.current.submitAnswer('Y'); });
+      act(() => { result.current.submitAnswer(q1.answer!); });
+      act(() => { result.current.finishQuiz(); });
+
+      const stats = readStats();
+      expect(stats[q1.id]?.attempts).toBe(1);
+      expect(stats[q1.id]?.correct).toBe(1);
+    });
+
+    it('跨 quiz session attempts 累計', () => {
+      const { result } = renderHook(() => useQuiz());
+
+      // 第一輪
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 1, shuffleQuestions: false });
+      });
+      const q1 = result.current.currentQuestion;
+      if (q1?.answer == null) return;
+      act(() => { result.current.submitAnswer(q1.answer!); });
+      act(() => { result.current.finishQuiz(); });
+
+      // 第二輪同題（shuffleQuestions=false 順序穩定）
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 1, shuffleQuestions: false });
+      });
+      act(() => { result.current.submitAnswer('Z'); }); // 故意錯
+      act(() => { result.current.finishQuiz(); });
+
+      const stats = readStats();
+      expect(stats[q1.id]?.attempts).toBe(2);
+      expect(stats[q1.id]?.correct).toBe(1);
+    });
+
+    it('resetQuiz 不寫 stats', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+      const q1 = result.current.currentQuestion;
+      act(() => { result.current.submitAnswer(q1?.answer ?? 'Z'); });
+      act(() => { result.current.resetQuiz(); });
+
+      expect(window.localStorage.getItem(STATS_KEY)).toBeNull();
+    });
+
+    it('softReset（abort）不寫 stats', () => {
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        result.current.startQuiz({ ...defaultConfig, questionCount: 3, shuffleQuestions: false });
+      });
+      const q1 = result.current.currentQuestion;
+      act(() => { result.current.submitAnswer(q1?.answer ?? 'Z'); });
+      act(() => { result.current.softReset(); });
+
+      expect(window.localStorage.getItem(STATS_KEY)).toBeNull();
+    });
+  });
 });

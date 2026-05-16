@@ -20,6 +20,15 @@
   margin: 0;
 }
 
+/* 返回首頁按鈕（Refs #72）— icon + 文字明確標示，避免 X icon-only 不直覺 */
+.settings-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+
 /* 設定區塊 */
 .settings-section {
   margin-bottom: var(--spacing-lg);
@@ -178,6 +187,15 @@
   .setting-item input[type="number"] {
     width: 100%;
   }
+  /* 返回首頁按鈕在小螢幕換行時全寬，更易點擊（Refs #72） */
+  .settings-header {
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+  .settings-back-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 480px) {
@@ -190,5 +208,54 @@
   .setting-item select,
   .toggle-switch {
     align-self: flex-end;
+  }
+}
+
+/* 清除作答統計確認 dialog（Refs #64）— 與 quiz-abort-dialog 同 pattern */
+.settings-confirm-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-md);
+}
+
+.settings-confirm-dialog {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  max-width: 480px;
+  width: 100%;
+  box-shadow: var(--shadow-2);
+}
+
+.settings-confirm-dialog h2 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin: 0 0 var(--spacing-sm);
+  color: var(--color-text-primary);
+}
+
+.settings-confirm-dialog p {
+  margin: 0 0 var(--spacing-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.settings-confirm-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+}
+
+@media (max-width: 640px) {
+  .settings-confirm-dialog__actions {
+    flex-direction: column-reverse;
+  }
+  .settings-confirm-dialog__actions .btn {
+    width: 100%;
   }
 }
