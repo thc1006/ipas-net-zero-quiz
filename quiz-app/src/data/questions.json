@@ -1507,7 +1507,14 @@
       "D": "2018 年"
     },
     "answer": "B",
-    "explanation": "《巴黎協定》於 2015 年 12 月 12 日在 COP21 通過，2016 年 11 月 4 日正式生效（依第 21(1) 條：批准書達 55 國且涵蓋全球 55% 排放量後 30 日生效；門檻於 2016 年 10 月 5 日達成）。2020 年起為 NDC 第一輪實施期之開端（不是生效時點）。資料來源：UN Treaty Collection（XXVII-7-d）。"
+    "explanation": "《巴黎協定》於 2015 年 12 月 12 日在 COP21 通過，2016 年 11 月 4 日正式生效（依第 21(1) 條：批准書達 55 國且涵蓋全球 55% 排放量後 30 日生效；門檻於 2016 年 10 月 5 日達成）。2020 年起為 NDC 第一輪實施期之開端（不是生效時點）。資料來源：UN Treaty Collection（XXVII-7-d）。",
+    "metadata": {
+      "sources": [
+        "https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XXVII-7-d&chapter=27&clang=_en",
+        "https://unfccc.int/process-and-meetings/the-paris-agreement"
+      ],
+      "sources_verified_date": "2026-05-16"
+    }
   },
   {
     "id": "c2-075",

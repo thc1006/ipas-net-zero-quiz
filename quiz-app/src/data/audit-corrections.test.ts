@@ -118,4 +118,30 @@ describe('audit corrections regression', () => {
       expect(q?.explanation).toContain('第 56 條');
     });
   });
+
+  describe('c2-074 巴黎協定 enriched explanation (issue #82)', () => {
+    const q = byId('c2-074');
+    it('explanation 帶 COP21 / UN Treaty Collection / 2015 年 12 月 12 日 任一關鍵字', () => {
+      expect(q?.explanation).toMatch(/COP21|UN Treaty Collection|2015 年 12 月 12 日/);
+    });
+    it('explanation 不應再含 [1, 2, 3, 4] stub', () => {
+      expect(q?.explanation).not.toMatch(/\[1, ?2, ?3, ?4\]/);
+    });
+    it('metadata.sources 含 UN Treaty Collection URL', () => {
+      const sources = q?.metadata?.sources ?? [];
+      expect(sources.some((u) => u.includes('treaties.un.org'))).toBe(true);
+    });
+    it('integrated_dataset gist[267] explanation 同步 enriched', () => {
+      expect(byIndex(267)?.explanation).toMatch(/COP21|2015 年 12 月 12 日/);
+    });
+  });
+
+  describe('c2-089 AR6「10次方」偽造題已移除 (issue #85)', () => {
+    it('c2-089 不應出現於 questions.json (AR6 無此敘述, 已移除)', () => {
+      expect(byId('c2-089')).toBeUndefined();
+    });
+    it('gist[282] 不應出現於 integrated_dataset.json', () => {
+      expect(byIndex(282)).toBeUndefined();
+    });
+  });
 });
