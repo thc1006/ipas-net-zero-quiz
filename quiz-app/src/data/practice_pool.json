@@ -3194,7 +3194,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "CBAM 過渡期 2023/10/01–2025/12/31，正式期自 2026/01/01 起；進口業者須於 2027/09/30 前完成 2026 年度產品內含碳排申報並購買憑證。",
+      "explanation": "CBAM 過渡期 2023/10/01–2025/12/31，正式期自 2026/01/01 起。依 Omnibus 簡化案 Regulation (EU) 2025/2083（2025/10/20 生效）：原 Reg (EU) 2023/956 之 5/31 申報期限已被延後至每年 9/30，憑證繳交期限亦同步延至 9/30。因此 2026 年度首次申報與憑證繳交皆於 2027/09/30 前完成。題目選項 B 「2027/09/30」反映的就是現行（post-Omnibus）申報截止日，非單純「繳費截止」。",
       "subject": "考科二：淨零碳盤查範圍與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -3212,7 +3212,9 @@
         }
       },
       "sources": [
-        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en"
+        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
       ],
       "quality_flags": []
     },
@@ -6897,7 +6899,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "CBAM 過渡期（2023/10–2025/12）原規定每年 5 月 31 日前繳交。Omnibus 修正案（Reg (EU) 2025/2083，2025-10-20 生效）將定價期（2026/01+）的繳交期限延後至每年 9 月 30 日；首次正式繳交為 2027 年 9 月 30 日。本題以 2026/04 現行法為準，正解為 C。",
+      "explanation": "依 Omnibus 修正案 Regulation (EU) 2025/2083（2025-10-20 生效），CBAM 確定期（2026/01+）之年度申報與憑證繳交截止日均為次年 9 月 30 日；首次正式申報暨繳交為 2027/09/30。原 Reg (EU) 2023/956 之 5 月 31 日規則僅適用於過渡期（2023/10–2025/12），於 2025/10 已被取代，2026 年起不再適用。本題以 2026/05 現行法為準，正解為 C。",
       "subject": null,
       "topic_tags": [
         "CBAM",

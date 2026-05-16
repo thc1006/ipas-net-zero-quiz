@@ -44,8 +44,8 @@ describe('useQuiz.startQuizWithPool', () => {
 
   it('with includePracticePool can mix in pool items (questionCount 對 + 機率高足以抽到 pool)', async () => {
     const { result } = renderHook(() => useQuiz());
-    // 抽 600 題（接近主題庫總量 648 + fixture pool 6 = 654）→ 接近全抽，
-    // 高機率包含 pool 題（隨機抽樣，機率 = 1 - C(648, 600)/C(654, 600) ≈ 100%）
+    // 抽 600 題（接近主題庫總量 647 + fixture pool 6 = 653）→ 接近全抽，
+    // 高機率包含 pool 題（隨機抽樣，機率 = 1 - C(647, 600)/C(653, 600) ≈ 100%）
     await act(async () => {
       await result.current.startQuizWithPool({
         mode: 'practice',
@@ -59,9 +59,9 @@ describe('useQuiz.startQuizWithPool', () => {
     });
     expect(result.current.questions).toHaveLength(600);
     expect(result.current.isActive).toBe(true);
-    // 600 picks 從 654 抽 → 至少 (600+6-654) = ≥0；用 hasAnswer fixture 推估
+    // 600 picks 從 653 抽 → 至少 (600+6-653) = ≥0；用 hasAnswer fixture 推估
     // fixture-1 / fixture-2 / fixture-3 / fixture-4 / fixture-5 都有答案
-    // 600/654 ≈ 91.7% 機率每題被抽，期望 5-6 fixture 入選
+    // 600/653 ≈ 91.9% 機率每題被抽，期望 5-6 fixture 入選
     const poolCount = result.current.questions.filter(
       (q) => q.sourceType === 'practice_pool',
     ).length;
