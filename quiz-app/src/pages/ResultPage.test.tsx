@@ -2,8 +2,9 @@
 // 重點：score 評語分支、stats 渲染、wrongAnswers 分支、handleExport、操作按鈕。
 // AI streaming 路徑需要 puter.js 全 mock，屬整合測試範疇，不在此檔涵蓋。
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-import { render, screen, fireEvent, cleanup, within } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup, within, waitFor } from '@testing-library/react';
 import type { QuizResult, QuizQuestion, AnswerRecord } from '../types/quiz';
+import type { AIResponse } from '../utils/ai-helper';
 
 // 在 import ResultPage 前先 mock 資料層，否則 ResultPage import 時會吃真實題庫
 vi.mock('../data/questions', () => {
@@ -65,6 +66,7 @@ vi.mock('../utils/ai-helper', () => ({
 }));
 
 import { ResultPage } from './ResultPage';
+import { generateSimilarQuestionStream } from '../utils/ai-helper';
 
 afterEach(() => {
   cleanup();
@@ -245,6 +247,92 @@ describe('ResultPage', () => {
     );
     // section 仍渲染，但內部沒有 wrong-item
     expect(screen.getByText(/錯誤題目 \(1 題\)/)).toBeInTheDocument();
+  });
+
+  // === AI 生成相似題 render 分支 ===
+  describe('AI 生成相似題 render', () => {
+    function renderWithWrongAnswer() {
+      return render(
+        <ResultPage
+          result={makeResult({
+            score: 0,
+            correctCount: 0,
+            wrongCount: 1,
+            answers: [makeAnswer()],
+          })}
+          onGoHome={() => {}}
+          onRetry={() => {}}
+        />
+      );
+    }
+
+    it('success response → 渲染題目內容；低信心度顯示警示徽章', async () => {
+      const fakeResponse: AIResponse = {
+        success: true,
+        content: '新題目：下列何者屬於範疇一直接排放？\nA. 公務車柴油燃燒\nB. 外購電力',
+        confidence: 0.5, // 介於 0 和 0.7 之間 → 觸發 ⚠️ 低信心度 branch
+        error: '',
+      };
+      vi.mocked(generateSimilarQuestionStream).mockResolvedValueOnce(fakeResponse);
+
+      renderWithWrongAnswer();
+      fireEvent.click(screen.getByRole('button', { name: /AI 生成相似題/ }));
+
+      await waitFor(() => {
+        expect(screen.getByText(/AI 生成的相似題/)).toBeInTheDocument();
+      });
+      expect(screen.getByText(/新題目：下列何者屬於範疇一直接排放？/)).toBeInTheDocument();
+      expect(screen.getByText(/A\. 公務車柴油燃燒/)).toBeInTheDocument();
+      expect(screen.getByText(/⚠️ 低信心度/)).toBeInTheDocument();
+    });
+
+    it('success response 高信心度 → 不顯示警示徽章', async () => {
+      vi.mocked(generateSimilarQuestionStream).mockResolvedValueOnce({
+        success: true,
+        content: '高信心題目內容',
+        confidence: 0.9,
+        error: '',
+      });
+
+      renderWithWrongAnswer();
+      fireEvent.click(screen.getByRole('button', { name: /AI 生成相似題/ }));
+
+      await waitFor(() => {
+        expect(screen.getByText(/AI 生成的相似題/)).toBeInTheDocument();
+      });
+      expect(screen.queryByText(/⚠️ 低信心度/)).not.toBeInTheDocument();
+    });
+
+    it('failure response → 渲染 ai-error 區塊與錯誤訊息', async () => {
+      vi.mocked(generateSimilarQuestionStream).mockResolvedValueOnce({
+        success: false,
+        content: '',
+        confidence: 0,
+        error: 'AI 服務暫時無法使用',
+      });
+
+      renderWithWrongAnswer();
+      fireEvent.click(screen.getByRole('button', { name: /AI 生成相似題/ }));
+
+      await waitFor(() => {
+        expect(screen.getByText(/AI 服務暫時無法使用/)).toBeInTheDocument();
+      });
+      // 確認進入 error 樣式分支（非成功內容渲染）
+      expect(screen.queryByText(/新題目：/)).not.toBeInTheDocument();
+    });
+
+    it('stream throws → catch 路徑寫入 fallback 錯誤訊息', async () => {
+      vi.mocked(generateSimilarQuestionStream).mockRejectedValueOnce(
+        new Error('network error')
+      );
+
+      renderWithWrongAnswer();
+      fireEvent.click(screen.getByRole('button', { name: /AI 生成相似題/ }));
+
+      await waitFor(() => {
+        expect(screen.getByText(/生成失敗，請稍後再試/)).toBeInTheDocument();
+      });
+    });
   });
 
   // === 最常答錯 weak-section（Refs #64）===
