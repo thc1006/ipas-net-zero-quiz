@@ -7,7 +7,7 @@
 ## 主要資源
 
 - [線上測驗 SPA](https://thc1006.github.io/ipas-net-zero-quiz/)：React + TypeScript 單頁應用，提供考古題練習、考試模擬、AI 輔助解析、來源追溯
-- [GitHub Repo](https://github.com/thc1006/ipas-net-zero-quiz)：MIT 授權、開源、含完整題庫 JSON 與 schema 驗證
+- [GitHub Repo](https://github.com/thc1006/ipas-net-zero-quiz)：AGPL-3.0-or-later 授權（原始碼）+ CC BY-SA 4.0（自製內容），開源、含完整題庫 JSON 與 schema 驗證
 
 ## 適用對象
 
@@ -68,4 +68,6 @@
 
 ## 授權
 
-MIT License — 商用與修改自由，題庫資料來源於公開政府文件與引用標註，請保留原 attribution。
+- 原始碼：GNU AGPL-3.0-or-later（修改版若以網路服務對外提供，須開放對應修改版原始碼予使用者）
+- 本專案自製題目／解析／內容：CC BY-SA 4.0（需署名 + 衍生作品同條款分享）
+- 第三方／官方／公開來源（法規、ISO/IPCC/EUR-Lex/環境部、公開模擬題等）：依各自原始條款，僅在合理引用範圍內使用，請保留 `sources` / `provenance` 出處欄位

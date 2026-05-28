@@ -120,7 +120,20 @@ jq '.items[] | select(.quality_flags | index("time_sensitive")) | {id, stem: (.s
 
 ## 授權
 
-本工具僅供練習參考；題庫資料為個人整理，非官方發布。
+本專案採雙重授權架構：
+
+- **原始碼**：GNU Affero General Public License v3.0 或更新版本（SPDX：`AGPL-3.0-or-later`）。完整條款見根目錄 [`LICENSE`](LICENSE) 與 [`LICENSES/AGPL-3.0-or-later.txt`](LICENSES/AGPL-3.0-or-later.txt)。
+- **本專案自製之題庫、解析與內容資料**：Creative Commons Attribution-ShareAlike 4.0 International（SPDX：`CC-BY-SA-4.0`），除個別檔案另有標示者外，請見 [`LICENSES/CC-BY-SA-4.0.txt`](LICENSES/CC-BY-SA-4.0.txt)。
+- **第三方／官方／公開來源資料**（例如 iPAS 公開考古題、法規條文、ISO/IPCC/EUR-Lex/環境部等引用內容、外部 URL、公開模擬題）：仍依其各自原始來源條款使用，本專案僅在合理引用、註明出處範圍內提供連結與摘錄，**不主張著作權、不重新授權**。每題保留 `sources` / `provenance` 等出處欄位。
+- **第三方相依套件**：依其各自授權條款（見 `quiz-app/package.json` 與 lockfile）。
+
+### AGPL 網路服務條款（重點）
+
+若您修改本專案原始碼後**以網路服務（SaaS／公開網頁／API）形式提供給使用者**，依 AGPL-3.0 第 13 條，您必須讓所有與您修改版本互動的使用者，能取得**對應修改版的完整原始碼**，授權同樣為 AGPL-3.0-or-later。僅內部使用而未對外提供服務者，不觸發此條款，但仍受 AGPL 其他條款拘束。
+
+### 免責
+
+本工具為非官方 iPAS 備考輔助，題庫整理可能含錯誤，最終以 iPAS 官方公告為準。本專案不就內容正確性、可考性、或考試結果提供任何保證。
 
 ## 問題回報
 

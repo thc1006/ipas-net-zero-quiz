@@ -1,0 +1,71 @@
+iPAS Net-Zero Quiz (淨零碳規劃管理師備考神器)
+================================================
+
+Copyright (C) 2025-2026 Hsiu-Chi Tsai (蔡秀吉)
+Contact: caake2025@gmail.com
+Project: https://github.com/thc1006/ipas-net-zero-quiz
+
+This product is an UNOFFICIAL study tool for the iPAS 淨零碳規劃管理師
+(Taiwan iPAS Net-Zero Carbon Planning Manager) certification. It is NOT
+affiliated with, endorsed by, or representing iPAS, the Ministry of
+Economic Affairs, the Ministry of Environment (環境部), or any other
+governmental or standards-setting body.
+
+
+Licensing summary
+-----------------
+
+1. Source code
+   Licensed under the GNU Affero General Public License v3.0 or later
+   (SPDX: AGPL-3.0-or-later).
+   See: ./LICENSE  and  ./LICENSES/AGPL-3.0-or-later.txt
+
+   If you modify this software and provide it to users over a network
+   (for example as a SaaS, public website, or API), AGPL-3.0 section 13
+   requires you to offer those users access to the Corresponding Source
+   of your modified version under AGPL-3.0-or-later.
+
+2. Original project-authored content
+   Quiz items, explanations, narrative text, diagrams, and dataset
+   structure ORIGINALLY AUTHORED BY THIS PROJECT (unless individually
+   marked otherwise) are licensed under
+   Creative Commons Attribution-ShareAlike 4.0 International
+   (SPDX: CC-BY-SA-4.0).
+   See: ./LICENSES/CC-BY-SA-4.0.txt
+
+3. Third-party / public / official reference materials
+   The repository CITES and LINKS TO external sources, including but
+   not limited to:
+     - iPAS publicly released sample / past examination items
+     - Taiwan laws and regulations (law.moj.gov.tw, 環境部 公告等)
+     - International standards excerpts and references
+       (ISO, IPCC, IFRS Foundation, IAASB, GRI, SBTi, etc.)
+     - EU legal acts (EUR-Lex: CBAM Reg (EU) 2023/956,
+       Reg (EU) 2025/2083, etc.)
+     - Publicly circulated mock examination questions
+     - URLs and short quotations from third-party websites
+
+   These materials remain subject to the terms of their ORIGINAL
+   sources and rights holders. This project does NOT claim copyright
+   over them and does NOT relicense them under AGPL-3.0 or CC BY-SA
+   4.0. Source attribution is preserved on a per-item basis via the
+   `sources` and `provenance` fields in the dataset files.
+
+   If you are a rights holder and believe content has been used
+   beyond fair use / fair dealing, please open an issue or contact
+   the maintainer and the item will be reviewed promptly.
+
+4. Third-party dependencies
+   npm / pnpm dependencies declared in `quiz-app/package.json` are
+   licensed under their respective upstream licenses. See each
+   package's own LICENSE file for terms.
+
+
+No warranty
+-----------
+
+This software and its content are provided "AS IS", without warranty
+of any kind, express or implied. Content accuracy is not guaranteed;
+official iPAS announcements always take precedence. The maintainer is
+not liable for examination outcomes, regulatory decisions, or any
+damages arising from use of this tool.

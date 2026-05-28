@@ -61,7 +61,7 @@
     "type": "git",
     "url": "https://github.com/thc1006/ipas-net-zero-quiz.git"
   },
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "pnpm": {
     "overrides": {
       "esbuild": ">=0.25.0"
