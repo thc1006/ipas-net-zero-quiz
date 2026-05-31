@@ -129,7 +129,19 @@ describe('audit corrections regression', () => {
     });
     it('metadata.sources 含 UN Treaty Collection URL', () => {
       const sources = q?.metadata?.sources ?? [];
-      expect(sources.some((u) => u.includes('treaties.un.org'))).toBe(true);
+      // 用 hostname 比對而非 substring — 避免把 'evil.com/treaties.un.org' 誤認為 UN
+      // 且更貼近這個測試的本意：驗證 source URL 確實指向 UN Treaty Collection 主機。
+      // CodeQL: js/incomplete-url-substring-sanitization
+      expect(
+        sources.some((u) => {
+          try {
+            const host = new URL(u).hostname;
+            return host === 'treaties.un.org' || host.endsWith('.treaties.un.org');
+          } catch {
+            return false;
+          }
+        })
+      ).toBe(true);
     });
     it('integrated_dataset gist[267] explanation 同步 enriched', () => {
       expect(byIndex(267)?.explanation).toMatch(/COP21|2015 年 12 月 12 日/);

@@ -50,4 +50,28 @@ describe('prettifySourceUrl', () => {
   it('malformed URL returns original string', () => {
     expect(prettifySourceUrl('not a url')).toBe('not a url');
   });
+
+  // CodeQL js/incomplete-url-substring-sanitization regression：
+  // host.includes(domain) 會把 'iso.org.evil.com' 誤判為 iso.org；
+  // hostMatches 用 endsWith('.' + domain) 強制 subdomain 邊界。
+  describe('subdomain-boundary safety (CodeQL regression)', () => {
+    it('host suffix attack 不應誤標：iso.org.attacker.com → fallback', () => {
+      expect(prettifySourceUrl('https://iso.org.attacker.com/path')).toBe('iso.org.attacker.com');
+      expect(prettifySourceUrl('https://github.com.evil.example/foo')).toBe('github.com.evil.example');
+      expect(prettifySourceUrl('https://cdp.net.phisher.io/x')).toBe('cdp.net.phisher.io');
+    });
+    it('host prefix attack 不應誤標：xiso.org → fallback', () => {
+      expect(prettifySourceUrl('https://xiso.org/foo')).toBe('xiso.org');
+      // siso.org 不該被當 iso.org
+      expect(prettifySourceUrl('https://siso.org/bar')).toBe('siso.org');
+    });
+    it('path 含 known-host 字串不應誤標：evil.com/iso.org/path → fallback', () => {
+      // URL parser 把 path 跟 host 分開，host 是 evil.example，不會 match
+      expect(prettifySourceUrl('https://evil.example/iso.org/standard')).toBe('evil.example');
+    });
+    it('合法 subdomain 仍應命中：www.iso.org → ISO、a.b.iso.org → ISO', () => {
+      expect(prettifySourceUrl('https://www.iso.org/standard/12345.html')).toBe('ISO');
+      expect(prettifySourceUrl('https://committees.iso.org/foo')).toBe('ISO');
+    });
+  });
 });
