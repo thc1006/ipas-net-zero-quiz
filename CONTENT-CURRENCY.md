@@ -7,8 +7,19 @@
 避免下一輪又把同樣的東西重新調研一遍。
 
 - 最後一次內容查證：**2026-07-13**
-- `integrated_dataset.json` → `meta.content_verified_as_of`
+- `integrated_dataset.json` → **`meta.content_review`**（`last_review_date` / `scope` /
+  `reverified_count` / `known_unresolved`）
 - 每題 → `metadata.valid_as_of` + `metadata.sources[]`（一手來源，quarterly workflow 會 curl）
+
+> ⚠️ **`meta.content_review.last_review_date` 不代表「整份題庫已查證到那一天」。**
+> 本輪只實查了 **103 / 783** 題（`scope` 所列的 CBAM / NDC / 碳費 / 碳中和），
+> 12 題沿用 2026-01-23，另有 668 題連 `time_sensitive` 都沒標、根本沒碰過。
+>
+> 判斷**單一題目**的內容是否仍正確，請以**該題的 `metadata.valid_as_of`** 為準。
+>
+> 原本這裡叫 `content_verified_as_of`，會被下游誤讀成「全庫已查證」。已移除，
+> 並加了測試把 `reverified_count` 釘死在「資料裡實際有多少題 `valid_as_of == last_review_date`」上
+> —— meta 現在不可能說謊。
 
 ---
 

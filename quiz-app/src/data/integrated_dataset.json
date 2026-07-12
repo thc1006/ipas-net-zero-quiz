@@ -17,7 +17,41 @@
     },
     "with_answer": 783,
     "last_updated": "2026-07-13T00:00:00.000000",
-    "content_verified_as_of": "2026-07-13"
+    "content_review": {
+      "last_review_date": "2026-07-13",
+      "scope": [
+        "CBAM",
+        "NDC",
+        "carbon_fee",
+        "carbon_neutrality"
+      ],
+      "reverified_count": 103,
+      "total_questions": 783,
+      "time_sensitive_count": 115,
+      "not_reviewed_this_round_count": 680,
+      "carried_over_count": 12,
+      "known_unresolved": [
+        {
+          "id": "PAS_2060_withdrawal_date",
+          "detail": "BSI 官方 knowledge 頁只查得到 PAS 2060:2010（2014-04-29 撤回）；2014 版無官方 withdrawal record。現有來源把「停售驗證 2024-01-01」「改用 ISO 14068-1 2025-01-01」「文件撤回 2025-11-30」混為一談。pool-em-ipas_vocus_mock-007 與 pool-aig-intl_round1_rescued-intl-018 已標 ambiguous 且 answer=null（排除計分）。"
+        },
+        {
+          "id": "gist_313_penalty_actor_ambiguity",
+          "detail": "已於 2026-07-13 拆成 Art 26(1)（授權申報人未繳交→ETS 超額排放罰鍰）與 Art 26(2)（非授權之人輸入貨物→3–5 倍）兩題。狀態：已解決，保留紀錄以免重複調研。",
+          "resolved": true
+        },
+        {
+          "id": "ifrs_issb_tcfd_not_reverified",
+          "detail": "12 題（ISSB S1/S2、IFRS 我國採用時程、TCFD、CDP、金管會盤查申報時程）本輪未重查，誠實沿用 valid_as_of=2026-01-23 並標 content_reverified_2026_07=false。iPAS 115 年度考綱剛納入 IFRS S1/S2，下一輪應從這裡開始。"
+        },
+        {
+          "id": "coverage_gaps",
+          "detail": "主題庫尚無題目涵蓋：CBAM de minimis 50 公噸/年門檻、CBAM 憑證販售起始日 2027-02-01。"
+        }
+      ],
+      "note": "這不是「整份題庫已查證到 last_review_date」。本輪只實查 103/783 題（scope 所列主題）。判斷單一題目的內容是否仍正確，請以該題的 metadata.valid_as_of 為準，不要用這裡的日期。",
+      "see": "CONTENT-CURRENCY.md"
+    }
   },
   "gist_items": [
     {
