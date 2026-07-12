@@ -1,0 +1,13 @@
+# shell 腳本與 workflow 一律以 LF 存進 repo。
+#
+# 這個專案在 Windows 上開發（core.autocrlf=true），而 .github/scripts/*.sh 是在
+# ubuntu-latest 的 runner 上執行的。只要有一支 .sh 帶著 CRLF 進到 repo，Linux 的
+# bash 會把行尾的 \r 當成語法的一部分：`then\r` 不是保留字 `then`、
+# `echo 'OK'\r` 得到的是尾巴多一個 \r 的字串（於是 `[ "$x" = 'OK' ]` 永遠不成立）。
+# 症狀是「本機全綠、CI 莫名其妙」，而且很難一眼看出來。
+#
+# eol=lf 表示不論 checkout 到什麼平台，工作區都給 LF —— 這是唯一安全的選項，
+# 因為這些檔案的執行環境就是 Linux。
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
