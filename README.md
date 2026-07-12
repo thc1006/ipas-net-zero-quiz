@@ -7,14 +7,14 @@
 [![CI](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-ci.yml/badge.svg?branch=main)](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-ci.yml)
 [![codecov](https://codecov.io/gh/thc1006/ipas-net-zero-quiz/branch/main/graph/badge.svg)](https://codecov.io/gh/thc1006/ipas-net-zero-quiz)
 
-### ▶ 線上使用：<https://thc1006.github.io/ipas-net-zero-quiz/>
+## ▶ 線上使用：<https://thc1006.github.io/ipas-net-zero-quiz/>
 
 ![淨零碳規劃管理師（初級）認證 線上練習與考古題庫](quiz-app/public/thumbnail.jpg)
 
 ## 題庫
 
 | | 題數 | 說明 |
-|---|---:|---|
+| --- | ---: | --- |
 | **主題庫** | **780 題** | 考科一 434 + 考科二 346。其中 159 題由來源 PDF 分欄重建 |
 | **加強練習池**（選用） | **157 題** | 55 題公開模擬題 + 102 題 AI 產題。**預設關閉**，需於設定頁 opt-in |
 
