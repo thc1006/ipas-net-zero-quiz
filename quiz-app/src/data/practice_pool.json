@@ -305,8 +305,8 @@
           "text": "ISO 14068-1 已取代 PAS 2060，但兩者皆不涵蓋範疇三的排放量計算"
         }
       ],
-      "answer": "B",
-      "explanation": "BSI 公告 PAS 2060 於 2025 年 12 月 31 日撤回，由 ISO 14068-1:2023 取代。ISO 14068-1 要求順序為「先減排、後抵換」（hierarchy of mitigation），並將 PAS 2060 之事前 QES 確證改為事後查證。",
+      "answer": null,
+      "explanation": "【已排除計分】本題涉及 PAS 2060 的「撤回日期」，而現有來源互相矛盾：BSI 停售 PAS 2060 驗證為 2024-01-01、改以 ISO 14068-1 提供驗證為 2025-01-01、而「標準文件撤回」另有 2025-11-30 之說法；三者是不同的事件，常被混為一談。在取得 BSI 對 PAS 2060:2014 的官方 withdrawal record 前，本題標記為 ambiguous 且不計分，以免題庫對互斥命題同時給出確定答案。（原解析：BSI 公告 PAS 2060 於 2025 年 12 月 31 日撤回，由 ISO 14068-1:2023 取代。I…）",
       "subject": null,
       "topic_tags": [
         "ISO 14068",
@@ -326,7 +326,10 @@
         "https://vocus.cc/article/6901a506fd89780001c2a960",
         "https://www.bsigroup.com/zh-TW/PAS-2060-Carbon-Neutral/"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "ambiguous",
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-em-ipas_vocus_mock-008",
@@ -6698,8 +6701,8 @@
           "text": "ISO 14068-1 僅規範產品，組織須續用 PAS 2060"
         }
       ],
-      "answer": "B",
-      "explanation": "PAS 2060:2014 由 BSI 於 2024-01-01 起停止接受新驗證、2025-12-31 完成所有在途驗證，並由 ISO 14068-1:2023 取代為國際碳中和標準。",
+      "answer": null,
+      "explanation": "【已排除計分】本題涉及 PAS 2060 的「撤回日期」，而現有來源互相矛盾：BSI 停售 PAS 2060 驗證為 2024-01-01、改以 ISO 14068-1 提供驗證為 2025-01-01、而「標準文件撤回」另有 2025-11-30 之說法；三者是不同的事件，常被混為一談。在取得 BSI 對 PAS 2060:2014 的官方 withdrawal record 前，本題標記為 ambiguous 且不計分，以免題庫對互斥命題同時給出確定答案。（原解析：PAS 2060:2014 由 BSI 於 2024-01-01 起停止接受新驗證、2025-12-31 完成所有在途驗…）",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "ISO 14068-1",
@@ -6725,7 +6728,9 @@
         "https://www.bsigroup.com/en-GB/standards/PAS-2060-carbon-neutrality/"
       ],
       "quality_flags": [
-        "low_confidence"
+        "low_confidence",
+        "ambiguous",
+        "time_sensitive"
       ]
     },
     {
