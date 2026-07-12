@@ -145,6 +145,38 @@ jq '.items[] | select(.quality_flags | index("time_sensitive")) | {id, stem: (.s
 判斷單一題目請看該題的 `metadata.valid_as_of`。
 
 ⚠️ `quarterly-time-sensitive-verify` workflow **只驗連結還通不通，驗不出內容變了** —— 綠燈不等於內容正確。
+（CBAM 憑證繳交期限 5/31 → 9/30、臺灣 2030 NDC 24%±1% → 28%±2%，網址全程都是活的。）
+
+### 連結健康檢查怎麼判定「失效」
+
+只有這兩類會開 issue，其餘一律只警告：
+
+| 分類 | 條件 | 開 issue？ |
+|---|---|---|
+| `DEAD` | HTTP **404 / 410** | ✅ |
+| `DEAD_DNS` | curl exit 6，**且** 1.1.1.1 與 8.8.8.8 **兩個獨立 resolver 都回 NXDOMAIN** | ✅ |
+| `UNREACHABLE_DNS` | curl exit 6，但未經兩個 resolver 確認（可能只是 resolver 抖動） | ❌ |
+| `BLOCKED` | 401 / 403 / 405 / 429 / 451（WAF 擋 runner，站台活著） | ❌ |
+| `RETRYABLE` | 408 / 425 / 5xx（伺服器暫時性問題） | ❌ |
+| `UNREACHABLE_*` | curl exit ≠ 0（7=connect、28=timeout、35/60=TLS） | ❌ |
+| `OTHER` | 其餘 HTTP 碼 —— **明示列出，絕不靜默歸成 DEAD** | ❌ |
+
+`curl exit 6` 只代表「無法解析主機」，**不等於網域已停用**——暫時性 resolver 故障、SERVFAIL、
+runner 自己的 DNS 問題都長成同一個 exit code。**寧可漏報，不要誤報**：拿不到 `dig` 就一律降級。
+
+分類器、`check_url` glue、聚合三層都抽成腳本並有**離線測試**（`.github/scripts/*.test.sh`，
+用 PATH 注入的假 curl／假 dig，不碰網路），每個 PR 都跑：
+
+```bash
+bash .github/scripts/url-status.test.sh          # 分類矩陣
+bash .github/scripts/check-url.test.sh           # curl -> DNS 二次確認 -> 分類 的 glue
+bash .github/scripts/aggregate-results.test.sh   # 計數與 $GITHUB_OUTPUT
+bash .github/scripts/check-description.test.sh   # GitHub About 的題數
+```
+
+> 為什麼連 glue 都要測：這幾支測試寫出來的第一次執行，就抓到「兩個 resolver 都要同意」那道把關
+> 其實是**假的**——`resolve_dns_status` 最後一行 `else echo "$r1"` 會把「只有一個 resolver 說
+> NXDOMAIN」也放行。**一個永遠不會擋下任何東西的把關，等於沒有把關。**
 
 ### 還原題的可重現性
 
@@ -161,7 +193,44 @@ pip install pdfplumber
 python tools/restore_from_source_pdf.py --verify
 ```
 
-實測 **159/159** 相符（頁碼／欄位／題號／answer key／PDF 文字 hash／repo 文字 hash）。
+實測 **159/159** 相符（頁碼／欄位／題號／answer key／raw & canonical 文字 hash／repo 文字 hash）。
+
+#### 三個 hash，各自回答一個不同的問題
+
+| 欄位 | 它證明什麼 |
+|---|---|
+| `raw_pdf_text_sha256` | PDF 原文長什麼樣（分欄擷取後，**一個字都沒動**） |
+| `canonical_source_text_sha256` | 套用 `transformations` 所列的修正**之後**長什麼樣 |
+| `dataset_text_sha256` | repo 裡「現在」長什麼樣 |
+| `transformations[]` | 這一題**動了什麼、憑什麼動**。空陣列＝原文照抄 |
+
+不變式（`--emit` 與 CI 各擋一次）：**`raw ≠ canonical` ⟺ `transformations` 非空**。
+有差異卻沒列明＝藏起來的手腳；列明了卻沒差異＝記錄與事實不符。兩種都會失敗。
+
+> 為什麼要分這麼細：先前只存一個 `pdf_text_sha256`，名字宣稱是「PDF 裡的文字」，實際存的卻是
+> **套用修正後**的文字（S_CHU_06 第 37 題的選項標號在 PDF 原文是 `(A)(B)(B)(C)`，被改成 `(A)(B)(C)(D)`）。
+> 結果任何人拿原始 PDF 重算都會對不上，而且看不出為什麼。
+> **一條只有作者本人重跑同一支腳本才對得上的證據鏈，不是證據鏈。**
+
+#### 來源的每一題都要有交代
+
+manifest 不只記「我還原了什麼」，也記「我**沒有**還原什麼、為什麼」——
+來源 PDF 全部 **170** 題逐題都有 disposition：
+
+| disposition | 數量 | 憑據 |
+|---|---:|---|
+| `restored` | 159 | 已還原進題庫 |
+| `duplicate_within_source` | 8 | PDF 自己重印了同一題（normalized hash 完全相同，並指出重複於第幾題） |
+| `duplicate_in_dataset` | 3 | 主庫已有內容幾乎相同的題目（附相似度與比對對象） |
+| `UNACCOUNTED` | **0** | 只要有一題落到這裡，`--emit` 直接失敗 |
+
+> 先前的程式是 `if item_id not in by_item: continue  # 一定是重複題`——那行註解是**斷言**，不是驗證。
+> 真的在還原過程中掉了一題，它也會安靜地說成「重複」。
+> **一份只講「我留下了什麼」而不講「我丟掉了什麼、為什麼」的憑證，證明不了「沒有東西被弄丟」。**
+>
+> 這個稽核當場抓到一個**教錯的答案**：一題被當成「重複」丟掉的來源題，它自己印的 answer key
+> 與主庫教的答案互相矛盾（ISO 14064-1:2018 強制揭露項目，主庫答 C、來源答 D——**D 才是對的**）。
+> 靜默去重把來源題丟掉的同時，也丟掉了那張本來可以當場戳破錯誤的答案卡。
 
 ## 問題回報
 
