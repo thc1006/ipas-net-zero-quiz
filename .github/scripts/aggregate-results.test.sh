@@ -160,7 +160,49 @@ else
   echo '  ✗ 沒有產生 failures.tsv'
 fi
 
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 「什麼算失效」只能有一個定義
+#
+# is_failure() 先前是**死程式碼**：它有 10 項單元測試、註解宣稱自己是單一事實來源，
+# 但生產路徑上沒有任何地方呼叫它 —— 真正做決定的是這裡手抄的
+# `fail=$(( dead + dead_dns ))` 與 awk 的 `$1=="DEAD" || $1=="DEAD_DNS"`。
+#
+# 於是「什麼算失效」有三份各自獨立、靠人工同步的定義。哪天新增一個失效分類，
+# 開發者照註解去改 is_failure（那個被宣稱是 SSOT 的地方），所有測試都會綠，
+# 而聚合會靜默地漏掉它 —— 正是這個 workflow 一直在對付的「安靜地少報」。
+#
+# 這組測試把它釘住：改 is_failure，聚合的行為就**必須**跟著變。
+echo '── is_failure() 必須真的被聚合呼叫（不能是死程式碼）'
+
+# failure_categories 必須正好是 DEAD 與 DEAD_DNS
+got=$(failure_categories | sort | tr '\n' ',')
+if [ "$got" = 'DEAD,DEAD_DNS,' ]; then
+  pass=$((pass + 1))
+else
+  fail=$((fail + 1))
+  printf '  ✗ failure_categories 期望 DEAD,DEAD_DNS, 實得 %s\n' "$got"
+fi
+
+# 核心：把 is_failure 改成「BLOCKED 也算失效」，聚合的 fail_count 就必須跟著變。
+# 若聚合還在手抄清單，這裡不會有任何變化 —— 那就是死程式碼。
+OUT=$(
+  is_failure() { case "$1" in DEAD|DEAD_DNS|BLOCKED) return 0 ;; *) return 1 ;; esac; }
+  res="$TMP/r2.tsv"; out="$TMP/o2"
+  printf 'DEAD\thttps://a\ti1\t404\t0\nBLOCKED\thttps://b\ti2\t403\t0\nOK\thttps://c\ti3\t200\t0\n' > "$res"
+  : > "$out"
+  ( cd "$TMP" && aggregate_results "$res" "$out" ) > /dev/null 2>&1
+  grep '^fail_count=' "$out" | cut -d= -f2
+)
+if [ "$OUT" = '2' ]; then
+  pass=$((pass + 1))
+else
+  fail=$((fail + 1))
+  printf '  ✗ 改了 is_failure（BLOCKED 也算失效）後 fail_count 應為 2，實得 %s\n' "${OUT:-<空>}"
+  echo '     -> 聚合沒有真的呼叫 is_failure，它還在用手抄的清單（死程式碼）'
+fi
+
 echo
 echo "通過 $pass 項，失敗 $fail 項"
 [ "$fail" -eq 0 ] || exit 1
-echo '✅ aggregate-results 整合測試全部通過'
+echo '✅ aggregate-results 整合測試全部通過（含 is_failure SSOT）'

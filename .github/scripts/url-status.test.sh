@@ -196,7 +196,73 @@ if t=$((e1 + 0)) 2>/dev/null && [ "$t" = "0" ]; then pass=$((pass + 1)); else
   fail=$((fail + 1)); echo '  ✗ 空檔案的計數無法做算術展開'
 fi
 
+
+# ─────────────────────────────────────────────────────────────────────────────
+# url_host 與 status_icon 先前是零覆蓋。
+#
+# url_host 的輸出直接餵給 dig，也就是**直接餵給 DEAD_DNS 的決策** ——
+# 它一旦壞掉（例如不再剝掉 port 或 userinfo），dig 會查一個不存在的主機名而回
+# NXDOMAIN，於是一個活著的網址被判定為「網域已停用」並自動開 issue，
+# 而所有測試都是綠的。這種地方不能沒有測試。
+echo '── url_host（輸出直接餵給 dig -> 直接影響 DEAD_DNS 判定）'
+check_host() {
+  local url="$1" want="$2" got
+  got=$(url_host "$url")
+  if [ "$got" = "$want" ]; then
+    pass=$((pass + 1))
+  else
+    fail=$((fail + 1))
+    printf '  ✗ url_host %-44s 期望 %-24s 實得 %s\n' "$url" "$want" "${got:-<空>}"
+  fi
+}
+check_host 'https://example.org/a/b?c=d'          'example.org'
+check_host 'http://example.org'                    'example.org'
+check_host 'https://example.org:8443/x'            'example.org'      # 必須剝掉 port
+check_host 'https://user:pass@example.org/x'       'example.org'      # 必須剝掉 userinfo
+check_host 'https://user@example.org:8443/x'       'example.org'      # 兩者並存
+check_host 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020' 'eur-lex.europa.eu'
+
+echo '── status_icon（報表的門面：DEAD 不可以長得像成功）'
+check_icon() {
+  local cat="$1" want="$2" got
+  got=$(status_icon "$cat")
+  if [ "$got" = "$want" ]; then
+    pass=$((pass + 1))
+  else
+    fail=$((fail + 1))
+    printf '  ✗ status_icon %-20s 期望 %s 實得 %s\n' "$cat" "$want" "$got"
+  fi
+}
+check_icon OK        '✅'
+check_icon DEAD      '❌'
+check_icon DEAD_DNS  '❌'
+check_icon BLOCKED   '🟡'
+check_icon RETRYABLE '🔄'
+check_icon UNREACHABLE_DNS '🔌'
+check_icon OTHER     '❓'
+
+echo '── ALL_STATUS_CATEGORIES 必須涵蓋 classify 吐得出來的每一種分類'
+# 聚合是靠 ALL_STATUS_CATEGORIES 去列舉「哪些算失效」的（failure_categories）。
+# 它一旦漏列某個分類，那個分類就永遠不可能被判成失效 —— 又一次「安靜地少報」。
+missing=''
+for probe in '200 0' '404 0' '410 0' '403 0' '503 0' '418 0' '000 6' '000 7' '000 28' '000 35' '000 99'; do
+  # shellcheck disable=SC2086
+  c=$(classify_url_status $probe)
+  case " $(echo $ALL_STATUS_CATEGORIES) " in
+    *" $c "*) ;;
+    *) missing="$missing $c" ;;
+  esac
+done
+c=$(classify_url_status 000 6 NXDOMAIN)
+case " $(echo $ALL_STATUS_CATEGORIES) " in *" $c "*) ;; *) missing="$missing $c" ;; esac
+if [ -z "$missing" ]; then
+  pass=$((pass + 1))
+else
+  fail=$((fail + 1))
+  printf '  ✗ 這些分類 classify 吐得出來，卻不在 ALL_STATUS_CATEGORIES 裡：%s\n' "$missing"
+fi
+
 echo
 echo "通過 $pass 項，失敗 $fail 項"
 [ "$fail" -eq 0 ] || exit 1
-echo '✅ status matrix + 計數 全部通過'
+echo '✅ status matrix + 計數 + url_host + status_icon 全部通過'

@@ -39,15 +39,32 @@ aggregate_results() {
   # 在報表上出現兩次，各分類加總也會超過 total。
   unreach_nondns=$(( $(count_prefix UNREACHABLE_ "$results") - dns ))
 
-  # 失效 = DEAD（404/410）+ DEAD_DNS（兩個獨立 resolver 都確認 NXDOMAIN）。
+  # 「什麼算失效」**只有一個定義**：url-status.sh 的 is_failure()。
+  # 這裡實際去呼叫它，不再手抄一份 `dead + dead_dns` 出來。
   #
-  # UNREACHABLE_DNS **不算**：curl exit 6 只代表「無法解析主機」，不保證是 NXDOMAIN；
-  # 暫時性 resolver 故障、SERVFAIL、runner 自己的 DNS 問題都長成同一個 exit code。
-  # 單憑一次 exit 6 就開 issue 說「網域已停用」，是過度推論 —— 又一次喊狼來了。
-  fail=$(( dead + dead_dns ))
+  # 先前這裡是手抄的，而 is_failure() 變成死程式碼 —— 它有 10 項單元測試、
+  # 註解宣稱自己是單一事實來源，但生產路徑上根本沒人呼叫。於是「什麼算失效」
+  # 有三份各自獨立、靠人工同步的定義（is_failure、這裡的 fail=、下面的 awk）。
+  # 哪天新增一個失效分類，開發者照註解去改 is_failure，所有測試都會綠，
+  # 而聚合會靜默地漏掉它 —— 正是這個 workflow 一直在對付的「安靜地少報」。
+  #
+  # UNREACHABLE_DNS 不在失效之列：curl exit 6 只代表「無法解析主機」，不保證是
+  # NXDOMAIN；暫時性 resolver 故障、SERVFAIL、runner 自己的 DNS 問題都長成同一個碼。
+  local cat_list=''
+  fail=0
+  while IFS= read -r c; do
+    [ -n "$c" ] || continue
+    fail=$(( fail + $(count_exact "$c" "$results") ))
+    cat_list="${cat_list:+$cat_list,}$c"
+  done <<EOF
+$(failure_categories)
+EOF
 
-  # 失效清單（會開 issue 的）
-  awk -F'\t' '$1 == "DEAD" || $1 == "DEAD_DNS"' "$results" > failures.tsv || : > failures.tsv
+  # 失效清單（會開 issue 的）—— 分類同樣來自 is_failure()，不是寫死的字串。
+  awk -F'\t' -v cats="$cat_list" '
+    BEGIN { n = split(cats, a, ","); for (i = 1; i <= n; i++) fail[a[i]] = 1 }
+    fail[$1]
+  ' "$results" > failures.tsv || : > failures.tsv
 
   {
     echo "fail_count=$fail"

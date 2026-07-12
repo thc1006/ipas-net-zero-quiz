@@ -34,7 +34,11 @@ jobs:
   verify:
     name: Verify time-sensitive sources
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # 實測：workflow 的 curl 旗標打一個黑洞 IP 要 34s（connect-timeout 10 + max-time 30
+    # + --retry 2）。49 個 unique URL、-P 4 -> 13 波 ≈ 7.4 分鐘，還沒算 checkout、
+    # self-test 與 apt install dig。原本 10 分鐘的預算，只要網路差一點或 time_sensitive
+    # 題目再長一些就會 timeout —— 而 timeout 的結果是「沒有報告」，不是「報告說有問題」。
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -97,15 +101,23 @@ jobs:
       # 於是 DEAD_DNS **永遠不會觸發** —— 網域真的停用了也不會開 issue。
       # 這種「安靜地少報」比誤報更難發現，所以這裡明確確保 dig 存在，並在拿不到時大聲警告。
       - name: Ensure dig is available (needed to confirm NXDOMAIN)
+        id: dig
         run: |
           if ! command -v dig > /dev/null 2>&1; then
             echo "::warning::dig 不存在，安裝 bind9-dnsutils"
             sudo apt-get update -qq && sudo apt-get install -y -qq bind9-dnsutils
           fi
+          # dig 在不在，必須寫進 output 與報表。
+          # 沒有 dig -> resolve_dns_status 永遠回 UNKNOWN -> DEAD_DNS **永遠不會觸發**。
+          # 這是刻意的 fail-safe，但如果報表不講，看報表的人看到 DEAD_DNS=0，
+          # 根本分不出那是「沒有網域死掉」還是「這項檢查根本沒啟用」。
+          # 這個 workflow 自己的註解說靜默漏報「比誤報更難發現」—— 那就不能讓它在報表上也看不見。
           if command -v dig > /dev/null 2>&1; then
             echo "dig OK: $(dig -v 2>&1 | head -1)"
+            echo "dig_available=true" >> "$GITHUB_OUTPUT"
           else
-            echo "::warning::仍然沒有 dig —— DNS 解析失敗一律降級成 UNREACHABLE_DNS（只警告、不開 issue）。寧可漏報，不要誤報。"
+            echo "::warning::仍然沒有 dig —— DNS 解析失敗一律降級成 UNREACHABLE_DNS（只警告、不開 issue）。寧可漏報，不要誤報。但這也代表 DEAD_DNS 永遠不會觸發。"
+            echo "dig_available=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Curl-check URLs (parallel; 7-way status classification)
@@ -139,7 +151,13 @@ jobs:
           export -f check_url classify_url_status status_icon resolve_dns_status dig_status url_host
           export CURL_BIN HTTP_UA
 
-          # 並行 4 worker。POSIX 保證 < PIPE_BUF (4096) bytes 的 write 為 atomic，每行遠低於此。
+          # 並行 4 worker，全部寫進同一個被重導的檔案。
+          #
+          # 註：先前這裡寫「POSIX 保證 < PIPE_BUF (4096) bytes 的 write 為 atomic」——
+          # 那個理由是**錯的**。PIPE_BUF 的原子性講的是 pipe/FIFO，這裡寫的是一般檔案。
+          # 之所以安全，是因為這些子行程共用同一個 open file description，Linux 的
+          # write(2) 會在 f_pos_lock 底下序列化 append，每行 < 4KB 不會被撕開。
+          # 結論一樣（實測 49 個 URL、-P 4，0 筆撕裂行），但理由要講對。
           : > results.tsv
           xargs -d '\n' -P 4 -I{} bash -c 'check_url "$@"' _ {} < urls.tsv > results.tsv
 
@@ -270,6 +288,12 @@ jobs:
             echo "| ❓ OTHER | 其餘 HTTP 碼（明示，不靜默歸成 DEAD） | ${{ steps.curl.outputs.other_count }} | 否 |"
             echo "| **合計** | | **${{ steps.curl.outputs.total_count }}** | |"
             echo ""
+            if [ "${{ steps.dig.outputs.dig_available }}" != 'true' ]; then
+              echo "> 🚨 **這次執行沒有 dig** —— DEAD_DNS 的判定需要向 1.1.1.1 / 8.8.8.8 確認 NXDOMAIN，"
+              echo "> 沒有 dig 就一律降級成 UNREACHABLE_DNS。也就是說上面的 **DEAD_DNS = 0 不代表沒有網域死掉**，"
+              echo "> 而是**這項檢查根本沒有啟用**。不要把它讀成好消息。"
+              echo ""
+            fi
             echo "> curl exit 6 只代表「無法解析主機」，**不等於 NXDOMAIN** —— 暫時性 resolver 故障、"
             echo "> SERVFAIL、runner 自己的 DNS 問題都長成同一個 exit code。只有 1.1.1.1 與 8.8.8.8"
             echo "> 兩邊都回 NXDOMAIN 才升級成 DEAD_DNS 並開 issue。寧可漏報，不要誤報。"

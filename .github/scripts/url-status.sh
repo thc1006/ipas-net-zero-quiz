@@ -112,15 +112,39 @@ url_host() {
   printf '%s' "$1" | sed -E 's#^[a-zA-Z]+://##; s#/.*$##; s#:[0-9]+$##; s#^.*@##'
 }
 
+# classify_url_status 可能吐出的所有分類。
+# 聚合要靠它列舉「哪些分類算失效」（見 is_failure），所以它必須是完整的 ——
+# url-status.test.sh 會反過來驗證：classify 吐得出來的每一種分類都必須在這裡面。
+ALL_STATUS_CATEGORIES='OK DEAD DEAD_DNS BLOCKED RETRYABLE OTHER
+UNREACHABLE_DNS UNREACHABLE_CONNECT UNREACHABLE_TIMEOUT UNREACHABLE_TLS UNREACHABLE_OTHER'
+
 # 這個分類是否應該開 issue（＝我們認為連結真的失效）
 #
 # UNREACHABLE_DNS **不在此列** —— 它只代表「這次解析不到」，可能是 resolver 抖動。
 # 只有 DEAD（404/410）與 DEAD_DNS（兩個獨立 resolver 都確認 NXDOMAIN）才算真的死了。
+#
+# 這是「什麼算失效」的**唯一**定義。aggregate-results.sh 會實際呼叫它來決定
+# fail_count 與 failures.tsv 的內容 —— 不准再手抄第二份清單。
+#
+# 為什麼要強調：先前這個函式是**死程式碼**。它有 10 項單元測試、註解宣稱自己是
+# 單一事實來源，但生產路徑上沒有任何地方呼叫它 —— 真正做決定的是 aggregate-results.sh
+# 裡手抄的 `fail=$(( dead + dead_dns ))` 與 awk 的 `$1=="DEAD" || $1=="DEAD_DNS"`。
+# 也就是說「什麼算失效」有三份各自獨立、靠人工同步的定義。
+# 哪天新增一個失效分類，開發者照註解改了這裡（那個被宣稱是 SSOT 的地方），
+# 所有測試都會綠，而聚合會靜默地漏掉它 —— 正是這個 workflow 一直在對付的「安靜地少報」。
 is_failure() {
   case "$1" in
     DEAD|DEAD_DNS) return 0 ;;
     *)             return 1 ;;
   esac
+}
+
+# 列出所有「算失效」的分類。聚合用它，不要自己手抄。
+failure_categories() {
+  local c
+  for c in $ALL_STATUS_CATEGORIES; do
+    if is_failure "$c"; then printf '%s\n' "$c"; fi
+  done
 }
 
 # 人類可讀的圖示

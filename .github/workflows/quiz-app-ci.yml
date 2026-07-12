@@ -110,7 +110,21 @@ jobs:
           main_count=$(jq '(.gist_items | length) + (.our_unique_items | length)' \
             quiz-app/src/data/integrated_dataset.json)
           pool_count=$(jq '.items | length' quiz-app/src/data/practice_pool.json)
-          desc=$(gh api "repos/${GITHUB_REPOSITORY}" --jq '.description // ""')
+          # gh api 失敗（限流、網路、token 問題）與「About 真的寫錯」是兩件完全不同的事，
+          # 但先前都會走到同一條路：desc="" -> check_description 找不到字樣 -> exit 1，
+          # 錯誤訊息還會說「About 的題數與實際資料不符」—— **基礎設施故障被怪罪到 About 頭上**，
+          # 而且會擋住 main。要分開。
+          if ! desc=$(gh api "repos/${GITHUB_REPOSITORY}" --jq '.description // ""' 2>/tmp/gh_err); then
+            echo "::warning::gh api 取不到 repo description（基礎設施問題，不是 About 寫錯）："
+            sed 's/^/  /' /tmp/gh_err
+            {
+              echo "## GitHub About 題數檢查"
+              echo ""
+              echo "⚠️ 這次**沒有檢查成功** —— \`gh api\` 取不到 repo description。"
+              echo "這是基礎設施問題，不代表 About 是對的，也不代表它是錯的。"
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0   # 拿不到資料就不下判斷。誤擋 main 比漏擋一次更糟。
+          fi
 
           echo "實際資料：主題庫 ${main_count}、加強練習 ${pool_count}"
           echo "About    ：${desc}"
