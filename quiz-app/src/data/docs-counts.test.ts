@@ -35,6 +35,13 @@ const root = resolve(__dirname, '..', '..', '..');
 const read = (f: string) => readFileSync(resolve(root, f), 'utf8');
 const README = read('README.md');
 const CURRENCY = read('CONTENT-CURRENCY.md');
+// 這兩個是「對外」的門面：index.html 是搜尋引擎與社群分享卡看的，
+// llms.txt 是 AI 爬蟲看的。它們同樣寫著題數，卻一直沒有任何測試在看 ——
+// 於是兩邊都停在「719 題官方考古題 + 151 題加強練習」，跟資料（783 + 157）
+// 差了 64 題與 6 題，而且跟 README、跟 GitHub About 各說各話。
+// 同一個數字散在五個地方、沒有一個地方在對帳，漂移是遲早的事。
+const INDEX_HTML = read('quiz-app/index.html');
+const LLMS_TXT = read('quiz-app/public/llms.txt');
 
 describe('文件的題數必須與資料一致', () => {
   it('README「N 題主題庫」必須等於 meta.total_questions', () => {
@@ -81,5 +88,42 @@ describe('文件的題數必須與資料一致', () => {
       README.includes(s)
     );
     expect(stale).toEqual([]);
+  });
+});
+
+// index.html / llms.txt 是「對外的門面」——
+// 搜尋結果摘要、Facebook / X / LinkedIn 分享卡、AI 爬蟲看到的都是這裡的數字。
+// 它們一路寫著「719 題官方考古題 + 151 題加強練習」，跟任何一個版本的資料都對不上，
+// 而且沒有任何測試看得到它們。README 有 gate、這裡沒有 —— 於是就漂走了。
+describe('對外門面（index.html / llms.txt）的題數必須與資料一致', () => {
+  const eachDoc: Array<[string, string]> = [
+    ['index.html', INDEX_HTML],
+    ['llms.txt', LLMS_TXT],
+  ];
+
+  it.each(eachDoc)('%s 宣稱的「N 題主題庫」必須等於 meta.total_questions', (_name, doc) => {
+    const hits = [...doc.matchAll(/(\d+)\s*題主題庫/g)].map((m) => Number(m[1]));
+    expect(hits.length, '找不到任何「N 題主題庫」字樣').toBeGreaterThan(0);
+    for (const n of hits) expect(n).toBe(TOTAL);
+  });
+
+  it.each(eachDoc)('%s 宣稱的「N 題加強練習」必須等於練習池題數', (_name, doc) => {
+    const hits = [...doc.matchAll(/(\d+)\s*題加強練習/g)].map((m) => Number(m[1]));
+    expect(hits.length, '找不到任何「N 題加強練習」字樣').toBeGreaterThan(0);
+    for (const n of hits) expect(n).toBe(POOL_TOTAL);
+  });
+
+  // 「官方考古題」是過度宣稱：主題庫含 our_unique_items（我們自行整理／驗證的題目），
+  // 並不是全部都出自官方考古題。對外文案不該這樣講。
+  it.each(eachDoc)('%s 不得把整個主題庫稱作「官方考古題」', (_name, doc) => {
+    expect(doc).not.toMatch(/\d+\s*題官方考古題/);
+  });
+
+  it('og:image 必須是絕對網址且為點陣圖（爬蟲不吃相對路徑，也不吃 SVG）', () => {
+    const m = INDEX_HTML.match(/property="og:image"\s*\n?\s*content="([^"]+)"/);
+    expect(m, 'index.html 找不到 og:image').not.toBeNull();
+    const url = m![1];
+    expect(url).toMatch(/^https:\/\//);
+    expect(url).toMatch(/\.(jpg|jpeg|png|webp)$/i);
   });
 });
