@@ -19,7 +19,28 @@ describe('題庫資料模組', () => {
       // 更新：移除有問題的題目後，總數從 719 → 648（PR #41 等批次）；
       // 再於 issue #85 因 gist-282 AR6「10 次方」題幹為 AR6 訛誤、上游 gist 本身無答案 key
       // 而移除，總數 648 → 647。
-      expect(stats.total).toBe(647);
+      // 2026-07-13：647 → 799。2026-01-23 的清理是把 CHU 來源「雙欄錯置」的題目直接刪掉，
+      // 而非修復；那批錯置把成對的題目黏在一起，170 題被壓成 77 個壞掉的 item。
+      // 現已改由來源 PDF（本身帶答案 key）以分欄擷取重建，救回這些只以合併形態存在過的題目。
+      //
+      // 799 → 782：移除 17 題「同一道題目、不同 item」的重複（原始 gist 尾段
+      // index 538–569 重複了前段 index 4–206，main 上早就有）。實測影響：跑真實的
+      // getRandomQuestions() 2000 次，9.3% 的「40題/考科一」考卷會出現同一題兩次。
+      //
+      // 782 → 783：CBAM 罰則原本把「季末餘額不足」和「非授權之人輸入貨物」混成一題
+      // （gist[313]），但前者根本沒有倍數罰則、3–5 倍是後者。已拆成兩題，各自對應
+      // Art 26(2) 與 Art 26(1)，故 +1。
+      //
+      // 783 → 780：依**官方評鑑內容**把 21 題 CBAM / ISO 14068-1 / PAS 2060 從考科2 移回
+      // 考科1（115 年度 iPAS 簡章 §2.5：L11202 國際碳稅關貿政策(如 CBAM 等)、
+      // L11205 ISO 14068-1 碳中和標準 均屬科目一；科目二只涵蓋 L121 ISO 14064-1 與
+      // L122 ISO 14067，不含任何政策/貿易內容）。
+      // 搬完之後，其中 3 題與**原本就在考科1、且來源明確標示為考科1**的題目撞成同科重複
+      // （gist[27]/[36]/[45]），移除那 3 個重複的 item，故 -3。
+      //
+      // 這 3 組撞號本身就是最強的佐證：同一道 CBAM 題早就以「考科1」的身分存在了，
+      // 先前把它的另一份放進考科2，本來就是錯的。
+      expect(stats.total).toBe(780);
     });
 
     it('考科一和考科二題數加總應等於總題數', () => {
@@ -146,9 +167,42 @@ describe('題庫資料模組', () => {
       });
     });
 
-    it('要求數量超過可用題目時應回傳全部可用題目', () => {
+    it('要求數量超過可用題目時應回傳全部可用題目（且不含重複內容）', () => {
       const result = getRandomQuestions(10000);
-      expect(result.length).toBe(stats.total);
+
+      // 已不再等於 stats.total：'all' 模式會把兩科合進同一個池子，而有少數題目
+      // 考科一與考科二各有一份（資料上必須兩份都留著，否則只考一科的考生會少一題）。
+      // getRandomQuestions 會依「內容」去重，所以合併後的池子會比 stats.total 少幾題。
+      const sig = (q: (typeof result)[number]) =>
+        q.stem.replace(/\s+/g, '') +
+        '||' +
+        q.options
+          .map((o) => o.text.replace(/\s+/g, ''))
+          .sort()
+          .join('|');
+
+      // 沒有任何一題重複出現
+      expect(new Set(result.map(sig)).size).toBe(result.length);
+      // 且確實把整個（去重後的）題庫都拿出來了
+      expect(result.length).toBe(new Set(allQuestions.map(sig)).size);
+      expect(result.length).toBeLessThanOrEqual(stats.total);
+    });
+
+    it('抽出的考卷不應出現內容相同的題目（實際跑 200 份）', () => {
+      const sig = (q: { stem: string; options: { text: string }[] }) =>
+        q.stem.replace(/\s+/g, '') +
+        '||' +
+        q.options
+          .map((o) => o.text.replace(/\s+/g, ''))
+          .sort()
+          .join('|');
+      for (const subject of ['考科1', '考科2', 'all'] as const) {
+        for (let i = 0; i < 200; i++) {
+          const paper = getRandomQuestions(40, subject, true);
+          const sigs = paper.map(sig);
+          expect(new Set(sigs).size).toBe(sigs.length);
+        }
+      }
     });
   });
 

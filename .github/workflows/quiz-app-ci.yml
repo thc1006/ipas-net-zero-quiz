@@ -6,15 +6,24 @@ name: Quiz App CI
 
 on:
   # 移除 branches filter — stacked PRs (base != main) 也須跑 CI
+  #
+  # path 必須包含 .github/scripts/** 與 quarterly workflow 本身：
+  # 這裡的 url-status job 測的就是那些檔案。少了它們，「只改分類器」的 PR
+  # 根本不會觸發 CI —— 最需要跑分類器測試的修改，反而完全略過分類器測試。
+  # （這正是 `*) DEAD` catch-all 與 `grep -c || echo 0` 能活那麼久沒被發現的環境。）
   pull_request:
     paths:
       - 'quiz-app/**'
       - '.github/workflows/quiz-app-*.yml'
+      - '.github/scripts/**'
+      - '.github/workflows/quarterly-time-sensitive-verify.yml'
   push:
     branches: [main]
     paths:
       - 'quiz-app/**'
       - '.github/workflows/quiz-app-*.yml'
+      - '.github/scripts/**'
+      - '.github/workflows/quarterly-time-sensitive-verify.yml'
   workflow_dispatch:
 
 # 顯式宣告最小權限
@@ -32,6 +41,129 @@ defaults:
     working-directory: quiz-app
 
 jobs:
+  # quarterly-time-sensitive-verify 的 URL 狀態分類器（.github/scripts/url-status.sh）。
+  # 之前這段邏輯寫死在 workflow 裡，只能靠「等季排程跑一次、看它報什麼」來驗證，
+  # 所以 catch-all 的 `*) DEAD`（把 503、TLS 錯誤、逾時都當成連結已死）活了很久沒被發現。
+  # 現在抽成獨立 script + 離線 status matrix 測試，每個 PR 都跑。
+  url-status:
+    name: URL status classifier (offline matrix)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Shell syntax check
+        run: |
+          for f in .github/scripts/*.sh; do
+            echo "bash -n $f"
+            bash -n "$f"
+          done
+
+      - name: Status matrix (no network)
+        run: bash .github/scripts/url-status.test.sh
+
+      # 「curl -> DNS 二次確認 -> 分類」這段 glue 的測試（假 curl / 假 dig，離線）。
+      # glue 正是 bug 的居所：這支測試第一次跑就抓到 resolve_dns_status 會在
+      # 「只有一個 resolver 說 NXDOMAIN」時就升級成 DEAD_DNS —— 「兩邊都要同意」
+      # 的把關被最後一行 `else echo "$r1"` 整個繞過了。
+      - name: check_url glue test (fake curl/dig, no network)
+        run: bash .github/scripts/check-url.test.sh
+
+      # 聚合階段（計數 + $GITHUB_OUTPUT）也必須測。
+      # `grep -c ... || echo 0` 產生 $'0\n0'、讓 $(( )) syntax error 進而炸掉整個 step 的
+      # 那個 bug，就發生在聚合 —— 而當時的測試只涵蓋分類器，完全沒碰聚合。
+      # 把最容易出錯的那一段排除在測試之外，等於沒測。
+      - name: Aggregation integration test (fixture, no network)
+        run: bash .github/scripts/aggregate-results.test.sh
+
+  # GitHub 的 About（repo description）宣稱的題數，必須與實際資料一致。
+  #
+  # About 不在 git 裡 —— 沒有任何測試看得到它。結果它長年寫著「719 題官方考古題 +
+  # 151 題加強練習」，而 main 的實際資料是 647 + 157：這個數字跟任何一個版本都對不上，
+  # 卻是所有訪客第一眼看到的東西。沒有人發現，是因為根本沒有東西在看它。
+  # （同一時期 README 寫 648、實際 647 —— docs-counts.test.ts 已經釘住 repo 內的檔案，
+  #   但它讀不到 About，所以得另外用 gh api 拿。）
+  repo-description:
+    name: GitHub About 題數 vs 實際資料
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Offline tests for the checker
+        run: bash .github/scripts/check-description.test.sh
+
+      - name: Compare About against the data
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+
+          main_count=$(jq '(.gist_items | length) + (.our_unique_items | length)' \
+            quiz-app/src/data/integrated_dataset.json)
+          pool_count=$(jq '.items | length' quiz-app/src/data/practice_pool.json)
+          # gh api 失敗（限流、網路、token 問題）與「About 真的寫錯」是兩件完全不同的事，
+          # 但先前都會走到同一條路：desc="" -> check_description 找不到字樣 -> exit 1，
+          # 錯誤訊息還會說「About 的題數與實際資料不符」—— **基礎設施故障被怪罪到 About 頭上**，
+          # 而且會擋住 main。要分開。
+          if ! desc=$(gh api "repos/${GITHUB_REPOSITORY}" --jq '.description // ""' 2>/tmp/gh_err); then
+            echo "::warning::gh api 取不到 repo description（基礎設施問題，不是 About 寫錯）："
+            sed 's/^/  /' /tmp/gh_err
+            {
+              echo "## GitHub About 題數檢查"
+              echo ""
+              echo "⚠️ 這次**沒有檢查成功** —— \`gh api\` 取不到 repo description。"
+              echo "這是基礎設施問題，不代表 About 是對的，也不代表它是錯的。"
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0   # 拿不到資料就不下判斷。誤擋 main 比漏擋一次更糟。
+          fi
+
+          echo "實際資料：主題庫 ${main_count}、加強練習 ${pool_count}"
+          echo "About    ：${desc}"
+
+          # shellcheck source=.github/scripts/check-description.sh
+          . .github/scripts/check-description.sh
+
+          if check_description "$desc" "$main_count" "$pool_count"; then
+            {
+              echo "## GitHub About 題數檢查"
+              echo ""
+              echo "✅ About 與資料一致：主題庫 **${main_count}**、加強練習 **${pool_count}**"
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          {
+            echo "## GitHub About 題數檢查"
+            echo ""
+            echo "❌ About 宣稱的題數與實際資料不符。"
+            echo ""
+            echo "| | 主題庫 | 加強練習 |"
+            echo "|---|---:|---:|"
+            echo "| 實際資料 | ${main_count} | ${pool_count} |"
+            echo ""
+            echo "About 目前是：\`${desc}\`"
+            echo ""
+            echo '修正：`gh repo edit --description "...'"${main_count}"' 題主題庫 + '"${pool_count}"' 題加強練習..."`'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          # push 到 main：線上的門面正在說謊，必須擋 —— 警告會被忽略，只有 fail 擋得住。
+          # PR：分支改了題數、但 About 還沒改，是正常且預期的（About 要等合併後才改），
+          #     所以這階段只提示不擋，否則每個動到題數的 PR 都會無謂變紅。
+          if [ "${GITHUB_EVENT_NAME}" = 'push' ] && [ "${GITHUB_REF}" = 'refs/heads/main' ]; then
+            echo "::error::GitHub About 的題數與實際資料不符（主題庫 ${main_count} / 加強練習 ${pool_count}）"
+            exit 1
+          fi
+          echo "::warning::GitHub About 的題數與此分支的資料不符。合併到 main 後這個檢查會擋下來 —— 記得改 About。"
+
   lint:
     name: Lint & Type Check
     runs-on: ubuntu-latest

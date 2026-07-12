@@ -18,7 +18,7 @@ interface DatasetItem {
   stem: string;
   answer: string;
   options: { key: string; text: string }[];
-  metadata?: { original_id?: string; sources?: string[] };
+  metadata?: { original_id?: string; sources?: string[]; prior_answer?: string };
   explanation?: string;
 }
 
@@ -154,6 +154,128 @@ describe('audit corrections regression', () => {
     });
     it('gist[282] 不應出現於 integrated_dataset.json', () => {
       expect(byIndex(282)).toBeUndefined();
+    });
+  });
+
+  // 這條修正 @henrychen-bot 早在 2025-10 就回報了，_correction_note 也掛上去了，
+  // 但 answer 欄位從來沒被改過 —— 線上 App 一直發送錯的 D，explanation 甚至還在替 D 辯護。
+  // 沒有測試釘住，是它能默默漏掉的唯一原因。現在釘住。
+  describe('坎昆協議 MRV：ICA vs IAR (@henrychen-bot 回報)', () => {
+    const g = byIndex(304);
+    const q = byId('c2-111');
+
+    it('答案應為 C —— ICA 是非附件一國家用的，附件一國家走 IAR', () => {
+      expect(g?.answer).toBe('C');
+      expect(q?.answer).toBe('C');
+    });
+
+    it('explanation 不得再宣稱附件一國家「接受 ICA」', () => {
+      // 舊的錯誤 explanation：「坎昆協議規定，附件一國家應每兩年更新其排放報告，並接受國際諮商與分析（ICA）。」
+      expect(g?.explanation).not.toMatch(/附件一國家.{0,12}接受.{0,6}(ICA|國際諮商與分析)/);
+      expect(q?.explanation).not.toMatch(/附件一國家.{0,12}接受.{0,6}(ICA|國際諮商與分析)/);
+    });
+
+    it('explanation 應說明附件一國家走 IAR', () => {
+      expect(g?.explanation).toMatch(/IAR|國際評估與審查/);
+    });
+
+    it('保留 prior_answer 以標示此題已被修正過', () => {
+      expect(g?.metadata?.prior_answer).toBe('D');
+    });
+  });
+
+  // 內容時效性修正（2026-07-13）。Reg (EU) 2025/2083 修正 Reg (EU) 2023/956。
+  // 背景與未解事項見 CONTENT-CURRENCY.md。
+  //
+  // 這一組刻意「不只鎖答案字母」。上一版只驗「答案含 50、不含 80、explanation 有法規編號」，
+  // 結果把一段法律上不精確的敘述永久鎖死：題幹寫「每季提前購買比例」，但第 22(2) 條課予的
+  // 是「每季末帳戶中應『持有』」的義務；而且該義務自 2027 年才適用、計算基礎有兩種。
+  // 只鎖字母的測試永遠不會發現這種錯。所以改鎖【行為人 / 義務或違規行為 / 法條 / 罰則】。
+  describe('CBAM Art 22(2)：每季末帳戶餘額義務（80% → 50%）', () => {
+    it('gist[312] 答案 50%，且題幹必須把義務本身講對', () => {
+      const q = byIndex(312);
+      expect(q?.answer).toBe('B');
+      expect(q?.options.find((o) => o.key === 'B')?.text).toContain('50');
+
+      const stem = q?.stem ?? '';
+      expect(stem).toContain('22(2)'); // 法條
+      expect(stem).toContain('2027'); // 適用起始年
+      expect(stem).toMatch(/每季末/); // 時點
+      expect(stem).toMatch(/持有/); // 義務是「持有」而非「購買」
+      expect(stem).toMatch(/授權\s*CBAM\s*申報人/); // 行為人
+      expect(stem).not.toMatch(/提前購買/); // 不得再出現錯誤敘述
+    });
+
+    it('gist[312] explanation 必須說明預設值只是兩種計算基礎之一', () => {
+      const e = byIndex(312)?.explanation ?? '';
+      expect(e).toMatch(/2025\/2083/);
+      expect(e).toMatch(/Annex\s*IV|預設值/); // (a) 基礎
+      expect(e).toMatch(/前一年|已繳交之憑證/); // (b) 基礎
+      expect(e).toMatch(/2027/);
+    });
+
+    it('gist[439] 必須限定於 Art 22(2)(a)，且不得宣稱預設值是唯一方法', () => {
+      const q = byIndex(439);
+      expect(q?.answer).toBe('C');
+      const c = q?.options.find((o) => o.key === 'C')?.text ?? '';
+      expect(c).toContain('50');
+      expect(c).not.toContain('80');
+
+      expect(q?.stem).toMatch(/22\(2\)\(a\)/); // 明確限定到 (a) 款
+      const e = q?.explanation ?? '';
+      expect(e).toMatch(/兩種|其中之一/); // 說明還有別的基礎
+      expect(e).toMatch(/前一年|已繳交之憑證/); // (b) 基礎
+    });
+  });
+
+  // 原本 gist[313] 把「季末餘額不足」和「非授權之人輸入貨物」混成一題，答案給 3–5 倍。
+  // 事實上：季末餘額不足（Art 22(3)）根本沒有倍數罰則，只是通知後 1 個月內補足；
+  // 3–5 倍是 Art 26(2)，行為人是「非授權之人」、行為是「輸入貨物」。
+  // 已拆成兩題，各自鎖定【行為人 + 違規行為 + 法條 + 罰則】。
+  describe('CBAM Art 26：罰則必須區分行為人與違規行為', () => {
+    it('gist[313] = Art 26(2)：非授權之人輸入貨物 → 3–5 倍', () => {
+      const q = byIndex(313);
+      expect(q?.answer).toBe('D');
+      expect(q?.options.find((o) => o.key === 'D')?.text).toMatch(/3.*5\s*倍/);
+
+      const stem = q?.stem ?? '';
+      expect(stem).toContain('26(2)'); // 法條
+      expect(stem).toMatch(/非授權/); // 行為人
+      expect(stem).toMatch(/輸入/); // 違規行為
+      expect(stem).not.toMatch(/未於期間購買憑證/); // 舊的指涉不明敘述
+
+      const e = q?.explanation ?? '';
+      expect(e).toMatch(/26\(1\)/); // 要點出與 26(1) 的差異
+      expect(e).toMatch(/22\(3\)|1\s*個月/); // 也要點出季末餘額不足沒有倍數罰則
+    });
+
+    it('Art 26(1)：授權申報人未繳交憑證 → ETS 超額排放罰鍰，不是 3–5 倍', () => {
+      // 注意：不能只比對 /授權\s*CBAM\s*申報人/ —— 「非授權 CBAM 申報人」是它的超集，
+      // 會誤抓到 Art 26(2) 那題（gist[313]）。行為人必須是「授權」而「非」非授權。
+      const q = DS.gist_items.find(
+        (g) =>
+          /26\(1\)/.test(g.stem) &&
+          !/非授權/.test(g.stem) &&
+          /授權\s*CBAM\s*申報人/.test(g.stem) &&
+          /未.*繳交/.test(g.stem)
+      );
+      expect(q, 'Art 26(1) 的題目必須存在').toBeDefined();
+
+      const correct = q?.options.find((o) => o.key === q?.answer)?.text ?? '';
+      expect(correct).toMatch(/2003\/87\/EC|ETS|超額排放/); // 罰則本體
+      expect(correct).toMatch(/每一張憑證/); // 計算單位
+      expect(correct).not.toMatch(/3.*5\s*倍/); // 絕不是 3–5 倍
+
+      expect(q?.stem).toMatch(/未.*繳交/); // 違規行為
+      expect(q?.explanation).toMatch(/26\(2\)/); // 要點出與 26(2) 的差異
+    });
+
+    it('全庫不得再把「季末餘額／購買憑證」與「3–5 倍」綁在同一題', () => {
+      const bad = DS.gist_items
+        .filter((g) => /3.*5\s*倍/.test(g.options.map((o) => o.text).join()))
+        .filter((g) => /購買憑證|帳戶餘額|每季末/.test(g.stem))
+        .map((g) => `gist[${g.index}]`);
+      expect(bad).toEqual([]);
     });
   });
 });

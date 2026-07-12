@@ -34,7 +34,11 @@ jobs:
   verify:
     name: Verify time-sensitive sources
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # 實測：workflow 的 curl 旗標打一個黑洞 IP 要 34s（connect-timeout 10 + max-time 30
+    # + --retry 2）。49 個 unique URL、-P 4 -> 13 波 ≈ 7.4 分鐘，還沒算 checkout、
+    # self-test 與 apt install dig。原本 10 分鐘的預算，只要網路差一點或 time_sensitive
+    # 題目再長一些就會 timeout —— 而 timeout 的結果是「沒有報告」，不是「報告說有問題」。
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -87,42 +91,85 @@ jobs:
           echo "Found $unique_count unique URL(s) across $total_pairs (id, url) pairs"
           cat urls.tsv
 
-      - name: Curl-check URLs (parallel, with HEAD→GET fallback)
+      - name: Self-test classifier + glue + aggregation (offline, no network)
+        run: |
+          bash .github/scripts/url-status.test.sh
+          bash .github/scripts/check-url.test.sh
+          bash .github/scripts/aggregate-results.test.sh
+
+      # 沒有 dig 就無法向獨立 resolver 確認 NXDOMAIN，resolve_dns_status 會回 UNKNOWN，
+      # 於是 DEAD_DNS **永遠不會觸發** —— 網域真的停用了也不會開 issue。
+      # 這種「安靜地少報」比誤報更難發現，所以這裡明確確保 dig 存在，並在拿不到時大聲警告。
+      - name: Ensure dig is available (needed to confirm NXDOMAIN)
+        id: dig
+        run: |
+          if ! command -v dig > /dev/null 2>&1; then
+            echo "::warning::dig 不存在，安裝 bind9-dnsutils"
+            sudo apt-get update -qq && sudo apt-get install -y -qq bind9-dnsutils
+          fi
+          # dig 在不在，必須寫進 output 與報表。
+          # 沒有 dig -> resolve_dns_status 永遠回 UNKNOWN -> DEAD_DNS **永遠不會觸發**。
+          # 這是刻意的 fail-safe，但如果報表不講，看報表的人看到 DEAD_DNS=0，
+          # 根本分不出那是「沒有網域死掉」還是「這項檢查根本沒啟用」。
+          # 這個 workflow 自己的註解說靜默漏報「比誤報更難發現」—— 那就不能讓它在報表上也看不見。
+          if command -v dig > /dev/null 2>&1; then
+            echo "dig OK: $(dig -v 2>&1 | head -1)"
+            echo "dig_available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::仍然沒有 dig —— DNS 解析失敗一律降級成 UNREACHABLE_DNS（只警告、不開 issue）。寧可漏報，不要誤報。但這也代表 DEAD_DNS 永遠不會觸發。"
+            echo "dig_available=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Curl-check URLs (parallel; 7-way status classification)
         id: curl
         run: |
           set -euo pipefail
 
-          # Per-URL check 函式：
-          # - HEAD 先試（省流量）；CDN/WAF 拒 HEAD（403/405/000）→ fallback GET
-          # - --connect-timeout 5 + --max-time 10：總耗時上限約 20s/URL（HEAD+GET 兩次）
-          # - stdout：失敗時輸出 TSV（url\tids\tstatus），由 xargs 收集為 failures.tsv
-          # - stderr：人類可讀 log（✅/❌），由 GitHub Actions 顯示在 step output
-          check_url() {
-            local line="$1"
-            local url ids status
-            url="${line%%$'\t'*}"
-            ids="${line#*$'\t'}"
-            [ -z "$url" ] && return
-            status=$(curl -sIL --connect-timeout 5 --max-time 10 -A "Mozilla/5.0" -o /dev/null -w "%{http_code}" "$url" 2>/dev/null || echo "000")
-            if [ "$status" = "403" ] || [ "$status" = "405" ] || [ "$status" = "000" ]; then
-              status=$(curl -sL --connect-timeout 5 --max-time 10 -A "Mozilla/5.0" -o /dev/null -w "%{http_code}" "$url" 2>/dev/null || echo "000")
-            fi
-            if [ "$status" != "200" ]; then
-              printf '%s\t%s\t%s\n' "$url" "$ids" "$status"
-              printf '❌ %s (ids: %s) → HTTP %s\n' "$url" "$ids" "$status" >&2
-            else
-              printf '✅ %s (ids: %s)\n' "$url" "$ids" >&2
-            fi
-          }
-          export -f check_url
+          # 分類邏輯抽在 .github/scripts/url-status.sh，並由 url-status.test.sh 離線測試
+          # （上一個 step）。抽出來的原因：舊版把分類寫死在這裡，只能靠「等季排程跑一次、
+          # 看它報什麼」來驗證，結果 catch-all 的 `*) DEAD` 活了很久沒人發現。
+          #
+          # 舊版的兩個實質錯誤：
+          #  1. `*)` catch-all 把 400/401/408/451/5xx/TLS/逾時/連線重設 全部寫成 DEAD，
+          #     但 issue 文案卻宣稱「只有 404/410/DNS 才算失效」—— 程式與說明不一致。
+          #     網站短暫回 503 就會被報成「連結已死」，等於換個形式再喊一次狼來了。
+          #  2. `|| status='000'` 把 DNS 失敗/TLS 錯誤/逾時/連線拒絕壓成同一個碼，
+          #     事後分不出成因。改為保留 curl 的 exit code（6=DNS 7=connect 28=timeout
+          #     35/60=TLS），才分得出「網域真的沒了」與「網路抖一下」。
+          # check_url 本身也抽成 .github/scripts/check-url.sh，並由 check-url.test.sh
+          # 用「假的 curl / 假的 dig」離線把每條路徑跑過一遍。
+          #
+          # 為什麼連這段 glue 都要抽：分類器與聚合都有測試了，但「要不要做 DNS 二次確認、
+          # 有沒有把結果餵給分類器」的那幾行原本只活在這個 `run:` 區塊裡，沒有任何測試碰得到。
+          # 而 glue 正是 bug 的居所 —— 只要忘記把 $dns 傳進 classify_url_status，
+          # DEAD_DNS 就永遠不會觸發，網域真的停用也不會開 issue，而且測試照樣全綠。
+          # 事實上這支 glue 測試一寫出來，第一次跑就抓到 resolve_dns_status 的
+          # 「單一 resolver 說 NXDOMAIN 就升級」的漏洞（見該檔註解）。
+          # shellcheck source=.github/scripts/check-url.sh
+          . .github/scripts/check-url.sh
 
-          # 並行 4 worker：32 URLs ÷ 4 ≈ 8 rounds × 最壞 20s = 160s（job timeout-minutes: 10 充裕）
-          # POSIX 規定 < PIPE_BUF (4096) bytes 的 write 為 atomic，每行遠低於此 → 無交錯風險
-          : > failures.tsv
-          xargs -d '\n' -P 4 -I{} bash -c 'check_url "$@"' _ {} < urls.tsv > failures.tsv
+          export -f check_url classify_url_status status_icon resolve_dns_status dig_status url_host
+          export CURL_BIN HTTP_UA
 
-          fail_count=$(wc -l < failures.tsv)
-          echo "fail_count=$fail_count" >> "$GITHUB_OUTPUT"
+          # 並行 4 worker，全部寫進同一個被重導的檔案。
+          #
+          # 註：先前這裡寫「POSIX 保證 < PIPE_BUF (4096) bytes 的 write 為 atomic」——
+          # 那個理由是**錯的**。PIPE_BUF 的原子性講的是 pipe/FIFO，這裡寫的是一般檔案。
+          # 之所以安全，是因為這些子行程共用同一個 open file description，Linux 的
+          # write(2) 會在 f_pos_lock 底下序列化 append，每行 < 4KB 不會被撕開。
+          # 結論一樣（實測 49 個 URL、-P 4，0 筆撕裂行），但理由要講對。
+          : > results.tsv
+          xargs -d '\n' -P 4 -I{} bash -c 'check_url "$@"' _ {} < urls.tsv > results.tsv
+
+          # 聚合與 $GITHUB_OUTPUT 產生抽在 aggregate-results.sh，並由
+          # aggregate-results.test.sh 離線餵 fixture 測（含「所有分類皆為 0」的健康情境）。
+          #
+          # 為什麼要抽出來：`grep -c ... || echo 0` 產生 $'0\n0'、讓 $(( )) syntax error
+          # 進而炸掉整個 step 的那個 bug，就發生在這一段 —— 而當時的離線測試只驗到分類器，
+          # 完全沒碰聚合。把最容易出錯的那一段排除在測試之外，等於沒測。
+          # shellcheck source=.github/scripts/aggregate-results.sh
+          . .github/scripts/aggregate-results.sh
+          aggregate_results results.tsv "$GITHUB_OUTPUT"
 
       - name: Open / update issue if failures
         if: steps.curl.outputs.fail_count != '0' && (github.event_name == 'schedule' || github.event.inputs.open_issue == 'true')
@@ -130,26 +177,66 @@ jobs:
         with:
           script: |
             const fs = require('fs');
+            const o = ${{ toJSON(steps.curl.outputs) }};
+
+            // failures.tsv 只含 DEAD 與 DEAD_DNS —— 與程式的 is_failure() 完全一致。
+            // 這裡的文案必須逐字對應程式行為：上一版宣稱「只有 404/410/DNS 才算失效」，
+            // 但程式其實是 `*) DEAD` catch-all，把 503、TLS 錯誤、逾時都寫成「真的失效」。
+            // 文案與行為不符，就是在製造下一輪的「喊狼來了」。
             const lines = fs.readFileSync('failures.tsv', 'utf8').trim().split('\n').filter(Boolean);
-            const items = lines.map(l => {
-              const [url, ids, status] = l.split('\t');
-              const idList = (ids || '').split(',').filter(Boolean).map(i => `\`${i}\``).join(', ');
-              return `- [${url}](${url}) HTTP ${status} — affected: ${idList}`;
+            const items = lines.map((l) => {
+              const [cat, url, ids, http, rc] = l.split('\t');
+              const idList = (ids || '').split(',').filter(Boolean).map((i) => `\`${i}\``).join(', ');
+              const why = cat === 'DEAD_DNS'
+                ? `網域不存在（curl exit ${rc}，且 1.1.1.1 與 8.8.8.8 兩個獨立 resolver 都回 NXDOMAIN）`
+                : `HTTP ${http}`;
+              return `- [${url}](${url}) — **${cat}**：${why}\n  影響題目：${idList}`;
             }).join('\n');
 
             const today = new Date().toISOString().slice(0, 10);
             const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-            const body = `自動 quarterly verify 偵測到 \`time_sensitive\` 題目的 source URL 失效（${today}）：
 
-            ${items}
-
-            **動作項目**（依 \`feedback_citation_policy\` memory）：
-            1. 對每筆 URL 確認原 source 是否搬遷 / 內容變動
-            2. 比對題目選項是否仍與最新 source 一致
-            3. 不一致 → 修正答案 + 更新 \`provenance.verified_date\` + 附新 source URL（curl 實測 200 OK）
-            4. URL 已失效且找不到替代 → 移除題目（同時更新 \`_meta.totals\` + \`practice-pool-counts.ts\`）
-
-            Run: ${runUrl}`;
+            const body = [
+              `自動 quarterly verify：\`time_sensitive\` 題目的 source URL 有 **${lines.length} 筆判定為失效**（${today}）。`,
+              '',
+              '## 判定失效的只有這兩類（其餘一律不開 issue）',
+              '',
+              '| 分類 | 判定條件 | 本次 |',
+              '|---|---|---|',
+              `| ❌ \`DEAD\` | HTTP **404 / 410** —— 資源真的不存在 | ${o.dead_count} |`,
+              `| ❌ \`DEAD_DNS\` | curl exit **6**，**且** 1.1.1.1 與 8.8.8.8 兩個獨立 resolver 都回 **NXDOMAIN** | ${o.dead_dns_count} |`,
+              '',
+              '## 以下**不算**失效，只列出供參考',
+              '',
+              '| 分類 | 判定條件 | 本次 |',
+              '|---|---|---|',
+              `| ✅ \`OK\` | 2xx / 3xx（**含 202 Accepted** —— EUR-Lex 正常回這個） | ${o.ok_count} |`,
+              `| 🔌 \`UNREACHABLE_DNS\` | curl exit 6，但**沒有**兩個 resolver 確認 NXDOMAIN —— 可能只是 resolver 抖動 | ${o.dns_count} |`,
+              `| 🟡 \`BLOCKED\` | 401 / 403 / 405 / 429 / 451 —— WAF 擋 Actions runner，站台活著 | ${o.blocked_count} |`,
+              `| 🔄 \`RETRYABLE\` | 408 / 425 / 500 / 502 / 503 / 504 —— 伺服器暫時性問題，不是連結壞掉 | ${o.retryable_count} |`,
+              `| 🔌 \`UNREACHABLE_*\`（非 DNS） | curl exit ≠ 0（7=connect、28=timeout、35/60=TLS） | ${o.unreachable_count} |`,
+              `| ❓ \`OTHER\` | 其餘 HTTP 碼 —— 明示列出，**不靜默歸成 DEAD** | ${o.other_count} |`,
+              '',
+              `各分類加總 = ${o.total_count}（＝實際檢查的 URL 數；若對不起來代表有分類被重複計數）`,
+              '',
+              '## 失效清單',
+              '',
+              items,
+              '',
+              '## 動作項目',
+              '',
+              '1. 確認 source 是**搬家**還是**內容本身被撤**。死鏈有時代表「標準被廢止」而不只是',
+              '   「網址變了」—— 例：IAASB 那筆 404 是因為 **ISAE 3410 將於 2026-12-15 由 ISSA 5000 取代**。',
+              '2. 比對題目選項是否仍與最新 source 一致。',
+              '3. 不一致 → 修正答案 + 更新 `metadata.verification_date` + 附新 source URL（實測 2xx/3xx）。',
+              '4. 找不到替代且內容確已失效 → 移除題目（同步更新 `_meta.totals` + `practice-pool-counts.ts`）。',
+              '',
+              '> ⚠️ 這個 workflow **只驗連結還通不通，驗不出內容變了**。一個回 200 的網址，內容照樣',
+              '> 可能已經和題目對不上（CBAM 憑證繳交期限 5/31 → 9/30、臺灣 2030 NDC 24%±1% → 28%±2%，',
+              '> 網址全程都是活的）。內容時效性見 `CONTENT-CURRENCY.md`。',
+              '',
+              `Run: ${runUrl}`,
+            ].join('\n');
 
             // dedup：先找有沒有同 prefix open issue，有就 comment 更新而非新開
             const titlePrefix = '[quarterly verify]';
@@ -184,7 +271,35 @@ jobs:
       - name: Summary
         if: always()
         run: |
-          echo "## Quarterly time-sensitive verify summary" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "- URLs checked: ${{ steps.list.outputs.count }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Failures: ${{ steps.curl.outputs.fail_count }}" >> "$GITHUB_STEP_SUMMARY"
+          {
+            echo "## Quarterly time-sensitive verify summary"
+            echo ""
+            echo "URLs checked: **${{ steps.list.outputs.count }}**"
+            echo ""
+            echo "| 分類 | 判定條件 | 數量 | 開 issue？ |"
+            echo "|---|---|---:|---|"
+            echo "| ✅ OK | 2xx / 3xx（含 202 Accepted） | ${{ steps.curl.outputs.ok_count }} | — |"
+            echo "| ❌ DEAD | 404 / 410 | ${{ steps.curl.outputs.dead_count }} | **是** |"
+            echo "| ❌ DEAD_DNS | curl exit 6 **且** 兩個獨立 resolver 都回 NXDOMAIN | ${{ steps.curl.outputs.dead_dns_count }} | **是** |"
+            echo "| 🔌 UNREACHABLE_DNS | curl exit 6，但未經兩個 resolver 確認（可能只是抖動） | ${{ steps.curl.outputs.dns_count }} | 否 |"
+            echo "| 🟡 BLOCKED | 401/403/405/429/451（WAF，站台活著） | ${{ steps.curl.outputs.blocked_count }} | 否 |"
+            echo "| 🔄 RETRYABLE | 408/425/500/502/503/504（伺服器暫時性） | ${{ steps.curl.outputs.retryable_count }} | 否 |"
+            echo "| 🔌 UNREACHABLE_*（非 DNS） | curl exit≠0（7/28/35/60） | ${{ steps.curl.outputs.unreachable_count }} | 否 |"
+            echo "| ❓ OTHER | 其餘 HTTP 碼（明示，不靜默歸成 DEAD） | ${{ steps.curl.outputs.other_count }} | 否 |"
+            echo "| **合計** | | **${{ steps.curl.outputs.total_count }}** | |"
+            echo ""
+            if [ "${{ steps.dig.outputs.dig_available }}" != 'true' ]; then
+              echo "> 🚨 **這次執行沒有 dig** —— DEAD_DNS 的判定需要向 1.1.1.1 / 8.8.8.8 確認 NXDOMAIN，"
+              echo "> 沒有 dig 就一律降級成 UNREACHABLE_DNS。也就是說上面的 **DEAD_DNS = 0 不代表沒有網域死掉**，"
+              echo "> 而是**這項檢查根本沒有啟用**。不要把它讀成好消息。"
+              echo ""
+            fi
+            echo "> curl exit 6 只代表「無法解析主機」，**不等於 NXDOMAIN** —— 暫時性 resolver 故障、"
+            echo "> SERVFAIL、runner 自己的 DNS 問題都長成同一個 exit code。只有 1.1.1.1 與 8.8.8.8"
+            echo "> 兩邊都回 NXDOMAIN 才升級成 DEAD_DNS 並開 issue。寧可漏報，不要誤報。"
+            echo ""
+            echo "> ⚠️ 這個 workflow 只檢查「連結還通不通」，**驗不出內容變了**。"
+            echo "> 一個回 200 的網址，內容照樣可能已經和題目對不上"
+            echo "> （例：CBAM 憑證繳交期限 5/31 → 9/30、台灣 2030 NDC 24%±1% → 28%±2%，"
+            echo "> 網址全程都是活的）。內容時效性需要另一輪校正。"
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -42,6 +42,42 @@ describe('useQuiz.startQuizWithPool', () => {
     }
   });
 
+  // 這條路徑（不含練習池 + 循序取題）原本沒有任何測試走到 —— Codecov 標出 useQuiz.ts
+  // 有 1 行未覆蓋，正是這裡的 dedupeByContent。
+  // 補測試不是為了衝覆蓋率：這條路徑同樣會把兩科合進一個池子（subject: 'all'），
+  // 而少數題目考科一與考科二各有一份，不去重就會在同一份考卷出現兩次。
+  it('without pool + 循序取題（不洗牌）也必須依內容去重', async () => {
+    const { result } = renderHook(() => useQuiz());
+    await act(async () => {
+      await result.current.startQuizWithPool({
+        mode: 'practice',
+        subject: 'all',
+        questionCount: 400, // 取夠多，才會涵蓋到跨科重複的題目
+        shuffleQuestions: false, // ← 走 dedupeByContent 的循序分支
+        shuffleOptions: false,
+        showAnswerImmediately: true,
+        includePracticePool: false,
+      });
+    });
+
+    const qs = result.current.questions;
+    expect(qs.length).toBeGreaterThan(0);
+    for (const q of qs) {
+      expect(q.sourceType).not.toBe('practice_pool');
+    }
+
+    // 同一份考卷不得出現內容相同的題目（即使 id 不同）
+    const sig = (q: (typeof qs)[number]) =>
+      q.stem.replace(/\s+/g, '') +
+      '||' +
+      q.options
+        .map((o) => o.text.replace(/\s+/g, ''))
+        .sort()
+        .join('|');
+    const sigs = qs.map(sig);
+    expect(new Set(sigs).size).toBe(sigs.length);
+  });
+
   it('with includePracticePool can mix in pool items (questionCount 對 + 機率高足以抽到 pool)', async () => {
     const { result } = renderHook(() => useQuiz());
     // 抽 600 題（接近主題庫總量 647 + fixture pool 6 = 653）→ 接近全抽，

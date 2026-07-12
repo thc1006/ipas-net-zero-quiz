@@ -10,6 +10,9 @@ import type {
   PracticePoolVerdict,
   PracticePoolQualityFlag,
 } from '../types/practicePool';
+// 與主題庫共用的完整性規則（四選一 A–D、答案存在且在選項內、無換行/PDF 頁首頁尾、
+// time_sensitive 必須有可驗證來源）。抽出來共用，兩個題庫才是同一把尺。
+import { checkQuestion } from './question-integrity';
 
 const SOURCE_TYPES: ReadonlyArray<PracticePoolSourceType> = ['external_mock', 'ai_generated'];
 const DIFFICULTIES: ReadonlyArray<PracticePoolDifficulty> = ['easy', 'medium', 'hard'];
@@ -141,6 +144,83 @@ function validateItem(it: unknown, idx: number, errs: ValidationError[]): void {
           path: `${path}.provenance.ai_metadata.verifier_round`,
           message: 'must be number',
         });
+      }
+    }
+  }
+
+  // ---- verdict 不得與題目本身的狀態互相矛盾 ----
+  //
+  // 實際踩到的坑：兩題 PAS 2060 撤回日期題（來源互相矛盾、無法唯一作答）已經被設成
+  // answer=null + quality_flags:['ambiguous']（排除計分），但 provenance.verify_verdict
+  // 卻還留著 'CONFIRMED' —— 也就是 provenance 宣稱「這題已驗證確認」，而題目本身正
+  // 因為驗不出來才被排除。這兩件事不可能同時為真。
+  //
+  // 這種矛盾很危險：日後任何人（或任何腳本）只要信任 verify_verdict，就會把這題當成
+  // 已驗證的好題重新啟用。provenance 是拿來被信任的，它說謊比沒有還糟。
+  const flags: string[] = Array.isArray(it.quality_flags)
+    ? (it.quality_flags.filter((f) => typeof f === 'string') as string[])
+    : [];
+  const isAmbiguous = flags.includes('ambiguous');
+  const hasAnswer = it.answer !== null && it.answer !== undefined && it.answer !== '';
+
+  if (isAmbiguous && prov.verify_verdict === 'CONFIRMED') {
+    errs.push({
+      path: `${path}.provenance.verify_verdict`,
+      message:
+        "標了 ambiguous（排除計分）卻宣稱 CONFIRMED —— provenance 與題目狀態矛盾；" +
+        "應改為 AMBIGUOUS，並把舊結論移到 prior_verify_verdict",
+    });
+  }
+  if (prov.verify_verdict === 'AMBIGUOUS' && !isAmbiguous) {
+    errs.push({
+      path: `${path}.provenance.verify_verdict`,
+      message: "verdict 為 AMBIGUOUS，quality_flags 就必須含 'ambiguous'（否則題目仍會被正常計分）",
+    });
+  }
+  if (prov.verify_verdict === 'AMBIGUOUS' && hasAnswer) {
+    errs.push({
+      path: `${path}.provenance.verify_verdict`,
+      message: `verdict 為 AMBIGUOUS 卻仍給出答案 ${String(it.answer)} —— 驗不出來就不能教一個確定答案`,
+    });
+  }
+  if (
+    prov.prior_verify_verdict !== undefined &&
+    !isOneOf(prov.prior_verify_verdict, VERDICTS)
+  ) {
+    errs.push({
+      path: `${path}.provenance.prior_verify_verdict`,
+      message: `must be one of ${VERDICTS.join('|')}`,
+    });
+  }
+
+  // ---- 共用完整性規則（與主題庫同一套，見 utils/question-integrity.ts）----
+  //
+  // 這個 schema 原本只驗「形狀」：options 是非空陣列、有 key/text、answer 是 string|null…
+  // 它擋不住這個專案正在對付的那類錯誤 —— 實測把一筆雙欄錯置樣式的髒資料塞進練習池
+  // （3 個選項、內嵌換行、PDF 頁首頁尾、answer='Z' 不在選項裡、sources=['not-a-url']、
+  // 標了 time_sensitive 卻無可驗證來源），全套測試沒有任何一條抓到。
+  //
+  // 規則抽出來共用，dev 啟動的 fail-fast 與 CI gate 才是同一把尺。
+  if (typeof it.stem === 'string' && Array.isArray(it.options)) {
+    const opts = it.options.filter(
+      (o: unknown): o is { key: string; text: string } =>
+        isObj(o) && typeof o.key === 'string' && typeof o.text === 'string'
+    );
+    // 選項形狀本身壞掉時上面已經報過了，這裡只在形狀可解析時跑語意規則
+    if (opts.length === it.options.length) {
+      for (const v of checkQuestion({
+        id: typeof it.id === 'string' ? it.id : path,
+        stem: it.stem,
+        options: opts,
+        answer: (it.answer ?? null) as string | null,
+        qualityFlags: Array.isArray(it.quality_flags)
+          ? (it.quality_flags.filter((f) => typeof f === 'string') as string[])
+          : [],
+        sourceUrls: Array.isArray(it.sources)
+          ? (it.sources.filter((u) => typeof u === 'string') as string[])
+          : [],
+      })) {
+        errs.push({ path: `${path}.${v.rule}`, message: v.detail });
       }
     }
   }

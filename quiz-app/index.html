@@ -12,7 +12,7 @@
     <title>淨零碳規劃管理師備考神器 | iPAS 初級考古題（IFRS S1/S2、ISSB、TCFD、CBAM）</title>
     <meta
       name="description"
-      content="iPAS 淨零碳規劃管理師「初級」考古題線上測驗：719 題官方考古題 + 151 題加強練習，涵蓋 2026 熱點 IFRS S1/S2、ISSB 整合 TCFD、永續揭露準則（金管會 2026 編制、2027 申報、100 億以上上市櫃強制適用）、ISO 14064、CBAM、SBTi、GRI、ESRS、碳足跡與情境分析。每題附 primary-source URL，AI 解析符合 EU AI Act Art.50 揭露。"
+      content="iPAS 淨零碳規劃管理師「初級」考古題線上測驗：780 題主題庫 + 157 題加強練習，涵蓋 2026 熱點 IFRS S1/S2、ISSB 整合 TCFD、永續揭露準則（金管會 2026 編制、2027 申報、100 億以上上市櫃強制適用）、ISO 14064、CBAM、SBTi、GRI、ESRS、碳足跡與情境分析。每題附 primary-source URL，AI 解析符合 EU AI Act Art.50 揭露。"
     />
     <meta
       name="keywords"
@@ -25,9 +25,12 @@
     />
 
     <!-- Open Graph
-         注意：刻意不宣告 og:image —— Facebook / LinkedIn / Discord 等平台不支援
-         SVG 格式，宣告 SVG 會顯示「破圖佔位」而非「無圖」，比沒宣告更糟。
-         待設計 1200×630 PNG 後再補。 -->
+         og:image 一定要用「絕對網址」—— OG 爬蟲不會拿 og:url 去解相對路徑，
+         寫相對路徑等於沒宣告。
+         用 JPEG 而非先前的 SVG：Facebook / LinkedIn / X / Discord 都不支援 SVG，
+         宣告 SVG 會變成「破圖佔位」，比不宣告更糟（這正是先前刻意不宣告的原因）。
+         實際尺寸 1024×506（≈2:1）—— 已符合 X summary_large_image 與 FB 的最低要求，
+         width/height 照實填，不要謊報成 1200×630。 -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="zh_TW" />
     <meta property="og:site_name" content="淨零碳規劃管理師備考神器" />
@@ -35,15 +38,34 @@
     <meta property="og:title" content="淨零碳規劃管理師備考神器 | iPAS 初級考古題" />
     <meta
       property="og:description"
-      content="iPAS 淨零碳規劃管理師「初級」備考工具：719 題考古題 + 151 題加強練習（含 2026 熱點 IFRS S1/S2、ISSB、永續揭露準則）。"
+      content="iPAS 淨零碳規劃管理師「初級」備考工具：780 題主題庫 + 157 題加強練習（含 2026 熱點 IFRS S1/S2、ISSB、永續揭露準則）。"
+    />
+    <meta
+      property="og:image"
+      content="https://thc1006.github.io/ipas-net-zero-quiz/thumbnail.jpg"
+    />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="506" />
+    <meta
+      property="og:image:alt"
+      content="iPAS 淨零碳規劃管理師（初級）認證 線上練習與考古題庫"
     />
 
-    <!-- Twitter Card：summary（小卡）— X 不支援 SVG，待 PNG 完成再升級 summary_large_image -->
-    <meta name="twitter:card" content="summary" />
+    <!-- Twitter Card：有了 2:1 的點陣圖，才升級成 summary_large_image -->
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="淨零碳規劃管理師備考神器 | iPAS 初級考古題" />
     <meta
       name="twitter:description"
-      content="iPAS 淨零碳規劃管理師「初級」備考工具：719 題考古題 + 151 題加強練習（含 IFRS S1/S2、永續揭露準則）。"
+      content="iPAS 淨零碳規劃管理師「初級」備考工具：780 題主題庫 + 157 題加強練習（含 IFRS S1/S2、永續揭露準則）。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://thc1006.github.io/ipas-net-zero-quiz/thumbnail.jpg"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="iPAS 淨零碳規劃管理師（初級）認證 線上練習與考古題庫"
     />
 
     <!--
@@ -77,7 +99,7 @@
             "@id": "https://thc1006.github.io/ipas-net-zero-quiz/#quiz",
             "additionalType": "https://schema.org/Quiz",
             "name": "iPAS 淨零碳規劃管理師初級考古題測驗",
-            "description": "719 題官方考古題（考科一：淨零碳規劃管理基礎概論；考科二：淨零碳盤查範圍與程序概要）+ 151 題加強練習（含 IFRS S1/S2、ISSB、永續揭露準則、TCFD、SBTi、GRI、ESRS、ISO 14064、CBAM、碳足跡、情境分析等 2026 重點議題）。",
+            "description": "780 題主題庫（考科一：淨零碳規劃管理基礎概論；考科二：淨零碳盤查規範與程序概要）+ 157 題加強練習（含 IFRS S1/S2、ISSB、永續揭露準則、TCFD、SBTi、GRI、ESRS、ISO 14064、CBAM、碳足跡、情境分析等 2026 重點議題）。",
             "url": "https://thc1006.github.io/ipas-net-zero-quiz/",
             "inLanguage": "zh-TW",
             "isAccessibleForFree": true,

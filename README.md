@@ -8,7 +8,7 @@
 
 ## 功能特色
 
-- **648 題主題庫**：涵蓋考科一（淨零碳規劃管理基礎）與考科二（碳盤查範圍與程序）
+- **780 題主題庫**：涵蓋考科一（淨零碳規劃管理基礎）與考科二（碳盤查規範與程序）
 - **加強練習池（選用）**：開啟後額外提供 157 題補充題（55 題公開模擬題 + 102 題 AI 產題），每題附來源徽章
 - **練習/考試模式**：即時答案反饋或最後顯示結果
 - **參考來源連結**：每題答題後顯示權威引證（環境部、EUR-Lex、IPCC、ISO 等），URL 全部 curl 實測通過
@@ -36,11 +36,28 @@
 - 溫室氣體基礎知識、IPCC GWP（AR5/AR6）
 - 碳管理策略與工具、SBTi、ISSB IFRS S1/S2
 
-### 考科二：淨零碳盤查範圍與程序概要
+### 考科二：淨零碳盤查規範與程序概要
 - ISO 14064-1:2018 六分類（Cat 1–6）盤查範疇
 - 組織碳盤查邊界（營運／財務／股權控制法）
 - 排放係數與計算方法、AR5 GWP（環境部 113/2/5 公告）
 - 碳盤查報告與查證、CFP-PCR、產品碳足跡
+
+> **考科歸屬的依據是官方評鑑內容，不是坊間整理的考古題文件。**
+>
+> 依「115 年度 iPAS 淨零碳規劃管理師能力鑑定簡章」§2.5：
+>
+> | 科目 | 評鑑內容 |
+> |---|---|
+> | 科目一 `L11` | …`L11202` 國際碳稅關貿政策（如 **CBAM** 等）、`L11205` **ISO 14068-1** 碳中和標準… |
+> | 科目二 `L12` | `L121` **ISO 14064-1:2018** 組織型盤查、`L122` **ISO 14067:2018** 產品碳足跡 |
+>
+> 也就是說 **科目二只涵蓋 ISO 14064-1 與 ISO 14067**，不含任何政策／貿易／碳中和標準 ——
+> CBAM、ISO 14068-1、PAS 2060 都屬**科目一**。
+>
+> 本專案曾一度依「原始考古題 .md 把 CBAM 放在考科二段落」而把它們歸為考科二，**那是錯的**：
+> 那份是社群整理的文件，同一段落裡還混著 ISO 14068-1（官方 L11205，科目一）的題目。
+> 現已依官方評鑑內容更正，並由 `dataset-integrity.test.ts` 釘住 —— 考科2 不得再出現
+> CBAM / ISO 14068-1 / PAS 2060 的題目。
 
 ## 開發
 
@@ -134,6 +151,103 @@ jq '.items[] | select(.quality_flags | index("time_sensitive")) | {id, stem: (.s
 ### 免責
 
 本工具為非官方 iPAS 備考輔助，題庫整理可能含錯誤，最終以 iPAS 官方公告為準。本專案不就內容正確性、可考性、或考試結果提供任何保證。
+
+### 內容時效性
+
+題庫中有 112 題的答案會隨法規變動（CBAM、碳費、NDC、碳中和標準）。
+[`CONTENT-CURRENCY.md`](CONTENT-CURRENCY.md) 記錄已查證到哪一天、**還有什麼沒確定**、以及下一個到期日
+（最近的是 **2026-12-15：ISAE 3410 撤回，由 ISSA 5000 取代**）。
+
+⚠️ `meta.content_review.last_review_date` **不代表整份題庫都查證到那一天** —— 本輪只實查 100/780 題。
+判斷單一題目請看該題的 `metadata.valid_as_of`。
+
+⚠️ `quarterly-time-sensitive-verify` workflow **只驗連結還通不通，驗不出內容變了** —— 綠燈不等於內容正確。
+（CBAM 憑證繳交期限 5/31 → 9/30、臺灣 2030 NDC 24%±1% → 28%±2%，網址全程都是活的。）
+
+### 連結健康檢查怎麼判定「失效」
+
+只有這兩類會開 issue，其餘一律只警告：
+
+| 分類 | 條件 | 開 issue？ |
+|---|---|---|
+| `DEAD` | HTTP **404 / 410** | ✅ |
+| `DEAD_DNS` | curl exit 6，**且** 1.1.1.1 與 8.8.8.8 **兩個獨立 resolver 都回 NXDOMAIN** | ✅ |
+| `UNREACHABLE_DNS` | curl exit 6，但未經兩個 resolver 確認（可能只是 resolver 抖動） | ❌ |
+| `BLOCKED` | 401 / 403 / 405 / 429 / 451（WAF 擋 runner，站台活著） | ❌ |
+| `RETRYABLE` | 408 / 425 / 5xx（伺服器暫時性問題） | ❌ |
+| `UNREACHABLE_*` | curl exit ≠ 0（7=connect、28=timeout、35/60=TLS） | ❌ |
+| `OTHER` | 其餘 HTTP 碼 —— **明示列出，絕不靜默歸成 DEAD** | ❌ |
+
+`curl exit 6` 只代表「無法解析主機」，**不等於網域已停用**——暫時性 resolver 故障、SERVFAIL、
+runner 自己的 DNS 問題都長成同一個 exit code。**寧可漏報，不要誤報**：拿不到 `dig` 就一律降級。
+
+分類器、`check_url` glue、聚合三層都抽成腳本並有**離線測試**（`.github/scripts/*.test.sh`，
+用 PATH 注入的假 curl／假 dig，不碰網路），每個 PR 都跑：
+
+```bash
+bash .github/scripts/url-status.test.sh          # 分類矩陣
+bash .github/scripts/check-url.test.sh           # curl -> DNS 二次確認 -> 分類 的 glue
+bash .github/scripts/aggregate-results.test.sh   # 計數與 $GITHUB_OUTPUT
+bash .github/scripts/check-description.test.sh   # GitHub About 的題數
+```
+
+> 為什麼連 glue 都要測：這幾支測試寫出來的第一次執行，就抓到「兩個 resolver 都要同意」那道把關
+> 其實是**假的**——`resolve_dns_status` 最後一行 `else echo "$r1"` 會把「只有一個 resolver 說
+> NXDOMAIN」也放行。**一個永遠不會擋下任何東西的把關，等於沒有把關。**
+
+### 還原題的可重現性
+
+主題庫中有 159 題是從來源 PDF 重建的（2026-01-23 的清理把雙欄錯置的題目直接刪掉，
+而非修復）。[`restoration-manifest.json`](quiz-app/src/data/restoration-manifest.json)
+記錄每一題來自哪一份 PDF（含 **sha256**）的**哪一頁、哪一欄、第幾題**，以及 PDF 自己印的 **answer key**。
+
+```bash
+# CI 不下載 PDF：只驗 manifest ↔ dataset 一致（防竄改），離線秒級。
+pnpm vitest run src/data/restoration-manifest.test.ts
+
+# 完整重現（人工）：重新下載 PDF、比對 sha256、重跑分欄擷取、逐題核對。
+pip install pdfplumber
+python tools/restore_from_source_pdf.py --verify
+```
+
+實測 **159/159** 相符（頁碼／欄位／題號／answer key／raw & canonical 文字 hash／repo 文字 hash）。
+
+#### 三個 hash，各自回答一個不同的問題
+
+| 欄位 | 它證明什麼 |
+|---|---|
+| `raw_pdf_text_sha256` | PDF 原文長什麼樣（分欄擷取後，**一個字都沒動**） |
+| `canonical_source_text_sha256` | 套用 `transformations` 所列的修正**之後**長什麼樣 |
+| `dataset_text_sha256` | repo 裡「現在」長什麼樣 |
+| `transformations[]` | 這一題**動了什麼、憑什麼動**。空陣列＝原文照抄 |
+
+不變式（`--emit` 與 CI 各擋一次）：**`raw ≠ canonical` ⟺ `transformations` 非空**。
+有差異卻沒列明＝藏起來的手腳；列明了卻沒差異＝記錄與事實不符。兩種都會失敗。
+
+> 為什麼要分這麼細：先前只存一個 `pdf_text_sha256`，名字宣稱是「PDF 裡的文字」，實際存的卻是
+> **套用修正後**的文字（S_CHU_06 第 37 題的選項標號在 PDF 原文是 `(A)(B)(B)(C)`，被改成 `(A)(B)(C)(D)`）。
+> 結果任何人拿原始 PDF 重算都會對不上，而且看不出為什麼。
+> **一條只有作者本人重跑同一支腳本才對得上的證據鏈，不是證據鏈。**
+
+#### 來源的每一題都要有交代
+
+manifest 不只記「我還原了什麼」，也記「我**沒有**還原什麼、為什麼」——
+來源 PDF 全部 **170** 題逐題都有 disposition：
+
+| disposition | 數量 | 憑據 |
+|---|---:|---|
+| `restored` | 159 | 已還原進題庫 |
+| `duplicate_within_source` | 8 | PDF 自己重印了同一題（normalized hash 完全相同，並指出重複於第幾題） |
+| `duplicate_in_dataset` | 3 | 主庫已有內容幾乎相同的題目（附相似度與比對對象） |
+| `UNACCOUNTED` | **0** | 只要有一題落到這裡，`--emit` 直接失敗 |
+
+> 先前的程式是 `if item_id not in by_item: continue  # 一定是重複題`——那行註解是**斷言**，不是驗證。
+> 真的在還原過程中掉了一題，它也會安靜地說成「重複」。
+> **一份只講「我留下了什麼」而不講「我丟掉了什麼、為什麼」的憑證，證明不了「沒有東西被弄丟」。**
+>
+> 這個稽核當場抓到一個**教錯的答案**：一題被當成「重複」丟掉的來源題，它自己印的 answer key
+> 與主庫教的答案互相矛盾（ISO 14064-1:2018 強制揭露項目，主庫答 C、來源答 D——**D 才是對的**）。
+> 靜默去重把來源題丟掉的同時，也丟掉了那張本來可以當場戳破錯誤的答案卡。
 
 ## 問題回報
 

@@ -44,6 +44,36 @@ function item(
   };
 }
 
+/**
+ * fixture 裡「刻意沒有答案」的那一題（answer=null + ambiguous）。
+ *
+ * 之所以要匯出成常數：nullAnswerScoring 那組測試的鑑別力**全部**押在這一題身上。
+ * 一旦有人把它從 fixture 拿掉，「exam mode 不得出現無答案題」那條會**靜默變綠**
+ * （`expect(ids).not.toContain(...)` 與 `for (…) expect(hasAnswer).toBe(true)`
+ *  在沒有無答案題時都是空轉），而測試看起來仍然是綠的。
+ *
+ * 現在測試會先斷言這一題確實在池子裡，拿掉它就會直接紅。
+ */
+export const FIXTURE_NULL_ANSWER_ID = 'fixture-6';
+
+/**
+ * fixture 自我檢查：那題「刻意沒有答案」的題目必須真的在池子裡。
+ *
+ * 抽成獨立函式（而不是塞在 buildFixturePool 裡的一段 if）有兩個理由：
+ *  1. 它自己也要能被測 —— 一個「保護測試不空轉」的防呆，如果它本身從來沒被執行過，
+ *     那它壞掉了也沒人知道。這正是它要防的那種錯，只是換了一層。
+ *  2. 內嵌的 throw 分支在正常執行時永遠不會被走到，會被算成未覆蓋的行；
+ *     抽出來就能用「故意壞掉的 items」直接把它打出來。
+ */
+export function assertFixtureHasNullAnswerItem(items: PracticePoolItem[]): void {
+  if (!items.some((i) => i.id === FIXTURE_NULL_ANSWER_ID && i.answer === null)) {
+    throw new Error(
+      `fixture 壞了：找不到 ${FIXTURE_NULL_ANSWER_ID}（answer=null）。` +
+        'nullAnswerScoring 那組測試的鑑別力全部押在它身上。'
+    );
+  }
+}
+
 export function buildFixturePool(): PracticePool {
   const items: PracticePoolItem[] = [
     // 考科一 mapped, external_mock, 有答案
@@ -79,12 +109,19 @@ export function buildFixturePool(): PracticePool {
       subject: null,
       quality_flags: ['unmapped_subject'],
     }),
-    // 無答案題（exam mode 應排除）
+    // 無答案題 —— 模擬真實資料中「來源互相矛盾、刻意排除計分」的題目
+    // （例：PAS 2060 撤回日期）。answer=null 必須同時標 ambiguous，
+    // 否則會違反 question-integrity 的 missing_answer 規則。
+    // exam mode 應完全排除它；practice mode 可以出現，但絕不可計分。
     item(6, {
       subject: '考科一',
       answer: null,
+      quality_flags: ['ambiguous'],
     }),
   ];
+
+  assertFixtureHasNullAnswerItem(items);
+
   return {
     _meta: {
       version: 'fixture',

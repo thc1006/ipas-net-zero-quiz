@@ -92,6 +92,32 @@ export function getQuestionsBySubject(
 }
 
 /**
+ * 依「內容」去重（題幹 + 選項集合），而非依 id。
+ *
+ * 抽題是依 id 洗牌的，所以不會抽到同一個 item 兩次 —— 但同一道題目可能存在於
+ * 兩個不同的 item。同科內的那種已經在資料層移除；剩下的是**跨科重複**
+ * （考科一與考科二各有一份）：資料上必須兩份都留著，否則只考一科的考生會少一題，
+ * 但在「全部」模式下兩份會被合在同一個池子裡，同一份考卷就會出現兩次。
+ *
+ * 所以在「抽題」這一層依內容去重，資料層不動。
+ */
+export function dedupeByContent(qs: QuizQuestion[]): QuizQuestion[] {
+  const seen = new Set<string>();
+  return qs.filter((q) => {
+    const sig =
+      q.stem.replace(/\s+/g, '') +
+      '||' +
+      q.options
+        .map((o) => o.text.replace(/\s+/g, ''))
+        .sort()
+        .join('|');
+    if (seen.has(sig)) return false;
+    seen.add(sig);
+    return true;
+  });
+}
+
+/**
  * 取得隨機題目
  */
 export function getRandomQuestions(
@@ -99,7 +125,7 @@ export function getRandomQuestions(
   subject: ExamSubject | 'all' = 'all',
   onlyWithAnswer = false
 ): QuizQuestion[] {
-  let pool = getQuestionsBySubject(subject);
+  let pool = dedupeByContent(getQuestionsBySubject(subject));
   if (onlyWithAnswer) {
     pool = pool.filter((q) => q.hasAnswer);
   }
@@ -122,7 +148,9 @@ export function getRandomQuestionsFromPool(
   subject: ExamSubject | 'all' = 'all',
   onlyWithAnswer = false
 ): QuizQuestion[] {
-  let filtered = subject === 'all' ? pool : pool.filter((q) => q.subject === subject);
+  let filtered = dedupeByContent(
+    subject === 'all' ? pool : pool.filter((q) => q.subject === subject)
+  );
   if (onlyWithAnswer) filtered = filtered.filter((q) => q.hasAnswer);
   const shuffled = [...filtered];
   for (let i = shuffled.length - 1; i > 0; i--) {

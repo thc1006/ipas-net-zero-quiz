@@ -15,10 +15,12 @@ interface PoolItem {
   id: string;
   stem: string;
   options: { key: string; text: string }[];
-  answer: string;
+  // 可為 null：標記 'ambiguous' 的題目刻意不給答案，以排除計分。
+  answer: string | null;
   explanation: string;
   provenance: { source_type: string };
   sources: string[];
+  quality_flags?: string[];
 }
 
 interface Pool {
@@ -33,11 +35,41 @@ describe('practice_pool.json — ai_generated integrity', () => {
     (q) => q.provenance.source_type === 'ai_generated'
   );
 
-  it('每題都有非空 answer', () => {
+  // 例外：明確標記 'ambiguous' 的題目「必須」沒有答案。
+  // 題庫不能對互斥的命題同時給出確定答案 —— 與其在文件裡註記「此題有瑕疵」卻照常計分，
+  // 不如把答案拿掉（answer=null → hasAnswer=false → 不進考試模式、不計分）。
+  it('每題都有非空 answer（除非明確標記 ambiguous）', () => {
     const offenders = aiItems
+      .filter((q) => !(q.quality_flags ?? []).includes('ambiguous'))
       .filter((q) => !q.answer || q.answer.trim() === '')
       .map((q) => q.id);
     expect(offenders, `空 answer：\n${offenders.join('\n')}`).toEqual([]);
+  });
+
+  it('標記 ambiguous 的題目必須沒有答案（否則等於照常計分）', () => {
+    const offenders = pool.items
+      .filter((q) => (q.quality_flags ?? []).includes('ambiguous'))
+      .filter((q) => q.answer !== null && q.answer !== undefined)
+      .map((q) => q.id);
+    expect(offenders, `標了 ambiguous 卻仍有答案：\n${offenders.join('\n')}`).toEqual([]);
+  });
+
+  // PAS 2060 的撤回日期在現有來源中互相矛盾（BSI 停售驗證 2024-01-01、改用 ISO 14068-1
+  // 2025-01-01、標準文件撤回 2025-11-30 —— 是三件不同的事，常被混為一談）。
+  // 在取得 BSI 對 PAS 2060:2014 的官方 withdrawal record 之前，任何斷言撤回年份的題目
+  // 都不得有確定答案。定案後再把這條測試改成鎖定正確年份。
+  it('PAS 2060 撤回年份未定案前，不得有題目對它給出確定答案', () => {
+    const offenders = pool.items
+      .filter((q) => {
+        const blob = q.stem + (q.options ?? []).map((o) => o.text).join();
+        return /PAS\s?2060/.test(blob) && /20(24|25)\s*年?/.test(blob);
+      })
+      .filter((q) => q.answer !== null && q.answer !== undefined)
+      .map((q) => q.id);
+    expect(
+      offenders,
+      `PAS 2060 撤回年份仍有確定答案（來源互相矛盾，應標 ambiguous 並排除計分）：\n${offenders.join('\n')}`
+    ).toEqual([]);
   });
 
   it('每題都有非空 explanation', () => {
@@ -63,11 +95,12 @@ describe('practice_pool.json — ai_generated integrity', () => {
     ).toEqual([]);
   });
 
-  it('answer 必須在 options 的 key 集合中', () => {
+  it('answer 必須在 options 的 key 集合中（answer=null 者除外）', () => {
     const offenders = aiItems
+      .filter((q) => q.answer !== null && q.answer !== undefined) // ambiguous 題刻意無答案
       .filter((q) => {
         const keys = new Set(q.options.map((o) => o.key));
-        return !keys.has(q.answer);
+        return !keys.has(q.answer as string);
       })
       .map((q) => `${q.id} (answer=${q.answer})`);
     expect(

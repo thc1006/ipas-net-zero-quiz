@@ -305,8 +305,8 @@
           "text": "ISO 14068-1 已取代 PAS 2060，但兩者皆不涵蓋範疇三的排放量計算"
         }
       ],
-      "answer": "B",
-      "explanation": "BSI 公告 PAS 2060 於 2025 年 12 月 31 日撤回，由 ISO 14068-1:2023 取代。ISO 14068-1 要求順序為「先減排、後抵換」（hierarchy of mitigation），並將 PAS 2060 之事前 QES 確證改為事後查證。",
+      "answer": null,
+      "explanation": "【已排除計分】本題涉及 PAS 2060 的「撤回日期」，而現有來源互相矛盾：BSI 停售 PAS 2060 驗證為 2024-01-01、改以 ISO 14068-1 提供驗證為 2025-01-01、而「標準文件撤回」另有 2025-11-30 之說法；三者是不同的事件，常被混為一談。在取得 BSI 對 PAS 2060:2014 的官方 withdrawal record 前，本題標記為 ambiguous 且不計分，以免題庫對互斥命題同時給出確定答案。（原解析：BSI 公告 PAS 2060 於 2025 年 12 月 31 日撤回，由 ISO 14068-1:2023 取代。I…）",
       "subject": null,
       "topic_tags": [
         "ISO 14068",
@@ -319,14 +319,18 @@
         "source_origin": "ipas_vocus_mock",
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
-        "verify_verdict": "CONFIRMED",
+        "verify_verdict": "AMBIGUOUS",
+        "prior_verify_verdict": "CONFIRMED",
         "original_id": "7"
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
         "https://www.bsigroup.com/zh-TW/PAS-2060-Carbon-Neutral/"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "ambiguous",
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-em-ipas_vocus_mock-008",
@@ -2386,7 +2390,7 @@
       ],
       "answer": "B",
       "explanation": "金管會藍圖規劃以「直接採用（adoption）」方式接軌 IFRS S1/S2，分三階段：第一階段為 2026 年會計年度（資本額 100 億元以上）、第二階段 2027 年（50–100 億元）、第三階段 2028 年（50 億元以下）。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -2432,7 +2436,7 @@
       ],
       "answer": "C",
       "explanation": "依路徑圖 2.0，2023 起資本額逾百億及鋼鐵水泥業先行盤查，2024、2025 接續，2026 年完成個體公司盤查，2027 年全體上市櫃公司完成合併報表盤查與外部確信亦同步推動，2029 年全體完成外部確信。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -2478,7 +2482,7 @@
       ],
       "answer": "D",
       "explanation": "金管會允許之過渡豁免包括首年僅揭露氣候議題、範疇 3 延後一年、免比較期間，但產業特定揭露（IFRS S2 附錄 B）仍應依規定揭露，並無永久豁免。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -2524,7 +2528,7 @@
       ],
       "answer": "B",
       "explanation": "金管會 2025 年 5 月預告修正準則第七、十之一、二十三條，將原年報第四章「公司治理報告」改為包含 IFRS 永續揭露準則之「永續相關財務資訊專章」。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -2571,7 +2575,7 @@
       ],
       "answer": "C",
       "explanation": "TCX 國內減量額度交易平台於 2024/10/02 啟動，首批共 6 案（含奇美實業天然氣替代重油、中鋼鋼胚熱進爐節能、漢寶沼氣發電、漢程客運電動公車、台北 101 高效率光源等），定價 NT$2,500–4,000/噸 CO2e。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -2616,7 +2620,7 @@
       ],
       "answer": "C",
       "explanation": "首批國際碳權僅限作為「自願性碳中和宣告」或品牌商供應鏈中和要求使用，「不得」用於折抵我國碳費或 EU CBAM；其餘 A、B、D 皆與 TCX 公告一致。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -2661,7 +2665,7 @@
       ],
       "answer": "B",
       "explanation": "環境部公告一般費率 NT$300/噸 CO2e，提出自主減量計畫並符合「行業別指定削減率」者適用優惠費率 A（NT$50），符合「技術標竿」者適用優惠費率 B（NT$100）；2025 年試申報、2026 年 5 月起依 2025 年排放量正式繳費。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -2705,7 +2709,7 @@
       ],
       "answer": "B",
       "explanation": "首批徵收對象為年排放量 ≥ 2.5 萬噸 CO2e 之電力業、燃氣供應業及指定製造業，約 281 家企業、500 家工廠。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -2794,7 +2798,7 @@
       ],
       "answer": "C",
       "explanation": "FIT 躉購制度下台電已取得相對應憑證，企業不能再向台電「重複」購買憑證；常見合法路徑為轉供（直供/PPA）、自用、向再生能源售電業購買等。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -2882,7 +2886,7 @@
       ],
       "answer": "A",
       "explanation": "RE100 由 The Climate Group 與 CDP 共同發起，成員承諾「最遲 2050 年」全球營運使用 100% 再生電力，可透過 PPA、自建、購買憑證（如 T-REC、I-REC）等方式達成；核能不被計入。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -2926,7 +2930,7 @@
       ],
       "answer": "A",
       "explanation": "台積電宣布 2025 年達排放峰值、2030 年回到 2020 年水準（含範疇 1+2+3 絕對減量）、2030 年 RE60、2040 年 RE100、2050 年淨零。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -2971,7 +2975,7 @@
       ],
       "answer": "D",
       "explanation": "SBTi 規定當範疇 3 占總排放（1+2+3）≥ 40% 時，企業必須設定範疇 3 近期目標，且涵蓋至少其範疇 3 排放的 67%。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -3015,7 +3019,7 @@
       ],
       "answer": "C",
       "explanation": "SBTi FLAG 規範：屬指定產業（食品生產、農業、林產等），或 FLAG 相關排放 ≥ 20% 之企業，需設 FLAG 目標；其涵蓋 1+2 排放 ≥ 95%、範疇 3 ≥ 67%；並須最遲於 2025/12/31 公開零毀林承諾。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -3060,7 +3064,7 @@
       ],
       "answer": "A",
       "explanation": "EcoVadis 2024 起獎牌依年度排名比例頒發：白金前 1%、金牌前 5%、銀牌前 15%、銅牌前 35%；四大主題（環境、勞工人權、商業道德、永續採購）各構面分數須 ≥ 30 分。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -3104,7 +3108,7 @@
       ],
       "answer": "C",
       "explanation": "我國指引參酌歐盟 EU Taxonomy 三要件：（1）對任一環境目的有實質貢獻、（2）對其他目的無重大損害（Do No Significant Harm, DNSH）、（3）符合最低社會保障。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -3195,7 +3199,7 @@
       ],
       "answer": "B",
       "explanation": "CBAM 過渡期 2023/10/01–2025/12/31，正式期自 2026/01/01 起。依 Omnibus 簡化案 Regulation (EU) 2025/2083（2025/10/20 生效）：原 Reg (EU) 2023/956 之 5/31 申報期限已被延後至每年 9/30，憑證繳交期限亦同步延至 9/30。因此 2026 年度首次申報與憑證繳交皆於 2027/09/30 前完成。題目選項 B 「2027/09/30」反映的就是現行（post-Omnibus）申報截止日，非單純「繳費截止」。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -3241,7 +3245,7 @@
       ],
       "answer": "D",
       "explanation": "CBAM 第一階段納管 6 大類：鋼鐵、水泥、鋁、肥料、電力、氫，其後評估擴及部分化學品與下游產品；紡織品目前未納入。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -3285,7 +3289,7 @@
       ],
       "answer": "D",
       "explanation": "cfp.moenv.gov.tw 提供係數、PCR、碳標籤申請及產品碳足跡資訊揭露；CBAM 憑證須透過歐盟過渡登錄系統與正式期之申報購買，與該平台無直接關聯。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -3466,7 +3470,7 @@
       ],
       "answer": "B",
       "explanation": "轉型情境常採 IEA NZE 1.5°C 路徑；實體風險情境則常用 IPCC SSP/RCP 高排放情境（如 SSP5-8.5、RCP8.5）。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -3601,7 +3605,7 @@
       ],
       "answer": "A",
       "explanation": "BIPV 將光電模組整合於建築外殼（屋頂、外牆、採光罩），可降低農地、漁塭等開發爭議，並提升自發自用比率，搭配 BERS 與綠建築標章推動近零碳建築。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -3690,7 +3694,7 @@
       ],
       "answer": "D",
       "explanation": "經濟部以「以大帶小」由領頭企業帶動供應鏈中小企業，並提供盤查計算器、產發署/工業局之碳盤查試算工具與專業輔導；中小企業並非碳費徵收對象，亦非 IFRS S1/S2 之直接適用對象。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -3707,7 +3711,7 @@
         }
       },
       "sources": [
-        "https://ghg.tgpf.org.tw/"
+        "https://ghgregistry.moenv.gov.tw/"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -3736,7 +3740,7 @@
       ],
       "answer": "C",
       "explanation": "ISAE 3410 / 3000 與我國規範均以「先有限確信、後合理確信」為國際慣例；金管會路徑圖規劃 2027 全體上市櫃完成盤查、2029 年完成外部確信。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -3753,7 +3757,7 @@
         }
       },
       "sources": [
-        "https://www.iaasb.org/publications/international-standard-assurance-engagements-isae-3410-assurance-engagements-greenhouse-gas-statements"
+        "https://www.iaasb.org/publications/glance-international-standard-assurance-engagements-isae-3410-assurance-engagements-greenhouse-gas"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -3782,7 +3786,7 @@
       ],
       "answer": "D",
       "explanation": "EPD（Type III Environmental Declaration）以 ISO 14025 為基礎，依該產品類別之 PCR 進行 ISO 14040/44 LCA，揭露多項環境衝擊（含 GWP/AP/EP/ODP 等）並需獨立查驗。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
@@ -4392,7 +4396,7 @@
       },
       "sources": [
         "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/",
-        "https://www.fsb.org/2023/07/fsb-welcomes-issb-standards-as-culmination-of-its-work-on-climate-related-disclosures/"
+        "https://www.ifrs.org/groups/international-sustainability-standards-board/"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -4492,7 +4496,7 @@
         }
       },
       "sources": [
-        "https://www.efrag.org/en/sustainability-reporting/esrs-workstreams/european-sustainability-reporting-standards-1st-set",
+        "https://www.efrag.org/en/sustainability-reporting",
         "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202302772"
       ],
       "quality_flags": [
@@ -6698,8 +6702,8 @@
           "text": "ISO 14068-1 僅規範產品，組織須續用 PAS 2060"
         }
       ],
-      "answer": "B",
-      "explanation": "PAS 2060:2014 由 BSI 於 2024-01-01 起停止接受新驗證、2025-12-31 完成所有在途驗證，並由 ISO 14068-1:2023 取代為國際碳中和標準。",
+      "answer": null,
+      "explanation": "【已排除計分】本題涉及 PAS 2060 的「撤回日期」，而現有來源互相矛盾：BSI 停售 PAS 2060 驗證為 2024-01-01、改以 ISO 14068-1 提供驗證為 2025-01-01、而「標準文件撤回」另有 2025-11-30 之說法；三者是不同的事件，常被混為一談。在取得 BSI 對 PAS 2060:2014 的官方 withdrawal record 前，本題標記為 ambiguous 且不計分，以免題庫對互斥命題同時給出確定答案。（原解析：PAS 2060:2014 由 BSI 於 2024-01-01 起停止接受新驗證、2025-12-31 完成所有在途驗…）",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "ISO 14068-1",
@@ -6712,7 +6716,8 @@
         "source_origin": "intl_round1_rescued",
         "verified_date": "2026-04-25",
         "verifier": "manual_explanation_rewrite",
-        "verify_verdict": "CONFIRMED",
+        "verify_verdict": "AMBIGUOUS",
+        "prior_verify_verdict": "CONFIRMED",
         "original_id": "intl-018",
         "ai_metadata": {
           "model_family": "unspecified",
@@ -6725,7 +6730,9 @@
         "https://www.bsigroup.com/en-GB/standards/PAS-2060-carbon-neutrality/"
       ],
       "quality_flags": [
-        "low_confidence"
+        "low_confidence",
+        "ambiguous",
+        "time_sensitive"
       ]
     },
     {
@@ -6854,7 +6861,7 @@
       ],
       "answer": "D",
       "explanation": "RE100 為由 The Climate Group 與 CDP 共同推動的全球倡議，成員企業承諾 100% 使用再生能源。台灣會員家數隨時間異動，依 RE100 官網（there100.org）最新資料為準（2026 年 4 月時約 38 家）。答題時以官網即時數字為主，本題依公告當下版本標註。",
-      "subject": "考科二：淨零碳盤查範圍與程序概要",
+      "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {

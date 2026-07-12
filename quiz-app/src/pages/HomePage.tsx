@@ -310,7 +310,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
                 考科一：淨零碳規劃管理基礎概論 ({stats.subject1} 題)
               </option>
               <option value="考科2">
-                考科二：淨零碳盤查範圍與程序概要 ({stats.subject2} 題)
+                考科二：淨零碳盤查規範與程序概要 ({stats.subject2} 題)
               </option>
             </select>
           </div>
@@ -399,7 +399,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
               <span className="material-icons">analytics</span>
               考科二
             </h3>
-            <p className="info-title">淨零碳盤查範圍與程序概要</p>
+            <p className="info-title">淨零碳盤查規範與程序概要</p>
             <ul>
               <li>ISO 14064 溫室氣體盤查標準</li>
               <li>組織碳盤查範疇與邊界</li>
