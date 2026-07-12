@@ -56,6 +56,24 @@ function item(
  */
 export const FIXTURE_NULL_ANSWER_ID = 'fixture-6';
 
+/**
+ * fixture 自我檢查：那題「刻意沒有答案」的題目必須真的在池子裡。
+ *
+ * 抽成獨立函式（而不是塞在 buildFixturePool 裡的一段 if）有兩個理由：
+ *  1. 它自己也要能被測 —— 一個「保護測試不空轉」的防呆，如果它本身從來沒被執行過，
+ *     那它壞掉了也沒人知道。這正是它要防的那種錯，只是換了一層。
+ *  2. 內嵌的 throw 分支在正常執行時永遠不會被走到，會被算成未覆蓋的行；
+ *     抽出來就能用「故意壞掉的 items」直接把它打出來。
+ */
+export function assertFixtureHasNullAnswerItem(items: PracticePoolItem[]): void {
+  if (!items.some((i) => i.id === FIXTURE_NULL_ANSWER_ID && i.answer === null)) {
+    throw new Error(
+      `fixture 壞了：找不到 ${FIXTURE_NULL_ANSWER_ID}（answer=null）。` +
+        'nullAnswerScoring 那組測試的鑑別力全部押在它身上。'
+    );
+  }
+}
+
 export function buildFixturePool(): PracticePool {
   const items: PracticePoolItem[] = [
     // 考科一 mapped, external_mock, 有答案
@@ -102,14 +120,7 @@ export function buildFixturePool(): PracticePool {
     }),
   ];
 
-  // fixture 自我檢查：那題「刻意沒有答案」的題目必須真的在池子裡，
-  // 否則所有依賴它的測試都會安靜地失去鑑別力。
-  if (!items.some((i) => i.id === FIXTURE_NULL_ANSWER_ID && i.answer === null)) {
-    throw new Error(
-      `fixture 壞了：找不到 ${FIXTURE_NULL_ANSWER_ID}（answer=null）。` +
-        'nullAnswerScoring 那組測試的鑑別力全部押在它身上。'
-    );
-  }
+  assertFixtureHasNullAnswerItem(items);
 
   return {
     _meta: {
