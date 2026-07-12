@@ -18,7 +18,7 @@ interface DatasetItem {
   stem: string;
   answer: string;
   options: { key: string; text: string }[];
-  metadata?: { original_id?: string; sources?: string[] };
+  metadata?: { original_id?: string; sources?: string[]; prior_answer?: string };
   explanation?: string;
 }
 
@@ -154,6 +154,33 @@ describe('audit corrections regression', () => {
     });
     it('gist[282] 不應出現於 integrated_dataset.json', () => {
       expect(byIndex(282)).toBeUndefined();
+    });
+  });
+
+  // 這條修正 @henrychen-bot 早在 2025-10 就回報了，_correction_note 也掛上去了，
+  // 但 answer 欄位從來沒被改過 —— 線上 App 一直發送錯的 D，explanation 甚至還在替 D 辯護。
+  // 沒有測試釘住，是它能默默漏掉的唯一原因。現在釘住。
+  describe('坎昆協議 MRV：ICA vs IAR (@henrychen-bot 回報)', () => {
+    const g = byIndex(304);
+    const q = byId('c2-111');
+
+    it('答案應為 C —— ICA 是非附件一國家用的，附件一國家走 IAR', () => {
+      expect(g?.answer).toBe('C');
+      expect(q?.answer).toBe('C');
+    });
+
+    it('explanation 不得再宣稱附件一國家「接受 ICA」', () => {
+      // 舊的錯誤 explanation：「坎昆協議規定，附件一國家應每兩年更新其排放報告，並接受國際諮商與分析（ICA）。」
+      expect(g?.explanation).not.toMatch(/附件一國家.{0,12}接受.{0,6}(ICA|國際諮商與分析)/);
+      expect(q?.explanation).not.toMatch(/附件一國家.{0,12}接受.{0,6}(ICA|國際諮商與分析)/);
+    });
+
+    it('explanation 應說明附件一國家走 IAR', () => {
+      expect(g?.explanation).toMatch(/IAR|國際評估與審查/);
+    });
+
+    it('保留 prior_answer 以標示此題已被修正過', () => {
+      expect(g?.metadata?.prior_answer).toBe('D');
     });
   });
 });
