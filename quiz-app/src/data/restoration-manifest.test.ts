@@ -49,11 +49,31 @@ interface Entry {
   dataset_answer: string | null;
 }
 
+interface Disposition {
+  source_id: string;
+  source_question_number: number;
+  status: string;
+  item_id?: string;
+  duplicate_of?: { source_id?: string; source_question_number?: number; dataset_item?: string };
+  answers_agree?: boolean;
+  evidence?: string;
+}
+
 const DS = datasetRaw as unknown as { our_unique_items: DsItem[] };
 const MAN = manifestRaw as unknown as {
-  _meta: { restored_count: number; sources: Record<string, { sha256: string; exam_subject: string }> };
+  _meta: {
+    restored_count: number;
+    source_question_total: number;
+    disposition_summary: Record<string, number>;
+    answer_conflicts: string[];
+    sources: Record<string, { sha256: string; exam_subject: string }>;
+  };
   entries: Entry[];
+  dispositions: Disposition[];
 };
+
+// 來源 PDF 各自的總題數 —— 對帳的分母。
+const EXPECTED_SOURCE_COUNT: Record<string, number> = { S_CHU_06: 100, S_CHU_07: 70 };
 
 // 必須與 tools/restore_from_source_pdf.py 的 normalized_text_sha256() 完全一致：
 // 空白全剝掉，選項依 key 排序 —— 只認內容，不認排版。
@@ -158,5 +178,82 @@ describe('restoration manifest', () => {
     const right = MAN.entries.filter((e) => e.column === 'right').length;
     expect(left).toBeGreaterThan(0);
     expect(right).toBeGreaterThan(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 對帳：來源 PDF 的**每一題**都必須有交代
+//
+// 舊版 manifest 只報「restored_count: 159」，從來沒說另外 11 題去哪了。
+// 產生 manifest 的程式是這樣寫的：
+//
+//     if item_id not in by_item:
+//         continue          # 這一題與 gist 主庫重複，還原時已去重
+//
+// 那行註解是**斷言**，不是驗證 —— 它把「dataset 裡沒有」直接等同於「一定是重複題」。
+// 真的在還原過程中掉了一題，這行也會安靜地把它說成重複，而且沒有人會知道。
+//
+// 實際稽核 170 題的結果：
+//   8 題  確實是 PDF 自己重印的（normalized hash 完全相同）
+//   3 題  是主庫已有的題目（題幹幾乎相同）
+//   其中 1 題（S_CHU_07#13）的**答案與主庫互相矛盾** —— 我們把來源題當重複丟掉，
+//         卻留下了一個錯的答案在教（主庫答 C，來源答案卡是 D；D 才是對的）。
+//         這正是「靜默去重」會造成的實質傷害，而不只是紀錄不完整。
+//
+// 一份只講「我留下了什麼」而不講「我丟掉了什麼、為什麼」的憑證，
+// 沒辦法證明「沒有東西被弄丟」—— 而那正是這份 manifest 唯一要證明的事。
+describe('還原對帳：來源的每一題都要有交代', () => {
+  it('disposition 覆蓋來源全部 170 題，一題不多一題不少', () => {
+    const total = Object.values(EXPECTED_SOURCE_COUNT).reduce((a, b) => a + b, 0);
+    expect(MAN._meta.source_question_total).toBe(total);
+    expect(MAN.dispositions).toHaveLength(total);
+  });
+
+  it.each(Object.entries(EXPECTED_SOURCE_COUNT))(
+    '%s 的題號必須完整覆蓋 1..%s（沒有跳號、沒有重複）',
+    (srcId, expected) => {
+      const nums = MAN.dispositions
+        .filter((d) => d.source_id === srcId)
+        .map((d) => d.source_question_number)
+        .sort((a, b) => a - b);
+      expect(nums).toEqual(Array.from({ length: expected }, (_, i) => i + 1));
+    }
+  );
+
+  it('絕不可有 UNACCOUNTED —— 那代表題目真的掉了，不是「重複所以刪掉」', () => {
+    const lost = MAN.dispositions.filter((d) => d.status === 'UNACCOUNTED');
+    expect(lost, `這些來源題交代不出去向：${lost.map((d) => `${d.source_id}#${d.source_question_number}`).join(', ')}`).toEqual([]);
+  });
+
+  it('每一筆非 restored 的 disposition 都必須有證據（不能只是斷言「應該是重複」）', () => {
+    const dropped = MAN.dispositions.filter((d) => d.status !== 'restored');
+    expect(dropped.length).toBeGreaterThan(0); // 否則這條測試在空轉
+    for (const d of dropped) {
+      expect(d.evidence, `${d.source_id}#${d.source_question_number} 沒有 evidence`).toBeTruthy();
+      expect(d.duplicate_of, `${d.source_id}#${d.source_question_number} 沒有指出重複對象`).toBeTruthy();
+    }
+  });
+
+  it('restored 的 disposition 數必須等於 entries 數', () => {
+    const restored = MAN.dispositions.filter((d) => d.status === 'restored');
+    expect(restored).toHaveLength(MAN.entries.length);
+    expect(MAN._meta.restored_count).toBe(MAN.entries.length);
+  });
+
+  it('各 status 加總必須等於 170（沒有被重複計數或漏算）', () => {
+    const sum = Object.values(MAN._meta.disposition_summary).reduce((a, b) => a + b, 0);
+    expect(sum).toBe(MAN._meta.source_question_total);
+  });
+
+  // 這是本輪真正抓到的那個錯：來源答案卡與主庫教的答案不一致。
+  // 已用 ISO 14064-1:2018 §9.3.1(g) + normative Annex E 裁決（正解 D），主庫已更正。
+  // 這條測試確保「答案衝突」不會再被無聲吞掉 —— 有衝突就必須有人處理。
+  it('不得存在未解決的答案衝突（來源答案卡 vs 主庫答案）', () => {
+    const conflicts = MAN.dispositions.filter((d) => d.answers_agree === false);
+    expect(
+      conflicts.map((d) => `${d.source_id}#${d.source_question_number}`),
+      '來源 PDF 自己印的答案與主庫教的答案不一致 —— 必須用一手文件裁決，不可放著'
+    ).toEqual([]);
+    expect(MAN._meta.answer_conflicts).toEqual([]);
   });
 });

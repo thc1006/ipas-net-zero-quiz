@@ -14606,17 +14606,19 @@
           "text": "化石與生質碳排放與移除"
         }
       ],
-      "answer": "C",
+      "answer": "D",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "ISO 14064-1:2018 強制要求分別報告來自化石燃料和生物源的排放與移除量，但對於電力排放的計算處理方式（如位置基礎法 vs. 市場基礎法）並未強制規定揭露。 [1, 3, 4, 5]",
+      "explanation": "ISO 14064-1:2018 §9.3.1 Required information 逐項列出強制揭露內容，A、B、C 都在其中：(A) 人為生物源 CO₂ 排放與移除須「分開」量化及報告，CH₄／N₂O 等其他人為生物源溫室氣體亦須納入人為排放的量化與報告；(B) §9.3.1(g) 明確要求說明生物源 CO₂ 排放與移除在盤查中的「處理方式」，並將相關數量分開揭露；(C) 規範性附錄 E（Annex E, normative）要求輸入電力原則上採「地點基礎法」量化，若改用市場基礎法或契約工具，另有記錄與報告要求。(D) 則不是 §9.3.1 所列的獨立強制揭露項目 —— 標準採用的分類是「非生物源排放」、「人為生物源排放」，以及有量化時的「非人為生物源排放」，而不是籠統要求揭露「產生自化石與生質碳之所有 GHG 排放與移除」。故選 D。",
       "metadata": {
         "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c2-215"
-      }
+        "verification_date": "2026-07-13",
+        "verification_source": "ISO 14064-1:2018 §9.3.1(g) + Annex E (normative); 商研院 S_CHU_07#13 answer key",
+        "original_id": "c2-215",
+        "prior_answer": "C"
+      },
+      "_correction_note": "2026-07-13 更正：原答案 C（電力之處理方式）為誤，正解為 D。原解析寫「電力的計算處理方式並未強制規定揭露」，但 Annex E（Treatment of electricity）是 normative（規範性）附錄，該理由不成立。本題與來源 PDF（商研院 2024.08 模擬試題 S_CHU_07 第 13 題）為同一題，該 PDF 自己印的答案卡即為 D —— 先前把來源題當成重複丟掉，卻留下了錯的答案在教。這個矛盾是 restoration-manifest 的 disposition 稽核（duplicate_in_dataset_ANSWER_CONFLICT）揪出來的：舊版把「dataset 裡沒有」直接當成「一定是重複題」而靜默跳過，正是這種錯誤能長期存活的原因。"
     },
     {
       "index": 409,

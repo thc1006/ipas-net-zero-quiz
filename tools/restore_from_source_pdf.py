@@ -66,6 +66,10 @@ SOURCES = {
     },
 }
 
+# 來源 PDF 各自的總題數。這是「對帳」的分母 ——
+# 少了這個，manifest 只能說「我還原了 159 題」，卻證明不了「沒有東西被弄丟」。
+EXPECTED_QUESTION_COUNT = {'S_CHU_06': 100, 'S_CHU_07': 70}
+
 COLUMN_BOUNDARY = 292.0
 CJK = re.compile(r'[⺀-鿿豈-﫿＀-￯]')
 Q_RE = re.compile(r'^\(([A-D])\)\s*(\d{1,3})\s*[.、]\s*(.*)$')
@@ -207,20 +211,178 @@ def load_pdf(src_id: str, cache: Path) -> bytes:
     return data
 
 
+def _norm_for_compare(s: str) -> str:
+    """比對用的正規化：剝空白、剝標點。'數據來源' 與 '數據來源；' 是同一件事。"""
+    return re.sub(r'[\s，,。.；;、：:（）()「」【】]', '', s)
+
+
+def _answer_text(item: dict) -> str | None:
+    """取出答案對應的**選項文字**。
+
+    絕對不能拿字母去比 —— 同一道題在不同來源的選項順序常常不同，
+    A 在這邊是「國際排放係數」、在那邊可能是 D。比字母會得到「答案不一致」的假警報，
+    也會漏掉真正的衝突。（這個坑先前已經踩過一次，答案回填時把字母當答案抄。）
+    """
+    ans = item.get('answer')
+    if ans is None:
+        return None
+    for o in item['options']:
+        if o['key'] == ans:
+            return o['text']
+    return None
+
+
+def _similar(a: str, b: str) -> float:
+    import difflib
+    return difflib.SequenceMatcher(None, a, b).ratio()
+
+
+def _answers_agree(src_q: dict, ds_item: dict) -> tuple[bool, float]:
+    """兩個來源對「同一道題」給的答案，是不是同一個選項？
+
+    這件事有兩種顯而易見但都會出錯的做法：
+
+      1. 比字母（'D' == 'D'）—— 不安全。同一道題在不同來源的選項順序常常不同，
+         這邊的 D 可能是那邊的 A。（先前答案回填就踩過這個坑，把字母當答案抄。）
+      2. 比答案的文字是否相等 —— 太脆。同一個選項換個講法就誤報：
+         來源印「產生自化石與生質碳之GHG排放與移除」，主庫寫「化石與生質碳排放與移除」，
+         指的是同一個選項，字面卻不同。
+
+    正確做法：把來源的「正解選項文字」拿去和主庫的**每一個選項**比相似度，
+    看它最像哪一個；那一個是不是主庫的正解。這對「改寫」與「重新排序」同時免疫，
+    而且真正的衝突（C 電力之處理方式 vs D 化石與生質碳…）文字天差地遠，
+    不可能誤判成一致。
+    """
+    src_ans = _answer_text(src_q)
+    ds_ans_key = ds_item.get('answer')
+    if src_ans is None or ds_ans_key is None:
+        return False, 0.0
+
+    src_norm = _norm_for_compare(src_ans)
+    scored = sorted(
+        ((_similar(src_norm, _norm_for_compare(o['text'])), o['key']) for o in ds_item['options']),
+        reverse=True,
+    )
+    best_r, best_key = scored[0]
+    runner_r = scored[1][0] if len(scored) > 1 else 0.0
+
+    # 對得夠像、而且明顯比第二名像 —— 否則寧可當成「無法判定」丟出來讓人看。
+    # （沒有這個 margin，四個選項長得都差不多時會隨機挑一個，那種一致只是碰運氣。）
+    if best_r < 0.55 or (best_r - runner_r) < 0.10:
+        return False, round(best_r, 3)
+    return best_key == ds_ans_key, round(best_r, 3)
+
+
+def _disposition_for_dropped(q: dict, src_id: str, same_pdf: dict, ds_items: list) -> dict:
+    """一道「沒有進 dataset」的來源題，到底發生了什麼事？必須拿出證據，不能用猜的。
+
+    舊版是這樣寫的：
+
+        if item_id not in by_item:
+            continue          # 這一題與 gist 主庫重複，還原時已去重
+
+    那行註解是**斷言**，不是驗證。它把「dataset 裡沒有」直接等同於「一定是重複題」。
+    真的在還原過程中掉了一題，這行也會安靜地把它說成重複，而且沒有任何人會知道。
+    實測結果：170 題裡有 11 題走進這條路，其中 8 題確實是 PDF 自己重印的題目，
+    但另外 3 題並不是 —— 而且其中一題的答案還跟主庫**互相矛盾**。
+    """
+    qhash = normalized_text_sha256(q['stem'], q['options'])
+    qnorm = _norm_for_compare(q['stem'])
+
+    # 1) 同一份 PDF 裡有一模一樣的題目（PDF 自己重印）
+    twin = [n for n, h in same_pdf.items() if h == qhash and n < q['number']]
+    if twin:
+        return {
+            'status': 'duplicate_within_source',
+            'duplicate_of': {'source_id': src_id, 'source_question_number': twin[0]},
+            'evidence': 'normalized_text_sha256 完全相同（同一份 PDF 重印了這一題）',
+            'normalized_text_sha256': qhash,
+        }
+
+    # 2) 主庫裡已經有內容相同／幾乎相同的題目
+    best, best_r = None, 0.0
+    for it in ds_items:
+        r = _similar(qnorm, _norm_for_compare(it['stem']))
+        if r > best_r:
+            best, best_r = it, r
+
+    if best is not None and best_r >= 0.80:
+        src_ans = _answer_text(q)
+        ds_ans = _answer_text(best)
+        agree, align_r = _answers_agree(q, best)
+        who = best.get('item_id') or f"gist_items[{best.get('index')}]"
+        d = {
+            'status': 'duplicate_in_dataset' if agree else 'duplicate_in_dataset_ANSWER_CONFLICT',
+            'duplicate_of': {'dataset_item': who},
+            'stem_similarity': round(best_r, 3),
+            'source_answer_key': q['answer'],
+            'source_answer_text': src_ans,
+            'dataset_answer': best.get('answer'),
+            'dataset_answer_text': ds_ans,
+            'answers_agree': agree,
+            'answer_option_alignment': align_r,   # 來源正解對到主庫選項的相似度
+            'normalized_text_sha256': qhash,
+        }
+        if not agree:
+            # 這才是重點：來源 PDF 自己印的答案卡與主庫教的答案不同。
+            # 我們把來源題當成「重複」丟掉了，卻留下一個**可能是錯的**答案在教。
+            # 這種情形不可以安靜通過，必須留在 manifest 上讓人看見。
+            d['evidence'] = ('題幹幾乎相同但**答案不一致** —— 丟掉的來源題帶著它自己的答案卡，'
+                             '留下的主庫題可能是錯的。需人工用一手標準文件裁決。')
+        else:
+            d['evidence'] = '題幹幾乎相同且答案文字一致（比對的是選項文字，不是字母）'
+        return d
+
+    # 3) 沒有任何證據 —— 這題就是掉了。絕不可以安靜跳過。
+    return {
+        'status': 'UNACCOUNTED',
+        'evidence': ('在 dataset 裡找不到、在同一份 PDF 裡也沒有重複題 —— '
+                     '這題在還原過程中遺失了。'),
+        'stem': q['stem'][:80],
+        'closest_in_dataset': (best.get('item_id') or f"gist_items[{best.get('index')}]") if best else None,
+        'closest_similarity': round(best_r, 3),
+        'normalized_text_sha256': qhash,
+    }
+
+
 def build(cache: Path):
     ds = json.loads(DATASET.read_text(encoding='utf-8'))
     by_item = {i['item_id']: i for i in ds['our_unique_items']}
+    ds_items = ds['gist_items'] + ds['our_unique_items']
 
-    entries, pdf_typos = [], {}
+    entries, pdf_typos, dispositions = [], {}, []
     for src_id in SOURCES:
         load_pdf(src_id, cache)
         qs = extract(cache / f'{src_id}.pdf')
         pdf_typos[src_id] = patch_pdf_typos(qs, src_id)
+
+        # 同一份 PDF 內每題的內容指紋 —— 用來認出「PDF 自己重印的題目」
+        same_pdf = {q['number']: normalized_text_sha256(q['stem'], q['options']) for q in qs}
+
+        expected = EXPECTED_QUESTION_COUNT[src_id]
+        got_numbers = sorted(q['number'] for q in qs)
+        if got_numbers != list(range(1, expected + 1)):
+            missing = sorted(set(range(1, expected + 1)) - set(got_numbers))
+            sys.exit(f'✗ {src_id}: 從 PDF 只抽到 {len(got_numbers)} 題（應為 {expected}）。'
+                     f'缺題號 {missing} —— 擷取器壞了，不是資料的問題。')
+
         for q in qs:
             item_id = f'{src_id}-q{q["number"]:03d}'
             if item_id not in by_item:
-                continue  # 這一題與 gist 主庫重複，還原時已去重
+                d = _disposition_for_dropped(q, src_id, same_pdf, ds_items)
+                d.update({'source_id': src_id, 'source_question_number': q['number'],
+                          'page': q['page'], 'column': q['column']})
+                dispositions.append(d)
+                continue
             it = by_item[item_id]
+            dispositions.append({
+                'source_id': src_id,
+                'source_question_number': q['number'],
+                'page': q['page'],
+                'column': q['column'],
+                'status': 'restored',
+                'item_id': item_id,
+            })
 
             # 兩個 hash 必須分開算，否則等於自己驗自己：
             #   pdf_text_sha256     —— 從「PDF 擷取出來」的文字
@@ -246,13 +408,47 @@ def build(cache: Path):
             })
 
     entries.sort(key=lambda e: (e['source_id'], e['source_question_number']))
+    dispositions.sort(key=lambda d: (d['source_id'], d['source_question_number']))
+
+    # ── 對帳：來源的每一題都必須有交代 ────────────────────────────────────────
+    #
+    # 舊版只報「restored_count: 159」，從來沒說另外 11 題去哪了。
+    # 一份只講「我留下了什麼」而不講「我丟掉了什麼、為什麼」的憑證，
+    # 沒辦法證明「沒有東西被弄丟」—— 而那正是這份 manifest 唯一要證明的事。
+    total_source = sum(EXPECTED_QUESTION_COUNT.values())
+    if len(dispositions) != total_source:
+        sys.exit(f'✗ disposition 數 {len(dispositions)} != 來源總題數 {total_source}')
+
+    by_status = {}
+    for d in dispositions:
+        by_status.setdefault(d['status'], []).append(
+            f"{d['source_id']}#{d['source_question_number']}")
+
+    unaccounted = by_status.get('UNACCOUNTED', [])
+    if unaccounted:
+        sys.exit('✗ 有題目在還原過程中遺失，且找不到任何重複的憑據：\n  '
+                 + '\n  '.join(unaccounted)
+                 + '\n  這不是「重複所以刪掉」—— 是真的掉了。必須人工確認。')
+
+    conflicts = by_status.get('duplicate_in_dataset_ANSWER_CONFLICT', [])
+
     return {
         '_meta': {
-            'description': '被刪除題目的還原憑證。每筆記錄該題來自哪一份 PDF 的哪一頁、'
-                           '哪一欄、第幾題，以及 PDF 自己印的 answer key。'
-                           'normalized_text_sha256 讓 CI 不需要 PDF 也能驗證資料未被竄改。',
+            'description': '被刪除題目的還原憑證。來源 PDF 的**每一題**都有交代：'
+                           'restored（還原進 dataset）、duplicate_within_source（PDF 自己重印）、'
+                           'duplicate_in_dataset（主庫已有相同題）。'
+                           '任何一題交代不出來就是 UNACCOUNTED —— 產生 manifest 時直接失敗，'
+                           '不會安靜地當成「重複」放過。',
             'generated_by': 'tools/restore_from_source_pdf.py',
+            'source_question_total': total_source,
             'restored_count': len(entries),
+            'disposition_summary': {k: len(v) for k, v in sorted(by_status.items())},
+            'answer_conflicts': conflicts,
+            'answer_conflict_note':
+                '這些題的題幹與主庫幾乎相同，但**來源 PDF 自己印的答案卡**與主庫教的答案不一致。'
+                '我們把來源題當重複丟掉了，卻可能留下一個錯的答案在教。'
+                '在拿一手標準文件裁決之前，主庫的那一題已標 ambiguous + answer=null（排除計分）。'
+                if conflicts else None,
             'sources': {k: {kk: vv for kk, vv in v.items()} for k, v in SOURCES.items()},
             'source_pdf_typos': pdf_typos,
             'how_to_reproduce': [
@@ -262,6 +458,7 @@ def build(cache: Path):
             'ci_note': 'CI 不下載 PDF。restoration-manifest.test.ts 只驗 manifest ↔ dataset 一致。',
         },
         'entries': entries,
+        'dispositions': dispositions,
     }
 
 

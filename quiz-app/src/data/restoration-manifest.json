@@ -1,8 +1,16 @@
 {
   "_meta": {
-    "description": "被刪除題目的還原憑證。每筆記錄該題來自哪一份 PDF 的哪一頁、哪一欄、第幾題，以及 PDF 自己印的 answer key。normalized_text_sha256 讓 CI 不需要 PDF 也能驗證資料未被竄改。",
+    "description": "被刪除題目的還原憑證。來源 PDF 的**每一題**都有交代：restored（還原進 dataset）、duplicate_within_source（PDF 自己重印）、duplicate_in_dataset（主庫已有相同題）。任何一題交代不出來就是 UNACCOUNTED —— 產生 manifest 時直接失敗，不會安靜地當成「重複」放過。",
     "generated_by": "tools/restore_from_source_pdf.py",
+    "source_question_total": 170,
     "restored_count": 159,
+    "disposition_summary": {
+      "duplicate_in_dataset": 3,
+      "duplicate_within_source": 8,
+      "restored": 159
+    },
+    "answer_conflicts": [],
+    "answer_conflict_note": null,
     "sources": {
       "S_CHU_06": {
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
@@ -2259,6 +2267,1441 @@
       "dataset_text_sha256": "7e2999d5bcfd6f9ed16fe1f47c78b91bcb1a12eae8f9033fd6a285659832846b",
       "matches_source": true,
       "dataset_answer": "B"
+    }
+  ],
+  "dispositions": [
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 1,
+      "page": 1,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q001"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 2,
+      "page": 1,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q002"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 3,
+      "page": 1,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q003"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 4,
+      "page": 1,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q004"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 5,
+      "page": 1,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q005"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 6,
+      "page": 1,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q006"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 7,
+      "page": 1,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q007"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 8,
+      "page": 1,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q008"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 9,
+      "page": 1,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q009"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 10,
+      "page": 1,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q010"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 11,
+      "page": 1,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q011"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 12,
+      "page": 2,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q012"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 13,
+      "page": 2,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q013"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 14,
+      "page": 2,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q014"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 15,
+      "page": 2,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q015"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 16,
+      "page": 2,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q016"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 17,
+      "page": 2,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q017"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 18,
+      "page": 2,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q018"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 19,
+      "page": 2,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q019"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 20,
+      "page": 2,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q020"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 21,
+      "page": 2,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q021"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 22,
+      "page": 2,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q022"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 23,
+      "page": 3,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q023"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 24,
+      "page": 3,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q024"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 25,
+      "page": 3,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q025"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 26,
+      "page": 3,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q026"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 27,
+      "page": 3,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q027"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 28,
+      "page": 3,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q028"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 29,
+      "page": 3,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q029"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 30,
+      "page": 3,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q030"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 31,
+      "page": 3,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q031"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 32,
+      "page": 3,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q032"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 33,
+      "page": 3,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q033"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 34,
+      "page": 3,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q034"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 35,
+      "page": 4,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q035"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 36,
+      "page": 4,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q036"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 37,
+      "page": 4,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q037"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 38,
+      "page": 4,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q038"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 39,
+      "page": 4,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q039"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 40,
+      "page": 4,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q040"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 41,
+      "page": 4,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q041"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 42,
+      "page": 4,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q042"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 43,
+      "page": 4,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q043"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 44,
+      "page": 4,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q044"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 45,
+      "page": 4,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q045"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 46,
+      "page": 4,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q046"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 47,
+      "page": 5,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q047"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 48,
+      "page": 5,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q048"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 49,
+      "page": 5,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q049"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 50,
+      "page": 5,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q050"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 51,
+      "page": 5,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q051"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 52,
+      "page": 5,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q052"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 53,
+      "page": 5,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q053"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 54,
+      "page": 5,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q054"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 55,
+      "page": 5,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q055"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 56,
+      "page": 5,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q056"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 57,
+      "page": 5,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q057"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 58,
+      "page": 6,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q058"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 59,
+      "page": 6,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q059"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 60,
+      "page": 6,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q060"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 61,
+      "page": 6,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q061"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 62,
+      "page": 6,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q062"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 63,
+      "page": 6,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q063"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 64,
+      "page": 6,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q064"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 65,
+      "page": 6,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q065"
+    },
+    {
+      "status": "duplicate_within_source",
+      "duplicate_of": {
+        "source_id": "S_CHU_06",
+        "source_question_number": 47
+      },
+      "evidence": "normalized_text_sha256 完全相同（同一份 PDF 重印了這一題）",
+      "normalized_text_sha256": "46c4e398cb2c75d9e81f048af593cc8dad4dfa2f91bcdca133a48f4997c4c6fd",
+      "source_id": "S_CHU_06",
+      "source_question_number": 66,
+      "page": 6,
+      "column": "right"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 67,
+      "page": 6,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q067"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 68,
+      "page": 7,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q068"
+    },
+    {
+      "status": "duplicate_within_source",
+      "duplicate_of": {
+        "source_id": "S_CHU_06",
+        "source_question_number": 30
+      },
+      "evidence": "normalized_text_sha256 完全相同（同一份 PDF 重印了這一題）",
+      "normalized_text_sha256": "9439e5098046795b2c3e0ef123ac57f1e21d34f7e16b5de72b1a44d868edc54d",
+      "source_id": "S_CHU_06",
+      "source_question_number": 69,
+      "page": 7,
+      "column": "left"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 70,
+      "page": 7,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q070"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 71,
+      "page": 7,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q071"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 72,
+      "page": 7,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q072"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 73,
+      "page": 7,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q073"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 74,
+      "page": 7,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q074"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 75,
+      "page": 7,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q075"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 76,
+      "page": 7,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q076"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 77,
+      "page": 7,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q077"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 78,
+      "page": 7,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q078"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 79,
+      "page": 8,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q079"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 80,
+      "page": 8,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q080"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 81,
+      "page": 8,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q081"
+    },
+    {
+      "status": "duplicate_within_source",
+      "duplicate_of": {
+        "source_id": "S_CHU_06",
+        "source_question_number": 61
+      },
+      "evidence": "normalized_text_sha256 完全相同（同一份 PDF 重印了這一題）",
+      "normalized_text_sha256": "1fccabf53e938b48b2ed35022d56291f5645c89cc75a60dca6e15ce12ed74689",
+      "source_id": "S_CHU_06",
+      "source_question_number": 82,
+      "page": 8,
+      "column": "left"
+    },
+    {
+      "status": "duplicate_within_source",
+      "duplicate_of": {
+        "source_id": "S_CHU_06",
+        "source_question_number": 33
+      },
+      "evidence": "normalized_text_sha256 完全相同（同一份 PDF 重印了這一題）",
+      "normalized_text_sha256": "95a4a61773b3b3125ecbc7420d49d082c640628e5971e51922e657139bd0e737",
+      "source_id": "S_CHU_06",
+      "source_question_number": 83,
+      "page": 8,
+      "column": "left"
+    },
+    {
+      "status": "duplicate_within_source",
+      "duplicate_of": {
+        "source_id": "S_CHU_06",
+        "source_question_number": 58
+      },
+      "evidence": "normalized_text_sha256 完全相同（同一份 PDF 重印了這一題）",
+      "normalized_text_sha256": "3110a2dc33ab82c27b273670d665d321a23ee07c6a80abee7190c64ce450156a",
+      "source_id": "S_CHU_06",
+      "source_question_number": 84,
+      "page": 8,
+      "column": "left"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 85,
+      "page": 8,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q085"
+    },
+    {
+      "status": "duplicate_within_source",
+      "duplicate_of": {
+        "source_id": "S_CHU_06",
+        "source_question_number": 37
+      },
+      "evidence": "normalized_text_sha256 完全相同（同一份 PDF 重印了這一題）",
+      "normalized_text_sha256": "30dd7c42e8e1aad8ebc01f3e81c2350ae4d130243b835dd7db97d6033262361d",
+      "source_id": "S_CHU_06",
+      "source_question_number": 86,
+      "page": 8,
+      "column": "right"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 87,
+      "page": 8,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q087"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 88,
+      "page": 8,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q088"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 89,
+      "page": 8,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q089"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 90,
+      "page": 8,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q090"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 91,
+      "page": 9,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q091"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 92,
+      "page": 9,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q092"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 93,
+      "page": 9,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q093"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 94,
+      "page": 9,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q094"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 95,
+      "page": 9,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q095"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 96,
+      "page": 9,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_06-q096"
+    },
+    {
+      "status": "duplicate_within_source",
+      "duplicate_of": {
+        "source_id": "S_CHU_06",
+        "source_question_number": 44
+      },
+      "evidence": "normalized_text_sha256 完全相同（同一份 PDF 重印了這一題）",
+      "normalized_text_sha256": "bca0bb8f550f8e43cbd5bb18824d496e3870c40d7ab1cf28bcfc270cfcd7bbed",
+      "source_id": "S_CHU_06",
+      "source_question_number": 97,
+      "page": 9,
+      "column": "right"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 98,
+      "page": 9,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q098"
+    },
+    {
+      "source_id": "S_CHU_06",
+      "source_question_number": 99,
+      "page": 9,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_06-q099"
+    },
+    {
+      "status": "duplicate_within_source",
+      "duplicate_of": {
+        "source_id": "S_CHU_06",
+        "source_question_number": 49
+      },
+      "evidence": "normalized_text_sha256 完全相同（同一份 PDF 重印了這一題）",
+      "normalized_text_sha256": "368e1343bb3fb0491489a8cb54590de72334f957cc38ca8c6785fca1321de909",
+      "source_id": "S_CHU_06",
+      "source_question_number": 100,
+      "page": 9,
+      "column": "right"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 1,
+      "page": 1,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q001"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 2,
+      "page": 1,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q002"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 3,
+      "page": 1,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q003"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 4,
+      "page": 1,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q004"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 5,
+      "page": 1,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q005"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 6,
+      "page": 1,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q006"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 7,
+      "page": 1,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q007"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 8,
+      "page": 1,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q008"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 9,
+      "page": 1,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q009"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 10,
+      "page": 1,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q010"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 11,
+      "page": 2,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q011"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 12,
+      "page": 2,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q012"
+    },
+    {
+      "status": "duplicate_in_dataset",
+      "duplicate_of": {
+        "dataset_item": "gist_items[408]"
+      },
+      "stem_similarity": 0.868,
+      "source_answer_key": "D",
+      "source_answer_text": "產生自化石與生質碳之GHG排放與移除",
+      "dataset_answer": "D",
+      "dataset_answer_text": "化石與生質碳排放與移除",
+      "answers_agree": true,
+      "answer_option_alignment": 0.759,
+      "normalized_text_sha256": "4033fe0c60d0e4bdc62cf122bb518cbd62373d7e20889884a326ba521aabc664",
+      "evidence": "題幹幾乎相同且答案文字一致（比對的是選項文字，不是字母）",
+      "source_id": "S_CHU_07",
+      "source_question_number": 13,
+      "page": 2,
+      "column": "left"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 14,
+      "page": 2,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q014"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 15,
+      "page": 2,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q015"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 16,
+      "page": 2,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q016"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 17,
+      "page": 2,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q017"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 18,
+      "page": 2,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q018"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 19,
+      "page": 2,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q019"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 20,
+      "page": 2,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q020"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 21,
+      "page": 3,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q021"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 22,
+      "page": 3,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q022"
+    },
+    {
+      "status": "duplicate_in_dataset",
+      "duplicate_of": {
+        "dataset_item": "gist_items[430]"
+      },
+      "stem_similarity": 0.909,
+      "source_answer_key": "A",
+      "source_answer_text": "國際排放係數",
+      "dataset_answer": "D",
+      "dataset_answer_text": "國際排放係數",
+      "answers_agree": true,
+      "answer_option_alignment": 1.0,
+      "normalized_text_sha256": "397063985dc1dc64ff4c44bbd932e3f829e2857260e47168c6374792edb210b2",
+      "evidence": "題幹幾乎相同且答案文字一致（比對的是選項文字，不是字母）",
+      "source_id": "S_CHU_07",
+      "source_question_number": 23,
+      "page": 3,
+      "column": "left"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 24,
+      "page": 3,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q024"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 25,
+      "page": 3,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q025"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 26,
+      "page": 3,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q026"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 27,
+      "page": 3,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q027"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 28,
+      "page": 3,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q028"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 29,
+      "page": 3,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q029"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 30,
+      "page": 3,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q030"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 31,
+      "page": 3,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q031"
+    },
+    {
+      "status": "duplicate_in_dataset",
+      "duplicate_of": {
+        "dataset_item": "S_YAMOL_018-q002"
+      },
+      "stem_similarity": 1.0,
+      "source_answer_key": "A",
+      "source_answer_text": "數據收集資訊，包括數據來源",
+      "dataset_answer": "A",
+      "dataset_answer_text": "數據收集資訊，包括數據來源；",
+      "answers_agree": true,
+      "answer_option_alignment": 1.0,
+      "normalized_text_sha256": "e37b74595398db0e4b4f6222bf6517310f1c0fc2c6a2b3e1dcd8a6d079a7e15d",
+      "evidence": "題幹幾乎相同且答案文字一致（比對的是選項文字，不是字母）",
+      "source_id": "S_CHU_07",
+      "source_question_number": 32,
+      "page": 4,
+      "column": "left"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 33,
+      "page": 4,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q033"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 34,
+      "page": 4,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q034"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 35,
+      "page": 4,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q035"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 36,
+      "page": 4,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q036"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 37,
+      "page": 4,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q037"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 38,
+      "page": 4,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q038"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 39,
+      "page": 4,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q039"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 40,
+      "page": 4,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q040"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 41,
+      "page": 4,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q041"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 42,
+      "page": 4,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q042"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 43,
+      "page": 5,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q043"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 44,
+      "page": 5,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q044"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 45,
+      "page": 5,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q045"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 46,
+      "page": 5,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q046"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 47,
+      "page": 5,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q047"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 48,
+      "page": 5,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q048"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 49,
+      "page": 5,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q049"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 50,
+      "page": 5,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q050"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 51,
+      "page": 5,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q051"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 52,
+      "page": 5,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q052"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 53,
+      "page": 5,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q053"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 54,
+      "page": 6,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q054"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 55,
+      "page": 6,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q055"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 56,
+      "page": 6,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q056"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 57,
+      "page": 6,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q057"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 58,
+      "page": 6,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q058"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 59,
+      "page": 6,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q059"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 60,
+      "page": 6,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q060"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 61,
+      "page": 6,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q061"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 62,
+      "page": 6,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q062"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 63,
+      "page": 6,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q063"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 64,
+      "page": 6,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q064"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 65,
+      "page": 6,
+      "column": "right",
+      "status": "restored",
+      "item_id": "S_CHU_07-q065"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 66,
+      "page": 7,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q066"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 67,
+      "page": 7,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q067"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 68,
+      "page": 7,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q068"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 69,
+      "page": 7,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q069"
+    },
+    {
+      "source_id": "S_CHU_07",
+      "source_question_number": 70,
+      "page": 7,
+      "column": "left",
+      "status": "restored",
+      "item_id": "S_CHU_07-q070"
     }
   ]
 }
