@@ -135,6 +135,14 @@ jq '.items[] | select(.quality_flags | index("time_sensitive")) | {id, stem: (.s
 
 本工具為非官方 iPAS 備考輔助，題庫整理可能含錯誤，最終以 iPAS 官方公告為準。本專案不就內容正確性、可考性、或考試結果提供任何保證。
 
+### 內容時效性
+
+題庫中有 119 題的答案會隨法規變動（CBAM、碳費、NDC、碳中和標準）。
+[`CONTENT-CURRENCY.md`](CONTENT-CURRENCY.md) 記錄已查證到哪一天、**還有什麼沒確定**、以及下一個到期日
+（最近的是 **2026-12-15：ISAE 3410 撤回，由 ISSA 5000 取代**）。
+
+⚠️ `quarterly-time-sensitive-verify` workflow **只驗連結還通不通，驗不出內容變了** —— 綠燈不等於內容正確。
+
 ## 問題回報
 
 如有任何問題或建議，請至 [Discussions #1](https://github.com/thc1006/ipas-net-zero-quiz/discussions/1) 回報。

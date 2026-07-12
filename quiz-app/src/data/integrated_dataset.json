@@ -10,13 +10,14 @@
     "total_questions": 799,
     "gist_questions": 569,
     "our_unique_questions": 230,
-    "corrections_applied": 3,
+    "corrections_applied": 5,
     "by_subject": {
       "考科1": 429,
       "考科2": 370
     },
     "with_answer": 799,
-    "last_updated": "2026-07-13T00:00:00.000000"
+    "last_updated": "2026-07-13T00:00:00.000000",
+    "content_verified_as_of": "2026-07-13"
   },
   "gist_items": [
     {
@@ -737,8 +738,15 @@
         "verification_date": "2026-01-23",
         "verification_batch": "C",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 22,
@@ -839,8 +847,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c1-024"
-      }
+        "original_id": "c1-024",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 25,
@@ -907,8 +922,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 27,
@@ -941,8 +964,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 28,
@@ -1009,8 +1040,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 30,
@@ -1043,8 +1082,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 31,
@@ -1077,8 +1124,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 32,
@@ -1179,8 +1234,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 35,
@@ -1247,8 +1310,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "medium",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 37,
@@ -1281,8 +1352,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c1-037"
-      }
+        "original_id": "c1-037",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 38,
@@ -1317,9 +1396,11 @@
         "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
         "original_id": "c1-038",
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020"
         ],
-        "sources_verified_date": "2026-05-05"
+        "sources_verified_date": "2026-05-05",
+        "valid_as_of": "2026-07-13"
       },
       "quality_flags": [
         "time_sensitive"
@@ -1392,9 +1473,11 @@
         "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
         "original_id": "c1-040",
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020"
         ],
-        "sources_verified_date": "2026-05-05"
+        "sources_verified_date": "2026-05-05",
+        "valid_as_of": "2026-07-13"
       },
       "quality_flags": [
         "time_sensitive"
@@ -1431,8 +1514,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 42,
@@ -1533,8 +1624,17 @@
         "verification_date": "2026-01-23",
         "verification_batch": "B",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 45,
@@ -1567,8 +1667,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "medium",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 46,
@@ -1780,8 +1888,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 52,
@@ -1848,8 +1964,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 54,
@@ -1950,8 +2074,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "medium",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 57,
@@ -2018,8 +2150,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "medium",
-        "sources_count": 1
-      }
+        "sources_count": 1,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 59,
@@ -2086,8 +2226,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 1
-      }
+        "sources_count": 1,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 61,
@@ -2188,8 +2336,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 1
-      }
+        "sources_count": 1,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 64,
@@ -2222,8 +2378,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 65,
@@ -2324,8 +2488,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 68,
@@ -2426,8 +2598,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 71,
@@ -2494,8 +2674,15 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 73,
@@ -2596,8 +2783,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 1
-      }
+        "sources_count": 1,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 76,
@@ -2698,8 +2893,15 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 79,
@@ -2732,8 +2934,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 80,
@@ -2804,11 +3014,13 @@
         "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
         "prior_answer": "D",
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020"
         ],
         "sources_verified_date": "2026-04-25",
         "option_text_changed_on": "2026-04-25",
-        "option_text_change_note": "選項 D 文字由錯誤的『8/31』改為正確的『10/31』(CBAM Omnibus 回購截止)；答案字母 D 不變"
+        "option_text_change_note": "選項 D 文字由錯誤的『8/31』改為正確的『10/31』(CBAM Omnibus 回購截止)；答案字母 D 不變",
+        "valid_as_of": "2026-07-13"
       },
       "quality_flags": [
         "time_sensitive"
@@ -2846,8 +3058,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 83,
@@ -2885,11 +3105,17 @@
         "prior_answer": "B",
         "answer_ambiguity_note": "B 與 D 皆可對應條文；若題意問『直接目的』選 D，『整體目的』可接受 B",
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
-        "sources_verified_date": "2026-04-25"
+        "sources_verified_date": "2026-04-25",
+        "valid_as_of": "2026-07-13"
       },
-      "explanation": "依 Regulation (EU) 2023/956 Article 1(1)：CBAM 直接目的為『防止碳洩漏（prevent carbon leakage）』，藉此『降低全球碳排放（thereby reducing global carbon emissions）』並支持巴黎協定目標。四選項中以 D『保護本地產業競爭力』最貼近『防碳洩漏』意涵；B『降低碳排放』亦為條文明列之間接目的，屬可接受答案。本題因無『防止碳洩漏』選項，官方建議以 D 為最佳解。\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
+      "explanation": "依 Regulation (EU) 2023/956 Article 1(1)：CBAM 直接目的為『防止碳洩漏（prevent carbon leakage）』，藉此『降低全球碳排放（thereby reducing global carbon emissions）』並支持巴黎協定目標。四選項中以 D『保護本地產業競爭力』最貼近『防碳洩漏』意涵；B『降低碳排放』亦為條文明列之間接目的，屬可接受答案。本題因無『防止碳洩漏』選項，官方建議以 D 為最佳解。\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 84,
@@ -2922,8 +3148,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "medium",
-        "sources_count": 1
-      }
+        "sources_count": 1,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 85,
@@ -2990,8 +3224,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 1
-      }
+        "sources_count": 1,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 87,
@@ -3024,8 +3266,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 88,
@@ -3058,8 +3308,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 89,
@@ -3171,9 +3429,11 @@
         "sources_count": 2,
         "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020"
         ],
-        "sources_verified_date": "2026-04-25"
+        "sources_verified_date": "2026-04-25",
+        "valid_as_of": "2026-07-13"
       },
       "quality_flags": [
         "time_sensitive"
@@ -3245,8 +3505,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 94,
@@ -3415,8 +3683,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "E",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 99,
@@ -3551,8 +3827,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 1
-      }
+        "sources_count": 1,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 103,
@@ -3585,8 +3869,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "E",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 104,
@@ -3755,8 +4047,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "E",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 109,
@@ -3789,8 +4089,15 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 110,
@@ -3823,8 +4130,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 111,
@@ -3891,8 +4206,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "B",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 113,
@@ -3993,8 +4316,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "E",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 116,
@@ -4027,8 +4358,18 @@
         "verification_date": "2026-01-23",
         "verification_batch": "E",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 117,
@@ -4299,8 +4640,15 @@
         "verification_date": "2026-01-23",
         "verification_batch": "E",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 125,
@@ -4367,8 +4715,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "E",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 127,
@@ -4707,8 +5063,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "E",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 137,
@@ -4843,8 +5207,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "E",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 141,
@@ -4881,11 +5253,17 @@
         "verification_source": "CBAM 過渡期結束日為 2025/12/31",
         "prior_answer": "A",
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
-        "sources_verified_date": "2026-04-25"
+        "sources_verified_date": "2026-04-25",
+        "valid_as_of": "2026-07-13"
       },
-      "explanation": "CBAM 過渡期自 2023 年 10 月 1 日至 2025 年 12 月 31 日。2026 年 1 月 1 日起進入定價期（正式期）。\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
+      "explanation": "CBAM 過渡期自 2023 年 10 月 1 日至 2025 年 12 月 31 日。2026 年 1 月 1 日起進入定價期（正式期）。\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 142,
@@ -4986,8 +5364,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "E",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 145,
@@ -5096,8 +5482,17 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 148,
@@ -5167,9 +5562,11 @@
         "sources_count": 3,
         "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020"
         ],
-        "sources_verified_date": "2026-04-25"
+        "sources_verified_date": "2026-04-25",
+        "valid_as_of": "2026-07-13"
       },
       "quality_flags": [
         "time_sensitive"
@@ -9311,8 +9708,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-077"
-      }
+        "original_id": "c2-077",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 271,
@@ -9549,8 +9953,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-084"
-      }
+        "original_id": "c2-084",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 278,
@@ -9583,8 +9995,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-085"
-      }
+        "original_id": "c2-085",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 279,
@@ -9617,8 +10037,15 @@
         "answer_verified": true,
         "verification_date": "2026-04-25",
         "verification_source": "NDC 3.0: 24±1% -> 28±2%",
-        "original_id": "c2-086"
-      }
+        "original_id": "c2-086",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 280,
@@ -10127,8 +10554,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-102"
-      }
+        "original_id": "c2-102",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 296,
@@ -10161,8 +10596,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-103"
-      }
+        "original_id": "c2-103",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 297,
@@ -10365,8 +10808,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-109"
-      }
+        "original_id": "c2-109",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 303,
@@ -10578,9 +11028,11 @@
         "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
         "original_id": "c2-115",
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020"
         ],
-        "sources_verified_date": "2026-05-05"
+        "sources_verified_date": "2026-05-05",
+        "valid_as_of": "2026-07-13"
       },
       "quality_flags": [
         "time_sensitive"
@@ -10710,17 +11162,27 @@
           "text": "80 %"
         }
       ],
-      "answer": "D",
+      "answer": "B",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "CBAM正式實施後，申報人必須保證其CBAM帳戶中的憑證餘額，不小於依預設值計算碳含量的80%。 [2]",
+      "explanation": "Reg (EU) 2025/2083 修正 Reg (EU) 2023/956 第 22(2) 條：每季末應持有之 CBAM 憑證，由當年累計嵌入排放量的 80% 調降為 50%。",
       "metadata": {
         "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c2-119"
-      }
+        "verification_date": "2026-07-13",
+        "verification_source": "Reg (EU) 2025/2083 Art 1; consolidated 02023R0956-20251020 Art 22(2)",
+        "original_id": "c2-119",
+        "prior_answer": "D",
+        "confidence": "high",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 313,
@@ -10753,8 +11215,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-120"
-      }
+        "original_id": "c2-120",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 314,
@@ -11028,8 +11498,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-128"
-      }
+        "original_id": "c2-128",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 322,
@@ -11371,8 +11848,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-138"
-      }
+        "original_id": "c2-138",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 332,
@@ -11405,8 +11890,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-139"
-      }
+        "original_id": "c2-139",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 333,
@@ -11439,8 +11932,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-140"
-      }
+        "original_id": "c2-140",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 334,
@@ -11477,7 +11978,9 @@
         "sources": [
           "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/"
         ],
-        "sources_verified_date": "2026-05-04"
+        "sources_verified_date": "2026-05-04",
+        "valid_as_of": "2026-01-23",
+        "content_reverified_2026_07": false
       },
       "quality_flags": [
         "time_sensitive"
@@ -11518,7 +12021,9 @@
         "sources": [
           "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/"
         ],
-        "sources_verified_date": "2026-05-04"
+        "sources_verified_date": "2026-05-04",
+        "valid_as_of": "2026-01-23",
+        "content_reverified_2026_07": false
       },
       "quality_flags": [
         "time_sensitive"
@@ -11559,7 +12064,9 @@
         "sources": [
           "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/"
         ],
-        "sources_verified_date": "2026-05-04"
+        "sources_verified_date": "2026-05-04",
+        "valid_as_of": "2026-01-23",
+        "content_reverified_2026_07": false
       },
       "quality_flags": [
         "time_sensitive"
@@ -11601,7 +12108,9 @@
           "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News",
           "https://isds.tpex.org.tw/"
         ],
-        "sources_verified_date": "2026-05-04"
+        "sources_verified_date": "2026-05-04",
+        "valid_as_of": "2026-01-23",
+        "content_reverified_2026_07": false
       },
       "quality_flags": [
         "time_sensitive"
@@ -11808,8 +12317,17 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-150"
-      }
+        "original_id": "c2-150",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 344,
@@ -11915,7 +12433,9 @@
           "https://cgc.twse.com.tw/responsibilityRoadMap/listCh",
           "https://www.fsc.gov.tw/ch/home.jsp?id=2&parentpath=0&mcustomize=news_view.jsp&dataserno=202303280001&dtable=News"
         ],
-        "sources_verified_date": "2026-05-04"
+        "sources_verified_date": "2026-05-04",
+        "valid_as_of": "2026-01-23",
+        "content_reverified_2026_07": false
       },
       "quality_flags": [
         "time_sensitive"
@@ -11956,7 +12476,9 @@
         "sources": [
           "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/"
         ],
-        "sources_verified_date": "2026-05-04"
+        "sources_verified_date": "2026-05-04",
+        "valid_as_of": "2026-01-23",
+        "content_reverified_2026_07": false
       },
       "quality_flags": [
         "time_sensitive"
@@ -12576,7 +13098,9 @@
           "https://www.fsb-tcfd.org/recommendations/",
           "https://assets.bbhub.io/company/sites/60/2021/10/FINAL-2017-TCFD-Report.pdf"
         ],
-        "sources_verified_date": "2026-05-04"
+        "sources_verified_date": "2026-05-04",
+        "valid_as_of": "2026-01-23",
+        "content_reverified_2026_07": false
       },
       "quality_flags": [
         "time_sensitive"
@@ -12617,7 +13141,9 @@
         "sources": [
           "https://www.fsb-tcfd.org/recommendations/"
         ],
-        "sources_verified_date": "2026-05-04"
+        "sources_verified_date": "2026-05-04",
+        "valid_as_of": "2026-01-23",
+        "content_reverified_2026_07": false
       },
       "quality_flags": [
         "time_sensitive"
@@ -12658,7 +13184,9 @@
         "sources": [
           "https://www.fsb-tcfd.org/recommendations/"
         ],
-        "sources_verified_date": "2026-05-04"
+        "sources_verified_date": "2026-05-04",
+        "valid_as_of": "2026-01-23",
+        "content_reverified_2026_07": false
       },
       "quality_flags": [
         "time_sensitive"
@@ -12700,7 +13228,9 @@
           "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/",
           "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/"
         ],
-        "sources_verified_date": "2026-05-04"
+        "sources_verified_date": "2026-05-04",
+        "valid_as_of": "2026-01-23",
+        "content_reverified_2026_07": false
       },
       "quality_flags": [
         "time_sensitive"
@@ -13798,8 +14328,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-207"
-      }
+        "original_id": "c2-207",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 401,
@@ -13968,8 +14505,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-212"
-      }
+        "original_id": "c2-212",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 406,
@@ -14512,8 +15057,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-228"
-      }
+        "original_id": "c2-228",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 422,
@@ -14546,8 +15098,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-229"
-      }
+        "original_id": "c2-229",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 423,
@@ -15022,8 +15581,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-243"
-      }
+        "original_id": "c2-243",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 437,
@@ -15056,8 +15623,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-244"
-      }
+        "original_id": "c2-244",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 438,
@@ -15108,7 +15683,7 @@
         },
         {
           "key": "C",
-          "text": "預設值計算碳含量的 80 %"
+          "text": "預設值計算碳含量的 50 %"
         },
         {
           "key": "D",
@@ -15119,13 +15694,23 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "根據CBAM法規，自2026年正式期起，進口商在每一季結束時，其CBAM帳戶中持有的憑證數量，必須至少涵蓋自年初以來進口貨物總排放量的80%。 [2]",
+      "explanation": "Reg (EU) 2025/2083 修正 Reg (EU) 2023/956 第 22(2) 條：每季末應持有之 CBAM 憑證，由當年累計嵌入排放量的 80% 調降為 50%。",
       "metadata": {
         "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c2-246"
-      }
+        "verification_date": "2026-07-13",
+        "verification_source": "Reg (EU) 2025/2083 Art 1; consolidated 02023R0956-20251020 Art 22(2)",
+        "original_id": "c2-246",
+        "prior_option_c": "預設值計算碳含量的 80 %",
+        "confidence": "high",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 440,
@@ -15163,7 +15748,9 @@
           "https://www.cdp.net/zh",
           "https://www.cdp.net/"
         ],
-        "sources_verified_date": "2026-05-04"
+        "sources_verified_date": "2026-05-04",
+        "valid_as_of": "2026-01-23",
+        "content_reverified_2026_07": false
       },
       "quality_flags": [
         "time_sensitive"
@@ -15236,9 +15823,11 @@
         "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
         "original_id": "c2-249",
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020"
         ],
-        "sources_verified_date": "2026-05-05"
+        "sources_verified_date": "2026-05-05",
+        "valid_as_of": "2026-07-13"
       },
       "quality_flags": [
         "time_sensitive"
@@ -15275,8 +15864,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-250"
-      }
+        "original_id": "c2-250",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 444,
@@ -15309,8 +15906,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-251"
-      }
+        "original_id": "c2-251",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 445,
@@ -15547,8 +16152,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-258"
-      }
+        "original_id": "c2-258",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 452,
@@ -15819,8 +16432,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-266"
-      }
+        "original_id": "c2-266",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 460,
@@ -15955,8 +16576,17 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-270"
-      }
+        "original_id": "c2-270",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 464,
@@ -16261,8 +16891,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "F",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 473,
@@ -16295,8 +16933,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "F",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 474,
@@ -16363,8 +17009,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "F",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 476,
@@ -17852,8 +18506,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "F",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 519,
@@ -17920,8 +18582,15 @@
         "verification_date": "2026-01-23",
         "verification_batch": "F",
         "confidence": "medium",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 521,
@@ -17954,8 +18623,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "F",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 522,
@@ -18603,11 +19280,16 @@
         "sources_count": 2,
         "verification_source": "NDC 3.0 (2025)",
         "sources": [
-          "https://www.cca.gov.tw/affairs/response-policies/ndc/2029.html"
+          "https://www.cca.gov.tw/affairs/response-policies/ndc/2029.html",
+          "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
         ],
-        "sources_verified_date": "2026-04-25"
+        "sources_verified_date": "2026-04-25",
+        "valid_as_of": "2026-07-13"
       },
-      "explanation": "NDC 3.0（2025 公布）將 2030 年減排目標由 24±1% 提升為 28±2%（相較 2005 基準年）。\n\n資料來源：https://www.cca.gov.tw/affairs/response-policies/ndc/2029.html"
+      "explanation": "NDC 3.0（2025 公布）將 2030 年減排目標由 24±1% 提升為 28±2%（相較 2005 基準年）。\n\n資料來源：https://www.cca.gov.tw/affairs/response-policies/ndc/2029.html",
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 541,
@@ -19014,8 +19696,15 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "batch_verification",
-        "confidence": "medium"
-      }
+        "confidence": "medium",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 553,
@@ -19116,8 +19805,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "batch_verification",
-        "confidence": "medium"
-      }
+        "confidence": "medium",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 556,
@@ -19150,8 +19847,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "batch_verification",
-        "confidence": "medium"
-      }
+        "confidence": "medium",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 557,
@@ -19187,10 +19892,16 @@
         "original_id": "c1-029",
         "prior_answer": "C",
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
-        "sources_verified_date": "2026-04-25"
-      }
+        "sources_verified_date": "2026-04-25",
+        "valid_as_of": "2026-07-13"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 558,
@@ -19223,8 +19934,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "batch_verification",
-        "confidence": "medium"
-      }
+        "confidence": "medium",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 559,
@@ -19291,8 +20010,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "batch_verification",
-        "confidence": "medium"
-      }
+        "confidence": "medium",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 561,
@@ -19359,8 +20086,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "F",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 563,
@@ -19393,8 +20128,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "B",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 564,
@@ -19495,8 +20238,17 @@
         "verification_date": "2026-01-23",
         "verification_batch": "C",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 567,
@@ -19529,8 +20281,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "F",
         "confidence": "medium",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 568,
@@ -19563,8 +20323,15 @@
         "verification_date": "2026-01-23",
         "verification_batch": "F",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.iso.org/standard/43279.html"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 569,
@@ -20298,7 +21065,9 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "batch_verification",
-        "confidence": "medium"
+        "confidence": "medium",
+        "valid_as_of": "2026-01-23",
+        "content_reverified_2026_07": false
       },
       "quality_flags": [
         "time_sensitive"
@@ -21063,8 +21832,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "batch_verification",
-        "confidence": "medium"
-      }
+        "confidence": "medium",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "item_id": "S_VOCUS_01-q013",
@@ -21427,8 +22204,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "batch_verification",
-        "confidence": "medium"
-      }
+        "confidence": "medium",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "item_id": "S_VOCUS_01-q020",
@@ -21794,8 +22579,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "batch_verification",
-        "confidence": "medium"
-      }
+        "confidence": "medium",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "item_id": "S_VOCUS_02-q008",
@@ -22432,8 +23225,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "batch_verification",
-        "confidence": "medium"
-      }
+        "confidence": "medium",
+        "valid_as_of": "2026-07-13",
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "item_id": "S_VOCUS_03-q001",
@@ -23989,9 +24790,14 @@
         "verification_source": "answer key embedded in source PDF",
         "confidence": "high",
         "sources": [
-          "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf"
-        ]
-      }
+          "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "https://www.iso.org/standard/43279.html"
+        ],
+        "valid_as_of": "2026-07-13"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "item_id": "S_CHU_06-q011",
@@ -24044,9 +24850,15 @@
         "verification_source": "answer key embedded in source PDF",
         "confidence": "high",
         "sources": [
-          "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf"
-        ]
-      }
+          "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "valid_as_of": "2026-07-13"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "item_id": "S_CHU_06-q012",
@@ -26629,9 +27441,15 @@
         "verification_source": "answer key embedded in source PDF",
         "confidence": "high",
         "sources": [
-          "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf"
-        ]
-      }
+          "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "valid_as_of": "2026-07-13"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "item_id": "S_CHU_06-q059",

@@ -183,4 +183,30 @@ describe('audit corrections regression', () => {
       expect(g?.metadata?.prior_answer).toBe('D');
     });
   });
+
+  // 內容時效性修正（2026-07-13）。Reg (EU) 2025/2083 修正 Reg (EU) 2023/956 第 22(2) 條，
+  // 每季末應持有之 CBAM 憑證由累計嵌入排放量的 80% 調降為 50%。
+  // 2026-05 那次處理 CBAM Omnibus 的 commit 漏掉了這兩題。
+  // 背景與其他未解事項見 docs/content-currency.md。
+  describe('CBAM Omnibus：每季持有憑證比例 80% → 50%', () => {
+    it('gist[312] 答案應為 B（50%），不是 D（80%）', () => {
+      const q = byIndex(312);
+      expect(q?.answer).toBe('B');
+      expect(q?.options.find((o) => o.key === 'B')?.text).toContain('50');
+      expect(q?.metadata?.prior_answer).toBe('D');
+    });
+
+    it('gist[439] 選項 C 應為 50%（原為 80%，正解根本不在選項內）', () => {
+      const q = byIndex(439);
+      expect(q?.answer).toBe('C');
+      const c = q?.options.find((o) => o.key === 'C')?.text ?? '';
+      expect(c).toContain('50');
+      expect(c).not.toContain('80');
+    });
+
+    it('兩題都要引用 Omnibus 法源', () => {
+      expect(byIndex(312)?.explanation).toMatch(/2025\/2083|22\(2\)/);
+      expect(byIndex(439)?.explanation).toMatch(/2025\/2083|22\(2\)/);
+    });
+  });
 });

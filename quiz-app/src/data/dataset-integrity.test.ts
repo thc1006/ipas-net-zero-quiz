@@ -25,8 +25,10 @@ interface Item {
   answer?: string | null;
   explanation?: string | null;
   exam_subject?: string;
+  quality_flags?: string[];
   _correction_note?: string;
-  metadata?: { prior_answer?: string };
+  source?: { url?: string };
+  metadata?: { prior_answer?: string; sources?: string[]; valid_as_of?: string };
 }
 
 const DS = datasetRaw as unknown as {
@@ -102,6 +104,33 @@ describe('題庫結構完整性', () => {
 
   it('AR6「次方成長」偽造題不得再出現（issue #85 迴歸防護）', () => {
     const bad = ALL.filter((it) => /次方/.test(it.stem) && /AR6/.test(it.stem)).map(who);
+    expect(bad).toEqual([]);
+  });
+
+  // quarterly workflow 只 curl「有 source URL」的題目。沒有 URL 的 time_sensitive 題目
+  // 對它完全隱形 —— 修正前 569 題裡有 535 題（94%）就是這樣被漏掉的。
+  // 標了 time_sensitive 卻沒附來源，等於宣稱「這題會過期」又不給任何方式去驗證。
+  //
+  // URL 的取法必須和 workflow 的 jq 一致（source.url 或 metadata.sources[] 皆可），
+  // 否則這個測試會對「覆蓋率」說謊。
+  const sourceUrls = (it: Item): string[] =>
+    [it.source?.url, ...(it.metadata?.sources ?? [])].filter(
+      (u): u is string => typeof u === 'string' && /^https?:\/\//.test(u)
+    );
+
+  it('標為 time_sensitive 的題目必須附來源 URL（否則 quarterly workflow 看不到）', () => {
+    const bad = ALL.filter((it) => (it.quality_flags ?? []).includes('time_sensitive'))
+      .filter((it) => sourceUrls(it).length === 0)
+      .map(who);
+    expect(bad).toEqual([]);
+  });
+
+  // valid_as_of 是「內容查證到哪一天」，不是「這個檔案何時被改過」。
+  // 未重新查證的題目必須誠實沿用它原本的日期 —— 謊報成今天比沒有這個欄位更糟。
+  it('time_sensitive 題目應帶 valid_as_of，標示內容查證到哪一天', () => {
+    const bad = ALL.filter((it) => (it.quality_flags ?? []).includes('time_sensitive'))
+      .filter((it) => !it.metadata?.valid_as_of)
+      .map(who);
     expect(bad).toEqual([]);
   });
 });
