@@ -111,7 +111,7 @@ jobs:
 
           UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
           export UA
-          export -f classify_url_status status_icon
+          export -f classify_url_status status_icon count_exact count_prefix
 
           check_url() {
             local line="$1"
@@ -147,14 +147,17 @@ jobs:
           : > results.tsv
           xargs -d '\n' -P 4 -I{} bash -c 'check_url "$@"' _ {} < urls.tsv > results.tsv
 
-          count_of() { grep -c "^$1"$'\t' results.tsv 2>/dev/null || echo 0; }
-          ok=$(count_of OK)
-          dead=$(count_of DEAD)
-          dns=$(count_of UNREACHABLE_DNS)
-          blocked=$(count_of BLOCKED)
-          retryable=$(count_of RETRYABLE)
-          other=$(count_of OTHER)
-          unreach=$(grep -c '^UNREACHABLE_' results.tsv 2>/dev/null || echo 0)
+          # count_exact / count_prefix 來自 url-status.sh，且有離線測試涵蓋「分類為 0」的情況。
+          # 千萬不要退回 `grep -c ... || echo 0` —— grep -c 找不到時會印 0 且 exit 1，
+          # `||` 於是又印一次，得到 $'0\n0'，接著 $(( ... )) 直接 syntax error，
+          # 而 set -euo pipefail 會讓整個 step 爆掉（且幾乎每次健康的執行都會踩到）。
+          ok=$(count_exact OK)
+          dead=$(count_exact DEAD)
+          dns=$(count_exact UNREACHABLE_DNS)
+          blocked=$(count_exact BLOCKED)
+          retryable=$(count_exact RETRYABLE)
+          other=$(count_exact OTHER)
+          unreach=$(count_prefix UNREACHABLE_)
 
           # 只有 DEAD（404/410）與 DNS 解析失敗（NXDOMAIN）才算「連結真的失效」→ 開 issue。
           # BLOCKED / RETRYABLE / TLS / 逾時 一律只警告 —— 把它們當成死亡就是在喊狼來了。

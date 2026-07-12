@@ -197,6 +197,46 @@ describe('validatePracticePool — additional invalid cases', () => {
     expect(errs.some((e) => e.path.includes('options') && /non-empty/.test(e.message))).toBe(true);
   });
 
+  // quality_flags / sources 不是陣列時，共用完整性規則的 adapter 會退回成空陣列。
+  // 這條測試證明它「優雅降級」而不是丟例外 —— schema 的工作是把所有問題「列出來」，
+  // 而不是在第一個壞欄位就炸掉、讓後面的問題永遠看不到。
+  it('quality_flags / sources 不是陣列時仍能完成驗證（不丟例外，且照樣列出其他錯誤）', () => {
+    const bad = {
+      _meta: { version: '1', totals: { total: 1 } },
+      items: [
+        {
+          id: 'malformed-arrays',
+          stem: '題幹',
+          options: [
+            { key: 'A', text: 'a' },
+            { key: 'B', text: 'b' },
+            { key: 'C', text: 'c' },
+            { key: 'D', text: 'd' },
+          ],
+          answer: 'Z', // 同時是錯的 —— 要證明後面的規則仍然跑得到
+          explanation: 'e',
+          subject: null,
+          topic_tags: [],
+          difficulty: 'medium',
+          sources: 'https://example.com' as unknown as string[], // 不是陣列
+          quality_flags: 'time_sensitive' as unknown as string[], // 不是陣列
+          provenance: validProvExternal,
+        },
+      ],
+    };
+
+    let errs: ReturnType<typeof validatePracticePool> = [];
+    expect(() => {
+      errs = validatePracticePool(bad);
+    }).not.toThrow();
+
+    // 型別錯誤本身要報
+    expect(errs.some((e) => e.path.endsWith('.sources'))).toBe(true);
+    expect(errs.some((e) => e.path.endsWith('.quality_flags'))).toBe(true);
+    // 而且共用規則仍然跑得到 —— answer=Z 不在選項裡
+    expect(errs.some((e) => e.path.includes('answer_not_in_options'))).toBe(true);
+  });
+
   it('detects non-string subject (number)', () => {
     const bad = {
       _meta: { version: '1', totals: { total: 1 } },

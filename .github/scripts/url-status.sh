@@ -71,3 +71,29 @@ status_icon() {
     *)                  echo '❓' ;;
   esac
 }
+
+# ── 計數 ────────────────────────────────────────────────────────────────────
+#
+# 不要用 `grep -c ... || echo 0`。
+#
+# grep -c 找不到時會「印出 0」**而且** exit 1，所以 `|| echo 0` 是**串接**不是覆寫，
+# 結果是 $'0\n0'。接著 $(( dead + dns )) 就會炸：
+#
+#     line 11: 0
+#     0: syntax error in expression (error token is "0")
+#
+# 而 workflow 有 set -euo pipefail —— 也就是說，只要「任何一個分類是 0」
+# （幾乎每一次健康的執行都是），這個 step 就直接爆掉。
+#
+# 這跟先前 `status=$(curl ... -w '%{http_code}' || echo "000")` 產生 "000000"
+# 是**完全同一種錯**：命令自己已經印了值，`||` 又印一次。
+#
+# 用 awk：永遠 exit 0、永遠印一個數字、而且是「欄位精確比對」而不是 regex 前綴比對
+# （前綴比對會讓 UNREACHABLE_DNS 被 UNREACHABLE_ 重複算到）。
+count_exact() {
+  awk -F'\t' -v c="$1" '$1 == c { n++ } END { print n + 0 }' "${2:-results.tsv}"
+}
+
+count_prefix() {
+  awk -F'\t' -v p="$1" 'index($1, p) == 1 { n++ } END { print n + 0 }' "${2:-results.tsv}"
+}
