@@ -354,7 +354,19 @@ def build(cache: Path):
     for src_id in SOURCES:
         load_pdf(src_id, cache)
         qs = extract(cache / f'{src_id}.pdf')
+
+        # 先把「還沒動過任何一個字」的 hash 存下來，再去套用修正。
+        #
+        # 舊版是先 patch 再算 hash，然後把結果叫做 pdf_text_sha256（宣稱是「PDF 裡的文字」）。
+        # 那是假的：S_CHU_06 第 37 題的選項標號在 PDF 原文是 (A)(B)(B)(C)，我們把它改成
+        # (A)(B)(C)(D)。於是 manifest 上那個 hash 既不是 PDF 的文字、也沒有任何地方說明
+        # 中間做過什麼手腳 —— 任何人拿原始 PDF 重算都會對不上，而且看不出為什麼。
+        #
+        # 一條「只有作者本人重算才對得上」的證據鏈，不是證據鏈。
+        raw_hash = {q['number']: normalized_text_sha256(q['stem'], q['options']) for q in qs}
+
         pdf_typos[src_id] = patch_pdf_typos(qs, src_id)
+        fixes_by_no = {t['question_no']: t for t in pdf_typos[src_id]}
 
         # 同一份 PDF 內每題的內容指紋 —— 用來認出「PDF 自己重印的題目」
         same_pdf = {q['number']: normalized_text_sha256(q['stem'], q['options']) for q in qs}
@@ -384,13 +396,29 @@ def build(cache: Path):
                 'item_id': item_id,
             })
 
-            # 兩個 hash 必須分開算，否則等於自己驗自己：
-            #   pdf_text_sha256     —— 從「PDF 擷取出來」的文字
-            #   dataset_text_sha256 —— repo 裡「現在」的文字
+            # 三個 hash，各自回答一個不同的問題 —— 少任何一個，證據鏈就有缺口：
+            #
+            #   raw_pdf_text_sha256        PDF 原文長什麼樣（一個字都沒動）
+            #   canonical_source_text_sha256  套用「已列明的修正」之後長什麼樣
+            #   dataset_text_sha256        repo 裡「現在」長什麼樣
+            #
             # 只記一個（而且是從 dataset 算的）的話，--verify 就是拿 dataset-hash 比
-            # dataset-hash，永遠相等，根本沒在驗「repo 的內容是否真的等於 PDF」。
-            pdf_hash = normalized_text_sha256(q['stem'], q['options'])
+            # dataset-hash，永遠相等，根本沒在驗「repo 的內容是否真的等於來源」。
+            # 而只記 canonical 不記 raw（舊版的做法），則是把「我們動過手腳」這件事藏起來：
+            # 別人拿原始 PDF 重算會對不上，卻找不到原因。
+            #
+            # transformations 逐筆列出「動了什麼、憑什麼動」。空陣列＝原文照抄。
+            raw_h = raw_hash[q['number']]
+            canon_h = normalized_text_sha256(q['stem'], q['options'])
             ds_hash = normalized_text_sha256(it['stem'], it['options'])
+            fix = fixes_by_no.get(q['number'])
+            transformations = [{'fix': fix['fix'], 'evidence': fix['evidence']}] if fix else []
+
+            # 沒有列明的修正，raw 就必須等於 canonical。不相等代表有「沒被記錄的轉換」，
+            # 那正是這次要根除的東西 —— 直接失敗，不要讓它悄悄進到 manifest。
+            if not transformations and raw_h != canon_h:
+                sys.exit(f'✗ {item_id}: 沒有列明任何修正，raw 與 canonical 卻不同 —— '
+                         '有未被記錄的轉換偷偷改動了來源文字。')
 
             entries.append({
                 'item_id': item_id,
@@ -401,9 +429,11 @@ def build(cache: Path):
                 'column': q['column'],
                 'source_question_number': q['number'],
                 'answer_key': q['answer'],           # PDF 自己印在題號前的答案
-                'pdf_text_sha256': pdf_hash,
+                'raw_pdf_text_sha256': raw_h,
+                'canonical_source_text_sha256': canon_h,
                 'dataset_text_sha256': ds_hash,
-                'matches_source': pdf_hash == ds_hash,
+                'transformations': transformations,
+                'matches_source': canon_h == ds_hash,
                 'dataset_answer': it.get('answer'),
             })
 
@@ -439,6 +469,22 @@ def build(cache: Path):
                            'duplicate_in_dataset（主庫已有相同題）。'
                            '任何一題交代不出來就是 UNACCOUNTED —— 產生 manifest 時直接失敗，'
                            '不會安靜地當成「重複」放過。',
+            'hash_fields': {
+                'raw_pdf_text_sha256':
+                    'PDF 原文（分欄擷取後、未套用任何修正）。拿原始 PDF 重跑就該得到這個值。',
+                'canonical_source_text_sha256':
+                    '套用 transformations 所列的修正之後的來源文字。dataset 應該等於這個。',
+                'dataset_text_sha256': 'repo 裡「現在」的文字。',
+                'transformations':
+                    '這一題做過哪些修正、憑什麼做。空陣列＝原文照抄。'
+                    '若 raw != canonical 卻沒有列明 transformations，--emit 直接失敗 —— '
+                    '不允許存在「沒被記錄的轉換」。',
+                'why':
+                    '舊版只存一個 pdf_text_sha256，名字宣稱是「PDF 裡的文字」，實際卻是'
+                    '「套用修正之後」的文字（S_CHU_06 第 37 題的選項標號原文是 (A)(B)(B)(C)，'
+                    '被改成 (A)(B)(C)(D)）。結果任何人拿原始 PDF 重算都會對不上，'
+                    '而且看不出為什麼。一條只有作者本人重算才對得上的證據鏈，不是證據鏈。',
+            },
             'generated_by': 'tools/restore_from_source_pdf.py',
             'source_question_total': total_source,
             'restored_count': len(entries),
@@ -479,17 +525,32 @@ def verify(cache: Path) -> int:
         if b is None:
             print(f'  ✗ {iid}: PDF 重跑後不存在'); bad += 1; continue
         for f in ('page', 'column', 'source_question_number', 'answer_key',
-                  'pdf_text_sha256', 'dataset_text_sha256', 'source_sha256', 'dataset_answer'):
+                  'raw_pdf_text_sha256', 'canonical_source_text_sha256',
+                  'dataset_text_sha256', 'source_sha256', 'dataset_answer'):
             if a.get(f) != b.get(f):
                 print(f'  ✗ {iid}.{f}: manifest={a.get(f)!r} 重跑={b.get(f)!r}'); bad += 1
+        # transformations 也要一致 —— 否則「我們動過哪些手腳」可以被偷偷改掉
+        if a.get('transformations') != b.get('transformations'):
+            print(f'  ✗ {iid}.transformations: manifest={a.get("transformations")!r} '
+                  f'重跑={b.get("transformations")!r}'); bad += 1
 
-    # 這才是真正的重現性檢查：repo 裡的文字 == PDF 裡的文字
+    # 這才是真正的重現性檢查：repo 裡的文字 == 來源（套用已列明的修正之後）
     drift = [e['item_id'] for e in fresh['entries'] if not e['matches_source']]
     if drift:
-        print(f'\n  ✗ 有 {len(drift)} 題的 repo 內容與 PDF 不一致（dataset_text ≠ pdf_text）：')
+        print(f'\n  ✗ 有 {len(drift)} 題的 repo 內容與來源不一致'
+              f'（dataset_text ≠ canonical_source_text）：')
         for iid in drift[:10]:
             print(f'      {iid}')
         bad += len(drift)
+
+    # raw != canonical 的題目，必須剛好就是有列明 transformations 的那些。
+    # 有差異卻沒列明 = 藏起來的手腳；列明了卻沒差異 = 記錄與事實不符。
+    for e in fresh['entries']:
+        differs = e['raw_pdf_text_sha256'] != e['canonical_source_text_sha256']
+        declared = bool(e['transformations'])
+        if differs != declared:
+            print(f'  ✗ {e["item_id"]}: raw≠canonical={differs} 但 transformations '
+                  f'{"有" if declared else "沒有"}列明 —— 兩者必須一致'); bad += 1
 
     # 答案也要一致：dataset 的 answer 必須等於 PDF 自己印的 answer key
     ans = [e['item_id'] for e in fresh['entries'] if e['dataset_answer'] != e['answer_key']]

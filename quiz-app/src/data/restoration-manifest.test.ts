@@ -6,10 +6,19 @@
 //
 // manifest 固定了這條證據鏈：
 //   item_id -> source_document(+sha256) / page / column / question_no / answer_key
-//              + pdf_text_sha256（PDF 裡的文字） + dataset_text_sha256（repo 裡的文字）
+//              + raw_pdf_text_sha256（PDF 原文，一個字都沒動）
+//              + canonical_source_text_sha256（套用已列明的修正之後）
+//              + dataset_text_sha256（repo 裡的文字）
+//              + transformations[]（動了什麼、憑什麼動）
 //
-// 兩個 hash 必須分開記，否則就是自己驗自己 —— 只記一個（而且從 dataset 算）的話，
+// 三個 hash 必須分開記，否則就是自己驗自己 —— 只記一個（而且從 dataset 算）的話，
 // 驗證等於拿 dataset-hash 比 dataset-hash，永遠相等。
+//
+// 而只記 canonical、不記 raw（舊版的做法）則是把「我們動過手腳」藏起來：
+// 舊欄位叫 pdf_text_sha256、宣稱是「PDF 裡的文字」，實際存的卻是「套用修正之後」的文字。
+// S_CHU_06 第 37 題的選項標號在 PDF 原文是 (A)(B)(B)(C)，我們改成了 (A)(B)(C)(D)。
+// 結果任何人拿原始 PDF 重算都會對不上，而且看不出為什麼。
+// 一條只有作者本人重算才對得上的證據鏈，不是證據鏈。
 //
 // 分工：
 //   CI（這支測試）    不下載 PDF。只驗 manifest ↔ dataset 一致 —— 有人偷改還原題的文字，
@@ -43,7 +52,9 @@ interface Entry {
   column: 'left' | 'right';
   source_question_number: number;
   answer_key: string;
-  pdf_text_sha256: string;
+  raw_pdf_text_sha256: string;
+  canonical_source_text_sha256: string;
+  transformations: { fix: string; evidence: string }[];
   dataset_text_sha256: string;
   matches_source: boolean;
   dataset_answer: string | null;
@@ -142,7 +153,8 @@ describe('restoration manifest', () => {
         !Number.isInteger(e.source_question_number) ||
         e.source_question_number < 1 ||
         !/^[A-D]$/.test(e.answer_key) ||
-        !/^[0-9a-f]{64}$/.test(e.pdf_text_sha256)
+        !/^[0-9a-f]{64}$/.test(e.raw_pdf_text_sha256) ||
+        !/^[0-9a-f]{64}$/.test(e.canonical_source_text_sha256)
     ).map((e) => e.item_id);
     expect(bad).toEqual([]);
   });
@@ -255,5 +267,79 @@ describe('還原對帳：來源的每一題都要有交代', () => {
       '來源 PDF 自己印的答案與主庫教的答案不一致 —— 必須用一手文件裁決，不可放著'
     ).toEqual([]);
     expect(MAN._meta.answer_conflicts).toEqual([]);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 「我們動過哪些手腳」必須是公開的
+//
+// 舊版只存一個 pdf_text_sha256，欄位名宣稱是「PDF 裡的文字」，實際存的卻是
+// **套用修正之後**的文字：S_CHU_06 第 37 題的選項標號在 PDF 原文是 (A)(B)(B)(C)，
+// 我們改成了 (A)(B)(C)(D)（有憑據 —— 同一份 PDF 的第 86 題是同一道題且標號正確）。
+//
+// 修正本身沒問題，問題是**沒有留下痕跡**：manifest 上的 hash 既不是 PDF 的文字，
+// 也沒有任何欄位說明中間做過什麼。任何人拿原始 PDF 重算都會對不上，且看不出原因。
+// 一條只有作者本人重算才對得上的證據鏈，不是證據鏈 —— 它只是一份自說自話的宣稱。
+//
+// 現在拆成三個 hash + transformations[]，並在這裡把不變式釘死：
+//   raw ≠ canonical  ⟺  transformations 非空
+// 有差異卻沒列明 = 藏起來的手腳；列明了卻沒差異 = 記錄與事實不符。兩種都擋。
+describe('來源文字的轉換必須全部列明', () => {
+  it('每題都要有 raw / canonical / dataset 三個 hash', () => {
+    const bad = MAN.entries.filter(
+      (e) =>
+        !/^[0-9a-f]{64}$/.test(e.raw_pdf_text_sha256) ||
+        !/^[0-9a-f]{64}$/.test(e.canonical_source_text_sha256) ||
+        !/^[0-9a-f]{64}$/.test(e.dataset_text_sha256)
+    ).map((e) => e.item_id);
+    expect(bad).toEqual([]);
+  });
+
+  it('raw ≠ canonical ⟺ transformations 非空（不允許沒被記錄的轉換）', () => {
+    const bad = MAN.entries
+      .filter((e) => {
+        const differs = e.raw_pdf_text_sha256 !== e.canonical_source_text_sha256;
+        const declared = (e.transformations ?? []).length > 0;
+        return differs !== declared;
+      })
+      .map((e) => {
+        const differs = e.raw_pdf_text_sha256 !== e.canonical_source_text_sha256;
+        return `${e.item_id}: raw≠canonical=${differs} 但 transformations ${
+          (e.transformations ?? []).length > 0 ? '有' : '沒有'
+        }列明`;
+      });
+    expect(
+      bad,
+      '有差異卻沒列明＝藏起來的手腳；列明了卻沒差異＝記錄與事實不符'
+    ).toEqual([]);
+  });
+
+  it('每一筆 transformation 都必須附上憑據（不能只寫「改了」）', () => {
+    for (const e of MAN.entries) {
+      for (const t of e.transformations ?? []) {
+        expect(t.fix, `${e.item_id} 的 transformation 沒寫改了什麼`).toBeTruthy();
+        expect(t.evidence, `${e.item_id} 的 transformation 沒附憑據`).toBeTruthy();
+      }
+    }
+  });
+
+  // 這條確保上面兩條不是在空轉：確實存在「有被修正過」的題目。
+  it('S_CHU_06-q037 就是那個被修正過的題目（選項標號 A,B,B,C -> A,B,C,D）', () => {
+    const e = MAN.entries.find((x) => x.item_id === 'S_CHU_06-q037');
+    expect(e).toBeDefined();
+    expect(e!.transformations).toHaveLength(1);
+    expect(e!.transformations[0].fix).toMatch(/lettering/i);
+    expect(e!.transformations[0].evidence).toMatch(/Q86/);
+    // 它必須真的和 PDF 原文不同 —— 否則這個「修正」根本沒發生
+    expect(e!.raw_pdf_text_sha256).not.toBe(e!.canonical_source_text_sha256);
+  });
+
+  it('dataset 的文字必須等於 canonical（套用修正後的來源），不是等於 raw', () => {
+    const bad = MAN.entries
+      .filter((e) => e.dataset_text_sha256 !== e.canonical_source_text_sha256)
+      .map((e) => e.item_id);
+    expect(bad).toEqual([]);
+    // 而且 matches_source 這個旗標必須誠實反映上面那件事
+    expect(MAN.entries.filter((e) => !e.matches_source)).toEqual([]);
   });
 });
