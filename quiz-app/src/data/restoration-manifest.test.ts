@@ -43,8 +43,15 @@ interface DsItem {
   exam_subject?: string;
   source?: { source_id?: string };
 }
+interface AnswerOverride {
+  corrected_answer: string;
+  reason: string;
+  evidence: string;
+  decided_on: string;
+}
 interface Entry {
   item_id: string;
+  answer_override?: AnswerOverride | null;
   source_id: string;
   source_document: string;
   source_sha256: string;
@@ -134,12 +141,49 @@ describe('restoration manifest', () => {
     expect(bad).toEqual([]);
   });
 
-  it('每題的 answer 必須等於 PDF 自己印的 answer key', () => {
+  // 預設一律以**來源 PDF 自己印的 answer key** 為錨點。隨便推翻它，整條證據鏈就沒有意義了
+  // ——「這題我覺得應該是 C」不是理由。實際上還發生過反過來的情況：一題 ISO 14064-1
+  // 強制揭露題，我們原本教 C、PDF 印 D，查證後是 **PDF 對、我們錯**。
+  //
+  // 但「以來源為準」不等於「明知有錯還照抄」。差別在於：偏離必須被**記錄下來、附上一手依據**，
+  // 而不是安靜地改掉。這跟 transformations 是同一套規矩 —— **不允許沒被記錄的偏離**。
+  it('每題的 answer 必須等於 PDF 的 answer key —— 除非有列明依據的 answer_override', () => {
     const bad = RESTORED.filter((it) => {
       const e = BY_ID.get(it.item_id);
-      return !e || e.answer_key !== it.answer || e.dataset_answer !== it.answer;
-    }).map((it) => `${it.item_id}: dataset=${it.answer} manifest_key=${BY_ID.get(it.item_id)?.answer_key}`);
+      if (!e) return true;
+      if (e.dataset_answer !== it.answer) return true;          // manifest 與 dataset 自己就對不上
+      if (e.answer_key === it.answer) return false;             // 與來源一致 -> 正常
+      // 與來源不一致 -> 必須有 override，且 override 說的就是現在這個答案
+      return !e.answer_override || e.answer_override.corrected_answer !== it.answer;
+    }).map(
+      (it) =>
+        `${it.item_id}: dataset=${it.answer} PDF_key=${BY_ID.get(it.item_id)?.answer_key}` +
+        `（要偏離來源的答案卡，必須在 ANSWER_OVERRIDES 列明一手依據）`
+    );
     expect(bad).toEqual([]);
+  });
+
+  it('每一筆 answer_override 都必須附上理由與一手依據，且真的與來源不同', () => {
+    const overrides = MAN.entries.filter((e) => e.answer_override);
+    // 前提：真的存在 override，否則下面在空轉
+    expect(overrides.length, '沒有任何 answer_override —— 這條測試在空轉').toBeGreaterThan(0);
+    for (const e of overrides) {
+      const o = e.answer_override!;
+      expect(o.reason, `${e.item_id} 的 override 沒寫理由`).toBeTruthy();
+      expect(o.evidence, `${e.item_id} 的 override 沒附一手依據`).toBeTruthy();
+      expect(o.decided_on, `${e.item_id} 的 override 沒記日期`).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(
+        o.corrected_answer,
+        `${e.item_id} 的 override 更正答案與來源相同 —— 那不是 override`
+      ).not.toBe(e.answer_key);
+    }
+  });
+
+  // override 是刻意極小的清單。它一旦變大，就代表我們開始習慣性推翻來源 ——
+  // 那時候該檢討的是「來源選錯了」，不是「再多加一筆例外」。
+  it('answer_override 必須是極少數（超過 5 筆代表來源本身有問題，該重新檢討）', () => {
+    const n = MAN.entries.filter((e) => e.answer_override).length;
+    expect(n, `目前有 ${n} 筆 override —— 太多了，該檢討的是來源的選擇`).toBeLessThanOrEqual(5);
   });
 
   it('每題都要有可追溯的來源座標（PDF sha256 / 頁碼 / 欄位 / 題號）', () => {

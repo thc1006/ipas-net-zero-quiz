@@ -28567,7 +28567,7 @@
           "text": "以上皆非"
         }
       ],
-      "answer": "D",
+      "answer": "C",
       "explanation": null,
       "source": {
         "source_id": "S_CHU_06",
@@ -28588,12 +28588,14 @@
       "metadata": {
         "answer_verified": true,
         "verification_date": "2026-07-13",
-        "verification_source": "answer key embedded in source PDF",
+        "verification_source": "ISO 14064-1:2018 base year 定義",
         "confidence": "high",
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf"
-        ]
-      }
+        ],
+        "prior_answer": "D"
+      },
+      "_correction_note": "2026-07-13 更正：來源 PDF（商研院模擬試題 S_CHU_06 第 94 題）的答案卡印 D（以上皆非），但那與 ISO 14064-1:2018 對「基準年（base year）」的定義不符 —— 該標準將基準年定義為「為了隨時間比較溫室氣體排放、移除或其他 GHG 相關資訊而選定的特定歷史期間」，正是選項 C「與其他年份進行比較的參考年份」。A（開始盤查的年份）與 B（設定減碳目標的年份）都不是。故正解為 C。此偏離已列入 restoration-manifest 的 answer_override 並附依據 —— 預設一律以來源答案卡為錨點，推翻它必須拿得出一手條文。"
     },
     {
       "item_id": "S_CHU_06-q095",
