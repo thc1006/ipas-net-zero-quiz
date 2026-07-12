@@ -3707,7 +3707,7 @@
         }
       },
       "sources": [
-        "https://ghg.tgpf.org.tw/"
+        "https://ghgregistry.moenv.gov.tw/"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -3753,7 +3753,7 @@
         }
       },
       "sources": [
-        "https://www.iaasb.org/publications/international-standard-assurance-engagements-isae-3410-assurance-engagements-greenhouse-gas-statements"
+        "https://www.iaasb.org/publications/glance-international-standard-assurance-engagements-isae-3410-assurance-engagements-greenhouse-gas"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -4392,7 +4392,7 @@
       },
       "sources": [
         "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/",
-        "https://www.fsb.org/2023/07/fsb-welcomes-issb-standards-as-culmination-of-its-work-on-climate-related-disclosures/"
+        "https://www.ifrs.org/groups/international-sustainability-standards-board/"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -4492,7 +4492,7 @@
         }
       },
       "sources": [
-        "https://www.efrag.org/en/sustainability-reporting/esrs-workstreams/european-sustainability-reporting-standards-1st-set",
+        "https://www.efrag.org/en/sustainability-reporting",
         "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202302772"
       ],
       "quality_flags": [
