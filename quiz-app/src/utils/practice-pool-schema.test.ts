@@ -376,7 +376,15 @@ describe('validatePracticePool — verdict 與 quality_flags/answer 的一致性
         provenance: { ...baseProv, verify_verdict: 'AMBIGUOUS' },
       })
     );
-    expect(errs.length).toBeGreaterThan(0);
+    // 只斷言 errs.length > 0 是**假把關**：這個 fixture（answer:'A' + AMBIGUOUS）同時也踩到
+    // 「verdict 為 AMBIGUOUS 卻仍給出答案」那條規則，而兩條規則 push 到**同一個 path**。
+    // 於是把「AMBIGUOUS 必須有 ambiguous flag」整條關掉，errs 仍然有 1 筆 —— 測試照樣綠。
+    // （實測：`if (false && ...)` 關掉該規則，20/20 全過。）
+    // 必須指名是「這一條」報的錯，不能只數有沒有錯。
+    expect(
+      errs.some((e) => /quality_flags|必須含/.test(e.message)),
+      `期望有「AMBIGUOUS 就必須含 ambiguous flag」這條錯，實得：${errs.map((e) => e.message).join(' / ')}`
+    ).toBe(true);
   });
 
   it('verdict=AMBIGUOUS 卻仍給出答案 → 報錯（驗不出來就不能教確定答案）', () => {

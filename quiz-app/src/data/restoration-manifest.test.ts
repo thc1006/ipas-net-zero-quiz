@@ -257,15 +257,49 @@ describe('還原對帳：來源的每一題都要有交代', () => {
     expect(sum).toBe(MAN._meta.source_question_total);
   });
 
-  // 這是本輪真正抓到的那個錯：來源答案卡與主庫教的答案不一致。
-  // 已用 ISO 14064-1:2018 §9.3.1(g) + normative Annex E 裁決（正解 D），主庫已更正。
-  // 這條測試確保「答案衝突」不會再被無聲吞掉 —— 有衝突就必須有人處理。
+  // 這是本輪真正抓到的那個錯：來源答案卡與主庫教的答案不一致
+  // （S_CHU_07#13：主庫教 C，來源答案卡是 D —— D 才是對的）。
+  // 已用 ISO 14064-1:2018 §9.3.1(g) + normative Annex E 裁決，主庫已更正。
+  //
+  // 這條測試的第一版**自己就是個假把關**：
+  //
+  //     const conflicts = MAN.dispositions.filter((d) => d.answers_agree === false);
+  //
+  // 它的鑑別力 100% 押在 answers_agree 這個**選填**欄位上，而當時沒有任何一條測試
+  // 要求它必須存在、必須是 boolean。兩種靜默失效（都實測過，22/22 全綠）：
+  //   欄位消失（工具哪天不再輸出）  -> undefined === false 恆為 false -> 選不到 -> 綠
+  //   型別跑掉（寫成字串 'false'）  -> 'false' === false 恆為 false -> 綠
+  // 後者最惡毒：一個**真實存在、而且已經被如實記錄下來**的答案衝突，被 gate 直接無視。
+  //
+  // 而 `expect(MAN._meta.answer_conflicts).toEqual([])` 也擋不住 —— 那是產生 manifest 的
+  // 同一支腳本自己寫的自陳陣列，腳本不寫就是空的。**自己驗自己。**
+  //
+  // 守一個錯誤的把關，自己卻抓不到錯，是這整輪工作最不該犯的錯。
   it('不得存在未解決的答案衝突（來源答案卡 vs 主庫答案）', () => {
-    const conflicts = MAN.dispositions.filter((d) => d.answers_agree === false);
+    const crossBank = MAN.dispositions.filter((d) => d.status === 'duplicate_in_dataset');
+
+    // 前提：沒有這種 disposition 的話，下面全都是空轉。
+    expect(
+      crossBank.length,
+      '沒有任何 duplicate_in_dataset —— 這條測試在空轉，鑑別力是零'
+    ).toBeGreaterThan(0);
+
+    // answers_agree 必須真的存在、而且真的是 boolean。
+    for (const d of crossBank) {
+      expect(
+        typeof d.answers_agree,
+        `${d.source_id}#${d.source_question_number} 的 answers_agree 必須是 boolean，` +
+          `實際是 ${JSON.stringify(d.answers_agree)}`
+      ).toBe('boolean');
+    }
+
+    // 用 !== true 而不是 === false：任何「不是明確說一致」的值都算沒交代。
+    const conflicts = crossBank.filter((d) => d.answers_agree !== true);
     expect(
       conflicts.map((d) => `${d.source_id}#${d.source_question_number}`),
       '來源 PDF 自己印的答案與主庫教的答案不一致 —— 必須用一手文件裁決，不可放著'
     ).toEqual([]);
+
     expect(MAN._meta.answer_conflicts).toEqual([]);
   });
 });
@@ -315,6 +349,11 @@ describe('來源文字的轉換必須全部列明', () => {
   });
 
   it('每一筆 transformation 都必須附上憑據（不能只寫「改了」）', () => {
+    // `for (const t of []) expect(...)` 迴圈零次執行就是綠的 —— 把所有 transformations
+    // 清空，這條會靜默通過（實測過）。先斷言「真的有東西可以檢查」，否則它只是在空轉。
+    const all = MAN.entries.flatMap((e) => e.transformations ?? []);
+    expect(all.length, '沒有任何 transformation —— 這條測試在空轉').toBeGreaterThan(0);
+
     for (const e of MAN.entries) {
       for (const t of e.transformations ?? []) {
         expect(t.fix, `${e.item_id} 的 transformation 沒寫改了什麼`).toBeTruthy();

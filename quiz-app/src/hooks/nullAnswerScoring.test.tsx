@@ -18,11 +18,14 @@ import {
   __resetPracticePoolCacheForTesting,
   __setPracticePoolForTesting,
 } from '../utils/practice-pool';
-import { buildFixturePool } from '../utils/__fixtures__/practice-pool-fixture';
+import {
+  buildFixturePool,
+  FIXTURE_NULL_ANSWER_ID,
+} from '../utils/__fixtures__/practice-pool-fixture';
 import type { QuizConfig, QuizResult } from '../types/quiz';
 
-// fixture-6 是 answer=null + ambiguous 的那一題
-const NULL_ANSWER_ID = 'fixture-6';
+// fixture 裡 answer=null + ambiguous 的那一題（由 fixture 自己匯出，避免這裡寫死 id）
+const NULL_ANSWER_ID = FIXTURE_NULL_ANSWER_ID;
 
 const baseConfig: QuizConfig = {
   mode: 'practice',
@@ -44,6 +47,16 @@ describe('無標準答案的題目（answer=null + ambiguous）不得計分', ()
   });
 
   it('exam mode：整題不得出現（連看到都不該看到）', async () => {
+    // 前提：這條測試的鑑別力全部押在「fixture 裡真的有一題 answer=null」。
+    // 沒有這個前提斷言，只要有人把那題從 fixture 拿掉，
+    // `not.toContain` 與下面的 for 迴圈就都變成空轉 —— 靜默變綠（實測過）。
+    // 主題庫目前 783 題全部都有答案，所以它是唯一的無答案題來源。
+    const pool = buildFixturePool();
+    expect(
+      pool.items.some((i) => i.id === NULL_ANSWER_ID && i.answer === null),
+      'fixture 裡沒有 answer=null 的題目 —— 這條測試在空轉'
+    ).toBe(true);
+
     const { result } = renderHook(() => useQuiz());
     await act(async () => {
       await result.current.startQuizWithPool({ ...baseConfig, mode: 'exam' });

@@ -230,11 +230,23 @@ describe('題庫結構完整性', () => {
 //   Art 26(1) 授權申報人未繳交憑證 -> 按每張憑證處以與 EU ETS 超額排放相同之罰鍰
 //   Art 26(2) 非授權之人輸入 CBAM 貨物 -> 處 26(1) 罰鍰之 3–5 倍
 //   Art 22(3) 每季帳戶餘額不足     -> 無倍數，1 個月內補足
-// 拆成兩題（26(1) / 26(2)）之後，我把新的那題放進考科1，但母題在原始考古題文件裡是
-// 考科二 —— 於是同一份考卷永遠只看得到其中一題，拆題想製造的「對照」完全消失。
+// 拆成兩題（26(1) / 26(2)）之後，兩題一度分屬不同考科 —— 同一份考卷永遠只看得到其中一題，
+// 拆題想製造的「對照」完全消失。
 //
-// 這條規則擋的就是這個：互為對照組的題目一旦分屬不同考科，拆題的意義就沒了。
-describe('CBAM 罰則：拆分出的對照題必須同科', () => {
+// 考科的依據是**官方評鑑內容**，不是社群整理的考古題文件：
+//   115 年度 iPAS 簡章 §2.5：
+//     L11 淨零碳規劃管理基礎概論（科目一）
+//       L11202 國際碳稅關貿政策(如 CBAM 等)      <- CBAM 在這裡
+//       L11205 ISO 14068-1 碳中和標準
+//     L12 淨零碳盤查規範與程序概要（科目二）
+//       L121 ISO 14064-1:2018 組織型溫室氣體盤查
+//       L122 ISO 14067:2018 標準與規範
+//   => 科目二只有 ISO 14064-1 與 ISO 14067，**沒有任何政策/貿易內容**。CBAM 一定是考科1。
+//
+// 先前曾因為「原始考古題 .md 把母題放在考科二段落底下」而把它們改成考科2 —— 那是錯的。
+// 那份 .md 是社群整理的文件，它的「考科二」段落裡同時還有 ISO 14068-1（官方 L11205，
+// 科目一）與巴黎協定的題目，明顯是貼錯位置的產物，不能拿來當考科歸屬的依據。
+describe('CBAM 罰則：拆分出的對照題必須同科，且必須是考科1', () => {
   // 注意：不能用「題幹含 第 26(1) 條」來認人 —— 26(2) 那題的題幹裡也寫著
   // 「其罰鍰為第 26(1) 條罰鍰的幾倍？」，兩題都會命中。
   // 要認的是「這題在考哪一條」，也就是開頭「依 … 第 26(N) 條，」那個 N。
@@ -252,7 +264,11 @@ describe('CBAM 罰則：拆分出的對照題必須同科', () => {
     expect(penalty.filter((it) => asks(it, 2))).toHaveLength(1);
   });
 
-  it('兩題必須在同一考科（否則同一份考卷看不到對照）', () => {
+  it('兩題必須在同一考科，且必須是考科1（官方 L11202：CBAM 屬科目一）', () => {
+    // 前提：只剩一題時 `new Set([一個值]).size` 也是 1 —— 沒有這行，刪掉其中一題會
+    // 讓這條測試**靜默變綠**（實測過）。空轉的把關不是把關。
+    expect(penalty.length, 'CBAM 罰則題不足兩題 —— 這條測試在空轉').toBe(2);
+
     const subjects = new Set(penalty.map((it) => it.exam_subject));
     expect(
       subjects.size,
@@ -260,6 +276,14 @@ describe('CBAM 罰則：拆分出的對照題必須同科', () => {
         .map((it) => `${who(it)}=${it.exam_subject}`)
         .join(', ')}`
     ).toBe(1);
+
+    // 只釘「同科」是不夠的 —— 兩題一起搬到錯的那一科，這條照樣綠。
+    // 官方評鑑內容 L11202 把 CBAM 明確放在科目一，所以要釘死「就是考科1」。
+    expect(
+      [...subjects][0],
+      'CBAM 屬官方評鑑內容 L11202（科目一：淨零碳規劃管理基礎概論）。' +
+        '科目二只涵蓋 ISO 14064-1 與 ISO 14067，不含政策/貿易內容。'
+    ).toBe('考科1');
   });
 
   it('兩題的罰則規則不得互相抄錯（只有 26(2) 是 3–5 倍）', () => {
@@ -275,5 +299,77 @@ describe('CBAM 罰則：拆分出的對照題必須同科', () => {
     // 相同之罰鍰；它**不是**倍數罰則。這兩者被混為一談，正是原本那題教錯的地方。
     expect(ansText(a1)).toMatch(/ETS|超額排放/);
     expect(ansText(a1)).not.toMatch(/倍/);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// meta 不可以說謊（續）
+//
+// meta.corrections_applied 原本寫 8 —— 而實際上 prior_answer 有 14 題、其中
+// prior_answer != answer 的有 12 題、_correction_note 有 3 題。**8 對應不到任何一個數字。**
+// 它是 meta 裡唯一沒有 cannot-lie gate 的計數器，而這整輪工作的主軸就是「meta 不可以說謊」。
+// 宣告在 types/quiz.ts，從來沒有被計算過，也從來沒有被斷言過。
+//
+// 另外還有兩題的 prior_answer == answer（宣稱「改過答案」，實際上答案根本沒變）。
+// 那等於在證據鏈上記了一筆沒發生過的更正。
+describe('meta.corrections_applied 必須等於資料實算', () => {
+  const withPrior = ALL.filter((it) => it.metadata?.prior_answer != null);
+  const realCorrections = withPrior.filter((it) => it.metadata!.prior_answer !== it.answer);
+
+  it('prior_answer 不得等於現在的答案（那是一筆沒發生過的更正）', () => {
+    const noop = withPrior
+      .filter((it) => it.metadata!.prior_answer === it.answer)
+      .map((it) => `${who(it)}: prior=${it.metadata!.prior_answer} answer=${it.answer}`);
+    expect(
+      noop,
+      'prior_answer == answer 代表「宣稱改過答案，其實沒改」—— 證據鏈上不該有這種紀錄'
+    ).toEqual([]);
+  });
+
+  it('corrections_applied 必須等於 prior_answer != answer 的題數', () => {
+    // 前提：真的有更正紀錄，否則下面是空轉
+    expect(realCorrections.length, '沒有任何更正紀錄 —— 這條測試在空轉').toBeGreaterThan(0);
+    expect(
+      (DS.meta as Record<string, unknown>).corrections_applied,
+      `meta 宣稱 ${(DS.meta as Record<string, unknown>).corrections_applied}，` +
+        `實際 prior_answer != answer 的有 ${realCorrections.length} 題`
+    ).toBe(realCorrections.length);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 考科歸屬必須依「官方評鑑內容」，不是依社群整理的考古題文件
+//
+// 115 年度 iPAS 簡章 §2.5：
+//   L11 淨零碳規劃管理基礎概論（科目一）
+//     L11202 國際碳稅關貿政策(如 CBAM 等)
+//     L11205 ISO 14068-1 碳中和標準
+//   L12 淨零碳盤查規範與程序概要（科目二）
+//     L121 ISO 14064-1:2018 組織型溫室氣體盤查
+//     L122 ISO 14067:2018 標準與規範
+//
+// 也就是說：**科目二只涵蓋 ISO 14064-1 與 ISO 14067**，不含任何政策/貿易/碳中和標準。
+// CBAM、ISO 14068-1、PAS 2060 出現在考科2，就是錯置。
+//
+// 先前曾把 CBAM 題改成考科2，理由是「原始考古題 .md 把它們放在考科二段落」——
+// 那份 .md 是社群整理的文件，同一段落裡還混著 ISO 14068-1（官方 L11205，科目一）
+// 的題目，明顯是貼錯位置的產物。**社群文件的段落不能拿來當考科歸屬的依據。**
+describe('考科歸屬：科目二只有 ISO 14064-1 與 ISO 14067', () => {
+  const S1_ONLY = /CBAM|碳邊境|ISO\s*14068|PAS\s*2060/i;
+
+  it('考科2 不得出現 CBAM / ISO 14068-1 / PAS 2060 的題目（官方 L11202、L11205 屬科目一）', () => {
+    const misfiled = ALL.filter(
+      (it) => it.exam_subject === '考科2' && S1_ONLY.test(it.stem)
+    ).map((it) => `${who(it)}: ${it.stem.slice(0, 40)}`);
+    expect(
+      misfiled,
+      '這些題目的主題屬官方科目一（L11202 國際碳稅關貿政策 / L11205 ISO 14068-1 碳中和標準）'
+    ).toEqual([]);
+  });
+
+  it('這條測試不是空轉：CBAM / ISO 14068 / PAS 2060 的題目確實存在（且都在考科1）', () => {
+    const s1 = ALL.filter((it) => S1_ONLY.test(it.stem));
+    expect(s1.length, '題庫裡沒有任何 CBAM/ISO 14068/PAS 2060 題 —— 上一條在空轉').toBeGreaterThan(10);
+    expect(new Set(s1.map((it) => it.exam_subject))).toEqual(new Set(['考科1']));
   });
 });

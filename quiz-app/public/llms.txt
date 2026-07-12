@@ -1,6 +1,6 @@
 # 淨零碳規劃管理師備考神器
 
-> iPAS 淨零碳規劃管理師「初級」能力鑑定考古題線上測驗工具。783 題主題庫 + 157 題加強練習（含 IFRS S1/S2、ISSB 整合 TCFD、永續揭露準則、ISO 14064、CBAM、SBTi、GRI、ESRS、碳足跡、情境分析等 2026 重點議題）。每題附 primary-source URL，AI 解析符合 EU AI Act Art.50 揭露要求。
+> iPAS 淨零碳規劃管理師「初級」能力鑑定考古題線上測驗工具。780 題主題庫 + 157 題加強練習（含 IFRS S1/S2、ISSB 整合 TCFD、永續揭露準則、ISO 14064、CBAM、SBTi、GRI、ESRS、碳足跡、情境分析等 2026 重點議題）。每題附 primary-source URL，AI 解析符合 EU AI Act Art.50 揭露要求。
 
 本檔遵循 [llms.txt](https://llmstxt.org/) 提案格式，協助 LLM 代理人（Cursor、GitHub Copilot、Claude、ChatGPT search、Perplexity 等）以最少 token 理解本站用途與內容範圍。
 
@@ -54,7 +54,7 @@
 
 ## 題庫來源
 
-- **783 題主題庫**（`integrated_dataset.json`）：iPAS 公開考古題（gist：[https://gist.github.com/thc1006](https://gist.github.com/thc1006)）+ 自行驗證題目
+- **780 題主題庫**（`integrated_dataset.json`）：iPAS 公開考古題（gist：[https://gist.github.com/thc1006](https://gist.github.com/thc1006)）+ 自行驗證題目
 - **157 題加強練習池**（`practice_pool.json`）：
   - 55 題 `external_mock`：網路公開模擬題（非官方歷屆，iPAS 不公開歷屆）
   - 96 題 `ai_generated`：LLM 代理依 ISO/CBAM/環境部等法規與標準產生，每題經獨立驗證代理 cross-check 通過、附 ≥1 條 primary-source URL（law.moj.gov.tw、EUR-Lex、IPCC、ISO 等，curl 實測可達）

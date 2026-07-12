@@ -8,7 +8,7 @@
 
 ## 功能特色
 
-- **783 題主題庫**：涵蓋考科一（淨零碳規劃管理基礎）與考科二（碳盤查範圍與程序）
+- **780 題主題庫**：涵蓋考科一（淨零碳規劃管理基礎）與考科二（碳盤查範圍與程序）
 - **加強練習池（選用）**：開啟後額外提供 157 題補充題（55 題公開模擬題 + 102 題 AI 產題），每題附來源徽章
 - **練習/考試模式**：即時答案反饋或最後顯示結果
 - **參考來源連結**：每題答題後顯示權威引證（環境部、EUR-Lex、IPCC、ISO 等），URL 全部 curl 實測通過
@@ -137,11 +137,11 @@ jq '.items[] | select(.quality_flags | index("time_sensitive")) | {id, stem: (.s
 
 ### 內容時效性
 
-題庫中有 115 題的答案會隨法規變動（CBAM、碳費、NDC、碳中和標準）。
+題庫中有 112 題的答案會隨法規變動（CBAM、碳費、NDC、碳中和標準）。
 [`CONTENT-CURRENCY.md`](CONTENT-CURRENCY.md) 記錄已查證到哪一天、**還有什麼沒確定**、以及下一個到期日
 （最近的是 **2026-12-15：ISAE 3410 撤回，由 ISSA 5000 取代**）。
 
-⚠️ `meta.content_review.last_review_date` **不代表整份題庫都查證到那一天** —— 本輪只實查 103/783 題。
+⚠️ `meta.content_review.last_review_date` **不代表整份題庫都查證到那一天** —— 本輪只實查 100/780 題。
 判斷單一題目請看該題的 `metadata.valid_as_of`。
 
 ⚠️ `quarterly-time-sensitive-verify` workflow **只驗連結還通不通，驗不出內容變了** —— 綠燈不等於內容正確。

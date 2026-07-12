@@ -7,15 +7,15 @@
       "爬蟲題庫: dataset_verified.json",
       "CHU 商研院模擬試題 PDF（考科1 100題 / 考科2 70題，含答案key）"
     ],
-    "total_questions": 783,
-    "gist_questions": 553,
+    "total_questions": 780,
+    "gist_questions": 550,
     "our_unique_questions": 230,
-    "corrections_applied": 8,
+    "corrections_applied": 12,
     "by_subject": {
-      "考科1": 417,
-      "考科2": 366
+      "考科1": 434,
+      "考科2": 346
     },
-    "with_answer": 783,
+    "with_answer": 780,
     "last_updated": "2026-07-13T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -25,9 +25,9 @@
         "carbon_fee",
         "carbon_neutrality"
       ],
-      "reverified_count": 103,
-      "total_questions": 783,
-      "time_sensitive_count": 115,
+      "reverified_count": 100,
+      "total_questions": 780,
+      "time_sensitive_count": 112,
       "not_reviewed_this_round_count": 680,
       "carried_over_count": 12,
       "known_unresolved": [
@@ -3082,7 +3082,6 @@
         "confidence": "medium",
         "sources_count": 2,
         "verification_source": "CBAM Omnibus — Regulation (EU) 2025/2083 of 8 October 2025（OJ L 2025/10/17 刊登、2025/10/20 生效）；Article 22(1) 將年度憑證繳交期限由 5/31 延至 9/30，首次繳交為 2027-09-30（涵蓋 2026 進口）。",
-        "prior_answer": "D",
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020"
@@ -10899,7 +10898,7 @@
       "answer": "A",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "根據ISO 14068-1，首要步驟是確定碳中和的標的物，界定碳中和範圍與適用對象，並設定基線年作為減碳目標與績效評估的參考。 [1, 2, 3, 4, 5]",
       "metadata": {
         "answer_verified": true,
@@ -10909,7 +10908,12 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.iso.org/standard/43279.html"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -11083,7 +11087,7 @@
       "answer": "C",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "依 CBAM Omnibus 修正案（2025/10 生效），進口商應於每年 9 月 30 日前繳交前一年度 CBAM 憑證（原為 5/31）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）",
       "metadata": {
         "answer_verified": true,
@@ -11095,7 +11099,12 @@
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020"
         ],
         "sources_verified_date": "2026-05-05",
-        "valid_as_of": "2026-07-13"
+        "valid_as_of": "2026-07-13",
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -11228,7 +11237,7 @@
       "answer": "B",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "第 22(2) 條課予的是「每季末帳戶中應『持有』一定數量憑證」的義務，而非「每季提前購買固定比例憑證」——原題幹敘述有誤，已更正。該季度餘額義務自 2027 年 1 月 1 日起適用（憑證亦自 2027-02-01 才開始販售）。比例經 (EU) 2025/2083 修正，由原本的 80% 調降為 50%。嵌入排放量之計算基礎有二，得擇一：(a) 依 Annex IV 預設值（不含加成）計算；或 (b) 依前一年就相同 CN 碼與原產國貨物已繳交之憑證數量計算；並依第 31 條就免費配額調整。",
       "metadata": {
         "answer_verified": true,
@@ -11241,7 +11250,12 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -11273,7 +11287,7 @@
       "answer": "D",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "第 26(2) 條：「Where a person other than an authorised CBAM declarant introduces goods into the customs territory of the Union without complying with the obligations under this Regulation」——即「非授權之人」「輸入貨物」，處第 26(1) 條罰鍰之 3 至 5 倍，按其未繳交之每一張 CBAM 憑證計算。請注意行為人與違規行為之區別：授權申報人「未繳交憑證」適用第 26(1) 條（等同 ETS 超額排放罰鍰），不是 3–5 倍；而第 22(2) 條的「季末帳戶餘額不足」依第 22(3) 條僅需於通知後 1 個月內補足，根本沒有倍數罰則。原題幹「未於期間購買憑證」未區分行為人與違規類型，敘述有誤，已更正。",
       "metadata": {
         "answer_verified": true,
@@ -11285,9 +11299,13 @@
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
-        "prior_answer": "D",
         "prior_explanation": "若進口產品符合管制項目卻未進行申報，將處以3至5倍的罰鍰。 [5]",
-        "confidence": "high"
+        "confidence": "high",
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -11952,7 +11970,7 @@
       "answer": "C",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "歐盟CBAM的排放量計算主要包括產品製程中的直接排放（含外部熱源）及外購電力的間接排放。 [2]",
       "metadata": {
         "answer_verified": true,
@@ -11963,7 +11981,12 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -11994,7 +12017,7 @@
       "answer": "D",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "在產品製造國若已實際支付碳定價制度下的相關費用，例如碳稅或排放交易，則可以減免CBAM憑證費用。 [2]",
       "metadata": {
         "answer_verified": true,
@@ -12005,7 +12028,12 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -15053,7 +15081,7 @@
       "answer": "D",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "ISO 14068-1碳中和標準適用於組織、產品、建築物、城市、活動等特定主體，但通常不單獨針對組織內的「部門」進行宣告，部門的排放會被包含在整個組織的排放量中。 [1]",
       "metadata": {
         "answer_verified": true,
@@ -15063,7 +15091,12 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.iso.org/standard/43279.html"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -15094,7 +15127,7 @@
       "answer": "C",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "一份可信的碳中和宣告，必須清楚說明其碳足跡的量化方法與邊界、已執行的減量措施與成效，以及用於抵換剩餘排放的碳權來源與品質證明。 [1, 2]",
       "metadata": {
         "answer_verified": true,
@@ -15104,7 +15137,12 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.iso.org/standard/43279.html"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -15305,13 +15343,18 @@
       "answer": "B",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科1",
+      "exam_subject": "考科2",
       "explanation": "依據環境部「溫室氣體排放量盤查登錄管理辦法」，應盤查登錄的事業，其組織邊界應以主管機關核發的管制編號所對應的廠（場）為準。 [3]",
       "metadata": {
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-235"
+        "original_id": "c2-235",
+        "subject_corrected_2026_07_13": {
+          "from": "考科1",
+          "to": "考科2",
+          "basis": "官方 L12102 組織型溫室氣體盤查邊界界定（科目二）"
+        }
       }
     },
     {
@@ -15553,48 +15596,6 @@
       }
     },
     {
-      "index": 436,
-      "number": 177,
-      "stem": "以下哪項不是 CBAM 納管的鋁中下游產品？",
-      "options": [
-        {
-          "key": "A",
-          "text": "鋁製管配件"
-        },
-        {
-          "key": "B",
-          "text": "鋁板"
-        },
-        {
-          "key": "C",
-          "text": "鋁製容器"
-        },
-        {
-          "key": "D",
-          "text": "鋁製家具"
-        }
-      ],
-      "answer": "D",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科2",
-      "explanation": "根據CBAM納管產品清單，鋁製容器、鋁製管配件、鋁板皆在納管範圍內，而鋁製家具則不在其中。 [1, 3, 4, 5]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c2-243",
-        "valid_as_of": "2026-07-13",
-        "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
-      },
-      "quality_flags": [
-        "time_sensitive"
-      ]
-    },
-    {
       "index": 438,
       "number": 179,
       "stem": "本指引對於使用碳權進行抵換的要求是什麼？",
@@ -15653,7 +15654,7 @@
       "answer": "C",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "第 22(2) 條提供「兩種」計算基礎，預設值僅為其中之一：(a) 依 Annex IV 預設值計算，且不含加成（without the mark-up）；(b) 依前一年就相同 CN 碼與原產國貨物已繳交之憑證數量計算。本題限定於 (a) 之情形。比例經 (EU) 2025/2083 修正，由 80% 調降為 50%；該義務自 2027 年起適用。",
       "metadata": {
         "answer_verified": true,
@@ -15666,7 +15667,12 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -15776,7 +15782,7 @@
       "answer": "B",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "CBAM 自 2026 年 1 月 1 日起進入定價期，第一個申報年度為 2026 年。依 Omnibus 修正案，首次 CBAM 申報及憑證繳交期限為 2027 年 9 月 30 日（原為 2027/05/31）。（正式編號 Regulation (EU) 2025/2083，歐盟執委會 2025/10/8 採納，OJ 2025/10/17 刊登，10/20 生效）",
       "metadata": {
         "answer_verified": true,
@@ -15788,7 +15794,12 @@
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020"
         ],
         "sources_verified_date": "2026-05-05",
-        "valid_as_of": "2026-07-13"
+        "valid_as_of": "2026-07-13",
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -15861,7 +15872,7 @@
       "answer": "D",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "歐盟執委會考量申報系統穩定性及給予企業更多適應時間，將過渡期前兩次（2023Q4及2024Q1）報告的修正截止日期延後至2024年7月31日。 [4]",
       "metadata": {
         "answer_verified": true,
@@ -15872,7 +15883,12 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -16531,7 +16547,7 @@
       "answer": "D",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "歐盟CBAM的抵減機制是基於出口國已支付的「外顯碳價」（如碳稅/費或總量管制交易下的成本）。而遵循PAS 2060或ISO 14068-1所達成的碳中和，屬於自願性行動，其使用的自願性碳權通常無法直接用來抵減CBAM的費用。 [4, 5]",
       "metadata": {
         "answer_verified": true,
@@ -16543,7 +16559,12 @@
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
           "https://www.iso.org/standard/43279.html"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -19481,7 +19502,7 @@
       "answer": "A",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "PAS 2060要求組織建立碳足跡管理計畫（CFM Plan），承諾達到並維持碳中和狀態。 [5]",
       "metadata": {
         "answer_verified": true,
@@ -19491,7 +19512,12 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.iso.org/standard/43279.html"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -19530,48 +19556,6 @@
         "verification_source": "batch_verification",
         "confidence": "medium"
       }
-    },
-    {
-      "index": 556,
-      "number": 297,
-      "stem": "在CBAM系統中查詢產品是否受到納管時，需要輸入稅則號碼的哪幾碼？",
-      "options": [
-        {
-          "key": "A",
-          "text": "全部號碼"
-        },
-        {
-          "key": "B",
-          "text": "前2\\~6碼"
-        },
-        {
-          "key": "C",
-          "text": "前4\\~8碼"
-        },
-        {
-          "key": "D",
-          "text": "僅前2碼"
-        }
-      ],
-      "answer": "B",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科2",
-      "explanation": "查詢CBAM納管產品時，可輸入產品的稅則號碼前2至6碼進行比對。 [1, 2, 3, 4]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "batch_verification",
-        "confidence": "medium",
-        "valid_as_of": "2026-07-13",
-        "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
-      },
-      "quality_flags": [
-        "time_sensitive"
-      ]
     },
     {
       "index": 559,
@@ -19632,7 +19616,7 @@
       "answer": "A",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "metadata": {
         "answer_verified": true,
         "verification_date": "2026-01-23",
@@ -19643,7 +19627,12 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -19674,7 +19663,7 @@
       "answer": "C",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "metadata": {
         "answer_verified": true,
         "verification_date": "2026-01-23",
@@ -19685,7 +19674,12 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -19750,7 +19744,7 @@
       "answer": "D",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "metadata": {
         "answer_verified": true,
         "verification_date": "2026-01-23",
@@ -19762,49 +19756,12 @@
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
           "https://www.iso.org/standard/43279.html"
-        ]
-      },
-      "quality_flags": [
-        "time_sensitive"
-      ]
-    },
-    {
-      "index": 567,
-      "number": 308,
-      "stem": "CBAM正式實施後，若申報人被發現憑證不足，需要在多長時間內補足？",
-      "options": [
-        {
-          "key": "A",
-          "text": "三週內"
-        },
-        {
-          "key": "B",
-          "text": "兩週內"
-        },
-        {
-          "key": "C",
-          "text": "兩個月內"
-        },
-        {
-          "key": "D",
-          "text": "一個月內"
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
         }
-      ],
-      "answer": "D",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科2",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_batch": "F",
-        "confidence": "medium",
-        "sources_count": 2,
-        "valid_as_of": "2026-07-13",
-        "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -19835,7 +19792,7 @@
       "answer": "D",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "metadata": {
         "answer_verified": true,
         "verification_date": "2026-01-23",
@@ -19845,7 +19802,12 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.iso.org/standard/43279.html"
-        ]
+        ],
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -19910,7 +19872,7 @@
       "answer": "A",
       "source": "gist",
       "original_section": "未分類",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "explanation": "第 26(1) 條：授權申報人未繳交憑證者，「按其未繳交之每一張 CBAM 憑證」，處以與 Directive 2003/87/EC 第 16(3) 條之 ETS 超額排放罰鍰相同之金額（並依同指令第 16(4) 條調升）。選項 B 的 3–5 倍是第 26(2) 條，適用對象是「非授權之人輸入貨物」，行為人不同。選項 D 描述的是第 22(3) 條季末餘額不足時的補正程序，不是繳交義務的罰則。",
       "metadata": {
         "answer_verified": true,
@@ -19922,7 +19884,12 @@
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
-        "subject_note": "本題由 number=54（CBAM 未於期間購買憑證，罰款倍數為？）拆分而來，該母題在原始考古題文件中位於「考科二（淨零碳盤查規範與程序概要）」，故本題同列考科2 —— 拆出的兩題必須同科，否則同一份考卷永遠看不到 26(1) 與 26(2) 的對照，拆題的意義就沒了。"
+        "subject_note": "本題由 number=54（CBAM 未於期間購買憑證，罰款倍數為？）拆分而來，該母題在原始考古題文件中位於「考科二（淨零碳盤查規範與程序概要）」，故本題同列考科2 —— 拆出的兩題必須同科，否則同一份考卷永遠看不到 26(1) 與 26(2) 的對照，拆題的意義就沒了。",
+        "subject_corrected_2026_07_13": {
+          "from": "考科2",
+          "to": "考科1",
+          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"

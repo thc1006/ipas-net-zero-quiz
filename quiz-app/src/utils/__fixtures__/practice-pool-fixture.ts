@@ -44,6 +44,18 @@ function item(
   };
 }
 
+/**
+ * fixture 裡「刻意沒有答案」的那一題（answer=null + ambiguous）。
+ *
+ * 之所以要匯出成常數：nullAnswerScoring 那組測試的鑑別力**全部**押在這一題身上。
+ * 一旦有人把它從 fixture 拿掉，「exam mode 不得出現無答案題」那條會**靜默變綠**
+ * （`expect(ids).not.toContain(...)` 與 `for (…) expect(hasAnswer).toBe(true)`
+ *  在沒有無答案題時都是空轉），而測試看起來仍然是綠的。
+ *
+ * 現在測試會先斷言這一題確實在池子裡，拿掉它就會直接紅。
+ */
+export const FIXTURE_NULL_ANSWER_ID = 'fixture-6';
+
 export function buildFixturePool(): PracticePool {
   const items: PracticePoolItem[] = [
     // 考科一 mapped, external_mock, 有答案
@@ -89,6 +101,16 @@ export function buildFixturePool(): PracticePool {
       quality_flags: ['ambiguous'],
     }),
   ];
+
+  // fixture 自我檢查：那題「刻意沒有答案」的題目必須真的在池子裡，
+  // 否則所有依賴它的測試都會安靜地失去鑑別力。
+  if (!items.some((i) => i.id === FIXTURE_NULL_ANSWER_ID && i.answer === null)) {
+    throw new Error(
+      `fixture 壞了：找不到 ${FIXTURE_NULL_ANSWER_ID}（answer=null）。` +
+        'nullAnswerScoring 那組測試的鑑別力全部押在它身上。'
+    );
+  }
+
   return {
     _meta: {
       version: 'fixture',
