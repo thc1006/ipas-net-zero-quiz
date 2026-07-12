@@ -12,8 +12,8 @@
     "our_unique_questions": 230,
     "corrections_applied": 8,
     "by_subject": {
-      "考科1": 418,
-      "考科2": 365
+      "考科1": 417,
+      "考科2": 366
     },
     "with_answer": 783,
     "last_updated": "2026-07-13T00:00:00.000000",
@@ -19907,8 +19907,8 @@
       ],
       "answer": "A",
       "source": "gist",
-      "original_section": "考科1",
-      "exam_subject": "考科1",
+      "original_section": "未分類",
+      "exam_subject": "考科2",
       "explanation": "第 26(1) 條：授權申報人未繳交憑證者，「按其未繳交之每一張 CBAM 憑證」，處以與 Directive 2003/87/EC 第 16(3) 條之 ETS 超額排放罰鍰相同之金額（並依同指令第 16(4) 條調升）。選項 B 的 3–5 倍是第 26(2) 條，適用對象是「非授權之人輸入貨物」，行為人不同。選項 D 描述的是第 22(3) 條季末餘額不足時的補正程序，不是繳交義務的罰則。",
       "metadata": {
         "answer_verified": true,
@@ -19919,7 +19919,8 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
+        ],
+        "subject_note": "本題由 number=54（CBAM 未於期間購買憑證，罰款倍數為？）拆分而來，該母題在原始考古題文件中位於「考科二（淨零碳盤查規範與程序概要）」，故本題同列考科2 —— 拆出的兩題必須同科，否則同一份考卷永遠看不到 26(1) 與 26(2) 的對照，拆題的意義就沒了。"
       },
       "quality_flags": [
         "time_sensitive"

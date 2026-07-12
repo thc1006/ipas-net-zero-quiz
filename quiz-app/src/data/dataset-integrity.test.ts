@@ -222,3 +222,58 @@ describe('題庫結構完整性', () => {
     expect(bad).toEqual([]);
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 拆分出來的題目必須同科
+//
+// 背景：原本有一題「CBAM 未於期間購買憑證，罰款倍數為？」把三件不同的事混為一談 ——
+//   Art 26(1) 授權申報人未繳交憑證 -> 按每張憑證處以與 EU ETS 超額排放相同之罰鍰
+//   Art 26(2) 非授權之人輸入 CBAM 貨物 -> 處 26(1) 罰鍰之 3–5 倍
+//   Art 22(3) 每季帳戶餘額不足     -> 無倍數，1 個月內補足
+// 拆成兩題（26(1) / 26(2)）之後，我把新的那題放進考科1，但母題在原始考古題文件裡是
+// 考科二 —— 於是同一份考卷永遠只看得到其中一題，拆題想製造的「對照」完全消失。
+//
+// 這條規則擋的就是這個：互為對照組的題目一旦分屬不同考科，拆題的意義就沒了。
+describe('CBAM 罰則：拆分出的對照題必須同科', () => {
+  // 注意：不能用「題幹含 第 26(1) 條」來認人 —— 26(2) 那題的題幹裡也寫著
+  // 「其罰鍰為第 26(1) 條罰鍰的幾倍？」，兩題都會命中。
+  // 要認的是「這題在考哪一條」，也就是開頭「依 … 第 26(N) 條，」那個 N。
+  const asks = (it: Item, n: 1 | 2) =>
+    new RegExp(`^依 Regulation \\(EU\\) 2023/956 第 26\\(${n}\\) 條`).test(it.stem);
+
+  const penalty = ALL.filter(
+    (it) =>
+      /Regulation \(EU\) 2023\/956/.test(it.stem) && (asks(it, 1) || asks(it, 2))
+  );
+
+  it('Art 26(1) 與 26(2) 兩題都存在', () => {
+    expect(penalty).toHaveLength(2);
+    expect(penalty.filter((it) => asks(it, 1))).toHaveLength(1);
+    expect(penalty.filter((it) => asks(it, 2))).toHaveLength(1);
+  });
+
+  it('兩題必須在同一考科（否則同一份考卷看不到對照）', () => {
+    const subjects = new Set(penalty.map((it) => it.exam_subject));
+    expect(
+      subjects.size,
+      `Art 26(1)/26(2) 分屬不同考科：${penalty
+        .map((it) => `${who(it)}=${it.exam_subject}`)
+        .join(', ')}`
+    ).toBe(1);
+  });
+
+  it('兩題的罰則規則不得互相抄錯（只有 26(2) 是 3–5 倍）', () => {
+    const a1 = penalty.find((it) => asks(it, 1))!;
+    const a2 = penalty.find((it) => asks(it, 2))!;
+    const ansText = (it: Item) =>
+      it.options.find((o) => o.key === it.answer)?.text ?? '';
+
+    // 26(2)（非授權之人輸入 CBAM 貨物）的正解＝ 26(1) 罰鍰的 3–5 倍
+    expect(ansText(a2)).toMatch(/3\s*[–-]\s*5\s*倍/);
+
+    // 26(1)（授權申報人未繳交憑證）的正解＝按每張憑證處以與 EU ETS 超額排放
+    // 相同之罰鍰；它**不是**倍數罰則。這兩者被混為一談，正是原本那題教錯的地方。
+    expect(ansText(a1)).toMatch(/ETS|超額排放/);
+    expect(ansText(a1)).not.toMatch(/倍/);
+  });
+});
