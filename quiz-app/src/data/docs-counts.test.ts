@@ -12,6 +12,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import datasetRaw from './integrated_dataset.json';
 import poolRaw from './practice_pool.json';
+import manifestRaw from './restoration-manifest.json';
 
 interface Item {
   quality_flags?: string[];
@@ -30,6 +31,12 @@ const TIME_SENSITIVE = ALL.filter((i) => (i.quality_flags ?? []).includes('time_
 const POOL_TOTAL = POOL.items.length;
 const REVERIFIED = DS.meta.content_review.reverified_count;
 
+const MAN = manifestRaw as unknown as {
+  _meta: { restored_count: number; source_question_total: number };
+};
+const RESTORED_COUNT = MAN._meta.restored_count;      // 159
+const SOURCE_TOTAL = MAN._meta.source_question_total; // 170
+
 // repo root = quiz-app/src/data -> ../../..
 const root = resolve(__dirname, '..', '..', '..');
 const read = (f: string) => readFileSync(resolve(root, f), 'utf8');
@@ -42,31 +49,45 @@ const CURRENCY = read('CONTENT-CURRENCY.md');
 // 同一個數字散在五個地方、沒有一個地方在對帳，漂移是遲早的事。
 const INDEX_HTML = read('quiz-app/index.html');
 const LLMS_TXT = read('quiz-app/public/llms.txt');
+// README 精簡後，證據鏈的細節搬到 DATA-PROVENANCE.md —— 那裡也寫著題數（159 還原、
+// 170 來源題）。**任何寫著數字的檔案都必須進這道 gate**，否則就只是把漂移搬到一個
+// 沒人看守的地方，重蹈這整輪在修的覆轍。
+const PROVENANCE = read('DATA-PROVENANCE.md');
 
 describe('文件的題數必須與資料一致', () => {
-  it('README「N 題主題庫」必須等於 meta.total_questions', () => {
-    const m = README.match(/\*\*(\d+)\s*題主題庫\*\*/);
-    expect(m, 'README 找不到「**N 題主題庫**」').not.toBeNull();
+  it('README 的主題庫題數（表格）必須等於 meta.total_questions', () => {
+    const m = README.match(/\*\*主題庫\*\*\s*\|\s*\*\*(\d+)\s*題\*\*/);
+    expect(m, 'README 找不到「| **主題庫** | **N 題** |」').not.toBeNull();
     expect(Number(m![1])).toBe(TOTAL);
   });
 
-  it('README「N 題補充題」必須等於練習池題數', () => {
-    const m = README.match(/額外提供\s*(\d+)\s*題補充題/);
-    expect(m, 'README 找不到「額外提供 N 題補充題」').not.toBeNull();
+  it('README 的加強練習池題數（表格）必須等於練習池題數', () => {
+    const m = README.match(/\*\*加強練習池\*\*[^|]*\|\s*\*\*(\d+)\s*題\*\*/);
+    expect(m, 'README 找不到「| **加強練習池**… | **N 題** |」').not.toBeNull();
     expect(Number(m![1])).toBe(POOL_TOTAL);
   });
 
   it('README「N 題的答案會隨法規變動」必須等於 time_sensitive 題數', () => {
-    const m = README.match(/題庫中有\s*(\d+)\s*題的答案會隨法規變動/);
-    expect(m, 'README 找不到「題庫中有 N 題的答案會隨法規變動」').not.toBeNull();
+    const m = README.match(/\*\*(\d+)\s*題\*\*的答案會隨法規變動/);
+    expect(m, 'README 找不到「**N 題**的答案會隨法規變動」').not.toBeNull();
     expect(Number(m![1])).toBe(TIME_SENSITIVE);
   });
 
-  it('README「本輪只實查 X/Y 題」必須等於 reverified_count / total', () => {
-    const m = README.match(/本輪只實查\s*(\d+)\s*\/\s*(\d+)\s*題/);
-    expect(m, 'README 找不到「本輪只實查 X/Y 題」').not.toBeNull();
+  it('README「本輪只實查 X / Y 題」必須等於 reverified_count / total', () => {
+    const m = README.match(/本輪只實查\s*\*\*(\d+)\s*\/\s*(\d+)\*\*\s*題/);
+    expect(m, 'README 找不到「本輪只實查 **X / Y** 題」').not.toBeNull();
     expect(Number(m![1])).toBe(REVERIFIED);
     expect(Number(m![2])).toBe(TOTAL);
+  });
+
+  // README 精簡時，「159 題重建」這個數字從 README 移到了 DATA-PROVENANCE.md。
+  // 它同時出現在兩個地方（README 的信任摘要 + DATA-PROVENANCE 的細節），兩邊都要對。
+  it('README 與 DATA-PROVENANCE 宣稱的「N 題由來源 PDF 重建」必須一致且等於 manifest', () => {
+    const inReadme = README.match(/(\d+)\s*題由來源 PDF/);
+    const inProv = PROVENANCE.match(/\*\*(\d+)\s*題\*\*是從來源 PDF 重建|(\d+)\s*題是從來源 PDF/);
+    expect(inReadme, 'README 找不到「N 題由來源 PDF …」').not.toBeNull();
+    expect(Number(inReadme![1])).toBe(RESTORED_COUNT);
+    expect(inProv, 'DATA-PROVENANCE 找不到還原題數').not.toBeNull();
   });
 
   it('CONTENT-CURRENCY「本輪只實查了 X / Y 題」必須與資料一致', () => {
@@ -125,5 +146,43 @@ describe('對外門面（index.html / llms.txt）的題數必須與資料一致'
     const url = m![1];
     expect(url).toMatch(/^https:\/\//);
     expect(url).toMatch(/\.(jpg|jpeg|png|webp)$/i);
+  });
+});
+
+// DATA-PROVENANCE.md 是「證據鏈」的說明文件 —— 它自己就寫著 159（還原）與 170（來源總題數）。
+// 這些數字如果跟 manifest 漂掉，那份文件就變成在為一條不存在的證據鏈背書。
+//
+// 這正是 README 精簡時最容易踩的坑：把數字搬到一個新檔案，卻忘了把 gate 一起搬過去 ——
+// 於是「文件不能對資料說謊」這個保證，在新檔案上直接失效。
+describe('DATA-PROVENANCE.md 的數字必須與 manifest 一致', () => {
+  it('「159 題」還原數必須等於 manifest 的 restored_count', () => {
+    const hits = [...PROVENANCE.matchAll(/(\d+)\s*題(?:是從|由)來源 PDF 重建/g)].map((m) => Number(m[1]));
+    expect(hits.length, 'DATA-PROVENANCE 找不到「N 題（是從|由）來源 PDF 重建」').toBeGreaterThan(0);
+    for (const n of hits) expect(n).toBe(RESTORED_COUNT);
+  });
+
+  it('「170 題」來源總題數必須等於 manifest 的 source_question_total', () => {
+    const m = PROVENANCE.match(/全部\s*\*\*(\d+)\s*題\*\*/);
+    expect(m, 'DATA-PROVENANCE 找不到「來源 PDF 全部 **N 題**」').not.toBeNull();
+    expect(Number(m![1])).toBe(SOURCE_TOTAL);
+  });
+
+  it('disposition 表格裡的數字必須與 manifest 實際相符', () => {
+    // 表格形如：| `restored` | 159 | … |   與   | `UNACCOUNTED` | **0** | … |
+    const restored = PROVENANCE.match(/\|\s*`restored`\s*\|\s*\**(\d+)\**\s*\|/);
+    expect(restored, 'DATA-PROVENANCE 的 disposition 表格找不到 restored').not.toBeNull();
+    expect(Number(restored![1])).toBe(RESTORED_COUNT);
+
+    const unaccounted = PROVENANCE.match(/\|\s*`UNACCOUNTED`\s*\|\s*\**(\d+)\**\s*\|/);
+    expect(unaccounted, '找不到 UNACCOUNTED').not.toBeNull();
+    expect(
+      Number(unaccounted![1]),
+      'UNACCOUNTED 必須是 0 —— 只要有一題下落不明，這份證據鏈就不成立'
+    ).toBe(0);
+  });
+
+  it('README 必須連到 CONTENT-CURRENCY 與 DATA-PROVENANCE（否則細節等於被藏起來）', () => {
+    expect(README).toMatch(/\(CONTENT-CURRENCY\.md\)/);
+    expect(README).toMatch(/\(DATA-PROVENANCE\.md\)/);
   });
 });
