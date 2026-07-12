@@ -1,15 +1,10 @@
-# 淨零碳規劃管理師備考神器
+# 淨零碳規劃管理師備考神器 | iPAS 淨零碳規劃管理師考古題
 
-> iPAS 淨零碳規劃管理師（初級）考古題線上練習 —— **免費、免註冊、開啟即用**。
-> 每題附一手來源連結；答案與文件對不上時，CI 會擋下來。
-
-[![Deploy](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-deploy.yml/badge.svg)](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-deploy.yml)
-[![CI](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-ci.yml/badge.svg?branch=main)](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-ci.yml)
+[![Deploy Quiz App to GitHub Pages](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-deploy.yml/badge.svg)](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-deploy.yml)
+[![Quiz App CI](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-ci.yml/badge.svg?branch=main)](https://github.com/thc1006/ipas-net-zero-quiz/actions/workflows/quiz-app-ci.yml)
 [![codecov](https://codecov.io/gh/thc1006/ipas-net-zero-quiz/branch/main/graph/badge.svg)](https://codecov.io/gh/thc1006/ipas-net-zero-quiz)
 
-## ▶ 線上使用：<https://thc1006.github.io/ipas-net-zero-quiz/>
-
-![淨零碳規劃管理師（初級）認證 線上練習與考古題庫](quiz-app/public/thumbnail.jpg)
+線上測驗：**<https://thc1006.github.io/ipas-net-zero-quiz/>**
 
 ## 題庫
 
@@ -32,30 +27,36 @@ CBAM、ISO 14068-1 屬**科目一**；**科目二只涵蓋 ISO 14064-1 與 ISO 1
 
 ## 這份題庫可不可信
 
-> ⚠️ **非官方**備考輔助，題庫仍可能有錯，**最終以 iPAS 官方公告為準**。
-> iPAS 不公開歷屆試題，本題庫整理自公開資料與社群共筆。
-
 我們把「可不可信」做成**可以自己驗證的東西**，而不是一句宣稱：
 
 - **每題有出處** —— `sources` / `provenance` 欄位；答案修正一律附實測可達的一手來源 URL
 - **重建的題目有證據鏈** —— 159 題逐題記錄來自哪一份 PDF（含 sha256）的哪一頁、哪一欄、
   第幾題，以及 PDF 自己印的 answer key。跑 `python tools/restore_from_source_pdf.py --verify`
   可完整重現（實測 **159/159** 相符）
-- **時效性是公開的** —— **112 題**的答案會隨法規變動（CBAM、碳費、NDC、碳中和標準）
+- **AI 產題與人工整理的題目嚴格隔離** —— AI 產題不會混進主題庫，UI 也會標示
 - **文件不能對資料說謊** —— README、網站文案、`llms.txt`、甚至 GitHub 的 About，
   上面每個題數都由 CI 對著資料實算比對，對不上就擋下 merge
 
-三件必須誠實講清楚的事：
-
-1. **「查證日期」不代表整份題庫都查到那天** —— 本輪只實查 **100 / 780** 題。
-   單一題目請看該題的 `metadata.valid_as_of`。
-2. **季排程的連結檢查只驗網址還通不通，驗不出內容變了** ——
-   CBAM 繳交期限從 5/31 改成 9/30 時，網址全程都是活的。**綠燈不等於內容正確。**
-3. **AI 產題與人工整理的題目嚴格隔離**，AI 產題不會混進主題庫。
-
-📎 已查證到哪一天、**還有什麼沒確定**、下一個到期日（最近：**2026-12-15 ISAE 3410 撤回**）
-→ [`CONTENT-CURRENCY.md`](CONTENT-CURRENCY.md)
 📎 證據鏈、還原方法、CI gate 如何驗證上述宣稱 → [`DATA-PROVENANCE.md`](DATA-PROVENANCE.md)
+
+## 免責
+
+本工具為非官方 iPAS 備考輔助，題庫整理可能含錯誤，最終以 iPAS 官方公告為準。
+本專案不就內容正確性、可考性、或考試結果提供任何保證。
+（iPAS 不公開歷屆試題，本題庫整理自公開資料與社群共筆。）
+
+## 內容時效性
+
+題庫中有 **112 題**的答案會隨法規變動（CBAM、碳費、NDC、碳中和標準）。
+[`CONTENT-CURRENCY.md`](CONTENT-CURRENCY.md) 記錄已查證到哪一天、**還有什麼沒確定**、
+以及下一個到期日（最近的是 **2026-12-15：ISAE 3410 撤回，由 ISSA 5000 取代**）。
+
+⚠️ `meta.content_review.last_review_date` **不代表整份題庫都查證到那一天** ——
+本輪只實查 **100 / 780** 題。判斷單一題目請看該題的 `metadata.valid_as_of`。
+
+⚠️ `quarterly-time-sensitive-verify` workflow **只驗連結還通不通，驗不出內容變了**
+—— 綠燈不等於內容正確。
+（CBAM 憑證繳交期限 5/31 → 9/30、臺灣 2030 NDC 24%±1% → 28%±2%，網址全程都是活的。）
 
 ## 開發
 

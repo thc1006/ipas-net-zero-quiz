@@ -186,3 +186,29 @@ describe('DATA-PROVENANCE.md 的數字必須與 manifest 一致', () => {
     expect(README).toMatch(/\(DATA-PROVENANCE\.md\)/);
   });
 });
+
+// README 的 H1 是**可被搜尋引擎索引的**（GitHub 會把它當成 repo 首頁的標題）。
+// 考生是靠「iPAS 淨零碳規劃管理師考古題」這類字串找到這個專案的。
+//
+// 精簡 README 時，我為了視覺簡潔把 H1 從
+//   「淨零碳規劃管理師備考神器 | iPAS 淨零碳規劃管理師考古題」
+// 砍成
+//   「淨零碳規劃管理師備考神器」
+// —— 直接刪掉了讓人找得到這個專案的關鍵字，而**沒有任何一條測試會紅**。
+//
+// 「排版好看」不值得用「沒人找得到」去換。標題不是裝飾，是入口。
+describe('README 的 H1 必須保留可被搜尋到的關鍵字', () => {
+  const h1 = README.split('\n').find((l) => l.startsWith('# '));
+
+  it('H1 存在', () => {
+    expect(h1, 'README 沒有 H1').toBeDefined();
+  });
+
+  it.each([
+    ['iPAS', '證照名稱的英文縮寫 —— 考生最常用的搜尋詞'],
+    ['淨零碳規劃管理師', '證照全名'],
+    ['考古題', '考生真正在搜尋的東西'],
+  ])('H1 必須含「%s」（%s）', (kw) => {
+    expect(h1, `H1 掉了關鍵字「${kw}」：${h1}`).toContain(kw);
+  });
+});
