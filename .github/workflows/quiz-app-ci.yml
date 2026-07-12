@@ -32,6 +32,27 @@ defaults:
     working-directory: quiz-app
 
 jobs:
+  # quarterly-time-sensitive-verify 的 URL 狀態分類器（.github/scripts/url-status.sh）。
+  # 之前這段邏輯寫死在 workflow 裡，只能靠「等季排程跑一次、看它報什麼」來驗證，
+  # 所以 catch-all 的 `*) DEAD`（把 503、TLS 錯誤、逾時都當成連結已死）活了很久沒被發現。
+  # 現在抽成獨立 script + 離線 status matrix 測試，每個 PR 都跑。
+  url-status:
+    name: URL status classifier (offline matrix)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Shell syntax check
+        run: bash -n .github/scripts/url-status.sh && bash -n .github/scripts/url-status.test.sh
+
+      - name: Status matrix (no network)
+        run: bash .github/scripts/url-status.test.sh
+
   lint:
     name: Lint & Type Check
     runs-on: ubuntu-latest

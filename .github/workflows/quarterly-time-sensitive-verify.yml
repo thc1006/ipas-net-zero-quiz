@@ -87,62 +87,59 @@ jobs:
           echo "Found $unique_count unique URL(s) across $total_pairs (id, url) pairs"
           cat urls.tsv
 
-      - name: Curl-check URLs (parallel; classify dead vs WAF-blocked)
+      - name: Self-test the status classifier (offline, no network)
+        run: bash .github/scripts/url-status.test.sh
+
+      - name: Curl-check URLs (parallel; 5-way status classification)
         id: curl
         run: |
           set -euo pipefail
 
-          # Per-URL check 函式：
-          # - HEAD 先試（省流量）；CDN/WAF 拒 HEAD（403/405/000）→ fallback GET
-          # - --connect-timeout 5 + --max-time 10：總耗時上限約 20s/URL（HEAD+GET 兩次）
-          # - stdout：失敗時輸出 TSV（url\tids\tstatus），由 xargs 收集為 failures.tsv
-          # - stderr：人類可讀 log（✅/❌），由 GitHub Actions 顯示在 step output
-          # 2026-07 重寫。舊版在 issue #88 產生 9 筆警報，其中 5 筆是假的，成因有三：
+          # 分類邏輯抽在 .github/scripts/url-status.sh，並由 url-status.test.sh 離線測試
+          # （上一個 step）。抽出來的原因：舊版把分類寫死在這裡，只能靠「等季排程跑一次、
+          # 看它報什麼」來驗證，結果 catch-all 的 `*) DEAD` 活了很久沒人發現。
           #
-          #  1. 只接受 HTTP 200。EUR-Lex 正常回 **202 Accepted**，被判定為失效。
-          #     -> 2xx/3xx 一律視為活著。
-          #  2. `status=$(curl ... -w '%{http_code}' || echo "000")` 會「串接」兩個值：
-          #     curl 失敗時 -w 已經印出 000，`|| echo "000"` 再印一次 -> "000000"，
-          #     這種狀態碼不存在，且 `[ "$status" = "000" ]` 永遠不成立，fallback 形同虛設。
-          #     -> 改用 `|| status='000'`（覆寫而非串接）。
-          #  3. 403 幾乎都是 Cloudflare/WAF 擋 Actions runner 的 IP/UA，不是網站掛掉
-          #     （ghgprotocol.org、fsb-tcfd.org、iea.org 用瀏覽器 UA 實測皆為 200）。
-          #     -> 403/405/429 歸類為 BLOCKED，只警告、不開 issue；唯有 404/410/DNS 失敗
-          #        才算 DEAD。把「被擋」當成「死亡」只會製造雜訊，讓人開始無視這個告警。
+          # 舊版的兩個實質錯誤：
+          #  1. `*)` catch-all 把 400/401/408/451/5xx/TLS/逾時/連線重設 全部寫成 DEAD，
+          #     但 issue 文案卻宣稱「只有 404/410/DNS 才算失效」—— 程式與說明不一致。
+          #     網站短暫回 503 就會被報成「連結已死」，等於換個形式再喊一次狼來了。
+          #  2. `|| status='000'` 把 DNS 失敗/TLS 錯誤/逾時/連線拒絕壓成同一個碼，
+          #     事後分不出成因。改為保留 curl 的 exit code（6=DNS 7=connect 28=timeout
+          #     35/60=TLS），才分得出「網域真的沒了」與「網路抖一下」。
+          # shellcheck source=.github/scripts/url-status.sh
+          . .github/scripts/url-status.sh
+
           UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
           export UA
+          export -f classify_url_status status_icon
 
           check_url() {
             local line="$1"
-            local url ids status
+            local url ids http rc cat icon
             url="${line%%$'\t'*}"
             ids="${line#*$'\t'}"
             [ -z "$url" ] && return
 
             # 直接 GET：許多 WAF 擋 HEAD。-o /dev/null 丟棄 body。
             # --retry 2 帶指數退避，吸收暫時性的 5xx / 連線重置。
-            status=$(curl -sL --compressed \
-                       -A "$UA" \
-                       -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' \
-                       -H 'Accept-Language: en-US,en;q=0.9' \
-                       --connect-timeout 10 --max-time 30 \
-                       --retry 2 --retry-delay 2 --retry-connrefused \
-                       -o /dev/null -w '%{http_code}' "$url" 2>/dev/null) || status='000'
+            # 關鍵：http_code 與 curl 的 exit code 分開保留，不再壓成單一個 '000'。
+            http=$(curl -sL --compressed \
+                     -A "$UA" \
+                     -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' \
+                     -H 'Accept-Language: en-US,en;q=0.9' \
+                     --connect-timeout 10 --max-time 30 \
+                     --retry 2 --retry-delay 2 --retry-connrefused \
+                     -o /dev/null -w '%{http_code}' "$url" 2>/dev/null)
+            rc=$?
+            [ -n "$http" ] || http='000'
 
-            case "$status" in
-              2??|3??)
-                printf '✅ %-6s %s (ids: %s)\n' "$status" "$url" "$ids" >&2
-                ;;
-              403|405|429)
-                # 網站活著，只是擋自動化流量。記錄但不視為失效。
-                printf 'BLOCKED\t%s\t%s\t%s\n' "$url" "$ids" "$status"
-                printf '🟡 %-6s %s (ids: %s) — WAF/rate-limit，非失效\n' "$status" "$url" "$ids" >&2
-                ;;
-              *)
-                printf 'DEAD\t%s\t%s\t%s\n' "$url" "$ids" "$status"
-                printf '❌ %-6s %s (ids: %s)\n' "$status" "$url" "$ids" >&2
-                ;;
-            esac
+            cat=$(classify_url_status "$http" "$rc")
+            icon=$(status_icon "$cat")
+
+            # 所有分類都寫進 results.tsv（含 OK），報告才能誠實呈現全貌
+            printf '%s\t%s\t%s\t%s\t%s\n' "$cat" "$url" "$ids" "$http" "$rc"
+            printf '%s %-20s http=%-4s rc=%-3s %s (ids: %s)\n' \
+              "$icon" "$cat" "$http" "$rc" "$url" "$ids" >&2
           }
           export -f check_url
 
@@ -150,17 +147,33 @@ jobs:
           : > results.tsv
           xargs -d '\n' -P 4 -I{} bash -c 'check_url "$@"' _ {} < urls.tsv > results.tsv
 
-          grep -c '^DEAD'    results.tsv > /dev/null 2>&1 && true
-          dead_count=$(grep -c '^DEAD'    results.tsv || true)
-          blocked_count=$(grep -c '^BLOCKED' results.tsv || true)
-          dead_count=${dead_count:-0}
-          blocked_count=${blocked_count:-0}
+          count_of() { grep -c "^$1"$'\t' results.tsv 2>/dev/null || echo 0; }
+          ok=$(count_of OK)
+          dead=$(count_of DEAD)
+          dns=$(count_of UNREACHABLE_DNS)
+          blocked=$(count_of BLOCKED)
+          retryable=$(count_of RETRYABLE)
+          other=$(count_of OTHER)
+          unreach=$(grep -c '^UNREACHABLE_' results.tsv 2>/dev/null || echo 0)
 
-          grep '^DEAD' results.tsv | cut -f2- > failures.tsv || true
+          # 只有 DEAD（404/410）與 DNS 解析失敗（NXDOMAIN）才算「連結真的失效」→ 開 issue。
+          # BLOCKED / RETRYABLE / TLS / 逾時 一律只警告 —— 把它們當成死亡就是在喊狼來了。
+          fail=$((dead + dns))
+          grep -E '^(DEAD|UNREACHABLE_DNS)'$'\t' results.tsv > failures.tsv || true
 
-          echo "fail_count=$dead_count"       >> "$GITHUB_OUTPUT"
-          echo "blocked_count=$blocked_count" >> "$GITHUB_OUTPUT"
-          echo "Dead: $dead_count   Blocked (not a failure): $blocked_count"
+          {
+            echo "fail_count=$fail"
+            echo "ok_count=$ok"
+            echo "dead_count=$dead"
+            echo "dns_count=$dns"
+            echo "blocked_count=$blocked"
+            echo "retryable_count=$retryable"
+            echo "unreachable_count=$unreach"
+            echo "other_count=$other"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "OK=$ok  DEAD=$dead  DNS=$dns  BLOCKED=$blocked  RETRYABLE=$retryable  UNREACHABLE=$unreach  OTHER=$other"
+          echo "→ 視為失效（會開 issue）：$fail"
 
       - name: Open / update issue if failures
         if: steps.curl.outputs.fail_count != '0' && (github.event_name == 'schedule' || github.event.inputs.open_issue == 'true')
@@ -168,30 +181,60 @@ jobs:
         with:
           script: |
             const fs = require('fs');
+            const o = ${{ toJSON(steps.curl.outputs) }};
+
+            // failures.tsv 只含 DEAD 與 UNREACHABLE_DNS —— 與程式的 is_failure() 完全一致。
+            // 這裡的文案必須逐字對應程式行為：上一版宣稱「只有 404/410/DNS 才算失效」，
+            // 但程式其實是 `*) DEAD` catch-all，把 503、TLS 錯誤、逾時都寫成「真的失效」。
+            // 文案與行為不符，就是在製造下一輪的「喊狼來了」。
             const lines = fs.readFileSync('failures.tsv', 'utf8').trim().split('\n').filter(Boolean);
-            const items = lines.map(l => {
-              const [url, ids, status] = l.split('\t');
-              const idList = (ids || '').split(',').filter(Boolean).map(i => `\`${i}\``).join(', ');
-              return `- [${url}](${url}) HTTP ${status} — affected: ${idList}`;
+            const items = lines.map((l) => {
+              const [cat, url, ids, http, rc] = l.split('\t');
+              const idList = (ids || '').split(',').filter(Boolean).map((i) => `\`${i}\``).join(', ');
+              const why = cat === 'UNREACHABLE_DNS'
+                ? `DNS 無法解析（curl exit ${rc}，NXDOMAIN — 網域可能已停用）`
+                : `HTTP ${http}`;
+              return `- [${url}](${url}) — **${cat}**：${why}\n  影響題目：${idList}`;
             }).join('\n');
 
             const today = new Date().toISOString().slice(0, 10);
             const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-            const blocked = '${{ steps.curl.outputs.blocked_count }}';
+
             const body = [
-              `自動 quarterly verify：\`time_sensitive\` 題目的 source URL 有 **${lines.length} 筆真的失效**（${today}）。`,
+              `自動 quarterly verify：\`time_sensitive\` 題目的 source URL 有 **${lines.length} 筆判定為失效**（${today}）。`,
               '',
-              '只列出 **DEAD**（404 / 410 / DNS 解析失敗）。403/405/429 屬於 WAF 或流量限制，',
-              `網站其實活著，不列入失效（本次 ${blocked} 筆）。`,
+              '## 判定失效的只有這兩類（其餘一律不開 issue）',
+              '',
+              '| 分類 | 判定條件 | 本次 |',
+              '|---|---|---|',
+              `| ❌ \`DEAD\` | HTTP **404 / 410** —— 資源真的不存在 | ${o.dead_count} |`,
+              `| ❌ \`UNREACHABLE_DNS\` | curl exit **6** —— 網域無法解析（NXDOMAIN） | ${o.dns_count} |`,
+              '',
+              '## 以下**不算**失效，只列出供參考',
+              '',
+              '| 分類 | 判定條件 | 本次 |',
+              '|---|---|---|',
+              `| ✅ \`OK\` | 2xx / 3xx（**含 202 Accepted** —— EUR-Lex 正常回這個） | ${o.ok_count} |`,
+              `| 🟡 \`BLOCKED\` | 401 / 403 / 405 / 429 / 451 —— WAF 擋 Actions runner，站台活著 | ${o.blocked_count} |`,
+              `| 🔄 \`RETRYABLE\` | 408 / 425 / 500 / 502 / 503 / 504 —— 伺服器暫時性問題，不是連結壞掉 | ${o.retryable_count} |`,
+              `| 🔌 \`UNREACHABLE_*\` | curl exit ≠ 0（7=connect、28=timeout、35/60=TLS） | ${o.unreachable_count} |`,
+              `| ❓ \`OTHER\` | 其餘 HTTP 碼 —— 明示列出，**不靜默歸成 DEAD** | ${o.other_count} |`,
+              '',
+              '## 失效清單',
               '',
               items,
               '',
-              '**動作項目**：',
-              '1. 確認 source 是搬家還是內容本身被撤（例：ISAE 3410 已於 2026-12-15 由 ISSA 5000 取代，',
-              '   死鏈可能代表「標準被廢止」而不只是「網址變了」）',
-              '2. 比對題目選項是否仍與最新 source 一致',
-              '3. 不一致 → 修正答案 + 更新 `metadata.verification_date` + 附新 source URL（實測 2xx）',
-              '4. 找不到替代且內容確已失效 → 移除題目（同步更新 `_meta.totals` + `practice-pool-counts.ts`）',
+              '## 動作項目',
+              '',
+              '1. 確認 source 是**搬家**還是**內容本身被撤**。死鏈有時代表「標準被廢止」而不只是',
+              '   「網址變了」—— 例：IAASB 那筆 404 是因為 **ISAE 3410 將於 2026-12-15 由 ISSA 5000 取代**。',
+              '2. 比對題目選項是否仍與最新 source 一致。',
+              '3. 不一致 → 修正答案 + 更新 `metadata.verification_date` + 附新 source URL（實測 2xx/3xx）。',
+              '4. 找不到替代且內容確已失效 → 移除題目（同步更新 `_meta.totals` + `practice-pool-counts.ts`）。',
+              '',
+              '> ⚠️ 這個 workflow **只驗連結還通不通，驗不出內容變了**。一個回 200 的網址，內容照樣',
+              '> 可能已經和題目對不上（CBAM 憑證繳交期限 5/31 → 9/30、臺灣 2030 NDC 24%±1% → 28%±2%，',
+              '> 網址全程都是活的）。內容時效性見 `CONTENT-CURRENCY.md`。',
               '',
               `Run: ${runUrl}`,
             ].join('\n');
@@ -232,9 +275,17 @@ jobs:
           {
             echo "## Quarterly time-sensitive verify summary"
             echo ""
-            echo "- URLs checked: ${{ steps.list.outputs.count }}"
-            echo "- ❌ Dead (404 / 410 / DNS): ${{ steps.curl.outputs.fail_count }}"
-            echo "- 🟡 Blocked by WAF / rate-limit (site is alive, NOT a failure): ${{ steps.curl.outputs.blocked_count }}"
+            echo "URLs checked: **${{ steps.list.outputs.count }}**"
+            echo ""
+            echo "| 分類 | 判定條件 | 數量 | 開 issue？ |"
+            echo "|---|---|---:|---|"
+            echo "| ✅ OK | 2xx / 3xx（含 202 Accepted） | ${{ steps.curl.outputs.ok_count }} | — |"
+            echo "| ❌ DEAD | 404 / 410 | ${{ steps.curl.outputs.dead_count }} | **是** |"
+            echo "| ❌ UNREACHABLE_DNS | curl exit 6（NXDOMAIN） | ${{ steps.curl.outputs.dns_count }} | **是** |"
+            echo "| 🟡 BLOCKED | 401/403/405/429/451（WAF，站台活著） | ${{ steps.curl.outputs.blocked_count }} | 否 |"
+            echo "| 🔄 RETRYABLE | 408/425/500/502/503/504（伺服器暫時性） | ${{ steps.curl.outputs.retryable_count }} | 否 |"
+            echo "| 🔌 UNREACHABLE_* | curl exit≠0（7/28/35/60） | ${{ steps.curl.outputs.unreachable_count }} | 否 |"
+            echo "| ❓ OTHER | 其餘 HTTP 碼（明示，不靜默歸成 DEAD） | ${{ steps.curl.outputs.other_count }} | 否 |"
             echo ""
             echo "> ⚠️ 這個 workflow 只檢查「連結還通不通」，**驗不出內容變了**。"
             echo "> 一個回 200 的網址，內容照樣可能已經和題目對不上"
