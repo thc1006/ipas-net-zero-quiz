@@ -137,11 +137,31 @@ jq '.items[] | select(.quality_flags | index("time_sensitive")) | {id, stem: (.s
 
 ### 內容時效性
 
-題庫中有 119 題的答案會隨法規變動（CBAM、碳費、NDC、碳中和標準）。
+題庫中有 115 題的答案會隨法規變動（CBAM、碳費、NDC、碳中和標準）。
 [`CONTENT-CURRENCY.md`](CONTENT-CURRENCY.md) 記錄已查證到哪一天、**還有什麼沒確定**、以及下一個到期日
 （最近的是 **2026-12-15：ISAE 3410 撤回，由 ISSA 5000 取代**）。
 
+⚠️ `meta.content_review.last_review_date` **不代表整份題庫都查證到那一天** —— 本輪只實查 103/783 題。
+判斷單一題目請看該題的 `metadata.valid_as_of`。
+
 ⚠️ `quarterly-time-sensitive-verify` workflow **只驗連結還通不通，驗不出內容變了** —— 綠燈不等於內容正確。
+
+### 還原題的可重現性
+
+主題庫中有 159 題是從來源 PDF 重建的（2026-01-23 的清理把雙欄錯置的題目直接刪掉，
+而非修復）。[`restoration-manifest.json`](quiz-app/src/data/restoration-manifest.json)
+記錄每一題來自哪一份 PDF（含 **sha256**）的**哪一頁、哪一欄、第幾題**，以及 PDF 自己印的 **answer key**。
+
+```bash
+# CI 不下載 PDF：只驗 manifest ↔ dataset 一致（防竄改），離線秒級。
+pnpm vitest run src/data/restoration-manifest.test.ts
+
+# 完整重現（人工）：重新下載 PDF、比對 sha256、重跑分欄擷取、逐題核對。
+pip install pdfplumber
+python tools/restore_from_source_pdf.py --verify
+```
+
+實測 **159/159** 相符（頁碼／欄位／題號／answer key／PDF 文字 hash／repo 文字 hash）。
 
 ## 問題回報
 
