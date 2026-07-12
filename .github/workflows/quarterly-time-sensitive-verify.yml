@@ -87,10 +87,28 @@ jobs:
           echo "Found $unique_count unique URL(s) across $total_pairs (id, url) pairs"
           cat urls.tsv
 
-      - name: Self-test the status classifier (offline, no network)
-        run: bash .github/scripts/url-status.test.sh
+      - name: Self-test classifier + glue + aggregation (offline, no network)
+        run: |
+          bash .github/scripts/url-status.test.sh
+          bash .github/scripts/check-url.test.sh
+          bash .github/scripts/aggregate-results.test.sh
 
-      - name: Curl-check URLs (parallel; 5-way status classification)
+      # 沒有 dig 就無法向獨立 resolver 確認 NXDOMAIN，resolve_dns_status 會回 UNKNOWN，
+      # 於是 DEAD_DNS **永遠不會觸發** —— 網域真的停用了也不會開 issue。
+      # 這種「安靜地少報」比誤報更難發現，所以這裡明確確保 dig 存在，並在拿不到時大聲警告。
+      - name: Ensure dig is available (needed to confirm NXDOMAIN)
+        run: |
+          if ! command -v dig > /dev/null 2>&1; then
+            echo "::warning::dig 不存在，安裝 bind9-dnsutils"
+            sudo apt-get update -qq && sudo apt-get install -y -qq bind9-dnsutils
+          fi
+          if command -v dig > /dev/null 2>&1; then
+            echo "dig OK: $(dig -v 2>&1 | head -1)"
+          else
+            echo "::warning::仍然沒有 dig —— DNS 解析失敗一律降級成 UNREACHABLE_DNS（只警告、不開 issue）。寧可漏報，不要誤報。"
+          fi
+
+      - name: Curl-check URLs (parallel; 7-way status classification)
         id: curl
         run: |
           set -euo pipefail
@@ -106,77 +124,34 @@ jobs:
           #  2. `|| status='000'` 把 DNS 失敗/TLS 錯誤/逾時/連線拒絕壓成同一個碼，
           #     事後分不出成因。改為保留 curl 的 exit code（6=DNS 7=connect 28=timeout
           #     35/60=TLS），才分得出「網域真的沒了」與「網路抖一下」。
-          # shellcheck source=.github/scripts/url-status.sh
-          . .github/scripts/url-status.sh
+          # check_url 本身也抽成 .github/scripts/check-url.sh，並由 check-url.test.sh
+          # 用「假的 curl / 假的 dig」離線把每條路徑跑過一遍。
+          #
+          # 為什麼連這段 glue 都要抽：分類器與聚合都有測試了，但「要不要做 DNS 二次確認、
+          # 有沒有把結果餵給分類器」的那幾行原本只活在這個 `run:` 區塊裡，沒有任何測試碰得到。
+          # 而 glue 正是 bug 的居所 —— 只要忘記把 $dns 傳進 classify_url_status，
+          # DEAD_DNS 就永遠不會觸發，網域真的停用也不會開 issue，而且測試照樣全綠。
+          # 事實上這支 glue 測試一寫出來，第一次跑就抓到 resolve_dns_status 的
+          # 「單一 resolver 說 NXDOMAIN 就升級」的漏洞（見該檔註解）。
+          # shellcheck source=.github/scripts/check-url.sh
+          . .github/scripts/check-url.sh
 
-          UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
-          export UA
-          export -f classify_url_status status_icon count_exact count_prefix
-
-          check_url() {
-            local line="$1"
-            local url ids http rc cat icon
-            url="${line%%$'\t'*}"
-            ids="${line#*$'\t'}"
-            [ -z "$url" ] && return
-
-            # 直接 GET：許多 WAF 擋 HEAD。-o /dev/null 丟棄 body。
-            # --retry 2 帶指數退避，吸收暫時性的 5xx / 連線重置。
-            # 關鍵：http_code 與 curl 的 exit code 分開保留，不再壓成單一個 '000'。
-            http=$(curl -sL --compressed \
-                     -A "$UA" \
-                     -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' \
-                     -H 'Accept-Language: en-US,en;q=0.9' \
-                     --connect-timeout 10 --max-time 30 \
-                     --retry 2 --retry-delay 2 --retry-connrefused \
-                     -o /dev/null -w '%{http_code}' "$url" 2>/dev/null)
-            rc=$?
-            [ -n "$http" ] || http='000'
-
-            cat=$(classify_url_status "$http" "$rc")
-            icon=$(status_icon "$cat")
-
-            # 所有分類都寫進 results.tsv（含 OK），報告才能誠實呈現全貌
-            printf '%s\t%s\t%s\t%s\t%s\n' "$cat" "$url" "$ids" "$http" "$rc"
-            printf '%s %-20s http=%-4s rc=%-3s %s (ids: %s)\n' \
-              "$icon" "$cat" "$http" "$rc" "$url" "$ids" >&2
-          }
-          export -f check_url
+          export -f check_url classify_url_status status_icon resolve_dns_status dig_status url_host
+          export CURL_BIN HTTP_UA
 
           # 並行 4 worker。POSIX 保證 < PIPE_BUF (4096) bytes 的 write 為 atomic，每行遠低於此。
           : > results.tsv
           xargs -d '\n' -P 4 -I{} bash -c 'check_url "$@"' _ {} < urls.tsv > results.tsv
 
-          # count_exact / count_prefix 來自 url-status.sh，且有離線測試涵蓋「分類為 0」的情況。
-          # 千萬不要退回 `grep -c ... || echo 0` —— grep -c 找不到時會印 0 且 exit 1，
-          # `||` 於是又印一次，得到 $'0\n0'，接著 $(( ... )) 直接 syntax error，
-          # 而 set -euo pipefail 會讓整個 step 爆掉（且幾乎每次健康的執行都會踩到）。
-          ok=$(count_exact OK)
-          dead=$(count_exact DEAD)
-          dns=$(count_exact UNREACHABLE_DNS)
-          blocked=$(count_exact BLOCKED)
-          retryable=$(count_exact RETRYABLE)
-          other=$(count_exact OTHER)
-          unreach=$(count_prefix UNREACHABLE_)
-
-          # 只有 DEAD（404/410）與 DNS 解析失敗（NXDOMAIN）才算「連結真的失效」→ 開 issue。
-          # BLOCKED / RETRYABLE / TLS / 逾時 一律只警告 —— 把它們當成死亡就是在喊狼來了。
-          fail=$((dead + dns))
-          grep -E '^(DEAD|UNREACHABLE_DNS)'$'\t' results.tsv > failures.tsv || true
-
-          {
-            echo "fail_count=$fail"
-            echo "ok_count=$ok"
-            echo "dead_count=$dead"
-            echo "dns_count=$dns"
-            echo "blocked_count=$blocked"
-            echo "retryable_count=$retryable"
-            echo "unreachable_count=$unreach"
-            echo "other_count=$other"
-          } >> "$GITHUB_OUTPUT"
-
-          echo "OK=$ok  DEAD=$dead  DNS=$dns  BLOCKED=$blocked  RETRYABLE=$retryable  UNREACHABLE=$unreach  OTHER=$other"
-          echo "→ 視為失效（會開 issue）：$fail"
+          # 聚合與 $GITHUB_OUTPUT 產生抽在 aggregate-results.sh，並由
+          # aggregate-results.test.sh 離線餵 fixture 測（含「所有分類皆為 0」的健康情境）。
+          #
+          # 為什麼要抽出來：`grep -c ... || echo 0` 產生 $'0\n0'、讓 $(( )) syntax error
+          # 進而炸掉整個 step 的那個 bug，就發生在這一段 —— 而當時的離線測試只驗到分類器，
+          # 完全沒碰聚合。把最容易出錯的那一段排除在測試之外，等於沒測。
+          # shellcheck source=.github/scripts/aggregate-results.sh
+          . .github/scripts/aggregate-results.sh
+          aggregate_results results.tsv "$GITHUB_OUTPUT"
 
       - name: Open / update issue if failures
         if: steps.curl.outputs.fail_count != '0' && (github.event_name == 'schedule' || github.event.inputs.open_issue == 'true')
@@ -186,7 +161,7 @@ jobs:
             const fs = require('fs');
             const o = ${{ toJSON(steps.curl.outputs) }};
 
-            // failures.tsv 只含 DEAD 與 UNREACHABLE_DNS —— 與程式的 is_failure() 完全一致。
+            // failures.tsv 只含 DEAD 與 DEAD_DNS —— 與程式的 is_failure() 完全一致。
             // 這裡的文案必須逐字對應程式行為：上一版宣稱「只有 404/410/DNS 才算失效」，
             // 但程式其實是 `*) DEAD` catch-all，把 503、TLS 錯誤、逾時都寫成「真的失效」。
             // 文案與行為不符，就是在製造下一輪的「喊狼來了」。
@@ -194,8 +169,8 @@ jobs:
             const items = lines.map((l) => {
               const [cat, url, ids, http, rc] = l.split('\t');
               const idList = (ids || '').split(',').filter(Boolean).map((i) => `\`${i}\``).join(', ');
-              const why = cat === 'UNREACHABLE_DNS'
-                ? `DNS 無法解析（curl exit ${rc}，NXDOMAIN — 網域可能已停用）`
+              const why = cat === 'DEAD_DNS'
+                ? `網域不存在（curl exit ${rc}，且 1.1.1.1 與 8.8.8.8 兩個獨立 resolver 都回 NXDOMAIN）`
                 : `HTTP ${http}`;
               return `- [${url}](${url}) — **${cat}**：${why}\n  影響題目：${idList}`;
             }).join('\n');
@@ -211,17 +186,20 @@ jobs:
               '| 分類 | 判定條件 | 本次 |',
               '|---|---|---|',
               `| ❌ \`DEAD\` | HTTP **404 / 410** —— 資源真的不存在 | ${o.dead_count} |`,
-              `| ❌ \`UNREACHABLE_DNS\` | curl exit **6** —— 網域無法解析（NXDOMAIN） | ${o.dns_count} |`,
+              `| ❌ \`DEAD_DNS\` | curl exit **6**，**且** 1.1.1.1 與 8.8.8.8 兩個獨立 resolver 都回 **NXDOMAIN** | ${o.dead_dns_count} |`,
               '',
               '## 以下**不算**失效，只列出供參考',
               '',
               '| 分類 | 判定條件 | 本次 |',
               '|---|---|---|',
               `| ✅ \`OK\` | 2xx / 3xx（**含 202 Accepted** —— EUR-Lex 正常回這個） | ${o.ok_count} |`,
+              `| 🔌 \`UNREACHABLE_DNS\` | curl exit 6，但**沒有**兩個 resolver 確認 NXDOMAIN —— 可能只是 resolver 抖動 | ${o.dns_count} |`,
               `| 🟡 \`BLOCKED\` | 401 / 403 / 405 / 429 / 451 —— WAF 擋 Actions runner，站台活著 | ${o.blocked_count} |`,
               `| 🔄 \`RETRYABLE\` | 408 / 425 / 500 / 502 / 503 / 504 —— 伺服器暫時性問題，不是連結壞掉 | ${o.retryable_count} |`,
-              `| 🔌 \`UNREACHABLE_*\` | curl exit ≠ 0（7=connect、28=timeout、35/60=TLS） | ${o.unreachable_count} |`,
+              `| 🔌 \`UNREACHABLE_*\`（非 DNS） | curl exit ≠ 0（7=connect、28=timeout、35/60=TLS） | ${o.unreachable_count} |`,
               `| ❓ \`OTHER\` | 其餘 HTTP 碼 —— 明示列出，**不靜默歸成 DEAD** | ${o.other_count} |`,
+              '',
+              `各分類加總 = ${o.total_count}（＝實際檢查的 URL 數；若對不起來代表有分類被重複計數）`,
               '',
               '## 失效清單',
               '',
@@ -284,11 +262,17 @@ jobs:
             echo "|---|---|---:|---|"
             echo "| ✅ OK | 2xx / 3xx（含 202 Accepted） | ${{ steps.curl.outputs.ok_count }} | — |"
             echo "| ❌ DEAD | 404 / 410 | ${{ steps.curl.outputs.dead_count }} | **是** |"
-            echo "| ❌ UNREACHABLE_DNS | curl exit 6（NXDOMAIN） | ${{ steps.curl.outputs.dns_count }} | **是** |"
+            echo "| ❌ DEAD_DNS | curl exit 6 **且** 兩個獨立 resolver 都回 NXDOMAIN | ${{ steps.curl.outputs.dead_dns_count }} | **是** |"
+            echo "| 🔌 UNREACHABLE_DNS | curl exit 6，但未經兩個 resolver 確認（可能只是抖動） | ${{ steps.curl.outputs.dns_count }} | 否 |"
             echo "| 🟡 BLOCKED | 401/403/405/429/451（WAF，站台活著） | ${{ steps.curl.outputs.blocked_count }} | 否 |"
             echo "| 🔄 RETRYABLE | 408/425/500/502/503/504（伺服器暫時性） | ${{ steps.curl.outputs.retryable_count }} | 否 |"
-            echo "| 🔌 UNREACHABLE_* | curl exit≠0（7/28/35/60） | ${{ steps.curl.outputs.unreachable_count }} | 否 |"
+            echo "| 🔌 UNREACHABLE_*（非 DNS） | curl exit≠0（7/28/35/60） | ${{ steps.curl.outputs.unreachable_count }} | 否 |"
             echo "| ❓ OTHER | 其餘 HTTP 碼（明示，不靜默歸成 DEAD） | ${{ steps.curl.outputs.other_count }} | 否 |"
+            echo "| **合計** | | **${{ steps.curl.outputs.total_count }}** | |"
+            echo ""
+            echo "> curl exit 6 只代表「無法解析主機」，**不等於 NXDOMAIN** —— 暫時性 resolver 故障、"
+            echo "> SERVFAIL、runner 自己的 DNS 問題都長成同一個 exit code。只有 1.1.1.1 與 8.8.8.8"
+            echo "> 兩邊都回 NXDOMAIN 才升級成 DEAD_DNS 並開 issue。寧可漏報，不要誤報。"
             echo ""
             echo "> ⚠️ 這個 workflow 只檢查「連結還通不通」，**驗不出內容變了**。"
             echo "> 一個回 200 的網址，內容照樣可能已經和題目對不上"

@@ -69,7 +69,7 @@ check 501 0 OTHER
 check 505 0 OTHER
 
 echo '── UNREACHABLE：curl 失敗，保留 exit code 以區分成因 ────────'
-check 000 6  UNREACHABLE_DNS     '← NXDOMAIN，例如 ghg.tgpf.org.tw'
+check 000 6  UNREACHABLE_DNS     '← 單次 exit 6：只警告，不敢斷言 NXDOMAIN'
 check 000 7  UNREACHABLE_CONNECT
 check 000 28 UNREACHABLE_TIMEOUT
 check 000 35 UNREACHABLE_TLS
@@ -77,13 +77,32 @@ check 000 60 UNREACHABLE_TLS
 check 000 99 UNREACHABLE_OTHER
 check 200 6  UNREACHABLE_DNS     '← curl 失敗時 exit code 優先於 http_code'
 
+echo '── DNS：exit 6 只有在獨立 resolver 也確認 NXDOMAIN 時才算真死 ──'
+# curl 的 exit 6 官方定義只是「Couldn't resolve host」，不保證是 NXDOMAIN。
+# 暫時性 resolver 故障 / SERVFAIL / runner 自己的 DNS 問題都長成同一個碼。
+check_dns() {
+  local http="$1" rc="$2" verdict="$3" expected="$4" note="${5:-}"
+  local got; got="$(classify_url_status "$http" "$rc" "$verdict")"
+  if [ "$got" = "$expected" ]; then pass=$((pass + 1)); else
+    fail=$((fail + 1))
+    printf '  ✗ http=%-4s exit=%-2s dns=%-9s 期望 %-18s 實得 %-18s %s
+'       "$http" "$rc" "$verdict" "$expected" "$got" "$note"
+  fi
+}
+check_dns 000 6 NXDOMAIN DEAD_DNS        '← 兩個獨立 resolver 都說 NXDOMAIN -> 真的死了'
+check_dns 000 6 SERVFAIL UNREACHABLE_DNS '← SERVFAIL 是 resolver 故障，不是網域沒了'
+check_dns 000 6 NOERROR  UNREACHABLE_DNS '← 解析得到卻連不上 -> 不是 NXDOMAIN'
+check_dns 000 6 UNKNOWN  UNREACHABLE_DNS '← 拿不到 dig -> 寧可漏報，不要誤報'
+check_dns 000 6 ''       UNREACHABLE_DNS '← 沒給 verdict -> 保守處理'
+check_dns 000 7 NXDOMAIN UNREACHABLE_CONNECT '← verdict 只在 exit 6 時有意義'
+
 echo '── is_failure：只有 DEAD 與 DNS 失敗才開 issue ──────────────'
-for s in DEAD UNREACHABLE_DNS; do
+for s in DEAD DEAD_DNS; do
   if is_failure "$s"; then pass=$((pass + 1)); else
     fail=$((fail + 1)); echo "  ✗ is_failure($s) 應為 true"
   fi
 done
-for s in OK BLOCKED RETRYABLE UNREACHABLE_TIMEOUT UNREACHABLE_TLS UNREACHABLE_CONNECT OTHER; do
+for s in OK BLOCKED RETRYABLE UNREACHABLE_DNS UNREACHABLE_TIMEOUT UNREACHABLE_TLS UNREACHABLE_CONNECT OTHER; do
   if is_failure "$s"; then
     fail=$((fail + 1)); echo "  ✗ is_failure($s) 應為 false —— 這會再次製造『喊狼來了』"
   else pass=$((pass + 1)); fi
@@ -161,9 +180,12 @@ check_count 'count_exact UNREACHABLE_DNS'    1 "$(count_exact UNREACHABLE_DNS "$
 check_count 'count_prefix UNREACHABLE_（3 個）' 3 "$(count_prefix UNREACHABLE_ "$FIX")"
 check_count 'count_exact UNREACHABLE_（精確比對，0 筆）' 0 "$(count_exact UNREACHABLE_ "$FIX")"
 
-# 會開 issue 的 = DEAD + DNS = 3
-d=$(count_exact DEAD "$FIX"); n=$(count_exact UNREACHABLE_DNS "$FIX")
-check_count '會開 issue 的筆數 (DEAD + DNS)' 3 "$((d + n))"
+# 會開 issue 的 = DEAD + DEAD_DNS。
+# UNREACHABLE_DNS **不算** —— curl exit 6 不保證是 NXDOMAIN，單次解析失敗只警告。
+# 這個 fixture 有 2 筆 DEAD、1 筆 UNREACHABLE_DNS、0 筆 DEAD_DNS -> 應為 2。
+d=$(count_exact DEAD "$FIX"); dd=$(count_exact DEAD_DNS "$FIX")
+check_count '會開 issue 的筆數 (DEAD + DEAD_DNS)' 2 "$((d + dd))"
+check_count 'UNREACHABLE_DNS 不得計入失效' 0 "$(count_exact DEAD_DNS "$FIX")"
 
 echo '── 計數：空檔案也不能炸 ─────────────────────────────────────'
 : > "$FIX"

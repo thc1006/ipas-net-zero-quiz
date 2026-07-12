@@ -20,19 +20,36 @@
 # 保留它，才能分辨「網域不存在（真的死了）」與「網路抖一下」。
 #
 # 用法：
-#   classify_url_status <http_code> <curl_exit_code>
-#   -> 印出 OK | DEAD | BLOCKED | RETRYABLE | UNREACHABLE | OTHER
+#   classify_url_status <http_code> <curl_exit_code> [dns_verdict]
+#   -> 印出 OK | DEAD | DEAD_DNS | BLOCKED | RETRYABLE | UNREACHABLE_* | OTHER
 #
-# 只有 DEAD 與 UNREACHABLE_DNS 會開 issue；其餘只警告。
+# 只有 DEAD 與 DEAD_DNS 會開 issue（見 is_failure）；其餘一律只警告。
 
+#   classify_url_status <http_code> <curl_exit> [dns_verdict]
+#
+# dns_verdict 只在 curl_exit=6 時有意義，可為：
+#   NXDOMAIN  —— 獨立 resolver 確認該網域不存在  -> DEAD_DNS（真的死了，開 issue）
+#   SERVFAIL / TIMEOUT / OK / UNKNOWN / (空)     -> UNREACHABLE_DNS（只警告）
+#
+# 為什麼要分：curl 的 exit 6 官方定義只是「Couldn't resolve host」，**不保證是 NXDOMAIN**。
+# 暫時性 resolver 故障、SERVFAIL、GitHub runner 自己的 DNS 問題，都會長成同一個 exit 6。
+# 單憑一次 exit 6 就宣告「網域已停用」並開 issue，是過度推論 —— 又是一種喊狼來了。
 classify_url_status() {
   local http="${1:-000}"
   local exit_code="${2:-0}"
+  local dns_verdict="${3:-}"
 
   # curl 本身失敗（連 HTTP 回應都沒拿到）—— 保留 exit code 以區分成因
   if [ "$exit_code" -ne 0 ] 2>/dev/null; then
     case "$exit_code" in
-      6)  echo 'UNREACHABLE_DNS'     ;; # 網域無法解析：NXDOMAIN 通常代表真的沒了
+      6)
+        # 只有在「第二個獨立 resolver 也說 NXDOMAIN」時，才敢說它真的死了
+        if [ "$dns_verdict" = 'NXDOMAIN' ]; then
+          echo 'DEAD_DNS'
+        else
+          echo 'UNREACHABLE_DNS'
+        fi
+        ;;
       7)  echo 'UNREACHABLE_CONNECT' ;; # TCP 連不上
       28) echo 'UNREACHABLE_TIMEOUT' ;; # 逾時
       35|60|58|59|77|83)
@@ -51,11 +68,58 @@ classify_url_status() {
   esac
 }
 
+# 向單一 resolver 查詢，取出 header 裡的 status。查不動就回空字串。
+dig_status() {
+  local resolver="$1" host="$2" out
+  out=$(dig +time=3 +tries=2 "@$resolver" "$host" A 2>/dev/null) || { echo ''; return 0; }
+  printf '%s' "$out" | sed -n 's/.*status: \([A-Z]*\).*/\1/p' | head -1
+}
+
+# 用「獨立於系統 resolver」的公共 DNS 再問一次，區分 NXDOMAIN 與暫時性故障。
+# 只有 Cloudflare (1.1.1.1) 與 Google (8.8.8.8) **兩邊都** 回 NXDOMAIN 才算數。
+# 拿不到 dig 就回 UNKNOWN —— UNKNOWN 不會升級成 DEAD_DNS（寧可漏報，不要誤報）。
+resolve_dns_status() {
+  local host="${1:-}"
+  [ -n "$host" ] || { echo 'UNKNOWN'; return 0; }
+  command -v dig > /dev/null 2>&1 || { echo 'UNKNOWN'; return 0; }
+
+  local r1 r2
+  r1=$(dig_status 1.1.1.1 "$host")
+  r2=$(dig_status 8.8.8.8 "$host")
+
+  if [ "$r1" = 'NXDOMAIN' ] && [ "$r2" = 'NXDOMAIN' ]; then
+    echo 'NXDOMAIN'
+    return 0
+  fi
+
+  # 以下全部**保證不是 NXDOMAIN** —— 這是這個函式唯一真正的職責。
+  #
+  # 上一版最後一行是 `else echo "$r1"`，而 r1 在「只有 1.1.1.1 說 NXDOMAIN」時
+  # 就是 NXDOMAIN —— 於是上面那個 `&&`（兩邊都要同意）被這行整個繞過，
+  # 單一個 resolver 抖動或被劫持就足以誤判「網域已停用」並開 issue。
+  # 一個永遠不會擋下任何東西的把關，等於沒有把關。
+  if [ "$r1" = 'NXDOMAIN' ] || [ "$r2" = 'NXDOMAIN' ]; then
+    echo 'DISAGREE'   # 一邊說沒了、一邊說還在 -> 不升級
+  elif [ -z "$r1" ] || [ -z "$r2" ]; then
+    echo 'UNKNOWN'    # 至少一邊查不動 -> 不升級
+  else
+    echo "$r1"        # SERVFAIL / NOERROR / REFUSED ...（此處必非 NXDOMAIN）
+  fi
+}
+
+# 從 URL 取出主機名（給 resolve_dns_status 用）
+url_host() {
+  printf '%s' "$1" | sed -E 's#^[a-zA-Z]+://##; s#/.*$##; s#:[0-9]+$##; s#^.*@##'
+}
+
 # 這個分類是否應該開 issue（＝我們認為連結真的失效）
+#
+# UNREACHABLE_DNS **不在此列** —— 它只代表「這次解析不到」，可能是 resolver 抖動。
+# 只有 DEAD（404/410）與 DEAD_DNS（兩個獨立 resolver 都確認 NXDOMAIN）才算真的死了。
 is_failure() {
   case "$1" in
-    DEAD|UNREACHABLE_DNS) return 0 ;;
-    *)                    return 1 ;;
+    DEAD|DEAD_DNS) return 0 ;;
+    *)             return 1 ;;
   esac
 }
 
@@ -64,10 +128,10 @@ status_icon() {
   case "$1" in
     OK)                 echo '✅' ;;
     DEAD)               echo '❌' ;;
-    UNREACHABLE_DNS)    echo '❌' ;;
+    DEAD_DNS)           echo '❌' ;;
     BLOCKED)            echo '🟡' ;;
     RETRYABLE)          echo '🔄' ;;
-    UNREACHABLE_*)      echo '🔌' ;;
+    UNREACHABLE_*)      echo '🔌' ;;  # 含 UNREACHABLE_DNS —— 只警告，不算失效
     *)                  echo '❓' ;;
   esac
 }

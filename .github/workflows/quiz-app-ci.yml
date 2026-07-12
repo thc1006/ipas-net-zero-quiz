@@ -6,15 +6,24 @@ name: Quiz App CI
 
 on:
   # 移除 branches filter — stacked PRs (base != main) 也須跑 CI
+  #
+  # path 必須包含 .github/scripts/** 與 quarterly workflow 本身：
+  # 這裡的 url-status job 測的就是那些檔案。少了它們，「只改分類器」的 PR
+  # 根本不會觸發 CI —— 最需要跑分類器測試的修改，反而完全略過分類器測試。
+  # （這正是 `*) DEAD` catch-all 與 `grep -c || echo 0` 能活那麼久沒被發現的環境。）
   pull_request:
     paths:
       - 'quiz-app/**'
       - '.github/workflows/quiz-app-*.yml'
+      - '.github/scripts/**'
+      - '.github/workflows/quarterly-time-sensitive-verify.yml'
   push:
     branches: [main]
     paths:
       - 'quiz-app/**'
       - '.github/workflows/quiz-app-*.yml'
+      - '.github/scripts/**'
+      - '.github/workflows/quarterly-time-sensitive-verify.yml'
   workflow_dispatch:
 
 # 顯式宣告最小權限
@@ -48,10 +57,28 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Shell syntax check
-        run: bash -n .github/scripts/url-status.sh && bash -n .github/scripts/url-status.test.sh
+        run: |
+          for f in .github/scripts/*.sh; do
+            echo "bash -n $f"
+            bash -n "$f"
+          done
 
       - name: Status matrix (no network)
         run: bash .github/scripts/url-status.test.sh
+
+      # 「curl -> DNS 二次確認 -> 分類」這段 glue 的測試（假 curl / 假 dig，離線）。
+      # glue 正是 bug 的居所：這支測試第一次跑就抓到 resolve_dns_status 會在
+      # 「只有一個 resolver 說 NXDOMAIN」時就升級成 DEAD_DNS —— 「兩邊都要同意」
+      # 的把關被最後一行 `else echo "$r1"` 整個繞過了。
+      - name: check_url glue test (fake curl/dig, no network)
+        run: bash .github/scripts/check-url.test.sh
+
+      # 聚合階段（計數 + $GITHUB_OUTPUT）也必須測。
+      # `grep -c ... || echo 0` 產生 $'0\n0'、讓 $(( )) syntax error 進而炸掉整個 step 的
+      # 那個 bug，就發生在聚合 —— 而當時的測試只涵蓋分類器，完全沒碰聚合。
+      # 把最容易出錯的那一段排除在測試之外，等於沒測。
+      - name: Aggregation integration test (fixture, no network)
+        run: bash .github/scripts/aggregate-results.test.sh
 
   lint:
     name: Lint & Type Check
