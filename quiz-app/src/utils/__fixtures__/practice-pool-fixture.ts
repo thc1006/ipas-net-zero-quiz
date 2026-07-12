@@ -79,10 +79,14 @@ export function buildFixturePool(): PracticePool {
       subject: null,
       quality_flags: ['unmapped_subject'],
     }),
-    // 無答案題（exam mode 應排除）
+    // 無答案題 —— 模擬真實資料中「來源互相矛盾、刻意排除計分」的題目
+    // （例：PAS 2060 撤回日期）。answer=null 必須同時標 ambiguous，
+    // 否則會違反 question-integrity 的 missing_answer 規則。
+    // exam mode 應完全排除它；practice mode 可以出現，但絕不可計分。
     item(6, {
       subject: '考科一',
       answer: null,
+      quality_flags: ['ambiguous'],
     }),
   ];
   return {

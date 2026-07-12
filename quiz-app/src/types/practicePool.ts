@@ -37,6 +37,14 @@ interface ProvenanceBase {
   verified_date: string;
   verifier: string;
   verify_verdict: PracticePoolVerdict;
+  /**
+   * 曾經下過、之後被推翻的結論。
+   *
+   * 為什麼要留：verify_verdict 被降級（例如 CONFIRMED -> AMBIGUOUS）時，如果直接覆寫，
+   * 就看不出「這題曾被判定為已確認」這件事，也看不出我們的驗證流程曾經誤判。
+   * 保留它，下一輪 review 才知道這裡出過錯、不要再照抄同一個結論。
+   */
+  prior_verify_verdict?: PracticePoolVerdict;
   /** 上游檔的原始 ID（如有） */
   original_id: string;
 }

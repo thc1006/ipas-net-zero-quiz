@@ -33,7 +33,7 @@
       "known_unresolved": [
         {
           "id": "PAS_2060_withdrawal_date",
-          "detail": "BSI 官方 knowledge 頁只查得到 PAS 2060:2010（2014-04-29 撤回）；2014 版無官方 withdrawal record。現有來源把「停售驗證 2024-01-01」「改用 ISO 14068-1 2025-01-01」「文件撤回 2025-11-30」混為一談。pool-em-ipas_vocus_mock-007 與 pool-aig-intl_round1_rescued-intl-018 已標 ambiguous 且 answer=null（排除計分）。"
+          "detail": "BSI 官方 knowledge 頁只查得到 PAS 2060:2010（2014-04-29 撤回）；2014 版無官方 withdrawal record。現有來源把「停售驗證 2024-01-01」「改用 ISO 14068-1 2025-01-01」「文件撤回 2025-11-30」混為一談 —— 三者是不同事件。pool-em-ipas_vocus_mock-007 與 pool-aig-intl_round1_rescued-intl-018 已標 ambiguous、answer=null、provenance.verify_verdict=AMBIGUOUS（prior_verify_verdict=CONFIRMED 保留舊誤判紀錄）。2026-07-13 已用測試釘住：exam mode 完全不出這兩題；practice mode 可出但 isCorrect=null，不進分子也不進分母（見 hooks/nullAnswerScoring.test.tsx）。schema 亦禁止 ambiguous 題再標成 CONFIRMED。"
         },
         {
           "id": "gist_313_penalty_actor_ambiguity",

@@ -148,6 +148,51 @@ function validateItem(it: unknown, idx: number, errs: ValidationError[]): void {
     }
   }
 
+  // ---- verdict 不得與題目本身的狀態互相矛盾 ----
+  //
+  // 實際踩到的坑：兩題 PAS 2060 撤回日期題（來源互相矛盾、無法唯一作答）已經被設成
+  // answer=null + quality_flags:['ambiguous']（排除計分），但 provenance.verify_verdict
+  // 卻還留著 'CONFIRMED' —— 也就是 provenance 宣稱「這題已驗證確認」，而題目本身正
+  // 因為驗不出來才被排除。這兩件事不可能同時為真。
+  //
+  // 這種矛盾很危險：日後任何人（或任何腳本）只要信任 verify_verdict，就會把這題當成
+  // 已驗證的好題重新啟用。provenance 是拿來被信任的，它說謊比沒有還糟。
+  const flags: string[] = Array.isArray(it.quality_flags)
+    ? (it.quality_flags.filter((f) => typeof f === 'string') as string[])
+    : [];
+  const isAmbiguous = flags.includes('ambiguous');
+  const hasAnswer = it.answer !== null && it.answer !== undefined && it.answer !== '';
+
+  if (isAmbiguous && prov.verify_verdict === 'CONFIRMED') {
+    errs.push({
+      path: `${path}.provenance.verify_verdict`,
+      message:
+        "標了 ambiguous（排除計分）卻宣稱 CONFIRMED —— provenance 與題目狀態矛盾；" +
+        "應改為 AMBIGUOUS，並把舊結論移到 prior_verify_verdict",
+    });
+  }
+  if (prov.verify_verdict === 'AMBIGUOUS' && !isAmbiguous) {
+    errs.push({
+      path: `${path}.provenance.verify_verdict`,
+      message: "verdict 為 AMBIGUOUS，quality_flags 就必須含 'ambiguous'（否則題目仍會被正常計分）",
+    });
+  }
+  if (prov.verify_verdict === 'AMBIGUOUS' && hasAnswer) {
+    errs.push({
+      path: `${path}.provenance.verify_verdict`,
+      message: `verdict 為 AMBIGUOUS 卻仍給出答案 ${String(it.answer)} —— 驗不出來就不能教一個確定答案`,
+    });
+  }
+  if (
+    prov.prior_verify_verdict !== undefined &&
+    !isOneOf(prov.prior_verify_verdict, VERDICTS)
+  ) {
+    errs.push({
+      path: `${path}.provenance.prior_verify_verdict`,
+      message: `must be one of ${VERDICTS.join('|')}`,
+    });
+  }
+
   // ---- 共用完整性規則（與主題庫同一套，見 utils/question-integrity.ts）----
   //
   // 這個 schema 原本只驗「形狀」：options 是非空陣列、有 key/text、answer 是 string|null…

@@ -319,7 +319,8 @@
         "source_origin": "ipas_vocus_mock",
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
-        "verify_verdict": "CONFIRMED",
+        "verify_verdict": "AMBIGUOUS",
+        "prior_verify_verdict": "CONFIRMED",
         "original_id": "7"
       },
       "sources": [
@@ -6715,7 +6716,8 @@
         "source_origin": "intl_round1_rescued",
         "verified_date": "2026-04-25",
         "verifier": "manual_explanation_rewrite",
-        "verify_verdict": "CONFIRMED",
+        "verify_verdict": "AMBIGUOUS",
+        "prior_verify_verdict": "CONFIRMED",
         "original_id": "intl-018",
         "ai_metadata": {
           "model_family": "unspecified",
