@@ -10,6 +10,7 @@ import {
   getRandomQuestions,
   getQuestionsBySubject,
   getRandomQuestionsFromPool,
+  dedupeByContent,
   allQuestions,
 } from '../data/questions';
 import { loadPracticePool, toQuizQuestion } from '../utils/practice-pool';
@@ -78,8 +79,8 @@ export function useQuiz() {
         config.mode === 'exam' // 考試模式只選有答案的題目
       );
     } else {
-      // 順序取題
-      const pool = getQuestionsBySubject(config.subject);
+      // 順序取題（同樣依內容去重：跨科重複在 'all' 模式下會同時落進池子）
+      const pool = dedupeByContent(getQuestionsBySubject(config.subject));
       questions = pool.slice(0, config.questionCount);
     }
 
@@ -120,7 +121,7 @@ export function useQuiz() {
           if (q.qualityFlags?.includes('unmapped_subject')) return false;
           return q.subject === config.subject;
         });
-      const combined: QuizQuestion[] = [...allQuestions, ...poolItems];
+      const combined: QuizQuestion[] = dedupeByContent([...allQuestions, ...poolItems]);
 
       questions = config.shuffleQuestions
         ? getRandomQuestionsFromPool(
@@ -149,7 +150,7 @@ export function useQuiz() {
           config.mode === 'exam'
         );
       } else {
-        const subjectFiltered = getQuestionsBySubject(config.subject);
+        const subjectFiltered = dedupeByContent(getQuestionsBySubject(config.subject));
         const answerFiltered =
           config.mode === 'exam'
             ? subjectFiltered.filter((q) => q.hasAnswer)

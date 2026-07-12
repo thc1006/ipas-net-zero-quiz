@@ -22,7 +22,11 @@ describe('題庫資料模組', () => {
       // 2026-07-13：647 → 799。2026-01-23 的清理是把 CHU 來源「雙欄錯置」的題目直接刪掉，
       // 而非修復；那批錯置把成對的題目黏在一起，170 題被壓成 77 個壞掉的 item。
       // 現已改由來源 PDF（本身帶答案 key）以分欄擷取重建，救回這些只以合併形態存在過的題目。
-      expect(stats.total).toBe(799);
+      //
+      // 799 → 782：移除 17 題「同一道題目、不同 item」的重複（原始 gist 尾段
+      // index 538–569 重複了前段 index 4–206，main 上早就有）。實測影響：跑真實的
+      // getRandomQuestions() 2000 次，9.3% 的「40題/考科一」考卷會出現同一題兩次。
+      expect(stats.total).toBe(782);
     });
 
     it('考科一和考科二題數加總應等於總題數', () => {
@@ -149,9 +153,42 @@ describe('題庫資料模組', () => {
       });
     });
 
-    it('要求數量超過可用題目時應回傳全部可用題目', () => {
+    it('要求數量超過可用題目時應回傳全部可用題目（且不含重複內容）', () => {
       const result = getRandomQuestions(10000);
-      expect(result.length).toBe(stats.total);
+
+      // 已不再等於 stats.total：'all' 模式會把兩科合進同一個池子，而有少數題目
+      // 考科一與考科二各有一份（資料上必須兩份都留著，否則只考一科的考生會少一題）。
+      // getRandomQuestions 會依「內容」去重，所以合併後的池子會比 stats.total 少幾題。
+      const sig = (q: (typeof result)[number]) =>
+        q.stem.replace(/\s+/g, '') +
+        '||' +
+        q.options
+          .map((o) => o.text.replace(/\s+/g, ''))
+          .sort()
+          .join('|');
+
+      // 沒有任何一題重複出現
+      expect(new Set(result.map(sig)).size).toBe(result.length);
+      // 且確實把整個（去重後的）題庫都拿出來了
+      expect(result.length).toBe(new Set(allQuestions.map(sig)).size);
+      expect(result.length).toBeLessThanOrEqual(stats.total);
+    });
+
+    it('抽出的考卷不應出現內容相同的題目（實際跑 200 份）', () => {
+      const sig = (q: { stem: string; options: { text: string }[] }) =>
+        q.stem.replace(/\s+/g, '') +
+        '||' +
+        q.options
+          .map((o) => o.text.replace(/\s+/g, ''))
+          .sort()
+          .join('|');
+      for (const subject of ['考科1', '考科2', 'all'] as const) {
+        for (let i = 0; i < 200; i++) {
+          const paper = getRandomQuestions(40, subject, true);
+          const sigs = paper.map(sig);
+          expect(new Set(sigs).size).toBe(sigs.length);
+        }
+      }
     });
   });
 

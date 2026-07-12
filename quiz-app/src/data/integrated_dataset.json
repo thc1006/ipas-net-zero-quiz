@@ -7,15 +7,15 @@
       "爬蟲題庫: dataset_verified.json",
       "CHU 商研院模擬試題 PDF（考科1 100題 / 考科2 70題，含答案key）"
     ],
-    "total_questions": 799,
-    "gist_questions": 569,
+    "total_questions": 782,
+    "gist_questions": 552,
     "our_unique_questions": 230,
     "corrections_applied": 5,
     "by_subject": {
-      "考科1": 429,
-      "考科2": 370
+      "考科1": 417,
+      "考科2": 365
     },
-    "with_answer": 799,
+    "with_answer": 782,
     "last_updated": "2026-07-13T00:00:00.000000",
     "content_verified_as_of": "2026-07-13"
   },
@@ -160,8 +160,12 @@
         "verification_date": "2026-01-23",
         "verification_batch": "C",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "deduped_from": [
+          "gist[545]"
+        ]
+      },
+      "explanation": "已開發國家承諾每年提供1000億美元的氣候資金協助發展中國家減排及調適，而非要求發展中國家提供資金。 [1, 2, 3, 4]"
     },
     {
       "index": 5,
@@ -813,8 +817,12 @@
         "verification_date": "2026-01-23",
         "verification_batch": "C",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "deduped_from": [
+          "gist[553]"
+        ]
+      },
+      "explanation": "CDP透過問卷方式揭露並評比受測對象的表現，並有其獨立的評分方法。 [1, 3, 5]"
     },
     {
       "index": 24,
@@ -927,11 +935,15 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "deduped_from": [
+          "gist[555]"
         ]
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "歐盟於2023年12月22日公布適用於過渡期之CBAM報告預設值。 [1, 2]"
     },
     {
       "index": 27,
@@ -1044,12 +1056,17 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
+        ],
+        "deduped_from": [
+          "gist[557]"
         ]
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "今日（2026-04）CBAM 已進入定價期（2026/01 起），依 Regulation (EU) 2023/956 Art. 19：授權 CBAM 申報人之申報、憑證繳交、核實與罰則由各會員國指定之主管機關（National Competent Authority, NCA）初審負責，歐盟執委會負責總籌與監督。過渡期（2023/10–2025/12）則由執委會直接受理季報。\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
     },
     {
       "index": 30,
@@ -1129,11 +1146,15 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "deduped_from": [
+          "gist[558]"
         ]
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "在CBAM過渡期間，歐盟進口商應在每季結束後的一個月內提交CBAM報告。 [1, 2, 3, 5]"
     },
     {
       "index": 32,
@@ -1239,11 +1260,15 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "deduped_from": [
+          "gist[560]"
         ]
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "可至經濟部國際貿易署的「綠色貿易資訊網」CBAM專區，輸入產品的稅則號碼查詢是否受到納管。 [1, 3, 4]"
     },
     {
       "index": 35,
@@ -1276,8 +1301,12 @@
         "verification_date": "2026-01-23",
         "verification_batch": "C",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "deduped_from": [
+          "gist[561]"
+        ]
+      },
+      "explanation": "企業進行產品碳中和的第一步應是進行科學化的碳盤查，以確保碳排放與碳移除數據的完整性。 [1, 2]"
     },
     {
       "index": 36,
@@ -1590,7 +1619,10 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 1
+        "sources_count": 1,
+        "deduped_from": [
+          "gist[538]"
+        ]
       }
     },
     {
@@ -1752,8 +1784,12 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "deduped_from": [
+          "gist[306]"
+        ]
+      },
+      "explanation": "碳匯是指吸收並儲存二氧化碳的天然或人工倉庫，如森林、海洋、土壤、地層等，而野火則是排放二氧化碳的來源。 [2]"
     },
     {
       "index": 48,
@@ -4893,7 +4929,10 @@
         "verification_date": "2026-01-23",
         "verification_batch": "C",
         "confidence": "high",
-        "sources_count": 3
+        "sources_count": 3,
+        "deduped_from": [
+          "gist[564]"
+        ]
       }
     },
     {
@@ -5068,11 +5107,15 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        ],
+        "deduped_from": [
+          "gist[437]"
         ]
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "為協助國內業者因應歐盟CBAM，經濟部國際貿易署在其「綠色貿易資訊網」上設立了CBAM專區，提供相關資訊與諮詢服務。 [1, 3, 4]"
     },
     {
       "index": 137,
@@ -5330,7 +5373,10 @@
         "verification_date": "2026-01-23",
         "verification_batch": "E",
         "confidence": "high",
-        "sources_count": 3
+        "sources_count": 3,
+        "deduped_from": [
+          "gist[569]"
+        ]
       }
     },
     {
@@ -6779,7 +6825,10 @@
         "verification_date": "2026-01-23",
         "verification_batch": "C",
         "confidence": "high",
-        "sources_count": 3
+        "sources_count": 3,
+        "deduped_from": [
+          "gist[548]"
+        ]
       }
     },
     {
@@ -6813,7 +6862,10 @@
         "verification_date": "2026-01-23",
         "verification_batch": "C",
         "confidence": "high",
-        "sources_count": 3
+        "sources_count": 3,
+        "deduped_from": [
+          "gist[549]"
+        ]
       }
     },
     {
@@ -6847,7 +6899,10 @@
         "verification_date": "2026-01-23",
         "verification_batch": "C",
         "confidence": "high",
-        "sources_count": 3
+        "sources_count": 3,
+        "deduped_from": [
+          "gist[550]"
+        ]
       }
     },
     {
@@ -7324,8 +7379,12 @@
         "verification_date": "2026-01-23",
         "verification_batch": "C",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "deduped_from": [
+          "gist[349]"
+        ]
+      },
+      "explanation": "CFP研究中的「一致性」原則要求，在整個研究過程中，假設、方法及數據的應用方式應保持一致。 [1, 2, 3, 4]"
     },
     {
       "index": 201,
@@ -7527,8 +7586,12 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-157"
-      }
+        "original_id": "c2-157",
+        "deduped_from": [
+          "gist[350]"
+        ]
+      },
+      "explanation": "在PCR中，原料取得階段不強制要求收集一級活動數據，但應優先採用。 [2, 5]"
     },
     {
       "index": 207,
@@ -10928,40 +10991,6 @@
       }
     },
     {
-      "index": 306,
-      "number": 47,
-      "stem": "碳匯儲存不包含以下哪一項？",
-      "options": [
-        {
-          "key": "A",
-          "text": "森林"
-        },
-        {
-          "key": "B",
-          "text": "海洋"
-        },
-        {
-          "key": "C",
-          "text": "地層"
-        },
-        {
-          "key": "D",
-          "text": "野火"
-        }
-      ],
-      "answer": "D",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "explanation": "碳匯是指吸收並儲存二氧化碳的天然或人工倉庫，如森林、海洋、土壤、地層等，而野火則是排放二氧化碳的來源。 [2]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c2-113"
-      }
-    },
-    {
       "index": 307,
       "number": 48,
       "stem": "在 2050 淨零軌跡四大轉型策略中，不包含以下哪一項？",
@@ -12516,74 +12545,6 @@
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
         "original_id": "c2-155"
-      }
-    },
-    {
-      "index": 349,
-      "number": 90,
-      "stem": "CFP 研究中的「一致性」原則要求：",
-      "options": [
-        {
-          "key": "A",
-          "text": "所有產品使用相同的方法"
-        },
-        {
-          "key": "B",
-          "text": "研究結果必須與之前的研究一致"
-        },
-        {
-          "key": "C",
-          "text": "研究結果必須符合預期"
-        },
-        {
-          "key": "D",
-          "text": "假設、方法及數據以相同方式應用於整個 CFP 研究中"
-        }
-      ],
-      "answer": "D",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科2",
-      "explanation": "CFP研究中的「一致性」原則要求，在整個研究過程中，假設、方法及數據的應用方式應保持一致。 [1, 2, 3, 4]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c2-156"
-      }
-    },
-    {
-      "index": 350,
-      "number": 91,
-      "stem": "在 PCR 中，關於原料取得階段的數據收集要求是：",
-      "options": [
-        {
-          "key": "A",
-          "text": "可以忽略這個階段的數據"
-        },
-        {
-          "key": "B",
-          "text": "只能使用二級活動數據"
-        },
-        {
-          "key": "C",
-          "text": "不強制要求收集一級活動數據，但應優先採用"
-        },
-        {
-          "key": "D",
-          "text": "必須全部使用一級活動數據"
-        }
-      ],
-      "answer": "C",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科2",
-      "explanation": "在PCR中，原料取得階段不強制要求收集一級活動數據，但應優先採用。 [2, 5]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c2-157"
       }
     },
     {
@@ -15582,48 +15543,6 @@
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
         "original_id": "c2-243",
-        "valid_as_of": "2026-07-13",
-        "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
-      },
-      "quality_flags": [
-        "time_sensitive"
-      ]
-    },
-    {
-      "index": 437,
-      "number": 178,
-      "stem": "哪個政府單位設立了 CBAM 網站專區？",
-      "options": [
-        {
-          "key": "A",
-          "text": "經濟部國際貿易署"
-        },
-        {
-          "key": "B",
-          "text": "環境部"
-        },
-        {
-          "key": "C",
-          "text": "財政部"
-        },
-        {
-          "key": "D",
-          "text": "外交部"
-        }
-      ],
-      "answer": "A",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "explanation": "為協助國內業者因應歐盟CBAM，經濟部國際貿易署在其「綠色貿易資訊網」上設立了CBAM專區，提供相關資訊與諮詢服務。 [1, 3, 4]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c2-244",
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
@@ -19179,40 +19098,6 @@
       }
     },
     {
-      "index": 538,
-      "number": 279,
-      "stem": "工業部門轉型向淨零排放的關鍵策略是什麼？",
-      "options": [
-        {
-          "key": "A",
-          "text": "降低能效"
-        },
-        {
-          "key": "B",
-          "text": "增加對煤炭的依賴"
-        },
-        {
-          "key": "C",
-          "text": "創新與綠色技術採納"
-        },
-        {
-          "key": "D",
-          "text": "減少出口"
-        }
-      ],
-      "answer": "C",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_batch": "A",
-        "confidence": "high",
-        "sources_count": 1
-      }
-    },
-    {
       "index": 539,
       "number": 280,
       "stem": "臺灣的長期淨零過渡中，哪項技術被提及為關鍵？",
@@ -19428,40 +19313,6 @@
       }
     },
     {
-      "index": 545,
-      "number": 286,
-      "stem": "關於已開發國家對發展中國家的氣候資金援助，下列何者不正確？",
-      "options": [
-        {
-          "key": "A",
-          "text": "支持發展中國家採用低碳技術"
-        },
-        {
-          "key": "B",
-          "text": "協助發展中國家應對氣候變遷衝擊"
-        },
-        {
-          "key": "C",
-          "text": "要求發展中國家每年提供1000億美元資金援助給已開發國家"
-        },
-        {
-          "key": "D",
-          "text": "協助發展中國家強化氣候調適能力"
-        }
-      ],
-      "answer": "C",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "explanation": "已開發國家承諾每年提供1000億美元的氣候資金協助發展中國家減排及調適，而非要求發展中國家提供資金。 [1, 2, 3, 4]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c1-004"
-      }
-    },
-    {
       "index": 546,
       "number": 287,
       "stem": "碳稅費與排放交易之間的觀念，何者為非？",
@@ -19527,108 +19378,6 @@
         "verification_date": "2026-01-23",
         "verification_source": "batch_verification",
         "confidence": "medium"
-      }
-    },
-    {
-      "index": 548,
-      "number": 289,
-      "stem": "CFP研究報告中，關於價值選擇，應該：",
-      "options": [
-        {
-          "key": "A",
-          "text": "隱藏所有價值選擇"
-        },
-        {
-          "key": "B",
-          "text": "只報告有利的價值選擇"
-        },
-        {
-          "key": "C",
-          "text": "揭露價值選擇及其理由"
-        },
-        {
-          "key": "D",
-          "text": "忽略價值選擇的影響"
-        }
-      ],
-      "answer": "C",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科2",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_batch": "C",
-        "confidence": "high",
-        "sources_count": 3
-      }
-    },
-    {
-      "index": 549,
-      "number": 290,
-      "stem": "內部查證時，針對數據資訊面向的查證重點包括以下哪項？",
-      "options": [
-        {
-          "key": "A",
-          "text": "員工績效評估"
-        },
-        {
-          "key": "B",
-          "text": "客戶開發策略"
-        },
-        {
-          "key": "C",
-          "text": "產品研發計劃"
-        },
-        {
-          "key": "D",
-          "text": "計算公式錯誤"
-        }
-      ],
-      "answer": "D",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科2",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_batch": "C",
-        "confidence": "high",
-        "sources_count": 3
-      }
-    },
-    {
-      "index": 550,
-      "number": 291,
-      "stem": "CFP量化數值具備代表性的時間期間應如何確定？",
-      "options": [
-        {
-          "key": "A",
-          "text": "永遠使用最新的一年數據"
-        },
-        {
-          "key": "B",
-          "text": "由監管機構統一規定"
-        },
-        {
-          "key": "C",
-          "text": "應予指定並說明理由"
-        },
-        {
-          "key": "D",
-          "text": "必須涵蓋產品的整個生命週期"
-        }
-      ],
-      "answer": "C",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科2",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_batch": "C",
-        "confidence": "high",
-        "sources_count": 3
       }
     },
     {
@@ -19707,40 +19456,6 @@
       ]
     },
     {
-      "index": 553,
-      "number": 294,
-      "stem": "CDP 每年如何評估公司和城市？",
-      "options": [
-        {
-          "key": "A",
-          "text": "通過公開投標"
-        },
-        {
-          "key": "B",
-          "text": "通過獨立評分方法"
-        },
-        {
-          "key": "C",
-          "text": "通過投資者投票"
-        },
-        {
-          "key": "D",
-          "text": "通過客戶反饋"
-        }
-      ],
-      "answer": "B",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "explanation": "CDP透過問卷方式揭露並評比受測對象的表現，並有其獨立的評分方法。 [1, 3, 5]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "batch_verification",
-        "confidence": "medium"
-      }
-    },
-    {
       "index": 554,
       "number": 295,
       "stem": "SBTi 的主要目標是為了符合哪個國際協議的目標？",
@@ -19775,48 +19490,6 @@
       }
     },
     {
-      "index": 555,
-      "number": 296,
-      "stem": "歐盟於何時公告CBAM預設值數字？",
-      "options": [
-        {
-          "key": "A",
-          "text": "2023年10月1日"
-        },
-        {
-          "key": "B",
-          "text": "2024年1月1日"
-        },
-        {
-          "key": "C",
-          "text": "2023年11月30日"
-        },
-        {
-          "key": "D",
-          "text": "2023年12月22日"
-        }
-      ],
-      "answer": "D",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "explanation": "歐盟於2023年12月22日公布適用於過渡期之CBAM報告預設值。 [1, 2]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "batch_verification",
-        "confidence": "medium",
-        "valid_as_of": "2026-07-13",
-        "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
-      },
-      "quality_flags": [
-        "time_sensitive"
-      ]
-    },
-    {
       "index": 556,
       "number": 297,
       "stem": "在CBAM系統中查詢產品是否受到納管時，需要輸入稅則號碼的哪幾碼？",
@@ -19843,93 +19516,6 @@
       "original_section": "未分類",
       "exam_subject": "考科2",
       "explanation": "查詢CBAM納管產品時，可輸入產品的稅則號碼前2至6碼進行比對。 [1, 2, 3, 4]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "batch_verification",
-        "confidence": "medium",
-        "valid_as_of": "2026-07-13",
-        "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
-      },
-      "quality_flags": [
-        "time_sensitive"
-      ]
-    },
-    {
-      "index": 557,
-      "number": 298,
-      "stem": "在歐盟碳邊境調整機制 (CBAM) 申報後，最初由哪個單位負責審查？",
-      "options": [
-        {
-          "key": "A",
-          "text": "歐盟成員國政府"
-        },
-        {
-          "key": "B",
-          "text": "歐盟碳邊境調整機制委員會"
-        },
-        {
-          "key": "C",
-          "text": "歐盟執委會"
-        },
-        {
-          "key": "D",
-          "text": "主管機關"
-        }
-      ],
-      "answer": "D",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "explanation": "今日（2026-04）CBAM 已進入定價期（2026/01 起），依 Regulation (EU) 2023/956 Art. 19：授權 CBAM 申報人之申報、憑證繳交、核實與罰則由各會員國指定之主管機關（National Competent Authority, NCA）初審負責，歐盟執委會負責總籌與監督。過渡期（2023/10–2025/12）則由執委會直接受理季報。\n\n資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-04-25",
-        "verification_source": "CBAM 定價期由會員國主管機關初審",
-        "original_id": "c1-029",
-        "prior_answer": "C",
-        "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ],
-        "sources_verified_date": "2026-04-25",
-        "valid_as_of": "2026-07-13"
-      },
-      "quality_flags": [
-        "time_sensitive"
-      ]
-    },
-    {
-      "index": 558,
-      "number": 299,
-      "stem": "在CBAM過渡期間，歐盟進口商應在每季結束後多久內提交CBAM報告？",
-      "options": [
-        {
-          "key": "A",
-          "text": "一個月內"
-        },
-        {
-          "key": "B",
-          "text": "兩週內"
-        },
-        {
-          "key": "C",
-          "text": "兩個月內"
-        },
-        {
-          "key": "D",
-          "text": "三個月內"
-        }
-      ],
-      "answer": "A",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "explanation": "在CBAM過渡期間，歐盟進口商應在每季結束後的一個月內提交CBAM報告。 [1, 2, 3, 5]",
       "metadata": {
         "answer_verified": true,
         "verification_date": "2026-01-23",
@@ -19977,82 +19563,6 @@
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
         "original_id": "c1-032"
-      }
-    },
-    {
-      "index": 560,
-      "number": 301,
-      "stem": "在CBAM系統中，如何確認自己的產品是否受到納管？",
-      "options": [
-        {
-          "key": "A",
-          "text": "詢問歐盟海關"
-        },
-        {
-          "key": "B",
-          "text": "在綠色貿易資訊網上輸入稅則號碼查詢"
-        },
-        {
-          "key": "C",
-          "text": "檢查產品的國際標準分類"
-        },
-        {
-          "key": "D",
-          "text": "查看產品的原產地證明"
-        }
-      ],
-      "answer": "B",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "explanation": "可至經濟部國際貿易署的「綠色貿易資訊網」CBAM專區，輸入產品的稅則號碼查詢是否受到納管。 [1, 3, 4]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "batch_verification",
-        "confidence": "medium",
-        "valid_as_of": "2026-07-13",
-        "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
-      },
-      "quality_flags": [
-        "time_sensitive"
-      ]
-    },
-    {
-      "index": 561,
-      "number": 302,
-      "stem": "企業進行產品碳中和時，應優先完成哪項工作？",
-      "options": [
-        {
-          "key": "A",
-          "text": "購買碳權"
-        },
-        {
-          "key": "B",
-          "text": "申請環境部審核"
-        },
-        {
-          "key": "C",
-          "text": "制定長期減排目標"
-        },
-        {
-          "key": "D",
-          "text": "完成組織盤查"
-        }
-      ],
-      "answer": "D",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "explanation": "企業進行產品碳中和的第一步應是進行科學化的碳盤查，以確保碳排放與碳移除數據的完整性。 [1, 2]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c1-035"
       }
     },
     {
@@ -20138,40 +19648,6 @@
       "quality_flags": [
         "time_sensitive"
       ]
-    },
-    {
-      "index": 564,
-      "number": 305,
-      "stem": "企業完成碳中和作為後，環境部會如何回應？",
-      "options": [
-        {
-          "key": "A",
-          "text": "提供稅收優惠"
-        },
-        {
-          "key": "B",
-          "text": "不會核發證明或標籤"
-        },
-        {
-          "key": "C",
-          "text": "授予碳權交易資格"
-        },
-        {
-          "key": "D",
-          "text": "頒發官方認證標章"
-        }
-      ],
-      "answer": "B",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_batch": "C",
-        "confidence": "high",
-        "sources_count": 3
-      }
     },
     {
       "index": 565,
@@ -20332,40 +19808,6 @@
       "quality_flags": [
         "time_sensitive"
       ]
-    },
-    {
-      "index": 569,
-      "number": 310,
-      "stem": "CDP 原本的名稱是什麼？",
-      "options": [
-        {
-          "key": "A",
-          "text": "氣候變化計畫"
-        },
-        {
-          "key": "B",
-          "text": "碳揭露計畫"
-        },
-        {
-          "key": "C",
-          "text": "環境保護計畫"
-        },
-        {
-          "key": "D",
-          "text": "碳排放計畫"
-        }
-      ],
-      "answer": "B",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_batch": "F",
-        "confidence": "high",
-        "sources_count": 2
-      }
     },
     {
       "index": 570,
