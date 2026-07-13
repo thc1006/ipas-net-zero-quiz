@@ -84,8 +84,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "1",
         "option_order": {
@@ -93,10 +93,17 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "CO2-equivalent emissions are commonly used to compare emissions of different GHGs, but should not be taken to imply that these emissions have an equivalent effect across all key measures of climate change.",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://www.ipcc.ch/report/ar6/wg1/downloads/report/IPCC_AR6_WGI_AnnexVII.pdf"
       ],
       "quality_flags": []
     },
@@ -133,8 +140,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "2",
         "option_order": {
@@ -142,10 +149,17 @@
           "previous_answer": "A",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "The Paris Agreement, inter alia, sets out a long-term goal in line with the objective to keep the global temperature increase well below 2 °C above pre-industrial levels and to pursue efforts to keep it to 1,5 °C above pre-industrial levels.",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016D1841"
       ],
       "quality_flags": []
     },
@@ -235,8 +249,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "4",
         "option_order": {
@@ -244,11 +258,18 @@
           "previous_answer": "A",
           "method": "ladder_reversed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "優惠費率A（符合「徵收對象溫室氣體減量指定目標」公告附表一行業別指定削減率規定）：新臺幣50元/公噸二氧化碳當量。",
+          "supports_option": "D",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
-        "https://www.moenv.gov.tw/"
+        "https://www.moenv.gov.tw/",
+        "https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284"
       ],
       "quality_flags": []
     },
@@ -334,8 +355,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "6",
         "option_order": {
@@ -343,11 +364,18 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "The requirements in IFRS S2 Climate-related Disclosures issued by the International Sustainability Standards Board (ISSB) integrate, and are consistent with, the four core recommendations and 11 recommended disclosures published by the Task Force on Climate-related Financial Disclosures (TCFD).",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
-        "https://www.ifrs.org/"
+        "https://www.ifrs.org/",
+        "https://www.ifrs.org/content/dam/ifrs/supporting-implementation/ifrs-s2/ifrs-s2-comparison-tcfd.pdf"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -434,8 +462,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "8",
         "option_order": {
@@ -443,10 +471,17 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "確認其非法規要求、不具投資效益、非技術普遍或存在技術障礙之分析",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=2"
       ],
       "quality_flags": []
     },
@@ -483,8 +518,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "9",
         "option_order": {
@@ -492,11 +527,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "These are 5-10 year GHG mitigation targets in line with 1.5°C pathways",
+          "supports_option": "D",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
-        "https://sciencebasedtargets.org/"
+        "https://sciencebasedtargets.org/",
+        "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf"
       ],
       "quality_flags": []
     },
@@ -632,8 +674,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "13",
         "option_order": {
@@ -641,10 +683,17 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "Through JI, a country with an emission reduction or limitation commitment under the Kyoto Protocol may take part in an emission reduction (or emission removal) project in any other country with a commitment under the Protocol",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://cdm.unfccc.int/about/cdm_kpm.pdf"
       ],
       "quality_flags": []
     },
@@ -681,8 +730,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "14",
         "option_order": {
@@ -690,10 +739,17 @@
           "previous_answer": "C",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "自中華民國一百十四年七月一日起，氫氟碳化物未經核准不得輸入或輸出，且限向遵守蒙特婁議定書規定之國家或地區為之。",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007931"
       ],
       "quality_flags": []
     },
@@ -782,8 +838,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "16",
         "option_order": {
@@ -791,10 +847,17 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "事業依前條規定辦理查驗作業，應於每年十月三十一日前，依中央主管機關所定格式，將溫室氣體查驗總結報告及查驗聲明書之查驗結果，以網路傳輸方式，上傳至中央主管機關指定之資訊平台。",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=9"
       ],
       "quality_flags": []
     },
@@ -831,8 +894,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "17",
         "option_order": {
@@ -840,10 +903,17 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "屬第一項第一款之相同類型逸散排放源，其排放量低於事業總排放量百分之零點零五且未達五公噸二氧化碳當量，得連續二年採用其最近一期經盤查登錄之排放量。",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=3"
       ],
       "quality_flags": []
     },
@@ -1525,8 +1595,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "32",
         "option_order": {
@@ -1534,10 +1604,17 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "coastal wetlands including mangrove forests, tidal marshes and seagrass meadows, and constructed wetlands for wastewater treatment",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://www.ipcc.ch/site/assets/uploads/2018/09/FS_TFI_Wetlands.pdf"
       ],
       "quality_flags": []
     },
@@ -1574,8 +1651,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "33",
         "option_order": {
@@ -1583,10 +1660,17 @@
           "previous_answer": "A",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "外加性分析：指事業或各級政府針對其所提出之自願減量專案進行法規外加性、財務外加性、普遍性及障礙分析，確認其非法規要求、不具投資效益、非技術普遍或存在技術障礙之分析",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=2"
       ],
       "quality_flags": []
     },
@@ -1623,8 +1707,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "34",
         "option_order": {
@@ -1632,10 +1716,17 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "小規模減量方法 造林與植林碳匯專案活動 版本 01.0 範疇別： 11 林業",
+          "supports_option": "D",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://carbonoffset.moenv.gov.tw/Content/files/AR-TMS0001%E9%80%A0%E6%9E%97%E8%88%87%E6%A4%8D%E6%9E%97%E7%A2%B3%E5%8C%AF%E5%B0%88%E6%A1%88%E6%B4%BB%E5%8B%95.pdf"
       ],
       "quality_flags": []
     },
@@ -1672,8 +1763,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "35",
         "option_order": {
@@ -1681,10 +1772,17 @@
           "previous_answer": "B",
           "method": "ladder_kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "injected into deep geological formations (including depleted oil and gas reservoirs or saline formations) which trap the CO2 for permanent storage",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://www.iea.org/reports/about-ccus"
       ],
       "quality_flags": []
     },
@@ -1721,8 +1819,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "36",
         "option_order": {
@@ -1730,10 +1828,17 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "Category 1 includes emissions from all purchased goods and services not otherwise included in the other categories of upstream scope 3 emissions",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://ghgprotocol.org/sites/default/files/2022-12/Chapter1.pdf"
       ],
       "quality_flags": []
     },
@@ -1770,8 +1875,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "37",
         "option_order": {
@@ -1779,10 +1884,17 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "Embedded emissions in goods other than electricity shall be determined based on the actual emissions in accordance with the methods set out in points 2 and 3 of Annex IV.",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32023R0956"
       ],
       "quality_flags": []
     },
@@ -1819,8 +1931,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "38",
         "option_order": {
@@ -1828,10 +1940,17 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "Actionable, globally recognized supplier scorecards",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://ecovadis.com/solutions/ratings/"
       ],
       "quality_flags": []
     },
@@ -1868,8 +1987,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "39",
         "option_order": {
@@ -1877,10 +1996,17 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "Additional information on more active forms of training and capacity-building are covered in section 5.",
+          "supports_option": "D",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://files.sciencebasedtargets.org/production/files/Supplier-Engagement-Guidance.pdf"
       ],
       "quality_flags": []
     },
@@ -1917,8 +2043,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "40",
         "option_order": {
@@ -1926,10 +2052,17 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "事業具有經中央主管機關公告之排放源，應進行排放量盤查，並於規定期限前登錄於中央主管機關指定資訊平台；其經中央主管機關公告指定應查驗者，盤查相關資料並應經查驗機構查驗",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=21"
       ],
       "quality_flags": []
     },
@@ -1966,8 +2099,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "41",
         "option_order": {
@@ -1975,11 +2108,18 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "The objective of IFRS S2 is to require an entity to disclose information about its climate-related risks and opportunities that is useful to users of general purpose financial reports in making decisions relating to providing resources to the entity.",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
-        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en"
+        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+        "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -2018,8 +2158,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "42",
         "option_order": {
@@ -2027,11 +2167,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "Transition risks include policy, legal, technological, market and reputational risks.",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
-        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en"
+        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+        "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -2070,8 +2217,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "43",
         "option_order": {
@@ -2079,10 +2226,17 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "The TNFD has developed a set of disclosure recommendations and guidance that encourage and enable business and finance to assess, report and act on their nature-related dependencies, impacts, risks and opportunities.",
+          "supports_option": "D",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://www.ifrs.org/content/dam/ifrs/meetings/2025/february/issb/ap3c-introduction-tnfd-recommendations.pdf"
       ],
       "quality_flags": []
     },
@@ -2119,8 +2273,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "44",
         "option_order": {
@@ -2128,11 +2282,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "Double materiality has two dimensions, namely: impact materiality and financial materiality.",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
-        "https://www.efrag.org/"
+        "https://www.efrag.org/",
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32023R2772"
       ],
       "quality_flags": []
     },
@@ -2169,8 +2330,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "45",
         "option_order": {
@@ -2178,11 +2339,18 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "IFRS S1 prescribes how an entity prepares and reports its sustainability-related financial disclosures. It sets out general requirements for the content and presentation of those disclosures so that the information disclosed is useful to users in making decisions relating to providing resources to the entity.",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
-        "https://www.ifrs.org/"
+        "https://www.ifrs.org/",
+        "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -2221,8 +2389,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "46",
         "option_order": {
@@ -2230,10 +2398,17 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "Chapter 7, which provides guidance on collecting data, including prioritizing data collection efforts, selecting among different types of data, and ensuring data quality",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6903fd65fd89780001a80f8b"
+        "https://vocus.cc/article/6903fd65fd89780001a80f8b",
+        "https://ghgprotocol.org/sites/default/files/standards/Scope3_Calculation_Guidance_0.pdf"
       ],
       "quality_flags": []
     },
@@ -2270,8 +2445,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "47",
         "option_order": {
@@ -2279,10 +2454,17 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "It focuses on quantifying, reducing, and offsetting carbon footprints, utilizing a hierarchical approach prioritizing direct and indirect GHG emission reductions and removal enhancements within the value chain over offsetting.",
+          "supports_option": "D",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6903fd65fd89780001a80f8b"
+        "https://vocus.cc/article/6903fd65fd89780001a80f8b",
+        "https://www.iso.org/standard/43279.html"
       ],
       "quality_flags": []
     },
@@ -2419,8 +2601,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "51",
         "option_order": {
@@ -2428,10 +2610,17 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "The attributed direct and indirect emissions shall then be converted into specific embedded direct and indirect emissions of the goods resulting from the production process using Equations 50 and 51.",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/68010e53fd897800010b717c"
+        "https://vocus.cc/article/68010e53fd897800010b717c",
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32023R1773"
       ],
       "quality_flags": []
     },
@@ -2636,8 +2825,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "55",
         "option_order": {
@@ -2645,10 +2834,17 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document.",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/68b53f5efd89780001e60438"
+        "https://vocus.cc/article/68b53f5efd89780001e60438",
+        "https://www.iso.org/standard/71206.html"
       ],
       "quality_flags": []
     },
@@ -7860,7 +8056,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "依 Omnibus 修正案 Regulation (EU) 2025/2083（2025-10-20 生效），CBAM 確定期（2026/01+）之年度申報與憑證繳交截止日均為次年 9 月 30 日；首次正式申報暨繳交為 2027/09/30。原 Reg (EU) 2023/956 之 5 月 31 日規則僅適用於過渡期（2023/10–2025/12），於 2025/10 已被取代，2026 年起不再適用。本題以 2026/05 現行法為準，正解為 C。",
+      "explanation": "依 Omnibus 修正案 Regulation (EU) 2025/2083（2025-10-20 生效），CBAM 確定期（2026/01+）之年度申報與憑證繳交截止日均為次年 9 月 30 日；首次正式申報暨繳交為 2027/09/30。原 Reg (EU) 2023/956 之 5 月 31 日規則僅適用於過渡期（2023/10–2025/12），於 2025/10 已被取代，2026 年起不再適用。本題以現行法（post-Omnibus）為準，正解即「次年 9 月 30 日前」。",
       "subject": null,
       "topic_tags": [
         "CBAM",
@@ -7871,8 +8067,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock_rescued",
-        "verified_date": "2026-04-25",
-        "verifier": "manual_omnibus_update",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "50",
         "option_order": {
@@ -7880,12 +8076,25 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "explanation_fix": {
+          "fixed_on": "2026-07-13",
+          "defect": "解析正確推導出「次年 9 月 30 日」，結尾卻寫「正解為 C」—— C 是「每季結束後 30 日內」，與 answer 欄位（A）及 EUR-Lex 原文皆矛盾。考生讀解析會被告知一個錯的答案。",
+          "why_it_slipped": "練習池的「解析不得指名選項字母」gate 的 pattern 只認「答案為/故選/選項」，**漏了「正解」** —— 而主題庫的同一道 gate 有認。兩道守同一件事的 gate 寬窄不一，窄的那道就是個洞。已補齊。",
+          "evidence": "EUR-Lex CELEX:32025R2083 Art. 6(1)：「By 30 September of each year, and for the first time in 2027 for the year 2026, each authorised CBAM declarant shall … submit a CBAM declaration」"
+        },
+        "evidence": {
+          "quote": "By 30 September of each year, and for the first time in 2027 for the year 2026, each authorised CBAM declarant shall use the CBAM registry referred to in Article 14 to submit a CBAM declaration for the preceding calendar year.",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
         "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
-        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+        "https://eur-lex.europa.eu/eli/reg/2025/2083/oj"
       ],
       "quality_flags": []
     },

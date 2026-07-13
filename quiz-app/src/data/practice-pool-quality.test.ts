@@ -173,14 +173,40 @@ describe('練習池：解析不得指名選項字母', () => {
   // 字母不是題目的一部分 —— 它只是「目前的排列」。
   // 解析寫「選項 B 是…」，等於把解析綁死在一個隨時可能變的排列上；
   // 這次重排就有 6 題的解析因此會指錯選項。
+  //
+  // ⚠️ **我第一版的 pattern 太窄，漏掉了一個真實缺陷。**
+  //
+  // `pool-em-ipas_vocus_mock_rescued-050` 的解析正確推導出 CBAM 申報期限是
+  // 「次年 9 月 30 日」（選項 A），然後**結尾寫「正解為 C」**——
+  // 而 C 是「每季結束後 30 日內」，完全錯誤。
+  // **考生讀解析會被告知答案是 C，但答案是 A。**
+  //
+  // 我的 pattern 只認「答案為 / 故選 / 選項」，**漏了「正解」**。
+  // 主題庫的同一道 gate 有認「正解」—— 兩道守同一件事的 gate 寬窄不一，
+  // 窄的那道就是個洞。判準要一致。
+  const NAMES_A_LETTER =
+    /(?:選項|答案|正解|正確答案|標準答案|應選|故選|本題答案|此題答案)\s*(?:為|是|應為|即|：|:)?\s*[（(]?\s*([ABCD])\s*[）)]?(?![\w])/u;
+
+  it('這道 gate 不是空轉：pattern 抓得到「正解為 C」這種寫法', () => {
+    expect(NAMES_A_LETTER.test('本題以現行法為準，正解為 C。')).toBe(true);
+    expect(NAMES_A_LETTER.test('選項 A 描述的是…')).toBe(true);
+    expect(NAMES_A_LETTER.test('故選 B。')).toBe(true);
+    // 不可誤殺：正常提到 ISO 14064-1 的 A 部分、附錄 B 等
+    expect(NAMES_A_LETTER.test('依 ISO 14064-1 附錄 B 之規定')).toBe(false);
+  });
+
   it('沒有任何解析在指名 A/B/C/D', () => {
-    const pat = /選項\s*[（(]?\s*[ABCD]|答案\s*(?:為|是|：|:)\s*[ABCD]|故選\s*[ABCD]/u;
-    const bad = POOL.filter((q) => pat.test(q.explanation)).map(
-      (q) => `${q.id}: ${q.explanation.match(pat)![0]}`
-    );
+    const bad = POOL.filter((q) => NAMES_A_LETTER.test(q.explanation)).map((q) => {
+      const m = q.explanation.match(NAMES_A_LETTER)!;
+      const mismatch = m[1] !== q.answer ? `  🚨 **與 answer=${q.answer} 不符**` : '';
+      return `${q.id}: 解析寫「${m[0]}」${mismatch}`;
+    });
     expect(
       bad,
-      '解析請指涉選項的「內容」，不要指涉它的「字母」—— 選項一重排，字母就指錯了'
+      '解析請指涉選項的「內容」，不要指涉它的「字母」——\n' +
+        '  1. 選項一重排，字母就指錯了；\n' +
+        '  2. **更糟的是：解析裡的字母可能跟 answer 欄位互相矛盾** —— ' +
+        '考生讀解析會被告知一個錯的答案（實際發生過：mock_rescued-050 答案是 A，解析卻寫「正解為 C」）'
     ).toEqual([]);
   });
 });

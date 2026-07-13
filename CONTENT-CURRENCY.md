@@ -13,7 +13,7 @@
 - 每題 → `metadata.valid_as_of` + `metadata.sources[]`（一手來源，quarterly workflow 會 curl）
 
 > ⚠️ **`meta.content_review.last_review_date` 不代表「整份題庫已查證到那一天」。**
-> 本輪只實查了 **110 / 773** 題（`scope` 所列的 CBAM / NDC / 碳費 / 碳中和），
+> 本輪只實查了 **112 / 773** 題（`scope` 所列的 CBAM / NDC / 碳費 / 碳中和），
 > 12 題沿用 2026-01-23，另有 668 題連 `time_sensitive` 都沒標、根本沒碰過。
 >
 > 判斷**單一題目**的內容是否仍正確，請以**該題的 `metadata.valid_as_of`** 為準。
@@ -41,7 +41,7 @@
 | 碳費 | — | 2026-05 首徵；一般 300 元，優惠 A 50 / B 100；高碳洩漏係數 0.2 | 環境部 |
 
 一手來源已掛進 `metadata.sources[]`（EUR-Lex 合併版 `02023R0956-20251020`、Omnibus `32025R2083`、
-環境部氣候變遷署、全國法規資料庫、ISO）。**122 題**標記 `time_sensitive`，其中 **112 題**有 source URL
+環境部氣候變遷署、全國法規資料庫、ISO）。**123 題**標記 `time_sensitive`，其中 **112 題**有 source URL
 —— 這點很重要：quarterly workflow **只看得到有 URL 的題目**，修正前 569 題中有 535 題（94 %）對它完全隱形。
 
 ---

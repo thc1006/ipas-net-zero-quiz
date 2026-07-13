@@ -125,7 +125,7 @@ describe('metadata 的欄位名稱不得說謊', () => {
     // 「UNFCCC Cancún Agreements 1/CP.16」這個**真的引用**判成不合格。
     // 判準太窄會逼人把好的引用改爛，跟判準太寬一樣糟。
     const looksLikeCitation =
-      /§|第.{1,4}條|Art\.|Article|Regulation|Reg\s*\(|CELEX|Directive|ISO|IPCC|UNFCCC|Cancún|Cancun|CP\.\d|CMA|Agreement|Protocol|Treaty|Collection|公約|協定|條約|公告|字第|要點|附件|辦法|指引|準則|標準|PDF|教材|Table|CDP|NDC|CBAM|ETS|CORSIA|SBTi|GHG Protocol/u;
+      /§|第.{1,4}條|Art\.|Article|Regulation|Reg\s*\(|CELEX|Directive|ISO|IPCC|UNFCCC|Cancún|Cancun|CP\.\d|CMA|Agreement|Protocol|Treaty|Collection|公約|協定|條約|公告|字第|要點|附件|辦法|指引|準則|標準|PDF|教材|Table|CDP|NDC|CBAM|ETS|CORSIA|SBTi|GHG Protocol|IFRS|ISSB|IAASB|EFRAG|ESRS|TCFD|導覽頁|官方/u;
     const odd = [...new Set(kept)].filter((v) => !looksLikeCitation.test(v));
     expect(odd, 'verification_source 的值看起來不像引用').toEqual([]);
   });
