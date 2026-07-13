@@ -1,11 +1,47 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""驗證 agents 交回來的引文 —— 去把那個 URL 抓下來，檢查那段話真的在上面。
+"""驗證 AI 代理交回來的引文 —— 把它引的 URL 抓回來，檢查那段話真的在上面。
 
-**這一步是整套設計的重點。** 沒有它，agents 交回來的東西跟
-`research_agent` / `adversarial_subagent` 沒有任何差別 —— 都是「相信我」。
+## 為什麼這支工具存在
 
-有了它，agent 的輸出變成**可證偽的**：捏造的引文會當場被抓出來。
+這個專案的 metadata 裡曾經有一整組「已查證」欄位，全部是 AI 自評：
+
+  - 練習池 `provenance.verify_verdict = CONFIRMED`（155/157，驗證者 adversarial_subagent）
+  - 主題庫 `metadata.verification_source = "research_agent"`（14 題）
+  - 主題庫 `metadata.answer_verified = true`（**全部 773 題**）
+
+拿法條原文逐條比對後，找到 13 個實質缺陷 —— **13 個當初全部被判 CONFIRMED**。
+
+**AI 驗 AI 沒有用。** 所以派代理蒐證時，契約寫死：
+
+  **代理只准交「一手來源 URL + 該頁面上的逐字引文」，不准交「判定」。**
+  **判定由人做；引文由這支程式抓回原網頁逐字比對。**
+
+第一輪 32 筆引文：代理**捏造了 1 筆**、引了 2 筆非一手來源 —— 全部被這支程式擋下。
+第二輪把這件事寫進契約後，143 題 **0 筆捏造**。
+
+## 這支工具自己踩過的坑（每一個都害我誤指代理捏造）
+
+| 我的錯 | 後果 |
+| --- | --- |
+| 沒處理 PDF | 環境部盤查指引的**真引文**被判成捏造（政府 PDF 用 CID 內嵌字型，要 PyMuPDF） |
+| 要求逐字「連續」 | 片段皆真、只是被重排的也判成捏造 |
+| 抓不到內容就判有罪 | JS 渲染的頁面全部變成偽造指控 |
+| **手列標點清單** | **`'`(U+0027) vs `’`(U+2019)** —— 直引號 vs 彎引號，3 筆真引文被判成捏造 |
+| **手抄 PRIMARY 清單** | 把代理引用 **ipas.org.tw（考試主辦單位官網）** 判成「不是一手來源」 |
+
+**每一次，錯的都是這個檢查器，不是資料。**
+
+所以：
+  - 正規化剝掉**所有** Unicode 標點類別（讓 Unicode 回答「什麼是標點」，不要手列）
+  - PRIMARY 直接從 `source-authority.ts` 讀（**兩份清單一定會漂移**）
+  - 分**三類**（逐字／重組／查無），不是有罪/無罪二分
+  - **「我抓不到」≠「它捏造了」** —— 抓不到就回報抓不到，由人用別的方法複驗
+
+用法：
+    python tools/verify_agent_quotes.py <代理輸出的 res*.json 所在目錄>
 """
+
 import json, sys, io, re, html, glob, unicodedata, urllib.request, collections, ssl
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 

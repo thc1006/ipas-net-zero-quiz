@@ -1154,8 +1154,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "22",
         "option_order": {
@@ -1163,10 +1163,17 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "事業之特約或加盟門市由其他事業經營者，其排放量盤查至少應涵蓋外購電力之能源間接排放。",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
       ],
       "quality_flags": []
     },
@@ -1203,8 +1210,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "23",
         "option_order": {
@@ -1212,10 +1219,17 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "事業使用經中央主管機關公告之燃料及原（物）料者，得以該燃料及原（物）料商品標示之熱值或碳含量計算排放量，不適用前項規定。",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
       ],
       "quality_flags": []
     },
@@ -1240,8 +1254,8 @@
           "text": "殘餘碳（Residual Carbon）"
         }
       ],
-      "answer": "C",
-      "explanation": "依 IPCC 2006/2019 指南，生物起源 CO2（biogenic CO2）視為短期碳循環之一部分，應於資訊欄位（memo item）報告而不計入國家總排放。我國 2025 年 NIR 據此回溯重算 2015–2023 年廢水處理 CO2。",
+      "answer": "B",
+      "explanation": "依 2025 年版《中華民國國家溫室氣體排放清冊報告》（NIR）之「重新計算」章節：「這些源自於生物的二氧化碳被視為**中性碳(carbon-neutral)**，因此移除事業盤查資料中所產生的二氧化碳排放。」故 2025 年版 NIR 回溯重算了廢水處理的 CO₂ 排放，將生物起源的部分自國家總排放中移除。\n\n⚠️ 注意用詞：國際慣用語是「biogenic CO₂（生物源二氧化碳）」，但**本題問的是 2025 年版 NIR 怎麼寫** —— 該報告全文使用「中性碳(carbon-neutral)」，「生物碳」一詞在 327 頁全文中**出現 0 次**。",
       "subject": null,
       "topic_tags": [
         "生物碳",
@@ -1252,8 +1266,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對（2025 NIR 原文）",
         "verify_verdict": "CONFIRMED",
         "original_id": "24",
         "option_order": {
@@ -1261,10 +1275,25 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "answer_correction": {
+          "corrected_on": "2026-07-13",
+          "prior_answer": "C",
+          "new_answer": "B",
+          "evidence": "2025 年版國家溫室氣體清冊報告（service.cca.gov.tw，327 頁 PDF）逐字寫著：「這些源自於生物的二氧化碳被視為**中性碳(carbon-neutral)**，因此移除事業盤查資料中所產生的二氧化碳排放。」",
+          "why": "題目問的是「**2025 年版 NIR** 把它視為哪一類碳」。把整份 327 頁的 NIR 搜過 ——「**生物碳**」出現 **0 次**；NIR 自己用的詞是「**中性碳(carbon-neutral)**」。原答案「生物碳」是錯的。（我先前「修」過這題的解析，寫「依 IPCC 指南，生物起源 CO2 視為短期碳循環」—— 那是國際慣用語，但**我從來沒去看過 NIR 本身**。題目問的是 NIR 怎麼寫。）"
+        },
+        "evidence": {
+          "quote": "這些源自於生物的二氧化碳被視為中性碳(carbon-neutral)，因此移除事業盤查資料中所產生的二氧化碳排放。",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + 機械逐字比對（抓回 service.cca.gov.tw 的 NIR PDF，確認引文逐字存在）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://www.cca.gov.tw/information-service/publications/national-ghg-inventory-report/13123.html",
+        "https://service.cca.gov.tw/File/Get/cca/zh-tw/5aP6jPYTHl31hKi"
       ],
       "quality_flags": []
     },
@@ -1408,6 +1437,11 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "unverifiable_evidence": {
+          "recorded_on": "2026-07-13",
+          "why": "引文出自 ea01.moeaea.gov.tw 的 JS 手風琴（ASP.NET postback 動態載入）。我的靜態抓取與 WebFetch 都看不到答案內文 —— **無法證明它為真，也無法證明它捏造**。不寫入證據，也不指控。",
+          "agent_source": "https://ea01.moeaea.gov.tw/e0409/Page/Classroom.aspx"
         }
       },
       "sources": [
@@ -1546,8 +1580,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "30",
         "option_order": {
@@ -1555,10 +1589,17 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "A market-based method reflects emissions from electricity that companies have purposefully chosen (or their lack of choice).",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://ghgprotocol.org/sites/default/files/2023-03/Scope%202%20Guidance.pdf"
       ],
       "quality_flags": []
     },
