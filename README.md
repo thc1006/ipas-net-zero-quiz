@@ -93,10 +93,16 @@ corepack enable && pnpm install
 
 pnpm dev            # 開發（含 schema fail-fast 驗證）
 pnpm build          # 建置
+pnpm preview        # 預覽建置結果
 pnpm test:run       # 單元測試（vitest）
+pnpm test:coverage  # 含 coverage
 pnpm test:e2e       # E2E（playwright）
 pnpm lint && pnpm type-check
 ```
+
+> CI 會先跑 `npm install -g corepack@latest` —— Node 20.18 內建的 Corepack 簽名公鑰
+> 已過期（[nodejs/corepack#612](https://github.com/nodejs/corepack/issues/612)），
+> 不升級會裝不動 pnpm。本機遇到同樣問題時也照做。
 
 **技術棧**：React 18 + TypeScript（strict）／Vite 6／Vitest + Testing Library + Playwright／
 GitHub Actions（lint · tsc · test · build · e2e · CodeQL · Codecov）／GitHub Pages 自動部署。

@@ -137,3 +137,45 @@ bash .github/scripts/check-description.test.sh   # GitHub About 的題數
 **文件也不能對資料說謊**：README、網站文案（`index.html`）、給 AI 爬蟲的 `llms.txt`、
 甚至 **GitHub 的 About**，上面每一個題數都由 CI 對著資料實算比對，對不上就擋下 merge。
 （About 不在 git 裡，得用 `gh api` 讀 —— 這正是它曾經錯了很久沒人發現的原因。）
+
+---
+
+## 維運：time-sensitive 題目怎麼重新查證
+
+帶 `quality_flags: ["time_sensitive"]` 的題目，內容會隨法規變動（CBAM、碳費、NDC、
+碳中和標準）。**連結還通不通，跟內容有沒有變，是兩件事** —— 季排程只驗前者。
+
+```bash
+# 列出所有 time_sensitive 題目與它們的來源
+jq '.items[] | select(.quality_flags | index("time_sensitive"))
+    | {id, stem: (.stem | .[0:60]), sources}' \
+  quiz-app/src/data/practice_pool.json
+
+# 主題庫（欄位不同：metadata.sources）
+jq '[.gist_items[], .our_unique_items[]]
+    | map(select(.quality_flags // [] | index("time_sensitive")))
+    | map({stem: (.stem | .[0:60]), sources: .metadata.sources})' \
+  quiz-app/src/data/integrated_dataset.json
+```
+
+人工重新查證的步驟：
+
+1. 開啟該題的來源 URL，比對**最新內容**與題目選項是否仍一致
+2. 一致 → 更新該題的 `metadata.valid_as_of`
+3. 不一致 → 修正答案，並補上 `metadata.prior_answer` 與 `_correction_note`
+   （改了什麼、憑什麼改），附上實測可達的一手來源 URL
+4. 來源已失效且找不到替代 → 移除題目，並同步更新
+   `_meta.totals` 與 `practice-pool-counts.ts`
+
+> 每次改動題數，`docs-counts` gate 會強迫你把 README／`index.html`／`llms.txt`／
+> GitHub About 的數字一起改對 —— 這是刻意的。
+
+### 手動觸發季排程檢查
+
+```bash
+gh workflow run quarterly-time-sensitive-verify.yml
+```
+
+⚠️ 這個 workflow 需要在 **Settings → Actions → General → Workflow permissions**
+啟用 **Read and write permissions**，否則它**開不了 issue** —— 檢查照跑，
+失效的連結卻沒有人會知道。這正是最典型的「安靜地少報」。
