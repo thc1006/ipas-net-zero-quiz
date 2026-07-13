@@ -121,7 +121,9 @@ export function isNumericQuestion(q: { options: readonly { text: string }[] }): 
  */
 export function optionValue(text: string): number | null {
   const s = text.replace(/[,，\s]/gu, '');
-  const m = s.match(/\(?([\d.]+)[−\-]([\d.]+)\)?[×x*]([\d.]+)(?:[×x*]([\d.]+))?/u);
+  // 減號兩種都要吃：ASCII hyphen 與 U+2212 MINUS SIGN（題庫裡兩種都有）。
+  // `-` 放在字元類別**最後**，才不會被讀成範圍、也不必轉義（no-useless-escape）。
+  const m = s.match(/\(?([\d.]+)[−-]([\d.]+)\)?[×x*]([\d.]+)(?:[×x*]([\d.]+))?/u);
   if (m) {
     const d = m[4] ? Number(m[4]) : 1;
     return (Number(m[1]) - Number(m[2])) * Number(m[3]) * d;
