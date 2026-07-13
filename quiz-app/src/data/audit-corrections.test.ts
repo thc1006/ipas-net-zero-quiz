@@ -1,87 +1,116 @@
-// 稽核修正回歸測試
-// 鎖定 c2-190、c2-006、c2-132 等審核過的答案，避免被誤改回去
+// 稽核修正回歸測試 —— 鎖定審核過的答案，避免被誤改回去。
+//
+// ⚠️ **這個檔案曾經整個守錯對象，長達好幾個月。**
+//
+// 原本每一條斷言都寫成 `byId('c2-190')`，而 `byId` 讀的是 `questions.json` ——
+// **一個 app 從來不會載入的檔案**（真正出貨的資料模組 `questions.ts` 讀的是
+// `integrated_dataset.json`）。
+//
+// 也就是說：這些以**真實使用者回報**命名的回歸測試（`c2-190` 來自 discussion #1、
+// `c2-074` 來自 issue #82），宣稱「避免被誤改回去」，
+// **但出貨資料裡的答案就算被改成錯的，它們也照樣全綠。**
+// 突變測試證實過：把出貨端的 c2-190 / c2-006 / c2-132 / c2-074 答案通通改錯，四條全部 GREEN。
+//
+// 而且那個舊檔已經漂了 —— 它與出貨資料有 **8 題答案不一致**，
+// 每一題的 `prior_answer` 都對得上它，也就是說它保存的是**更正前的錯答案**。
+//
+// **一句假的保證比沒有保證更糟**：這些測試看起來像是有人在守，其實沒有。
+// `questions.json` 已刪除（它 0 條來源、93% 的解析帶著捏造的引用編號，見 meta.metadata_honesty_note）。
+// 現在每一條斷言都打在**出貨的那一份資料**上。
 import { describe, it, expect } from 'vitest';
-import questionsRaw from './questions.json';
 import datasetRaw from './integrated_dataset.json';
 
-interface RawQ {
-  id: string;
-  question: string;
-  options: Record<string, string>;
-  answer: string;
-  explanation?: string;
-  metadata?: { sources?: string[]; sources_verified_date?: string };
-}
-
 interface DatasetItem {
-  index: number;
+  index?: number;
+  item_id?: string;
   stem: string;
-  answer: string;
+  answer: string | null;
   options: { key: string; text: string }[];
   metadata?: { original_id?: string; sources?: string[]; prior_answer?: string };
   explanation?: string;
 }
 
-const Q1 = questionsRaw as unknown as RawQ[];
-const DS = datasetRaw as unknown as { gist_items: DatasetItem[] };
+const DS = datasetRaw as unknown as {
+  gist_items: DatasetItem[];
+  our_unique_items: DatasetItem[];
+};
+const ALL = [...DS.gist_items, ...DS.our_unique_items];
 
-const byId = (id: string) => Q1.find((q) => q.id === id);
+/** 依舊 pipeline 的題號（c2-190 之類）找到**出貨資料**裡的那一題。 */
+const live = (id: string) =>
+  ALL.find((q) => q.metadata?.original_id === id || q.item_id === id);
+
 const byIndex = (idx: number) => DS.gist_items.find((g) => g.index === idx);
+
+/** 出貨資料的 options 是陣列，不是 Record —— 取某個字母的選項文字。 */
+const opt = (q: DatasetItem | undefined, key: string) =>
+  q?.options.find((o) => o.key === key)?.text;
+
+describe('回歸測試守的是「出貨的那一份資料」', () => {
+  // 這一條是元測試：如果哪天 live() 對不到題（例如 original_id 被改名），
+  // 底下所有 `expect(live('c2-190')?.answer)` 都會變成 `expect(undefined)` ——
+  // **那不會讓測試變綠，但會讓失敗訊息變得莫名其妙。** 先在這裡明確擋掉。
+  const PINNED = ['c2-190', 'c2-006', 'c2-132', 'c1-038', 'c1-040', 'c2-086', 'c2-074'];
+  it('每一個被釘住的題號都必須在出貨資料裡找得到', () => {
+    for (const id of PINNED) {
+      expect(live(id), `${id} 在 integrated_dataset.json 裡找不到 —— 回歸測試會變成空轉`).toBeDefined();
+    }
+  });
+});
 
 describe('audit corrections regression', () => {
   describe('c2-190 一級數據佔上游排放（discussion #1）', () => {
-    const q = byId('c2-190');
-    it('answer should be B (10%, not 20%)', () => {
+    const q = live('c2-190');
+    it('出貨資料的答案必須是 B（10%，不是 20%）', () => {
       expect(q?.answer).toBe('B');
     });
-    it('option B 文字含 10', () => {
-      expect(q?.options.B).toContain('10');
+    it('選項 B 的文字含 10', () => {
+      expect(opt(q, 'B')).toContain('10');
     });
-    it('explanation includes 10%', () => {
+    it('解析含 10%', () => {
       expect(q?.explanation).toContain('10%');
     });
-    it('explanation does NOT contain "原環境部" anachronism', () => {
+    it('解析不得再出現「（原環境部）」這個時序錯置', () => {
       expect(q?.explanation).not.toContain('（原環境部）');
     });
-    it('metadata.sources includes vocus citation', () => {
+    it('來源仍保留當初據以更正的 vocus 引用', () => {
       const sources = q?.metadata?.sources ?? [];
       expect(sources.some((u) => u.includes('vocus.cc'))).toBe(true);
     });
   });
 
   describe('c2-006 溫管辦法主導查驗員', () => {
-    const q = byId('c2-006');
-    it('answer should be C (6 years)', () => {
+    const q = live('c2-006');
+    it('出貨資料的答案必須是 C（6 年）', () => {
       expect(q?.answer).toBe('C');
     });
-    it('explanation cites §8 (not §14)', () => {
-      // §8 第 2 項第 2 款 — should appear; §14 should not be the answer reference
+    it('解析引的是 §8（不是 §14）', () => {
       expect(q?.explanation).toContain('第 8 條');
     });
   });
 
   describe('c2-132 CDP 揭露範疇', () => {
-    const q = byId('c2-132');
-    it('answer should be A (土壤, not 塑膠)', () => {
+    const q = live('c2-132');
+    it('出貨資料的答案必須是 A（土壤，不是塑膠）', () => {
       expect(q?.answer).toBe('A');
     });
-    it('option A is 土壤', () => {
-      expect(q?.options.A).toBe('土壤');  // 短字無需 loose
+    it('選項 A 是「土壤」', () => {
+      expect(opt(q, 'A')).toBe('土壤');
     });
   });
 
   describe('CBAM Omnibus dates (Reg 2025/2083)', () => {
-    it('c1-038 surrender deadline option C → 9 月 30 日', () => {
-      expect(byId('c1-038')?.options.C).toMatch(/9\s*月\s*30\s*日/);
+    it('c1-038 憑證繳交期限：選項 C → 9 月 30 日', () => {
+      expect(opt(live('c1-038'), 'C')).toMatch(/9\s*月\s*30\s*日/);
     });
-    it('c1-040 first submission option B → 2027 年 9 月 30 日', () => {
-      expect(byId('c1-040')?.options.B).toMatch(/2027\s*年\s*9\s*月\s*30\s*日/);
+    it('c1-040 首次申報：選項 B → 2027 年 9 月 30 日', () => {
+      expect(opt(live('c1-040'), 'B')).toMatch(/2027\s*年\s*9\s*月\s*30\s*日/);
     });
   });
 
   describe('NDC 3.0 update', () => {
-    it('c2-086 option B → 28 % ± 2 %', () => {
-      expect(byId('c2-086')?.options.B).toMatch(/28\s*%\s*±\s*2\s*%/);
+    it('c2-086 選項 B → 28 % ± 2 %', () => {
+      expect(opt(live('c2-086'), 'B')).toMatch(/28\s*%\s*±\s*2\s*%/);
     });
   });
 
@@ -120,17 +149,19 @@ describe('audit corrections regression', () => {
   });
 
   describe('c2-074 巴黎協定 enriched explanation (issue #82)', () => {
-    const q = byId('c2-074');
-    it('explanation 帶 COP21 / UN Treaty Collection / 2015 年 12 月 12 日 任一關鍵字', () => {
+    const q = live('c2-074');
+    it('出貨資料的答案必須是 B（2016 年生效）', () => {
+      expect(q?.answer).toBe('B');
+    });
+    it('解析帶 COP21 / UN Treaty Collection / 2015 年 12 月 12 日 任一關鍵字', () => {
       expect(q?.explanation).toMatch(/COP21|UN Treaty Collection|2015 年 12 月 12 日/);
     });
-    it('explanation 不應再含 [1, 2, 3, 4] stub', () => {
+    it('解析不應再含 [1, 2, 3, 4] 這種捏造的引用編號', () => {
       expect(q?.explanation).not.toMatch(/\[1, ?2, ?3, ?4\]/);
     });
-    it('metadata.sources 含 UN Treaty Collection URL', () => {
+    it('來源含 UN Treaty Collection URL', () => {
       const sources = q?.metadata?.sources ?? [];
       // 用 hostname 比對而非 substring — 避免把 'evil.com/treaties.un.org' 誤認為 UN
-      // 且更貼近這個測試的本意：驗證 source URL 確實指向 UN Treaty Collection 主機。
       // CodeQL: js/incomplete-url-substring-sanitization
       expect(
         sources.some((u) => {
@@ -143,14 +174,11 @@ describe('audit corrections regression', () => {
         })
       ).toBe(true);
     });
-    it('integrated_dataset gist[267] explanation 同步 enriched', () => {
-      expect(byIndex(267)?.explanation).toMatch(/COP21|2015 年 12 月 12 日/);
-    });
   });
 
   describe('c2-089 AR6「10次方」偽造題已移除 (issue #85)', () => {
-    it('c2-089 不應出現於 questions.json (AR6 無此敘述, 已移除)', () => {
-      expect(byId('c2-089')).toBeUndefined();
+    it('c2-089 不應出現於出貨資料（AR6 無此敘述，已移除）', () => {
+      expect(live('c2-089')).toBeUndefined();
     });
     it('gist[282] 不應出現於 integrated_dataset.json', () => {
       expect(byIndex(282)).toBeUndefined();
@@ -182,33 +210,24 @@ describe('audit corrections regression', () => {
   // 真正的全文是改用瀏覽器型抓取取得後，才在本機以 PyMuPDF 解出並逐字比對的。
   describe('坎昆協議 MRV：附件一國家的報告義務 (@henrychen-bot 回報，2026-07 二次更正)', () => {
     const g = byIndex(304);
-    const q = byId('c2-111');
 
     it('答案應為 A —— §40(a) 要求報告「減緩行動與已達成之減量成果」', () => {
       expect(g?.answer).toBe('A');
-      expect(q?.answer).toBe('A');
     });
 
     it('explanation 不得再宣稱附件一國家「接受 ICA」', () => {
       // 舊的錯誤 explanation：「坎昆協議規定，附件一國家應每兩年更新其排放報告，並接受國際諮商與分析（ICA）。」
       expect(g?.explanation).not.toMatch(/附件一國家.{0,12}接受.{0,6}(ICA|國際諮商與分析)/);
-      expect(q?.explanation).not.toMatch(/附件一國家.{0,12}接受.{0,6}(ICA|國際諮商與分析)/);
     });
 
     it('explanation 應說明附件一國家走 IAR（@henrychen-bot 指認正確的那一半）', () => {
       expect(g?.explanation).toMatch(/IAR|國際評估/);
-      expect(q?.explanation).toMatch(/IAR|國際評估/);
     });
 
     it('explanation 不得再替沒有依據的 C（基線資料）背書', () => {
       // 舊的 explanation 寫「附件一國家之 MRV 須提報與其量化全經濟體減量目標相關之基線資料，故選 C」
       // —— 決議全文查無 baseline / base year。
       expect(g?.explanation).not.toMatch(/須提報.{0,20}基線資料.{0,8}故選/);
-      expect(q?.explanation).not.toMatch(/須提報.{0,20}基線資料.{0,8}故選/);
-    });
-
-    it('兩個檔案（integrated_dataset / questions.json）必須同步 —— 同一題不能有兩個答案', () => {
-      expect(g?.answer).toBe(q?.answer);
     });
 
     it('保留 prior_answer 以標示此題已被修正過', () => {

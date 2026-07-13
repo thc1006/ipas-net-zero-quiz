@@ -20,6 +20,8 @@ export interface MainBankItemMetadata {
    * ⚠️ 它**不可以**是資料管線的註記。歷史上它曾經是：
    *   - `"sync_from_310"`（270 題）—— 意思是「答案從 questions.json（309 題的舊檔）
    *     **複製**過來」，而那個檔案 0 條來源、93% 的解析帶著捏造的引用編號。**複製不是查證。**
+   *     （`questions.json` 已於 2026-07-14 刪除：app 從來不載入它，它卻與出貨資料
+   *     有 8 題答案不一致 —— 保存的是更正**前**的錯答案，而回歸測試正對著它斷言。）
    *   - `"batch_verification"`（72 題）—— 沒說驗了什麼。
    *   - `"research_agent"`（14 題）—— AI 代理自評。
    * 這三種值已被搬到 `_legacy_pipeline_metadata.answer_origin`，並由
