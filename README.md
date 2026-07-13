@@ -52,7 +52,7 @@ CBAM、ISO 14068-1 屬**科目一**；**科目二只涵蓋 ISO 14064-1 與 ISO 1
 - **重建的題目有證據鏈** —— 159 題逐題記錄來自哪一份 PDF（含 sha256）的哪一頁、哪一欄、
   第幾題，以及 PDF 自己印的 answer key。跑 `python tools/restore_from_source_pdf.py --verify`
   可完整重現（實測 **159/159** 相符）
-- **改過的答案留得下痕跡** —— 17 題答案曾被更正，每題都保留 `metadata.prior_answer`
+- **改過的答案留得下痕跡** —— 15 題答案曾被更正，每題都保留 `metadata.prior_answer`
   與 `_correction_note`（改了什麼、憑什麼改）。其中 10 題附一手來源 URL，
   另外 3 題的依據是標準條文本身（見該題的 `_correction_note`）。
   推翻來源 PDF 的答案卡需要列明依據，而且 CI 會擋下沒有依據的偏離。

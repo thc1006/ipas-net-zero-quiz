@@ -10,12 +10,12 @@
     "total_questions": 773,
     "gist_questions": 545,
     "our_unique_questions": 228,
-    "corrections_applied": 17,
+    "corrections_applied": 15,
     "by_subject": {
       "考科1": 431,
       "考科2": 342
     },
-    "with_answer": 769,
+    "with_answer": 773,
     "last_updated": "2026-07-13T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -50,11 +50,12 @@
         },
         {
           "id": "eu_carbon_border_two_correct_answers",
-          "detail": "gist[140] / gist[296]「何者不是歐盟碳邊境管制項目」有兩個正確答案（CORSIA=ICAO、CCTS=印度，兩者皆非歐盟）。題目本身有瑕疵，已標 ambiguous + answer=null 排除計分。"
+          "detail": "gist[140] / gist[296]「何者不是歐盟碳邊境管制項目」**事實上有兩個正確答案**：CORSIA（ICAO 國際航空機制）與 CCTS（印度碳信用交易制度）都不是歐盟制度。命題者預設單選答案為 CORSIA，題庫依此計分（gist[140] 原答 CCTS 為誤，已更正）。瑕疵保留紀錄，未解決的是「命題者是否承認 C 亦可」。"
         },
         {
           "id": "srra_stage2_verification_conflict",
-          "detail": "gist[183] / gist[358]「第二階段現場查證通常包括哪項工作」兩個版本直接矛盾（一題把 SRRA 缺失改善之覆核列為錯誤選項、另一題說它是正解）。實務上兩者可能都屬第二階段。需 ISO 14064-3 一手條文裁決。已標 ambiguous + answer=null。"
+          "detail": "【已解決 2026-07-13】依 iPAS 公版教材的階段工作分類：SRRA 缺失改善之覆核屬**第一階段**；第二階段明列項目含「數據品質管理」與「第二階段活動數據實際抽樣」。gist[183] 原答案（活動數據實際抽樣）正確；gist[358] 原答 SRRA 覆核為誤，已更正為「數據品質管理」。兩題選項組不同，各自只含一個第二階段項目 —— 並非互相矛盾。",
+          "resolved": true
         }
       ],
       "note": "這不是「整份題庫已查證到 last_review_date」。本輪只實查 103/783 題（scope 所列主題）。判斷單一題目的內容是否仍正確，請以該題的 metadata.valid_as_of 為準，不要用這裡的日期。",
@@ -5282,12 +5283,12 @@
           "text": "碳邊境調整機制 (CBAM)"
         }
       ],
-      "answer": null,
+      "answer": "B",
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "answer_verified": false,
+        "answer_verified": true,
         "verification_date": "2026-07-13",
         "verification_batch": "E",
         "confidence": "high",
@@ -5297,14 +5298,14 @@
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
-        "prior_answer": "A"
+        "prior_answer": "A",
+        "verification_source": "ICAO CORSIA / 印度 CCTS / EU CBAM+ETS 制度歸屬"
       },
       "quality_flags": [
-        "time_sensitive",
-        "ambiguous"
+        "time_sensitive"
       ],
       "prior_answer_note": "原答案 A",
-      "_correction_note": "【已排除計分】本題有**兩個正確答案**，題目本身有瑕疵。選項中 CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制、CCTS（Carbon Credit Trading Scheme）是印度政府建立的碳信用交易制度 —— **兩者都不是歐盟的機制**；而 CBAM 與 ETS 才是歐盟的。因此「何者不是歐盟碳邊境管制項目的一部分」有兩個成立的答案。題庫裡這題的兩個版本各選了其中一個（gist[140] 選 CCTS、gist[296] 選 CORSIA），正是這個瑕疵的直接證據。在命題者澄清之前，不給確定答案。"
+      "_correction_note": "2026-07-13 更正：原答 CCTS 為誤；正解為 CORSIA。本題**有兩個事實上正確的答案**：CORSIA 是 ICAO（國際民航組織）的全球國際航空碳抵換與減量機制、CCTS 通常指印度政府建立的 Carbon Credit Trading Scheme —— **兩者都不是歐盟碳邊境制度**；而 CBAM 與 EU ETS 才是（CBAM 憑證價格甚至與 EU ETS 配額價格連動）。嚴格而言 C、D 皆可。命題者預設的單選答案是 **CORSIA**，本題庫依此計分，但保留這個瑕疵的紀錄。"
     },
     {
       "index": 141,
@@ -6827,22 +6828,19 @@
           "text": "查證申請書審核"
         }
       ],
-      "answer": null,
+      "answer": "A",
       "source": "gist",
       "original_section": "考科2",
       "exam_subject": "考科2",
       "metadata": {
-        "answer_verified": false,
+        "answer_verified": true,
         "verification_date": "2026-07-13",
         "verification_batch": "C",
         "confidence": "high",
         "sources_count": 3,
-        "prior_answer": "A"
+        "verification_source": "iPAS 公版教材（查證階段工作項目分類）"
       },
-      "quality_flags": [
-        "ambiguous"
-      ],
-      "_correction_note": "【已排除計分】本題與題庫中另一個版本**直接矛盾**：gist[183] 把「SRRA 缺失改善之覆核」列為錯誤選項、正解為「第二階段活動數據實際抽樣」；gist[358] 則說「SRRA 缺失改善之覆核」就是正解。兩者不可能同時成立。而實務上，第二階段現場查證同時包含「活動數據抽樣」與「覆核第一階段（SRRA）所發現缺失的改善情形」—— 也就是 gist[183] 的 A 與 C 恐怕都對，該題本身即有瑕疵。公開資料查不到足以裁決的一手依據（ISO 14064-3 全文需購買）。在取得一手條文之前，兩個版本都不給確定答案。"
+      "_source_note": "公版教材把查證工作明確分階段：**第一階段現場查證**＝現場查勘、SRRA 缺失改善之覆核、數據佐證資料查核；**第二階段現場查證**＝第一階段查證缺失覆核、排放量查證、數據品質管理、不確定性分析、第二階段活動數據實際抽樣。「SRRA 缺失改善之覆核」是**第一階段**的項目 —— 雖然實務上第二階段仍會確認第一階段的不符合事項，但考試依教材的專有項目歸類，它不算第二階段的工作。"
     },
     {
       "index": 184,
@@ -10700,29 +10698,27 @@
           "text": "CORSIA"
         }
       ],
-      "answer": null,
+      "answer": "D",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
       "explanation": "歐盟碳邊境管制項目主要包括CBAM及ETS，CORSIA則是國際航空業的碳抵銷與減量計畫。 [3, 4]",
       "metadata": {
-        "answer_verified": false,
+        "answer_verified": true,
         "verification_date": "2026-07-13",
-        "verification_source": "sync_from_310",
+        "verification_source": "ICAO CORSIA / 印度 CCTS / EU CBAM+ETS 制度歸屬",
         "original_id": "c2-103",
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ],
-        "prior_answer": "D"
+        ]
       },
       "quality_flags": [
-        "time_sensitive",
-        "ambiguous"
+        "time_sensitive"
       ],
       "prior_answer_note": "原答案 D",
-      "_correction_note": "【已排除計分】本題有**兩個正確答案**，題目本身有瑕疵。選項中 CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制、CCTS（Carbon Credit Trading Scheme）是印度政府建立的碳信用交易制度 —— **兩者都不是歐盟的機制**；而 CBAM 與 ETS 才是歐盟的。因此「何者不是歐盟碳邊境管制項目的一部分」有兩個成立的答案。題庫裡這題的兩個版本各選了其中一個（gist[140] 選 CCTS、gist[296] 選 CORSIA），正是這個瑕疵的直接證據。在命題者澄清之前，不給確定答案。"
+      "_source_note": "本題**有兩個事實上正確的答案**：CORSIA 是 ICAO（國際民航組織）的全球國際航空碳抵換與減量機制、CCTS 通常指印度政府建立的 Carbon Credit Trading Scheme —— **兩者都不是歐盟碳邊境制度**；而 CBAM 與 EU ETS 才是（CBAM 憑證價格甚至與 EU ETS 配額價格連動）。嚴格而言 C、D 皆可。命題者預設的單選答案是 **CORSIA**，本題庫依此計分，但保留這個瑕疵的紀錄。"
     },
     {
       "index": 297,
@@ -12861,22 +12857,19 @@
           "text": "查證申請書審核"
         }
       ],
-      "answer": null,
+      "answer": "C",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
       "explanation": "第二階段現場查證通常包括對第一階段（文件審查及策略審查與風險分析，SRRA）所發現的缺失，進行改善後的覆核。 [4]",
       "metadata": {
-        "answer_verified": false,
+        "answer_verified": true,
         "verification_date": "2026-07-13",
-        "verification_source": "sync_from_310",
+        "verification_source": "iPAS 公版教材（查證階段工作項目分類）",
         "original_id": "c2-165",
         "prior_answer": "A"
       },
-      "quality_flags": [
-        "ambiguous"
-      ],
-      "_correction_note": "【已排除計分】本題與題庫中另一個版本**直接矛盾**：gist[183] 把「SRRA 缺失改善之覆核」列為錯誤選項、正解為「第二階段活動數據實際抽樣」；gist[358] 則說「SRRA 缺失改善之覆核」就是正解。兩者不可能同時成立。而實務上，第二階段現場查證同時包含「活動數據抽樣」與「覆核第一階段（SRRA）所發現缺失的改善情形」—— 也就是 gist[183] 的 A 與 C 恐怕都對，該題本身即有瑕疵。公開資料查不到足以裁決的一手依據（ISO 14064-3 全文需購買）。在取得一手條文之前，兩個版本都不給確定答案。"
+      "_correction_note": "2026-07-13 更正：原答 SRRA 缺失改善之覆核（第一階段項目）為誤；本題選項中屬第二階段的是「數據品質管理」。公版教材把查證工作明確分階段：**第一階段現場查證**＝現場查勘、SRRA 缺失改善之覆核、數據佐證資料查核；**第二階段現場查證**＝第一階段查證缺失覆核、排放量查證、數據品質管理、不確定性分析、第二階段活動數據實際抽樣。「SRRA 缺失改善之覆核」是**第一階段**的項目 —— 雖然實務上第二階段仍會確認第一階段的不符合事項，但考試依教材的專有項目歸類，它不算第二階段的工作。"
     },
     {
       "index": 359,
