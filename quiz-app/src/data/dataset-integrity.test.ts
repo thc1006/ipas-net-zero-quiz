@@ -704,6 +704,7 @@ describe('改過答案就必須留下理由', () => {
       it.metadata as unknown as {
         verification_source?: string;
         answer_correction_reason?: string;
+        prior_answer?: string;
       };
     const bad = corrected
       .filter(
