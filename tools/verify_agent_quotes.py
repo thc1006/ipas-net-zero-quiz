@@ -42,118 +42,29 @@
     python tools/verify_agent_quotes.py <代理輸出的 res*.json 所在目錄>
 """
 
-import json, sys, io, re, html, glob, unicodedata, urllib.request, collections, ssl
+import json, sys, io, re, glob, collections, os
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# ⚠️ **抓取／正規化／PRIMARY 清單一律 import，不要在這裡再寫第二份。**
+#
+# 「兩份實作一定會漂」在這個 repo 已經應驗過三次：
+#   1. 量測腳本手抄 PRIMARY → 漏了 re100.org.tw
+#   2. 這個檔案第一版手抄 → 把 **ipas.org.tw（這場考試的主辦單位！）** 判成「不是一手來源」
+#   3. sync_derived_counts.py 的「無來源」定義跟 gate 不一樣 → 275 vs 274
+#
+# 底下這些坑全部固化在 fetch_text.py 裡了：
+#   - PDF 只認 magic bytes（不認副檔名 —— Incapsula 擋頁會被 fitz 默默解成「0 字的 PDF」）
+#   - 抓不到就走 Wayback（否則被擋的站永遠無法驗證）
+#   - NFKC（中文 PDF 用 CJK 相容字）
+#   - 引文分三類：逐字 / 重排但片段皆真 / 查無此句（不是兩類）
+from fetch_text import fetch, load_primary, norm, quote_status   # noqa: E402
+
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-S = r'C:\Users\thc1006\AppData\Local\Temp\claude\D--dev-06-june-exam\2a55d42b-3609-4580-be5d-18f505590582\scratchpad'
-
-# ⚠️ **不要手抄這份清單。**
-#
-# 我已經抄錯三次了：
-#   1. 上一輪的量測腳本手抄 PRIMARY，漏了 re100.org.tw
-#   2. 這個檔案第一版手抄，漏了 ipas.org.tw / ecovadis.com / iea.org / trec.org.tw…
-#      —— 於是把 agent 引用 **iPAS 官方網站**（ipas.org.tw，這場考試的主辦單位！）
-#      判成「不是一手來源」。
-#
-# **兩份清單一定會漂移。** 直接從 source-authority.ts 讀 —— 那是唯一的真相來源。
-def _load_primary():
-    src = open('quiz-app/src/utils/source-authority.ts', encoding='utf-8').read()
-    block = src.split('export const PRIMARY')[1].split('];')[0]
-    return tuple(re.findall(r"host:\s*'([^']+)'", block))
-
-PRIMARY = _load_primary()
-
-def norm(t):
-    """逐字比對前的正規化。
-
-    ⚠️ **不要手列標點清單。** 我第一版手列了 `、，。；：（）「」…` 這一串，
-    結果漏了 **`'`（U+0027 直引號）vs `’`（U+2019 彎引號）** ——
-    agent 把 SBTi PDF 裡的彎引號抄成直引號，我就把一筆**真的引文判成捏造**。
-
-    那是我在這個 pilot 裡第四次「檢查器比資料還常出錯」：
-      1. 沒處理 PDF          → 會把環境部指引的真引文判成捏造
-      2. 要求逐字「連續」     → 片段皆真、只是被重排的也判成捏造
-      3. 抓不到內容就判有罪   → JS 渲染的頁面全部變成偽造指控
-      4. **手列標點清單**     → 直引號 vs 彎引號就爆掉
-
-    改成剝掉**所有** Unicode 標點（P*）與分隔符（Z*）—— 讓 Unicode 自己回答
-    「什麼是標點」，不要我來列。
-
-    （注意這裡可以剝符號類，因為我們比對的是「引文在不在頁面上」；
-      主題庫的**重複偵測**則絕對不能剝 \\p{S} —— 公式題的選項只差在運算子。
-      兩者的取捨不同，不要混用同一個 norm。）
-    """
-    t = unicodedata.normalize('NFKC', t or '')
-    return ''.join(
-        c for c in t
-        if not (unicodedata.category(c)[0] in ('P', 'Z') or c.isspace())
-    )
-
-def _get(url):
-    """抓一次，回傳 (raw_bytes, content_type)。"""
-    req = urllib.request.Request(url, headers={
-        'User-Agent': 'Mozilla/5.0 (compatible; ipas-quiz-quote-verifier/1.0)'})
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE   # 學術網站憑證鏈常不完整；抓不到頁面 != 捏造
-    with urllib.request.urlopen(req, timeout=60, context=ctx) as r:
-        return r.read(), (r.headers.get('Content-Type') or '').lower()
-
-
-def _to_text(raw, ctype):
-    """把 bytes 轉純文字。**PDF 只認內容，不認副檔名。**
-
-    第 6 個「檢查器比資料還常出錯」：
-    原本這裡寫 `is_pdf = ... or url.endswith('.pdf')`。
-    於是抓 `unfccc.int/.../07a01.pdf` 時，伺服器回的是一個 **212 bytes 的
-    Incapsula 擋頁（Content-Type: text/html）**，但因為網址以 .pdf 結尾，
-    程式照樣把那段 HTML 餵進 PyMuPDF —— fitz 不會抱怨，它回一個
-    **「1 頁、0 個字」的文件**。接著搜尋 baseline 得到 0 次。
-
-    **那個 0 是假的。** 它不是「文件裡沒有」，是「我根本沒拿到文件」。
-    副檔名是網址作者的宣告，不是伺服器實際給了什麼 —— 只信真正的 magic bytes。
-    """
-    if raw[:5] == b'%PDF-' or ('pdf' in ctype and raw[:5] != b'<html'):
-        import fitz
-        doc = fitz.open(stream=raw, filetype='pdf')
-        return chr(10).join(p.get_text() for p in doc)
-
-    txt = raw.decode('utf-8', errors='replace')
-    txt = re.sub(r'<script[\s\S]*?</script>|<style[\s\S]*?</style>', ' ', txt, flags=re.I)
-    txt = html.unescape(re.sub(r'<[^>]+>', ' ', txt))
-    return txt
-
-
-def fetch(url):
-    """抓下來轉成純文字，抓不到就改走 Wayback Machine。
-
-    ⚠️ **必須處理 PDF。** agents 引的來源有好幾個是 PDF（環境部盤查作業指引、
-    GHG Protocol Scope 3 指南）。如果只當 HTML 剝標籤，會抓到二進位亂碼，
-    然後把**真的引文誤判成「捏造」** —— 那就是「檢查器比資料還常出錯」。
-    而且這些政府 PDF 用 CID 內嵌中文字型，pdftotext 會吐出空白或亂碼；
-    PyMuPDF (fitz) 能正確解碼。
-
-    ⚠️ **而且必須處理「被擋」。** unfccc.int 有 Incapsula、
-    sciencebasedtargets.org 有 Cloudflare —— 直接抓只會拿到擋頁。
-    只回報「⚠️ 抓不到」雖然誠實（不會誣賴 agent 捏造），但那是**死路**：
-    這些站的引文將**永遠無法被確認**，等於這個驗證器對它們沒有作用。
-    契約已經要求 agent 用 web.archive.org，驗證器就必須跟得上去同一個地方查。
-    """
-    try:
-        raw, ctype = _get(url)
-        txt = _to_text(raw, ctype)
-        if len(norm(txt)) >= 500:
-            return txt, url
-    except Exception:
-        pass
-
-    # 活站抓不到（擋爬／JS 渲染／404）—— 改抓存檔。**這不是猜，是換一個地方讀同一份文件。**
-    snap = 'https://web.archive.org/web/2024id_/' + url
-    try:
-        raw, ctype = _get(snap)
-        return _to_text(raw, ctype), snap
-    except Exception:
-        return '', url
+S = (r'C:\Users\thc1006\AppData\Local\Temp\claude'
+     r'\D--dev-06-june-exam\2a55d42b-3609-4580-be5d-18f505590582\scratchpad')
+PRIMARY = load_primary()
 
 ROUND = sys.argv[1] if len(sys.argv) > 1 else 'r3'
 results = []
