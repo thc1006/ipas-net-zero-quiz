@@ -40,7 +40,7 @@ function makeQuizMock(
       subject: 'all',
       questionCount: 10,
       shuffleQuestions: false,
-      shuffleOptions: false,
+
       showAnswerImmediately: true,
     },
     isLastQuestion: false,

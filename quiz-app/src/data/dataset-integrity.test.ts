@@ -12,6 +12,11 @@
 // （gist[304]）能默默錯到線上的原因。
 import { describe, it, expect } from 'vitest';
 import datasetRaw from './integrated_dataset.json';
+import {
+  checkFlags,
+  formatFlagViolations,
+  type FlaggedItem,
+} from '../utils/quality-flags';
 
 interface Opt {
   key: string;
@@ -787,47 +792,32 @@ describe('quality_flags 的一致性', () => {
     }
   });
 
-  // time_sensitive 的來源必須至少有一條「一手權威」。
-  // 只靠社群站（yamol / vocus 這種）是沒有意義的：
-  // 季排程去檢查 yamol 還活著，**根本無法告訴你金管會的規定有沒有變**。
-  const PRIMARY =
-    /law\.moj\.gov\.tw|moenv\.gov\.tw|cca\.gov\.tw|fsc\.gov\.tw|eur-lex\.europa\.eu|iso\.org|ipcc\.ch|unfccc\.int|ifrs\.org|ipas\.org\.tw|icao\.int|sciencebasedtargets\.org|cdp\.net|fsb-tcfd\.org|iaasb\.org|bsigroup\.com|iea\.org|twse\.com\.tw|tpex\.org\.tw|treaties\.un\.org|usr\.chu\.edu\.tw/;
-
-  it('time_sensitive 的題目，至少要有一條一手權威來源', () => {
-    const ts = ALL.filter((it) => flags(it).has('time_sensitive'));
+  // 剩下四條規則（未知 flag／time_sensitive 缺一手來源／valid_as_of 前後一致）
+  // 已經抽到 utils/quality-flags.ts，與練習池共用。
+  //
+  // 為什麼要抽：這個檔案**只 import integrated_dataset.json**，
+  // 所以規則寫在這裡，就一題練習池都守不到 —— 「守了一半」。
+  // question-integrity.ts 開頭那段註解早就警告過同一件事，我讀過它，然後又犯了一次。
+  //
+  // PRIMARY 也一起搬走了。它原本是一條 regex，失敗模式是「認不得就默默當成不權威」，
+  // 因此把 taxation-customs.ec.europa.eu（CBAM 的主管機關）、sec.gov、ghgprotocol.org
+  // 全判成非權威。現在改成必須逐一分類，認不得就讓 CI 紅。
+  it('quality_flags 規則全數通過（與練習池共用同一套規則）', () => {
+    const stable = new Set(CORRECTED_BUT_STABLE.map((c) => c.id));
+    const items: FlaggedItem[] = ALL.map((it) => ({
+      id: who(it),
+      flags: it.quality_flags ?? [],
+      sourceUrls: urls(it),
+      validAsOf: md(it)?.valid_as_of ?? null,
+      priorAnswer: md(it)?.prior_answer ?? null,
+    }));
+    const ts = items.filter((i) => i.flags.includes('time_sensitive'));
     expect(ts.length, '沒有任何 time_sensitive 題 —— 這條測試在空轉').toBeGreaterThan(50);
-    const bad = ts
-      .filter((it) => !urls(it).some((u) => PRIMARY.test(u)))
-      .map((it) => `${who(it)}: 來源只有 ${urls(it).map((u) => new URL(u).host).join(', ')}`);
+
+    const vs = checkFlags(items, stable);
     expect(
-      bad,
-      '這些題宣稱「會隨時間變」，但唯一的來源是社群站 —— ' +
-        '季排程去檢查那個站還活著，無法告訴你規定有沒有變'
-    ).toEqual([]);
-  });
-
-  it('time_sensitive 的題目必須有 valid_as_of（否則無從判斷查證到哪一天）', () => {
-    const bad = ALL.filter((it) => flags(it).has('time_sensitive'))
-      .filter((it) => !md(it)?.valid_as_of)
-      .map(who);
-    expect(bad).toEqual([]);
-  });
-
-  it('沒標 time_sensitive 的題目不得有 valid_as_of（那個欄位只對 time_sensitive 有意義）', () => {
-    const bad = ALL.filter((it) => !flags(it).has('time_sensitive'))
-      .filter((it) => md(it)?.valid_as_of)
-      .map((it) => `${who(it)}: valid_as_of=${md(it)!.valid_as_of} 但沒標 time_sensitive`);
-    expect(bad).toEqual([]);
-  });
-
-  it('quality_flags 只能用已知的值（打錯字的 flag 等於沒有 flag）', () => {
-    const KNOWN = new Set(['time_sensitive', 'ambiguous', 'low_confidence', 'duplicate_topic']);
-    const bad: string[] = [];
-    for (const it of ALL) {
-      for (const f of it.quality_flags ?? []) {
-        if (!KNOWN.has(f)) bad.push(`${who(it)}: 未知的 flag「${f}」`);
-      }
-    }
-    expect(bad).toEqual([]);
+      vs.length === 0 ? '' : `\n${formatFlagViolations(vs)}\n`,
+      '主題庫違反了 quality_flags 規則'
+    ).toBe('');
   });
 });

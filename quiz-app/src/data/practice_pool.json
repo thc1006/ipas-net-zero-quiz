@@ -2,7 +2,7 @@
   "_meta": {
     "version": "1.0.0",
     "generated_at": "2026-04-25T02:34:23.313664+00:00",
-    "last_updated": "2026-05-04T13:30:00+08:00",
+    "last_updated": "2026-07-13T00:00:00+08:00",
     "description": "Practice pool — 獨立於主題庫的補充練習題；使用者開啟『加強練習』模式才提供。每題附 provenance.source_type 與 quality_flags；UI 須顯示來源徽章。",
     "source_types": [
       "external_mock",
@@ -14,8 +14,8 @@
     },
     "totals": {
       "external_mock": 55,
-      "ai_generated": 102,
-      "total": 157
+      "ai_generated": 100,
+      "total": 155
     },
     "policy": "AI 產題不進主題庫；本檔僅在使用者明確開啟『加強練習』時提供，並顯示來源徽章。",
     "last_rescue_round": "2026-05-04 (ifrs_s1_s2_round_2026q2: +6 questions covering Assurance, Materiality, Climate Risk Quantification — Refs #62)"
@@ -57,7 +57,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "1"
+        "original_id": "1",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -70,7 +76,7 @@
       "options": [
         {
           "key": "A",
-          "text": "2.0°C 之內，努力邁向 1.5°C"
+          "text": "3.0°C 之內，努力邁向 2.0°C"
         },
         {
           "key": "B",
@@ -78,14 +84,14 @@
         },
         {
           "key": "C",
-          "text": "3.0°C 之內，努力邁向 2.0°C"
+          "text": "2.0°C 之內，努力邁向 1.5°C"
         },
         {
           "key": "D",
           "text": "限制暖化在 2.0°C，且不設更積極目標"
         }
       ],
-      "answer": "A",
+      "answer": "C",
       "explanation": "依《巴黎協定》第2條第1(a)款，締約方承諾將全球升溫控制在比工業化前水準高 2°C 以內，並努力將升溫限制在 1.5°C 以內。COP26 格拉斯哥氣候協議再次重申 1.5°C 目標。",
       "subject": null,
       "topic_tags": [
@@ -100,7 +106,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "2"
+        "original_id": "2",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "A",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -121,14 +133,14 @@
         },
         {
           "key": "C",
-          "text": "28 ± 2%"
+          "text": "32 ± 2%"
         },
         {
           "key": "D",
-          "text": "32 ± 2%"
+          "text": "28 ± 2%"
         }
       ],
-      "answer": "C",
+      "answer": "D",
       "explanation": "依環境部 113 年公告之第三期階段管制目標，2030 年淨排放量相較 2005 年減少 28 ± 2%。此目標為我國 NDC 3.0 的中期承諾依據，並對應《氣候變遷因應法》第10條訂定階段管制目標之規定。",
       "subject": null,
       "topic_tags": [
@@ -140,16 +152,25 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "law_text_pinning (tools/pin_law_articles.py + 人工逐條核對)",
         "verify_verdict": "CONFIRMED",
-        "original_id": "3"
+        "original_id": "3",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960",
-        "https://www.cca.gov.tw/"
+        "https://www.cca.gov.tw/information-service/publications/government-publications/2461.html",
+        "https://www.cca.gov.tw/",
+        "https://vocus.cc/article/6901a506fd89780001c2a960"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-em-ipas_vocus_mock-004",
@@ -157,22 +178,22 @@
       "options": [
         {
           "key": "A",
-          "text": "50元"
+          "text": "500元"
         },
         {
           "key": "B",
-          "text": "100元"
-        },
-        {
-          "key": "C",
           "text": "300元"
         },
         {
+          "key": "C",
+          "text": "100元"
+        },
+        {
           "key": "D",
-          "text": "500元"
+          "text": "50元"
         }
       ],
-      "answer": "A",
+      "answer": "D",
       "explanation": "依環境部 113 年 10 月 21 日公告《碳費收費辦法》及《碳費費率》：一般費率 300 元/公噸 CO2e、優惠費率 A（行業別指定削減率）50 元、優惠費率 B（技術標竿）100 元。優惠費率 A 對應提出自主減量計畫並符合行業別指定削減率者。",
       "subject": null,
       "topic_tags": [
@@ -187,7 +208,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "4"
+        "original_id": "4",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "A",
+          "method": "ladder_reversed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -201,11 +228,11 @@
       "options": [
         {
           "key": "A",
-          "text": "國家NDC強制遵約；企業ESG自願承諾"
+          "text": "企業ESG自願承諾；供應鏈碳中和要求"
         },
         {
           "key": "B",
-          "text": "企業ESG自願承諾；供應鏈碳中和要求"
+          "text": "國家NDC強制遵約；企業ESG自願承諾"
         },
         {
           "key": "C",
@@ -216,7 +243,7 @@
           "text": "國內碳費扣抵；增量抵換義務"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "國際自願碳市場（VCM）核發之 VCS、Gold Standard 等碳權，僅適用於企業 ESG 自願性承諾與供應鏈碳中和宣告，不可用於 NDC 遵約、CBAM 抵免或我國碳費抵減（碳費限用環境部核發之國內自願減量額度）。",
       "subject": null,
       "topic_tags": [
@@ -231,7 +258,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "5"
+        "original_id": "5",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -248,18 +281,18 @@
         },
         {
           "key": "B",
-          "text": "GRI"
+          "text": "TCFD"
         },
         {
           "key": "C",
-          "text": "TCFD"
+          "text": "GRI"
         },
         {
           "key": "D",
           "text": "RE100"
         }
       ],
-      "answer": "C",
+      "answer": "B",
       "explanation": "ISSB 於 2023 年 6 月發布 IFRS S1（一般要求）與 S2（氣候相關揭露），其架構承襲 TCFD 四大核心要素：治理、策略、風險管理、指標與目標。TCFD 工作組於 2023 年解散，揭露責任由 ISSB 接續。",
       "subject": null,
       "topic_tags": [
@@ -274,7 +307,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "6"
+        "original_id": "6",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -346,14 +385,14 @@
         },
         {
           "key": "C",
-          "text": "永久性"
+          "text": "外加性"
         },
         {
           "key": "D",
-          "text": "外加性"
+          "text": "永久性"
         }
       ],
-      "answer": "D",
+      "answer": "C",
       "explanation": "依 ISO 14064-2 與我國《溫室氣體自願減量專案管理辦法》第6條，外加性（Additionality）指減量活動超出法規、商業常規等基準情境，若無此專案則不會發生，是碳權品質的核心要件。",
       "subject": null,
       "topic_tags": [
@@ -368,7 +407,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "8"
+        "original_id": "8",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -385,7 +430,7 @@
         },
         {
           "key": "B",
-          "text": "1.5°C"
+          "text": "3.1°C"
         },
         {
           "key": "C",
@@ -393,10 +438,10 @@
         },
         {
           "key": "D",
-          "text": "3.1°C"
+          "text": "1.5°C"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "SBTi 自 2022 年 7 月起僅接受對齊 1.5°C 的目標，淨零目標亦須符合 SBTi Net-Zero Standard 之 1.5°C 路徑。原 WB2°C（well-below 2°C）已停止接受。",
       "subject": null,
       "topic_tags": [
@@ -411,7 +456,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "9"
+        "original_id": "9",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -425,22 +476,22 @@
       "options": [
         {
           "key": "A",
-          "text": "1兆元"
+          "text": "12兆元"
         },
         {
           "key": "B",
-          "text": "4兆元"
-        },
-        {
-          "key": "C",
           "text": "9兆元"
         },
         {
+          "key": "C",
+          "text": "4兆元"
+        },
+        {
           "key": "D",
-          "text": "12兆元"
+          "text": "1兆元"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "依國發會《臺灣 2050 淨零排放路徑及策略總說明》，政府預計 2030 年前投入 9,000 億元，可帶動民間約 4 兆元投資。此為 12 項關鍵戰略之經費規模重要數據。",
       "subject": null,
       "topic_tags": [
@@ -455,7 +506,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "10"
+        "original_id": "10",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "ladder_reversed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -469,11 +526,11 @@
       "options": [
         {
           "key": "A",
-          "text": "碳費制度需要設定排放總量上限，但排放交易制度則不需要"
+          "text": "碳費制度的價格具確定性，但減量效果不確定；排放交易制度的減量效果確定，但價格不確定"
         },
         {
           "key": "B",
-          "text": "碳費制度的價格具確定性，但減量效果不確定；排放交易制度的減量效果確定，但價格不確定"
+          "text": "碳費制度需要設定排放總量上限，但排放交易制度則不需要"
         },
         {
           "key": "C",
@@ -484,7 +541,7 @@
           "text": "碳費制度由財政機關主管，所收費用用於一般國庫；排放交易制度由環境部主管，所收費用需成立基金"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "經濟學基本原理：價格型工具（碳費／碳稅）由政府訂定價格，數量（減量）由市場決定；數量型工具（總量管制與交易 ETS）由政府訂定上限，價格由市場決定。我國採碳費制（《氣候法》第28條），尚未實施總量管制交易。",
       "subject": null,
       "topic_tags": [
@@ -499,7 +556,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "11"
+        "original_id": "11",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -542,7 +605,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "13"
+        "original_id": "13",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -585,7 +654,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "14"
+        "original_id": "14",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -602,7 +677,7 @@
         },
         {
           "key": "B",
-          "text": "2026年，4月30日"
+          "text": "2027年，10月31日"
         },
         {
           "key": "C",
@@ -610,10 +685,10 @@
         },
         {
           "key": "D",
-          "text": "2027年，10月31日"
+          "text": "2026年，4月30日"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "依《溫室氣體排放量盤查登錄及查驗管理辦法》修正草案，擴大列管事業（製造業 2,000 萬度、旅館業 1,000 萬度等）自 2026 年起，於每年 4 月 30 日前完成前一年度盤查登錄；已列管之第一批事業仍維持 8 月 31 日前。",
       "subject": null,
       "topic_tags": [
@@ -628,7 +703,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "15"
+        "original_id": "15",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -641,7 +722,7 @@
       "options": [
         {
           "key": "A",
-          "text": "4月30日"
+          "text": "10月31日"
         },
         {
           "key": "B",
@@ -653,10 +734,10 @@
         },
         {
           "key": "D",
-          "text": "10月31日"
+          "text": "4月30日"
         }
       ],
-      "answer": "D",
+      "answer": "A",
       "explanation": "依管理辦法第10條，列管事業應於每年 8 月 31 日前完成前一年度盤查登錄，並於 10 月 31 日前完成查驗並上傳查驗總結報告與聲明書至 GHG 平台。",
       "subject": null,
       "topic_tags": [
@@ -671,7 +752,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "16"
+        "original_id": "16",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -714,7 +801,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "17"
+        "original_id": "17",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -735,14 +828,14 @@
         },
         {
           "key": "C",
-          "text": "UNEP，第五次評估報告"
+          "text": "IPCC，第五次評估報告"
         },
         {
           "key": "D",
-          "text": "IPCC，第五次評估報告"
+          "text": "UNEP，第五次評估報告"
         }
       ],
-      "answer": "D",
+      "answer": "C",
       "explanation": "我國國家清冊（NIR）依 UNFCCC Decision 18/CMA.1 所定 ETF 報告規則，自 2024 年起採用 IPCC AR5 之 100 年期 GWP 值（如 CH4=28、N2O=265）。事業盤查亦於 113 年 2 月 5 日公告改用 AR5。",
       "subject": null,
       "topic_tags": [
@@ -757,7 +850,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "18"
+        "original_id": "18",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -778,14 +877,14 @@
         },
         {
           "key": "C",
-          "text": "服務業、運輸業、醫院、大專校院"
+          "text": "金融業、運輸業、醫院、製造業"
         },
         {
           "key": "D",
-          "text": "金融業、運輸業、醫院、製造業"
+          "text": "服務業、運輸業、醫院、大專校院"
         }
       ],
-      "answer": "C",
+      "answer": "D",
       "explanation": "環境部於 2025 年 7 月 14 日針對盤查擴大納管之非製造類事業，發布「服務業」、「運輸業」、「醫院」、「大專校院」四類行業別盤查作業指引，協助降低首次盤查門檻。",
       "subject": null,
       "topic_tags": [
@@ -800,7 +899,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "19"
+        "original_id": "19",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -829,7 +934,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "依環境部 113 年發布《碳費收費辦法》第10條：徵收對象使用國內自願減量額度（先期專案除外）扣減收費排放量之上限為 10%；國外減量額度上限為 5%。",
+      "explanation": "依《碳費收費辦法》§9 第一項：事業得以國內減量額度申請扣除收費排放量，「其扣除上限不得超過事業收費排放量之百分之十」；先期專案額度另有較低之扣除比率，且僅供非屬高碳洩漏風險事業使用。國外減量額度則規定在 §10：扣除上限為收費排放量之百分之五，且限非屬高碳洩漏風險之事業。兩條的上限不同（國內 10%、國外 5%），常被混淆。",
       "subject": null,
       "topic_tags": [
         "碳費",
@@ -840,15 +945,25 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "law_text_pinning (tools/pin_law_articles.py + 人工逐條核對)",
         "verify_verdict": "CONFIRMED",
-        "original_id": "20"
+        "original_id": "20",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "ladder_kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=9",
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=10",
         "https://vocus.cc/article/6901a506fd89780001c2a960"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-em-ipas_vocus_mock-021",
@@ -856,23 +971,23 @@
       "options": [
         {
           "key": "A",
-          "text": "50家以上"
+          "text": "500家以上"
         },
         {
           "key": "B",
-          "text": "100家以上"
-        },
-        {
-          "key": "C",
           "text": "200家以上"
         },
         {
+          "key": "C",
+          "text": "100家以上"
+        },
+        {
           "key": "D",
-          "text": "500家以上"
+          "text": "50家以上"
         }
       ],
-      "answer": "B",
-      "explanation": "依環境部盤查修正草案，連鎖便利商店、超級市場、電信業之納管門檻為門市（含直營、特約、加盟）總數達 100 家以上。製造業以年外購電力 2,000 萬度為門檻。",
+      "answer": "C",
+      "explanation": "依環境部「排放源分批納管」擴大盤查對象之修正**草案**，連鎖便利商店業、超級市場業、電信業之納管門檻為門市（含直營、特約、加盟）總數達 100 家以上；製造業則以年外購電力 2,000 萬度為門檻。⚠️ 本題答案的依據是尚未發布施行的草案，不是現行《溫室氣體排放量盤查登錄及查驗管理辦法》（該辦法條文中並無便利商店／超市／電信之門檻規定）。草案內容於正式公告前仍可能變動。",
       "subject": null,
       "topic_tags": [
         "擴大列管",
@@ -883,15 +998,25 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "law_text_pinning (tools/pin_law_articles.py + 人工逐條核對)",
         "verify_verdict": "CONFIRMED",
-        "original_id": "21"
+        "original_id": "21",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "ladder_reversed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
+        "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+        "https://ghgregistry.moenv.gov.tw/",
         "https://vocus.cc/article/6901a506fd89780001c2a960"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-em-ipas_vocus_mock-022",
@@ -899,11 +1024,11 @@
       "options": [
         {
           "key": "A",
-          "text": "範疇一（直接排放）"
+          "text": "範疇二（外購電力）"
         },
         {
           "key": "B",
-          "text": "範疇二（外購電力）"
+          "text": "範疇一（直接排放）"
         },
         {
           "key": "C",
@@ -914,7 +1039,7 @@
           "text": "範疇一與範疇二"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "草案規範：列管事業之特約／加盟門市雖不在組織邊界內，仍須提供範疇二外購電力數據，以利母體事業掌握全通路用電碳排，符合擴大盤查精神。",
       "subject": null,
       "topic_tags": [
@@ -929,7 +1054,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "22"
+        "original_id": "22",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -972,7 +1103,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "23"
+        "original_id": "23",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -989,18 +1126,18 @@
         },
         {
           "key": "B",
-          "text": "生物碳（Biogenic Carbon）"
+          "text": "中性碳（Carbon-neutral）"
         },
         {
           "key": "C",
-          "text": "中性碳（Carbon-neutral）"
+          "text": "生物碳（Biogenic Carbon）"
         },
         {
           "key": "D",
           "text": "殘餘碳（Residual Carbon）"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "依 IPCC 2006/2019 指南，生物起源 CO2（biogenic CO2）視為短期碳循環之一部分，應於資訊欄位（memo item）報告而不計入國家總排放。我國 2025 年 NIR 據此回溯重算 2015–2023 年廢水處理 CO2。",
       "subject": null,
       "topic_tags": [
@@ -1015,7 +1152,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "24"
+        "original_id": "24",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -1032,7 +1175,7 @@
         },
         {
           "key": "B",
-          "text": "實施空壓系統洩漏檢測與改善"
+          "text": "增加冷凍水溫度 0.5°C"
         },
         {
           "key": "C",
@@ -1040,10 +1183,10 @@
         },
         {
           "key": "D",
-          "text": "增加冷凍水溫度 0.5°C"
+          "text": "實施空壓系統洩漏檢測與改善"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "依 ISO 50001:2018 §6.3 重大能源使用（SEU）原則，應優先處理用能比例最高之系統。空壓系統典型洩漏率 20–30%，洩漏檢測與改善為投資最低、回收最快之節能措施（payback < 1 年）。",
       "subject": null,
       "topic_tags": [
@@ -1058,7 +1201,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "25"
+        "original_id": "25",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1101,7 +1250,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "26"
+        "original_id": "26",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "A",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1144,7 +1299,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "27"
+        "original_id": "27",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1161,18 +1322,18 @@
         },
         {
           "key": "B",
-          "text": "EMIS（能源資訊管理系統）"
+          "text": "T-REC 憑證系統"
         },
         {
           "key": "C",
-          "text": "T-REC 憑證系統"
+          "text": "EMIS（能源資訊管理系統）"
         },
         {
           "key": "D",
           "text": "固碳量測系統"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "EMIS（Energy Management Information System）整合 IoT 感測、即時資料分析與機器學習，提供異常偵測（FDD）與能耗預測，常作為 ISO 50001 §9.1 監測與量測之數位化工具。",
       "subject": null,
       "topic_tags": [
@@ -1187,7 +1348,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "28"
+        "original_id": "28",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1208,14 +1375,14 @@
         },
         {
           "key": "C",
-          "text": "T-REC 憑證購買"
+          "text": "自由市場躉售電力"
         },
         {
           "key": "D",
-          "text": "自由市場躉售電力"
+          "text": "T-REC 憑證購買"
         }
       ],
-      "answer": "C",
+      "answer": "D",
       "explanation": "RE100 認可三大綠電取得方式中，T-REC（Taiwan Renewable Energy Certificate）為彈性最高之短期工具，逐張購買、彈性配比，適合快速達成初期百分比目標；CPPA 為長期固定承諾。",
       "subject": null,
       "topic_tags": [
@@ -1230,7 +1397,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "29"
+        "original_id": "29",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1243,11 +1416,11 @@
       "options": [
         {
           "key": "A",
-          "text": "減少範疇一（Scope 1）排放"
+          "text": "減少範疇二（Scope 2）排放"
         },
         {
           "key": "B",
-          "text": "減少範疇二（Scope 2）排放"
+          "text": "減少範疇一（Scope 1）排放"
         },
         {
           "key": "C",
@@ -1258,7 +1431,7 @@
           "text": "增加再生能源占比但無減量效果"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "GHG Protocol Scope 2 Guidance（2015）建立 dual reporting：地點法以電網平均係數計算、市場法則扣除已取得並註銷之再生能源憑證（如 T-REC、I-REC），故 T-REC 對 Scope 2 市場法值有抵減效果。",
       "subject": null,
       "topic_tags": [
@@ -1273,7 +1446,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "30"
+        "original_id": "30",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1316,7 +1495,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "32"
+        "original_id": "32",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1329,7 +1514,7 @@
       "options": [
         {
           "key": "A",
-          "text": "若無此專案則不會產生此減量"
+          "text": "由政府強制要求執行"
         },
         {
           "key": "B",
@@ -1337,14 +1522,14 @@
         },
         {
           "key": "C",
-          "text": "由政府強制要求執行"
+          "text": "若無此專案則不會產生此減量"
         },
         {
           "key": "D",
           "text": "不需經查證即可申報"
         }
       ],
-      "answer": "A",
+      "answer": "C",
       "explanation": "外加性為碳權核發之核心要件：減量活動須超出法規、商業常規、財務或技術障礙下之基準情境，若無此專案則不會發生，避免將原本即會發生之減量重複申報為碳權。",
       "subject": null,
       "topic_tags": [
@@ -1359,7 +1544,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "33"
+        "original_id": "33",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "A",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1376,7 +1567,7 @@
         },
         {
           "key": "B",
-          "text": "新植造林計畫"
+          "text": "更換 LED 燈具"
         },
         {
           "key": "C",
@@ -1384,10 +1575,10 @@
         },
         {
           "key": "D",
-          "text": "更換 LED 燈具"
+          "text": "新植造林計畫"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "依環境部公告之自願減量方法學，「造林與植林」屬於我國目前接受申請之自然碳匯類方法學；太陽能、節能換燈屬能源類方法學；T-REC 為市場工具非減量專案。",
       "subject": null,
       "topic_tags": [
@@ -1402,7 +1593,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "34"
+        "original_id": "34",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1445,7 +1642,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "35"
+        "original_id": "35",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "ladder_kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1458,11 +1661,11 @@
       "options": [
         {
           "key": "A",
-          "text": "鍋爐燃料燃燒"
+          "text": "資材／原物料採購（Category 1: Purchased goods and services）"
         },
         {
           "key": "B",
-          "text": "資材／原物料採購（Category 1: Purchased goods and services）"
+          "text": "鍋爐燃料燃燒"
         },
         {
           "key": "C",
@@ -1473,7 +1676,7 @@
           "text": "自家車隊柴油"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "依 GHG Protocol Scope 3 Standard，電子業上游採購（晶片、PCB、外殼等）屬 Category 1（Purchased goods and services），通常占總排放 60% 以上；A、D 為 Scope 1，C 為 Scope 2。",
       "subject": null,
       "topic_tags": [
@@ -1488,7 +1691,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "36"
+        "original_id": "36",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1531,7 +1740,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "37"
+        "original_id": "37",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1548,18 +1763,18 @@
         },
         {
           "key": "B",
-          "text": "建立 ESG 評分卡並納入採購流程（Procurement Scorecard）"
+          "text": "要求供應商全部使用電動機車"
         },
         {
           "key": "C",
-          "text": "要求供應商全部使用電動機車"
+          "text": "建立 ESG 評分卡並納入採購流程（Procurement Scorecard）"
         },
         {
           "key": "D",
           "text": "要求供應商加入 CPPA"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "依 CDP Supply Chain 與 ISO 20400 永續採購指引，供應商 ESG 評分卡（含碳排、勞權、合規等指標）並嵌入採購 RFP/RFQ 評選權重，是將永續因素系統化納入採購決策之公認最佳實務。",
       "subject": null,
       "topic_tags": [
@@ -1574,7 +1789,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "38"
+        "original_id": "38",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1591,7 +1812,7 @@
         },
         {
           "key": "B",
-          "text": "協助其進行碳盤查與節能輔導（Capacity Building）"
+          "text": "要求其立即 100% 使用綠電"
         },
         {
           "key": "C",
@@ -1599,10 +1820,10 @@
         },
         {
           "key": "D",
-          "text": "要求其立即 100% 使用綠電"
+          "text": "協助其進行碳盤查與節能輔導（Capacity Building）"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "依 SBTi Net-Zero Standard 與 CDP Supply Chain 程序，對於關鍵供應商應優先採取能力建構（Capacity Building），透過教育訓練、共同盤查、技術轉移，以維持供應穩定並有效減量。",
       "subject": null,
       "topic_tags": [
@@ -1617,7 +1838,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "39"
+        "original_id": "39",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1630,11 +1857,11 @@
       "options": [
         {
           "key": "A",
-          "text": "必須購買 T-REC 憑證"
+          "text": "必須申報溫室氣體排放量並接受查驗"
         },
         {
           "key": "B",
-          "text": "必須申報溫室氣體排放量並接受查驗"
+          "text": "必須購買 T-REC 憑證"
         },
         {
           "key": "C",
@@ -1645,7 +1872,7 @@
           "text": "必須加入 CBAM 申報"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "《氣候變遷因應法》第21條：中央主管機關公告之排放源應每年盤查並登錄前一年度排放量，並應經查驗機構查驗。年排放 2.5 萬公噸以上即為碳費徵收對象（《氣候法》第28條）。",
       "subject": null,
       "topic_tags": [
@@ -1660,7 +1887,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "40"
+        "original_id": "40",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1703,10 +1936,17 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "41"
+        "original_id": "41",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -1722,18 +1962,18 @@
         },
         {
           "key": "B",
-          "text": "轉型風險（政策與法律）"
+          "text": "資訊風險"
         },
         {
           "key": "C",
-          "text": "資訊風險"
+          "text": "轉型風險（政策與法律）"
         },
         {
           "key": "D",
           "text": "生物多樣性風險"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "TCFD 將氣候相關風險分為「物理風險」（急性／慢性）與「轉型風險」（政策與法律、技術、市場、聲譽）。碳費屬政策工具，其成本上升歸類於轉型風險之政策與法律子類。",
       "subject": null,
       "topic_tags": [
@@ -1748,10 +1988,17 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "42"
+        "original_id": "42",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -1767,7 +2014,7 @@
         },
         {
           "key": "B",
-          "text": "自然依賴度與影響風險（依 TNFD 框架）"
+          "text": "碳費風險"
         },
         {
           "key": "C",
@@ -1775,10 +2022,10 @@
         },
         {
           "key": "D",
-          "text": "碳費風險"
+          "text": "自然依賴度與影響風險（依 TNFD 框架）"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "TNFD（Taskforce on Nature-related Financial Disclosures）於 2023 年 9 月發布最終建議，企業應評估對自然之 dependencies（依賴度）與 impacts（影響）。森林資源依賴屬典型自然依賴風險，需以 LEAP 程序評估。",
       "subject": null,
       "topic_tags": [
@@ -1793,7 +2040,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "43"
+        "original_id": "43",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7"
@@ -1806,11 +2059,11 @@
       "options": [
         {
           "key": "A",
-          "text": "雙重記帳，將永續資訊重複登載於財務報表與永續報表"
+          "text": "同時評估永續議題對企業之財務影響（外向內）與企業活動對環境社會之影響（內向外）"
         },
         {
           "key": "B",
-          "text": "同時評估永續議題對企業之財務影響（外向內）與企業活動對環境社會之影響（內向外）"
+          "text": "雙重記帳，將永續資訊重複登載於財務報表與永續報表"
         },
         {
           "key": "C",
@@ -1821,7 +2074,7 @@
           "text": "由兩個獨立查證機構分別查證"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "CSRD 暨 ESRS 1 §3 規範雙重重大性：Financial Materiality（議題對企業財務之風險與機會，outside-in）與 Impact Materiality（企業對人權、環境、社會之實際影響，inside-out），兩者只要任一達重大即須揭露。",
       "subject": null,
       "topic_tags": [
@@ -1836,7 +2089,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "44"
+        "original_id": "44",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
@@ -1880,7 +2139,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "45"
+        "original_id": "45",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
@@ -1900,18 +2165,18 @@
         },
         {
           "key": "B",
-          "text": "建立供應商活動數據蒐集與資料品質管理計畫"
+          "text": "全部採用次級資料（Secondary Data）以節省成本"
         },
         {
           "key": "C",
-          "text": "全部採用次級資料（Secondary Data）以節省成本"
+          "text": "建立供應商活動數據蒐集與資料品質管理計畫"
         },
         {
           "key": "D",
           "text": "僅關注 Tier 1 供應商，忽略 Tier 2/3"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "依 GHG Protocol Scope 3 Calculation Guidance §6 與 ISO 14064-1:2018 §7.3，組織應先建立資料蒐集架構與資料品質管理計畫（Data Quality Plan），再逐年透過初級資料置換次級資料，並擴展至上下游 Tier。",
       "subject": null,
       "topic_tags": [
@@ -1926,7 +2191,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "46"
+        "original_id": "46",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b"
@@ -1943,7 +2214,7 @@
         },
         {
           "key": "B",
-          "text": "先進行內部減量（Reduce）並達到剩餘排放後，再以高品質移除型抵換"
+          "text": "完全禁止使用任何抵換"
         },
         {
           "key": "C",
@@ -1951,10 +2222,10 @@
         },
         {
           "key": "D",
-          "text": "完全禁止使用任何抵換"
+          "text": "先進行內部減量（Reduce）並達到剩餘排放後，再以高品質移除型抵換"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "ISO 14068-1 §6.4 確立 Mitigation Hierarchy：Avoid → Reduce → Replace → Offset。企業應依減量階層先行內部減量，僅針對技術／經濟上不可避免之剩餘排放才使用碳抵換，且優先採用碳移除型而非減量型額度。",
       "subject": null,
       "topic_tags": [
@@ -1969,7 +2240,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "47"
+        "original_id": "47",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b"
@@ -1982,11 +2259,11 @@
       "options": [
         {
           "key": "A",
-          "text": "杜拜，2024 年 12 月"
+          "text": "巴西貝倫（Belém），2025 年 11 月"
         },
         {
           "key": "B",
-          "text": "巴西貝倫（Belém），2025 年 11 月"
+          "text": "杜拜，2024 年 12 月"
         },
         {
           "key": "C",
@@ -1997,7 +2274,7 @@
           "text": "亞塞拜然巴庫，2025 年 11 月"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "COP30 於 2025 年 11 月 10–21 日於巴西亞馬遜地區之 Pará 州首府貝倫（Belém）舉辦，重點議題為 NDC 3.0、Article 6 全球碳市場機制細則、亞馬遜雨林保護與全球盤點後續行動。",
       "subject": null,
       "topic_tags": [
@@ -2012,7 +2289,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "48"
+        "original_id": "48",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
@@ -2056,7 +2339,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "49"
+        "original_id": "49",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
@@ -2074,18 +2363,18 @@
         },
         {
           "key": "B",
-          "text": "60 公噸 CO2e"
+          "text": "100 公噸 CO2e"
         },
         {
           "key": "C",
-          "text": "100 公噸 CO2e"
+          "text": "60 公噸 CO2e"
         },
         {
           "key": "D",
           "text": "150 公噸 CO2e"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "依 CBAM 實施細則 (EU) 2023/1773，水泥屬涵蓋商品，須申報直接 + 間接內含碳排放。計算：(0.5 + 0.1) × 100 = 60 公噸 CO2e。CBAM 過渡期已要求水泥、鋼鐵、鋁、肥料、電力、氫之直接與部分間接排放申報。",
       "subject": null,
       "topic_tags": [
@@ -2100,7 +2389,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "51"
+        "original_id": "51",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/68010e53fd897800010b717c"
@@ -2121,15 +2416,15 @@
         },
         {
           "key": "C",
-          "text": "(30,000 − 25,000) × 300 × 1 = 1,500,000 元"
+          "text": "9,000,000 元"
         },
         {
           "key": "D",
-          "text": "9,000,000 元"
+          "text": "(30,000 − 25,000) × 300 × 1 = 1,500,000 元"
         }
       ],
-      "answer": "C",
-      "explanation": "依《碳費收費辦法》第8條碳費計算公式：(年排放量 − K 值 25,000) × 費率 × 行業別調整係數。本題：(30,000 − 25,000) × 300 × 1 = 5,000 × 300 = 1,500,000 元。一般費率 300 元、優惠 A 50 元、優惠 B 100 元。",
+      "answer": "D",
+      "explanation": "依《碳費收費辦法》§5：碳費＝收費排放量 × 徵收費率；收費排放量＝（年排放量 − K 值）× 排放量調整係數值；K 值為 25,000 公噸 CO2e（屬高碳洩漏風險之事業 K 值為零）。本題為非高碳洩漏風險行業，調整係數值為 1（§6 第二項），適用一般費率 300 元：(30,000 − 25,000) × 1 × 300 = 1,500,000 元。費率由環境部公告：一般費率 300 元、優惠費率 A 50 元、優惠費率 B 100 元。注意：§8 是生產電力之事業申請扣除電力消費排放量之規定，不是碳費計算公式。",
       "subject": null,
       "topic_tags": [
         "碳費計算",
@@ -2140,16 +2435,26 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "law_text_pinning (tools/pin_law_articles.py + 人工逐條核對)",
         "verify_verdict": "CONFIRMED",
-        "original_id": "52"
+        "original_id": "52",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
-        "https://vocus.cc/article/68010e53fd897800010b717c",
-        "https://www.moenv.gov.tw/"
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=5",
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=6",
+        "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+        "https://vocus.cc/article/68010e53fd897800010b717c"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-em-ipas_vocus_mock-053",
@@ -2157,23 +2462,23 @@
       "options": [
         {
           "key": "A",
-          "text": "0.0"
+          "text": "1.0"
         },
         {
           "key": "B",
-          "text": "0.2"
-        },
-        {
-          "key": "C",
           "text": "0.5"
         },
         {
+          "key": "C",
+          "text": "0.2"
+        },
+        {
           "key": "D",
-          "text": "1.0"
+          "text": "0.0"
         }
       ],
-      "answer": "B",
-      "explanation": "依《碳費收費辦法》第9條與《高碳洩漏風險行業認定辦法》，獲認定之高碳洩漏風險行業於第一期（2025–2027）適用調整係數 0.2，第二期（2028–2030）為 0.4，第三期（2031 起）為 0.6，逐期遞增以維持產業國際競爭力。",
+      "answer": "C",
+      "explanation": "依《碳費收費辦法》§6 第一項：事業取得中央主管機關核定之自主減量計畫，「並」經審查認定屬高碳洩漏風險行業者，第一期排放量調整係數值為零點二、第二期零點四、第三期零點六；非屬高碳洩漏風險者係數值為一（同條第二項）。亦即優惠係數需同時具備「自主減量計畫獲核定」與「高碳洩漏風險認定」兩項要件，缺一不可。各期對應年度（第一期 2025–2027、第二期 2028–2030、第三期 2031 起）由環境部公告；認定標準見環境部 113/08/29 發布之「碳費徵收對象申請認定屬高碳洩漏風險者審核原則」（為行政原則，非法規命令）。注意：§9 是國內減量額度扣除上限（10%）之規定，不是調整係數。",
       "subject": null,
       "topic_tags": [
         "碳洩漏",
@@ -2184,16 +2489,25 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "law_text_pinning (tools/pin_law_articles.py + 人工逐條核對)",
         "verify_verdict": "CONFIRMED",
-        "original_id": "53"
+        "original_id": "53",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "ladder_reversed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
-        "https://vocus.cc/article/68010e53fd897800010b717c",
-        "https://www.moenv.gov.tw/"
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=6",
+        "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+        "https://vocus.cc/article/68010e53fd897800010b717c"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-em-ipas_vocus_mock-054",
@@ -2201,7 +2515,7 @@
       "options": [
         {
           "key": "A",
-          "text": "計入直接排放（範疇一）總量中"
+          "text": "在報告中分別量化並單獨揭露，不計入總量"
         },
         {
           "key": "B",
@@ -2209,14 +2523,14 @@
         },
         {
           "key": "C",
-          "text": "在報告中分別量化並單獨揭露，不計入總量"
+          "text": "計入直接排放（範疇一）總量中"
         },
         {
           "key": "D",
           "text": "完全忽略不需報告"
         }
       ],
-      "answer": "C",
+      "answer": "A",
       "explanation": "ISO 14064-1:2018 §6.4 與 GHG Protocol 一致要求：生物源 CO2 排放與移除應分別量化並於報告中單獨揭露（separate reporting），但不納入企業之總溫室氣體排放總量計算，避免與短期碳循環重複計算。",
       "subject": null,
       "topic_tags": [
@@ -2231,7 +2545,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "54"
+        "original_id": "54",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/68b53f5efd89780001e60438"
@@ -2274,7 +2594,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "55"
+        "original_id": "55",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/68b53f5efd89780001e60438"
@@ -2291,18 +2617,18 @@
         },
         {
           "key": "B",
-          "text": "組織盤查的電力排碳係數僅計算發電過程中燃燒的排放，而產品碳足跡需包含從原料開採到電網輸配整個生命週期"
+          "text": "產品碳足跡使用不同的溫室氣體換算係數"
         },
         {
           "key": "C",
-          "text": "產品碳足跡使用不同的溫室氣體換算係數"
+          "text": "組織盤查的電力排碳係數僅計算發電過程中燃燒的排放，而產品碳足跡需包含從原料開採到電網輸配整個生命週期"
         },
         {
           "key": "D",
           "text": "組織盤查的電力排碳係數只適用於間接排放"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "組織盤查（ISO 14064-1）電力係數通常採台電公告之發電廠燃料燃燒係數；產品碳足跡（ISO 14067 / PAS 2050）依生命週期評估，需採含原料開採、燃料運輸、發電、輸配電損耗之全生命週期係數（如 ecoinvent、GaBi）。",
       "subject": null,
       "topic_tags": [
@@ -2317,7 +2643,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "56"
+        "original_id": "56",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/68b53f5efd89780001e60438"
@@ -2334,7 +2666,7 @@
         },
         {
           "key": "B",
-          "text": "502,100"
+          "text": "421,500"
         },
         {
           "key": "C",
@@ -2342,10 +2674,10 @@
         },
         {
           "key": "D",
-          "text": "421,500"
+          "text": "502,100"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "依排放係數法計算：電力 500,000 × 0.527 = 263,500 kg；柴油 20,000 × 2.68 = 53,600 kg；天然氣 100,000 × 1.85 = 185,000 kg。合計 263,500 + 53,600 + 185,000 = 502,100 kg CO2。",
       "subject": null,
       "topic_tags": [
@@ -2360,7 +2692,13 @@
         "verified_date": "2026-04-25",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
-        "original_id": "58"
+        "original_id": "58",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/68b53f5efd89780001e60438"
@@ -2373,11 +2711,11 @@
       "options": [
         {
           "key": "A",
-          "text": "2024 年會計年度起，全體上市櫃公司一體適用"
+          "text": "2026 年會計年度起，資本額達新臺幣 100 億元以上之上市櫃公司"
         },
         {
           "key": "B",
-          "text": "2026 年會計年度起，資本額達新臺幣 100 億元以上之上市櫃公司"
+          "text": "2024 年會計年度起，全體上市櫃公司一體適用"
         },
         {
           "key": "C",
@@ -2388,7 +2726,7 @@
           "text": "2028 年會計年度起，僅鋼鐵與石化產業適用"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "金管會藍圖規劃以「直接採用（adoption）」方式接軌 IFRS S1/S2，分三階段：第一階段為 2026 年會計年度（資本額 100 億元以上）、第二階段 2027 年（50–100 億元）、第三階段 2028 年（50 億元以下）。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -2404,6 +2742,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2450,6 +2794,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "ladder_kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2496,6 +2846,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2511,11 +2867,11 @@
       "options": [
         {
           "key": "A",
-          "text": "新增「碳費繳納專章」"
+          "text": "原年報第四章改為「永續相關財務資訊專章」依 IFRS S1/S2 編製"
         },
         {
           "key": "B",
-          "text": "原年報第四章改為「永續相關財務資訊專章」依 IFRS S1/S2 編製"
+          "text": "新增「碳費繳納專章」"
         },
         {
           "key": "C",
@@ -2526,7 +2882,7 @@
           "text": "由公司治理評鑑取代年報揭露"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "金管會 2025 年 5 月預告修正準則第七、十之一、二十三條，將原年報第四章「公司治理報告」改為包含 IFRS 永續揭露準則之「永續相關財務資訊專章」。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -2542,6 +2898,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2566,14 +2928,14 @@
         },
         {
           "key": "C",
-          "text": "2024 年 10 月 2 日"
+          "text": "2026 年 1 月 1 日"
         },
         {
           "key": "D",
-          "text": "2026 年 1 月 1 日"
+          "text": "2024 年 10 月 2 日"
         }
       ],
-      "answer": "C",
+      "answer": "D",
       "explanation": "TCX 國內減量額度交易平台於 2024/10/02 啟動，首批共 6 案（含奇美實業天然氣替代重油、中鋼鋼胚熱進爐節能、漢寶沼氣發電、漢程客運電動公車、台北 101 高效率光源等），定價 NT$2,500–4,000/噸 CO2e。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -2589,6 +2951,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2603,7 +2971,7 @@
       "options": [
         {
           "key": "A",
-          "text": "首批共 7 個專案、來自亞、非、中南美洲"
+          "text": "首批所購碳權可直接折抵我國碳費"
         },
         {
           "key": "B",
@@ -2611,14 +2979,14 @@
         },
         {
           "key": "C",
-          "text": "首批所購碳權可直接折抵我國碳費"
+          "text": "首批共 7 個專案、來自亞、非、中南美洲"
         },
         {
           "key": "D",
           "text": "首批當日 27 家企業購買，總交易量約 8.8 萬噸"
         }
       ],
-      "answer": "C",
+      "answer": "A",
       "explanation": "首批國際碳權僅限作為「自願性碳中和宣告」或品牌商供應鏈中和要求使用，「不得」用於折抵我國碳費或 EU CBAM；其餘 A、B、D 皆與 TCX 公告一致。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -2634,6 +3002,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2652,7 +3026,7 @@
         },
         {
           "key": "B",
-          "text": "一般費率每噸 300 元、優惠費率 A 為 50 元、優惠費率 B 為 100 元"
+          "text": "一般費率每噸 1,500 元，與歐盟 CBAM 同價"
         },
         {
           "key": "C",
@@ -2660,10 +3034,10 @@
         },
         {
           "key": "D",
-          "text": "一般費率每噸 1,500 元，與歐盟 CBAM 同價"
+          "text": "一般費率每噸 300 元、優惠費率 A 為 50 元、優惠費率 B 為 100 元"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "環境部公告一般費率 NT$300/噸 CO2e，提出自主減量計畫並符合「行業別指定削減率」者適用優惠費率 A（NT$50），符合「技術標竿」者適用優惠費率 B（NT$100）；2025 年試申報、2026 年 5 月起依 2025 年排放量正式繳費。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -2679,6 +3053,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2692,11 +3072,11 @@
       "options": [
         {
           "key": "A",
-          "text": "全體上市櫃公司"
+          "text": "年排放量 ≥ 2.5 萬公噸 CO2e 之電力業、燃氣供應業及製造業"
         },
         {
           "key": "B",
-          "text": "年排放量 ≥ 2.5 萬公噸 CO2e 之電力業、燃氣供應業及製造業"
+          "text": "全體上市櫃公司"
         },
         {
           "key": "C",
@@ -2707,7 +3087,7 @@
           "text": "所有具溫室氣體排放之事業，無門檻"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "首批徵收對象為年排放量 ≥ 2.5 萬噸 CO2e 之電力業、燃氣供應業及指定製造業，約 281 家企業、500 家工廠。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -2723,6 +3103,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2745,14 +3131,14 @@
         },
         {
           "key": "C",
-          "text": "經濟部標準檢驗局國家再生能源憑證中心；1 張 = 1,000 度（1 MWh）"
+          "text": "台灣電力公司；1 張 = 1 度"
         },
         {
           "key": "D",
-          "text": "台灣電力公司；1 張 = 1 度"
+          "text": "經濟部標準檢驗局國家再生能源憑證中心；1 張 = 1,000 度（1 MWh）"
         }
       ],
-      "answer": "C",
+      "answer": "D",
       "explanation": "T-REC 由經濟部標準檢驗局下「國家再生能源憑證中心」（NREC）核發，1 張憑證代表 1,000 度（1 MWh）綠電；可作為 RE100、ISO 14064-1 範疇 2 市場基礎法之佐證。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
@@ -2768,6 +3154,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2781,7 +3173,7 @@
       "options": [
         {
           "key": "A",
-          "text": "向再生能源發電業者直接「轉供」"
+          "text": "向台電購買含躉購制度（FIT）下 T-REC 之綠電"
         },
         {
           "key": "B",
@@ -2789,14 +3181,14 @@
         },
         {
           "key": "C",
-          "text": "向台電購買含躉購制度（FIT）下 T-REC 之綠電"
+          "text": "向再生能源發電業者直接「轉供」"
         },
         {
           "key": "D",
           "text": "自設再生能源設備自用並登記憑證"
         }
       ],
-      "answer": "C",
+      "answer": "A",
       "explanation": "FIT 躉購制度下台電已取得相對應憑證，企業不能再向台電「重複」購買憑證；常見合法路徑為轉供（直供/PPA）、自用、向再生能源售電業購買等。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -2812,6 +3204,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2825,22 +3223,22 @@
       "options": [
         {
           "key": "A",
-          "text": "約 25%"
+          "text": "約 90%"
         },
         {
           "key": "B",
-          "text": "約 45%"
-        },
-        {
-          "key": "C",
           "text": "約 68%"
         },
         {
+          "key": "C",
+          "text": "約 45%"
+        },
+        {
           "key": "D",
-          "text": "約 90%"
+          "text": "約 25%"
         }
       ],
-      "answer": "C",
+      "answer": "B",
       "explanation": "2024 年底我國再生能源總裝置容量約 22.9 GW，太陽光電約 15.5 GW，占再生能源約 67.8%（風力約 18.5%）。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
@@ -2856,6 +3254,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "ladder_reversed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2869,11 +3273,11 @@
       "options": [
         {
           "key": "A",
-          "text": "RE100 由 The Climate Group 與 CDP 合作發起，成員須承諾 2050 年前 100% 使用再生能源"
+          "text": "RE100 由聯合國發起，要求成員 2030 年使用 100% 核能"
         },
         {
           "key": "B",
-          "text": "RE100 由聯合國發起，要求成員 2030 年使用 100% 核能"
+          "text": "RE100 由 The Climate Group 與 CDP 合作發起，成員須承諾 2050 年前 100% 使用再生能源"
         },
         {
           "key": "C",
@@ -2884,7 +3288,7 @@
           "text": "RE100 僅承認電力公司直接供電，不接受憑證機制"
         }
       ],
-      "answer": "A",
+      "answer": "B",
       "explanation": "RE100 由 The Climate Group 與 CDP 共同發起，成員承諾「最遲 2050 年」全球營運使用 100% 再生電力，可透過 PPA、自建、購買憑證（如 T-REC、I-REC）等方式達成；核能不被計入。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -2900,6 +3304,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "A",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2913,7 +3323,7 @@
       "options": [
         {
           "key": "A",
-          "text": "2025 達碳排峰值、2030 將排放降至 2020 年水準、2040 達 RE100、2050 淨零"
+          "text": "2030 達碳排峰值、2050 達 RE50"
         },
         {
           "key": "B",
@@ -2921,14 +3331,14 @@
         },
         {
           "key": "C",
-          "text": "2030 達碳排峰值、2050 達 RE50"
+          "text": "2025 達碳排峰值、2030 將排放降至 2020 年水準、2040 達 RE100、2050 淨零"
         },
         {
           "key": "D",
           "text": "2030 達淨零（含範疇 3）"
         }
       ],
-      "answer": "A",
+      "answer": "C",
       "explanation": "台積電宣布 2025 年達排放峰值、2030 年回到 2020 年水準（含範疇 1+2+3 絕對減量）、2030 年 RE60、2040 年 RE100、2050 年淨零。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -2944,6 +3354,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "A",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -2989,6 +3405,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3002,7 +3424,7 @@
       "options": [
         {
           "key": "A",
-          "text": "FLAG 僅適用於石化與半導體業"
+          "text": "凡 FLAG 相關排放占總排放（1+2+3）≥ 20% 之企業須另設 FLAG 目標"
         },
         {
           "key": "B",
@@ -3010,14 +3432,14 @@
         },
         {
           "key": "C",
-          "text": "凡 FLAG 相關排放占總排放（1+2+3）≥ 20% 之企業須另設 FLAG 目標"
+          "text": "FLAG 僅適用於石化與半導體業"
         },
         {
           "key": "D",
           "text": "FLAG 不要求任何零毀林承諾"
         }
       ],
-      "answer": "C",
+      "answer": "A",
       "explanation": "SBTi FLAG 規範：屬指定產業（食品生產、農業、林產等），或 FLAG 相關排放 ≥ 20% 之企業，需設 FLAG 目標；其涵蓋 1+2 排放 ≥ 95%、範疇 3 ≥ 67%；並須最遲於 2025/12/31 公開零毀林承諾。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -3033,6 +3455,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3047,11 +3475,11 @@
       "options": [
         {
           "key": "A",
-          "text": "獎牌不再依分數區間，而依排名前段比例：白金前 1%、金前 5%、銀前 15%、銅前 35%"
+          "text": "白金牌頒給總分 ≥ 95 分者"
         },
         {
           "key": "B",
-          "text": "白金牌頒給總分 ≥ 95 分者"
+          "text": "獎牌不再依分數區間，而依排名前段比例：白金前 1%、金前 5%、銀前 15%、銅前 35%"
         },
         {
           "key": "C",
@@ -3062,7 +3490,7 @@
           "text": "改版後取消白金獎牌"
         }
       ],
-      "answer": "A",
+      "answer": "B",
       "explanation": "EcoVadis 2024 起獎牌依年度排名比例頒發：白金前 1%、金牌前 5%、銀牌前 15%、銅牌前 35%；四大主題（環境、勞工人權、商業道德、永續採購）各構面分數須 ≥ 30 分。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -3078,6 +3506,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "A",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3122,6 +3556,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3168,6 +3608,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3182,11 +3628,11 @@
       "options": [
         {
           "key": "A",
-          "text": "過渡期 2021/01–2023/09；正式期 2024/01 起"
+          "text": "過渡期 2023/10–2025/12；正式期 2026/01 起，2026 年度首次申報截止為 2027/09/30"
         },
         {
           "key": "B",
-          "text": "過渡期 2023/10–2025/12；正式期 2026/01 起，2026 年度首次申報截止為 2027/09/30"
+          "text": "過渡期 2021/01–2023/09；正式期 2024/01 起"
         },
         {
           "key": "C",
@@ -3197,8 +3643,8 @@
           "text": "過渡期 2025/01–2026/12；正式期 2030 年起"
         }
       ],
-      "answer": "B",
-      "explanation": "CBAM 過渡期 2023/10/01–2025/12/31，正式期自 2026/01/01 起。依 Omnibus 簡化案 Regulation (EU) 2025/2083（2025/10/20 生效）：原 Reg (EU) 2023/956 之 5/31 申報期限已被延後至每年 9/30，憑證繳交期限亦同步延至 9/30。因此 2026 年度首次申報與憑證繳交皆於 2027/09/30 前完成。題目選項 B 「2027/09/30」反映的就是現行（post-Omnibus）申報截止日，非單純「繳費截止」。",
+      "answer": "A",
+      "explanation": "CBAM 過渡期 2023/10/01–2025/12/31，正式期自 2026/01/01 起。依 Omnibus 簡化案 Regulation (EU) 2025/2083（2025/10/20 生效）：原 Reg (EU) 2023/956 之 5/31 申報期限已被延後至每年 9/30，憑證繳交期限亦同步延至 9/30。因此 2026 年度首次申報與憑證繳交皆於 2027/09/30 前完成。正解中的「2027/09/30」反映的就是現行（post-Omnibus）申報截止日，非單純「繳費截止」。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -3213,6 +3659,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3232,7 +3684,7 @@
         },
         {
           "key": "B",
-          "text": "水泥"
+          "text": "紡織品"
         },
         {
           "key": "C",
@@ -3240,10 +3692,10 @@
         },
         {
           "key": "D",
-          "text": "紡織品"
+          "text": "水泥"
         }
       ],
-      "answer": "D",
+      "answer": "B",
       "explanation": "CBAM 第一階段納管 6 大類：鋼鐵、水泥、鋁、肥料、電力、氫，其後評估擴及部分化學品與下游產品；紡織品目前未納入。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -3259,6 +3711,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3280,14 +3738,14 @@
         },
         {
           "key": "C",
-          "text": "碳足跡標籤與減量標籤申請"
+          "text": "歐盟 CBAM 憑證直接購買"
         },
         {
           "key": "D",
-          "text": "歐盟 CBAM 憑證直接購買"
+          "text": "碳足跡標籤與減量標籤申請"
         }
       ],
-      "answer": "D",
+      "answer": "C",
       "explanation": "cfp.moenv.gov.tw 提供係數、PCR、碳標籤申請及產品碳足跡資訊揭露；CBAM 憑證須透過歐盟過渡登錄系統與正式期之申報購買，與該平台無直接關聯。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -3303,6 +3761,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3321,7 +3785,7 @@
         },
         {
           "key": "B",
-          "text": "「碳標籤」揭露產品之碳足跡值；「減量標籤」要求產品在 5 年內較基準年減量達 3% 以上"
+          "text": "兩者皆由經濟部產業發展署核發"
         },
         {
           "key": "C",
@@ -3329,10 +3793,10 @@
         },
         {
           "key": "D",
-          "text": "兩者皆由經濟部產業發展署核發"
+          "text": "「碳標籤」揭露產品之碳足跡值；「減量標籤」要求產品在 5 年內較基準年減量達 3% 以上"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "「碳標籤」為產品碳足跡之揭露；「減量標籤」（碳足跡減量標籤）為動態，需 5 年內較基準減量 ≥ 3% 且通過第三方查驗，由環境部核發。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
@@ -3348,6 +3812,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3361,7 +3831,7 @@
       "options": [
         {
           "key": "A",
-          "text": "S2 廢除 TCFD 架構，改採 GRI 架構"
+          "text": "S2 完全延續 TCFD 四大支柱並進一步要求量化指標、情境分析與範疇 1+2+3 揭露"
         },
         {
           "key": "B",
@@ -3373,10 +3843,10 @@
         },
         {
           "key": "D",
-          "text": "S2 完全延續 TCFD 四大支柱並進一步要求量化指標、情境分析與範疇 1+2+3 揭露"
+          "text": "S2 廢除 TCFD 架構，改採 GRI 架構"
         }
       ],
-      "answer": "D",
+      "answer": "A",
       "explanation": "ISSB 於 2023/06 發布 IFRS S2 即以 TCFD 為基礎，延續治理、策略、風險管理、指標與目標四支柱，並強化情境分析、產業特定指標與範疇 1+2+3 揭露；TCFD 已完成階段任務，2024 年起由 ISSB 接手監測。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
@@ -3392,6 +3862,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3411,18 +3887,18 @@
         },
         {
           "key": "B",
-          "text": "海平面上升導致沿海資產減損"
+          "text": "碳定價政策上路造成營運成本上升"
         },
         {
           "key": "C",
-          "text": "碳定價政策上路造成營運成本上升"
+          "text": "海平面上升導致沿海資產減損"
         },
         {
           "key": "D",
           "text": "極端高溫造成工人停工"
         }
       ],
-      "answer": "C",
+      "answer": "B",
       "explanation": "轉型風險源自政策、法規、技術、市場、聲譽變化，如碳定價、CBAM、消費偏好移轉；A、B、D 屬實體風險（急性或慢性）。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
@@ -3438,6 +3914,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3457,18 +3939,18 @@
         },
         {
           "key": "B",
-          "text": "IEA Net Zero by 2050（NZE）情境"
+          "text": "IPCC RCP 8.5"
         },
         {
           "key": "C",
-          "text": "IPCC RCP 8.5"
+          "text": "IEA Net Zero by 2050（NZE）情境"
         },
         {
           "key": "D",
           "text": "IPCC SSP3-7.0"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "轉型情境常採 IEA NZE 1.5°C 路徑；實體風險情境則常用 IPCC SSP/RCP 高排放情境（如 SSP5-8.5、RCP8.5）。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -3484,6 +3966,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3530,6 +4018,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "ladder_kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3547,7 +4041,7 @@
         },
         {
           "key": "B",
-          "text": "BERS 設「1+ 級（近零碳建築）」加 1–7 級共 8 級評等"
+          "text": "BERS 由環境部主管"
         },
         {
           "key": "C",
@@ -3555,10 +4049,10 @@
         },
         {
           "key": "D",
-          "text": "BERS 由環境部主管"
+          "text": "BERS 設「1+ 級（近零碳建築）」加 1–7 級共 8 級評等"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "BERS 共 8 級：1+ 級（近零碳建築）及 1–7 級；2023/07 起公有新建辦公類建築強制達 2 級以上、社會住宅達 1 級；2024/07 起擴及公眾使用建築；2026 年再擴大適用範圍。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
@@ -3574,6 +4068,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3619,6 +4119,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "A",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3636,7 +4142,7 @@
         },
         {
           "key": "B",
-          "text": "2030 年電動機車新車銷售比 35%、電動小客車新車銷售比 30%"
+          "text": "2025 年禁售燃油汽機車"
         },
         {
           "key": "C",
@@ -3644,10 +4150,10 @@
         },
         {
           "key": "D",
-          "text": "2025 年禁售燃油汽機車"
+          "text": "2030 年電動機車新車銷售比 35%、電動小客車新車銷售比 30%"
         }
       ],
-      "answer": "D",
+      "answer": "B",
       "explanation": "我國未採「禁售燃油車」之強制手段，而是以補貼、充電基礎建設等鼓勵措施，引導 2030/2035/2040 階段達成新售比目標。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
@@ -3663,6 +4169,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3685,14 +4197,14 @@
         },
         {
           "key": "C",
-          "text": "環境部要求所有中小企業強制公告碳費"
+          "text": "經濟部「以大帶小」減碳輔導與「中小企業碳盤查計算器」、產發署 ghg.tgpf.org.tw 資源"
         },
         {
           "key": "D",
-          "text": "經濟部「以大帶小」減碳輔導與「中小企業碳盤查計算器」、產發署 ghg.tgpf.org.tw 資源"
+          "text": "環境部要求所有中小企業強制公告碳費"
         }
       ],
-      "answer": "D",
+      "answer": "C",
       "explanation": "經濟部以「以大帶小」由領頭企業帶動供應鏈中小企業，並提供盤查計算器、產發署/工業局之碳盤查試算工具與專業輔導；中小企業並非碳費徵收對象，亦非 IFRS S1/S2 之直接適用對象。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -3708,6 +4220,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3731,14 +4249,14 @@
         },
         {
           "key": "C",
-          "text": "首階段為有限確信（limited assurance），長期朝合理確信（reasonable assurance）方向發展"
+          "text": "確信僅針對範疇 3，範疇 1+2 不要求"
         },
         {
           "key": "D",
-          "text": "確信僅針對範疇 3，範疇 1+2 不要求"
+          "text": "首階段為有限確信（limited assurance），長期朝合理確信（reasonable assurance）方向發展"
         }
       ],
-      "answer": "C",
+      "answer": "D",
       "explanation": "ISAE 3410 / 3000 與我國規範均以「先有限確信、後合理確信」為國際慣例；金管會路徑圖規劃 2027 全體上市櫃完成盤查、2029 年完成外部確信。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -3754,6 +4272,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3769,7 +4293,7 @@
       "options": [
         {
           "key": "A",
-          "text": "EPD 僅揭露碳足跡，不含其他環境衝擊"
+          "text": "EPD 依 ISO 14025 第三類環境宣告編製，須依產品類別規則（PCR）進行 LCA，並經獨立第三方查驗"
         },
         {
           "key": "B",
@@ -3781,10 +4305,10 @@
         },
         {
           "key": "D",
-          "text": "EPD 依 ISO 14025 第三類環境宣告編製，須依產品類別規則（PCR）進行 LCA，並經獨立第三方查驗"
+          "text": "EPD 僅揭露碳足跡，不含其他環境衝擊"
         }
       ],
-      "answer": "D",
+      "answer": "A",
       "explanation": "EPD（Type III Environmental Declaration）以 ISO 14025 為基礎，依該產品類別之 PCR 進行 ISO 14040/44 LCA，揭露多項環境衝擊（含 GWP/AP/EP/ODP 等）並需獨立查驗。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -3800,6 +4324,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3814,7 +4344,7 @@
       "options": [
         {
           "key": "A",
-          "text": "進口商每年進口 CBAM 商品淨重 50 公噸以下者可豁免申報"
+          "text": "進口商來自最低度開發國家（LDC）之全部進口可豁免"
         },
         {
           "key": "B",
@@ -3822,14 +4352,14 @@
         },
         {
           "key": "C",
-          "text": "進口商來自最低度開發國家（LDC）之全部進口可豁免"
+          "text": "進口商每年進口 CBAM 商品淨重 50 公噸以下者可豁免申報"
         },
         {
           "key": "D",
           "text": "進口商若已取得歐盟 ETS 核配可全面豁免"
         }
       ],
-      "answer": "A",
+      "answer": "C",
       "explanation": "CBAM Omnibus 修正案（2025/10/20 生效）新增單一進口商每年進口 CBAM 商品「淨質量 50 公噸」以下之大眾化最低門檻豁免（鋼鐵、鋁、肥料、水泥），預估排除約 90% 進口商，但仍涵蓋約 99% 之納管碳排放。此豁免不適用於電力與氫氣。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -3849,6 +4379,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "A",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3898,6 +4434,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3912,11 +4454,11 @@
       "options": [
         {
           "key": "A",
-          "text": "任何具歐盟 EORI 編號之進口商皆可進口"
+          "text": "須先取得「授權 CBAM 申報人（Authorised CBAM Declarant）」資格"
         },
         {
           "key": "B",
-          "text": "須先取得「授權 CBAM 申報人（Authorised CBAM Declarant）」資格"
+          "text": "任何具歐盟 EORI 編號之進口商皆可進口"
         },
         {
           "key": "C",
@@ -3927,7 +4469,7 @@
           "text": "僅於每季結束後一個月內提交季報即可進口"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "CBAM 進入定價期（2026/01/01 起）後，依 Regulation (EU) 2023/956 Art. 5 與 Omnibus 修正，僅「授權 CBAM 申報人」得進口 CBAM 商品；申請須向會員國主管機關（NCA）提出並通過審查。過渡期（2023/10–2025/12）僅須季報，不須事先授權。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -3947,6 +4489,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -3997,6 +4545,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4047,6 +4601,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4065,7 +4625,7 @@
         },
         {
           "key": "B",
-          "text": "已開發國家領頭，至 2035 年每年至少提供 3,000 億美元，並呼籲全球氣候資金擴大至每年 1.3 兆美元"
+          "text": "由發展中國家自行籌措 5,000 億美元"
         },
         {
           "key": "C",
@@ -4073,10 +4633,10 @@
         },
         {
           "key": "D",
-          "text": "由發展中國家自行籌措 5,000 億美元"
+          "text": "已開發國家領頭，至 2035 年每年至少提供 3,000 億美元，並呼籲全球氣候資金擴大至每年 1.3 兆美元"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "COP29 達成的 NCQG（New Collective Quantified Goal on Climate Finance）取代 2009 年訂定之每年 1,000 億美元舊目標。新目標為「已開發國家領頭、至 2035 年每年至少 3,000 億美元」之氣候資金，並呼籲所有來源（公部門、私部門、創新財源）共同擴大至 2035 年每年 1.3 兆美元（Baku to Belém Roadmap）。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -4097,6 +4657,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4111,11 +4677,11 @@
       "options": [
         {
           "key": "A",
-          "text": "立即全面禁止所有化石燃料投資"
+          "text": "公平、有序且公正地「轉型脫離化石燃料（transitioning away from fossil fuels）」於能源系統，於本十年加速行動，以期於 2050 年達淨零"
         },
         {
           "key": "B",
-          "text": "公平、有序且公正地「轉型脫離化石燃料（transitioning away from fossil fuels）」於能源系統，於本十年加速行動，以期於 2050 年達淨零"
+          "text": "立即全面禁止所有化石燃料投資"
         },
         {
           "key": "C",
@@ -4126,7 +4692,7 @@
           "text": "停止天然氣探勘但繼續使用煤炭"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "COP28 通過之 UAE Consensus（首次全球盤點決議）於 §28 首次以聯合國共識文字呼籲各國以公正、有序、公平方式「轉型脫離化石燃料」（transitioning away from fossil fuels），並三倍再生能源、兩倍能效進步速率，於 2030 年前加速行動。並非立即禁止或關閉，亦非僅限煤炭。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -4147,6 +4713,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4196,6 +4768,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4214,18 +4792,18 @@
         },
         {
           "key": "B",
-          "text": "巴西貝倫（Belém）；強調全球盤點落實、調適行動與雨林／生物多樣性整合"
+          "text": "南韓首爾；聚焦人工智慧減碳"
         },
         {
           "key": "C",
-          "text": "南韓首爾；聚焦人工智慧減碳"
+          "text": "巴西貝倫（Belém）；強調全球盤點落實、調適行動與雨林／生物多樣性整合"
         },
         {
           "key": "D",
           "text": "南非開普敦；以煤電退場為唯一議題"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "COP30 於 2025 年 11 月 10–21 日於巴西亞馬遜流域之貝倫（Belém）舉辦，由巴西擔任主席國，主題包含「全球盤點落實（implementation COP）」、調適、氣候資金（NCQG 路徑圖）、雨林與生物多樣性整合，並接續 COP29 之 NCQG 與 Baku to Belém Roadmap 之具體化。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -4245,6 +4823,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4294,6 +4878,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4308,7 +4898,7 @@
       "options": [
         {
           "key": "A",
-          "text": "所有產業企業，無排他例外"
+          "text": "FLAG 排放佔總排放 ≥20% 之企業，或屬於指定森林、土地及農業密集行業者"
         },
         {
           "key": "B",
@@ -4316,14 +4906,14 @@
         },
         {
           "key": "C",
-          "text": "FLAG 排放佔總排放 ≥20% 之企業，或屬於指定森林、土地及農業密集行業者"
+          "text": "所有產業企業，無排他例外"
         },
         {
           "key": "D",
           "text": "僅適用未上市的中小企業"
         }
       ],
-      "answer": "C",
+      "answer": "A",
       "explanation": "SBTi FLAG Guidance（2022/09 發布、2024 整合於 Net-Zero Standard）要求 FLAG 排放佔總排放 ≥20% 之企業，或屬於 SBTi 指定 FLAG 密集行業（如食品加工、林業／紙業、農產品交易等）者，須另行設定符合 FLAG 路徑之科學基礎目標，並區分能源／工業排放與土地相關排放。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -4343,6 +4933,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4392,6 +4988,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4443,6 +5045,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4493,6 +5101,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4509,11 +5123,11 @@
       "options": [
         {
           "key": "A",
-          "text": "已全面生效，所有上市公司皆須揭露 Scope 1/2/3"
+          "text": "規則僅要求大型加速申報人揭露 Scope 1/2（具重大性者），未要求 Scope 3；2024 年 4 月遭聯邦法院程序停留（stay），SEC 後續於 2025 年表態不擬抗辯"
         },
         {
           "key": "B",
-          "text": "規則僅要求大型加速申報人揭露 Scope 1/2（具重大性者），未要求 Scope 3；2024 年 4 月遭聯邦法院程序停留（stay），SEC 後續於 2025 年表態不擬抗辯"
+          "text": "已全面生效，所有上市公司皆須揭露 Scope 1/2/3"
         },
         {
           "key": "C",
@@ -4524,7 +5138,7 @@
           "text": "僅適用於石油業"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "SEC 於 2024/03/06 通過之最終規則，要求大型加速申報人（LAFs）與加速申報人揭露具重大性之 Scope 1 與 Scope 2 排放（不要求 Scope 3，與最初提案相比已大幅退讓），並要求氣候風險、目標、過渡計畫及財務報表附註揭露。2024/04 第八巡迴法院裁定停留，SEC 於 2024/04 主動暫緩生效；2025/03 SEC 投票決議不再為該規則辯護，目前實質凍結，但規則尚未正式廢止。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -4544,6 +5158,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4593,6 +5213,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4611,18 +5237,18 @@
         },
         {
           "key": "B",
-          "text": "須依層級原則：先測量／量化、再減量（依 1.5°C 路徑）、最後僅以高品質碳權抵銷殘餘排放"
+          "text": "Scope 3 不得納入"
         },
         {
           "key": "C",
-          "text": "Scope 3 不得納入"
+          "text": "須依層級原則：先測量／量化、再減量（依 1.5°C 路徑）、最後僅以高品質碳權抵銷殘餘排放"
         },
         {
           "key": "D",
           "text": "碳權可不限種類，包含過期 CDM 亦可"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "ISO 14068-1:2023 §5–§7 確立碳中和階層：(1) 量化主體碳足跡（依 ISO 14064-1 / 14067）；(2) 訂定符合 1.5°C 路徑之減量目標與計畫並落實；(3) 殘餘排放方得以「高品質碳權（含碳移除）」抵銷，並具透明、可驗證之公開揭露。Scope 3 應原則納入，碳權品質須符合附錄 D 要求，過期或低公信力單位不符要求。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -4642,6 +5268,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4660,7 +5292,7 @@
         },
         {
           "key": "B",
-          "text": "CH₄（非化石源）= 27.0；CH₄（化石源）= 29.8；N₂O = 273"
+          "text": "CH₄ = 84；N₂O = 264（採 20 年期）"
         },
         {
           "key": "C",
@@ -4668,10 +5300,10 @@
         },
         {
           "key": "D",
-          "text": "CH₄ = 84；N₂O = 264（採 20 年期）"
+          "text": "CH₄（非化石源）= 27.0；CH₄（化石源）= 29.8；N₂O = 273"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "IPCC AR6 WG1 第 7 章 Table 7.15（含氣候-碳循環回饋之 100 年 GWP）：CH₄（非化石源）= 27.0、CH₄（化石源）= 29.8、N₂O = 273、SF₆ = 25,200、NF₃ = 17,400。AR4 之 CH₄=25 / N₂O=298 與 SAR 之 21/310 均屬舊值；84 為 AR5 之 CH₄ 20 年期 GWP。我國環境部及 GHG Protocol 已採 AR6 數值。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -4691,6 +5323,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4705,11 +5343,11 @@
       "options": [
         {
           "key": "A",
-          "text": "2030 年較 2020 年減少甲烷排放 50%"
+          "text": "2030 年較 2020 年減少全球人為甲烷排放至少 30%"
         },
         {
           "key": "B",
-          "text": "2030 年較 2020 年減少全球人為甲烷排放至少 30%"
+          "text": "2030 年較 2020 年減少甲烷排放 50%"
         },
         {
           "key": "C",
@@ -4720,7 +5358,7 @@
           "text": "強制油氣業每年減量 10%"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "Global Methane Pledge 由美國與歐盟領銜於 COP26（2021/11）啟動，承諾 2030 年較 2020 年減少全球人為甲烷排放「至少 30%」。截至 2024 年已超過 150 國加入，COP28 並由石油與天然氣業者啟動 OGDC（Oil and Gas Decarbonization Charter）承諾 2030 年甲烷強度近零。我國非締約方但相關目標納入國家減量路徑。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -4740,6 +5378,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4789,6 +5433,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4807,18 +5457,18 @@
         },
         {
           "key": "B",
-          "text": "由轉出國於 NDC 帳本中加上、轉入國於 NDC 帳本中減去 ITMOs 量，以避免雙重計算"
+          "text": "依匯率換算氣候資金"
         },
         {
           "key": "C",
-          "text": "依匯率換算氣候資金"
+          "text": "由轉出國於 NDC 帳本中加上、轉入國於 NDC 帳本中減去 ITMOs 量，以避免雙重計算"
         },
         {
           "key": "D",
           "text": "由發展中國家另行提交 NDC"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "依巴黎協定 6.2 條規則（CMA.3 17/CMA.3 與 COP29 修正），ITMOs 跨境移轉時須執行相應調整：轉出方於其 NDC 排放帳本「加回」轉出量，轉入方於其 NDC 排放帳本「扣除」轉入量，俾確保同筆減排量不被兩國同時用於 NDC，達避免重複計算之目的。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -4838,6 +5488,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4856,7 +5512,7 @@
         },
         {
           "key": "B",
-          "text": "BVCM 屬企業在價值鏈外資助／投入額外減緩或移除行動之倡議，「不」可作為達成科學基礎目標或淨零之抵銷工具"
+          "text": "BVCM 取代 SBTi 之 Scope 1、2 減量目標"
         },
         {
           "key": "C",
@@ -4864,10 +5520,10 @@
         },
         {
           "key": "D",
-          "text": "BVCM 取代 SBTi 之 Scope 1、2 減量目標"
+          "text": "BVCM 屬企業在價值鏈外資助／投入額外減緩或移除行動之倡議，「不」可作為達成科學基礎目標或淨零之抵銷工具"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "SBTi 在 Corporate Net-Zero Standard 與其 BVCM 立場文件中明示：BVCM（Beyond Value Chain Mitigation）係鼓勵企業於價值鏈外另行資助／投入減緩與碳移除（如資助森林保育、DAC），屬「附加性氣候行動」並具強烈鼓勵地位，但「不」可用於抵銷／替代企業內部 Scope 1、2、3 減量目標，亦不得作為淨零達成之中和工具（neutralization）。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -4887,6 +5543,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4901,11 +5563,11 @@
       "options": [
         {
           "key": "A",
-          "text": "CDM 已併入 6.4 並繼續發行新碳權"
+          "text": "CDM 將逐步退場：2020 年 12 月 31 日後 CDM 不再註冊新專案；既有專案得有條件轉至 6.4，未轉者於過渡期屆滿後不再有效"
         },
         {
           "key": "B",
-          "text": "CDM 將逐步退場：2020 年 12 月 31 日後 CDM 不再註冊新專案；既有專案得有條件轉至 6.4，未轉者於過渡期屆滿後不再有效"
+          "text": "CDM 已併入 6.4 並繼續發行新碳權"
         },
         {
           "key": "C",
@@ -4916,7 +5578,7 @@
           "text": "巴黎協定不承認任何京都時期之減排機制"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "依 CMA.3 決議，CDM 自 2020/12/31 後不得註冊新專案；既有 CDM 專案於符合 PACM 標準前提下得申請轉軌至 6.4 機制（transition），且僅限 2013 年後核發或符合資格之 CER 可由參與方使用至首份 NDC（2025 後）。CDM 整體已步入退場；6.4 PACM 為承接機制但非「直接併入」。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -4937,6 +5599,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -4986,6 +5654,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5010,14 +5684,14 @@
         },
         {
           "key": "C",
-          "text": "EU ETS 之自由配額將於 2026–2034 年逐步取消，與 CBAM 同步分階段適用"
+          "text": "CBAM 與 EU ETS 自由配額皆永遠維持，互不影響"
         },
         {
           "key": "D",
-          "text": "CBAM 與 EU ETS 自由配額皆永遠維持，互不影響"
+          "text": "EU ETS 之自由配額將於 2026–2034 年逐步取消，與 CBAM 同步分階段適用"
         }
       ],
-      "answer": "D",
+      "answer": "C",
       "explanation": "依 Regulation (EU) 2023/956 與修訂後 EU ETS 指令：CBAM 進入定價期之同時，EU ETS 受 CBAM 涵蓋產業之自由配額（free allocation）將自 2026 年起以 2.5%、5%、10%…逐年比例遞減，至 2034 年完全取消，並由 CBAM 等額替代以避免雙重保護。故「永遠維持」之描述錯誤。CBAM 憑證價格依 EU ETS 拍賣每週平均價計算。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -5037,6 +5711,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5055,7 +5735,7 @@
         },
         {
           "key": "B",
-          "text": "IFRS S2 採單一財務重大性（投資人視角）；ESRS E1 採雙重重大性（財務 + 影響重大性）"
+          "text": "IFRS S2 為強制法規，ESRS E1 為自願性"
         },
         {
           "key": "C",
@@ -5063,10 +5743,10 @@
         },
         {
           "key": "D",
-          "text": "IFRS S2 為強制法規，ESRS E1 為自願性"
+          "text": "IFRS S2 採單一財務重大性（投資人視角）；ESRS E1 採雙重重大性（財務 + 影響重大性）"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "IFRS S2 採「單一重大性」原則（資本市場／投資人視角，氣候對企業企業價值之影響）；ESRS E1 採「雙重重大性」原則，同時涵蓋財務重大性（氣候對企業）及影響重大性（企業對人與環境之衝擊），二者皆要求 Scope 3 排放揭露。ESRS 為歐盟法規（CSRD 強制適用），IFRS S2 由各管轄區決定是否強制（如台灣分階段強制）。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -5086,6 +5766,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5102,7 +5788,7 @@
       "options": [
         {
           "key": "A",
-          "text": "經 ICAO TAB（技術諮詢委員會）審議通過之合格計畫所核發"
+          "text": "可使用任何 Verra VCS 或 Gold Standard 一般核發之碳權，不需經 ICAO 審議"
         },
         {
           "key": "B",
@@ -5114,10 +5800,10 @@
         },
         {
           "key": "D",
-          "text": "可使用任何 Verra VCS 或 Gold Standard 一般核發之碳權，不需經 ICAO 審議"
+          "text": "經 ICAO TAB（技術諮詢委員會）審議通過之合格計畫所核發"
         }
       ],
-      "answer": "D",
+      "answer": "A",
       "explanation": "CORSIA EEUs 須由 ICAO Technical Advisory Body（TAB）審議通過之計畫核發，符合 EUC 8 大原則（附加性、保守基準線、永久性、可量化監測、無洩漏、避免重複計算、無社會環境負面影響、合法持有），並符合各階段「最早起始日」（先導/第一階段 EEU 須由 2016/01/01 後開始之專案，且減排量產出於 2021/01/01–2023/12/31；第一階段 2024–2026 EEU 須來自 2021/01/01 後開始之專案）。一般 VCS／GS 標準碳權若未通過 TAB 認可即「不」為 CORSIA EEU。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -5137,6 +5823,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5187,6 +5879,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5236,6 +5934,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "ladder_kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5267,7 +5971,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "依《碳費收費辦法》§5 之計算公式（收費排放量 = (年排放量 − 25,000) × K × 費率），其中「費率」由中央主管機關公告之。環境部於 2024/10/07 經費率審議會通過並公告：一般費率 NT$300／公噸 CO₂e，優惠費率 A 為 NT$50（達指定削減率）、優惠費率 B 為 NT$100（達技術標竿削減率）。費率本身載於環境部公告，不在《碳費收費辦法》§6（§6 為高碳洩漏風險之 K 係數規定）。",
+      "explanation": "依《碳費收費辦法》§5：碳費＝收費排放量 × 徵收費率；收費排放量＝（年排放量 − K 值）× 排放量調整係數值。K 值為 25,000 公噸 CO2e（高碳洩漏風險之事業 K 值為零）—— K 值與「排放量調整係數值」是兩個不同的量，調整係數值規定在 §6（0.2／0.4／0.6，非高碳洩漏者為 1），不要混用。費率本身不在《碳費收費辦法》裡，而是由環境部公告：2024/10/07 費率審議會通過並公告，一般費率 NT$300／公噸 CO2e，優惠費率 A 為 NT$50（達行業別指定削減率）、優惠費率 B 為 NT$100（達技術標竿指定削減率），自 2025/01/01 起算。",
       "subject": null,
       "topic_tags": [
         "碳費",
@@ -5278,14 +5982,20 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "tw_regs_rewritten",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "law_text_pinning (tools/pin_law_articles.py + 人工逐條核對)",
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_01-v2",
         "ai_metadata": {
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "ladder_kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5293,7 +6003,9 @@
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=6",
         "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-tw_regs_02-v2",
@@ -5301,11 +6013,11 @@
       "options": [
         {
           "key": "A",
-          "text": "達成環境部公告之「行業別指定削減率」或「科學基礎減量目標 SBTi 1.5°C 路徑」之自主減量計畫並經核定"
+          "text": "僅須繳交履約保證金即可"
         },
         {
           "key": "B",
-          "text": "僅須繳交履約保證金即可"
+          "text": "達成環境部公告之「行業別指定削減率」或「科學基礎減量目標 SBTi 1.5°C 路徑」之自主減量計畫並經核定"
         },
         {
           "key": "C",
@@ -5316,7 +6028,7 @@
           "text": "通過環境影響評估即可適用"
         }
       ],
-      "answer": "A",
+      "answer": "B",
       "explanation": "依《自主減量計畫管理辦法》§11，事業之自主減量計畫經中央主管機關核定後，於每年 6 月 30 日前申請者當年度起、7 月 1 日後申請者次年度起得適用優惠費率。優惠費率 A（NT$50）對應環境部 2024/10/07 公告「碳費徵收對象溫室氣體減量指定目標」之「行業別指定削減率」（或符合 SBTi 1.5°C 目標）；優惠費率 B（NT$100）對應「技術標竿削減率」。費率金額本身載於環境部公告，非《碳費收費辦法》§8（§8 為發電業電力消費排放量證明扣除）。",
       "subject": null,
       "topic_tags": [
@@ -5336,6 +6048,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "A",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5351,22 +6069,22 @@
       "options": [
         {
           "key": "A",
-          "text": "0.1"
+          "text": "0.6"
         },
         {
           "key": "B",
-          "text": "0.2"
-        },
-        {
-          "key": "C",
           "text": "0.4"
         },
         {
+          "key": "C",
+          "text": "0.2"
+        },
+        {
           "key": "D",
-          "text": "0.6"
+          "text": "0.1"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "《碳費收費辦法》§6 明定：高碳洩漏風險之事業，「第一期排放量調整係數值為零點二、第二期排放量調整係數值為零點四、第三期排放量調整係數值為零點六」；其餘事業之調整係數為 1。注意：先前坊間提及之「事業溫室氣體排放量調整辦法」並不存在，K 值之法源即為《碳費收費辦法》§6。高碳洩漏認定原則另由環境部 113/08/29 發布之「碳費徵收對象申請認定屬高碳洩漏風險者審核原則」公告。",
       "subject": null,
       "topic_tags": [
@@ -5386,6 +6104,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "ladder_reversed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5405,19 +6129,19 @@
         },
         {
           "key": "B",
-          "text": "碳費負擔費額占事業營業毛利之比例達 30% 以上，或事業營業毛利為負值"
+          "text": "員工數 ≥200 人且年產值 ≥10 億新臺幣"
         },
         {
           "key": "C",
-          "text": "員工數 ≥200 人且年產值 ≥10 億新臺幣"
+          "text": "碳費負擔費額占事業營業毛利之比例達 30% 以上，或事業營業毛利為負值"
         },
         {
           "key": "D",
           "text": "出口比例 ≥50% 且能源強度 ≥10%"
         }
       ],
-      "answer": "B",
-      "explanation": "依環境部 113/08/29 發布「碳費徵收對象申請認定屬高碳洩漏風險者審核原則」，台灣採近似韓國 K-ETS 之認定模式：(1) 行業別認定（依碳排成本強度 × 貿易強度合計值參考閾值）；(2) 個別事業認定，其量化標準為「碳費負擔費額占營業毛利達 30% 以上」或「營業毛利為負值」。選項 A 為歐盟 EU ETS 之 Carbon Leakage 公式（貿易強度 ≥30% 或碳排強度 ≥30%），與我國規定不同。",
+      "answer": "C",
+      "explanation": "依環境部 113/08/29 發布「碳費徵收對象申請認定屬高碳洩漏風險者審核原則」，台灣採近似韓國 K-ETS 之認定模式：(1) 行業別認定（依碳排成本強度 × 貿易強度合計值參考閾值）；(2) 個別事業認定，其量化標準為「碳費負擔費額占營業毛利達 30% 以上」或「營業毛利為負值」。「貿易強度 ≥30% 且碳排成本強度 ≥5%」那個選項講的是歐盟 EU ETS 的碳洩漏認定（採貿易強度與排放強度的乘積指標），與我國以「碳費負擔占營業毛利之比例」認定的方式不同。",
       "subject": null,
       "topic_tags": [
         "碳費",
@@ -5436,6 +6160,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5486,6 +6216,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "ladder_kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5508,15 +6244,15 @@
         },
         {
           "key": "C",
-          "text": "5 月 31 日"
+          "text": "9 月 30 日"
         },
         {
           "key": "D",
-          "text": "9 月 30 日"
+          "text": "5 月 31 日"
         }
       ],
-      "answer": "C",
-      "explanation": "《碳費收費辦法》§4 規定：「事業應於每年 5 月底前，按前一年度排放量計算費額並自行繳納」。我國首次碳費申報已於 2025/05/31 截止（針對 2024 年排放量試申報），2026/05/31 為 2025 年排放年度之正式繳納期限。注意：§12 並非申報期限條，而是「主管機關得通知事業於 15 日內提報計算資料」之規定。",
+      "answer": "D",
+      "explanation": "《碳費收費辦法》§4：「事業應於碳費徵收費率公告生效次年起，每年五月底前，依其前一年度一月一日至十二月三十一日之溫室氣體排放量，按公告之費率自行計算應繳納之費額」。我國首次碳費申報已於 2025/05/31 截止（針對 2024 年排放量試申報），2026/05/31 為 2025 年排放年度之正式繳納期限。注意：§12 並非申報期限條，而是碳費查核作業的資料調閱規定（「中央主管機關為執行碳費查核作業，得通知該事業於十五日內提報下列計算溫室氣體排放量之相關資料」）。",
       "subject": null,
       "topic_tags": [
         "碳費",
@@ -5534,6 +6270,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5565,7 +6307,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "依《自主減量計畫管理辦法》§3 第二款，自主減量計畫書應含「依本法第二十九條第二項規定之指定目標，計算基準年及目標年全廠排放量」。配合環境部 2024/10 公告「碳費徵收對象溫室氣體減量指定目標」，「目標年為 2030 年」（基準年原則為 2018-2022 年指定）。注意：§4 並非目標年條，而是「減量措施方式」條（轉換低碳燃料、能源效率、再生能源、製程改善、CCS/CCU 等）。",
+      "explanation": "依《自主減量計畫管理辦法》§3 第二款，自主減量計畫書應含「依本法第二十九條第二項規定之指定目標，計算基準年及目標年全廠（場）之溫室氣體年排放量」。配合環境部 2024/10 公告「碳費徵收對象溫室氣體減量指定目標」，「目標年為 2030 年」（基準年原則為 2018-2022 年指定）。注意：§4 並非目標年條，而是「減量措施方式」條（轉換低碳燃料、能源效率、再生能源、製程改善、CCS/CCU 等）。",
       "subject": null,
       "topic_tags": [
         "碳費",
@@ -5584,6 +6326,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "ladder_kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5599,7 +6347,7 @@
       "options": [
         {
           "key": "A",
-          "text": "依本法收取之碳費及代金"
+          "text": "中央政府每年從營業稅撥入之 5%"
         },
         {
           "key": "B",
@@ -5611,11 +6359,11 @@
         },
         {
           "key": "D",
-          "text": "中央政府每年從營業稅撥入之 5%"
+          "text": "依本法收取之碳費及代金"
         }
       ],
-      "answer": "D",
-      "explanation": "《氣候變遷因應法》§32 第一項列舉溫管基金來源 7 款：(1) §24/§31 代金、§28 碳費；(2) §25、§36 手續費；(3) §35 拍賣或配售所得；(4) 政府循預算程序之撥款；(5) 受贈收入；(6) 基金孳息；(7) 其他相關收入。沒有「營業稅 5% 自動撥入」之規定。注意：§33 為「基金用途」（13 款用途）而非來源。",
+      "answer": "A",
+      "explanation": "《氣候變遷因應法》§32：「中央主管機關應成立溫室氣體管理基金，基金來源如下：一、第二十四條與前條之代金及第二十八條之碳費。二、第二十五條及第三十六條之手續費。三、第三十五條拍賣或配售之所得。四、政府循預算程序之撥款。五、人民、事業或團體之捐贈。六、其他之收入。」—— 共六款，並無「中央政府從營業稅撥入 5%」之規定。注意：§33 規定的是基金「用途」（十三款），不是來源。",
       "subject": null,
       "topic_tags": [
         "氣候變遷因應法",
@@ -5633,6 +6381,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5643,7 +6397,7 @@
     },
     {
       "id": "pool-aig-tw_regs_10-v2",
-      "stem": "依《氣候變遷因應法》第 49 條，事業違反 §21 規定（盤查、登錄）或 §22（查驗管理）相關規定，經通知限期補正或改善，屆期仍未完成者，得處新臺幣多少罰鍰？",
+      "stem": "依《氣候變遷因應法》第 49 條第一項，事業違反依 §21 第二項所定辦法中有關排放量盤查、登錄之頻率、紀錄、應登錄事項、期限或管理之規定，經通知限期補正或改善，屆期仍未補正或完成改善者，處新臺幣多少罰鍰？",
       "options": [
         {
           "key": "A",
@@ -5663,7 +6417,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "《氣候變遷因應法》§49 第一項規定：事業違反 §21（盤查、登錄）相關規定，經通知限期補正或改善，屆期仍未補正或完成改善者，「處新臺幣十萬元以上一百萬元以下罰鍰」，並得按次處罰。注意：§52 之罰鍰雖然金額同為 10-100 萬元，但對應違反情形為 §24（增量抵換）、§38（高 GWP 限制）等；20-200 萬元罰鍰見於 §48（規避檢查）。",
+      "explanation": "《氣候變遷因應法》§49 第一項：事業違反依 §21 第二項所定辦法中有關排放量盤查、登錄之頻率、紀錄、應登錄事項、期限或管理之規定，經通知限期補正或改善，屆期仍未補正或完成改善者，「處新臺幣十萬元以上一百萬元以下罰鍰」，並通知限期補正或改善；屆期仍未完成者按次處罰。同條第二項罰鍰金額相同（10–100 萬元），但受罰主體是「查驗機構」（未依 §22 第一項取得許可逕行查驗，或違反 §22 第二項所定辦法者）——事業與查驗機構的義務主體不同，勿混為一談。另注意：§52 之罰鍰金額雖同為 10–100 萬元，對應的是 §24（增量抵換）、§38 等違反情形；20–200 萬元罰鍰見於 §48（規避、妨礙或拒絕檢查）。",
       "subject": null,
       "topic_tags": [
         "氣候變遷因應法",
@@ -5682,6 +6436,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5701,19 +6461,19 @@
         },
         {
           "key": "B",
-          "text": "移除類型專案：展延型 20 年（最多展延 2 次每次 10 年）或固定型 30 年；減少或避免排放類型：展延型 5 年（最多展延 2 次每次 5 年）或固定型 10 年"
+          "text": "能源效率改善類最長 7 年、再生能源類 10 年、自然碳匯類 20 年（不得展延）"
         },
         {
           "key": "C",
-          "text": "能源效率改善類最長 7 年、再生能源類 10 年、自然碳匯類 20 年（不得展延）"
+          "text": "移除類型專案：展延型 20 年（最多展延 2 次每次 10 年）或固定型 30 年；減少或避免排放類型：展延型 5 年（最多展延 2 次每次 5 年）或固定型 10 年"
         },
         {
           "key": "D",
           "text": "額度永久有效"
         }
       ],
-      "answer": "B",
-      "explanation": "《溫室氣體自願減量專案管理辦法》§7 明定計入期分為展延型／固定型，並依專案類型區分：「移除類型專案——展延型以二十年為限，最多得展延二次，每次展延以十年為限；固定型以三十年為限。減少或避免排放類型專案——展延型以五年為限，最多得展延二次，每次展延以五年為限；固定型以十年為限。」注意：本辦法 §17 為「監測報告」之規定，並非計入期規定。",
+      "answer": "C",
+      "explanation": "《溫室氣體自願減量專案管理辦法》§7 明定計入期分為展延型／固定型，並依專案類型區分：「一、移除類型專案：（一）展延型：以二十年為限，最多得展延二次，每次展延以十年為限。（二）固定型：以三十年為限。二、減少或避免排放類型專案：（一）展延型：以五年為限，最多得展延二次，每次展延以五年為限。（二）固定型：以十年為限。」注意：本辦法 §17 為「監測報告」之規定，並非計入期規定。",
       "subject": null,
       "topic_tags": [
         "自願減量",
@@ -5732,6 +6492,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5780,6 +6546,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "A",
+          "method": "ladder_kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5798,7 +6570,7 @@
         },
         {
           "key": "B",
-          "text": "電力業及指定製造業（含發電業、鋼鐵業、石油煉製業、水泥業、半導體業、TFT-LCD 業）"
+          "text": "金融保險業"
         },
         {
           "key": "C",
@@ -5806,10 +6578,10 @@
         },
         {
           "key": "D",
-          "text": "金融保險業"
+          "text": "電力業及指定製造業（含發電業、鋼鐵業、石油煉製業、水泥業、半導體業、TFT-LCD 業）"
         }
       ],
-      "answer": "B",
+      "answer": "D",
       "explanation": "依《氣候變遷因應法》§21 第一項，中央主管機關公告之排放源應進行盤查、登錄。環境部歷次公告之第一批與第二批納管事業包含：發電業、鋼鐵業、石油煉製業、水泥業、半導體業、薄膜電晶體液晶顯示器業，採全廠（場）「直接排放」即達 2.5 萬公噸 CO₂e 認定。其他業別則為「直接＋間接排放」合計達門檻。注意：盤查辦法 §5 為「燃料熱值與碳含量檢測方法」之規定，並非納管門檻條文。",
       "subject": null,
       "topic_tags": [
@@ -5829,6 +6601,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5879,6 +6657,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "ladder_kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5893,11 +6677,11 @@
       "options": [
         {
           "key": "A",
-          "text": "3 月 31 日完成登錄、5 月 31 日完成查驗上傳"
+          "text": "4 月 30 日完成登錄、10 月 31 日完成查驗結果上傳"
         },
         {
           "key": "B",
-          "text": "4 月 30 日完成登錄、10 月 31 日完成查驗結果上傳"
+          "text": "3 月 31 日完成登錄、5 月 31 日完成查驗上傳"
         },
         {
           "key": "C",
@@ -5908,8 +6692,8 @@
           "text": "12 月 31 日完成登錄與查驗"
         }
       ],
-      "answer": "B",
-      "explanation": "《溫室氣體排放量盤查登錄及查驗管理辦法》§6 規定：「應於每年 4 月 30 日前，將前一年度溫室氣體排放量清冊及盤查報告書，以網路傳輸方式登錄於指定資訊平台」；§9 規定：「應於每年 10 月 31 日前上傳溫室氣體查驗總結報告及查驗聲明書」。注意：§17 為本辦法之「施行日期」條款，非登錄期限規定。",
+      "answer": "A",
+      "explanation": "《溫室氣體排放量盤查登錄及查驗管理辦法》§6 規定：「應於每年四月三十日前，依中央主管機關所定格式，將前一年度之溫室氣體排放量清冊（以下簡稱排放量清冊）及溫室氣體盤查報告書（以下簡稱盤查報告書），以網路傳輸方式，登錄於中央主管機關指定之事業溫室氣體排放量資訊平台」；§9 規定：「應於每年十月三十一日前，依中央主管機關所定格式，將溫室氣體查驗總結報告及查驗聲明書之查驗結果，以網路傳輸方式，上傳至中央主管機關指定之資訊平台」。注意：§17 為本辦法之「施行日期」條款，非登錄期限規定。",
       "subject": null,
       "topic_tags": [
         "盤查登錄",
@@ -5927,6 +6711,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5977,6 +6767,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -5991,23 +6787,23 @@
       "options": [
         {
           "key": "A",
-          "text": "300 平方公尺"
+          "text": "2,000 平方公尺"
         },
         {
           "key": "B",
-          "text": "1,000 平方公尺"
-        },
-        {
-          "key": "C",
           "text": "1,500 平方公尺"
         },
         {
+          "key": "C",
+          "text": "1,000 平方公尺"
+        },
+        {
           "key": "D",
-          "text": "2,000 平方公尺"
+          "text": "300 平方公尺"
         }
       ],
-      "answer": "B",
-      "explanation": "依《再生能源發展條例》§12-1（2023/06/21 修正、115/08/01 施行）授權，內政部、經濟部於 2025/12/19 會銜公告「建築物設置太陽光電發電設備標準」，明定「新建建築物建築面積達 1,000 平方公尺（約 300 坪）以上者，每 20 平方公尺即應設置 1 瓩之太陽光電發電設備」；增建增加面積、改建變更屋頂面積達 1,000 平方公尺亦適用。各地受光條件不足者得免設置。",
+      "answer": "C",
+      "explanation": "依《再生能源發展條例》§12-1（2023/06/21 修正、115/08/01 施行）授權，內政部、經濟部於 2025/12/19 會銜公告「建築物設置太陽光電發電設備標準」，該標準（非母法條文）明定：新建建築物建築面積達 1,000 平方公尺（約 300 坪）以上者，每 20 平方公尺應設置 1 瓩之太陽光電發電設備；增建增加面積、改建變更屋頂面積達 1,000 平方公尺亦適用。各地受光條件不足者得免設置。",
       "subject": null,
       "topic_tags": [
         "再生能源",
@@ -6018,21 +6814,30 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "tw_regs_rewritten",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "law_text_pinning (tools/pin_law_articles.py + 人工逐條核對)",
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_24-v2",
         "ai_metadata": {
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "ladder_reversed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
+        "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0070319",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=J0130032&flno=12-1",
-        "https://www.moi.gov.tw/News_Content.aspx?n=4&s=335116"
+        "https://www.moi.gov.tw/News_Content.aspx?n=145&s=335365"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-tw_regs_27-v2",
@@ -6044,18 +6849,18 @@
         },
         {
           "key": "B",
-          "text": "須經中央主管機關認可；非高碳洩漏事業抵減上限為收費排放量之 5%；屬高碳洩漏風險事業則「不得」使用國外減量額度抵減"
+          "text": "僅限 CDM 額度可使用，且上限為 50%"
         },
         {
           "key": "C",
-          "text": "僅限 CDM 額度可使用，且上限為 50%"
+          "text": "須經中央主管機關認可；非高碳洩漏事業抵減上限為收費排放量之 5%；屬高碳洩漏風險事業則「不得」使用國外減量額度抵減"
         },
         {
           "key": "D",
           "text": "得抵減至收費排放量之 100%，但須加計手續費"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "《氣候變遷因應法》§27 第一項：「事業取得國外減量額度者，應經中央主管機關認可後，始得扣除第二十八條第一項各款之排放量或抵銷第三十六條第二項之超額量」。《碳費收費辦法》§10 進一步規定：「非屬經審查認定之高碳洩漏風險事業……以符合中央主管機關認可之國外減量額度申請……扣除上限不得超過事業收費排放量之百分之五」；屬高碳洩漏風險之事業則不得使用國外減量額度抵減（國內減量額度上限見 §9，為 10%）。注意：§28 為「碳費徵收授權條款」，非國外額度條。",
       "subject": null,
       "topic_tags": [
@@ -6075,6 +6880,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6094,7 +6905,7 @@
         },
         {
           "key": "B",
-          "text": "依 §12 通知限期改善；§14 規定未達指定目標之年度起，自當年度及其後年度改為一般費率（NT$300）計算碳費"
+          "text": "由事業自行決定後續行動"
         },
         {
           "key": "C",
@@ -6102,11 +6913,11 @@
         },
         {
           "key": "D",
-          "text": "由事業自行決定後續行動"
+          "text": "依 §12 通知限期改善；§14 規定「未達指定目標」者，僅「經查核且未達指定目標之該年度」改為一般費率；「廢止自主減量計畫」者，才是自廢止當年度及其後年度均改為一般費率"
         }
       ],
-      "answer": "B",
-      "explanation": "《自主減量計畫管理辦法》§12 規定：發現「自主減量計畫書中重要資訊與實際情況不符」、「一年內無正當理由未依規劃期程實施減量措施」或實施違反相關法規者，應命事業限期改善。§14 進一步規定：「未達指定目標的年度或廢止計畫者，自廢止當年度及其後年度，改為一般費率」計算碳費。注意：§10 為「主管機關每年 12 月底前完成執行報告查核」，§11 為「優惠費率申請與生效時點」，皆非限期改善條。",
+      "answer": "D",
+      "explanation": "《自主減量計畫管理辦法》§12：查核發現「自主減量計畫書中重要資訊與實際情況不符」、「自主減量計畫於核定後，一年內無正當理由未依規劃期程實施減量措施」或「該計畫減量措施之實施違反相關法規」者，應命事業限期改善。§14 則分兩款，兩者的效果範圍不同，最容易混淆：一、查核未達目標年指定目標或年度指定目標 ——「經查核且未達指定目標之年度改為一般費率」（**只有那一個年度**）；二、廢止自主減量計畫 ——「自廢止當年度及其後年度，改為一般費率」（**當年度以後全部**）。未依 §12 限期改善者，依 §13 得廢止計畫，此時才會落入 §14 第二款。注意：§10 為執行報告查核之規定，§11 為優惠費率之適用與生效時點，皆非限期改善條。",
       "subject": null,
       "topic_tags": [
         "碳費",
@@ -6117,22 +6928,31 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "tw_regs_rewritten",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "law_text_pinning (tools/pin_law_articles.py + 人工逐條核對)",
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_28-v2",
         "ai_metadata": {
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=12",
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=13",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=14",
-        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=10"
+        "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-tw_regs_29-v2",
@@ -6140,7 +6960,7 @@
       "options": [
         {
           "key": "A",
-          "text": "所有國民"
+          "text": "依本法 §21 第一項公告應盤查登錄並經指定須查驗之事業"
         },
         {
           "key": "B",
@@ -6148,15 +6968,15 @@
         },
         {
           "key": "C",
-          "text": "依本法 §21 第一項公告應盤查登錄並經指定須查驗之事業"
+          "text": "所有國民"
         },
         {
           "key": "D",
           "text": "任何永續報告書編製者"
         }
       ],
-      "answer": "C",
-      "explanation": "《氣候變遷因應法》§22 第一項規定：「查驗機構應先取得中央主管機關或其委託之認證機構認證，並經中央主管機關許可後，始得辦理查驗」。應委託許可查驗機構辦理查驗者，依 §21 第一項由中央主管機關公告（即達 2.5 萬公噸 CO₂e 之指定事業）。注意：§23 為「產品、車輛、新建築之溫室氣體效能標準」條文，與查驗機構制度無關。",
+      "answer": "A",
+      "explanation": "《氣候變遷因應法》§22 第一項規定：「查驗機構應先向中央主管機關或其委託（任）之認證機關（構）申請認證後，並取得中央主管機關許可，始得辦理本法所定查驗事宜」。應委託許可查驗機構辦理查驗者，依 §21 第一項由中央主管機關公告（即達 2.5 萬公噸 CO₂e 之指定事業）。注意：§23 為「產品、車輛、新建築之溫室氣體效能標準」條文，與查驗機構制度無關。",
       "subject": null,
       "topic_tags": [
         "氣候變遷因應法",
@@ -6174,6 +6994,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6224,6 +7050,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6242,19 +7074,19 @@
         },
         {
           "key": "B",
-          "text": "金管會於 2023/08 公告、2024/08 修訂之「我國接軌 IFRS 永續揭露準則藍圖」明定上市櫃公司分階段適用 IFRS S1/S2，並由金管會修正《公開發行公司年報應行記載事項準則》§10-4 規範揭露格式"
+          "text": "氣候風險揭露在我國為純自願性，無任何法律或行政規則基礎"
         },
         {
           "key": "C",
-          "text": "氣候風險揭露在我國為純自願性，無任何法律或行政規則基礎"
+          "text": "金管會於 2023/08 公告、2024/08 修訂之「我國接軌 IFRS 永續揭露準則藍圖」明定上市櫃公司分階段適用 IFRS S1/S2，並由金管會修正《公開發行公司年報應行記載事項準則》§10-4 規範揭露格式"
         },
         {
           "key": "D",
           "text": "僅金融業 (銀行、保險、證券) 須揭露，非金融業豁免"
         }
       ],
-      "answer": "B",
-      "explanation": "我國上市櫃公司氣候相關財務揭露之直接法源並非《氣候變遷因應法》§36（§36 實為「核配排放額度之帳戶管理及超額量處理」條文，與財務揭露無關），而是金管會職權：(1) 金管會 2023/08/17 公告、2024/08 滾動修訂之「我國接軌 IFRS 永續揭露準則藍圖」，分階段（資本額 100 億元以上 2026 年、50 億 2027 年、其餘 2028 年）強制適用 IFRS S1（永續一般揭露）／S2（氣候）；(2)《公開發行公司年報應行記載事項準則》§10-4 載明氣候相關事項應於年報揭露之內容。",
+      "answer": "C",
+      "explanation": "我國上市櫃公司氣候相關財務揭露之直接法源並非《氣候變遷因應法》§36（§36 規範的是核配排放額度之帳戶開立、移轉交易與超額量扣減抵銷，與財務揭露無關），而是金管會職權：(1) 金管會 2023/08/17 公告、2024/08 滾動修訂之「我國接軌 IFRS 永續揭露準則藍圖」，分階段（資本額 100 億元以上 2026 年、50 億 2027 年、其餘 2028 年）強制適用 IFRS S1（永續一般揭露）／S2（氣候）；(2)《公開發行公司年報應行記載事項準則》§10-4 載明氣候相關事項應於年報揭露之內容。",
       "subject": null,
       "topic_tags": [
         "金管會",
@@ -6273,6 +7105,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6324,6 +7162,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "ladder_kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6343,7 +7187,7 @@
         },
         {
           "key": "B",
-          "text": "經中央主管機關公告認可之減量方法（含本國訂定及審定通過之外部方法學）"
+          "text": "僅限 ISO 14064-2 方法"
         },
         {
           "key": "C",
@@ -6351,11 +7195,11 @@
         },
         {
           "key": "D",
-          "text": "僅限 ISO 14064-2 方法"
+          "text": "經中央主管機關公告認可之減量方法（含本國訂定及審定通過之外部方法學）"
         }
       ],
-      "answer": "B",
-      "explanation": "《溫室氣體自願減量專案管理辦法》§12 規定：「中央主管機關審定具備專案範疇、適用條件、專案邊界、基線情境等內容之減量方法，並應公開於指定之資訊平台」。截至 2025 年初，環境部公告認可之減量方法已逾 140 項（首批 2025/02 公告），來源包含本國新訂與外部方法學（CDM、VCS、GS）審定通過者。注意：§7 為「計入期年限」之規定，非方法學條。",
+      "answer": "D",
+      "explanation": "《溫室氣體自願減量專案管理辦法》§12 規定：「中央主管機關應就溫室氣體減量措施類型，審定具備專案範疇、適用條件、專案邊界、基線情境及專案情境等內容之溫室氣體減量方法」，且同條第三項規定「前項審定之溫室氣體減量方法，中央主管機關應公開於指定資訊平台」。截至 2025 年初，環境部公告認可之減量方法已逾 140 項（首批 2025/02 公告），來源包含本國新訂與外部方法學（CDM、VCS、GS）審定通過者。注意：§7 為「計入期年限」之規定，非方法學條。",
       "subject": null,
       "topic_tags": [
         "自願減量",
@@ -6374,6 +7218,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6389,7 +7239,7 @@
       "options": [
         {
           "key": "A",
-          "text": "排放源類別、活動數據及計算方法"
+          "text": "員工每人每日通勤碳足跡明細（範疇 3 類別 7 自願性揭露）"
         },
         {
           "key": "B",
@@ -6401,10 +7251,10 @@
         },
         {
           "key": "D",
-          "text": "員工每人每日通勤碳足跡明細（範疇 3 類別 7 自願性揭露）"
+          "text": "排放源類別、活動數據及計算方法"
         }
       ],
-      "answer": "D",
+      "answer": "A",
       "explanation": "依《氣候變遷因應法》§21 第一項授權之《溫室氣體排放量盤查登錄及查驗管理辦法》§6 與 §7，事業應登錄之內容包含排放量清冊及盤查報告書（含事業基本資料、廠場配置、製程流程、排放源資訊、原物料燃料使用量、排放係數、計算方法、減量措施等十項）；§9 規定查驗結果（合理保證等級查驗總結報告及查驗聲明書）應於 10/31 前上傳。員工通勤排放屬範疇 3 類別 7，非氣候法強制盤查登錄項目（為自願性揭露範疇）。注意：氣候法 §22 為「查驗機構認證許可」條文，非登錄資訊條。",
       "subject": null,
       "topic_tags": [
@@ -6423,6 +7273,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6454,7 +7310,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "《氣候變遷因應法》§35 規定：中央主管機關「應參酌國際公約決議事項，分階段公告納入總量管制之排放源、排放總量、核配方式、保留及禁止移轉之事項」。核配方式包含免費核配、拍賣或配售，並考量碳洩漏風險。現階段（2026）我國採「先碳費、後 ETS」策略，碳費為主要工具；台灣碳權交易所僅辦理自願減量額度之交易，全面總量管制與排放交易尚未公告實施。注意：§27 為「國外減量額度認可」條文，非總量管制條。",
+      "explanation": "《氣候變遷因應法》§35 第一項：「中央主管機關應公告納入總量管制之排放源，分階段訂定排放總量目標，於總量管制時應考量各行業之貿易強度、總量管制成本等因素，以避免碳洩漏影響全球減碳及國家整體競爭力之原則，將各階段排放總量所對應排放源之排放額度，以免費核配、拍賣或配售方式，核配其事業。」亦即核配方式有免費核配、拍賣、配售三種，且須考量貿易強度與總量管制成本以避免碳洩漏。現階段（2026 年 7 月）我國採「先碳費、後 ETS」策略，碳費為主要工具；臺灣碳權交易所目前僅辦理自願減量額度之交易，總量管制之排放源與排放總量尚未公告，ETS 尚未實施。注意：§27 為國外減量額度之認可規定，非總量管制條文。",
       "subject": null,
       "topic_tags": [
         "氣候變遷因應法",
@@ -6465,22 +7321,30 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "tw_regs_rewritten",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "law_text_pinning (tools/pin_law_articles.py + 人工逐條核對)",
         "verify_verdict": "CONFIRMED",
         "original_id": "tw_regs_38-v2",
         "ai_metadata": {
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "kept",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=35",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=27",
-        "https://www.tcx.com.tw/"
+        "https://www.cca.gov.tw/"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-tw_regs_44-v2",
@@ -6492,19 +7356,19 @@
         },
         {
           "key": "B",
-          "text": "應依中央主管機關公告之產品碳足跡標籤式樣，碳足跡計算須依公告之產品類別規則 (CFP-PCR) 並經查證"
+          "text": "僅須揭露於官網即可"
         },
         {
           "key": "C",
-          "text": "僅須揭露於官網即可"
+          "text": "應依中央主管機關公告之產品碳足跡標籤式樣，碳足跡計算須依公告之產品類別規則 (CFP-PCR) 並經查證"
         },
         {
           "key": "D",
           "text": "僅進口品適用，本國產品免規範"
         }
       ],
-      "answer": "B",
-      "explanation": "《氣候變遷因應法》§37 第一項：「中央主管機關得公告……產品，其製造、輸入或販賣業者，應於指定期限內向中央主管機關申請核定碳足跡，並依公告分級標示」。實施細節依環境部「自願性產品碳足跡核定標示及管理辦法」(GL007934) 與「環境部推動產品碳足跡標示作業要點」，須採公告標章式樣，計算依公告之產品類別規則 (PCR)。違者依氣候法 §54 處 1 萬–100 萬元罰鍰。注意：氣候法 §31 為「進口產品碳排放申報、代金繳納（碳邊境調整機制）」，並非碳足跡標示條。",
+      "answer": "C",
+      "explanation": "《氣候變遷因應法》§37 第一項：「中央主管機關得公告一定種類、規模之產品，其製造、輸入或販賣業者，應於指定期限內向中央主管機關申請核定碳足跡，經中央主管機關審查、查驗及核算後核定之，並於規定期限內依核定內容使用及分級標示於產品之容器或外包裝」。實施細節依環境部「自願性產品碳足跡核定標示及管理辦法」(GL007934) 與「環境部推動產品碳足跡標示作業要點」，須採公告標章式樣，計算依公告之產品類別規則 (PCR)。違者依氣候法 §54 處 1 萬–100 萬元罰鍰。注意：氣候法 §31 為「進口產品碳排放申報、代金繳納（碳邊境調整機制）」，並非碳足跡標示條。",
       "subject": null,
       "topic_tags": [
         "氣候變遷因應法",
@@ -6522,6 +7386,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6541,7 +7411,7 @@
         },
         {
           "key": "B",
-          "text": "每逾 1 日加徵 0.5%；逾 30 日移送強制執行"
+          "text": "每月加徵 5% 利息；無移送執行規定"
         },
         {
           "key": "C",
@@ -6549,11 +7419,11 @@
         },
         {
           "key": "D",
-          "text": "每月加徵 5% 利息；無移送執行規定"
+          "text": "每逾 1 日加徵 0.5%；逾 30 日移送強制執行"
         }
       ],
-      "answer": "B",
-      "explanation": "《氣候變遷因應法》§60 規定：「未依規定期限繳納者，每逾一日按滯納金額加徵百分之零點五滯納金，至應納金額之百分之十五為限；逾三十日仍未繳納者，移送強制執行」，並自滯納期限屆滿之次日起至繳納日止依郵政儲金一年期定期存款固定利率按日加計利息。注意：滯納金規定載於氣候法 §60，並非《碳費收費辦法》§14（§14 為「主管機關得核算差額並限期 90 日繳清」之追補繳規定）。",
+      "answer": "D",
+      "explanation": "《氣候變遷因應法》§60 第一項：「未依第二十四條第二項、第二十八條第四項及第三十一條第三項所定辦法，於期限內繳納代金、碳費者，每逾一日按滯納之金額加徵百分之零點五滯納金，一併繳納；逾期三十日仍未繳納者，移送強制執行。」同條第二項另定自滯納期限屆滿次日起至繳納日止，依繳納當日郵政儲金一年期定期存款固定利率按日加計利息。請注意：條文並無滯納金上限之明文 —— 干擾選項裡「最高加徵至 30 日（合計 15%）」的上限是虛構的。追補繳（主管機關逕行核算碳費差額並限期九十日內繳清）規定在《碳費收費辦法》§14，與滯納金是不同制度。",
       "subject": null,
       "topic_tags": [
         "氣候變遷因應法",
@@ -6572,6 +7442,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6586,11 +7462,11 @@
       "options": [
         {
           "key": "A",
-          "text": "專案行動非屬法規強制要求且具備財務障礙"
+          "text": "減量行為已為法令強制要求（如《空污法》指定鍋爐排放標準改善），即不具法規外加性"
         },
         {
           "key": "B",
-          "text": "減量行為已為法令強制要求（如《空污法》指定鍋爐排放標準改善），即不具法規外加性"
+          "text": "專案行動非屬法規強制要求且具備財務障礙"
         },
         {
           "key": "C",
@@ -6601,7 +7477,7 @@
           "text": "與專案情境基線（baseline）相比，明顯具額外減量"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "《溫室氣體自願減量專案管理辦法》§8 規定，依專案規模分級提出之外加性分析至少包含「法規外加性」（financial regulatory additionality），並得自財務外加性、障礙分析、普遍性分析中擇一執行。法令已強制要求之減量行為不具「法規外加性」，依本條不得申請註冊為自願減量專案；同時 §11 進一步限制專案邊界不得包含氣候法 §28 應繳碳費排放源、§21 第一二批應盤查事業、§35 總量管制排放源等。",
       "subject": null,
       "topic_tags": [
@@ -6621,6 +7497,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6639,18 +7521,18 @@
         },
         {
           "key": "B",
-          "text": "首年得豁免揭露 Scope 3 排放，並可暫不揭露比較期資訊；僅須揭露氣候相關風險與機會"
+          "text": "可使用任何全球暖化潛勢數值，無需依 GHG Protocol"
         },
         {
           "key": "C",
-          "text": "可使用任何全球暖化潛勢數值，無需依 GHG Protocol"
+          "text": "首年得豁免揭露 Scope 3 排放，並可暫不揭露比較期資訊；僅須揭露氣候相關風險與機會"
         },
         {
           "key": "D",
           "text": "可永久豁免揭露範疇 1 與範疇 2"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "explanation": "IFRS S2（氣候相關揭露）的過渡救濟條款（transition reliefs）規範於 IFRS S2 附錄 C；首年（2024 起初次適用）允許僅揭露範疇 1+2、次年起須涵蓋範疇 3。具體段落以 IFRS Foundation 公布之最新版為準。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -6670,6 +7552,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6749,14 +7637,14 @@
         },
         {
           "key": "C",
-          "text": "進口商於正式期得選擇使用歐盟執委會公告之默認值或實際值；實際值須由經認證查驗者驗證；默認值反映出口國／全球 10% 最差表現之合理推估"
+          "text": "默認值僅由出口國政府訂定"
         },
         {
           "key": "D",
-          "text": "默認值僅由出口國政府訂定"
+          "text": "進口商於正式期得選擇使用歐盟執委會公告之默認值或實際值；實際值須由經認證查驗者驗證；默認值反映出口國／全球 10% 最差表現之合理推估"
         }
       ],
-      "answer": "C",
+      "answer": "D",
       "explanation": "依 CBAM Implementing Regulation (EU) 2023/1773 與 Omnibus 修正案，預設值（default values）由執委會公告，反映特定國家或地區之代表性實體；具體計算方法細節以執委會公布之技術指引為準。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -6777,6 +7665,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6793,11 +7687,11 @@
       "options": [
         {
           "key": "A",
-          "text": "可訂於任何年度，無強制上限"
+          "text": "最遲於 2050 年；多數產業需至少於該年達成 90% 以上絕對減量"
         },
         {
           "key": "B",
-          "text": "最遲於 2050 年；多數產業需至少於該年達成 90% 以上絕對減量"
+          "text": "可訂於任何年度，無強制上限"
         },
         {
           "key": "C",
@@ -6808,7 +7702,7 @@
           "text": "僅限 2030 年達成，無 2050 目標"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "explanation": "依 SBTi Corporate Net-Zero Standard v1.2：跨範疇減量 ≥90%；Scope 1+2 ≥95%；Scope 3 ≥90%。航空、海運、電力等行業有專屬部門路徑（SDA），本題若無『按 SBTi v1.2 範疇切分』之明確選項，回答以最接近的官方架構為佳。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -6828,6 +7722,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6848,7 +7748,7 @@
         },
         {
           "key": "B",
-          "text": "台達電（Delta）"
+          "text": "中油股份有限公司"
         },
         {
           "key": "C",
@@ -6856,10 +7756,10 @@
         },
         {
           "key": "D",
-          "text": "中油股份有限公司"
+          "text": "台達電（Delta）"
         }
       ],
-      "answer": "D",
+      "answer": "B",
       "explanation": "RE100 為由 The Climate Group 與 CDP 共同推動的全球倡議，成員企業承諾 100% 使用再生能源。台灣會員家數隨時間異動，依 RE100 官網（there100.org）最新資料為準（2026 年 4 月時約 38 家）。答題時以官網即時數字為主，本題依公告當下版本標註。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
@@ -6875,6 +7775,12 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "D",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -6890,7 +7796,7 @@
       "options": [
         {
           "key": "A",
-          "text": "每季結束後 30 日內"
+          "text": "次年 9 月 30 日前"
         },
         {
           "key": "B",
@@ -6898,14 +7804,14 @@
         },
         {
           "key": "C",
-          "text": "次年 9 月 30 日前"
+          "text": "每季結束後 30 日內"
         },
         {
           "key": "D",
           "text": "次年 12 月 31 日前"
         }
       ],
-      "answer": "C",
+      "answer": "A",
       "explanation": "依 Omnibus 修正案 Regulation (EU) 2025/2083（2025-10-20 生效），CBAM 確定期（2026/01+）之年度申報與憑證繳交截止日均為次年 9 月 30 日；首次正式申報暨繳交為 2027/09/30。原 Reg (EU) 2023/956 之 5 月 31 日規則僅適用於過渡期（2023/10–2025/12），於 2025/10 已被取代，2026 年起不再適用。本題以 2026/05 現行法為準，正解為 C。",
       "subject": null,
       "topic_tags": [
@@ -6920,7 +7826,13 @@
         "verified_date": "2026-04-25",
         "verifier": "manual_omnibus_update",
         "verify_verdict": "CONFIRMED",
-        "original_id": "50"
+        "original_id": "50",
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
@@ -6930,109 +7842,12 @@
       "quality_flags": []
     },
     {
-      "id": "pool-aig-tw_regs_rewritten_rescued-tw_regs_09-v2",
-      "stem": "依《氣候變遷因應法》第 32 條，溫室氣體管理基金（溫管基金）之來源不包括下列何者？",
-      "options": [
-        {
-          "key": "A",
-          "text": "依本法收取之碳費及代金"
-        },
-        {
-          "key": "B",
-          "text": "依 §35 拍賣或配售排放額度之所得"
-        },
-        {
-          "key": "C",
-          "text": "違反本法所處之罰鍰、政府循預算程序之撥款及受贈收入"
-        },
-        {
-          "key": "D",
-          "text": "中央政府每年從營業稅撥入之 5%"
-        }
-      ],
-      "answer": "D",
-      "explanation": "《氣候變遷因應法》§32 第一項列舉溫管基金來源 7 款：(1) §24/§31 代金、§28 碳費；(2) §25、§36 手續費；(3) §35 拍賣或配售所得；(4) 政府循預算程序之撥款；(5) 受贈收入；(6) 基金孳息；(7) 其他相關收入。沒有「營業稅 5% 自動撥入」之規定。注意：§33 為「基金用途」（13 款用途）而非來源。",
-      "subject": null,
-      "topic_tags": [
-        "氣候變遷因應法",
-        "溫管基金"
-      ],
-      "difficulty": "easy",
-      "provenance": {
-        "source_type": "ai_generated",
-        "source_origin": "tw_regs_rewritten_rescued",
-        "verified_date": "2026-04-25",
-        "verifier": "manual_explanation_correction",
-        "verify_verdict": "CONFIRMED",
-        "original_id": "tw_regs_09-v2",
-        "ai_metadata": {
-          "model_family": "unspecified",
-          "generation_date": "2026-04-25",
-          "verifier_round": 3
-        }
-      },
-      "sources": [
-        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=32",
-        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=33"
-      ],
-      "quality_flags": []
-    },
-    {
-      "id": "pool-aig-tw_regs_rewritten_rescued-tw_regs_45-v2",
-      "stem": "依《氣候變遷因應法》第 60 條，事業未依規定期限繳納碳費或代金者，每逾 1 日按應繳金額加徵多少滯納金？逾多少日仍未繳納者移送強制執行？",
-      "options": [
-        {
-          "key": "A",
-          "text": "每逾 1 日加徵 0.1%；逾 90 日移送強制執行"
-        },
-        {
-          "key": "B",
-          "text": "每逾 1 日加徵 0.5%；逾 30 日移送強制執行"
-        },
-        {
-          "key": "C",
-          "text": "每逾 2 日加徵 1%；最高加徵至 30 日（合計 15%）"
-        },
-        {
-          "key": "D",
-          "text": "每月加徵 5% 利息；無移送執行規定"
-        }
-      ],
-      "answer": "B",
-      "explanation": "《氣候變遷因應法》§60 規定：「未依規定期限繳納者，每逾一日按滯納金額加徵百分之零點五滯納金，至應納金額之依《氣候變遷因應法》第 60 條規定處理（無 15% 上限明文，請以條文最新版本為準）；逾三十日仍未繳納者，移送強制執行」，並自滯納期限屆滿之次日起至繳納日止依郵政儲金一年期定期存款固定利率按日加計利息。注意：滯納金規定載於氣候法 §60，並非《碳費收費辦法》§14（§14 為「主管機關得核算差額並限期 90 日繳清」之追補繳規定）。",
-      "subject": null,
-      "topic_tags": [
-        "氣候變遷因應法",
-        "碳費",
-        "滯納金"
-      ],
-      "difficulty": "medium",
-      "provenance": {
-        "source_type": "ai_generated",
-        "source_origin": "tw_regs_rewritten_rescued",
-        "verified_date": "2026-04-25",
-        "verifier": "manual_explanation_correction",
-        "verify_verdict": "CONFIRMED",
-        "original_id": "tw_regs_45-v2",
-        "ai_metadata": {
-          "model_family": "unspecified",
-          "generation_date": "2026-04-25",
-          "verifier_round": 3
-        }
-      },
-      "sources": [
-        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=60",
-        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=14"
-      ],
-      "quality_flags": []
-    },
-    {
       "id": "pool-aig-ifrs2026-001",
       "stem": "關於我國接軌 IFRS 永續揭露準則之「永續資訊確信」現況，下列敘述何者「最」正確？",
       "options": [
         {
           "key": "A",
-          "text": "第一階段（資本額 100 億以上）公司自 2026 年會計年度起即須取得獨立合理確信"
+          "text": "IFRS 永續揭露準則本身尚未要求對永續資訊進行確信；我國主管機關將持續關注 ISSA 5000 之發展，再評估確信案件之可行性"
         },
         {
           "key": "B",
@@ -7040,15 +7855,15 @@
         },
         {
           "key": "C",
-          "text": "IFRS 永續揭露準則本身尚未要求對永續資訊進行確信；我國主管機關將持續關注 ISSA 5000 之發展，再評估確信案件之可行性"
+          "text": "第一階段（資本額 100 億以上）公司自 2026 年會計年度起即須取得獨立合理確信"
         },
         {
           "key": "D",
           "text": "我國要求企業自行對永續資訊進行內部確信，無須委由外部會計師"
         }
       ],
-      "answer": "C",
-      "explanation": "依金管會接軌 IFRS 永續揭露準則之相關公告，IFRS S1/S2 本身並未強制要求對永續資訊進行外部確信；我國主管機關表示將持續關注 IAASB 之 ISSA 5000（2026/12/15 生效）發展，再評估永續主題確信案件之可行性。選項 A、B 之強制確信時程為錯誤敘述。",
+      "answer": "A",
+      "explanation": "依金管會接軌 IFRS 永續揭露準則之相關公告，IFRS S1/S2 本身並未強制要求對永續資訊進行外部確信；我國主管機關表示將持續關注 IAASB 之 ISSA 5000（2026/12/15 生效）發展，再評估永續主題確信案件之可行性。「第一階段公司自 2026 年會計年度起即須取得獨立合理確信」與「所有上市櫃公司自 2026 年起取得獨立有限確信」這兩個選項所述的強制確信時程，均為錯誤敘述。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S1",
@@ -7069,6 +7884,12 @@
           "model_family": "claude-opus-4-7",
           "generation_date": "2026-05-04",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -7085,7 +7906,7 @@
       "options": [
         {
           "key": "A",
-          "text": "ISAE 3410（GHG 確信）將於 2026 年 12 月 15 日 ISSA 5000 生效時撤回"
+          "text": "ISSA 5000 僅適用於依 IFRS 永續揭露準則編製之資訊，不適用於 GRI 等其他框架"
         },
         {
           "key": "B",
@@ -7097,10 +7918,10 @@
         },
         {
           "key": "D",
-          "text": "ISSA 5000 僅適用於依 IFRS 永續揭露準則編製之資訊，不適用於 GRI 等其他框架"
+          "text": "ISAE 3410（GHG 確信）將於 2026 年 12 月 15 日 ISSA 5000 生效時撤回"
         }
       ],
-      "answer": "A",
+      "answer": "D",
       "explanation": "IAASB 已公告 ISSA 5000「永續確信案件之一般規定」自 2026 年 12 月 15 日起生效；同時 ISAE 3410（GHG 統計確信）將於同日撤回，由 ISSA 5000 統一規範。ISSA 5000 同時涵蓋有限確信與合理確信、不依賴特定 reporting framework、且為 standalone standard 不需配合 ISAE 3000。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -7121,6 +7942,12 @@
           "model_family": "claude-opus-4-7",
           "generation_date": "2026-05-04",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "A",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -7137,11 +7964,11 @@
       "options": [
         {
           "key": "A",
-          "text": "任何對人類或環境有顯著影響之永續議題，無論對企業現金流是否有影響"
+          "text": "可合理預期影響企業未來現金流、融資成本或資金成本之永續相關風險與機會"
         },
         {
           "key": "B",
-          "text": "可合理預期影響企業未來現金流、融資成本或資金成本之永續相關風險與機會"
+          "text": "任何對人類或環境有顯著影響之永續議題，無論對企業現金流是否有影響"
         },
         {
           "key": "C",
@@ -7152,8 +7979,8 @@
           "text": "凡企業內部認為重要之 ESG 議題，無須客觀標準"
         }
       ],
-      "answer": "B",
-      "explanation": "依 IFRS S1 §17，企業應揭露「could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital over the short, medium or long term」之永續相關風險與機會 — 此即 ISSB 採用之「單一財務重大性」(single financial materiality)。選項 A 描述為 ESRS「雙重重大性」之 impact materiality 面向，非 IFRS S1 範圍。",
+      "answer": "A",
+      "explanation": "依 IFRS S1 §17，企業應揭露「could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital over the short, medium or long term」之永續相關風險與機會 — 此即 ISSB 採用之「單一財務重大性」(single financial materiality)。「任何對人類或環境有顯著影響之永續議題，無論對企業現金流是否有影響」描述的是 ESRS「雙重重大性」中的 impact materiality 面向，不在 IFRS S1 的範圍內。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S1",
@@ -7172,6 +7999,12 @@
           "model_family": "claude-opus-4-7",
           "generation_date": "2026-05-04",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -7196,14 +8029,14 @@
         },
         {
           "key": "C",
-          "text": "IFRS S1 採「單一財務重大性」（投資人視角）；ESRS 採「雙重重大性」（財務 + 影響重大性）"
+          "text": "兩者皆採「單一影響重大性」，僅關注企業對環境之影響"
         },
         {
           "key": "D",
-          "text": "兩者皆採「單一影響重大性」，僅關注企業對環境之影響"
+          "text": "IFRS S1 採「單一財務重大性」（投資人視角）；ESRS 採「雙重重大性」（財務 + 影響重大性）"
         }
       ],
-      "answer": "C",
+      "answer": "D",
       "explanation": "IFRS S1 依 §18 採「單一財務重大性」(single materiality / financial materiality)，聚焦影響企業價值之 outside-in 視角；歐盟 ESRS 1 §3 採「雙重重大性」(double materiality)，包含「財務重大性」（outside-in：對企業財務影響）與「影響重大性」（inside-out：企業對人類/環境之影響）。EFRAG 與 ISSB 已聯合確認兩者於財務重大性面向為對齊，但 ESRS 額外要求揭露 impact materiality。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -7224,6 +8057,12 @@
           "model_family": "claude-opus-4-7",
           "generation_date": "2026-05-04",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -7240,11 +8079,11 @@
       "options": [
         {
           "key": "A",
-          "text": "僅須以定性敘述方式揭露，無須量化"
+          "text": "須揭露當期及預期未來之財務影響定量資訊（含財務狀況、財務績效、現金流量）；無法精確估計時得以區間呈現"
         },
         {
           "key": "B",
-          "text": "須揭露當期及預期未來之財務影響定量資訊（含財務狀況、財務績效、現金流量）；無法精確估計時得以區間呈現"
+          "text": "僅須以定性敘述方式揭露，無須量化"
         },
         {
           "key": "C",
@@ -7255,8 +8094,8 @@
           "text": "須以單一精確金額揭露，不允許使用區間或範圍估計"
         }
       ],
-      "answer": "B",
-      "explanation": "依 IFRS S2 §15(a)–(b)，企業應揭露氣候相關風險與機會對「當期財務狀況、財務績效及現金流量」與「預期影響」之定量資訊；§16 進一步指出，當無法精確估計時，得以「單一金額或區間」(single amount or range) 呈現。選項 A 屬定性 only 為過時 TCFD 早期實務、非 IFRS S2 強制要求；D 之「不允許區間」與 §16 直接衝突。",
+      "answer": "A",
+      "explanation": "依 IFRS S2 §15(a)–(b)，企業應揭露氣候相關風險與機會對「當期財務狀況、財務績效及現金流量」與「預期影響」之定量資訊；§16 進一步指出，當無法精確估計時，得以「單一金額或區間」(single amount or range) 呈現。「僅須以定性敘述方式揭露，無須量化」是過時的 TCFD 早期實務，非 IFRS S2 之強制要求；而「不允許使用區間或範圍估計」則與 §16 直接衝突。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S2",
@@ -7275,6 +8114,12 @@
           "model_family": "claude-opus-4-7",
           "generation_date": "2026-05-04",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "B",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [
@@ -7299,14 +8144,14 @@
         },
         {
           "key": "C",
-          "text": "須揭露衡量不確定性之程度，並說明所使用之輸入值、假設、估計技術，以及（適用時）為何無法以精確金額提供"
+          "text": "衡量不確定性僅針對範疇 1 排放適用，不適用於範疇 2、3"
         },
         {
           "key": "D",
-          "text": "衡量不確定性僅針對範疇 1 排放適用，不適用於範疇 2、3"
+          "text": "須揭露衡量不確定性之程度，並說明所使用之輸入值、假設、估計技術，以及（適用時）為何無法以精確金額提供"
         }
       ],
-      "answer": "C",
+      "answer": "D",
       "explanation": "依 IFRS S2 Appendix B 關於衡量不確定性之揭露要求，當以區間或估計方式揭露氣候相關財務影響時，企業應揭露：(1) 衡量不確定性的程度；(2) 所使用之輸入值、假設與估計技術；(3) 必要時說明為何無法提供更精確之金額；(4) 預計後續期間之影響因素。此屬強制揭露項目，並適用於所有範疇排放對應之財務影響，非僅限範疇 1。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
@@ -7326,6 +8171,12 @@
           "model_family": "claude-opus-4-7",
           "generation_date": "2026-05-04",
           "verifier_round": 1
+        },
+        "option_order": {
+          "rebalanced_on": "2026-07-13",
+          "previous_answer": "C",
+          "method": "transposed",
+          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         }
       },
       "sources": [

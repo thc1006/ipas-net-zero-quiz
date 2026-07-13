@@ -47,7 +47,7 @@ const fakeConfig: QuizState['config'] = {
   subject: 'all',
   questionCount: 10,
   shuffleQuestions: false,
-  shuffleOptions: false,
+
   showAnswerImmediately: true,
 };
 const fakeQuestions = Array.from({ length: 10 }, (_, i) => ({

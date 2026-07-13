@@ -135,7 +135,15 @@ export interface QuizConfig {
   subject: ExamSubject | 'all';
   questionCount: number;
   shuffleQuestions: boolean;
-  shuffleOptions: boolean;
+  // shuffleOptions 已移除（2026-07）。它是一段**不可達、零測試、而且啟用會壞掉**的死碼：
+  //   - HomePage 從來沒有它的開關，預設 false，**沒有任何使用者能打開它**
+  //   - 每一個測試都寫死 shuffleOptions: false，`true` 那條分支一行都沒跑過
+  //   - 它洗的是 {key,text} 物件陣列，但 QuestionCard 直接印 option.key 當字母
+  //     —— 真的啟用，畫面會變成「C. … A. … D. … B. …」
+  //
+  // 而且它本來也不該存在：主題庫是從來源 PDF 分欄重建的，選項順序有證據鏈
+  // （--verify 逐題比對），執行期洗牌會讓畫面上的題目與已驗證的來源不一致。
+  // 練習池原本的答案偏斜（永遠選 B 得 60 分）已在資料層重排解決（χ²=0.02）。
   /** 是否將加強練習池題目混入抽題範圍（須使用者已 opt-in） */
   includePracticePool?: boolean;
   showAnswerImmediately: boolean;

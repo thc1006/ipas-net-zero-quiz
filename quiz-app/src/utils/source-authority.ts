@@ -1,0 +1,141 @@
+// 來源的權威性分級 —— 主題庫與練習池「共用」。
+//
+// 為什麼需要這個：
+//
+// 標了 time_sensitive 的題目必須至少有一條「一手權威來源」，否則季排程去檢查一個
+// 部落格還活著，**根本無法告訴你法規有沒有改**。這條規則本身沒問題，問題出在實作：
+//
+// 原本它是 dataset-integrity.test.ts 裡的一條 regex，長這樣：
+//     /law\.moj\.gov\.tw|moenv\.gov\.tw|…|usr\.chu\.edu\.tw/
+//
+// 那不是「權威來源」的定義，只是一張**剛好蓋住主題庫**的名單。把它套到練習池上，
+// 它認不得 taxation-customs.ec.europa.eu（歐盟執委會關稅總署，CBAM 的主管機關）、
+// www.sec.gov、ghgprotocol.org、www.efrag.org、www.ndc.gov.tw ——
+// 全都是不折不扣的一手來源，卻被當成「不權威」，會誤殺 59 題。
+//
+// **真正的問題是它的失敗模式：認不得的東西一律「默默當成不權威」。**
+// 一個會安靜給出錯誤答案的分類器，比一個會大聲失敗的分類器危險得多。
+//
+// 所以這裡改成：每一個網域都必須被**明確分類**。
+// 沒被分類的網域會讓 CI 變紅（見 source-authority.test.ts），
+// 逼下一個加題目的人回來寫一行「這是誰、為什麼算／不算一手來源」。
+
+export type Authority = 'primary' | 'secondary';
+
+export interface HostRule {
+  /** 比對 URL 的 host（尾綴比對：'iso.org' 也會命中 'www.iso.org'） */
+  readonly host: string;
+  /** 這是誰 —— 給下一個讀的人看的，不是註解 */
+  readonly who: string;
+}
+
+/**
+ * 一手權威來源：**規範本身的制定者、發布者或主管機關**。
+ * 判準只有一個 —— 「這題的答案如果變了，是因為這個機構做了什麼」。
+ * 它變了，這個網域的內容就會變；它沒變，這個網域就不會變。
+ */
+export const PRIMARY: readonly HostRule[] = [
+  // ── 我國主管機關與法規 ──────────────────────────────────────────
+  { host: 'law.moj.gov.tw', who: '全國法規資料庫（法務部）—— 法條原文' },
+  { host: 'moenv.gov.tw', who: '環境部（含 cfp/oaout/ghgregistry/data 子網域）' },
+  { host: 'cca.gov.tw', who: '環境部氣候變遷署 —— 碳費、盤查、階段管制目標' },
+  { host: 'fsc.gov.tw', who: '金融監督管理委員會 —— 上市櫃永續揭露' },
+  { host: 'ndc.gov.tw', who: '國家發展委員會 —— 2050 淨零路徑、12 項關鍵戰略' },
+  { host: 'moeaea.gov.tw', who: '經濟部能源署 —— 電力排放係數、再生能源' },
+  { host: 'ey.gov.tw', who: '行政院 —— 政策核定與公報' },
+  { host: 'moi.gov.tw', who: '內政部 —— 建築物太陽光電設置標準（會銜機關）' },
+  { host: 'abri.gov.tw', who: '內政部建築研究所 —— 綠建築與建築碳足跡' },
+  { host: 'twse.com.tw', who: '臺灣證券交易所（含 cgc 公司治理中心）' },
+  { host: 'tpex.org.tw', who: '證券櫃檯買賣中心' },
+  { host: 'tcx.com.tw', who: '臺灣碳權交易所 —— 減量額度交易' },
+  { host: 'ipas.org.tw', who: 'iPAS 經濟部產業人才能力鑑定 —— 考科範圍的唯一權威' },
+
+  // ── 國際標準與規範的制定者 ──────────────────────────────────────
+  { host: 'iso.org', who: 'ISO（含 committee.iso.org）—— ISO 14064／14067／14068' },
+  { host: 'bsigroup.com', who: 'BSI —— PAS 2060 的發布與撤回' },
+  { host: 'ifrs.org', who: 'IFRS 基金會／ISSB —— IFRS S1・S2' },
+  { host: 'ghgprotocol.org', who: 'GHG Protocol —— Scope 1/2/3 的定義來源' },
+  { host: 'iaasb.org', who: 'IAASB —— ISAE 3410／ISSA 5000 確信準則' },
+  { host: 'efrag.org', who: 'EFRAG —— ESRS 的技術建議機構' },
+  { host: 'fsb-tcfd.org', who: 'TCFD —— 氣候相關財務揭露架構' },
+  { host: 'sciencebasedtargets.org', who: 'SBTi（含 files. 子網域）—— 科學基礎減量目標' },
+  { host: 'cdp.net', who: 'CDP —— 揭露問卷與評分方法' },
+  { host: 'environdec.com', who: 'EPD International —— EPD 制度的營運者' },
+  { host: 'there100.org', who: 'RE100 國際倡議 —— RE100 規則與會員名單' },
+  { host: 're100.org.tw', who: 'RE100 臺灣（綠色和平協力）—— RE100 在台推動' },
+  { host: 'globalmethanepledge.org', who: '全球甲烷承諾 —— 承諾文本本身' },
+
+  // ── 國際組織與條約機構 ──────────────────────────────────────────
+  { host: 'unfccc.int', who: 'UNFCCC —— 巴黎協定、NDC、COP 決議' },
+  { host: 'treaties.un.org', who: '聯合國條約集 —— 條約原文與批准狀態' },
+  { host: 'ipcc.ch', who: 'IPCC —— AR5／AR6 的 GWP 值' },
+  { host: 'iea.org', who: '國際能源總署 —— 能源與排放統計' },
+  { host: 'icao.int', who: 'ICAO —— CORSIA' },
+  { host: 'cop28.com', who: 'COP28 主辦國官網 —— UAE Consensus 文本' },
+  { host: 'cop30.br', who: 'COP30 主辦國官網' },
+
+  // ── 歐盟 ────────────────────────────────────────────────────────
+  // 註：eur-lex 是法律原文，ec.europa.eu 各總署是**主管機關**（CBAM 的實施細則、
+  // 過渡期指引都發布在 taxation-customs 上）。原本的 regex 只認 eur-lex，
+  // 把執委會本身當成「不權威」—— 那是說不通的。
+  { host: 'eur-lex.europa.eu', who: '歐盟法律公報 —— Regulation 原文' },
+  { host: 'ec.europa.eu', who: '歐盟執委會（含 taxation-customs／climate／finance 各總署）' },
+
+  // ── 其他國家主管機關 ────────────────────────────────────────────
+  { host: 'sec.gov', who: '美國證券交易委員會 —— 氣候揭露規則' },
+
+  // ── 公版教材 ────────────────────────────────────────────────────
+  // 中華大學版是 iPAS 淨零碳規劃管理師的公版教材，159 題的重建來源即為其 PDF。
+  // 它不是「規範制定者」，但它是**這場考試的命題依據**，對考科內容而言是一手的。
+  { host: 'usr.chu.edu.tw', who: '中華大學 —— iPAS 淨零碳規劃管理師公版教材（重建來源 PDF）' },
+];
+
+/**
+ * 明確判定為「非一手」的來源。
+ *
+ * 這些**不是壞來源**（很多內容是對的），只是**它們變不變，跟規定變不變無關**。
+ * 季排程去檢查它們還活著，得不到任何關於法規的資訊。
+ */
+export const SECONDARY: readonly HostRule[] = [
+  { host: 'vocus.cc', who: '方格子 —— 個人部落格平台' },
+  { host: 'yamol.tw', who: '阿摩線上測驗 —— 社群共筆題庫' },
+  { host: 'csr.cw.com.tw', who: '天下 CSR —— 媒體' },
+  { host: 'netzero.cna.com.tw', who: '中央社淨零 —— 媒體' },
+  { host: 'smartmachinery.tw', who: '智慧機械推動辦公室 —— 產業推廣網站' },
+  { host: 'km.twenergy.org.tw', who: '能源知識庫 —— 轉載彙整' },
+  { host: 'nzb.bers.tw', who: '低碳建築聯盟 —— 民間協會' },
+  { host: 'trec.org.tw', who: '台灣再生能源推動聯盟 —— 民間團體' },
+  { host: 'support.ecovadis.com', who: 'EcoVadis 客服說明 —— 廠商文件' },
+  { host: 'pr.tsmc.com', who: '台積電新聞稿 —— 單一企業的自我揭露' },
+  { host: 'assets.bbhub.io', who: 'Bloomberg CDN —— TCFD 報告的寄存處，非發布機構' },
+  { host: 'github.com', who: 'GitHub discussion —— 討論串' },
+];
+
+const matches = (host: string, rule: string) => host === rule || host.endsWith(`.${rule}`);
+
+/** 回傳這個 host 的權威分級；**認不得就回 null** —— 絕不默默當成 secondary。 */
+export function classifyHost(host: string): Authority | null {
+  const h = host.toLowerCase();
+  if (PRIMARY.some((r) => matches(h, r.host))) return 'primary';
+  if (SECONDARY.some((r) => matches(h, r.host))) return 'secondary';
+  return null;
+}
+
+export function hostOf(url: string): string | null {
+  try {
+    return new URL(url).host.toLowerCase();
+  } catch {
+    return null;
+  }
+}
+
+/** 這條 URL 是不是一手權威來源。 */
+export function isPrimarySource(url: string): boolean {
+  const h = hostOf(url);
+  return h != null && classifyHost(h) === 'primary';
+}
+
+/** 這批 URL 裡有沒有任何一條一手來源。 */
+export function hasPrimarySource(urls: readonly string[]): boolean {
+  return urls.some(isPrimarySource);
+}

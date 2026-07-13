@@ -32,7 +32,7 @@ const baseConfig: QuizConfig = {
   subject: 'all',
   questionCount: 2000, // 取滿，確保整個池子（含 fixture-6）都被納入
   shuffleQuestions: false, // 循序 → 決定性，抓得到 fixture-6
-  shuffleOptions: false,
+
   showAnswerImmediately: true,
   includePracticePool: true,
 };
