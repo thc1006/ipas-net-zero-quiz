@@ -7,15 +7,15 @@
       "爬蟲題庫: dataset_verified.json",
       "CHU 商研院模擬試題 PDF（考科1 100題 / 考科2 70題，含答案key）"
     ],
-    "total_questions": 778,
-    "gist_questions": 550,
+    "total_questions": 773,
+    "gist_questions": 545,
     "our_unique_questions": 228,
-    "corrections_applied": 13,
+    "corrections_applied": 17,
     "by_subject": {
-      "考科1": 434,
-      "考科2": 344
+      "考科1": 431,
+      "考科2": 342
     },
-    "with_answer": 778,
+    "with_answer": 769,
     "last_updated": "2026-07-13T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -25,9 +25,9 @@
         "carbon_fee",
         "carbon_neutrality"
       ],
-      "reverified_count": 100,
-      "total_questions": 778,
-      "time_sensitive_count": 112,
+      "reverified_count": 99,
+      "total_questions": 773,
+      "time_sensitive_count": 111,
       "not_reviewed_this_round_count": 680,
       "carried_over_count": 12,
       "known_unresolved": [
@@ -47,6 +47,14 @@
         {
           "id": "coverage_gaps",
           "detail": "主題庫尚無題目涵蓋：CBAM de minimis 50 公噸/年門檻、CBAM 憑證販售起始日 2027-02-01。"
+        },
+        {
+          "id": "eu_carbon_border_two_correct_answers",
+          "detail": "gist[140] / gist[296]「何者不是歐盟碳邊境管制項目」有兩個正確答案（CORSIA=ICAO、CCTS=印度，兩者皆非歐盟）。題目本身有瑕疵，已標 ambiguous + answer=null 排除計分。"
+        },
+        {
+          "id": "srra_stage2_verification_conflict",
+          "detail": "gist[183] / gist[358]「第二階段現場查證通常包括哪項工作」兩個版本直接矛盾（一題把 SRRA 缺失改善之覆核列為錯誤選項、另一題說它是正解）。實務上兩者可能都屬第二階段。需 ISO 14064-3 一手條文裁決。已標 ambiguous + answer=null。"
         }
       ],
       "note": "這不是「整份題庫已查證到 last_review_date」。本輪只實查 103/783 題（scope 所列主題）。判斷單一題目的內容是否仍正確，請以該題的 metadata.valid_as_of 為準，不要用這裡的日期。",
@@ -5274,13 +5282,13 @@
           "text": "碳邊境調整機制 (CBAM)"
         }
       ],
-      "answer": "A",
+      "answer": null,
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
+        "answer_verified": false,
+        "verification_date": "2026-07-13",
         "verification_batch": "E",
         "confidence": "high",
         "sources_count": 3,
@@ -5288,11 +5296,15 @@
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
+        ],
+        "prior_answer": "A"
       },
       "quality_flags": [
-        "time_sensitive"
-      ]
+        "time_sensitive",
+        "ambiguous"
+      ],
+      "prior_answer_note": "原答案 A",
+      "_correction_note": "【已排除計分】本題有**兩個正確答案**，題目本身有瑕疵。選項中 CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制、CCTS（Carbon Credit Trading Scheme）是印度政府建立的碳信用交易制度 —— **兩者都不是歐盟的機制**；而 CBAM 與 ETS 才是歐盟的。因此「何者不是歐盟碳邊境管制項目的一部分」有兩個成立的答案。題庫裡這題的兩個版本各選了其中一個（gist[140] 選 CCTS、gist[296] 選 CORSIA），正是這個瑕疵的直接證據。在命題者澄清之前，不給確定答案。"
     },
     {
       "index": 141,
@@ -6815,17 +6827,22 @@
           "text": "查證申請書審核"
         }
       ],
-      "answer": "A",
+      "answer": null,
       "source": "gist",
       "original_section": "考科2",
       "exam_subject": "考科2",
       "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
+        "answer_verified": false,
+        "verification_date": "2026-07-13",
         "verification_batch": "C",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "prior_answer": "A"
+      },
+      "quality_flags": [
+        "ambiguous"
+      ],
+      "_correction_note": "【已排除計分】本題與題庫中另一個版本**直接矛盾**：gist[183] 把「SRRA 缺失改善之覆核」列為錯誤選項、正解為「第二階段活動數據實際抽樣」；gist[358] 則說「SRRA 缺失改善之覆核」就是正解。兩者不可能同時成立。而實務上，第二階段現場查證同時包含「活動數據抽樣」與「覆核第一階段（SRRA）所發現缺失的改善情形」—— 也就是 gist[183] 的 A 與 C 恐怕都對，該題本身即有瑕疵。公開資料查不到足以裁決的一手依據（ISO 14064-3 全文需購買）。在取得一手條文之前，兩個版本都不給確定答案。"
     },
     {
       "index": 184,
@@ -10683,25 +10700,29 @@
           "text": "CORSIA"
         }
       ],
-      "answer": "D",
+      "answer": null,
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
       "explanation": "歐盟碳邊境管制項目主要包括CBAM及ETS，CORSIA則是國際航空業的碳抵銷與減量計畫。 [3, 4]",
       "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
+        "answer_verified": false,
+        "verification_date": "2026-07-13",
         "verification_source": "sync_from_310",
         "original_id": "c2-103",
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ]
+        ],
+        "prior_answer": "D"
       },
       "quality_flags": [
-        "time_sensitive"
-      ]
+        "time_sensitive",
+        "ambiguous"
+      ],
+      "prior_answer_note": "原答案 D",
+      "_correction_note": "【已排除計分】本題有**兩個正確答案**，題目本身有瑕疵。選項中 CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制、CCTS（Carbon Credit Trading Scheme）是印度政府建立的碳信用交易制度 —— **兩者都不是歐盟的機制**；而 CBAM 與 ETS 才是歐盟的。因此「何者不是歐盟碳邊境管制項目的一部分」有兩個成立的答案。題庫裡這題的兩個版本各選了其中一個（gist[140] 選 CCTS、gist[296] 選 CORSIA），正是這個瑕疵的直接證據。在命題者澄清之前，不給確定答案。"
     },
     {
       "index": 297,
@@ -12649,40 +12670,6 @@
       }
     },
     {
-      "index": 352,
-      "number": 93,
-      "stem": "在生命週期評估（LCA）的衝擊評估階段，溫室氣體排放與移除量應選擇哪種全球暖化潛勢（GWP）計算方法？",
-      "options": [
-        {
-          "key": "A",
-          "text": "跨期 GWP 加權"
-        },
-        {
-          "key": "B",
-          "text": "輸入‑輸出分析"
-        },
-        {
-          "key": "C",
-          "text": "組織範疇分析"
-        },
-        {
-          "key": "D",
-          "text": "直接排放量計算"
-        }
-      ],
-      "answer": "A",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科2",
-      "explanation": "在LCA的衝擊評估階段，通常會使用GWP（全球暖化潛勢）將不同溫室氣體的排放量換算為二氧化碳當量，並可能考慮不同時間尺度的影響，因此跨期GWP加權是相關的計算方法。 [4]",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "sync_from_310",
-        "original_id": "c2-159"
-      }
-    },
-    {
       "index": 353,
       "number": 94,
       "stem": "使用「基於距離法」計算運輸排放時，不需要以下哪項數據？",
@@ -12874,17 +12861,22 @@
           "text": "查證申請書審核"
         }
       ],
-      "answer": "A",
+      "answer": null,
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
       "explanation": "第二階段現場查證通常包括對第一階段（文件審查及策略審查與風險分析，SRRA）所發現的缺失，進行改善後的覆核。 [4]",
       "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
+        "answer_verified": false,
+        "verification_date": "2026-07-13",
         "verification_source": "sync_from_310",
-        "original_id": "c2-165"
-      }
+        "original_id": "c2-165",
+        "prior_answer": "A"
+      },
+      "quality_flags": [
+        "ambiguous"
+      ],
+      "_correction_note": "【已排除計分】本題與題庫中另一個版本**直接矛盾**：gist[183] 把「SRRA 缺失改善之覆核」列為錯誤選項、正解為「第二階段活動數據實際抽樣」；gist[358] 則說「SRRA 缺失改善之覆核」就是正解。兩者不可能同時成立。而實務上，第二階段現場查證同時包含「活動數據抽樣」與「覆核第一階段（SRRA）所發現缺失的改善情形」—— 也就是 gist[183] 的 A 與 C 恐怕都對，該題本身即有瑕疵。公開資料查不到足以裁決的一手依據（ISO 14064-3 全文需購買）。在取得一手條文之前，兩個版本都不給確定答案。"
     },
     {
       "index": 359,
@@ -16707,40 +16699,6 @@
       }
     },
     {
-      "index": 468,
-      "number": 209,
-      "stem": "台灣制定氣候變遷調適策略的願景是什麼？",
-      "options": [
-        {
-          "key": "A",
-          "text": "增加溫室氣體排放"
-        },
-        {
-          "key": "B",
-          "text": "減少自然資源的使用"
-        },
-        {
-          "key": "C",
-          "text": "為建構能適應氣候風險之低碳家園"
-        },
-        {
-          "key": "D",
-          "text": "完全依賴再生能源"
-        }
-      ],
-      "answer": "C",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "explanation": "建構能適應氣候風險之低碳家園",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "research_agent",
-        "confidence": "high"
-      }
-    },
-    {
       "index": 469,
       "number": 210,
       "stem": "台灣設定的國家溫室氣體長期減量目標是什麼？",
@@ -16772,40 +16730,6 @@
         "verification_batch": "B",
         "confidence": "high",
         "sources_count": 2
-      }
-    },
-    {
-      "index": 470,
-      "number": 211,
-      "stem": "台灣在因應氣候變遷的基本原則中，不包括以下哪項？",
-      "options": [
-        {
-          "key": "A",
-          "text": "遵循「巴黎協定」"
-        },
-        {
-          "key": "B",
-          "text": "實施碳交易制度"
-        },
-        {
-          "key": "C",
-          "text": "新增核能發電"
-        },
-        {
-          "key": "D",
-          "text": "增強化資訊公開及公民參與"
-        }
-      ],
-      "answer": "C",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "explanation": "台灣規定逐步落實非核家園願景，非新增核能",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_source": "research_agent",
-        "confidence": "high"
       }
     },
     {
@@ -19444,40 +19368,6 @@
       }
     },
     {
-      "index": 551,
-      "number": 292,
-      "stem": "使用“混合法”計算採購貨物產生的排放時，不包括以下哪項？",
-      "options": [
-        {
-          "key": "A",
-          "text": "供應商上游活動數據"
-        },
-        {
-          "key": "B",
-          "text": "供應商範疇1+2排放數據"
-        },
-        {
-          "key": "C",
-          "text": "供應商的利潤率"
-        },
-        {
-          "key": "D",
-          "text": "次級數據（如行業平均排放係數）"
-        }
-      ],
-      "answer": "C",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科2",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_batch": "B",
-        "confidence": "high",
-        "sources_count": 1
-      }
-    },
-    {
       "index": 552,
       "number": 293,
       "stem": "PAS 2060 要求組織制定什麼來支持其碳中和聲明？",
@@ -19590,53 +19480,6 @@
         "verification_source": "sync_from_310",
         "original_id": "c1-032"
       }
-    },
-    {
-      "index": 562,
-      "number": 303,
-      "stem": "CBAM過渡期第二次（填報2024年1–3月）填報的最後修正日期是何時？",
-      "options": [
-        {
-          "key": "A",
-          "text": "2024年7月31日"
-        },
-        {
-          "key": "B",
-          "text": "2024年6月30日"
-        },
-        {
-          "key": "C",
-          "text": "2024年5月31日"
-        },
-        {
-          "key": "D",
-          "text": "2024年7月30日"
-        }
-      ],
-      "answer": "A",
-      "source": "gist",
-      "original_section": "未分類",
-      "exam_subject": "考科1",
-      "metadata": {
-        "answer_verified": true,
-        "verification_date": "2026-01-23",
-        "verification_batch": "F",
-        "confidence": "high",
-        "sources_count": 2,
-        "valid_as_of": "2026-07-13",
-        "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
-        ],
-        "subject_corrected_2026_07_13": {
-          "from": "考科2",
-          "to": "考科1",
-          "basis": "官方 115 年度 iPAS 簡章 §2.5 評鑑主題與評鑑內容：L11202 國際碳稅關貿政策(如 CBAM 等) 與 L11205 ISO 14068-1 碳中和標準 均屬科目一（L11 淨零碳規劃管理基礎概論）；科目二（L12）只涵蓋 L121 ISO 14064-1 組織型溫室氣體盤查 與 L122 ISO 14067 產品碳足跡，不含任何政策/貿易內容。"
-        }
-      },
-      "quality_flags": [
-        "time_sensitive"
-      ]
     },
     {
       "index": 563,

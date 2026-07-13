@@ -178,13 +178,23 @@ describe('題庫結構完整性', () => {
   // 否則只考一科的考生會少一題；「全部」模式的重複由 questions.ts 的 dedupeByContent
   // 在抽題時處理。
   it('同一考科內不得有內容完全相同的題目（題幹 + 選項集合）', () => {
+    // 正規化必須夠狠：**只剝空白是不夠的**。
+    //
+    // 實測抓到的漏網之魚：
+    //   「2024 年 1‑3 月」vs「2024年1–3月」 —— 連字號是不同的 Unicode 字元（U+2011 / U+2013）
+    //   「「混合法」」    vs「“混合法”」   —— 中文引號 vs 西文引號
+    // 兩組都是同一道題、同一個答案，只因為標點與全形/半形不同就溜過去了。
+    //
+    // 只要題幹有任何一點雜訊，重複就抓不到 —— 這正是「【已刪除】90.」那串來源殘留
+    // 能一直遮住兩題重複的原因。所以這裡用 NFKC + 剝掉所有非文數字。
+    // ⚠️ 不可以用 /[\s\W_]+/：JS 的 \W 是 [^A-Za-z0-9_]，**中文字全部符合 \W**
+    //    —— 那會把題幹的中文整段刪光，剩下的空殼互相「重複」，爆出一堆假警報。
+    //    （Python 的 \W 是 Unicode-aware，行為完全不同 —— 我就是這樣被騙的。）
+    //    用 Unicode property escape：只剝標點(\p{P})、符號(\p{S})、分隔(\p{Z})與空白，保留 CJK。
+    const norm = (t: string) =>
+      (t ?? '').normalize('NFKC').replace(/[\p{P}\p{S}\p{Z}\s_]+/gu, '').toLowerCase();
     const sig = (it: Item) =>
-      it.stem.replace(/\s+/g, '') +
-      '||' +
-      it.options
-        .map((o) => o.text.replace(/\s+/g, ''))
-        .sort()
-        .join('|');
+      norm(it.stem) + '||' + it.options.map((o) => norm(o.text)).sort().join('|');
     const seen = new Map<string, string[]>();
     for (const it of ALL) {
       // 分隔符不能省：沒有它，'考科1' + sig 理論上可能與 '考科' + '1sig' 撞在一起
@@ -371,5 +381,110 @@ describe('考科歸屬：科目二只有 ISO 14064-1 與 ISO 14067', () => {
     const s1 = ALL.filter((it) => S1_ONLY.test(it.stem));
     expect(s1.length, '題庫裡沒有任何 CBAM/ISO 14068/PAS 2060 題 —— 上一條在空轉').toBeGreaterThan(10);
     expect(new Set(s1.map((it) => it.exam_subject))).toEqual(new Set(['考科1']));
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 同一道題，不能有兩個不同的正解
+//
+// 這一類錯誤**先前完全沒有任何 gate 在看**。去重只管「內容完全相同」，
+// 而真正危險的是「題幹幾乎相同、選項集合相同，但答案不同」——
+// 那代表其中一題正在教錯的東西，而且兩題都會被抽進同一份考卷。
+//
+// 實測抓到兩組：
+//   gist[183] / gist[358]（第二階段現場查證）—— 一題把「SRRA 缺失改善之覆核」
+//     列為**錯誤選項**，另一題說它**就是正解**。直接互相矛盾。
+//   gist[140] / gist[296]（何者不是歐盟碳邊境管制項目）—— 同樣四個選項
+//     （CBAM / ETS / CCTS / CORSIA），一題答 CCTS、一題答 CORSIA。
+//     查證後發現**題目本身是壞的**：CORSIA 是 ICAO 的國際航空機制、
+//     CCTS 是印度的碳信用交易制度 —— 兩個都不是歐盟的，這題有兩個正確答案。
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 同一道題，不能有兩個不同的正解
+//
+// 這一類錯誤**先前完全沒有任何 gate 在看**。去重只管「內容完全相同」，
+// 而真正危險的是：**同一個題幹出現兩次，卻教了不同的答案** ——
+// 兩題都會被抽進同一份考卷，使用者會看到自相矛盾的題庫。
+//
+// 難點在於：大部分這種組合其實是**同一個答案的不同寫法**
+// （「減排行動計畫」vs「減排行動計劃」、「5.20 %」vs「5.2 %」、
+//   「工廠使用化石燃料的排放」vs「工廠使用化石燃料排放」）。
+//
+// 我不用「答案文字相似度門檻」來自動判斷 —— 實測相似度分布是
+//   0.000（真衝突）／0.400／0.667／0.743／0.800…（全是同義改寫），
+// 0.400 離 0.000 太近，門檻訂在中間就是憑感覺，遲早誤判。
+//
+// 改用這個 repo 一貫的規矩：**任何「同題幹、不同答案文字」的組合，
+// 都必須被明確登記過** —— 沒登記就 fail。想新增一組？先看過它，寫下理由。
+const KNOWN_ANSWER_VARIANTS: ReadonlyArray<{ pair: [string, string]; why: string }> = [
+  { pair: ['gist[21]', 'gist[552]'], why: '「減排行動計畫」vs「減排行動計劃」—— 畫/劃 異體字' },
+  { pair: ['gist[28]', 'gist[438]'], why: '差一個「的」' },
+  { pair: ['gist[30]', 'gist[331]'], why: '同一句話的長短版（歐盟啟動 CBAM 主要宣稱是為了解決碳洩漏問題 / CBAM 主宣稱為解決碳洩漏）' },
+  { pair: ['gist[44]', 'gist[566]'], why: '差一個「的」' },
+  { pair: ['gist[134]', 'gist[262]'], why: '「5.20 %」vs「5.2 %」—— 同一個數字' },
+  { pair: ['gist[215]', 'gist[423]'], why: '差一個「的」' },
+  { pair: ['S_CHU_06-q014', 'S_CHU_06-q077'], why: '碳中和＝排放量等於「碳抵換量」/「碳移除量」—— 同義' },
+  { pair: ['S_CHU_06-q030', 'S_CHU_06-q079'], why: '「適應氣候變遷的行動」vs「適應氣候變遷影響的行動」—— 同義' },
+  { pair: ['S_CHU_06-q060', 'S_CHU_06-q078'], why: '來源 PDF 同一題問了兩次、選項組不同；兩個答案都在描述「減緩」—— 同義。（q060 的選項本身是同義反覆，那是來源的問題）' },
+];
+
+describe('同一道題不得有兩個不同的正解', () => {
+  // 不能用 \W —— JS 的 \W 是 [^A-Za-z0-9_]，**中文字全部符合 \W**，會把題幹刪光。
+  // （Python 的 \W 是 Unicode-aware，行為完全不同 —— 我就是這樣被騙出 52 組假重複的。）
+  const norm = (t: string) =>
+    (t ?? '').normalize('NFKC').replace(/[\p{P}\p{S}\p{Z}\s_]+/gu, '').toLowerCase();
+  const answerText = (it: Item) =>
+    norm(it.options.find((o) => o.key === it.answer)?.text ?? '');
+
+  const allowed = new Set(
+    KNOWN_ANSWER_VARIANTS.map((v) => [...v.pair].sort().join('||'))
+  );
+
+  // 只看「有答案」的題目：刻意排除計分的（answer=null + ambiguous）不列入
+  const answered = ALL.filter((it) => it.answer != null);
+  const byStem = new Map<string, Item[]>();
+  for (const it of answered) {
+    const k = `${it.exam_subject}||${norm(it.stem)}`;
+    byStem.set(k, [...(byStem.get(k) ?? []), it]);
+  }
+
+  const unreviewed: string[] = [];
+  for (const g of byStem.values()) {
+    if (g.length < 2) continue;
+    for (let i = 0; i < g.length; i++) {
+      for (let j = i + 1; j < g.length; j++) {
+        if (answerText(g[i]) === answerText(g[j])) continue; // 答案文字完全相同 -> 沒問題
+        const key = [who(g[i]), who(g[j])].sort().join('||');
+        if (!allowed.has(key)) {
+          unreviewed.push(
+            `${who(g[i])}(${g[i].answer}) vs ${who(g[j])}(${g[j].answer}) :: ${g[i].stem.slice(0, 34)}`
+          );
+        }
+      }
+    }
+  }
+
+  it('同題幹但答案不同的組合，必須全部被登記過（沒登記＝沒人看過）', () => {
+    expect(
+      unreviewed,
+      '這些題目的題幹相同、答案卻不同 —— 要嘛其中一題是錯的，要嘛只是措辭不同。' +
+        '兩種都必須有人親自看過並記錄：同義的登記進 KNOWN_ANSWER_VARIANTS，' +
+        '真衝突的就修掉或標 ambiguous 排除計分。**不允許沒人看過就放行。**'
+    ).toEqual([]);
+  });
+
+  it('登記清單不得有殘留（列了卻已不存在的組合 = 記錄與事實不符）', () => {
+    const ids = new Set(ALL.map(who));
+    const stale = KNOWN_ANSWER_VARIANTS.filter(
+      (v) => !ids.has(v.pair[0]) || !ids.has(v.pair[1])
+    ).map((v) => v.pair.join(' / '));
+    expect(stale, '登記清單裡有已經不存在的題目').toEqual([]);
+  });
+
+  it('每一筆登記都必須寫理由', () => {
+    expect(KNOWN_ANSWER_VARIANTS.length).toBeGreaterThan(0);
+    for (const v of KNOWN_ANSWER_VARIANTS) {
+      expect(v.why, `${v.pair.join('/')} 沒寫理由`).toBeTruthy();
+    }
   });
 });
