@@ -24490,7 +24490,7 @@
       "options": [
         {
           "key": "A",
-          "text": "透明性、完整性、準確性、可比性"
+          "text": "透明性、完整性、準確性、一致性"
         },
         {
           "key": "B",
@@ -24506,7 +24506,7 @@
         }
       ],
       "answer": "A",
-      "explanation": null,
+      "explanation": "ISO 14067 §5 明列 CFP 的原則：5.6 相關性、5.7 完整性、**5.8 一致性**、5.9 連貫性、5.10 準確度、5.11 透明度、5.12 避免重複計算。GHG Protocol Product Standard 的五項原則亦為 relevance／completeness／**consistency**／transparency／accuracy。\n\n⚠️ **兩者都沒有「可比性」。** 原選項誤列「可比性」，已更正為「一致性」（見 `metadata.option_text_fix`）。",
       "source": {
         "source_id": "S_VOCUS_02",
         "url": "https://vocus.cc/article/68d4ea33fd8978000107d365",
@@ -24533,6 +24533,25 @@
           "verification_date": "2026-01-23",
           "answer_origin": "batch_verification",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "option_text_fix": {
+          "fixed_on": "2026-07-13",
+          "option": "A",
+          "before": "透明性、完整性、準確性、可比性",
+          "after": "透明性、完整性、準確性、一致性",
+          "defect": "原選項寫「可比性」—— **ISO 14067 §5 的原則裡根本沒有「可比性」這一項**。",
+          "evidence": "iPAS 公版教材（中華大學）逐條列出 ISO 14067 §5 的原則：5.6 相關性、5.7 完整性、**5.8 一致性**、5.9 連貫性、5.10 準確度、5.11 透明度、5.12 避免重複計算。整份教材中「可比性」出現 **0 次**，「一致性」出現 16 次。GHG Protocol Product Standard 的五原則同樣是 relevance / completeness / **consistency** / transparency / accuracy —— 也沒有 comparability。",
+          "why": "學生照原選項會學到一個**不存在的原則**。答案字母不變（A 本來就是唯一合理的選項），改的是選項的**內容**，讓它與 ISO 14067 相符。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+          "https://ghgprotocol.org/product-standard"
+        ],
+        "evidence": {
+          "quote": "5.8 一致性",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "人工抓取 iPAS 公版教材 PDF（usr.chu.edu.tw）以 PyMuPDF 解碼後逐條核對 ISO 14067 §5 的原則清單"
         }
       }
     },
@@ -25846,7 +25865,7 @@
         }
       ],
       "answer": "A",
-      "explanation": null,
+      "explanation": "依 iPAS 公版教材（ISO 14067）：「闡釋階段應包括以下步驟：(a) 根據在 LCI 與 LCIA 階段之 CFP 與部分 CFP 之量化結果為基礎，來進行重大議題鑑別。(b) 進行考量**完整性、敏感度分析及一致性**的評估。(c) 作成結論、限制與建議。」\n\n步驟 (b) 即「檢查數據一致性與合理性」——本題答案。\n其餘選項分屬別的階段：「蒐集原料排放量」是**盤查分析（LCI）**、「確認 PCR 規範」是目標與範圍界定、「轉換為碳標籤」是揭露與溝通，都不是闡釋階段。\n\n⚠️ 注意：闡釋階段的**完整**內容不只一致性查核（還包括重大議題鑑別與結論建議）；本題問的是四個選項中哪一個屬於闡釋階段。",
       "source": {
         "source_id": "S_VOCUS_03",
         "url": "https://vocus.cc/article/68d5d622fd89780001c2392c",
@@ -25870,6 +25889,15 @@
           "verification_date": "2026-01-23",
           "answer_origin": "batch_verification",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": {
+          "quote": "闡釋階段應包括以下步驟：(a) 根據在LCI 與LCIA 階段之CFP 與部分CFP 之量化結果為基礎，來進行重大議題鑑別。(b) 進行考量完整性、敏感度分析及一致性的評估。(c) 作成結論、限制與建議。",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "人工抓取 iPAS 公版教材 PDF（usr.chu.edu.tw）以 PyMuPDF 解碼後逐字核對。（蒐證代理原本回報「找不到一手來源」—— **它過度保守了**：教材明文把「一致性的評估」列為闡釋階段的步驟 (b)。）"
         }
       }
     },

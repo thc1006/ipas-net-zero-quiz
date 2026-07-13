@@ -999,8 +999,8 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "AI 代理蒐證 + 機械逐字比對",
         "verify_verdict": "CONFIRMED",
         "original_id": "19",
         "option_order": {
@@ -1008,10 +1008,17 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": {
+          "quote": "一定規模之服務業、運輸業、醫療機構、大專校院及製造業為應盤查登錄對象",
+          "supports_option": "D",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
         }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://ghgregistry.moenv.gov.tw/Upload/News3/00003251_002.pdf"
       ],
       "quality_flags": []
     },
