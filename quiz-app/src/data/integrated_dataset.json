@@ -25,9 +25,9 @@
         "carbon_fee",
         "carbon_neutrality"
       ],
-      "reverified_count": 99,
+      "reverified_count": 110,
       "total_questions": 773,
-      "time_sensitive_count": 111,
+      "time_sensitive_count": 122,
       "not_reviewed_this_round_count": 680,
       "carried_over_count": 12,
       "known_unresolved": [
@@ -1628,8 +1628,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "D",
         "confidence": "high",
-        "sources_count": 2
-      }
+        "sources_count": 2,
+        "sources": [
+          "https://sciencebasedtargets.org/resources/files/SBTi-Corporate-Manual.pdf"
+        ],
+        "valid_as_of": "2026-07-13",
+        "time_sensitive_reason": "SBTi 短期目標年限（SBTi 準則可改版）。答案取決於「可被主管機關／組織修訂的文件」，且題幹未鎖定版本 —— 依定義即為 time_sensitive。先前未標記，導致季排程的來源檢查**完全看不到這一題**：它的來源就算失效、法規就算修訂，也不會有任何人知道。這正是「安靜地少報」。"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 43,
@@ -1971,8 +1979,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -2047,8 +2056,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -2157,8 +2167,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -2309,8 +2320,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -2419,8 +2431,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -3017,8 +3030,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -3230,8 +3244,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -3306,8 +3321,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -3390,8 +3406,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -3435,9 +3452,14 @@
           "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=56",
           "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098"
         ],
-        "sources_verified_date": "2026-04-25"
+        "sources_verified_date": "2026-04-25",
+        "valid_as_of": "2026-07-13",
+        "time_sensitive_reason": "氣候變遷因應法 §56 —— 罰鍰上限（可修法）。答案取決於「可被主管機關／組織修訂的文件」，且題幹未鎖定版本 —— 依定義即為 time_sensitive。先前未標記，導致季排程的來源檢查**完全看不到這一題**：它的來源就算失效、法規就算修訂，也不會有任何人知道。這正是「安靜地少報」。而且它已經被更正過一次 —— 那就是「答案會隨時間變」最直接的證據。"
       },
-      "explanation": "依《氣候變遷因應法》第 56 條規定，事業違反排放額度扣減義務，未於移轉期限日前在帳戶中登錄足供扣減之排放額度者，每公噸超額量之罰鍰上限為新臺幣 1,500 元。（註：§52 規範溫室氣體抵換不實、高 GWP 物質禁限制等，罰額另計）資料來源：https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=56 ; https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098"
+      "explanation": "依《氣候變遷因應法》第 56 條規定，事業違反排放額度扣減義務，未於移轉期限日前在帳戶中登錄足供扣減之排放額度者，每公噸超額量之罰鍰上限為新臺幣 1,500 元。（註：§52 規範溫室氣體抵換不實、高 GWP 物質禁限制等，罰額另計）資料來源：https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=56 ; https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098",
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 90,
@@ -3470,8 +3492,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "A",
         "confidence": "high",
-        "sources_count": 1
-      }
+        "sources_count": 1,
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098"
+        ],
+        "valid_as_of": "2026-07-13",
+        "time_sensitive_reason": "氣候變遷因應法 §56 —— 罰鍰上限（可修法）。答案取決於「可被主管機關／組織修訂的文件」，且題幹未鎖定版本 —— 依定義即為 time_sensitive。先前未標記，導致季排程的來源檢查**完全看不到這一題**：它的來源就算失效、法規就算修訂，也不會有任何人知道。這正是「安靜地少報」。"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 91,
@@ -3951,8 +3981,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -4129,8 +4160,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -4288,8 +4320,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -4398,8 +4431,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -4442,8 +4476,9 @@
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098"
+        ],
+        "source_correction_2026_07_13": "氣候法 -> O0020098。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -4796,9 +4831,9 @@
         "sources_count": 3,
         "valid_as_of": "2026-07-13",
         "sources": [
-          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
+        ],
+        "source_correction_2026_07_13": "來源與題目無關，移除。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -5385,8 +5420,16 @@
         "verification_date": "2026-01-23",
         "verification_batch": "E",
         "confidence": "high",
-        "sources_count": 3
-      }
+        "sources_count": 3,
+        "sources": [
+          "https://sciencebasedtargets.org/resources/files/SBTi-Corporate-Manual.pdf"
+        ],
+        "valid_as_of": "2026-07-13",
+        "time_sensitive_reason": "SBTi 目標審核週期（準則可改版）。答案取決於「可被主管機關／組織修訂的文件」，且題幹未鎖定版本 —— 依定義即為 time_sensitive。先前未標記，導致季排程的來源檢查**完全看不到這一題**：它的來源就算失效、法規就算修訂，也不會有任何人知道。這正是「安靜地少報」。"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 143,
@@ -5705,9 +5748,14 @@
           "https://www.cca.gov.tw/",
           "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
         ],
-        "sources_verified_date": "2026-04-25"
+        "sources_verified_date": "2026-04-25",
+        "valid_as_of": "2026-07-13",
+        "time_sensitive_reason": "溫管辦法 —— 納管門檻（環境部公告可修訂）。答案取決於「可被主管機關／組織修訂的文件」，且題幹未鎖定版本 —— 依定義即為 time_sensitive。先前未標記，導致季排程的來源檢查**完全看不到這一題**：它的來源就算失效、法規就算修訂，也不會有任何人知道。這正是「安靜地少報」。而且它已經被更正過一次 —— 那就是「答案會隨時間變」最直接的證據。"
       },
-      "explanation": "依環境部 113 年 2 月 22 日環部氣字第 1139101260 號公告「事業應盤查登錄及查驗溫室氣體排放量之排放源」：全廠（場）化石燃料燃燒之固定污染源直接排放及使用電力、熱或蒸汽之能源間接排放，年排放量合計達 2 萬 5 千公噸 CO₂e 以上之製造業，應辦理溫室氣體排放量盤查登錄與查驗。資料來源：https://www.cca.gov.tw/ ; https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+      "explanation": "依環境部 113 年 2 月 22 日環部氣字第 1139101260 號公告「事業應盤查登錄及查驗溫室氣體排放量之排放源」：全廠（場）化石燃料燃燒之固定污染源直接排放及使用電力、熱或蒸汽之能源間接排放，年排放量合計達 2 萬 5 千公噸 CO₂e 以上之製造業，應辦理溫室氣體排放量盤查登錄與查驗。資料來源：https://www.cca.gov.tw/ ; https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 151,
@@ -7393,8 +7441,16 @@
         "verification_date": "2026-04-25",
         "verification_source": "溫管辦法 §8(2)(ii) 114/12/19 版",
         "original_id": "c2-006",
-        "prior_answer": "A"
-      }
+        "prior_answer": "A",
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "valid_as_of": "2026-07-13",
+        "time_sensitive_reason": "溫管辦法 §8（114/12/19 修正）—— 主導查驗員連續年限。答案取決於「可被主管機關／組織修訂的文件」，且題幹未鎖定版本 —— 依定義即為 time_sensitive。先前未標記，導致季排程的來源檢查**完全看不到這一題**：它的來源就算失效、法規就算修訂，也不會有任何人知道。這正是「安靜地少報」。而且它已經被更正過一次 —— 那就是「答案會隨時間變」最直接的證據。"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 200,
@@ -8454,8 +8510,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-037"
-      }
+        "original_id": "c2-037",
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098"
+        ],
+        "valid_as_of": "2026-07-13",
+        "time_sensitive_reason": "氣候變遷因應法 —— 查驗完成期限。答案取決於「可被主管機關／組織修訂的文件」，且題幹未鎖定版本 —— 依定義即為 time_sensitive。先前未標記，導致季排程的來源檢查**完全看不到這一題**：它的來源就算失效、法規就算修訂，也不會有任何人知道。這正是「安靜地少報」。"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 231,
@@ -11192,8 +11256,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-117"
-      }
+        "original_id": "c2-117",
+        "sources": [
+          "https://sciencebasedtargets.org/resources/files/SBTi-Corporate-Manual.pdf"
+        ],
+        "valid_as_of": "2026-07-13",
+        "time_sensitive_reason": "SBTi 範疇 3 門檻（準則可改版）。答案取決於「可被主管機關／組織修訂的文件」，且題幹未鎖定版本 —— 依定義即為 time_sensitive。先前未標記，導致季排程的來源檢查**完全看不到這一題**：它的來源就算失效、法規就算修訂，也不會有任何人知道。這正是「安靜地少報」。"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 311,
@@ -11747,8 +11819,16 @@
         "verification_date": "2026-04-25",
         "verification_source": "CDP 2024 年起納入塑膠；土壤始終非揭露範疇",
         "original_id": "c2-132",
-        "prior_answer": "D"
-      }
+        "prior_answer": "D",
+        "sources": [
+          "https://www.cdp.net/en/guidance/guidance-for-companies"
+        ],
+        "valid_as_of": "2026-07-13",
+        "time_sensitive_reason": "CDP 揭露範疇（每年調整，2024 起納入塑膠）。答案取決於「可被主管機關／組織修訂的文件」，且題幹未鎖定版本 —— 依定義即為 time_sensitive。先前未標記，導致季排程的來源檢查**完全看不到這一題**：它的來源就算失效、法規就算修訂，也不會有任何人知道。這正是「安靜地少報」。而且它已經被更正過一次 —— 那就是「答案會隨時間變」最直接的證據。"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 326,
@@ -13761,10 +13841,18 @@
         "sources": [
           "https://vocus.cc/article/68b53f5efd89780001e60438",
           "https://www.smartmachinery.tw/upload/doc/202309130959490.pdf",
-          "https://github.com/thc1006/ipas-net-zero-quiz/discussions/1#discussioncomment-16697053"
+          "https://github.com/thc1006/ipas-net-zero-quiz/discussions/1#discussioncomment-16697053",
+          "https://cfp.moenv.gov.tw/WebPage/Index.aspx",
+          "https://data.moenv.gov.tw/dataset/detail/CFP_P_03"
         ],
-        "sources_verified_date": "2026-04-25"
-      }
+        "sources_verified_date": "2026-04-25",
+        "valid_as_of": "2026-07-13",
+        "time_sensitive_reason": "環境部產品碳足跡計算指引 —— 一級數據佔比（指引可修訂）。答案取決於「可被主管機關／組織修訂的文件」，且題幹未鎖定版本 —— 依定義即為 time_sensitive。先前未標記，導致季排程的來源檢查**完全看不到這一題**：它的來源就算失效、法規就算修訂，也不會有任何人知道。這正是「安靜地少報」。而且它已經被更正過一次 —— 那就是「答案會隨時間變」最直接的證據。",
+        "source_note_2026_07_13": "原本 3 條來源全是 vocus.cc（部落格）、smartmachinery.tw、GitHub discussion —— **沒有一條是環境部的一手來源**。這題標了 time_sensitive，但季排程去檢查一個部落格還活著，根本無法告訴你環境部的指引有沒有改。已補上一手來源：「環境部推動產品碳足跡管理要點」附件三〈產品碳足跡數據量化與查證規範〉第九條即為 10% 規則的出處。"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 384,
@@ -16360,8 +16448,16 @@
         "answer_verified": true,
         "verification_date": "2026-01-23",
         "verification_source": "sync_from_310",
-        "original_id": "c2-265"
-      }
+        "original_id": "c2-265",
+        "sources": [
+          "https://sciencebasedtargets.org/resources/files/SBTi-Corporate-Manual.pdf"
+        ],
+        "valid_as_of": "2026-07-13",
+        "time_sensitive_reason": "SBTi 短期目標年限（SBTi 準則可改版）。答案取決於「可被主管機關／組織修訂的文件」，且題幹未鎖定版本 —— 依定義即為 time_sensitive。先前未標記，導致季排程的來源檢查**完全看不到這一題**：它的來源就算失效、法規就算修訂，也不會有任何人知道。這正是「安靜地少報」。"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 459,
@@ -16794,8 +16890,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098"
+        ],
+        "source_correction_2026_07_13": "氣候法 -> O0020098。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -18526,8 +18623,9 @@
         "valid_as_of": "2026-07-13",
         "sources": [
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "source_correction_2026_07_13": "碳費 -> 碳費收費辦法 O0020139。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -20397,7 +20495,11 @@
         "verification_source": "batch_verification",
         "confidence": "medium",
         "valid_as_of": "2026-01-23",
-        "content_reverified_2026_07": false
+        "content_reverified_2026_07": false,
+        "sources": [
+          "https://www.fsc.gov.tw/ch/home.jsp?id=2&parentpath=0&mcustomize=news_view.jsp&dataserno=202303280001&dtable=News"
+        ],
+        "source_note_2026_07_13": "原本唯一來源是 yamol.tw（社群題庫站）—— 季排程去檢查 yamol 還活著，根本無法告訴你「金管會的盤查申報時程有沒有變」。已補上金管會公告作為一手來源。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -21043,9 +21145,9 @@
         "confidence": "medium",
         "valid_as_of": "2026-07-13",
         "sources": [
-          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
+        ],
+        "source_correction_2026_07_13": "來源與題目無關，移除。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -21790,9 +21892,9 @@
         "confidence": "medium",
         "valid_as_of": "2026-07-13",
         "sources": [
-          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
-          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
-        ]
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
+        ],
+        "source_correction_2026_07_13": "來源與題目無關，移除。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。"
       },
       "quality_flags": [
         "time_sensitive"

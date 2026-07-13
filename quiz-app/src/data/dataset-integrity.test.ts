@@ -721,3 +721,113 @@ describe('改過答案就必須留下理由', () => {
     expect(bad, '答案被改掉卻沒有留下理由 —— 這正是「沒被記錄的偏離」').toEqual([]);
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// quality_flags 的一致性
+//
+// 這裡的結構性危險：**季排程只檢查標了 time_sensitive 的題目**。
+// 該標而沒標的題目，它的來源就算失效、法規就算修訂，**也不會有任何人知道** ——
+// 又一次「安靜地少報」。
+describe('quality_flags 的一致性', () => {
+  const md = (it: Item) =>
+    it.metadata as unknown as {
+      prior_answer?: string;
+      sources?: string[];
+      valid_as_of?: string;
+    };
+  const flags = (it: Item) => new Set(it.quality_flags ?? []);
+  const urls = (it: Item) => {
+    const out = [...(md(it)?.sources ?? [])];
+    const s = (it as unknown as { source?: unknown }).source;
+    if (s && typeof s === 'object' && typeof (s as { url?: unknown }).url === 'string') {
+      out.push((s as { url: string }).url);
+    }
+    return out.filter((u) => /^https?:\/\//.test(u));
+  };
+
+  // 答案曾被更正 —— 那通常代表「答案會隨時間變」，就該標 time_sensitive。
+  //
+  // 但不是每個更正都是「時間」造成的：有些是我們本來就抄錯了
+  // （術語定義、歷史條約、鎖定版本的標準條文 —— 那些不會再變）。
+  //
+  // 我第一版是用一個 regex 把特定題幹寫死當例外 —— 那是**特殊處理，不是準則**，
+  // 而且下一個人加題目時完全不知道那個 regex 在保護什麼。
+  // 改成明確登記：每一筆例外都要寫下「為什麼這題的答案不會再變」。
+  const CORRECTED_BUT_STABLE: ReadonlyArray<{ id: string; why: string }> = [
+    { id: 'gist[1]', why: '題幹鎖定「ISO 14064-1:2018」—— 版本寫死，條文不會再變。原答案是抄錯了' },
+    { id: 'gist[46]', why: 'MRV 三個字母的原始定義（UNFCCC 2007 峇里路線圖），是術語詞源，不隨時間變' },
+    { id: 'gist[304]', why: '坎昆協議（2010）對附件一/非附件一國家的 MRV 安排 —— 歷史條約，不變' },
+    { id: 'gist[358]', why: '公版教材的查證階段工作項目分類 —— 原答案選錯了項目，不是教材變了' },
+    { id: 'gist[408]', why: '題幹鎖定「ISO 14064-1:2018」§9.3.1 —— 版本寫死，不會再變' },
+    { id: 'gist[140]', why: 'CBAM/ETS/CCTS/CORSIA 的制度歸屬（ICAO / 印度 / 歐盟）—— 制度事實，不隨時間變' },
+    { id: 'gist[325]', why: '（已標 time_sensitive，此處不需例外）', },
+    { id: 'S_CHU_06-q094', why: 'ISO 14064-1 對 base year 的定義 —— 定義，不隨時間變' },
+  ];
+
+  it('答案曾被更正的題目，要嘛標 time_sensitive，要嘛登記「為什麼不會再變」', () => {
+    const stable = new Set(CORRECTED_BUT_STABLE.map((c) => c.id));
+    const corrected = ALL.filter((it) => md(it)?.prior_answer != null);
+    expect(corrected.length, '沒有任何答案更正 —— 這條測試在空轉').toBeGreaterThan(0);
+    const bad = corrected
+      .filter((it) => !flags(it).has('time_sensitive'))
+      .filter((it) => !stable.has(who(it)))
+      .map((it) => `${who(it)}: ${md(it)!.prior_answer} -> ${it.answer}｜${it.stem.slice(0, 30)}`);
+    expect(
+      bad,
+      '答案已經被改過一次了，卻既沒標 time_sensitive、也沒登記「為什麼不會再變」——' +
+        '季排程完全看不到這一題，它下次再變也不會有人知道'
+    ).toEqual([]);
+  });
+
+  it('CORRECTED_BUT_STABLE 的每一筆都要寫理由，且題目必須真的存在', () => {
+    const ids = new Set(ALL.map(who));
+    for (const c of CORRECTED_BUT_STABLE) {
+      expect(c.why, `${c.id} 沒寫理由`).toBeTruthy();
+      expect(ids.has(c.id), `${c.id} 不存在 —— 登記清單有殘留`).toBe(true);
+    }
+  });
+
+  // time_sensitive 的來源必須至少有一條「一手權威」。
+  // 只靠社群站（yamol / vocus 這種）是沒有意義的：
+  // 季排程去檢查 yamol 還活著，**根本無法告訴你金管會的規定有沒有變**。
+  const PRIMARY =
+    /law\.moj\.gov\.tw|moenv\.gov\.tw|cca\.gov\.tw|fsc\.gov\.tw|eur-lex\.europa\.eu|iso\.org|ipcc\.ch|unfccc\.int|ifrs\.org|ipas\.org\.tw|icao\.int|sciencebasedtargets\.org|cdp\.net|fsb-tcfd\.org|iaasb\.org|bsigroup\.com|iea\.org|twse\.com\.tw|tpex\.org\.tw|treaties\.un\.org|usr\.chu\.edu\.tw/;
+
+  it('time_sensitive 的題目，至少要有一條一手權威來源', () => {
+    const ts = ALL.filter((it) => flags(it).has('time_sensitive'));
+    expect(ts.length, '沒有任何 time_sensitive 題 —— 這條測試在空轉').toBeGreaterThan(50);
+    const bad = ts
+      .filter((it) => !urls(it).some((u) => PRIMARY.test(u)))
+      .map((it) => `${who(it)}: 來源只有 ${urls(it).map((u) => new URL(u).host).join(', ')}`);
+    expect(
+      bad,
+      '這些題宣稱「會隨時間變」，但唯一的來源是社群站 —— ' +
+        '季排程去檢查那個站還活著，無法告訴你規定有沒有變'
+    ).toEqual([]);
+  });
+
+  it('time_sensitive 的題目必須有 valid_as_of（否則無從判斷查證到哪一天）', () => {
+    const bad = ALL.filter((it) => flags(it).has('time_sensitive'))
+      .filter((it) => !md(it)?.valid_as_of)
+      .map(who);
+    expect(bad).toEqual([]);
+  });
+
+  it('沒標 time_sensitive 的題目不得有 valid_as_of（那個欄位只對 time_sensitive 有意義）', () => {
+    const bad = ALL.filter((it) => !flags(it).has('time_sensitive'))
+      .filter((it) => md(it)?.valid_as_of)
+      .map((it) => `${who(it)}: valid_as_of=${md(it)!.valid_as_of} 但沒標 time_sensitive`);
+    expect(bad).toEqual([]);
+  });
+
+  it('quality_flags 只能用已知的值（打錯字的 flag 等於沒有 flag）', () => {
+    const KNOWN = new Set(['time_sensitive', 'ambiguous', 'low_confidence', 'duplicate_topic']);
+    const bad: string[] = [];
+    for (const it of ALL) {
+      for (const f of it.quality_flags ?? []) {
+        if (!KNOWN.has(f)) bad.push(`${who(it)}: 未知的 flag「${f}」`);
+      }
+    }
+    expect(bad).toEqual([]);
+  });
+});
