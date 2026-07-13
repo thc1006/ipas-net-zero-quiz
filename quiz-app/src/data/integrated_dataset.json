@@ -799,6 +799,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=8"
+        ],
+        "evidence": {
+          "quote": "查驗結果應為合理保證等級。",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -3207,6 +3217,16 @@
           "verification_batch": "D",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=50"
+        ],
+        "evidence": {
+          "quote": "檢驗測定機構未依第四十一條第一項取得許可證逕行檢驗測定，處新臺幣十萬元以上一百萬元以下罰鍰",
+          "supports_option": "D",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。（引文片段皆真，但被代理重新排序 —— 內容可信）",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -4723,6 +4743,16 @@
           "verification_batch": "C",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://service.cca.gov.tw/File/Get/cca/zh-tw/f53nWB30RClHNZh"
+        ],
+        "evidence": {
+          "quote": "請說明碳中和主體為何以及公司選擇此主體之理由，並清楚描述碳中和主體邊界、碳中和期程與時間表。",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -5039,6 +5069,16 @@
           "verification_batch": "E",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=23"
+        ],
+        "evidence": {
+          "quote": "中央主管機關公告之產品，其生產過程排放溫室氣體，應符合效能標準。",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -5313,6 +5353,16 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=10"
+        ],
+        "evidence": {
+          "quote": "非屬經審查認定之高碳洩漏風險事業依本法第二十七條規定，以符合中央主管機關認可之國外減量額度申請第五條第二項收費排放量之扣除，其扣除上限不得超過事業收費排放量之百分之五",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -5698,6 +5748,16 @@
           "verification_batch": "E",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://www.cdp.net/en/guidance"
+        ],
+        "evidence": {
+          "quote": "A record 3,500+ companies disclosed on climate change, deforestation and water security together in 2025.",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -6785,6 +6845,16 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": {
+          "quote": "供應商配合的意願？ • 有無誘因？ • 是否涉及商業機密？",
+          "supports_option": "D",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -7619,6 +7689,16 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://ghgprotocol.org/sites/default/files/2022-12/Chapter1.pdf"
+        ],
+        "evidence": {
+          "quote": "Hybrid method – uses a combination of supplier-specific activity data (where available) and secondary data to fill the gaps.",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -8112,6 +8192,16 @@
           "verification_batch": "C",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/691673213.pdf"
+        ],
+        "evidence": {
+          "quote": "假設、方法及數據以相同方式應用於整個CFP 研究中，以達成符合目標與範圍界定之結論。",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       },
       "explanation": "CFP研究中的「一致性」原則要求，在整個研究過程中，假設、方法及數據的應用方式應保持一致。"
@@ -8375,6 +8465,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://ghgprotocol.org/sites/default/files/2022-12/Chapter1.pdf"
+        ],
+        "evidence": {
+          "quote": "Mass or volume of material inputs (e.g., bill of materials), mass or volume of fuel inputs used, and distance from the origin of the raw material inputs to the supplier",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -8856,6 +8956,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://ghgprotocol.org/sites/default/files/standards_supporting/Chapter4.pdf"
+        ],
+        "evidence": {
+          "quote": "The actual distances should be used when available, and each leg of the transportation supply chain should be collected separately.",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -8930,6 +9040,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf"
+        ],
+        "evidence": {
+          "quote": "CO2 排放係數= 88/26 = 3.385 公噸/公噸乙炔",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -9382,6 +9502,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": {
+          "quote": "預期的應用-預期哪些使用者會看到這個結果，要怎麼對這些讀者溝通",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -9752,6 +9882,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": {
+          "quote": "1. 基本資料 2. 盤查項目清單 3. 熱點排名 4. 敏感度分析 5. 數據品質指標等級評核 6. 碳足跡簡表",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -9826,6 +9966,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": {
+          "quote": "備考1.不確定性可包括，例：－參數不確定性，例：溫室氣體排放係數(3.1.2.7)、活動數據。－情境不確定性，例：使用階段情境、生命終結階段情境。－模型不確定性。",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -11840,6 +11990,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/436281603.pdf"
+        ],
+        "evidence": {
+          "quote": "臺灣2050淨零排放路徑及12項關鍵策略",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -12044,6 +12204,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://sciencebasedtargets.org/blog/science-based-targets-101-near-term-and-net-zero"
+        ],
+        "evidence": {
+          "quote": "A near-term target must include at least 95% of a company's direct emissions (scopes 1 and 2).",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。｜WebFetch 獨立確認：sciencebasedtargets.org 該頁逐字含此句（機械抓取被 Cloudflare 403 擋下）",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -13522,6 +13692,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://www.moeaea.gov.tw/ecw/populace/news/News.aspx?kind=9&menu_id=4360&news_id=9808"
+        ],
+        "evidence": {
+          "quote": "於供給面推動於2025年達20%(再生能源)-30%(燃煤)-50%(天然氣)之低碳潔淨之發電能源配比目標",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -14070,6 +14250,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": {
+          "quote": "LCI乃是LCA之一個階段，包括產品整個生命週期階段的投入與產出的彙總與量化。",
+          "supports_option": "D",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -15122,6 +15312,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": {
+          "quote": "Q5 產品碳足跡盤查過程中數據確證不會採用哪種方式？(答案：A) (A)總量平衡(B)能量平衡(C)相似過程的比較(D)質量平衡",
+          "supports_option": "A",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -16680,6 +16880,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": {
+          "quote": "國際間溫室氣體盤查涵蓋範疇可分為直接排放（範疇一）、能源間接排放（範疇二）及其他間接排放（範疇三）三類",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -16722,6 +16932,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/00%20%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E7%99%BB%E9%8C%84%E4%BD%9C%E6%A5%ADQA%EF%BC%88111.10.18%EF%BC%89.pdf"
+        ],
+        "evidence": {
+          "quote": "本公告納管之排放源依規定以管制編號為邊界",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -16944,6 +17164,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": {
+          "quote": "使用百年尺度之溫暖化潛勢。依據環境部溫室氣體排放量盤查作業指引之規定，規範溫暖化潛勢（GWP）應採用百年尺度，引用版本為IPCC AR5 評估報告之GWP 值進行計算。",
+          "supports_option": "D",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -17018,6 +17248,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351"
+        ],
+        "evidence": {
+          "quote": "企業應證明已盡可能減少碳中和主體之溫室氣體排放量，以及增加溫室氣體移除量，最後視需求透過註銷溫室氣體減量額度對剩餘之溫室氣體淨排放量進行補償。",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -17753,6 +17993,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://sciencebasedtargets.org/blog/science-based-net-zero-targets-less-net-more-zero"
+        ],
+        "evidence": {
+          "quote": "A limited dependance on carbon removals to neutralize emissions that cannot yet be eliminated (5-10%)",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。｜WebFetch 獨立確認：sciencebasedtargets.org 該頁逐字含此句（連原文的錯字 \"dependance\" 都一致）",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -18079,6 +18329,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "research_agent",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://service.cca.gov.tw/File/Get/cca/zh-tw/OTUWcNktpcSPSdP"
+        ],
+        "evidence": {
+          "quote": "各締約方應當在衡平的基礎上，根據它們共同但有區別的責任和各自的能力，為人類當代和後代的利益保護氣候系統。因此，已開發國家締約方應當率先處理氣候變遷及其不利影響。",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -18227,6 +18487,16 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=4"
+        ],
+        "evidence": {
+          "quote": "國家溫室氣體長期減量目標為中華民國一百三十九年溫室氣體淨零排放。",
+          "supports_option": "C",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -19649,6 +19919,16 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=6"
+        ],
+        "evidence": {
+          "quote": "應於每年四月三十日前，依中央主管機關所定格式，將前一年度之溫室氣體排放量清冊（以下簡稱排放量清冊）及溫室氣體盤查報告書（以下簡稱盤查報告書），以網路傳輸方式，登錄於中央主管機關指定之事業溫室氣體排放量資訊平台",
+          "supports_option": "D",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
@@ -20820,6 +21100,16 @@
           "verification_batch": "C",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://www.cca.gov.tw/climatetalks/net-zero-roadmap/carbon-capture-utilization-and-storage/1903.html"
+        ],
+        "evidence": {
+          "quote": "為達成 2050 年淨零排放，碳捕捉利用及封存（CCUS）將是關鍵技術之一。",
+          "supports_option": "B",
+          "verified_on": "2026-07-13",
+          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
         }
       }
     },
