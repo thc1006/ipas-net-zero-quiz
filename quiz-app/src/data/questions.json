@@ -1988,8 +1988,13 @@
       "C": "與目標相關基線資料計算",
       "D": "每兩年更新排放報告並接受 ICA"
     },
-    "answer": "C",
-    "explanation": "坎昆協議下，附件一國家提交雙年報告（BR）並接受「國際評估與審查」（IAR）；「國際諮商與分析」（ICA）則適用於非附件一國家之雙年更新報告（BUR）。選項 B、D 均涉及 ICA／NAMAs，屬非附件一國家機制，故均非正解；附件一國家之 MRV 須提報與其量化全經濟體減量目標相關之基線資料，故選 C。"
+    "answer": "A",
+    "explanation": "坎昆協議（Decision 1/CP.16）第 40 段 (a) 款規定附件一國家的強化報告義務：提交年度溫室氣體清冊，以及「減緩行動（mitigation actions）與已達成之減量成果（emission reductions achieved）」的雙年報告 —— 即選項 A。第 44 段另定附件一國家接受「國際評估」（international assessment，IAR）；「國際諮商與分析」（ICA）則適用於非附件一國家，故 B、D 皆非。至於選項 C 的「基線資料計算」—— 決議全文查無 baseline／base year（各 0 次）。",
+    "metadata": {
+      "sources": [
+        "https://unfccc.int/resource/docs/2010/cop16/eng/07a01.pdf"
+      ]
+    }
   },
   {
     "id": "c2-112",

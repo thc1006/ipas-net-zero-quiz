@@ -315,10 +315,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_news/203d76130d7d453eac3de737be1f6302/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A%E5%AD%B8%E7%BF%92%E6%8C%87%E5%BC%95(%E8%80%83%E7%A7%91%E4%BA%8C)%E7%A2%B3%E7%AE%A1%E7%90%86%E5%88%B6%E5%BA%A6%E5%AF%A6%E5%8B%99_115_20260213164341.pdf",
+            "quote": "透過TCX 購買的國際自願性碳市場碳權，主要用於供應鏈碳中和要求或企業社會責任宣告，不得扣減國內法遵用途碳價成本，且亦僅能交易一次為限。",
+            "supports_option": "A"
+          }
+        ]
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://www.ipas.org.tw/api/proxy/uploads/certification_news/203d76130d7d453eac3de737be1f6302/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A%E5%AD%B8%E7%BF%92%E6%8C%87%E5%BC%95(%E8%80%83%E7%A7%91%E4%BA%8C)%E7%A2%B3%E7%AE%A1%E7%90%86%E5%88%B6%E5%BA%A6%E5%AF%A6%E5%8B%99_115_20260213164341.pdf"
       ],
       "quality_flags": []
     },
@@ -418,11 +426,19 @@
         "verifier": "adversarial_subagent",
         "verify_verdict": "AMBIGUOUS",
         "prior_verify_verdict": "CONFIRMED",
-        "original_id": "7"
+        "original_id": "7",
+        "evidence": [
+          {
+            "url": "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q",
+            "quote": "31st December 2025 - All PAS 2060 verifications have been completed and verification opinion issued.",
+            "supports_option": ""
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
-        "https://www.bsigroup.com/zh-TW/PAS-2060-Carbon-Neutral/"
+        "https://www.bsigroup.com/zh-TW/PAS-2060-Carbon-Neutral/",
+        "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q"
       ],
       "quality_flags": [
         "ambiguous",
@@ -584,11 +600,19 @@
           "previous_answer": "B",
           "method": "ladder_reversed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://www.ndc.gov.tw/nc_27_38201",
+            "quote": "將持續推動淨零轉型，預計可帶動民間投資4兆元，創造產值5.9兆元",
+            "supports_option": "C"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
-        "https://www.ndc.gov.tw/"
+        "https://www.ndc.gov.tw/",
+        "https://www.ndc.gov.tw/nc_27_38201"
       ],
       "quality_flags": []
     },
@@ -634,10 +658,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://www.moenv.gov.tw/press/podcast/32540.html",
+            "quote": "所謂的「稅」它是財政部主政，統收統支",
+            "supports_option": "A"
+          }
+        ]
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://www.moenv.gov.tw/press/podcast/32540.html"
       ],
       "quality_flags": []
     },
@@ -959,10 +991,18 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://service.cca.gov.tw/File/Get/cca/zh-tw/B1cCTPs8ZlovtNE",
+            "quote": "現行UNFCCC 規範，使用IPCC AR5 中GWP 百年平均值，作為計算溫室氣體當量之基礎。",
+            "supports_option": "C"
+          }
+        ]
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://vocus.cc/article/6901a506fd89780001c2a960",
+        "https://service.cca.gov.tw/File/Get/cca/zh-tw/B1cCTPs8ZlovtNE"
       ],
       "quality_flags": []
     },
@@ -1547,10 +1587,18 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://www.trec.org.tw/documents/81.pdf",
+            "quote": "企業因規模較大且須購買長期綠電，可直接洽綠能發電業訂定雙邊購電契約或透過售電業購買綠電",
+            "supports_option": "D"
+          }
+        ]
       },
       "sources": [
-        "https://vocus.cc/article/691f0d31fd897800016ba3c7"
+        "https://vocus.cc/article/691f0d31fd897800016ba3c7",
+        "https://www.trec.org.tw/documents/81.pdf"
       ],
       "quality_flags": []
     },
@@ -2608,11 +2656,19 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://unfccc.int/resource/docs/convkp/conveng.pdf",
+            "quote": "The Parties should protect the climate system for the benefit of present and future generations of humankind, on the basis of equity and in accordance with their common but differentiated responsibilities and respective capabilities. Accordingly, the developed country Parties should take the lead in combating climate change and the adverse effects thereof.",
+            "supports_option": "B"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
-        "https://unfccc.int/"
+        "https://unfccc.int/",
+        "https://unfccc.int/resource/docs/convkp/conveng.pdf"
       ],
       "quality_flags": []
     },
@@ -2833,10 +2889,18 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf",
+            "quote": "描述溫室氣體盤查中處理生物源二氧化碳(CO2)排放與移除之方法，並以二氧化碳當量之噸(t)數為單位，分别量化相關的生物源二氧化碳(CO2)排放量與移除量。",
+            "supports_option": "A"
+          }
+        ]
       },
       "sources": [
-        "https://vocus.cc/article/68b53f5efd89780001e60438"
+        "https://vocus.cc/article/68b53f5efd89780001e60438",
+        "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf"
       ],
       "quality_flags": []
     },

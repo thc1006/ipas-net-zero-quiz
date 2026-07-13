@@ -17,6 +17,7 @@ import {
   formatFlagViolations,
   type FlaggedItem,
 } from '../utils/quality-flags';
+import { hasPrimarySource } from '../utils/source-authority';
 
 interface Opt {
   key: string;
@@ -769,12 +770,44 @@ describe('quality_flags 的一致性', () => {
   const CORRECTED_BUT_STABLE: ReadonlyArray<{ id: string; why: string }> = [
     { id: 'gist[1]', why: '題幹鎖定「ISO 14064-1:2018」—— 版本寫死，條文不會再變。原答案是抄錯了' },
     { id: 'gist[46]', why: 'MRV 三個字母的原始定義（UNFCCC 2007 峇里路線圖），是術語詞源，不隨時間變' },
-    { id: 'gist[304]', why: '坎昆協議（2010）對附件一/非附件一國家的 MRV 安排 —— 歷史條約，不變' },
+    {
+      id: 'gist[304]',
+      why:
+        '坎昆協議 Decision 1/CP.16（2010）§40(a) 的附件一國家報告義務 —— 歷史條約，不變。' +
+        '注意：本題被更正過**兩次**（D → C → A）。第一次只對了一半（正確排除了 ICA，' +
+        '卻落在沒有文字依據的 C）；第二次比對決議全文（baseline / base year 各 0 次）才定案為 A',
+    },
     { id: 'gist[358]', why: '公版教材的查證階段工作項目分類 —— 原答案選錯了項目，不是教材變了' },
     { id: 'gist[408]', why: '題幹鎖定「ISO 14064-1:2018」§9.3.1 —— 版本寫死，不會再變' },
     { id: 'gist[140]', why: 'CBAM/ETS/CCTS/CORSIA 的制度歸屬（ICAO / 印度 / 歐盟）—— 制度事實，不隨時間變' },
     { id: 'gist[325]', why: '（已標 time_sensitive，此處不需例外）', },
     { id: 'S_CHU_06-q094', why: 'ISO 14064-1 對 base year 的定義 —— 定義，不隨時間變' },
+    {
+      id: 'S_VOCUS_03-q004',
+      why:
+        'ISO 14067:2018 §6.3.5 的數據品質清單（摘自 CNS 14044 §4.2.3.6.2）—— ' +
+        '版本寫死的標準條文，不隨時間變。原答案「準確度」不在該清單裡（清單裡的是「精密度」）',
+    },
+    {
+      id: 'gist[255]',
+      why:
+        'ISO 14067:2018 §7.2 的「應分別記錄」清單 —— 版本寫死的標準條文，不隨時間變。' +
+        '(b) 化石排放與 (e) 航空器運輸排放是兩個獨立項目，原答案把後者併進了前者',
+    },
+    {
+      id: 'gist[61]',
+      why:
+        '這題已改為 answer=null（排除計分），因為它**有兩個正解** —— iPAS 公版教材明示' +
+        '「國家」不屬 ISO 14068-1/PAS 2060 的碳中和主體範圍，於是 B（國家）與 C（個人生活方式）' +
+        '都不屬於主體範圍。缺陷在題目本身，不隨時間變（見 metadata.answer_ambiguity_note）',
+    },
+    {
+      id: 'gist[14]',
+      why:
+        '這題不是「答案過時」，是**選項整組抄錯**（見 metadata.options_replaced）—— ' +
+        '原本四個選項全是「十二項關鍵戰略」，沒有一個是治理基礎，導致題目有四個正解。' +
+        '已依 iPAS 公版教材範例題 Q47 還原官方選項與答案卡。抄錄錯誤不隨時間變',
+    },
   ];
 
   it('答案曾被更正的題目，要嘛標 time_sensitive，要嘛登記「為什麼不會再變」', () => {
@@ -790,6 +823,56 @@ describe('quality_flags 的一致性', () => {
       '答案已經被改過一次了，卻既沒標 time_sensitive、也沒登記「為什麼不會再變」——' +
         '季排程完全看不到這一題，它下次再變也不會有人知道'
     ).toEqual([]);
+  });
+
+  // 改答案是「偏離」，**把整組選項換掉是更大的偏離** —— 那等於換了一題。
+  //
+  // gist[14] 是第一個：社群共筆保留了 iPAS 官方題幹（「何者非屬治理基礎？」），
+  // 卻把四個選項換成了自然碳匯／綠色金融／碳捕捉封存／淨零綠生活 ——
+  // 這四項**全部都是「十二項關鍵戰略」**，沒有一項是治理基礎，
+  // 於是「何者非屬治理基礎」這個問句有**四個正確答案**，題目實質無解。
+  //
+  // 這種題不能靠改答案救（改成哪一個都對），只能還原官方選項。
+  // 但「還原」和「竄改」在資料上長得一模一樣 —— 差別只在**有沒有留下可查證的登記**。
+  // 所以：換過選項就必須有 options_replaced，而且裡面每一格都要填。
+  it('選項被整組換掉的題目，必須留下 options_replaced（原選項、原答案、依據、理由）', () => {
+    const replaced = ALL.filter(
+      (it) => (it.metadata as unknown as { options_replaced?: unknown })?.options_replaced
+    );
+    expect(replaced.length, '沒有任何 options_replaced —— 這條測試在空轉').toBeGreaterThan(0);
+
+    for (const it of replaced) {
+      const r = (it.metadata as unknown as {
+        options_replaced: {
+          on?: string;
+          prior_options?: { key: string; text: string }[];
+          prior_answer?: string;
+          source_url?: string;
+          why?: string;
+        };
+      }).options_replaced;
+      const id = who(it);
+
+      expect(r.on, `${id}: options_replaced 沒寫日期`).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(r.why, `${id}: options_replaced 沒寫理由 —— 沒有理由的換選項就是竄改`).toBeTruthy();
+      expect(r.why!.length, `${id}: 理由太短，說不清楚為什麼原選項不能用`).toBeGreaterThan(30);
+
+      // 依據必須是**一手來源**。拿社群共筆去「還原」另一份社群共筆，等於沒有還原。
+      expect(r.source_url, `${id}: options_replaced 沒寫依據 URL`).toBeTruthy();
+      expect(
+        hasPrimarySource([r.source_url!]),
+        `${id}: 還原選項的依據 ${r.source_url} 不是一手來源`
+      ).toBe(true);
+
+      // 原選項要留著，而且必須真的不一樣 —— 否則這個登記是假的
+      expect(r.prior_options?.length, `${id}: 沒留下原本的選項`).toBeGreaterThan(0);
+      expect(r.prior_answer, `${id}: 沒留下原本的答案`).toBeTruthy();
+      const before = JSON.stringify(r.prior_options);
+      const after = JSON.stringify(it.options);
+      expect(before, `${id}: prior_options 與現在的選項一模一樣 —— 這個登記沒有意義`).not.toBe(
+        after
+      );
+    }
   });
 
   it('CORRECTED_BUT_STABLE 的每一筆都要寫理由，且題目必須真的存在', () => {

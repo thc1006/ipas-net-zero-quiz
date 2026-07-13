@@ -160,13 +160,33 @@ describe('audit corrections regression', () => {
   // 這條修正 @henrychen-bot 早在 2025-10 就回報了，_correction_note 也掛上去了，
   // 但 answer 欄位從來沒被改過 —— 線上 App 一直發送錯的 D，explanation 甚至還在替 D 辯護。
   // 沒有測試釘住，是它能默默漏掉的唯一原因。現在釘住。
-  describe('坎昆協議 MRV：ICA vs IAR (@henrychen-bot 回報)', () => {
+  //
+  // ⚠️ 2026-07-14：**這題被改了第二次（D → C → A）。**
+  //
+  // @henrychen-bot 的核心指認是**對的**：ICA 是非附件一國家的機制，附件一國家走 IAR。
+  // Decision 1/CP.16 §44 逐字寫著 "a process for international assessment of emissions
+  // and removals related to quantified economy-wide emission reduction targets" —— B、D 確實都錯。
+  //
+  // 但那個推論**只走了一半**：排除掉 B、D 之後，它選了 C（與目標相關基線資料計算），
+  // 而 C 在一手來源裡**沒有任何文字依據** —— 我把 1/CP.16 全文（31 頁、90,592 字）抓下來，
+  // 搜尋 baseline / base year，**各 0 次**。
+  // §40(a) 逐字要求的是 "information on mitigation actions ... and emission reductions
+  // achieved" —— 那就是選項 A（強化減緩行動報告：項目與成果）。
+  //
+  // 教訓：**「排除了錯的」不等於「找到了對的」。** 上一版的測試把「答案是 C」釘死，
+  // 卻從來沒有人拿決議原文去驗證 C —— 一道釘住錯誤答案的回歸測試，
+  // 比沒有測試更難拆，因為它看起來像是有人驗證過。
+  //
+  // 取證註記：unfccc.int 對直接抓取回 212 bytes 的 Incapsula 擋頁，而 PyMuPDF 會把那段 HTML
+  // 默默解成「1 頁 0 字」的 PDF —— 若不查 Content-Type，會得到一個**假的**「baseline 出現 0 次」。
+  // 真正的全文是改用瀏覽器型抓取取得後，才在本機以 PyMuPDF 解出並逐字比對的。
+  describe('坎昆協議 MRV：附件一國家的報告義務 (@henrychen-bot 回報，2026-07 二次更正)', () => {
     const g = byIndex(304);
     const q = byId('c2-111');
 
-    it('答案應為 C —— ICA 是非附件一國家用的，附件一國家走 IAR', () => {
-      expect(g?.answer).toBe('C');
-      expect(q?.answer).toBe('C');
+    it('答案應為 A —— §40(a) 要求報告「減緩行動與已達成之減量成果」', () => {
+      expect(g?.answer).toBe('A');
+      expect(q?.answer).toBe('A');
     });
 
     it('explanation 不得再宣稱附件一國家「接受 ICA」', () => {
@@ -175,12 +195,25 @@ describe('audit corrections regression', () => {
       expect(q?.explanation).not.toMatch(/附件一國家.{0,12}接受.{0,6}(ICA|國際諮商與分析)/);
     });
 
-    it('explanation 應說明附件一國家走 IAR', () => {
-      expect(g?.explanation).toMatch(/IAR|國際評估與審查/);
+    it('explanation 應說明附件一國家走 IAR（@henrychen-bot 指認正確的那一半）', () => {
+      expect(g?.explanation).toMatch(/IAR|國際評估/);
+      expect(q?.explanation).toMatch(/IAR|國際評估/);
+    });
+
+    it('explanation 不得再替沒有依據的 C（基線資料）背書', () => {
+      // 舊的 explanation 寫「附件一國家之 MRV 須提報與其量化全經濟體減量目標相關之基線資料，故選 C」
+      // —— 決議全文查無 baseline / base year。
+      expect(g?.explanation).not.toMatch(/須提報.{0,20}基線資料.{0,8}故選/);
+      expect(q?.explanation).not.toMatch(/須提報.{0,20}基線資料.{0,8}故選/);
+    });
+
+    it('兩個檔案（integrated_dataset / questions.json）必須同步 —— 同一題不能有兩個答案', () => {
+      expect(g?.answer).toBe(q?.answer);
     });
 
     it('保留 prior_answer 以標示此題已被修正過', () => {
-      expect(g?.metadata?.prior_answer).toBe('D');
+      // 記最近一次的前值（C）；完整的 D → C → A 歷程在 _correction_note 裡
+      expect(g?.metadata?.prior_answer).toBe('C');
     });
   });
 

@@ -89,27 +89,31 @@ def norm(t):
         if not (unicodedata.category(c)[0] in ('P', 'Z') or c.isspace())
     )
 
-def fetch(url):
-    """抓下來轉成純文字。
-
-    ⚠️ **必須處理 PDF。** agents 引的來源有好幾個是 PDF（環境部盤查作業指引、
-    GHG Protocol Scope 3 指南）。如果只當 HTML 剝標籤，會抓到二進位亂碼，
-    然後把**真的引文誤判成「捏造」** —— 那就是「檢查器比資料還常出錯」。
-
-    而且這些政府 PDF 用 CID 內嵌中文字型，pdftotext 會吐出空白或亂碼；
-    PyMuPDF (fitz) 能正確解碼。
-    """
+def _get(url):
+    """抓一次，回傳 (raw_bytes, content_type)。"""
     req = urllib.request.Request(url, headers={
         'User-Agent': 'Mozilla/5.0 (compatible; ipas-quiz-quote-verifier/1.0)'})
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE   # 學術網站憑證鏈常不完整；抓不到頁面 != 捏造
     with urllib.request.urlopen(req, timeout=60, context=ctx) as r:
-        raw = r.read()
-        ctype = (r.headers.get('Content-Type') or '').lower()
+        return r.read(), (r.headers.get('Content-Type') or '').lower()
 
-    is_pdf = raw[:5] == b'%PDF-' or 'pdf' in ctype or url.lower().endswith('.pdf')
-    if is_pdf:
+
+def _to_text(raw, ctype):
+    """把 bytes 轉純文字。**PDF 只認內容，不認副檔名。**
+
+    第 6 個「檢查器比資料還常出錯」：
+    原本這裡寫 `is_pdf = ... or url.endswith('.pdf')`。
+    於是抓 `unfccc.int/.../07a01.pdf` 時，伺服器回的是一個 **212 bytes 的
+    Incapsula 擋頁（Content-Type: text/html）**，但因為網址以 .pdf 結尾，
+    程式照樣把那段 HTML 餵進 PyMuPDF —— fitz 不會抱怨，它回一個
+    **「1 頁、0 個字」的文件**。接著搜尋 baseline 得到 0 次。
+
+    **那個 0 是假的。** 它不是「文件裡沒有」，是「我根本沒拿到文件」。
+    副檔名是網址作者的宣告，不是伺服器實際給了什麼 —— 只信真正的 magic bytes。
+    """
+    if raw[:5] == b'%PDF-' or ('pdf' in ctype and raw[:5] != b'<html'):
         import fitz
         doc = fitz.open(stream=raw, filetype='pdf')
         return chr(10).join(p.get_text() for p in doc)
@@ -119,8 +123,41 @@ def fetch(url):
     txt = html.unescape(re.sub(r'<[^>]+>', ' ', txt))
     return txt
 
+
+def fetch(url):
+    """抓下來轉成純文字，抓不到就改走 Wayback Machine。
+
+    ⚠️ **必須處理 PDF。** agents 引的來源有好幾個是 PDF（環境部盤查作業指引、
+    GHG Protocol Scope 3 指南）。如果只當 HTML 剝標籤，會抓到二進位亂碼，
+    然後把**真的引文誤判成「捏造」** —— 那就是「檢查器比資料還常出錯」。
+    而且這些政府 PDF 用 CID 內嵌中文字型，pdftotext 會吐出空白或亂碼；
+    PyMuPDF (fitz) 能正確解碼。
+
+    ⚠️ **而且必須處理「被擋」。** unfccc.int 有 Incapsula、
+    sciencebasedtargets.org 有 Cloudflare —— 直接抓只會拿到擋頁。
+    只回報「⚠️ 抓不到」雖然誠實（不會誣賴 agent 捏造），但那是**死路**：
+    這些站的引文將**永遠無法被確認**，等於這個驗證器對它們沒有作用。
+    契約已經要求 agent 用 web.archive.org，驗證器就必須跟得上去同一個地方查。
+    """
+    try:
+        raw, ctype = _get(url)
+        txt = _to_text(raw, ctype)
+        if len(norm(txt)) >= 500:
+            return txt, url
+    except Exception:
+        pass
+
+    # 活站抓不到（擋爬／JS 渲染／404）—— 改抓存檔。**這不是猜，是換一個地方讀同一份文件。**
+    snap = 'https://web.archive.org/web/2024id_/' + url
+    try:
+        raw, ctype = _get(snap)
+        return _to_text(raw, ctype), snap
+    except Exception:
+        return '', url
+
+ROUND = sys.argv[1] if len(sys.argv) > 1 else 'r3'
 results = []
-for f in sorted(glob.glob(f'{S}/r2/res*.json')):
+for f in sorted(glob.glob(f'{S}/{ROUND}/res*.json')):
     try:
         results += json.load(open(f, encoding='utf-8'))
     except Exception as e:
@@ -160,12 +197,15 @@ for r in results:
         try:
             cache[url] = fetch(url)
         except Exception as e:
-            cache[url] = f'__FETCH_FAIL__{e}'
-    page = cache[url]
+            cache[url] = (f'__FETCH_FAIL__{e}', url)
+    page, via = cache[url]
     if page.startswith('__FETCH_FAIL__'):
         tally['⚠️ 抓不到頁面'] += 1
         rows.append((qid, v, '⚠️', f'抓不到：{page[14:60]}'))
         continue
+
+    # 走了存檔才讀到 —— 引文仍然算數（是同一份文件），但要說出來源是哪裡讀到的
+    archived = 'web.archive.org' in via
 
     pn = norm(page)
     qn = norm(quote)
@@ -187,7 +227,8 @@ for r in results:
 
     if qn in pn:
         tally[f'✅ 逐字連續存在 ({v})'] += 1
-        rows.append((qid, v, '✅', f'引文在 {host} 上逐字連續存在'))
+        where = f'{host}（活站擋爬，經 Wayback 存檔讀到）' if archived else host
+        rows.append((qid, v, '✅', f'引文在 {where} 上逐字連續存在'))
         continue
 
     # ⚠️ 「不是連續原文」不等於「捏造」。
