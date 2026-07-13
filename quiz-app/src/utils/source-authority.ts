@@ -102,6 +102,7 @@ export const PRIMARY: readonly HostRule[] = [
   // 把執委會本身當成「不權威」—— 那是說不通的。
   { host: 'eur-lex.europa.eu', who: '歐盟法律公報 —— Regulation 原文' },
   { host: 'ec.europa.eu', who: '歐盟執委會（含 taxation-customs／climate／finance 各總署）' },
+  { host: 'europarl.europa.eu', who: '歐洲議會 —— 立法進度（Omnibus 改了這一頁就會變）' },
 
   // ── 其他國家主管機關 ────────────────────────────────────────────
   { host: 'sec.gov', who: '美國證券交易委員會 —— 氣候揭露規則' },

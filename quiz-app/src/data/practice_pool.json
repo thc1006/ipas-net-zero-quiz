@@ -2859,11 +2859,11 @@
     },
     {
       "id": "pool-aig-ind-004",
-      "stem": "依金管會 2025 年 5 月修正「公開發行公司年報應行記載事項準則」之規劃，上市櫃公司年報架構之變更為何？",
+      "stem": "依金管會 2025 年 5 月預告修正之「公開發行公司年報應行記載事項準則」（第七條、第十條之一、第二十三條），上市櫃公司年報架構之變更為何？",
       "options": [
         {
           "key": "A",
-          "text": "原年報第四章改為「永續相關財務資訊專章」依 IFRS S1/S2 編製"
+          "text": "年報「新增」永續相關財務資訊專章，依 IFRS S1/S2 編製並經董事會決議通過"
         },
         {
           "key": "B",
@@ -2879,15 +2879,15 @@
         }
       ],
       "answer": "A",
-      "explanation": "金管會 2025 年 5 月預告修正準則第七、十之一、二十三條，將原年報第四章「公司治理報告」改為包含 IFRS 永續揭露準則之「永續相關財務資訊專章」。",
+      "explanation": "金管會於 2025/05/13 預告修正《公開發行公司年報應行記載事項準則》第七條、第十條之一、第二十三條，明定符合條件之上市櫃公司年報應**新增**「永續相關財務資訊」專章，依 IFRS 永續揭露準則（S1／S2）編製並經董事會決議通過，自**115 會計年度（2026 年）**起適用（第一階段為實收資本額 100 億元以上者）。\n\n⚠️ 注意年報的章次：依該準則 §7，年報應記載事項依序為一、致股東報告書；二、**公司治理報告**；三、募資情形；四、**營運概況**；五、財務狀況及財務績效之檢討分析與風險事項；六、特別記載事項。**公司治理報告是第二項，不是第四章**；而永續專章是**新增**的，**不是取代**任何既有章節。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "industry_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-004",
         "ai_metadata": {
@@ -2903,8 +2903,8 @@
         }
       },
       "sources": [
-        "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202505130005&dtable=News",
-        "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202510280004&dtable=News"
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0400022&flno=7",
+        "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0%2C2&mcustomize=news_view.jsp&dataserno=202505130005&dtable=News"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -3041,8 +3041,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "industry_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-007",
         "ai_metadata": {
@@ -3060,7 +3060,9 @@
       "sources": [
         "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-008",
@@ -3295,8 +3297,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "industry_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-013",
         "ai_metadata": {
@@ -3314,7 +3316,9 @@
       "sources": [
         "https://www.re100.org.tw/"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-015",
@@ -3345,8 +3349,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "industry_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-015",
         "ai_metadata": {
@@ -3365,7 +3369,9 @@
         "https://pr.tsmc.com/english/news/3227",
         "https://csr.cw.com.tw/article/44131"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-016",
@@ -3396,8 +3402,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "industry_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-016",
         "ai_metadata": {
@@ -3415,7 +3421,9 @@
       "sources": [
         "https://sciencebasedtargets.org/resources/files/SBTi-criteria.pdf"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-017",
@@ -3446,8 +3454,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "industry_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-017",
         "ai_metadata": {
@@ -3466,7 +3474,9 @@
         "https://sciencebasedtargets.org/sectors/forest-land-and-agriculture",
         "https://files.sciencebasedtargets.org/production/files/SBTiFLAGGuidance.pdf"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-018",
@@ -3497,8 +3507,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "industry_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-018",
         "ai_metadata": {
@@ -3516,7 +3526,9 @@
       "sources": [
         "https://support.ecovadis.com/hc/en-us/articles/210460227-Understanding-EcoVadis-Medals-and-Badges"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-019",
@@ -3599,8 +3611,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "industry_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-020",
         "ai_metadata": {
@@ -3619,7 +3631,9 @@
         "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202412310005&dtable=News",
         "https://csr.cw.com.tw/article/43998"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-021",
@@ -3650,8 +3664,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "industry_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-021",
         "ai_metadata": {
@@ -3671,7 +3685,9 @@
         "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
         "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-022",
@@ -3702,8 +3718,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "industry_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-022",
         "ai_metadata": {
@@ -3721,7 +3737,9 @@
       "sources": [
         "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-023",
@@ -4373,8 +4391,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-001",
         "ai_metadata": {
@@ -4393,7 +4411,9 @@
         "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
         "https://eur-lex.europa.eu/eli/reg/2025/2083/oj"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-002",
@@ -4428,8 +4448,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-002",
         "ai_metadata": {
@@ -4448,7 +4468,9 @@
         "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
         "https://ec.europa.eu/commission/presscorner/detail/en/ip_25_5071"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-003",
@@ -4483,8 +4505,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-003",
         "ai_metadata": {
@@ -4503,7 +4525,9 @@
         "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
         "https://eur-lex.europa.eu/eli/reg/2023/956/oj"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-004",
@@ -4841,7 +4865,7 @@
     },
     {
       "id": "pool-aig-intl-010",
-      "stem": "依 SBTi 之 Corporate Net-Zero Standard v1.2（2024 年發布、2026 年仍適用），下列何者錯誤？",
+      "stem": "依 SBTi 之 Corporate Net-Zero Standard（2026 年適用版本為 v1.3.1），下列關於「達成淨零」之敘述何者錯誤？",
       "options": [
         {
           "key": "A",
@@ -4861,7 +4885,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "SBTi Corporate Net-Zero Standard v1.2 規定：達淨零須先以絕對減量達 90–95%（依產業）後，僅剩餘無法消除排放方得使用「永久性碳移除（permanent carbon removals）」進行中和（neutralization），不得以一般避免／減量類碳權直接抵銷。SBTi 並倡議 BVCM（價值鏈外減緩）但其非中和工具。",
+      "explanation": "SBTi Corporate Net-Zero Standard 規定：達淨零須先以**絕對減量**達 90% 以上（依範疇與產業另有細則）後，僅剩餘無法消除之排放方得以「永久性碳移除（permanent carbon removals）」進行中和（neutralization）——**不得**以一般避免／減量類碳權直接抵銷。SBTi 另倡議 BVCM（價值鏈外減緩）作為額外氣候行動，但 BVCM 不是中和工具。\n\n⚠️ **版本狀態（2026-07）**：2026 年適用的是 **v1.3.1**；**Corporate Net-Zero Standard V2.0 已於 2026/06/11 發布**，自 2027 Q1 起可擇一提交目標，**2028/02/01 起 V2.0 強制適用**。V2.0 對範疇三的處理方式有重大調整，請以 SBTi 官網最新版本為準。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "SBTi",
@@ -4872,8 +4896,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-010",
         "ai_metadata": {
@@ -4890,9 +4914,11 @@
       },
       "sources": [
         "https://sciencebasedtargets.org/standards/net-zero-standard",
-        "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf"
+        "https://sciencebasedtargets.org/corporate-net-zero-standard-v2"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-011",
@@ -4927,8 +4953,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-011",
         "ai_metadata": {
@@ -4947,7 +4973,9 @@
         "https://sciencebasedtargets.org/sectors/forest-land-and-agriculture",
         "https://sciencebasedtargets.org/resources/files/SBTiFLAGGuidance.pdf"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-012",
@@ -5028,7 +5056,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "依 CSRD 第 5 條時程：第 1 波（已受 NFRD 規範之大型公益機構企業，員工 >500 人）自 2024 會計年度起適用，於 2025 年提交首份依 ESRS 編製之永續報告書（揭露 2024 資料）。後續分階段擴大至大型企業（2025 資料）、上市中小企業（2026 資料）、第三國企業（2028 資料）。",
+      "explanation": "依 CSRD 原時程，第 1 波（已受 NFRD 規範、員工 >500 人之大型公益機構企業）自 2024 會計年度起適用，於 2025 年提交首份依 ESRS 編製之永續報告書（揭露 2024 資料）—— 這一波**已經照原訂時程完成**，本題答案即指此。\n\n⚠️ **後續各波已被 Omnibus 大幅延後與縮減，原本的分階段時程不再適用：**\n- 「stop-the-clock」指令（2025/04/17 通過）：第 2 波（大型企業）延至 **FY2027**（2028 年申報）；第 3 波（上市中小企業）延至 **FY2028**（2029 年申報）。\n- 2025/12/16 歐洲議會通過之 Omnibus：「大型企業」門檻由員工 250 人**提高到 1,000 人**，大量原第 2 波企業因此退出適用範圍。\n請以 EUR-Lex 之現行指令文本為準。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "CSRD",
@@ -5039,8 +5067,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-014",
         "ai_metadata": {
@@ -5057,9 +5085,12 @@
       },
       "sources": [
         "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
-        "https://finance.ec.europa.eu/capital-markets-union-and-financial-markets/company-reporting-and-auditing/company-reporting/corporate-sustainability-reporting_en"
+        "https://finance.ec.europa.eu/capital-markets-union-and-financial-markets/company-reporting-and-auditing/company-reporting/corporate-sustainability-reporting_en",
+        "https://www.europarl.europa.eu/legislative-train/package-simplification-business/file-first-omnibus-package-on-sustainability"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-015",
@@ -5141,7 +5172,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "SEC 於 2024/03/06 通過之最終規則，要求大型加速申報人（LAFs）與加速申報人揭露具重大性之 Scope 1 與 Scope 2 排放（不要求 Scope 3，與最初提案相比已大幅退讓），並要求氣候風險、目標、過渡計畫及財務報表附註揭露。2024/04 第八巡迴法院裁定停留，SEC 於 2024/04 主動暫緩生效；2025/03 SEC 投票決議不再為該規則辯護，目前實質凍結，但規則尚未正式廢止。",
+      "explanation": "SEC 於 2024/03/06 通過之最終規則，要求大型加速申報人（LAF）與加速申報人揭露具重大性之 Scope 1 與 Scope 2 排放（**不要求 Scope 3**，較最初提案大幅退讓），並要求氣候風險、目標、過渡計畫及財務報表附註揭露。2024/04 SEC 主動暫緩（stay）該規則生效以待司法審查；2025/03/27 SEC 表決決議**不再為該規則辯護**；2025/09/12 第八巡迴法院裁定將訴訟**中止（abeyance）**。\n\n⚠️ **最新進展（2026-07）**：SEC 已於 **2026/05/29 表決提案「完全廢止」**（Rescission of Climate-Related Disclosure Rules，Federal Register 2026/06/03 刊登，意見徵詢至 2026/08/03），理由為逾越法定職權。**規則目前仍未正式廢止，但已進入廢止程序** —— 請以 sec.gov 最新公告為準。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "SEC",
@@ -5152,8 +5183,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-016",
         "ai_metadata": {
@@ -5170,9 +5201,11 @@
       },
       "sources": [
         "https://www.sec.gov/files/rules/final/2024/33-11275.pdf",
-        "https://www.sec.gov/news/press-release/2025-58"
+        "https://www.sec.gov/newsroom/press-releases/2026-49-sec-proposes-rescission-climate-related-disclosure-rules"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-017",
@@ -5207,8 +5240,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-017",
         "ai_metadata": {
@@ -5227,7 +5260,9 @@
         "https://www.icao.int/environmental-protection/CORSIA/Pages/default.aspx",
         "https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_FAQs_December_2024.pdf"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-019",
@@ -5306,7 +5341,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "IPCC AR6 WG1 第 7 章 Table 7.15（含氣候-碳循環回饋之 100 年 GWP）：CH₄（非化石源）= 27.0、CH₄（化石源）= 29.8、N₂O = 273、SF₆ = 25,200、NF₃ = 17,400。AR4 之 CH₄=25 / N₂O=298 與 SAR 之 21/310 均屬舊值；84 為 AR5 之 CH₄ 20 年期 GWP。我國環境部及 GHG Protocol 已採 AR6 數值。",
+      "explanation": "IPCC AR6 WG1 第 7 章 Table 7.15（含氣候-碳循環回饋之 100 年 GWP）：CH₄（非化石源）= 27.0、CH₄（化石源）= 29.8、N₂O = 273、SF₆ = 25,200、NF₃ = 17,400。AR4 之 CH₄=25 / N₂O=298 與 SAR 之 21/310 均屬舊值；84 為 AR5 之 CH₄ 20 年期 GWP。\n\n⚠️ **我國目前仍採 AR5，不是 AR6。** 環境部 113/2/5 公告之「溫室氣體排放係數」附表採 IPCC **AR5** 之 100 年期 GWP（CH₄ = 28、化石源 CH₄ = 30、N₂O = 265）——這是依 UNFCCC COP27 之結論，各國國家溫室氣體排放清冊自 2024 年起採 AR5。本題問的是「AR6 的數值」，與「我國採用哪一版」是兩件事，不要混為一談：**考我國制度時要用 AR5。**",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IPCC AR6",
@@ -5317,8 +5352,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-020",
         "ai_metadata": {
@@ -5335,9 +5370,12 @@
       },
       "sources": [
         "https://www.ipcc.ch/report/ar6/wg1/chapter/chapter-7/",
-        "https://www.ipcc.ch/report/ar6/wg1/downloads/report/IPCC_AR6_WGI_Chapter07.pdf"
+        "https://ghgregistry.moenv.gov.tw/upload/Tools/AI/113%E5%B9%B42%E6%9C%885%E6%97%A5%E5%85%AC%E5%91%8A%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E4%BF%82%E6%95%B8.pdf",
+        "https://www.cca.gov.tw/"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-021",
@@ -5537,8 +5575,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-024",
         "ai_metadata": {
@@ -5557,7 +5595,9 @@
         "https://sciencebasedtargets.org/resources/files/Above-and-Beyond-Position-Paper.pdf",
         "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-025",
@@ -5705,8 +5745,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-028",
         "ai_metadata": {
@@ -5725,7 +5765,9 @@
         "https://eur-lex.europa.eu/eli/reg/2023/956/oj",
         "https://climate.ec.europa.eu/eu-action/eu-emissions-trading-system-eu-ets_en"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-029",
@@ -5817,8 +5859,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-030",
         "ai_metadata": {
@@ -5837,7 +5879,9 @@
         "https://www.icao.int/environmental-protection/CORSIA/Pages/CORSIA-Emissions-Units.aspx",
         "https://www.icao.int/environmental-protection/CORSIA/Documents/TAB/TAB_Reports/TAB%20Report%20-%20March%202025.pdf"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-intl-032",
@@ -7659,8 +7703,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1_rescued",
-        "verified_date": "2026-04-25",
-        "verifier": "manual_explanation_rewrite",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-026",
         "ai_metadata": {
@@ -7680,7 +7724,8 @@
         "https://eur-lex.europa.eu/eli/reg/2023/956/oj"
       ],
       "quality_flags": [
-        "low_confidence"
+        "low_confidence",
+        "time_sensitive"
       ]
     },
     {
@@ -7705,7 +7750,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "依 SBTi Corporate Net-Zero Standard v1.2：跨範疇減量 ≥90%；Scope 1+2 ≥95%；Scope 3 ≥90%。航空、海運、電力等行業有專屬部門路徑（SDA），本題若無『按 SBTi v1.2 範疇切分』之明確選項，回答以最接近的官方架構為佳。",
+      "explanation": "SBTi Corporate Net-Zero Standard 之淨零目標一般原則：**最遲於 2050 年**達成，且須以絕對減量達成 90% 以上之減排，殘餘排放方得以永久性碳移除中和。航空、海運、電力等行業另有專屬部門路徑（SDA）。\n\n⚠️ **版本狀態（2026-07）**：2026 年適用 **v1.3.1**；**V2.0 已於 2026/06/11 發布**，2028/02/01 起強制。各範疇的具體減量比例請以 SBTi 官網現行版本為準 —— 本題只釘「最遲 2050 年、90% 以上絕對減量」這個各版皆一致的原則。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "SBTi",
@@ -7716,8 +7761,8 @@
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "intl_round1_rescued",
-        "verified_date": "2026-04-25",
-        "verifier": "manual_explanation_rewrite",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（一手來源）",
         "verify_verdict": "CONFIRMED",
         "original_id": "intl-031",
         "ai_metadata": {
@@ -7734,10 +7779,11 @@
       },
       "sources": [
         "https://sciencebasedtargets.org/standards/net-zero-standard",
-        "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard-Criteria.pdf"
+        "https://sciencebasedtargets.org/corporate-net-zero-standard-v2"
       ],
       "quality_flags": [
-        "low_confidence"
+        "low_confidence",
+        "time_sensitive"
       ]
     },
     {
