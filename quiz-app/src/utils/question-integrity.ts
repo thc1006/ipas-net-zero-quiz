@@ -41,6 +41,25 @@ const PDF_FURNITURE: readonly RegExp[] = [
   /\(\s*商研院\s*2024\.08\s*\)/,
 ];
 
+/**
+ * 「來源網站的殘留」—— 跟 PDF 頁首頁尾不同，這是**抄題目時把來源站的介面文字一起抄進來**。
+ *
+ * 實際踩到的：兩題的題幹開頭是「【已刪除】90. 根據台灣環境部碳足跡計算指引…」。
+ * 那個「【已刪除】」是 yamol 的頁面標題（yamol 自己把該題下架了），「90.」是 yamol 的題號
+ * —— 兩者都是來源站的**站內狀態**，不是題目內容。
+ *
+ * 造成兩個實際傷害：
+ *  1. 使用者在畫面上直接看到「【已刪除】90.」這串垃圾
+ *  2. 在考古題 .md 裡，它跟我們的墓碑慣例「【已刪除】」**撞名** ——
+ *     於是這 2 題被誤算成已刪除，「可用題數」少報了 2 題
+ *
+ * 原本的 gate 只擋 PDF 的頁首頁尾（商研院、模擬試題），完全沒想到「來源是網站」的情況。
+ */
+const SOURCE_SITE_RESIDUE: readonly { re: RegExp; what: string }[] = [
+  { re: /【已刪除】/, what: '來源網站的下架標記（且與我們的墓碑慣例撞名）' },
+  { re: /^\s*\d{1,3}\s*[.、]\s*\S/, what: '題幹開頭殘留來源站的題號' },
+];
+
 const EXPECTED_KEYS = ['A', 'B', 'C', 'D'] as const;
 
 const isHttpUrl = (u: unknown): u is string =>
@@ -81,6 +100,12 @@ export function checkQuestion(q: IntegrityQuestion): Violation[] {
   const hit = PDF_FURNITURE.find((re) => texts.some((t) => re.test(t)));
   if (hit) {
     push('pdf_furniture', `含來源 PDF 的頁面裝飾：${hit.source}`);
+  }
+
+  // 來源「網站」的殘留 —— 題幹裡不該有來源站的下架標記或站內題號。
+  const residue = SOURCE_SITE_RESIDUE.find((r) => r.re.test(q.stem));
+  if (residue) {
+    push('source_site_residue', `題幹含${residue.what}：${q.stem.slice(0, 24)}…`);
   }
 
   // 5) 題幹與每個選項都不得為空白
