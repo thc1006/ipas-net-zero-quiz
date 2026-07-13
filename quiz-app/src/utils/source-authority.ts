@@ -105,6 +105,9 @@ export const SECONDARY: readonly HostRule[] = [
   { host: 'km.twenergy.org.tw', who: '能源知識庫 —— 轉載彙整' },
   { host: 'nzb.bers.tw', who: '低碳建築聯盟 —— 民間協會' },
   { host: 'trec.org.tw', who: '台灣再生能源推動聯盟 —— 民間團體' },
+  // 能源署委外的入口網。它**轉載**統計，不是統計的發布者 ——
+  // 它掛掉，能源署的數字不會變；它還活著，也不代表數字沒更新。
+  { host: 're.org.tw', who: '再生能源資訊網 —— 能源署委外之入口網，轉載而非發布' },
   { host: 'support.ecovadis.com', who: 'EcoVadis 客服說明 —— 廠商文件' },
   { host: 'pr.tsmc.com', who: '台積電新聞稿 —— 單一企業的自我揭露' },
   { host: 'assets.bbhub.io', who: 'Bloomberg CDN —— TCFD 報告的寄存處，非發布機構' },

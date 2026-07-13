@@ -23,13 +23,13 @@ describe('PracticePoolHistogram', () => {
     expect(counts[2].textContent).toBe('47');  // AI 產題（含 ifrs_s1_s2_round_2026q2 +6）
   });
 
-  it('shows all subject totals (647 + 55 + 100)', () => {
+  it('shows all subject totals (647 + 54 + 100)', () => {
     const { container } = render(
       <PracticePoolHistogram mainBankCount={647} subject="all" />,
     );
     const counts = container.querySelectorAll('.pool-histogram__count');
     expect(counts[0].textContent).toBe('647');
-    expect(counts[1].textContent).toBe('55');
+    expect(counts[1].textContent).toBe('54');
     expect(counts[2].textContent).toBe('100');
   });
 

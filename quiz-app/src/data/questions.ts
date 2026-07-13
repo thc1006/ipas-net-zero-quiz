@@ -12,6 +12,7 @@ import type {
 
 // 載入原始資料（build 時會被 Vite 處理）
 import rawData from './integrated_dataset.json';
+import { dedupeByContent as sharedDedupe } from '../utils/question-identity';
 
 /** 原始題庫資料 */
 export const dataset: QuizDataset = rawData as QuizDataset;
@@ -129,19 +130,13 @@ export function getQuestionsBySubject(
  * 所以在「抽題」這一層依內容去重，資料層不動。
  */
 export function dedupeByContent(qs: QuizQuestion[]): QuizQuestion[] {
-  const seen = new Set<string>();
-  return qs.filter((q) => {
-    const sig =
-      q.stem.replace(/\s+/g, '') +
-      '||' +
-      q.options
-        .map((o) => o.text.replace(/\s+/g, ''))
-        .sort()
-        .join('|');
-    if (seen.has(sig)) return false;
-    seen.add(sig);
-    return true;
-  });
+  // 指紋的定義搬到 utils/question-identity.ts，與 CI 的重複檢查**共用同一套**。
+  //
+  // 原本這裡是 `.replace(/\s+/g, '')` —— **只剝空白**，而 CI 的 gate 用的是
+  // NFKC + 剝掉標點與分隔符。兩套定義不一致的後果：CI 擋得住的重複，
+  // 使用者的考卷上照樣會出現兩次（實測有 5 組重複是被 U+2011/U+2013 連字號、
+  // 「」vs “”、臺/台 遮住的）。gate 與執行期對「同一題」的定義必須是同一個。
+  return sharedDedupe(qs);
 }
 
 /**

@@ -13,9 +13,9 @@
       "ai_generated_disclosure": "本批 ai_generated 題目皆於 provenance.source_type 標記，UI 須顯示『AI 產題』徽章符合 EU AI Act Art.50"
     },
     "totals": {
-      "external_mock": 55,
+      "external_mock": 54,
       "ai_generated": 100,
-      "total": 155
+      "total": 154
     },
     "policy": "AI 產題不進主題庫；本檔僅在使用者明確開啟『加強練習』時提供，並顯示來源徽章。",
     "last_rescue_round": "2026-05-04 (ifrs_s1_s2_round_2026q2: +6 questions covering Assurance, Materiality, Climate Risk Quantification — Refs #62)"
@@ -689,7 +689,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "依《溫室氣體排放量盤查登錄及查驗管理辦法》修正草案，擴大列管事業（製造業 2,000 萬度、旅館業 1,000 萬度等）自 2026 年起，於每年 4 月 30 日前完成前一年度盤查登錄；已列管之第一批事業仍維持 8 月 31 日前。",
+      "explanation": "依《溫室氣體排放量盤查登錄及查驗管理辦法》**修正草案**，擴大列管事業（製造業年外購電力 2,000 萬度、旅館業 1,000 萬度等）自 2026 年起，應於每年 4 月 30 日前完成前一年度盤查登錄。⚠️ 「自 2026 年起擴大列管」的依據是**尚未發布施行的草案**，正式公告前仍可能變動；而「每年四月三十日前」則是現行《溫管辦法》§6 的明文（已列管事業一體適用）。",
       "subject": null,
       "topic_tags": [
         "溫管法",
@@ -700,7 +700,7 @@
       "provenance": {
         "source_type": "external_mock",
         "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
+        "verified_date": "2026-07-13",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
         "original_id": "15",
@@ -712,9 +712,12 @@
         }
       },
       "sources": [
-        "https://vocus.cc/article/6901a506fd89780001c2a960"
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=6",
+        "https://ghgregistry.moenv.gov.tw/"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-em-ipas_vocus_mock-016",
@@ -2408,23 +2411,23 @@
       "options": [
         {
           "key": "A",
-          "text": "1,500,000 元"
+          "text": "250,000 元"
         },
         {
           "key": "B",
-          "text": "1,500,000 × 0.2 元"
+          "text": "1,500,000 元"
         },
         {
           "key": "C",
-          "text": "9,000,000 元"
+          "text": "7,500,000 元"
         },
         {
           "key": "D",
-          "text": "(30,000 − 25,000) × 300 × 1 = 1,500,000 元"
+          "text": "9,000,000 元"
         }
       ],
-      "answer": "D",
-      "explanation": "依《碳費收費辦法》§5：碳費＝收費排放量 × 徵收費率；收費排放量＝（年排放量 − K 值）× 排放量調整係數值；K 值為 25,000 公噸 CO2e（屬高碳洩漏風險之事業 K 值為零）。本題為非高碳洩漏風險行業，調整係數值為 1（§6 第二項），適用一般費率 300 元：(30,000 − 25,000) × 1 × 300 = 1,500,000 元。費率由環境部公告：一般費率 300 元、優惠費率 A 50 元、優惠費率 B 100 元。注意：§8 是生產電力之事業申請扣除電力消費排放量之規定，不是碳費計算公式。",
+      "answer": "B",
+      "explanation": "依《碳費收費辦法》§5：碳費＝收費排放量 × 徵收費率；收費排放量＝（年排放量 − K 值）× 排放量調整係數值；K 值為 25,000 公噸 CO2e（屬高碳洩漏風險之事業 K 值為零）。本題為非高碳洩漏風險行業，調整係數值為 1（§6 第二項），適用一般費率 300 元：(30,000 − 25,000) × 1 × 300 = **1,500,000 元**。三個干擾項各對應一種常見錯誤：9,000,000 元＝30,000 × 300（忘了扣 K 值）；7,500,000 元＝25,000 × 300（把 K 值本身當成收費排放量）；250,000 元＝5,000 × 50（誤用優惠費率 A 而非一般費率）。注意：§8 是生產電力之事業申請扣除電力消費排放量之規定，不是碳費計算公式。",
       "subject": null,
       "topic_tags": [
         "碳費計算",
@@ -2442,8 +2445,20 @@
         "option_order": {
           "rebalanced_on": "2026-07-13",
           "previous_answer": "C",
-          "method": "transposed",
-          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+          "method": "ladder_kept",
+          "why": "選項重寫為純金額後依升冪排列（真實考卷的數字選項是排序的）；正解 1,500,000 元落在 B。原始答案字母見 option_fix。"
+        },
+        "option_fix": {
+          "fixed_on": "2026-07-13",
+          "defect": "兩個選項是同一個答案：「1,500,000 元」與「(30,000 − 25,000) × 300 × 1 = 1,500,000 元」在數值上相同。來源標的答案是後者，於是算對數字卻選前者的考生會被判錯。",
+          "previous_options": [
+            "1,500,000 元",
+            "1,500,000 × 0.2 元",
+            "9,000,000 元",
+            "(30,000 − 25,000) × 300 × 1 = 1,500,000 元"
+          ],
+          "previous_answer": "C",
+          "why": "題幹已給齊所有輸入，選項再列一次算式是多餘的，而那正是造成撞題的原因。四個選項統一為純金額，三個干擾項各對應一種真實的計算錯誤（忘扣 K 值／把 K 值當收費排放量／誤用優惠費率），不是憑空編的數字。"
         }
       },
       "sources": [
@@ -2644,55 +2659,6 @@
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
         "original_id": "56",
-        "option_order": {
-          "rebalanced_on": "2026-07-13",
-          "previous_answer": "B",
-          "method": "transposed",
-          "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
-        }
-      },
-      "sources": [
-        "https://vocus.cc/article/68b53f5efd89780001e60438"
-      ],
-      "quality_flags": []
-    },
-    {
-      "id": "pool-em-ipas_vocus_mock-058",
-      "stem": "某工廠一年能源使用：電力 500,000 kWh（係數 0.527 kgCO2/kWh）、柴油 20,000 公升（係數 2.68 kgCO2/L）、天然氣 100,000 立方米（係數 1.85 kgCO2/m³），請計算其總二氧化碳排放量（公斤）為？",
-      "options": [
-        {
-          "key": "A",
-          "text": "371,350"
-        },
-        {
-          "key": "B",
-          "text": "421,500"
-        },
-        {
-          "key": "C",
-          "text": "413,000"
-        },
-        {
-          "key": "D",
-          "text": "502,100"
-        }
-      ],
-      "answer": "D",
-      "explanation": "依排放係數法計算：電力 500,000 × 0.527 = 263,500 kg；柴油 20,000 × 2.68 = 53,600 kg；天然氣 100,000 × 1.85 = 185,000 kg。合計 263,500 + 53,600 + 185,000 = 502,100 kg CO2。",
-      "subject": null,
-      "topic_tags": [
-        "排放係數法",
-        "計算題",
-        "Scope 1+2"
-      ],
-      "difficulty": "medium",
-      "provenance": {
-        "source_type": "external_mock",
-        "source_origin": "ipas_vocus_mock",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
-        "verify_verdict": "CONFIRMED",
-        "original_id": "58",
         "option_order": {
           "rebalanced_on": "2026-07-13",
           "previous_answer": "B",
@@ -3239,14 +3205,14 @@
         }
       ],
       "answer": "B",
-      "explanation": "2024 年底我國再生能源總裝置容量約 22.9 GW，太陽光電約 15.5 GW，占再生能源約 67.8%（風力約 18.5%）。",
+      "explanation": "依經濟部能源署統計，截至 2024 年底我國再生能源總裝置容量約 21–23 GW，其中太陽光電占 **67.8%**（風力 18.5%、慣常水力 10.1%、生質能及廢棄物 3.6%）。⚠️ 這是**逐年變動的統計數字**，不是法規值 —— 請以能源署最新統計為準。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "industry_round1",
-        "verified_date": "2026-04-25",
+        "verified_date": "2026-07-13",
         "verifier": "adversarial_subagent",
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-012",
@@ -3263,9 +3229,12 @@
         }
       },
       "sources": [
-        "https://www.moeaea.gov.tw/ECW/populace/content/Content.aspx?menu_id=14438"
+        "https://www.moeaea.gov.tw/ECW/populace/content/Content.aspx?menu_id=14438",
+        "https://www.re.org.tw/information/statistics.aspx"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-013",
@@ -3983,7 +3952,7 @@
     },
     {
       "id": "pool-aig-ind-029",
-      "stem": "依行政院 2016 年規範，新設「資料中心」之能源使用效率（PUE）目標值為下列何者？",
+      "stem": "依行政院「資料中心設置作業要點」，中華民國 106 年 1 月 9 日（西元 2017/1/9）以後新建置之資料中心，其能源使用效率（PUE）應低於下列何者？",
       "options": [
         {
           "key": "A",
@@ -4003,15 +3972,15 @@
         }
       ],
       "answer": "B",
-      "explanation": "依行政院核定之資料中心節能規範（2016/01/09 起），新設資料中心 PUE ≤ 1.6，舊有資料中心應逐年改善；PUE = 資料中心總用電 / IT 設備用電。",
+      "explanation": "依行政院「行政院及所屬各機關資料中心設置作業要點」第九點：中華民國一百零六年一月九日（西元 2017/1/9）起新建置之資料中心，其能源使用效率值應「低於 1.6」；該日以前已設置者，若不符規定應逐步改善。PUE ＝ 資料中心總用電 ÷ IT 設備用電，數值愈接近 1 愈節能。⚠️ 原題幹與解析把「民國 106 年」換算成 2016 年 —— 民國 + 1911 = 西元，106 年是 **2017** 年。另注意：經濟部後續對民間資料中心另訂更嚴標準（超大型 ≤1.3、主機代管 ≤1.4），與本題行政院之規範不同。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
       "difficulty": "medium",
       "provenance": {
         "source_type": "ai_generated",
         "source_origin": "industry_round1",
-        "verified_date": "2026-04-25",
-        "verifier": "adversarial_subagent",
+        "verified_date": "2026-07-13",
+        "verifier": "人工查證（行政院資料中心設置作業要點第九點）",
         "verify_verdict": "CONFIRMED",
         "original_id": "ind-029",
         "ai_metadata": {
@@ -4027,9 +3996,12 @@
         }
       },
       "sources": [
-        "https://km.twenergy.org.tw/ReadFile/?p=KLBase&n=20230308154314.pdf"
+        "https://www.ey.gov.tw/",
+        "https://www.moeaea.gov.tw/ECW/populace/Law/LawsList.aspx?kind=6&menu_id=3302"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "id": "pool-aig-ind-030",

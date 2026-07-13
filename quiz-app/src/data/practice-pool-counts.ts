@@ -5,9 +5,9 @@
 // 若 practice_pool.json 內容變動需同步更新此處（dev 啟動的 schema validator
 // assert 內容形狀，cross-check test 驗證此常數與 _meta.totals 一致）
 export const PRACTICE_POOL_COUNTS = {
-  externalMock: 55,
+  externalMock: 54,
   aiGenerated: 100,
-  total: 155,
+  total: 154,
 } as const;
 
 /**
@@ -29,5 +29,5 @@ export const PRACTICE_POOL_COUNTS = {
 export const POOL_BY_SUBJECT = {
   '考科1': { externalMock: 0, aiGenerated: 47, total: 47 },
   '考科2': { externalMock: 0, aiGenerated: 24, total: 24 },
-  all: { externalMock: 55, aiGenerated: 100, total: 155 },
+  all: { externalMock: 54, aiGenerated: 100, total: 154 },
 } as const;
