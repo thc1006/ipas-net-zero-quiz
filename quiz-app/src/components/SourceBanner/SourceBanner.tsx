@@ -4,7 +4,12 @@
 // 顯示策略：
 // - 主題庫題（無 provenance）：不顯示
 // - external_mock：藍底，提示「非官方模擬題」
-// - ai_generated：黃底，提示「AI 產題已驗證；以官方教材為最終依據」
+// - ai_generated：黃底，說清楚「哪些是機器可驗證的、哪些不是」
+//
+// ⚠️ 原本寫的是「AI 產題**已驗證**；以官方教材為最終依據」——
+//    那個「已驗證」指的是 provenance.verify_verdict=CONFIRMED，而那是**用 AI 驗 AI**。
+//    2026-07 拿法條逐字比對，找到 13 個實質缺陷，**13 個當初全都被判 CONFIRMED**。
+//    一句假的保證比沒有保證更糟。詳見 SourceBadge.tsx 開頭。
 // - 帶 quality_flag：紅邊警示
 import type { PracticePoolSourceType, PracticePoolQualityFlag } from '../../types/practicePool';
 import './SourceBanner.css';
@@ -24,20 +29,23 @@ const SOURCE_META: Record<
     tone: 'mock',
     icon: 'menu_book',
     label: '模擬題',
-    hint: '公開模擬題（非官方歷屆，iPAS 不公開歷屆）。',
+    hint: '公開模擬題（非官方歷屆，iPAS 不公開歷屆）。來源的答案卡本身也可能有誤。',
   },
   ai_generated: {
     tone: 'ai',
     icon: 'auto_awesome',
     label: 'AI 產題',
-    hint: '由 LLM 依環境部 / CBAM / ISO 等法規產生，並經獨立驗證代理 cross-check 通過。請以官方教材為最終依據。',
+    hint:
+      '由語言模型產生。解析中「」括起來的法條原文，CI 會逐字比對全國法規資料庫 —— 捏造的條文會被擋下；' +
+      '但「條號有沒有掛錯」「有沒有捏造機構名稱」機器驗不出來（我們確實抓到過）。' +
+      '請以法規原文與官方教材為最終依據。',
   },
 };
 
 const FLAG_HINT: Partial<Record<PracticePoolQualityFlag, string>> = {
   time_sensitive: '時效性 — 答案會隨時間變動（如 RE100 名單），建議查最新官方資料',
   ambiguous: '爭議 — 不同教材可能給出不同答案，請參考多方來源',
-  low_confidence: '低信心 — 自動驗證信心較低，建議多方核對',
+  low_confidence: '低信心 — 產題當下自評信心較低，務必自行查證',
 };
 
 export function SourceBanner({

@@ -30,9 +30,24 @@ export interface HostRule {
 }
 
 /**
- * 一手權威來源：**規範本身的制定者、發布者或主管機關**。
- * 判準只有一個 —— 「這題的答案如果變了，是因為這個機構做了什麼」。
- * 它變了，這個網域的內容就會變；它沒變，這個網域就不會變。
+ * 一手來源 ＝ **事實的「出處」（source of record）**，不是轉述。
+ *
+ * 判準只有一個，而且是可操作的：
+ *     **這題問的事實如果變了，這一頁的內容會不會跟著變？**
+ *   會 → PRIMARY（它就是那個事實的發布者）
+ *   不會 → SECONDARY（它只是在轉述；它掛掉，事實不會變）
+ *
+ * 這個判準必須**照著套**，不能憑「感覺哪個網站比較官方」。我第一版就是憑感覺，錯了三個：
+ *
+ *   - `trec.org.tw` 被我寫成「台灣再生能源推動聯盟 —— 民間團體」。
+ *     它其實是**經濟部標準檢驗局「國家再生能源憑證中心」官網 —— T-REC 的發證機關本身**。
+ *   - `support.ecovadis.com` 被我寫成「廠商文件」。
+ *     但問的是「EcoVadis 的獎牌規則」—— EcoVadis 改規則，這一頁就會變。它就是出處。
+ *   - `pr.tsmc.com` 被我寫成「單一企業的自我揭露」。
+ *     但問的是「台積電宣布了什麼」—— 台積電改承諾，這一頁就會變。它就是出處。
+ *
+ * 反過來，`csr.cw.com.tw`（天下 CSR 報導台積電）就**不是**出處：
+ * 台積電改承諾，天下不一定跟著改；天下關站，台積電的承諾也不會變。
  */
 export const PRIMARY: readonly HostRule[] = [
   // ── 我國主管機關與法規 ──────────────────────────────────────────
@@ -48,6 +63,7 @@ export const PRIMARY: readonly HostRule[] = [
   { host: 'twse.com.tw', who: '臺灣證券交易所（含 cgc 公司治理中心）' },
   { host: 'tpex.org.tw', who: '證券櫃檯買賣中心' },
   { host: 'tcx.com.tw', who: '臺灣碳權交易所 —— 減量額度交易' },
+  { host: 'trec.org.tw', who: '經濟部標準檢驗局 國家再生能源憑證中心 —— T-REC 的發證機關' },
   { host: 'ipas.org.tw', who: 'iPAS 經濟部產業人才能力鑑定 —— 考科範圍的唯一權威' },
 
   // ── 國際標準與規範的制定者 ──────────────────────────────────────
@@ -64,6 +80,12 @@ export const PRIMARY: readonly HostRule[] = [
   { host: 'there100.org', who: 'RE100 國際倡議 —— RE100 規則與會員名單' },
   { host: 're100.org.tw', who: 'RE100 臺灣（綠色和平協力）—— RE100 在台推動' },
   { host: 'globalmethanepledge.org', who: '全球甲烷承諾 —— 承諾文本本身' },
+  { host: 'ecovadis.com', who: 'EcoVadis —— 其評級與獎牌規則的發布者（規則改了這裡就會變）' },
+
+  // ── 企業自我揭露 ────────────────────────────────────────────────
+  // 對「這家企業承諾了什麼」而言，企業自己的公告**就是**出處 ——
+  // 它改承諾，這一頁就會變。媒體報導同一件事則是轉述（見 SECONDARY 的 csr.cw.com.tw）。
+  { host: 'pr.tsmc.com', who: '台積電新聞稿 —— 對「台積電宣布了什麼」而言即為出處' },
 
   // ── 國際組織與條約機構 ──────────────────────────────────────────
   { host: 'unfccc.int', who: 'UNFCCC —— 巴黎協定、NDC、COP 決議' },
@@ -104,12 +126,9 @@ export const SECONDARY: readonly HostRule[] = [
   { host: 'smartmachinery.tw', who: '智慧機械推動辦公室 —— 產業推廣網站' },
   { host: 'km.twenergy.org.tw', who: '能源知識庫 —— 轉載彙整' },
   { host: 'nzb.bers.tw', who: '低碳建築聯盟 —— 民間協會' },
-  { host: 'trec.org.tw', who: '台灣再生能源推動聯盟 —— 民間團體' },
   // 能源署委外的入口網。它**轉載**統計，不是統計的發布者 ——
   // 它掛掉，能源署的數字不會變；它還活著，也不代表數字沒更新。
   { host: 're.org.tw', who: '再生能源資訊網 —— 能源署委外之入口網，轉載而非發布' },
-  { host: 'support.ecovadis.com', who: 'EcoVadis 客服說明 —— 廠商文件' },
-  { host: 'pr.tsmc.com', who: '台積電新聞稿 —— 單一企業的自我揭露' },
   { host: 'assets.bbhub.io', who: 'Bloomberg CDN —— TCFD 報告的寄存處，非發布機構' },
   { host: 'github.com', who: 'GitHub discussion —— 討論串' },
 ];

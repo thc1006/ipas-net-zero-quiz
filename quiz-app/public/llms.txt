@@ -56,8 +56,11 @@
 
 - **773 題主題庫**（`integrated_dataset.json`）：iPAS 公開考古題（gist：[https://gist.github.com/thc1006](https://gist.github.com/thc1006)）+ 自行驗證題目
 - **154 題加強練習池**（`practice_pool.json`）：
-  - 55 題 `external_mock`：網路公開模擬題（非官方歷屆，iPAS 不公開歷屆）
-  - 96 題 `ai_generated`：LLM 代理依 ISO/CBAM/環境部等法規與標準產生，每題經獨立驗證代理 cross-check 通過、附 ≥1 條 primary-source URL（law.moj.gov.tw、EUR-Lex、IPCC、ISO 等，curl 實測可達）
+  - 54 題 `external_mock`：網路公開模擬題（非官方歷屆，iPAS 不公開歷屆）。來源的答案卡本身也可能有誤
+  - 100 題 `ai_generated`：LLM 依 ISO/CBAM/環境部等法規與標準產生，每題附 ≥1 條一手來源 URL
+    - **機器擋得住**：解析中「」括起來、宣稱是法條原文的句子，CI 會逐字比對全國法規資料庫（`law-articles.pinned.json`，含 sha256）—— 捏造的條文會被擋下；數值題逐題經人工手算或查證出處
+    - **機器擋不住**：條號掛錯、捏造出不存在的機構或法規名稱 —— 這兩種我們**確實抓到過**（曾把碳費計算公式掛在錯的條號、捏造過一部不存在的辦法）。連結是活的不代表指對地方
+    - ⚠️ `provenance.verify_verdict = CONFIRMED` **沒有保證力**：它是由 AI 代理對 AI 產題自評得出的。2026-07 拿法條原文逐條比對後找到的 13 個實質缺陷，**13 個當初全部被判 CONFIRMED**。不要引用這個欄位當品質證據
 
 ## 技術細節
 

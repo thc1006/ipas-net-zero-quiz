@@ -23,12 +23,21 @@ const DS = datasetRaw as unknown as {
   gist_items: Item[];
   our_unique_items: Item[];
 };
-const POOL = poolRaw as unknown as { items: unknown[] };
+const POOL = poolRaw as unknown as {
+  items: { provenance: { source_type: string } }[];
+};
 
 const ALL = [...DS.gist_items, ...DS.our_unique_items];
 const TOTAL = DS.meta.total_questions;
 const TIME_SENSITIVE = ALL.filter((i) => (i.quality_flags ?? []).includes('time_sensitive')).length;
 const POOL_TOTAL = POOL.items.length;
+// 細項也要釘 —— 只釘總數的話，「55 + 96 = 151」這種同一份文件自打嘴巴的矛盾抓不到
+const POOL_EXTERNAL_MOCK = POOL.items.filter(
+  (q) => q.provenance.source_type === 'external_mock'
+).length;
+const POOL_AI_GENERATED = POOL.items.filter(
+  (q) => q.provenance.source_type === 'ai_generated'
+).length;
 const REVERIFIED = DS.meta.content_review.reverified_count;
 
 const MAN = manifestRaw as unknown as {
@@ -138,6 +147,33 @@ describe('對外門面（index.html / llms.txt）的題數必須與資料一致'
   // 並不是全部都出自官方考古題。對外文案不該這樣講。
   it.each(eachDoc)('%s 不得把整個主題庫稱作「官方考古題」', (_name, doc) => {
     expect(doc).not.toMatch(/\d+\s*題官方考古題/);
+  });
+
+  // 只釘總數是不夠的 —— llms.txt 一路寫著「55 題 external_mock + 96 題 ai_generated」，
+  // 加起來 151，跟同一份檔案裡自己寫的總數對不上，**而且就寫在相鄰兩行**。
+  // gate 只看總數，於是這個矛盾一直沒被發現。
+  it('llms.txt 的 external_mock / ai_generated 細項必須與資料一致，且加總等於總數', () => {
+    const em = LLMS_TXT.match(/(\d+)\s*題\s*`external_mock`/);
+    const ai = LLMS_TXT.match(/(\d+)\s*題\s*`ai_generated`/);
+    expect(em, '找不到「N 題 `external_mock`」字樣').not.toBeNull();
+    expect(ai, '找不到「N 題 `ai_generated`」字樣').not.toBeNull();
+    expect(Number(em![1])).toBe(POOL_EXTERNAL_MOCK);
+    expect(Number(ai![1])).toBe(POOL_AI_GENERATED);
+    expect(
+      Number(em![1]) + Number(ai![1]),
+      '細項加起來不等於總數 —— 同一份文件在自打嘴巴'
+    ).toBe(POOL_TOTAL);
+  });
+
+  // 對外文案不得對 AI 產題做出假的保證。
+  // llms.txt 原本寫「每題經獨立驗證代理 cross-check 通過」—— 那個「驗證」是 AI 自評，
+  // 而我們找到的 13 個實質缺陷，13 個當初全部被判 CONFIRMED。
+  // llms.txt 是餵給 AI 爬蟲的檔案，這句假話會被其他系統當成事實轉述出去。
+  // （UI 文案的同一道檢查在 components/ai-disclosure.test.ts。）
+  it.each(eachDoc)('%s 不得宣稱 AI 產題「已驗證 / 驗證通過」', (_name, doc) => {
+    for (const re of [/已通過(獨立)?驗證/, /經獨立驗證/, /cross-?check\s*通過/i, /交叉比對通過/]) {
+      expect(doc, `出現假保證：${re}`).not.toMatch(re);
+    }
   });
 
   it('og:image 必須是絕對網址且為點陣圖（爬蟲不吃相對路徑，也不吃 SVG）', () => {

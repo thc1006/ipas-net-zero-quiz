@@ -237,7 +237,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           modifierClass = '';
         } else {
           title = '想多練？啟用加強練習池';
-          desc = `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題；AI 產題依 EU AI Act Art.50 揭露，每題經獨立驗證且附 primary-source URL。`;
+          desc = `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題；AI 產題依 EU AI Act Art.50 揭露，每題附一手來源連結。啟用前會說明它們有多可信、以及哪些地方機器驗不出來。`;
           ctaLabel = `了解並啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習`;
           ctaIcon = 'add_circle_outline';
           modifierClass = '';

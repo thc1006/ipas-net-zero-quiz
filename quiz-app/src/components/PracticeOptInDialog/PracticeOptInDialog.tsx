@@ -79,13 +79,26 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
             <strong>模擬題（{PRACTICE_POOL_COUNTS.externalMock} 題）</strong>：公開模擬題（非官方歷屆，iPAS 不公開歷屆）。
           </li>
           <li>
-            <strong>AI 產題（{PRACTICE_POOL_COUNTS.aiGenerated} 題）</strong>：由語言模型依環境部、CBAM、ISO 等法規與標準
-            產生，並經獨立驗證代理逐題以權威來源（law.moj.gov.tw、EUR-Lex、IPCC、ISO 等）
-            交叉比對通過。
+            <strong>AI 產題（{PRACTICE_POOL_COUNTS.aiGenerated} 題）</strong>：由語言模型依環境部、CBAM、ISO 等
+            法規與標準產生，每題附一手來源連結。
           </li>
         </ul>
         <p className="optin-note">
-          每題皆顯示來源徽章。AI 產題答案雖經驗證，仍以官方教材為最終依據。
+          <strong>老實說：這些題目有多可信。</strong>
+        </p>
+        <ul className="optin-note">
+          <li>
+            <strong>機器擋得住的</strong>：解析中「」括起來、宣稱是法條原文的句子，CI 會逐字比對
+            全國法規資料庫的條文 —— 捏造的條文會被擋下來。數值題的答案也逐題經人工手算或查證出處。
+          </li>
+          <li>
+            <strong>機器擋不住的</strong>：「條號有沒有掛錯」「有沒有捏造出一部不存在的法規」——
+            這些我們<strong>確實抓到過</strong>（曾把碳費公式掛在錯的條號上、捏造過一部不存在的辦法）。
+            連結是活的不代表指對地方。
+          </li>
+        </ul>
+        <p className="optin-note">
+          每題皆顯示來源徽章。<strong>請以法規原文與官方教材為最終依據。</strong>
           本揭露依 EU AI Act Art. 50（2026-08-02 起對 AI 生成文字強制揭露）。
         </p>
         <div className="optin-actions">

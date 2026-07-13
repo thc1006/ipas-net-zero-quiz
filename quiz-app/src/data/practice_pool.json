@@ -18,7 +18,37 @@
       "total": 154
     },
     "policy": "AI 產題不進主題庫；本檔僅在使用者明確開啟『加強練習』時提供，並顯示來源徽章。",
-    "last_rescue_round": "2026-05-04 (ifrs_s1_s2_round_2026q2: +6 questions covering Assurance, Materiality, Climate Risk Quantification — Refs #62)"
+    "last_rescue_round": "2026-05-04 (ifrs_s1_s2_round_2026q2: +6 questions covering Assurance, Materiality, Climate Risk Quantification — Refs #62)",
+    "verify_verdict_disclaimer": {
+      "warning": "provenance.verify_verdict 沒有保證力，不要拿它當品質證據。",
+      "why": "155/157 題是 CONFIRMED，其中 149 題的驗證者是 adversarial_subagent —— 也就是用 AI 去驗 AI 產的題。2026-07-13 拿 law.moj.gov.tw 的逐字原文逐條比對後，在練習池找到 13 個已證實的實質缺陷，13 個當初「全部」被判 CONFIRMED。",
+      "what_it_missed": [
+        "tw_regs_38：引號裡是憑空捏造的氣候法 §35 條文（「應參酌國際公約決議事項…」）",
+        "tw_regs_45：憑空多出「滯納金至應納金額之百分之十五為限」—— 條文無此明文，而該題干擾選項正好寫 15%",
+        "mock-053：捏造出一部不存在的《高碳洩漏風險行業認定辦法》",
+        "mock-052：碳費計算公式掛在碳費收費辦法 §8（實為 §5）；且兩個選項是同一個數值（兩個正解）",
+        "mock-020：國內額度上限 10% 掛在 §10（實為 §9）",
+        "tw_regs_09：§32 的六款基金來源說成七款，還多編一款「基金孳息」",
+        "tw_regs_28：自主減量辦法 §14 的兩款混為一談 —— 而錯誤就寫在「正確選項」裡",
+        "ind-029：民國 106 年換算成 2016 年（民國 + 1911 = 西元，應為 2017）",
+        "mock-058：與主題庫 S1-p02-q004 是同一題（題幹被改寫過）"
+      ],
+      "what_actually_verifies": [
+        "law-articles.pinned.json：6 部法規的逐條原文 + sha256。解析裡「」括起來、宣稱是條文的句子，CI 逐字比對（law-quote-integrity.test.ts）",
+        "cross-bank-integrity.test.ts 的 CALC / LOOKUP：25 道數值題逐題人工手算或查證出處",
+        "quarterly workflow：重抓法條比 sha256，法規一被修訂就變紅"
+      ],
+      "recorded_on": "2026-07-13"
+    },
+    "ai_metadata_disclaimer": {
+      "warning": "ai_metadata.model_family：100 題 AI 產題裡有 94 題是 \"unspecified\" —— 產題當下沒有記錄用了哪個模型（只有 ifrs2026 那 6 題記了 claude-opus-4-7）。",
+      "why": "這 94 題無法回溯補齊。它不是 EU AI Act Art.50 的必要欄位（Art.50(4) 對部署者的要求是「揭露這是 AI 產的」，不是「揭露是哪個模型產的」；Art.50(2) 的機器可讀標記義務落在生成式系統的「提供者」身上，不是本專案），但一個 94% 在說「不知道」的欄位不能被拿來當 provenance 用。",
+      "distribution": {
+        "unspecified": 94,
+        "claude-opus-4-7": 6
+      },
+      "recorded_on": "2026-07-13"
+    }
   },
   "items": [
     {
