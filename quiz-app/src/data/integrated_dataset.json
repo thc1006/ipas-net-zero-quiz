@@ -10,7 +10,7 @@
     "total_questions": 773,
     "gist_questions": 545,
     "our_unique_questions": 228,
-    "corrections_applied": 23,
+    "corrections_applied": 29,
     "by_subject": {
       "考科1": 431,
       "考科2": 342
@@ -27,9 +27,9 @@
       ],
       "reverified_count": 112,
       "total_questions": 773,
-      "time_sensitive_count": 126,
+      "time_sensitive_count": 128,
       "not_reviewed_this_round_count": 680,
-      "carried_over_count": 14,
+      "carried_over_count": 16,
       "known_unresolved": [
         {
           "id": "PAS_2060_withdrawal_date",
@@ -9392,7 +9392,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "以範疇3 類別取得相關計量數據為基礎，搭配對應之次級數據（例如行業平均排放係數）進行計算。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -9429,7 +9439,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "特定供應商提供產品或服務從搖籃到大門（包含原料開採、製造/組裝、運輸等階段）的溫室氣體排放數據進行計算。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -9466,7 +9486,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "一般乾粉滅火器(ABC型)不用盤查\n• CO2滅火器與FM200要盤查(一般出現在機房裡)",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -9589,7 +9619,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "有關本階段相關收集項目，建議優先採用一級活動數據，但在一級活動數據無法蒐集時，二級數據亦可應用。",
+            "supports_option": "C"
+          }
+        ]
       },
       "explanation": "在PCR中，原料取得階段不強制要求收集一級活動數據，但應優先採用。"
     },
@@ -9674,7 +9714,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "CFP 之量化需要考量產品的整個生命週期，包括原物料取得、製造、運輸/ 配送、使用及生命終結處理。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -9711,7 +9761,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "CFP 與部分CFP 之量化為正確、可查證、相關及不誤導，且儘可能在實務上減少偏差與不確定性。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -9748,7 +9808,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "生命週期闡釋階段旨在整合生命週期盤查分析和生命週期衝擊評估的結果，並與評估的目的和範圍相匹配，最終提供結論和建議，以支持更環境友好的決策制定。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -9785,7 +9855,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "備考1.在CFP量化(3.1.1.6)或部分CFP的量化中不允許應用碳抵換，且碳抵換的溝通超出本標準之適用範圍(參照6.3.4.1)。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -9822,7 +9902,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "由小組蒐集相關活動數據與計算排放量。後續應研擬減碳目標及減碳推動方案(低碳化/智慧化)，達成永續淨零。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -9859,7 +9949,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "每當有數個替代分配程序可用時，應進行敏感度分析以說明偏離所選擇方法時之後果。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -9896,7 +9996,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "燃料燃燒造成之溫室氣體排放：二氧化碳(CO2)、甲烷(CH4)與氧化亞氮(N2O)。燃料在固定式設備(如：加熱器、燃氣渦輪、鍋爐)中燃燒之結果。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -9933,7 +10043,17 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "化石燃料燃燒產生的溫室氣體排放，固定式設備之燃料燃燒，如緊急發電機、鍋爐、燃燒爐、加熱爐、焚化爐等。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -10044,7 +10164,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "Category 1\n直接溫室氣體排放量與移除量\n1.1 固定式燃燒源之直接排放\n1.2 移動式燃燒源之直接排放\n1.3 產業過程之直接排放與移除\n1.4 人為系統所釋放的溫室氣體產生的直接暫時性排放\n1.5  土地使用、土地使用變更及林業之直接排放與移除",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -10165,7 +10295,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "組織須量化溫室氣體移除量。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -10249,7 +10389,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "步驟2：如無法避免分配時，系統的投入與產出，須以能反映其間基本實質關係之方式，區分至不同的產品或功能之間。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -10286,7 +10436,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "組織應依照氣候變遷因應法或是ISO 14064-1:2018所要求之架構進行溫室氣體盤查報\n告書之編制。\n• 組織應視溫室氣體盤查報告書之預期使用者需求，揭露排放量資訊與減量政策。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -10323,7 +10483,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "溫室氣體盤查需收集彙整的資料橫跨組織內部不同部門，跨部門合作相當重要，因此需\n要透過高階主管召開起始會議來凝聚執行溫室氣體盤查的共識，以確保盤查作業推動順\n利。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -10360,7 +10530,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf",
+            "quote": "間接溫室氣體排放(indirect greenhouse gas emission, indirect GHG emission)\n• 由組織之營運與活動產生的溫室氣體排放，惟該排放係來自非屬組織所擁有或控制的溫\n室氣體源。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -10397,7 +10577,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "自行發電\n(屬類別1)\n外購電網電力\n外購非電網電力",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -10434,7 +10624,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "另外要求已開發國家需提供氣候變遷資金，以幫助開發中國家減少溫\n室氣體排放，並有能力面對全球氣候變遷所帶來的後果。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -10471,7 +10671,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "如計算產品的生質碳含量，\n則應在CFP研究報告中分別列出，惟不應包括在CFP或部分CFP的結果中。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -10553,7 +10763,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "資料庫\n市調或情境假設\n盤查\n如何取得系統界限內的資料",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -10590,7 +10810,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "鑑別與詳細記錄在CFP 研究報告中所選擇使用的分配方法。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -10627,7 +10857,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "聯合國為了避免工業產品中的氟氯碳化物與海龍對地球臭氧層繼續造成惡化及損害承續\n1985年保護臭氧層維也納公約的大原則，於1987年9月16日邀請所屬26個會員國在加拿\n大蒙特婁所簽署的環境保護議定書",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -10758,7 +10998,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "3.1.3.4系統界限(system boundary)\n•\n基於一組準則來表示那項單元過程(3.1.3.6)係屬於被研究系統之一部分的界限。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -10795,7 +11045,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "(a)功能單位與參考流( 參照6 . 3 . 3 )。\n(b)系統界限，包括下列各項。\n- 作為基本流之系統投入與產出的類型，與\n- 決定關於單元過程處理的準則，考慮其對CFP 研究中結論的重要性。\n(c)重要單元過程清冊。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -10832,7 +11092,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf",
+            "quote": "Category 1\n直接溫室氣體排放量與移除量\n1.1\n固定式燃燒源之直接排放",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -10869,7 +11139,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/691673213.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/691673213.pdf",
+            "quote": "配合使用之資料庫(除能源外，一般非重量單位需換算為重量單位)",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -10906,7 +11186,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf",
+            "quote": "活動數據為焊條重量× 焊條含碳量(%)",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -10943,7 +11233,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "不鏽鋼管線材製品之生命週期涵蓋原料取得階段、製造階段、配送銷售階段、使用階段與廢棄處理階段，生命週期流程如下圖所示：",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -10980,7 +11280,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf",
+            "quote": "計費周期如有跨年度之情形，應以實際日數比例攤分使用量",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -11017,7 +11327,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "組織應量化其直接溫室氣體排放量，並將之區分為CO2, CH4, N2O, NF3, SF6與其他適當之溫室氣體族群(HFCs, PFCs…等)，並以二氧化碳當量公噸(tCO2e)表示。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -11195,7 +11515,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "母公司的管理階層在一開始就必須決定採用哪一種彙整方式（亦即股權比例或財務控制或營運控制三者之一），一旦選定了彙整政策，就應適用到組織內所有的層級。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -11232,7 +11562,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "旨在確保CFP 研究與本標準之原則與要求事項之間一致性的作業。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -11269,7 +11609,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "透過上游與下游之連結，供應產品(3.1.3.1)予使用者的過程(3.1.3.5)與活動。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -11306,7 +11656,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "對水體的排放-廢水與水體污染物",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -11343,7 +11703,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "CFP研究的範疇應與CFP研究之目標一致(參照6.3.1)。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -11380,7 +11750,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "廢棄物需提供處理方式(如: 掩埋、焚化、回收..等)",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -11417,7 +11797,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "資訊提供方式: 供應商名稱或地址或運輸距離(以google map方式查詢)",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -11454,7 +11844,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "應採用供應商提供之排放係數，若來源為汽電共生設備，建議以先熱後電計算其蒸汽排放係數，詳細計算方式請參照本指引附錄二，倘供應商為為本部公告列管對象，應採用最新且經查驗之蒸汽排放係數。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -11540,7 +11940,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "若廠區生活汙水有納管時，可不用計算化糞池甲烷逸散量。如果有納管但仍保留化糞池\n之情形，仍須計算逸散量。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -11577,7 +11987,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "3.1.3.9參考流(reference flow)\n•\n在已知產品系統(3.1.3.2)中，滿足以功能單位(3.1.3.7)表示的功能所需過程(3.1.3.5)投入或產出\n之量測。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -11614,7 +12034,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.iso.org/standard/71206.html"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.iso.org/standard/71206.html",
+            "quote": "This document specifies principles, requirements and guidelines for the quantification and reporting of the carbon footprint of a product (CFP), in a manner consistent with International Standards on life cycle assessment (LCA) (ISO 14040 and ISO 14044).",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -11651,7 +12081,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "高階主管支持與承諾：\n• 溫室氣體盤查需收集彙整的資料橫跨組織內部不同部門，跨部門合作相當重要，因此需\n要透過高階主管召開起始會議來凝聚執行溫室氣體盤查的共識，以確保盤查作業推動順\n利。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -11688,7 +12128,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "1995 年 第一屆締約方會議(COP 1)在柏林舉行。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -11725,7 +12175,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "於1997 年12 月11 日通過。由於批准程序複雜，該議定書於2005 年2 月16\n日才正式生效。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -11762,7 +12222,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "須以1990 年\n為基準，平均減量5.2%。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -11799,7 +12269,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "UNFCCC 於1995 年在德國柏林召開第1 次締約方大會\n(COP 1)",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -11836,7 +12316,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "該議定書於2005 年2 月16\n日才正式生效。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -11873,7 +12363,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "京都議定書之減量時程為\n2008 至2012 年",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -11910,7 +12410,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "京都議定書第二承諾期雖於2020年底結束，但仍持續辦理相關會議進行與巴黎協定的銜接工作。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -11995,7 +12505,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "巴黎協定於2015年在巴黎COP21會議通過，目標將本世紀末前的全球暖化控制於相較工業化前上升2°C之內，並致力控制於1.5°C，於2016年生效且召開第一次締約方會議(CMA1)。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -12032,7 +12552,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "巴黎協定於2015年在巴黎COP21會議通過，目標將本世紀末前的全球暖化控制於相較工業化前上升2°C之內，並致力控制於1.5°C",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -12113,7 +12643,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://unfccc.int/sites/default/files/resource/cma5_auv_4_gst.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://unfccc.int/sites/default/files/resource/cma5_auv_4_gst.pdf",
+            "quote": "global greenhouse gas emissions are projected to peak between 2020 and at the latest before 2025 in global modelled pathways that limit warming to 1.5",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -12150,7 +12690,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "2030 年將RE裝置容量增至3倍、能效提高至2倍；逐步淘汰無減碳效率煤電與低效化石燃料補貼",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -12187,7 +12737,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "2030年全球人為甲烷排放量較2020年削減30％.",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -12224,7 +12784,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
+            "quote": "商業營業場域燈具採LED燈100%",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -12261,7 +12831,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "全球逾120間以上企業加入；承諾使用100％電動車輛，2030年達到575萬輛目標。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -12298,7 +12878,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "全球逾400間以上企業加入；承諾2050年使用100％再生能源電力。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -12469,7 +13059,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "2023 年全球年平均氣溫比工業化前水準（1850-1900 年）高1.45 ± 0.12 °C。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -12506,7 +13106,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "SBTi認證審核項目中，展現企圖心(Ambition)是以應符合？°C 的情境為其減碳目標(A) 0.5°C (B) 1.0°C (C) 1.5°C (D) 2°C",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -12543,7 +13153,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "並由「聯合國政府間氣候變化委員會」(IPCC)各版次評估報告予以界定",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -12580,7 +13200,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+            "quote": "聯合國氣候變化大會是指《聯合國氣候變遷綱要公約》\n締約國每年一次的首腦峰會，討論氣候變化和各國的應\n對方案、承諾和行動。聯合國氣候變化大會英文縮寫為\n何\n(A) IPCC\n(B) COP\n(C) WEF\n(D) WHO。\n(B) COP",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -12617,7 +13247,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+            "quote": "Q22 .關於「再生能源」的定義，下列何者正確？\n(A)100%不排放碳的能源; (B)只使用太陽能和風能的能源;\n(C)從持續不斷地補充的自然過程中得到的能量來源; (D)由\n動植物質產生的能源\n(C)從持續不斷地補充的自然過程\n中得到的能量來源",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -12654,7 +13294,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+            "quote": "Q23 下列何者不是碳捕捉和儲存(CCS)的主要階段？\n(A)捕捉; (B)儲存; (C)輸送; (D)再生\n(D)再生",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -12691,7 +13341,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+            "quote": "Q24 下列何者並非我國2050淨零排放路徑之四大轉型？\n(A)能源轉型; (B)產業轉型; (C)生態轉型; (D)社會轉型\n(C)生態轉型",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -12728,7 +13388,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+            "quote": "Q25 下列何者非為溫室氣體減量的方式？\n (A)太陽能發電; (B)風力發電; (C)使用氫能發電; (D)使用天\n然氣取代煤碳\n(D)使用天然氣取代煤碳",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -12765,7 +13435,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "1. 溫室氣體盤查報告原則“不”包括以下哪項？ \n(A)準確性；(B)一致性；(C)極大化；(D)完整性",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -12802,7 +13482,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
+            "quote": "Q26 敍述在㇐段期間內㇐質量單位的溫室氣體之輻射衝擊，\n相對於相等單位的二氧化碳之係數稱之為下列何者？\n A.GWP;, B.GAP;, C.GMP;, D.GDP\nA.GWP",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -12839,7 +13529,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "5. 以下何者為B2B 產品在生命週期的描述方式？ \n(A)從搖籃到大門；(B)從搖籃到墳墓；(C)從搖籃到天堂；(D)以上皆非",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -12950,7 +13650,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "藉由上述兩個階段之工作，臺灣規劃2050 淨零排放初步藍圖(如圖3)，總電\n力占比60~70%之再生能源，並搭9~12%之氫能，加上顧及能源安全下使用搭配\n碳捕捉之火力發電20~27%，以達成整體電力供應的去碳化。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -13079,7 +13789,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+            "quote": "政府間氣候變化專門委員會是一個附屬於聯合國之下的\n跨政府組織，在1988 年由世界氣象組織、聯合國環境\n署合作成立，專責研究由人類活動所造成的氣候變遷。\n政府間氣候變化專門委員會英文縮寫為何\n(A) CDP\n(B) WEF\n(C) WHO\n(D) IPCC\n(D) IPCC",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -13116,7 +13836,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/903/367241918.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/903/367241918.pdf",
+            "quote": "簡稱SDGs），共計17項目標，並將在2030年檢視各國推動成效與作為。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -13153,7 +13883,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.cca.gov.tw/climatetalks/emission-and-reduction/national/1867.html"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.cca.gov.tw/climatetalks/emission-and-reduction/national/1867.html",
+            "quote": "第一期（2016-2020年）目標為2020年減量2%（相較於2005 年）",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -13323,7 +14063,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "即MRV 原則：• 可量測（Measurable）• 可報告（Reportable）• 可驗證（Verifiable）",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -13458,7 +14208,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+            "quote": "下列何者並非我國2050淨零排放路徑之四大轉型？(A)能源轉型; (B)產業轉型; (C)生態轉型; (D)社會轉型 (C)生態轉型",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -13546,7 +14306,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351"
+        ],
+        "evidence": [
+          {
+            "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351",
+            "quote": "本指引適用於企業就其溫室氣體排放進行盤查、減量及採取抵換作為有具體結果後，對下列事項進行碳中和",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -13628,7 +14398,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ey.gov.tw/PageRedirect.aspx?l=1ca9d58e-43d8-4b42-a3c1-55e3fe0ddb8b"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ey.gov.tw/PageRedirect.aspx?l=1ca9d58e-43d8-4b42-a3c1-55e3fe0ddb8b",
+            "quote": "使進口能源依存度由110年97.4%，降至139年50%以下",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -13774,7 +14554,17 @@
           "answer_verified": true,
           "verification_date": "2026-04-25",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "quote": "依據環境部盤查作業指引要求，我國列管事業應以何種方式進行溫室氣體彙總方法？(A)財務控制法；(B)營運控制法；(C)股權持分法；(D)以上皆可 (B)營運控制法",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -13811,7 +14601,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "全廠（場）化石燃料燃燒之直接排放及使用電力之間接排放產生溫室氣體年排放量合計達二點五萬公噸二氧化碳當量者。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -13848,7 +14648,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://oaout.moenv.gov.tw/law/Download.ashx?FileID=108577&id=GL004941&type=LAW"
+        ],
+        "evidence": [
+          {
+            "url": "https://oaout.moenv.gov.tw/law/Download.ashx?FileID=108577&id=GL004941&type=LAW",
+            "quote": "廠商使用碳標籤圖示，心型內應依實標示產品碳足跡數據及計量單位；",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -13885,7 +14695,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "為比較溫室氣體排放或溫室氣體移除或其他溫室氣體的相關逐時資訊之目的，所鑑別出的特定之歷史期間。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -13922,7 +14742,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+            "quote": "在全球前七大溫室氣體中，何種方式產生之主要溫室氣體對地球威脅最大且多？(A) 燃燒化石燃料 (B) 反芻動物與垃圾填埋場排放 (C) 冷氣及製冷設備排放 (D) 農作物肥料使用排放 (A) 燃燒化石燃料",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -13959,7 +14789,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "2. Ans (A) \n限制全球平均氣溫上升",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -13996,7 +14836,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "2020 年 由於COVID-19 大流行，未舉行實體會議。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -14124,7 +14974,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "9. Ans (D) \n2008 年至2012 年",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -14161,7 +15021,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "10. Ans (C) \n損失和損害資金",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -14246,7 +15116,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+            "quote": "GRI 準則2021之系統架構於三個系列準則， 分別為下\n列何者？\nA.GRI 環境準則、GRI社會準則、GRI治理準則  B.GRI環\n境準則、GRI社會準則、GRI經濟準則  C.GRI通用準則、\nGRI進階準則、GRI特殊準則 D.GRI 通用準則、GRI行業準\n則、GRI主題準則\n D.GR",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -14283,7 +15163,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+            "quote": "SASB準則五大面向當中的環境（Environment)提及空\n氣品質（Air\nQuality）議題， 下列描述何者不正確？\nA.此議題涉及對固定排放源（例如工廠、發電廠）和移動\n排放源（例如卡車、運輸車輛、飛機）成的空氣質量影響\n的管理  B.此議題也包括溫室氣體排放， 與溫室氣體排放\n的議題擇一揭露即可  C.此議題涉及工業排放造成的空氣\n質量影響的管理  D.相關空氣污染物包括但不限於氮氧化\n物（NOx)、硫氧化物（SOx)、揮發性有機化合物（\nVOC)、重金屬、顆粒物和氯氟烴\nB.此議題也包括溫室氣體\n排放， 與溫室氣體排放的議題擇\n一揭露即可",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -14320,7 +15210,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+            "quote": "SASB準則五大面向當中的社會資本（Social Capital)\n， 共包含7項ESG議題， 下列選項哪一個不是？\nA.資訊安全（Data Security)  B.商業道德（Business\nEthics)  C.客戶褔利（Customer Welfare)  D.人權和社區\n關係（Human Rights & Community Relations)\nB.商業道德（Business Ethics)",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -14357,7 +15257,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+            "quote": "依據溫室氣體盤查作業基本程序， 下列描述何者正確？ \nA.若企業具有環境部公告納管事業者， 該納管事業之盤查\n邊界由企業自行設定， 並依據營運控制權法區分為直接排\n放或能源間接排放的單元或程序B.金管會要求盤查邊界設\n定不需要與財務報表一致， 但對於子公司溫室氣體排放量\n納入統計方法並無規範， 僅要求企業內部子公司必須一致\nC.溫室氣體盤查主要依循四個步驟：決定排放量計算方\n式、蒐集活動數據、選擇合適的排放係數、計算溫室氣體\n排放量  D.不論依循任溫室氣體盤查規範，企業都不一定\n要界定盤查的範圍\n C.溫室氣體盤查主要依循四個步\n驟：決定排放量計算方式、蒐集\n活動數據、選擇\n合適的排放係數、計算溫室氣體\n排放量",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -14790,7 +15700,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.moeaea.gov.tw/ECW/populace/content/wHandMenuFile.ashx?menu_id=20834&file_id=10970"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.moeaea.gov.tw/ECW/populace/content/wHandMenuFile.ashx?menu_id=20834&file_id=10970",
+            "quote": "現有永安及台中接收站之天然氣供應能力為每年1,650\n萬公噸，然而我國110 年天然氣實際進口量為1,944 萬公\n噸，接收站已滿載操作。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -14827,7 +15747,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+            "quote": "(D) 55.什麼是能源轉型(Energy transition)？ \n(A)從化石燃料轉向再生能源的過程 \n(B)從傳統能源轉向新能源的過程 \n(C)從集中式能源轉向分散式能源的過程 \n(D)以上皆是",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -14864,7 +15794,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "阿聯酋共識\n(UAE Consensus)\n表明各國應在2030年前達成全球再生能源產能提高至三倍、全球能源效率改善\n至兩倍及化石燃料之轉型脫離。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -15031,7 +15971,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+            "quote": "Q27\n在全球前七大溫室氣體中，何種方式產生之主要溫室氣\n體對地球威脅最大且多？\n(A) 燃燒化石燃料\n(B) 反芻動物與垃圾填埋場排放\n(C) 冷氣及製冷設備排放\n(D) 農作物肥料使用排放\n(A) 燃燒化石\n燃料",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -15056,11 +16006,11 @@
           "text": "減少排碳"
         }
       ],
-      "answer": "D",
+      "answer": "A",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "要緩解溫度上升，最根本的方法是減少二氧化碳等溫室氣體的排放。",
+      "explanation": "題幹問的是「減少**大氣中已存在**的二氧化碳濃度」—— 減少排碳（D）只是不再增加，並不會把已經排到大氣裡的 CO₂ 拿回來；能降低既有濃度的是**移除**手段，即碳捕捉封存（A）。iPAS 公版教材範例題 Q12 為同一題（選項與順序完全相同），其答案卡即印 (A) 碳捕捉封存。",
       "metadata": {
         "original_id": "c2-152",
         "_legacy_pipeline_metadata": {
@@ -15068,8 +16018,20 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "prior_answer": "D",
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+            "quote": "溫度上升是不可逆的變化，除非進行什麼樣的方法，減",
+            "supports_option": "A"
+          }
+        ]
+      },
+      "_correction_note": "2026-07-14 更正：原答 D（減少排碳）為誤，正解為 A（碳捕捉封存）。iPAS 公版教材範例題 Q12 與本題**選項及順序完全相同**，其答案卡印 (A) 碳捕捉封存。題幹問的是降低「大氣中」的 CO₂ 濃度 —— 減排只是停止增加，移除才能降低既有濃度。"
     },
     {
       "index": 346,
@@ -15212,7 +16174,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "Q6 下列哪一項不是巴黎協定第二條所列的目標？(答案: A)\n(A)追求2050年淨零排放(B)限制全球溫升低於工業化前水準2°C以下，追求1.5°C以內(C)以不威脅糧食生產的方\n式增強氣候韌性，使溫室氣體朝低排放發展(D)使資金流向符合溫室氣體低排放路徑",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -15249,7 +16221,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "企業於報告年度賣出之中間產品由其他公司進行後續處理過程中產生的排放，需決定合理\n分配比例。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -15286,7 +16268,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "基於距離法（Distance-based method）\n定義\n以運輸相關之活動數據(例如運輸重量、運輸距離\n運輸種類或運具類型等)為基礎，搭配相應的排放\n係數進行計算。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -15323,7 +16315,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "織宜考量依下列章節編制其溫室氣體報告。\n• 第1章：\n•\n組織目的與盤查目標之一般描述。本章節包括報告組織、負責人員、本報告目的、預期使用者、傳播政策、報告期間\n及報告頻率之描述，包含於報告中的數據與資訊(納人考量的溫室氣體清單並予以說明），及組織對有關查證之聲明。\n• 第2章：\n•\n組織邊界。本章節包括組織的邊界與彙總方法之描述與說明。\n• 第3章：\n•\n報告邊界。本章節包括組織所考量的排放類別之描述與說明。\n• 第4章：\n•\n量化的溫室氣體排放與移除之盤查",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -15360,7 +16362,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "製造產品時\n列出製造此產品，經過哪些流程步驟\n- 比對生產/品管用流程圖或廢棄物清理計畫書\n- 直接到現場盤點，避免錯漏",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -15397,7 +16409,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "基於距離法（Distance-based method）\n定義\n以運輸相關之活動數據(例如運輸重量、運輸距離\n運輸種類或運具類型等)為基礎，搭配相應的排放\n係數進行計算。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -15434,7 +16456,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "一項CFP研究應明確指明待研究產品系統之功能或宣告單位。該功能或宣告單位應與CFP研究\n的目標與範疇一致。功能或宣告單位的主要目的，係提供與其相關投入與產出之參考。因此功\n能或宣告單位應清楚界定且可量測。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -15472,7 +16504,17 @@
           "answer_verified": true,
           "verification_date": "2026-07-13",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "除了針對第一階段查證缺失進行覆核外，另外包含：\n• 排放量查證\n• 數據品質管理\n• 不確定性分析\n• 第二階段活動數據實際抽樣\n現場查證(stage 2 Initial Verification)",
+            "supports_option": "C"
+          }
+        ]
       },
       "_correction_note": "2026-07-13 更正：原答 SRRA 缺失改善之覆核（第一階段項目）為誤；本題選項中屬第二階段的是「數據品質管理」。公版教材把查證工作明確分階段：**第一階段現場查證**＝現場查勘、SRRA 缺失改善之覆核、數據佐證資料查核；**第二階段現場查證**＝第一階段查證缺失覆核、排放量查證、數據品質管理、不確定性分析、第二階段活動數據實際抽樣。「SRRA 缺失改善之覆核」是**第一階段**的項目 —— 雖然實務上第二階段仍會確認第一階段的不符合事項，但考試依教材的專有項目歸類，它不算第二階段的工作。"
     },
@@ -15557,7 +16599,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "供應商上游活動數據(包含原料重量、燃料與能源使用量\n運輸距離等)、供應商製造產品過程之廢物量等，以及各\n自相應的排放係數",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -15594,7 +16646,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "混合法（Hybrid method） 定義 合併採用特定供應商之活動數據及次級數據（例如行業平均 排放係數）進行計算，包含： a. 供應商範疇1＋2 排放數據",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -15631,7 +16693,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "京都議定書成就三大市場機制： 國際排放交易(IET)、聯合履行(JI)、清潔發展機制(CDM)",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -15668,7 +16740,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "各締約方應在公平的基礎上，並根據它們共同但有區別的責任和各自的能力，為人類當代和後代的利益保護氣候系統。因此，已開發國家締約方應率先對付氣候變遷及其不利影響。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -15705,7 +16787,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "溫室氣體排放貢獻爭執：共同但有區別的責任？ 以現今排放水準來看：中國貢獻30％排 放量；歐盟、美國合計僅18％ 以累積排放貢獻來看：中國貢獻12％排 放量；歐盟、美國合計達27％ 國際氣候協商強調共同但有區別的責任 並考量國情與能力：歷年皆成為協商角 力重點，區分不同協商集團觀點",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -15947,7 +17039,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://service.cca.gov.tw/File/Get/cca/zh-tw/jOcI8bQFGSbDXdc"
+        ],
+        "evidence": [
+          {
+            "url": "https://service.cca.gov.tw/File/Get/cca/zh-tw/jOcI8bQFGSbDXdc",
+            "quote": "Intergovernmental Panel on Climate Change (IPCC) 聯合國政府間氣候變化專門委員會 為附屬於聯合國之下的跨政府組織，在1988 年 由世界氣象組織(World Meteorological Organi- zation, WMO)、聯合國環境署(United Nations Environment Programme, UNEP) 合作成立。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -15984,7 +17086,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "產品類別規則(Product Category Rules，PCR) 一個或多個產品要進行碳足跡/第三類環境宣告量化與溝通使用的一套特定 規則、要求事項及指引。依據ISO 14067 標準，若有相關PCR 或CFP-PCR 時， 應予採用。 註：產品類別規則沒有全球共通，碳標籤和第三方查證聲明書亦無共通。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -16021,7 +17133,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "計算產品碳足跡時原物料之排放係數可由下列何種方式取得？(答案：D) (A)要求供應商盤查後經查證確認後提供(B)環境部碳足跡資料庫公用碳排放係數(C)生命週期評估軟體資料庫 (D)以上皆是",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -16058,7 +17180,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "總投入量 總產出量 誤差值在10%以內 都還算合理 大於 小於 • 檢查是否有遺漏或重複寫到？ • 檢查單位是否有誤用？ • 討論分配方式，是否不當？",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -16095,7 +17227,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "為了滿足預期使用者與利害關係人之要求，組織應透過第三者之獨立查證(依循ISO14064-3) 來確保溫室氣體排放的量測、報告與查核之可信度、正確性與透明度。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -16132,7 +17274,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007755"
+        ],
+        "evidence": [
+          {
+            "url": "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007755",
+            "quote": "碳足跡盤查之溫室氣體排放量，應依據ＩＳＯ14067：2018 及本部「產品碳足跡數據量化與查證規範」（如附件三）計算。 前項碳足跡資料，應經產品碳足跡查驗機構查證取得查證聲明書或關鍵性審查出具之總結報告，始得申請產品碳足跡標籤。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -16169,7 +17321,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "3.1.6.1一級數據(primary data) • 過程(3.1.3.5)的量化值，或透過直接量測來獲得某項活動或基於其原始來源直接量測的數據。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -16206,7 +17368,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "時間性：穩定生產的產品以整年優先考慮；客製品或季節性產品可採最近一批 或客戶指定批次",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -16243,7 +17415,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "在CFP 研究中要做出決定時，宜優先參照自然科學( 例：物理、化學、生物學)。否則使用其他\n科學方法( 例：社會與經濟科學) 或參考有關公約以及定義於本標準6.3.2 中所載之地理範圍內\n的有效方法。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -16280,7 +17462,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "CFP 之量化需要考量產品的整個生命週期，包括原物料取得、製造、運輸/ 配送、使用及生命\n終結處理。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -16317,7 +17509,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "B2C產品(business-to-consumer)：搖籃到墳墓\n•\n可直接於消費市場上販售之最終產品(如：電視機、筆記型電腦)\nB2B 產品(business-to-business)：搖籃至大門\n•\n須再經組裝之半成品/零組件等(如：液晶面板模組、車用鍛造件)",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -16354,7 +17556,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "原料取得階段包括下列過程：\n1. 主原料生命週期相關流程。\n2. 副原料生命週期相關等過程。\n3. 耗材生命週期相關等過程。\n4. 包裝材生命週期相關的過程。\n5. 各原料到製造工廠之運輸過程。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -16391,7 +17603,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "噸CO2e / 噸H型鋼\n=\nx\n碳足跡計算概念\n活動數據\n排放係數",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -16527,7 +17749,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "Q3 計算產品碳足跡時原物料之排放係數可由下列何種方式取得？(答案：D)\n(A)要求供應商盤查後經查證確認後提供(B)環境部碳足跡資料庫公用碳排放係數(C)生命週期評估軟體資料庫\n(D)以上皆是",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -16564,7 +17796,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "Q4 生命週期評估的最終階段，目的在於綜合盤查分析與衝擊評估的結果或是將盤查分析的結果與\n目標及範疇一致化，以達成結論與建議，請問此階段在ISO 14040:2006 中稱作？\n(A)闡釋(interpretation) (B)結論(conclusion) (C)透明(transparency) (D)決策(decision)",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -16648,7 +17890,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "Q8 使用生命週期評估進行產品碳足跡評估不會經歷哪個重要階段？(答案：A)\n(A)實驗(B)闡釋(C)目標與範圍界定(D)盤查分析",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -16685,7 +17937,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "Q9 功能單位是在哪個生命週期階段被定義？(答案：B)\n(A)盤查分析(B)目標與範疇界定(C)實驗(D)闡釋",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -16722,7 +17984,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "穩定生產的產品以整年優先考慮\n客製品或季節性產品: 最近一批\n標的產品在調查期間內生產所在工廠的位置\n多個生產地點時，須考慮代表性",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -16759,7 +18031,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "展開專案的原因：法規要求、產業界共識、客戶宣告….\n•\n預期的應用-預期哪些使用者會看到這個結果，要怎麼對這些讀者溝通\n- 公司內部溝通：舉例-不同的子公司均採用具有一致性的方式向企業層面報告，以評價碳績效\n- 公司對外溝通：舉例-向客戶或消費者溝通有關購置決定、組合選擇決定或其他決定的資訊",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -16843,7 +18125,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "確定宣告或標示單位\n常使用產品銷售單位，\n如瓶、kg、支",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -16880,7 +18172,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "違反第三十七條第一項規定，未於中央主管機關指定期限內申請核定碳足跡，或\n未於規定期限內依核定內容使用或標示於產品之容器或外包裝。\n•\n二、違反依第三十七條第三項所定辦法中有關碳足跡標示、使用或管理之規定。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -16917,7 +18219,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "熱點排名\n4.\n敏感度分析\n5.\n數據品質指標等級評核\n6.\n碳足跡簡表",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -16942,11 +18254,11 @@
           "text": "僅廢棄物產出量"
         }
       ],
-      "answer": "C",
+      "answer": "B",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "活動數據的整理應全面，盤查清冊需完整記錄製程中的所有投入（原物料、能源）與產出（產品、廢棄物、排放物）。",
+      "explanation": "iPAS 公版教材「活動數據整理－本標的產品的各項投入產出」該頁（環境部碳足跡盤查清冊的質量平衡表）明確把兩邊分開：**投入量＝主要原物料投入總量**；**產出量＝標的產品產量＋製程廢棄物的產出量**。「製程廢棄物」是**產出**側的項目，不屬於投入量 —— 選項 C 把產出算進了投入。",
       "metadata": {
         "original_id": "c2-202",
         "_legacy_pipeline_metadata": {
@@ -16954,8 +18266,20 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "prior_answer": "C",
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "投入量：先預設主要原物料投入總量(欄位C25-C42) ；",
+            "supports_option": "B"
+          }
+        ]
+      },
+      "_correction_note": "2026-07-14 更正：原答 C（原物料投入、能源使用、廢棄物產出）為誤，正解為 B（主要原物料投入總量）。公版教材該頁的質量平衡表把「投入量」與「產出量」分列：投入量＝主要原物料投入總量；產出量＝標的產品產量＋**製程廢棄物的產出量**。原答案把產出側的廢棄物算進了投入側。（本機以 PyMuPDF 解出教材全文逐字比對。）"
     },
     {
       "index": 396,
@@ -16991,7 +18315,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "第一階供應商無法提供實際盤查資料時，….\n•\n多階(含)以上供應商…\n可引用二級數據進行替代(ISO 14067-3.1.6.3)",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -17028,7 +18362,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "檢查是否有遺漏或重複寫到？\n•\n檢查單位是否有誤用？\n•\n討論分配方式，是否不當？",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -17065,7 +18409,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "配合使用之資料庫\n(除能源外，一般非\n重量單位需換算為\n重量單位)",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -17102,7 +18456,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "名稱\n數值\n(噸CO2e/單位)\n單位\n鋼\n0.677\n噸",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -17183,7 +18547,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
+            "quote": "all transport-related emissions across all sectors must be reported on a well-to-wheel (WTW) basis in companies’ \nGHG inventories (well-to-wake for aviation and maritime transport)",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -17208,11 +18582,11 @@
           "text": "物理強度減排"
         }
       ],
-      "answer": "C",
+      "answer": "B",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "SBTi 提供的範疇三減量目標設定方法主要有物理強度法、經濟強度法及供應商議合法等。「跨部門絕對減排」是範疇一和二的主要方法，不直接適用於範疇三。",
+      "explanation": "SBTi Corporate Net-Zero Standard 的合格方法表：**長期** Scope 3 目標可用跨部門絕對減排、部門別絕對減排、SDA、Scope 3 經濟強度減排、Scope 3 物理強度減排；**「供應商／客戶參與」只出現在「近期」Scope 3 那一列**。標準 §B.7 逐字寫著 \"This method only applies to scope 3, near-term targets.\"故「非長期範疇 3 方法」者為 B。跨部門絕對減排（C）近期與長期都合格。",
       "metadata": {
         "original_id": "c2-209",
         "_legacy_pipeline_metadata": {
@@ -17220,8 +18594,24 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "prior_answer": "C",
+        "valid_as_of": "2026-07-14",
+        "sources": [
+          "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
+            "quote": "This method only applies to scope 3, near-term targets.",
+            "supports_option": "B"
+          }
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ],
+      "_correction_note": "2026-07-14 更正：原答 C（跨部門絕對減排）為誤，正解為 B（供應商參與）。SBTi Corporate Net-Zero Standard §B.7 逐字：\"This method only applies to scope 3, near-term targets.\" —— 供應商／客戶參與**只能用於近期**目標；而該標準的合格方法表中，長期 Scope 3 那一列**列有**跨部門絕對減排，**沒有**供應商參與。已標 time_sensitive：SBTi V2.0 於 2028-02-01 起強制適用，方法清單可能改變。"
     },
     {
       "index": 403,
@@ -17257,7 +18647,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
+            "quote": "emissions, 67% \ncoverage \nWell-below \n2°C",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -17294,7 +18694,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
+            "quote": "C12 – Carbon credits: The use of carbon credits must not be counted as emission \nreductions toward the progress of companies’ near-term or long-term science-based targets.",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -17376,7 +18786,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "控制權法 \n營運 \n控制法 \n若一家公司具有完全的權力去主導並執行事業體的營運政\n策，則表示其擁有該事業體的營運控制權，應100%認列其\n溫室氣體排放量和移除量。 \n財務 \n控制法 \n若一家公司有能力主導事業體的財務與營運政策時，則企\n業對事業體享有財務控制，應100%認列其溫室氣體排放量\n和移除量。 \n股權持分法 \n公司依照對各事業體所持有的股權比例，認列其溫室氣體\n排放量和移除量。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -17413,7 +18833,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "依據環境部盤查作業指引要求，我國列管事業應以何種方式進行溫室氣體彙總\n方法？ \n(A)財務控制法；(B)營運控制法；(C)股權持分法；(D)以上皆可",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -17451,7 +18881,17 @@
           "answer_verified": true,
           "verification_date": "2026-07-13",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "下列何者非ISO14064-1:2018 強制要求應揭露項目？ \n(A)生物源溫室氣體排放；(B)生物源二氧化碳移除之處理；(C)電力之處理方式；\n(D)產生自化石與生質碳之GHG 排放與移除",
+            "supports_option": "D"
+          }
+        ]
       },
       "_correction_note": "2026-07-13 更正：原答案 C（電力之處理方式）為誤，正解為 D。原解析寫「電力的計算處理方式並未強制規定揭露」，但 Annex E（Treatment of electricity）是 normative（規範性）附錄，該理由不成立。本題與來源 PDF（商研院 2024.08 模擬試題 S_CHU_07 第 13 題）為同一題，該 PDF 自己印的答案卡即為 D —— 先前把來源題當成重複丟掉，卻留下了錯的答案在教。這個矛盾是 restoration-manifest 的 disposition 稽核（duplicate_in_dataset_ANSWER_CONFLICT）揪出來的：舊版把「dataset 裡沒有」直接當成「一定是重複題」而靜默跳過，正是這種錯誤能長期存活的原因。"
     },
@@ -17489,7 +18929,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "C 公司在溫室氣體盤查報告書提到盤查的範圍包含桃園廠與小港廠。依據ISO \n14064-1:2018 最新條文規範，請問這段描述內容描述的是界定何種邊界？ \n(A)組織邊界；(B)營運邊界；(C)報告邊界；(D)系統邊界",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -17526,7 +18976,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "ISO 14064-1:2018 界定全球暖化潛勢(GWP)的溫室氣體(GHG)中，下列何者為\n非？ \n(A)二氧化碳；(B)氦氣；(C)氧化亞氮；(D)六氟化硫",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -17563,7 +19023,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "在溫室氣體盤查中，組織邊界的設定可能根據什麼來進行？ \n(A)法規要求；(B)國際供應鏈需求；(C)組織的財務控制權法；(D)公眾的意見\n反應",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -17600,7 +19070,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "組織在建立報告邊界時，應該包含哪些內容？ \n(A)直接溫室氣體排放和移除量；(B)來自輸入能源的間接溫室氣體排放量；\n(C)來自組織使用的產品的間接溫室氣體排放量；(D)以上皆是",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -17637,7 +19117,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "保證等級指定確證者或查證者為作成結論須具備之相對信賴度。由於諸如判斷之使用、\n測試之使用、管制之先天性限制，以及某些證據型式之品質特性等因素，絕對保證係無\n法達成。通常有二種保證等級：合理保證等級與有限保證等級。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -17674,7 +19164,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "RE100 倡議的主要目的是什麼？ \n(A)減少全球碳排放；(B)實現100%使用再生能源；(C)增加全球溫度；(D)減少\n企業利潤",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -17711,7 +19211,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "GRI 主題準則專注於特定的經濟、環境或社會主題，提供了關於如何報告這些\n特定議題的詳細指南和要求。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -17748,7 +19258,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf",
+            "quote": "Companies shall include a process map in their inventory \nreport. A process map illustrates the services, materials, \nand energy needed to move a product through its \nlifecycle.",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -17785,7 +19305,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "製程使用FCs（包括PFCs、SF6、NF3、HFCs）所造成的\n排放，是半導體製程的主要溫室氣體排放量之一，目前處理方向\n包括製程利用率的提升與加裝燃燒式尾氣",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -17822,7 +19352,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipcc.ch/sr15/chapter/glossary/"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipcc.ch/sr15/chapter/glossary/",
+            "quote": "Net zero emissions are achieved when anthropogenic emissions of greenhouse gases to the atmosphere are balanced by anthropogenic removals over a specified period.",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -17859,7 +19399,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ey.gov.tw/Page/5A8A0CB5B41DA11E/46de50e1-7381-4634-93e7-4cd320ec308b"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ey.gov.tw/Page/5A8A0CB5B41DA11E/46de50e1-7381-4634-93e7-4cd320ec308b",
+            "quote": "政府自105年5月啟動能源轉型，以「減煤、增氣、非核、展綠」為發展方向，完整擘劃我國再生能源發展路徑及策略，明訂114年再生能源裝置容量29 GW",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -18041,7 +19591,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "直接排放指的是企業營運過程中直接產生的溫室氣體排放，如燃燒化石燃料；",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -18078,7 +19638,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "Category 2\n來自輸人能源之間接溫室氣體排放量\n2.1來自輸入電力的間接排放",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -18115,7 +19685,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "CO2滅火器與FM200要盤查(一般出現在機房裡)",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -18152,7 +19732,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "若要排除顯著間接排放，應予以「合理說明」。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -18288,7 +19878,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "備考1.二級數據可包括數據庫與出版文獻之數據、國家盤查清冊的預設排放係數、計算數據、\n估計數或其他具代表性並由主管機關確證之數據。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -18325,7 +19925,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "quote": "下列哪種類排放係數的不確定性最高？\n(A)國際排放係數；(B)量測/質能平衡係數；\n(C)區域排放係數；(D)國家排放係數\n(A)國際排放\n係數",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -18362,7 +19972,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "一般乾粉滅火器(ABC型)不用盤查",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -18436,7 +20056,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "數據確證：在收集數據過程中，應進行數據確證之查核， 以確證與提供證據，\n證明符合數據品質要求事項。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -18520,7 +20150,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351"
+        ],
+        "evidence": [
+          {
+            "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351",
+            "quote": "本指引適用於企業就其溫室氣體排放進行盤查、減量及採取抵換作為有具體",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -18711,7 +20351,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "通過CDP 揭露環境數據可以保護和提升公司聲譽，增強競爭優勢，發現風險",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -18894,7 +20544,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://taxation-customs.ec.europa.eu/document/download/2980287c-dca2-4a4b-aff3-db6374806cf7_en?filename=Guidance+document+on+CBAM+implementation+for+installation+operators+outside+the+EU.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://taxation-customs.ec.europa.eu/document/download/2980287c-dca2-4a4b-aff3-db6374806cf7_en?filename=Guidance+document+on+CBAM+implementation+for+installation+operators+outside+the+EU.pdf",
+            "quote": "Installation data, comprising identification and location details for the \noperator’s installation, and contact details for the operator’s authorised \nrepresentative.",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -18931,7 +20591,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
+            "quote": "歐盟CBAM自2024/7/31之後，預設值僅可用於複雜商\n品小於多少的碳排量\nA.<20%, B.<30%, C.<40%, D.以上皆非\nA.<20%",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -18968,7 +20638,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "quote": "我國如果課徵碳稅通常由哪個部門徵收？\n(A)環境部；(B)財政部；(C)金管會；(D)行政\n院\n(B)財政部",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -19005,7 +20685,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://taxation-customs.ec.europa.eu/document/download/2980287c-dca2-4a4b-aff3-db6374806cf7_en?filename=Guidance+document+on+CBAM+implementation+for+installation+operators+outside+the+EU.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://taxation-customs.ec.europa.eu/document/download/2980287c-dca2-4a4b-aff3-db6374806cf7_en?filename=Guidance+document+on+CBAM+implementation+for+installation+operators+outside+the+EU.pdf",
+            "quote": "Reporting of indirect \nemissions  \nRequired for all CBAM goods. \n\n23 \nDefault values for \nreporting of \nembedded emissions \nGlobal values  \n(except electricity). \nMay be used for precursors of complex goods contributing up \nto 20% of the total for the complex good. \nMust be used for imports of electricity and for indirect \nemissions, unless certain criteria are met. \nFlexibility regarding \nMRV rules \nThe use of rules from other (non-EU) carbon pricing or \nreporting schemes are allowed for operators of installations \nuntil the end of 2024, if they cover the same emissions and \nprovide similar accuracy.  \nImporters may use other (estimation) methods until 31 July \n2024. \nFrequency of \nreporting \nQuarterly (importers). \nVerification of \nreported data \nNot required.  \nOperators and importers should aim to report as accurately \nand completely as possible.  \nIf verification has been undertaken this should be noted in the \nsubmission. \nSurrender of CBAM \ncertificates \nNot required.",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -19042,7 +20732,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "碳信用一旦被創建，需要在專門的登錄處註冊，以確保其獨一無二",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -19079,7 +20779,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "的配額可以賣給那些排放量超過自身配額的組織",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -19208,7 +20918,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/907546226.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/907546226.pdf",
+            "quote": "C.GRI與SASB在永續報\n告中需要分開兩個大章節分別表述資料",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -19245,7 +20965,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351"
+        ],
+        "evidence": [
+          {
+            "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351",
+            "quote": "企業作為須符合法令規定，例如不實廣告須依公平交易法規定辦\n理，向公平交易委員會申訴，本指引亦可作為公平會查處是否有廣告\n不實之參考。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -19282,7 +21012,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "Q12溫室氣體減量或移除計畫對於品質的要求，何者為非？(答案: A)\n(A)計畫應確保高度投資效益才執行",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -19366,7 +21106,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351"
+        ],
+        "evidence": [
+          {
+            "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351",
+            "quote": "應透過科學合理的計算和外部第三方機構查驗，確\n保碳中和的真實性和有效性",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -19493,7 +21243,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf",
+            "quote": "CDP 透過獨立的評分方法評估公司和城市在揭露和環境領導力方面的進展情\n況，目的是激勵和測量他們在氣候變化、森林保護和水安全方面的行動進展。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -19530,7 +21290,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "台灣旨在透過經濟誘因機制加速溫室氣體的減量",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -19567,7 +21337,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351"
+        ],
+        "evidence": [
+          {
+            "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351",
+            "quote": "產品或服務碳中和：指在產品或服務完整或部分生命週期內，\n人為溫室氣體排放與人為溫室氣體移除達到平衡狀態，包含\n採取抵換方式來補償溫室氣體排放。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -19702,7 +21482,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "research_agent",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "發展中國家在公約中的特殊考慮是什麼？ \n(A)不需要減少溫室氣體排放；(B)獲得額外資金；(C)面臨的具體需要和特殊情\n況應充分考慮；(D)享有豁免權",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -19739,7 +21529,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "research_agent",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "4. Ans (C) \n預防措施，包括緩解其不利影響。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -19776,7 +21576,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "research_agent",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "5. Ans (B) \n應融入相關社會、經濟和環境政策及行動中。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -19860,7 +21670,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "Q1 哪一項不是推動抵換類型計畫的好處？(答案: A)\n(A)增加全球二氧化碳的總量(B)刺激低碳技術的發展(C)為減碳提供經濟誘因(D)幫助國家達到他們的排放目標",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -19988,7 +21808,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "Q7我國永續報告書編製申報及公司治理3.0所使用的應參考標準，何者為非？(答案: B)\n(A)全球申報準則（GRI）(B)碳揭露專案（CDP）(C)氣候風險財務揭露（TCFD）(D)永續會計準則委員會（SASB）",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -20070,7 +21900,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+            "quote": "在世界經濟論壇的十大全球風險報告中，大多數的議題\n是什麼類型\n(A) 經濟\n(B) 環境\n(C) 社會\n(D) 科技。\n(B) 環境",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -20107,7 +21947,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+            "quote": "NASA 的報告，在 2021 年已經迎來地表最熱的紀錄，\n在科學家預測最快在西元幾年，將面臨北極第一次夏季\n無冰\n(A) 2025\n(B) 2030\n(C) 2050\n(D) 2100。\n(B) 2030",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -20144,7 +21994,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "表2-2、特定行業常見之溫室氣體排放源 \n行業 \n常見排放源 \n排放之 \n溫室氣體種類 \n發電業 \n⚫ 以發電設備為主，例如汽力發電機組\n中，燃煤鍋爐、燃氣鍋爐、燃油鍋爐及\n結合型氣渦輪機。 \n⚫ 電氣輸配線路之變壓器、斷路器等電路\n設施（易產生SF6 逸散排放）。 \nCO2、CH4、\nN2O、SF6 \n鋼鐵業 \n電弧\n爐 \n⚫ 電弧爐煉鋼製造程序：如電弧爐 \n⚫ 金屬軋造程序：如壓延用均熱\n爐、軋鋼鍋爐等 \nCO2、CH4、\nN2O \n一貫\n式煉\n鋼 \n⚫ 燒結製程：如燒結爐 \n⚫ 焦炭製造程序：如煉焦爐 \n⚫ 鐵初級熔煉製造程序：如高爐 \n⚫ 煉鋼程序：如轉爐 \nCO2、CH4、\nN2O \n軋鋼 \n程序 加熱爐、切割設備 \nCO2、CH4、\nN2O \n石油 \n煉製業 \n以加熱設施為主 \n⚫ 裂解程序：加熱爐、轉化爐 \n⚫ 觸媒重組程序：加熱爐、再生爐 \nCO2、CH4、\nN2O \n水泥業 \n旋轉式燒成爐 \nCO2、CH4、\nN2O \n\n第貳篇 事業盤查登錄作業流程 \n2-5 \n行業 \n常見排放源 \n排放之 \n溫室氣體種類 \n半導體業 \n以用電設備及使用含氟氣體之製程設備為\n主，包含蝕刻區、化學氣相沉積\n（chemical vapor deposition, CVD）製程、\n薄膜區及擴散區。 \nCO2、CH4、 \nN2O、HFCs、\nPFCs、SF6、\nNF3",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -20271,7 +22131,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://service.cca.gov.tw/File/Get/cca/zh-tw/TNW6AjRp4XWTeGr"
+        ],
+        "evidence": [
+          {
+            "url": "https://service.cca.gov.tw/File/Get/cca/zh-tw/TNW6AjRp4XWTeGr",
+            "quote": "(1) 汽油：2.3210(kgCO2e/L)。 \n(2) 柴油：2.6462(kgCO2e/L)。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -20308,7 +22178,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "XXX 年本公司/工廠之直接排放源，包含使用天然氣之固定\n燃燒排放源、使用合金鐵及乙炔之製程排放源、使用車用汽油\n之移動燃燒排放源、使用冷媒與化糞池之逸散排放源。能源間\n接排放源包含外購電力及外購蒸汽。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -20345,7 +22225,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+            "quote": "溫室氣體排放量 =  \n活動數據 (燃料耗用量) × GHG 排放係數 × 全球暖化潛勢(GWP)值",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -20382,8 +22272,13 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "stem_defect_note": "題幹的前提與環境部盤查作業指引不符（見 explanation）。**答案未更動** —— 依題目給定之數據，算術結果正確；缺陷在題幹設定的前提，不在答案。此處以解析明示正確規則，避免題目教錯觀念。"
+      },
+      "explanation": "100,000 kg × 0.1 kgCO2e/kg = 10,000 kgCO2e = **10 tCO2e**。\n\n⚠️ **但這題的題幹本身在教一件錯的事。** 環境部盤查作業指引明定：「生質燃料燃燒產生之 CO2 屬於自然界循環反應的一部分，不會增加大氣中 CO2 的濃度，故 CO2 僅需計算排放量後**單獨表列**」—— 生質燃燒的 CO2 **不彙總進排放總量**（CH4、N2O 才計入）。本題答案依題目給定的係數計算無誤，但實務上不可把生質 CO2 直接當成「直接排放總量」。"
     },
     {
       "index": 485,
@@ -20419,7 +22314,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "CH4 甲烷（Methane） \n21 \n23 \n25",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -20456,7 +22361,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "在邊界內使用燃料燃燒之固定與移動排放源、製程操作過程因物\n理或化學變化產生溫室氣體排放之排放源，及逸散排放源產生溫室氣\n體之排放，皆屬於溫室氣體直接排放。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -20493,7 +22408,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "CH4 甲烷（Methane） \n21 \n23 \n25",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -20530,7 +22455,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "在邊界內使用燃料燃燒之固定與移動排放源、製程操作過程因物\n理或化學變化產生溫室氣體排放之排放源，及逸散排放源產生溫室氣\n體之排放，皆屬於溫室氣體直接排放。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -20629,8 +22564,13 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "stem_defect_note": "題幹的前提與環境部盤查作業指引不符（見 explanation）。**答案未更動** —— 依題目給定之數據，算術結果正確；缺陷在題幹設定的前提，不在答案。此處以解析明示正確規則，避免題目教錯觀念。"
+      },
+      "explanation": "8,000,000 kWh × 0.2 kgCO2e/kWh = 1,600,000 kgCO2e = **1,600 tCO2e**。\n\n⚠️ **但這題的題幹本身在教一件錯的事。** 具再生能源憑證（T-REC）的綠電，其排放係數是 **0**，不是題幹給的 0.2 kgCO2e/kWh。本題答案依題目給定的係數計算無誤，但實務上「購買綠電」的能源間接排放不會是這個數字。"
     },
     {
       "index": 491,
@@ -20666,7 +22606,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "在邊界內使用燃料燃燒之固定與移動排放源、製程操作過程因物\n理或化學變化產生溫室氣體排放之排放源，及逸散排放源產生溫室氣\n體之排放，皆屬於溫室氣體直接排放。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -20703,7 +22653,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "在邊界內使用燃料燃燒之固定與移動排放源、製程操作過程因物\n理或化學變化產生溫室氣體排放之排放源，及逸散排放源產生溫室氣\n體之排放，皆屬於溫室氣體直接排放。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -20829,7 +22789,17 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "柴油 \n74,100 \n3 \n0.6 \n8,500 \nkcal/L",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -20866,7 +22836,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "PFC-14，四氟化碳，CF4 \n6,500 \n5,700 \n7,390",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -20903,8 +22883,13 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "stem_defect_note": "題幹的前提與環境部盤查作業指引不符（見 explanation）。**答案未更動** —— 依題目給定之數據，算術結果正確；缺陷在題幹設定的前提，不在答案。此處以解析明示正確規則，避免題目教錯觀念。"
+      },
+      "explanation": "180,000 kg × 0.18 kgCO2e/kg = 32,400 kgCO2e = **32.4 tCO2e**。\n\n⚠️ **但這題的題幹本身在教一件錯的事。** 環境部盤查作業指引明定：「生質燃料燃燒產生之 CO2 屬於自然界循環反應的一部分…故 CO2 僅需計算排放量後**單獨表列**」—— 不彙總進排放總量。本題答案依題目給定的係數計算無誤，但實務上不可把生質 CO2 直接當成「直接排放總量」。"
     },
     {
       "index": 498,
@@ -20940,7 +22925,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "二、排放係數法：指利用原（物）料、燃料之使用量或產品產量等數值乘上特定之排放係數，計算排放量之方法。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -20977,7 +22972,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "一、排放係數：指將每單位原（物）料、燃料使用量、產品產量或其他經中央主管機關認定之操作量所排放之排放量。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -21014,7 +23019,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "五、以相同計算方法，事業盤查登錄之總排放量與主管機關查核結果差異達百分之五以上。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -21051,7 +23066,17 @@
           "verification_batch": "C",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "事業應妥善保存盤查、登錄及查驗相關之資料六年，以備主管機關查核。",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -21076,7 +23101,7 @@
           "text": "以國際文獻為主"
         }
       ],
-      "answer": "C",
+      "answer": "A",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
@@ -21088,8 +23113,26 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "prior_answer": "C",
+        "valid_as_of": "2026-07-14",
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "依管理辦法第4 條第2 項規定，排放係數採用須以下來源： \n(1) 依據本部公告溫室氣體排放係數。",
+            "supports_option": "A"
+          }
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ],
+      "explanation": "環境部《溫室氣體排放量盤查作業指引》（113 年版）依溫管辦法 §4 第 2 項，把排放係數的採用來源**依序**列為：(1) 本部**公告**之溫室氣體排放係數 →(2) 國際文獻 →(3) 檢測報告所得之**自廠係數**。**自廠係數是最後一順位**，不是優先採用 —— 故選 A。",
+      "_correction_note": "2026-07-14 更正：原答 C（以自廠係數為主）為誤，正解為 A（以中央主管機關公告為主）。環境部盤查作業指引（113 年版）逐字列出採用順序：(1) 本部公告排放係數 (2) 國際文獻 (3) 檢測報告所得之自廠係數 —— **自廠係數排在最後**。釘選的溫管辦法 §4 亦把「採用中央主管機關公告之溫室氣體排放係數」列為第一款。已標 time_sensitive：作業指引逐年改版（現為 113 年版）。"
     },
     {
       "index": 503,
@@ -21125,7 +23168,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "事業原登錄之排放量盤查資料與查驗機構查驗結果不一致者，事業應於上傳查驗結果時併同上傳修正後之排放量清冊及盤查報告書。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -21162,7 +23215,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "事業原登錄之排放量盤查資料與查驗機構查驗結果不一致者，事業應於上傳查驗結果時併同上傳修正後之排放量清冊及盤查報告書。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -21199,7 +23262,17 @@
           "verification_batch": "C",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "事業停業、歇業或解散，應於事實發生之日起九十日內依本辦法規定辦理盤查登錄作業。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -21236,7 +23309,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "事業因天災或其他不可抗力事由致未能於期限內完成登錄或查驗作業時，應於規定期限屆滿前，以書面敘明理由，檢具相關資料，向中央主管機關申請展延，最長不得超過六十日。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -21320,7 +23403,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "事業盤查排放量應以排放係數法、質量平衡法、直接監測法或其他經中央主管機關認可之方法計算排放量，以公噸二氧化碳當量（公噸 CO2e）表示，並四捨五入至小數點後第三位。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -21357,7 +23450,17 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "前項排放量盤查，其溫室氣體種類如下：\n一、二氧化碳。\n二、甲烷。\n三、氧化亞氮。\n四、氫氟碳化物。\n五、全氟碳化物。\n六、六氟化硫。\n七、三氟化氮。\n八、其他經中央主管機關公告之物質。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -21394,7 +23497,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "以直接監測法計算排放量，事業應提出排放量監（檢）測計畫書送經中央主管機關核定後實施，排放量監（檢）測計畫書內容應包含監（檢）測方法與原理、連續監測設施之規格、設置位置、監（檢）測結果與其數據處理及品質保證作業、監（檢）測結果之記錄方式及保存，或其他經中央主管機關指定之事項。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -21431,7 +23544,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "溫室氣體年排放量 = 年活動數據 × 低位熱值 × 單位轉換因子 × 排放係數 × 溫暖化潛勢",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -21468,7 +23591,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "quote": "CO2 年排放量 = 年活動數據 × 分子量比率 × 碳含量 × 製程轉化效率或燃料之燃燒效率",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -21505,7 +23638,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "中央主管機關受理前項申請，經審查不合規定或內容有欠缺者，應即通知事業補正，補正次數以一次為限，補正日數不得超過三十日；屆期未補正或補正仍不合規定，駁回其申請。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -21542,7 +23685,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "查驗作業不得連續六年由同一主導查驗員執行。但更換查驗員確有困難，檢具證明文件向中央主管機關提出，並經中央主管機關同意者，不在此限。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -21579,7 +23732,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "主管機關為執行排放量查核作業，得通知事業備妥下列相關資料：一、與溫室氣體排放有關之原（物）料、燃料之種類、成分、熱值及用量、產品種類及生產量，或其他經主管機關認定之操作量紀錄報表。",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -21616,7 +23779,17 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+            "quote": "下列何者不是溫室氣體盤查的範疇？ (A)範疇一：直接排放 (B)範疇二：能源間接排放 (C)範疇三：其他間接排放 (D)範疇四：碳匯",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -21653,7 +23826,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "quote": "CDP 的數據集重點不包括哪㇐項？ (A)氣候變化；(B)森林砍伐；(C)水安全；(D)城市擴張",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -21735,7 +23918,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139",
+            "quote": "前項K值為二萬五千公噸二氧化碳當量；其屬高碳洩漏風險之事業，K值為零。",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -21862,7 +24055,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+            "quote": "Q11 1碳稅費與排放交易之間的觀念，何者為非？(A)排放交易為強制性市場，應設定排放上限(B)排放交易制度得在主管機關的授權下使用認可的減量額度進行超額排放量扣抵(C)只要是排放交易市場，涵蓋的部門別都一致(D)企業的總體碳成本可以包含法遵管制成本、內部碳定價成本與間接碳成本 (C)只要是排放交易市場，涵蓋的部門別都一致",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -21899,7 +24102,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+            "quote": "產品碳足盤查過程中，針對特定的產品/服務進行環境宣告之生命週期範疇界定的作業程序文件。目的在使相同功能產品/服務就其環境衝擊量化後之環境宣告，具有一致的比較基礎。這份文件稱之為何？(A)生命週期評估(LCA)；(B)物質安全資料表(MSDS)；(C)產品類別規則(PCR)；(D)物質流成本分析(MFCA)",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -21936,7 +24149,17 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+            "quote": "類別1-直接溫室氣體排放量與移除量：包括組織直接活動產生的溫室氣體排放，例如工廠燃燒煤炭、天然氣或石油產品來產生能量。直接排放還包括公司車隊燃燒汽油和柴油所產生的排放。",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -21973,7 +24196,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+            "quote": "若有需要申請環保署之碳標籤，則盤查流程為:引用產品類別規則->碳足跡計算->碳足跡查證-> 碳標籤申請",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -22010,7 +24243,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "quote": "台灣政策配套中，不包括以下哪項？(A)推動綠色金融；(B)檢討與改善再生能源等法令；(C)發展氣候變遷科學及衝擊調適研究；(D)全面禁止再生能源的發展",
+            "supports_option": "D"
+          }
+        ]
       }
     },
     {
@@ -22047,7 +24290,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "quote": "氣候變遷調適(Adaptation)是指？(A)降低二氧化碳排放；(B)增加綠色植被面積；(C)人類與自然系統回應氣候變遷風險的調整過程；(D)減少工業化進程",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -22084,7 +24337,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "quote": "碳洩漏(Carbon Leakage)是指？(A)碳的物理洩漏；(B)碳排放管制導致產業轉移到碳管制較寬鬆的地區；(C)植物吸收二氧化碳的過程；(D)溫室氣體的自然循環",
+            "supports_option": "A"
+          }
+        ]
       }
     },
     {
@@ -22094,22 +24357,22 @@
       "options": [
         {
           "key": "A",
-          "text": "將CO₂從空氣中移除並封存"
+          "text": "從大氣中移除氧氣"
         },
         {
           "key": "B",
-          "text": "分離排放源中的CO₂"
+          "text": "僅指從工業設施中捕捉二氧化碳"
         },
         {
           "key": "C",
-          "text": "將CO₂封存或用於其他用途"
+          "text": "從排放源捕捉二氧化碳及儲存過程"
         },
         {
           "key": "D",
-          "text": "加強自然碳吸收作用"
+          "text": "增加化石燃料的使用"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
@@ -22121,8 +24384,45 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "prior_answer": "B",
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "quote": "碳捕捉技術(CCUS)包括以下哪些過程？",
+            "supports_option": "C"
+          }
+        ],
+        "options_replaced": {
+          "on": "2026-07-14",
+          "prior_options": [
+            {
+              "key": "A",
+              "text": "將CO₂從空氣中移除並封存"
+            },
+            {
+              "key": "B",
+              "text": "分離排放源中的CO₂"
+            },
+            {
+              "key": "C",
+              "text": "將CO₂封存或用於其他用途"
+            },
+            {
+              "key": "D",
+              "text": "加強自然碳吸收作用"
+            }
+          ],
+          "prior_answer": "B",
+          "source_url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "why": "**原選項讓本題有兩個正解。** 原本的 B「分離排放源中的 CO₂」（＝捕捉）與 C「將 CO₂ 封存或用於其他用途」（＝封存／利用）**都是 CCUS 涵蓋的過程**，而題幹問的是「包含哪些過程」—— 兩個都對，無法作答。iPAS 公版教材模擬題 C 的 Q24 為同一題，其官方選項把「僅指捕捉」明列為錯誤選項、正解為「從排放源捕捉二氧化碳及儲存過程」（涵蓋捕捉＋儲存）。此處還原官方選項與答案卡。"
         }
-      }
+      },
+      "explanation": "CCUS 是「捕捉 + 利用／封存」的**整段流程** —— 只做捕捉（B）不算，把 CO₂ 從排放源捕捉下來**並加以儲存**才是（C）。iPAS 公版教材模擬題 C 的 Q24 為同一題，答案卡印 (C)。",
+      "_correction_note": "2026-07-14：**選項整組還原**（原題有兩個正解）。詳見 metadata.options_replaced。"
     },
     {
       "index": 530,
@@ -22158,7 +24458,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "Q19有關京都議定書的敘述何者為是？(答案: C)(A)目前2024年仍可申請新的清潔發展機制（CDM）專案(B)開發中國家（非附件一締約方）也應負責減量義務(C)京都議定書導入了聯合履行（JI）、清潔發展機制（CDM）與國際排放交易（IET）三種市場機制(D)京都議定書自1997年起執行，僅有一個承諾期",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -22195,7 +24505,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+            "quote": "有關GRI通用準則2021當中的GRI 1、GRI 2、GRI 3，下列敘述何者正確？A.包含了「GRI 1 環境」、「GRI 2 社會」、「GRI 3 治理」  B.包含了「GRI 1 環境」、「GRI 2 社會」、「GRI3 經濟」  C.包含了「GRI 1 基礎」、「GRI 2 一般揭露」、「GRI 3 重大性議題」  D.包含了「GRI 1 基礎」、「GRI 2 進階」、「GRI 3 特殊」C.包含了「GRI 1 基礎」、「GRI 2 一般揭露」、「GRI 3 重大性議題」",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -22205,22 +24525,22 @@
       "options": [
         {
           "key": "A",
-          "text": "涵蓋氣候變遷對生態系影響"
+          "text": "此議題涵蓋氣候變遷對生態系統和生物多樣性的影響"
         },
         {
           "key": "B",
-          "text": "管理企業對生物多樣性影響"
+          "text": "此議題涉及公司對生態系統和生物多樣性影響的管理"
         },
         {
           "key": "C",
-          "text": "涉及所有開發階段生物多樣性喪失"
+          "text": "影響包括但不限於規劃、土地使用、許可、開發、營運和場地修復等各階段的生物多樣性喪失、棲息地破壞與森林砍伐"
         },
         {
           "key": "D",
-          "text": "僅限營運階段，不含場址選擇"
+          "text": "包括但不限於勘探用地、自然資源開採和種植，以及專案開發、建設和選址"
         }
       ],
-      "answer": "D",
+      "answer": "A",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
@@ -22232,8 +24552,45 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "prior_answer": "D",
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+            "quote": "SASB準則五大面向當中的環境(Environment)提及生態衝擊(Ecological Impacts)議題",
+            "supports_option": "A"
+          }
+        ],
+        "options_replaced": {
+          "on": "2026-07-14",
+          "prior_options": [
+            {
+              "key": "A",
+              "text": "涵蓋氣候變遷對生態系影響"
+            },
+            {
+              "key": "B",
+              "text": "管理企業對生物多樣性影響"
+            },
+            {
+              "key": "C",
+              "text": "涉及所有開發階段生物多樣性喪失"
+            },
+            {
+              "key": "D",
+              "text": "僅限營運階段，不含場址選擇"
+            }
+          ],
+          "prior_answer": "D",
+          "source_url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+          "why": "**原選項讓本題有兩個正解。** 題幹問「何者不正確」。原選項 A（此議題涵蓋氣候變遷對生態系影響）本來就是**錯的**（官方答案卡即指 A 為不正確），而社群共筆又把官方的 D（一段正確敘述：涵蓋勘探、開採、開發、建設與選址）換成了另一句錯的「僅限營運階段，不含場址選擇」，並把答案指向 D —— 於是 A 與 D **都是不正確的敘述**，兩個都能選。此處還原官方選項與答案卡。"
         }
-      }
+      },
+      "explanation": "SASB 的「生態衝擊（Ecological Impacts）」議題處理的是企業對**生態系與生物多樣性**的衝擊（棲地破壞、森林砍伐、土地與選址等），**氣候變遷的影響不屬於這個議題**（氣候另有其議題）。故 A 為不正確之敘述。iPAS 公版教材範例題為同一題，答案卡印 A。",
+      "_correction_note": "2026-07-14：**選項整組還原**（原題有兩個正解）。詳見 metadata.options_replaced。"
     },
     {
       "index": 533,
@@ -22269,7 +24626,17 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "臺灣2050 淨零排放策略的主要目標是什麼？(A)增加工業產出；(B)達到淨零溫室氣體排放；(C)加倍能源消耗；(D)減少經濟成長",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -22306,7 +24673,17 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "在實現2050 年淨零排放目標中，哪個部門被認為是轉型的關鍵領域？(A)旅遊；(B)農業；(C)能源和工業；(D)教育",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -22343,7 +24720,17 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "在臺灣的淨零排放策略中，再生能源扮演什麼角色？(A)次要重要性；(B)無角色；(C)主要重要性；(D)將被淘汰",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -22380,7 +24767,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "至2025 年，關於再生能源安裝的具體目標是什麼？(A) 5GW 的核能；(B) 20GW 的太陽能；(C) 10GW 的煤炭能力；(D) 15GW 的天然氣",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -22417,7 +24814,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "臺灣計劃如何解決交通部門的排放問題？(A)增加私人車輛的使用；(B)逐步淘汰電動車；(C)擴大綠色公共交通；(D)減少公共交通網絡",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -22549,7 +24956,17 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf",
+            "quote": "9. 在臺灣的淨零排放策略中，綠色金融扮演什麼角色？ (A)減少對綠色項目的投資；(B)為轉型到可持續經濟提供資金；(C)支持石化工 業；(D)無明確角色 10. 在非電力能源",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -22586,7 +25003,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf",
+            "quote": "在非電力能源去碳化方面，除加速電氣化進程外，亦將投入創新潔淨能源之 開發，如氫能與生質能以取代化石燃料，並搭配碳捕捉再利用及封存技術。而在 其他難以削",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -22623,7 +25050,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf",
+            "quote": "5. 碳定價(Carbon pricing)通常被視為以下哪一項？ (A)溫室氣體排放的獎勵計劃；(B)減緩政策努力過程的經濟手段；(C)增加碳排 放的懲罰措施；(D)一種氣候變遷適應措施",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -22660,7 +25097,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf",
+            "quote": "6. 總量管制與排放交易系統(Cap and trade)的主要特點是什麼？ (A)為溫室氣體排放設定一個不變的上限；(B)為溫室氣體排放設定一個上限並 允許排放權的交易；(C)僅限於管制碳排放的產",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -22697,7 +25144,17 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/907546226.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/907546226.pdf",
+            "quote": "Q11 碳稅費與排放交易之間的觀念，何者為非？ A.排放交易為強制性市場，應設定排放上限, B.排放交易制度得在主管機關的授權下使用 認可的減量額度進行超 額排放量扣抵, C.只要 是排放交易市場，涵蓋的部門別都㇐致, D.企 業的總體碳成本可以包含法遵管制成本、內 部碳定價成本與間接碳成本 C.只要是排放 交易市場，涵 蓋的部門別都 ㇐致 Q12 溫室氣體減量或移除計畫對於品質的要求，何者為非？ A.計畫應確保高度投資效益才執行, B.應重視 法律外加性，若有法規強制義務則無碳權產 出, C.應採用認可的國內 外",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -22734,7 +25191,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "batch_verification",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+            "quote": "類別4-使用產品的間接溫 室氣體排放 範疇三 1.購買產品及服務，2.資本財，3.燃料與能源相關活動 5.營運產生廢棄物，8.上游租賃資產 類別5-產品使用相關的間 接溫室氣",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -22820,7 +25287,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "batch_verification",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf",
+            "quote": "2. SBTi 的主要目標是為了符合哪個國際協議的目標？ (A)京都議定書；(B)蒙特利爾議定書；(C)瑞士議定書；(D)巴黎協定 3. SBTi 推動企業",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -22857,7 +25334,17 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "quote": "Q106 碳中和聲明的準確性和真實性應該由誰進行驗證？ (A)組織內部審計；(B)政府機構；(C)獨立第 三方；(D)非政府組織 (C)獨立第三 方 Q107 PAS 2060 標",
+            "supports_option": "C"
+          }
+        ]
       }
     },
     {
@@ -22944,7 +25431,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf",
+            "quote": "CDP 的數據集專注於氣候變化、森林砍伐、水安全等環境問題，並在2021 年 擴展到包括生物多樣性、塑膠和海洋等新領域。城市擴張並非CDP 數據集的 重點。 3. Ans (C)",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
@@ -23081,7 +25578,17 @@
           "verification_batch": "F",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf",
+            "quote": "1. RE100 倡議的主要目的是什麼？ (A)減少全球碳排放；(B)實現100%使用再生能源；(C)增加全球溫度；(D)減少 企業利潤 2. 加",
+            "supports_option": "B"
+          }
+        ]
       }
     },
     {
