@@ -263,3 +263,38 @@ describe('題庫資料模組', () => {
     });
   });
 });
+
+// UI 顯示的來源連結，必須把兩個欄位都收進來。
+//
+// 先前 questions.ts 只讀 `metadata.sources`，於是由來源 PDF 重建的 230 題
+// —— 它們的來源放在結構化的 `source.url` —— **明明有指向原始 PDF 的連結，
+// 卻永遠不會顯示出來**。學生本來可以點進去看原題，卻看不到。
+//
+// 更糟的是 README 一度宣稱「每題附一手來源連結」。實際上 UI 只顯示得出 279/780 題，
+// 而「每題」是 780。這個賣點有一半是因為 UI 沒讀而落空的。
+describe('來源連結：UI 必須同時看 metadata.sources 與 source.url', () => {
+  it('有 source.url 的還原題，UI 拿得到它的來源', () => {
+    const restored = allQuestions.filter((q) => q.id.startsWith('S_CHU'));
+    expect(restored.length, '找不到還原題 —— 這條測試在空轉').toBeGreaterThan(100);
+    const withSources = restored.filter((q) => (q.sources ?? []).length > 0);
+    expect(
+      withSources.length,
+      '還原題的 source.url 沒有被帶進 UI —— 那些連結等於不存在'
+    ).toBe(restored.length);
+  });
+
+  it('sources 只收 http(s) URL，且不重複', () => {
+    for (const q of allQuestions) {
+      for (const u of q.sources ?? []) {
+        expect(u, `${q.id} 的來源不是 http(s)：${u}`).toMatch(/^https?:\/\//);
+      }
+      const s = q.sources ?? [];
+      expect(new Set(s).size, `${q.id} 的來源有重複`).toBe(s.length);
+    }
+  });
+
+  it('gist 題目的 source 是字串 "gist"，不得被誤當成 URL', () => {
+    const bad = allQuestions.filter((q) => (q.sources ?? []).some((u) => u === 'gist'));
+    expect(bad.map((q) => q.id)).toEqual([]);
+  });
+});

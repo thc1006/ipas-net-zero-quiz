@@ -27,6 +27,33 @@ export const stats = {
 };
 
 /**
+ * 蒐集一題所有可顯示的來源 URL。
+ *
+ * 兩個欄位都要看：
+ *   metadata.sources[]  —— 大部分題目用這個
+ *   source.url          —— 由來源 PDF 重建的 230 題用這個（結構化的 source 物件）
+ *
+ * 先前 UI 只讀 metadata.sources，於是那 230 題**明明有指向來源 PDF 的連結，
+ * 卻永遠不會顯示出來** —— 學生本來可以點進去看原始題目，卻看不到。
+ * 「每題附來源」這個賣點，有一半是因為 UI 沒讀而落空的。
+ *
+ * 注意 gist 題目的 source 是字串 'gist'（不是物件），要濾掉。
+ */
+function collectSources(q: {
+  metadata?: { sources?: string[] };
+  source?: unknown;
+}): string[] | undefined {
+  const urls = [...(q.metadata?.sources ?? [])];
+  const src = q.source;
+  if (src && typeof src === 'object' && 'url' in src) {
+    const u = (src as { url?: unknown }).url;
+    if (typeof u === 'string' && /^https?:\/\//.test(u)) urls.push(u);
+  }
+  const uniq = [...new Set(urls.filter((u) => typeof u === 'string' && /^https?:\/\//.test(u)))];
+  return uniq.length > 0 ? uniq : undefined;
+}
+
+/**
  * 將 Gist 題目轉換為統一格式
  */
 function convertGistQuestion(q: GistQuestion): QuizQuestion {
@@ -39,7 +66,7 @@ function convertGistQuestion(q: GistQuestion): QuizQuestion {
     sourceType: 'gist',
     year: null,
     hasAnswer: q.answer !== null,
-    sources: q.metadata?.sources,
+    sources: collectSources(q),
     explanation: q.explanation,
   };
 }
@@ -57,7 +84,7 @@ function convertUniqueQuestion(q: UniqueQuestion): QuizQuestion {
     sourceType: 'unique',
     year: q.year,
     hasAnswer: q.answer !== null,
-    sources: q.metadata?.sources,
+    sources: collectSources(q),
     explanation: q.explanation ?? undefined,
   };
 }

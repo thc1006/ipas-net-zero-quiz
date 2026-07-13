@@ -212,3 +212,128 @@ describe('README 的 H1 必須保留可被搜尋到的關鍵字', () => {
     expect(h1, `H1 掉了關鍵字「${kw}」：${h1}`).toContain(kw);
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// gate 缺口補完
+//
+// 對抗式審查做了變異測試，發現這道 gate 只守住了一半的數字 —— 以下這些改壞了
+// **CI 照樣全綠**：README 的「考科一 434 + 考科二 346」、「55 題模擬 + 102 題 AI」、
+// DATA-PROVENANCE 的 duplicate 數與「159/159」、以及最刺眼的
+// **disposition 三個分類的加總（159+8+3=170）根本沒人算**
+// —— 那張表賣的就是「每一題都有交代」，而「有交代」這件事本身沒被驗證。
+//
+// docs-counts.test.ts 自己的註解在罵「把數字搬到新檔案卻忘了把 gate 搬過去」，
+// 結果 gate 只搬了一半。這裡補完。
+describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人守', () => {
+  const BY_SUBJECT = (DS.meta as unknown as { by_subject: Record<string, number> }).by_subject;
+  const POOL_META = (poolRaw as unknown as {
+    _meta: { totals: { external_mock: number; ai_generated: number; total: number } };
+  })._meta.totals;
+
+  it('README 的「考科一 N + 考科二 M」必須等於 meta.by_subject', () => {
+    const m = README.match(/考科一\s*(\d+)\s*\+\s*考科二\s*(\d+)/);
+    expect(m, 'README 找不到「考科一 N + 考科二 M」').not.toBeNull();
+    expect(Number(m![1])).toBe(BY_SUBJECT['考科1']);
+    expect(Number(m![2])).toBe(BY_SUBJECT['考科2']);
+    expect(Number(m![1]) + Number(m![2])).toBe(TOTAL);
+  });
+
+  it('README 的「N 題公開模擬題 + M 題 AI 產題」必須等於 pool._meta.totals', () => {
+    const m = README.match(/(\d+)\s*題公開模擬題\s*\+\s*(\d+)\s*題 AI 產題/);
+    expect(m, 'README 找不到「N 題公開模擬題 + M 題 AI 產題」').not.toBeNull();
+    expect(Number(m![1])).toBe(POOL_META.external_mock);
+    expect(Number(m![2])).toBe(POOL_META.ai_generated);
+    expect(Number(m![1]) + Number(m![2])).toBe(POOL_TOTAL);
+  });
+
+  // 這是新寫進 README 的宣稱 —— 不加 gate 就是在重犯同一個錯。
+  it('README 的「N / M 題附一手來源 URL」必須等於實際有 metadata.sources 的題數', () => {
+    // 口徑必須與 UI 實際顯示的一致（questions.ts 的 collectSources）——
+    // metadata.sources ∪ source.url。用別的口徑算，README 的數字就會與使用者看到的不符。
+    const withUrl = ALL.filter((i) => {
+      const md = i.metadata as unknown as { sources?: unknown[] } | undefined;
+      const fromMeta = (md?.sources ?? []).some(
+        (u) => typeof u === 'string' && /^https?:\/\//.test(u)
+      );
+      const src = (i as unknown as { source?: unknown }).source;
+      const fromSrc =
+        !!src &&
+        typeof src === 'object' &&
+        typeof (src as { url?: unknown }).url === 'string' &&
+        /^https?:\/\//.test((src as { url: string }).url);
+      return fromMeta || fromSrc;
+    }).length;
+    const m = README.match(/\*\*(\d+)\s*\/\s*(\d+)\s*題\*\*（\d+%）/);
+    expect(m, 'README 找不到「**N / M 題**（X%）」的來源覆蓋率').not.toBeNull();
+    expect(Number(m![1]), 'README 宣稱的「有來源」題數與資料不符').toBe(withUrl);
+    expect(Number(m![2])).toBe(TOTAL);
+
+    // 「其餘 N 題沒有來源連結」也要對得上
+    const m2 = README.match(/其餘\s*(\d+)\s*題沒有來源連結/);
+    expect(m2, 'README 沒有誠實說出「其餘 N 題沒有來源連結」').not.toBeNull();
+    expect(Number(m2![1])).toBe(TOTAL - withUrl);
+  });
+
+  it('README 的「N 題答案曾被更正」必須等於實際 prior_answer 的題數', () => {
+    const corrected = ALL.filter(
+      (i) => (i.metadata as unknown as { prior_answer?: string })?.prior_answer != null
+    ).length;
+    const m = README.match(/(\d+)\s*題答案曾被更正/);
+    expect(m, 'README 找不到「N 題答案曾被更正」').not.toBeNull();
+    expect(Number(m![1])).toBe(corrected);
+  });
+
+  it('README 的「下一個到期日」必須與 CONTENT-CURRENCY 一致', () => {
+    const inReadme = README.match(/\*\*(\d{4}-\d{2}-\d{2})：ISAE 3410 撤回/);
+    expect(inReadme, 'README 找不到下一個到期日').not.toBeNull();
+    expect(
+      CURRENCY.includes(inReadme![1]),
+      `README 宣稱的到期日 ${inReadme![1]} 在 CONTENT-CURRENCY.md 裡找不到 —— 可能是捏造的`
+    ).toBe(true);
+  });
+
+  it('DATA-PROVENANCE 的 disposition 三個分類必須真的加總為 170', () => {
+    const rows = {
+      restored: PROVENANCE.match(/\|\s*`restored`\s*\|\s*\**(\d+)\**/),
+      duplicate_within_source: PROVENANCE.match(/\|\s*`duplicate_within_source`\s*\|\s*\**(\d+)\**/),
+      duplicate_in_dataset: PROVENANCE.match(/\|\s*`duplicate_in_dataset`\s*\|\s*\**(\d+)\**/),
+      UNACCOUNTED: PROVENANCE.match(/\|\s*`UNACCOUNTED`\s*\|\s*\**(\d+)\**/),
+    };
+    const num = (name: keyof typeof rows) => {
+      const m = rows[name];
+      expect(m, `DATA-PROVENANCE 的 disposition 表格找不到 ${name}`).not.toBeNull();
+      return Number(m![1]);
+    };
+    const restored = num('restored');
+    const dupSrc = num('duplicate_within_source');
+    const dupDs = num('duplicate_in_dataset');
+    const unacc = num('UNACCOUNTED');
+
+    // 跟 manifest 的實際 disposition 逐項比對
+    const summary = (manifestRaw as unknown as {
+      _meta: { disposition_summary: Record<string, number> };
+    })._meta.disposition_summary;
+    expect(restored).toBe(summary['restored'] ?? 0);
+    expect(dupSrc).toBe(summary['duplicate_within_source'] ?? 0);
+    expect(dupDs).toBe(summary['duplicate_in_dataset'] ?? 0);
+    expect(unacc).toBe(0);
+
+    // **加總** —— 那張表賣的就是「每一題都有交代」，加總本身必須成立
+    expect(
+      restored + dupSrc + dupDs + unacc,
+      '文件裡的 disposition 加總不等於來源總題數 —— 「每一題都有交代」這個宣稱就不成立'
+    ).toBe(SOURCE_TOTAL);
+  });
+
+  it('DATA-PROVENANCE 的「實測 N/M 相符」必須等於 restored_count', () => {
+    const m = PROVENANCE.match(/實測\s*\*\*(\d+)\s*\/\s*(\d+)\*\*\s*相符/);
+    expect(m, 'DATA-PROVENANCE 找不到「實測 **N/M** 相符」').not.toBeNull();
+    expect(Number(m![1])).toBe(RESTORED_COUNT);
+    expect(Number(m![2])).toBe(RESTORED_COUNT);
+  });
+
+  it('DATA-PROVENANCE 必須保有「連結健康檢查」這一節（整節被刪也要抓到）', () => {
+    expect(PROVENANCE).toMatch(/##\s*連結健康檢查/);
+    expect(PROVENANCE).toMatch(/DEAD_DNS/);
+  });
+});

@@ -47,6 +47,14 @@ import sys
 import urllib.request
 from pathlib import Path
 
+# 繁體中文 Windows 的預設 codepage 是 cp950 —— 而那正是這個專案的主要讀者。
+# 這支腳本印 ✓ / ✅ / 中文，在 cp950 下會直接 UnicodeEncodeError，**一題都還沒驗就死**。
+# DATA-PROVENANCE.md 的整篇論點是「每個宣稱都對應一個任何人都能自己跑一遍的檢查」——
+# 那個「任何人」如果在 Windows 上跑不動，這句話就是空的。
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+
 REPO = Path(__file__).resolve().parent.parent
 MANIFEST = REPO / 'quiz-app' / 'src' / 'data' / 'restoration-manifest.json'
 DATASET = REPO / 'quiz-app' / 'src' / 'data' / 'integrated_dataset.json'
