@@ -190,9 +190,18 @@ describe('題庫結構完整性', () => {
     // ⚠️ 不可以用 /[\s\W_]+/：JS 的 \W 是 [^A-Za-z0-9_]，**中文字全部符合 \W**
     //    —— 那會把題幹的中文整段刪光，剩下的空殼互相「重複」，爆出一堆假警報。
     //    （Python 的 \W 是 Unicode-aware，行為完全不同 —— 我就是這樣被騙的。）
-    //    用 Unicode property escape：只剝標點(\p{P})、符號(\p{S})、分隔(\p{Z})與空白，保留 CJK。
+    //    用 Unicode property escape：剝標點(\p{P})、分隔(\p{Z})與空白，保留 CJK。
+    //
+    // ⚠️ **絕對不可以連 \p{S}（符號）一起剝**。× ÷ + − = 都是 \p{S}，
+    //    而題庫裡有公式題：
+    //      A. 排放量 = 活動數據 × 排放係數 × GWP
+    //      B. 排放量 = 活動數據 + 排放係數 + GWP
+    //      C. 排放量 = 活動數據 ÷ 排放係數 × GWP
+    //    四個選項的差別**只在運算子**。剝掉 \p{S} 之後它們會塌成同一個字串 ——
+    //    於是「公式題的答案差在運算子」這種錯誤，就會被判成「同一個答案」而放行。
+    //    我第一版就是這樣寫的：親手做了一個會漏掉公式題錯誤的把關。
     const norm = (t: string) =>
-      (t ?? '').normalize('NFKC').replace(/[\p{P}\p{S}\p{Z}\s_]+/gu, '').toLowerCase();
+      (t ?? '').normalize('NFKC').replace(/[\p{P}\p{Z}\s_]+/gu, '').toLowerCase();
     const sig = (it: Item) =>
       norm(it.stem) + '||' + it.options.map((o) => norm(o.text)).sort().join('|');
     const seen = new Map<string, string[]>();
@@ -440,7 +449,7 @@ describe('同一道題不得有兩個不同的正解', () => {
   // 不能用 \W —— JS 的 \W 是 [^A-Za-z0-9_]，**中文字全部符合 \W**，會把題幹刪光。
   // （Python 的 \W 是 Unicode-aware，行為完全不同 —— 我就是這樣被騙出 52 組假重複的。）
   const norm = (t: string) =>
-    (t ?? '').normalize('NFKC').replace(/[\p{P}\p{S}\p{Z}\s_]+/gu, '').toLowerCase();
+    (t ?? '').normalize('NFKC').replace(/[\p{P}\p{Z}\s_]+/gu, '').toLowerCase();
   const answerText = (it: Item) =>
     norm(it.options.find((o) => o.key === it.answer)?.text ?? '');
 
@@ -494,5 +503,124 @@ describe('同一道題不得有兩個不同的正解', () => {
     for (const v of KNOWN_ANSWER_VARIANTS) {
       expect(v.why, `${v.pair.join('/')} 沒寫理由`).toBeTruthy();
     }
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 選項不得有兩個完全相同（那題就不可作答了）
+//
+// ⚠️ 正規化**不可以剝掉 \p{S}（數學符號）**。題庫裡有公式題：
+//     A. 排放量 = 活動數據 × 排放係數 × GWP
+//     B. 排放量 = 活動數據 + 排放係數 + GWP
+//     C. 排放量 = 活動數據 ÷ 排放係數 × GWP
+// 四個選項的差別**只在運算子**。剝掉符號之後它們會塌成同一個字串，
+// 於是這條 gate 會誤報「四個選項完全相同」——
+// 我第一版掃描就是這樣，被自己的正規化騙了。
+describe('同一題內不得有兩個完全相同的選項', () => {
+  const norm = (t: string) =>
+    (t ?? '').normalize('NFKC').replace(/[\p{P}\p{Z}\s_]+/gu, '').toLowerCase();
+
+  it('選項兩兩不得相同（相同就代表這題不可作答）', () => {
+    const bad: string[] = [];
+    for (const it of ALL) {
+      const seen = new Map<string, string>();
+      for (const o of it.options) {
+        const n = norm(o.text);
+        if (!n) continue;
+        const prev = seen.get(n);
+        if (prev) bad.push(`${who(it)}: ${prev} == ${o.key} 「${o.text.slice(0, 30)}」`);
+        else seen.set(n, o.key);
+      }
+    }
+    expect(bad, '同一題裡有兩個一模一樣的選項 —— 這題根本無法作答').toEqual([]);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 計算題的算術
+//
+// 這 22 題是可以純機械驗算的，而且**已經逐題手算核對過**。
+//
+// 為什麼不寫解析器而是把算式寫死：我寫過三版解析器，**三版都出錯**
+// （漏掉中間的排放係數、被「AR5」裡的 5 卡住 GWP 的 regex、
+//   把「200 噸稻草 × 5 kgCH₄/噸」誤讀成「200 噸 × GWP」）。
+// **一個比資料還容易出錯的檢查，只會製造假警報。**
+// 所以這裡把每一題的算式與正解寫出來當回歸表：
+// 有人改了題目的數字或答案，這條就會紅，逼他重新驗算一次。
+const CALC_ANSWERS: ReadonlyArray<{
+  id: string;
+  expect: string;
+  math: string;
+  /** 題幹裡必須出現的輸入數字 —— 沒有這個，改了題幹的數字而不動答案就抓不到 */
+  inputs: string[];
+}> = [
+  { id: 'gist[479]', expect: '6,108 tCO2e',   math: '12,000,000 kWh × 0.509 kgCO2e/kWh ÷ 1000', inputs: ['12,000,000', '0.509'] },
+  { id: 'gist[480]', expect: '1,175 tCO2e',   math: '50 kg SF₆ × GWP 23,500 ÷ 1000', inputs: ['50', '23,500'] },
+  { id: 'gist[481]', expect: '2,650 tCO2e',   math: '50 車 × 80,000 km × 0.25 L/km × 2.65 kgCO2e/L ÷ 1000', inputs: ['50', '80,000', '0.25', '2.65'] },
+  { id: 'gist[482]', expect: '70,000 tCO2e',  math: '70,000 噸 CO₂（本身即 tCO2e）', inputs: ['70,000'] },
+  { id: 'gist[483]', expect: '520 tCO2e',     math: '100 噸 = 100,000 kg × 5.2 kgCO2e/kg ÷ 1000', inputs: ['100', '5.2'] },
+  { id: 'gist[484]', expect: '10 tCO2e',      math: '100,000 kg × 0.1 kgCO2e/kg ÷ 1000', inputs: ['100,000', '0.1'] },
+  { id: 'gist[485]', expect: '3,000 tCO2e',   math: '120 噸 CH₄ × GWP 25', inputs: ['120', '25'] },
+  { id: 'gist[486]', expect: '140 tCO2e',     math: '40 噸 = 40,000 kg × 3.5 kgCO2e/kg ÷ 1000', inputs: ['40', '3.5'] },
+  { id: 'gist[487]', expect: '2,250 tCO2e',   math: '90 噸 CH₄ × GWP 25', inputs: ['90', '25'] },
+  { id: 'gist[488]', expect: '60,000 tCO2e',  math: '60,000 噸 CO₂（本身即 tCO2e）', inputs: ['60,000'] },
+  { id: 'gist[489]', expect: '25 tCO2e',      math: '200 噸稻草 × 5.0 kgCH₄/噸 = 1,000 kg = 1 t CH₄ × GWP 25', inputs: ['200', '5.0', '25'] },
+  { id: 'gist[490]', expect: '1,600 tCO2e',   math: '8,000,000 kWh × 0.2 kgCO2e/kWh ÷ 1000', inputs: ['8,000,000', '0.2'] },
+  { id: 'gist[491]', expect: '162 tCO2e',     math: '45 噸 = 45,000 kg × 3.6 kgCO2e/kg ÷ 1000', inputs: ['45', '3.6'] },
+  { id: 'gist[492]', expect: '160 tCO2e',     math: '50 噸 = 50,000 kg × 3.2 kgCO2e/kg ÷ 1000', inputs: ['50', '3.2'] },
+  { id: 'gist[493]', expect: '687.5 tCO2e',   math: '250,000 L × 2.75 kgCO2e/L ÷ 1000', inputs: ['250,000', '2.75'] },
+  { id: 'gist[494]', expect: '1,410 tCO2e',   math: '60 kg SF₆ × GWP 23,500 ÷ 1000', inputs: ['60', '23,500'] },
+  { id: 'gist[495]', expect: '318 tCO2e',     math: '120,000 L 柴油 × 2.65 kgCO2e/L ÷ 1000', inputs: ['120,000', '2.65'] },
+  { id: 'gist[496]', expect: '554.25 tCO2e',  math: '75 kg PFC-14 × GWP 7,390 ÷ 1000', inputs: ['75', '7,390'] },
+  { id: 'gist[497]', expect: '32.4 tCO2e',    math: '180,000 kg × 0.18 kgCO2e/kg ÷ 1000', inputs: ['180,000', '0.18'] },
+  { id: 'gist[498]', expect: '30 tCO2e',      math: '200,000 kg × 0.15 kgCO2e/kg ÷ 1000', inputs: ['200,000', '0.15'] },
+  {
+    id: 'S1-p02-q004',
+    expect: '502,100 公斤',
+    math:
+      '多來源加總：電力 500,000 kWh × 0.527 = 263,500 kg；柴油 20,000 L × 2.68 = 53,600 kg；' +
+      '天然氣 100,000 m³ × 1.85 = 185,000 kg。合計 502,100 kg',
+    inputs: ['500,000', '0.527', '20,000', '2.68', '100,000', '1.85'],
+  },
+];
+
+describe('計算題的標準答案必須與算式相符（逐題手算核對過）', () => {
+  const byId = new Map(ALL.map((it) => [who(it), it]));
+
+  it.each(CALC_ANSWERS)('$id：$math = $expect', ({ id, expect: want }) => {
+    const it = byId.get(id);
+    expect(it, `${id} 不存在 —— 題目被刪了或 index 變了，這條回歸表已失效`).toBeDefined();
+    const chosen = it!.options.find((o) => o.key === it!.answer)?.text ?? '';
+    // 只比數字，避免 tCO2e / tCO₂e 這種寫法差異造成假警報
+    const digits = (s: string) => s.replace(/[^\d.]/g, '');
+    expect(
+      digits(chosen),
+      `${id} 的標準答案是「${chosen}」，但算式算出來是「${want}」`
+    ).toBe(digits(want));
+  });
+
+  // 只釘答案是不夠的：有人把題幹的「120,000 公升」偷改成「150,000 公升」而不動答案，
+  // 答案就從對的變成錯的，而回歸表完全看不見（實測：這個變異抓不到）。
+  // 所以連**輸入數字**也一起釘住 —— 題幹的數字一改，這條就紅。
+  it.each(CALC_ANSWERS)('$id 的題幹必須仍含算式用到的輸入數字', ({ id, inputs, math }) => {
+    const it2 = byId.get(id);
+    expect(it2, `${id} 不存在`).toBeDefined();
+    const stem = it2!.stem.normalize('NFKC');
+    for (const n of inputs) {
+      expect(
+        stem.includes(n),
+        `${id} 的題幹已經沒有「${n}」了 —— 題目數字被改過，但答案沒跟著重算。算式：${math}`
+      ).toBe(true);
+    }
+  });
+
+  it('回歸表沒有遺漏題目（新增計算題必須一起手算並登記）', () => {
+    const calc = ALL.filter((it) => /請計算|試計算/.test(it.stem));
+    const listed = new Set(CALC_ANSWERS.map((c) => c.id));
+    const missing = calc.filter((it) => !listed.has(who(it))).map(who);
+    expect(
+      missing,
+      '這些計算題不在回歸表裡 —— 新增計算題時必須手算一次並登記，不能默默放行'
+    ).toEqual([]);
   });
 });
