@@ -770,6 +770,7 @@ describe('quality_flags 的一致性', () => {
   const CORRECTED_BUT_STABLE: ReadonlyArray<{ id: string; why: string }> = [
     { id: 'gist[1]', why: '題幹鎖定「ISO 14064-1:2018」—— 版本寫死，條文不會再變。原答案是抄錯了' },
     { id: 'gist[46]', why: 'MRV 三個字母的原始定義（UNFCCC 2007 峇里路線圖），是術語詞源，不隨時間變' },
+    { id: 'gist[29]', why: '（已標 time_sensitive —— CBAM 規則持續被 Omnibus 修正，此處不需例外）' },
     {
       id: 'gist[304]',
       why:

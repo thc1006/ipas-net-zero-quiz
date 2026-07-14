@@ -13,7 +13,7 @@
 - 每題 → `metadata.valid_as_of` + `metadata.sources[]`（一手來源，quarterly workflow 會 curl）
 
 > ⚠️ **`meta.content_review.last_review_date` 不代表「整份題庫已查證到那一天」。**
-> 本輪只實查了 **112 / 773** 題（`scope` 所列的 CBAM / NDC / 碳費 / 碳中和），
+> 本輪只實查了 **111 / 773** 題（`scope` 所列的 CBAM / NDC / 碳費 / 碳中和），
 > 12 題沿用 2026-01-23，另有 668 題連 `time_sensitive` 都沒標、根本沒碰過。
 >
 > 判斷**單一題目**的內容是否仍正確，請以**該題的 `metadata.valid_as_of`** 為準。

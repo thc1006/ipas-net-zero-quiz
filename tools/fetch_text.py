@@ -36,7 +36,14 @@ def norm(t):
 
 
 def _get(url, timeout=60):
-    req = urllib.request.Request(url, headers={'User-Agent': _UA})
+    # ⚠️ `Accept-Encoding: identity` 是必要的。
+    # icao.int 會回**壓縮過的 bytes**，而 urllib **不會自動解壓** ——
+    # 於是我們拿到一坨亂碼，然後把一筆真的引文判成「查無此句（捏造）」。
+    # 這又是一次「檢查器比資料還常出錯」：**亂碼不是「頁面上沒有這句話」。**
+    req = urllib.request.Request(url, headers={
+        'User-Agent': _UA,
+        'Accept-Encoding': 'identity',
+    })
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE   # 學術網站憑證鏈常不完整；抓不到頁面 != 捏造

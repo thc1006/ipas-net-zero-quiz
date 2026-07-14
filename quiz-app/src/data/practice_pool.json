@@ -827,6 +827,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -1104,6 +1109,18 @@
           "previous_answer": "B",
           "method": "ladder_kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=9",
+            "quote": "事業依本法第三十條規定，得以國內減量額度申請第五條第二項收費排放量之扣除，其扣除上限不得超過事業收費排放量之百分之十，減量額度之種類及其額度",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -1435,6 +1452,11 @@
           "previous_answer": "A",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -1489,6 +1511,11 @@
           "recorded_on": "2026-07-13",
           "why": "引文出自 ea01.moeaea.gov.tw 的 JS 手風琴（ASP.NET postback 動態載入）。我的靜態抓取與 WebFetch 都看不到答案內文 —— **無法證明它為真，也無法證明它捏造**。不寫入證據，也不指控。",
           "agent_source": "https://ea01.moeaea.gov.tw/e0409/Page/Classroom.aspx"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -1538,6 +1565,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -2606,6 +2638,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -2782,6 +2819,18 @@
           ],
           "previous_answer": "C",
           "why": "題幹已給齊所有輸入，選項再列一次算式是多餘的，而那正是造成撞題的原因。四個選項統一為純金額，三個干擾項各對應一種真實的計算錯誤（忘扣 K 值／把 K 值當收費排放量／誤用優惠費率），不是憑空編的數字。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=5",
+            "quote": "碳費之計算為收費排放量乘以徵收費率。\n前項收費排放量=（年排放量－K值）×排放量調整係數值。\n前項K值為二萬五千公噸二氧化碳當量；其屬高碳洩漏風險之事業，K值為零。",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -2836,6 +2885,18 @@
           "previous_answer": "B",
           "method": "ladder_reversed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=6",
+            "quote": "事業取得中央主管機關核定之自主減量計畫，並經審查認定屬高碳洩漏風險行業，其適用之排放量調整係數值規定如下：\n一、第一期排放量調整係數值為零點二。\n二、第二期排放量調整係數值為零點四。\n三、第三期排放量調整係數值為零點六。\n事業非屬前項認定之高碳洩漏風險者，其適用之排放量調整係數值為一。",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -3002,6 +3063,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -3052,6 +3118,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News",
+            "quote": "(二)適用對象及時程：考量國內量能，規劃自2026年會計年度起分三階段適用IFRS永續揭露準則：\n1.2026年：資本額達100億元以上之上市櫃公司適用。\n2.2027年：資本額達50億元以上未達100億元之上市櫃公司適用。\n3.2028年：其餘所有上市櫃公司適用。",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -3104,6 +3182,11 @@
           "previous_answer": "C",
           "method": "ladder_kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -3156,6 +3239,18 @@
           "previous_answer": "D",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://dsp.tpex.org.tw/storage/education_event/IFRS%E6%B0%B8%E7%BA%8C%E6%BA%96%E5%89%87%E5%95%8F%E7%AD%94%E9%9B%86.pdf",
+            "quote": "範疇3 溫室氣體排放延後一年揭露及首次適用年度無須揭露比較期間資訊",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -3208,6 +3303,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0%2C2&mcustomize=news_view.jsp&dataserno=202505130005&dtable=News",
+            "quote": "修正重點如下：\n一、 明定以專章揭露永續相關財務資訊，並經董事會通過：按接軌藍圖規劃之對象及時程，明定符合一定條件之公司，應以專章方式於年報中記載經董事會決議通過之「永續相關財務資訊」，以提升永續資訊之品質。",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -3261,6 +3368,11 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -3312,6 +3424,11 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -3363,6 +3480,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -3466,10 +3588,23 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.trec.org.tw/documents/81.pdf",
+            "quote": "但各國憑證運作模式相同\n• 1張憑證為1000度電\n• 以電子方式發行",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
-        "https://www.trec.org.tw/"
+        "https://www.trec.org.tw/",
+        "https://www.trec.org.tw/documents/81.pdf"
       ],
       "quality_flags": []
     },
@@ -3566,6 +3701,18 @@
           "previous_answer": "C",
           "method": "ladder_reversed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.moeaea.gov.tw/ECW/populace/content/Content.aspx?menu_id=14438",
+            "quote": "太陽光電占比由民國105年為26.3%，至民國114年增加為67.7%",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -3619,6 +3766,18 @@
           "previous_answer": "A",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.re100.org.tw/",
+            "quote": "RE100 是由氣候組織 (The Climate Group) 與碳揭露計畫 (Carbon Disclosure Project, CDP) 所主導的全球再生能源倡議，匯聚全球最具影響力企業，以電力需求端的角度，共同努力提升使用綠電的友善環境；加入企業必須公開承諾在2020至2050年間達成100%使用綠電的時程，並逐年提報使用進度。",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -3724,6 +3883,18 @@
           "previous_answer": "D",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://sciencebasedtargets.org/resources/files/SBTi-criteria.pdf",
+            "quote": "C4 – Scope 3: If a company's relevant scope 3 emissions are 40% or more of total scope 1, 2, and 3 emissions, they shall be included in near-term science-based targets.",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -3776,6 +3947,18 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://files.sciencebasedtargets.org/production/files/SBTiFLAGGuidance.pdf",
+            "quote": "Companies in any other sector with FLAG-related emissions that total more than 20% of overall emissions across scopes 1, 2 and 3.",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -3933,6 +4116,18 @@
           "previous_answer": "D",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202412310005&dtable=News",
+            "quote": "同時也不能對環境及社會造成重大危害(以沒有因違反環境及勞動、人權等相關法規而被處重大裁罰為判斷原則),簡而言之即是對環境",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -3986,6 +4181,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+            "quote": "Authorised CBAM declarants should submit their annual CBAM declaration and surrender the corresponding number of certificates by 30 September of the year following the year of importation of the goods.",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -4040,6 +4247,18 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+            "quote": "The use of the first criterion would allow the listing of the following industrial sectors in terms of cumulated emissions: iron and steel, refineries, cement, aluminium, organic basic chemicals, hydrogen and fertilisers.",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -4092,6 +4311,18 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://cfp.moenv.gov.tw/",
+            "quote": "碳足跡產品類別規則(PCR)查詢",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -4143,6 +4374,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -4193,6 +4429,18 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures.html",
+            "quote": "IFRS S2 integrates and builds on the recommendations of the Task Force on Climate-related Financial Disclosures (TCFD) and incorporates industry-based disclosure requirements derived from SASB Standards.",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -4245,6 +4493,11 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -4297,6 +4550,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.iea.org/reports/net-zero-by-2050",
+            "quote": "This special report is the world’s first comprehensive study of how to transition to a net zero energy system by 2050 while ensuring stable and affordable energy supplies",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -4349,6 +4614,11 @@
           "previous_answer": "B",
           "method": "ladder_kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "citation_disputed",
+          "detail": "agent 判定原引用 https://www.ey.gov.tw/ **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
         }
       },
       "sources": [
@@ -4402,6 +4672,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -4453,6 +4728,11 @@
           "previous_answer": "A",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -4503,6 +4783,18 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.ey.gov.tw/File/D2A731DDD7EC55EC?A=C",
+            "quote": "私人運具為主之小客車及機車,透\n過補貼讓價格合理化,建構完善且方便的使用環境,導引民眾汰\n換為電動運具,而非採禁售或禁買燃油車的強制手",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -4554,6 +4846,11 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "citation_disputed",
+          "detail": "agent 判定原引用 https://ghgregistry.moenv.gov.tw/ **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
         }
       },
       "sources": [
@@ -4606,6 +4903,11 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -4658,6 +4960,18 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.iso.org/standard/38131.html",
+            "quote": "ISO 14025:2006 establishes the principles and specifies the procedures for developing Type III environmental declaration programmes and Type III environmental declarations.",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -4713,6 +5027,18 @@
           "previous_answer": "A",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
+            "quote": "should be introduced in Regulation (EU) 2023/956, and initially be set at a level of 50 tonnes.",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -4770,6 +5096,18 @@
           "previous_answer": "D",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+            "quote": "CBAM will initially apply to imports of certain goods and selected precursors whose production is carbon-intensive",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -4827,6 +5165,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+            "quote": "Importers of CBAM goods (or their indirect customs representatives) are urged to apply for the status of authorised CBAM declarants.",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -4941,6 +5291,18 @@
           "previous_answer": "C",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/article-64-mechanism",
+            "quote": "containing the rules, modalities and procedures for a carbon crediting mechanism established by Article 6, paragraph 4, of the Paris Agreement.",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -4997,6 +5359,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://unfccc.int/sites/default/files/resource/cma2024_L22E.pdf",
+            "quote": "with developed \ncountry Parties taking the lead, of at least USD 300 billion per year by 2035 for developing \ncountry Parties for climate action",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -5053,6 +5427,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://unfccc.int/sites/default/files/resource/cma2023_L17_adv.pdf",
+            "quote": "Transitioning away from fossil fuels in energy systems, in a just, orderly and \nequitable manner, accelerating action in this critical decade, so as to achieve net zero by 2050 \nin keeping with the science",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -5218,11 +5604,23 @@
           "previous_answer": "D",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf",
+            "quote": "Although most companies will reduce emissions by at least 90% through their\nlong-term science-based targets, not all companies will be able to achieve complete\ndecarbonization and therefore some residual emissions may remain. These emissions must\nbe neutralized to reach net-zero emissions and a state of no impact on the climate from\nGHG emissions.",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "citation_replaced",
+          "detail": "原引用 https://sciencebasedtargets.org/corporate-net-zero-standard-v2 經複驗判定不含本題主張；已換為 https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf，該頁上的逐字引文已機械驗證存在且支持本題答案。"
         }
       },
       "sources": [
-        "https://sciencebasedtargets.org/standards/net-zero-standard",
-        "https://sciencebasedtargets.org/corporate-net-zero-standard-v2"
+        "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf",
+        "https://sciencebasedtargets.org/standards/net-zero-standard"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -5275,6 +5673,18 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://sciencebasedtargets.org/sectors/forest-land-and-agriculture",
+            "quote": "companies in food production, food and beverage processing, food and staples retailing and tobacco are required to set FLAG science-based targets. This requirement also applies to companies in any other sector if FLAG-related emissions exceed 20% of their total scopes 1, 2, and 3 emissions.",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -5332,6 +5742,18 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/",
+            "quote": "IFRS S2 integrates and builds on the recommendations of the Task Force on Climate-related Financial Disclosures (TCFD) and incorporates industry-based disclosure requirements derived from SASB Standards.",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -5389,6 +5811,18 @@
           "previous_answer": "C",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2464",
+            "quote": "for financial years starting on or after 1 January 2024: \n \n \n \n \n \n \n (i) \n \n \n to large undertakings within the meaning of Article 3(4) of Directive 2013/34/EU which are public-interest entities as defined in point (1) of Article 2 of that Directive exceeding on their balance sheet dates the average number of 500 employees during the financial year;",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -5448,6 +5882,18 @@
           "previous_answer": "D",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202302772",
+            "quote": "If the undertaking concludes that climate change is not material and therefore omits all disclosure requirements in ESRS E1 Climate change , it shall disclose a detailed explanation of the conclusions of its \n materiality \n assessment with regard to climate change (see ESRS 2 IRO-2 Disclosure Requirements in ESRS covered by the undertaking’s sustainability statement ), including a forward-looking analysis of the conditions that could lead the undertaking to conclude that climate change is material in the future.",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -5505,6 +5951,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.sec.gov/files/rules/final/2024/33-11275.pdf",
+            "quote": "Eliminating the proposed requirement to provide Scope 3 emissions disclosure (which the \nproposal would have required in certain circumstances);",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -5619,6 +6077,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.iso.org/standard/43279.html",
+            "quote": "ISO 14068 provides principles, requirements, and guidance for achieving and demonstrating carbon neutrality . It focuses on quantifying, reducing, and offsetting carbon footprints, utilizing a hierarchical approach prioritizing direct and indirect GHG emission reductions and removal enhancements within the value chain over offsetting.",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -5674,6 +6144,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.ipcc.ch/report/ar6/wg1/chapter/chapter-7/",
+            "quote": "CH 4 -fossil 11.8 ± 1.8 5.7 ± 1.4 ×10 –4 82.5 ± 25.8 29.8 ± 11 10.0 ± 3.8 13.2 ± 6.1 7.5 ± 2.9 2823 ± 1060 3531 ± 1385 CH 4 -non fossil 11.8 ± 1.8 5.7 ± 1.4 ×10 –4 79.7 ± 25.8 27.0 ± 11 7.2 ± 3.8 10.4 ± 6.1 4.7 ± 2.9 2675 ± 1057 3228 ± 1364 N 2 O 109 ± 10 2.8 ± 1.1 ×10 –3 273 ± 118 273 ± 130",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -5732,6 +6214,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.globalmethanepledge.org/",
+            "quote": "Participants joining the Pledge agree to take voluntary actions to contribute to a collective effort to reduce global methane emissions at least 30 percent from 2020 levels by 2030.",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -5842,6 +6336,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "dead",
+          "detail": "被引頁面已失效（含 Wayback 亦無存檔）"
         }
       },
       "sources": [
@@ -5897,6 +6396,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf",
+            "quote": "increase the likelihood the global community stays within a \n1.5˚C carbon budget but are not a substitute for the rapid and deep reduction of a company’s \nown value chain emissions. \nPlease see the Beyond Value Chain Mitigation pa",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -5955,6 +6466,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "dead",
+          "detail": "被引頁面已失效（含 Wayback 亦無存檔）"
         }
       },
       "sources": [
@@ -6010,6 +6526,11 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -6067,6 +6588,18 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/eli/reg/2023/956/oj",
+            "quote": "To ensure a gradual transition from the current system of free allowances to the CBAM, the CBAM should be progressively phased in while free allowances in sectors covered by the CBAM are phased out.",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -6124,6 +6657,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.efrag.org/Assets/Download?assetUrl=%2Fsites%2Fwebpublishing%2FSiteAssets%2FESRS-ISSB%2520Standards%2520Interoperability%2520Guidance.pdf",
+            "quote": "While in ESRS the double materiality assessment of what is decision-useful \nconsiders both investors and other stakeholders (including in relation to impact materiality), in \nISSB Standards this assessment is focused on the information needs of investors. On financial \nmateriality, the two assessmen",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -6181,6 +6726,18 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.icao.int/environmental-protection/CORSIA/Pages/CORSIA-Emissions-Units.aspx",
+            "quote": "The CORSIA Eligible Emissions Units are approved by the Council, by considering recommendations of the Technical Advisory Body (TAB), through the assessment of emissions unit programmes with the CORSIA Emissions Unit Eligibility Criteria.",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -6239,6 +6796,11 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "dead",
+          "detail": "被引頁面已失效（含 Wayback 亦無存檔）"
         }
       },
       "sources": [
@@ -6294,6 +6856,18 @@
           "previous_answer": "C",
           "method": "ladder_kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=3",
+            "quote": "碳費徵收對象為具有本法第二十一條第一項公告應盤查登錄及查驗溫室氣體排放量之排放源，且其全廠（場）之直接排放及使用電力之間接排放，其溫室氣體年排放量合計值達二萬五千公噸二氧化碳當量以上之電力、燃氣供應業及製造業（以下簡稱事業）。",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -6350,10 +6924,22 @@
           "previous_answer": "B",
           "method": "ladder_kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284",
+            "quote": "一般費率\n：新臺幣\n300元/公噸\n二氧化碳當量。\n◆\n優惠費率A\n（符合「徵收",
+            "supports_option": ""
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "citation_replaced",
+          "detail": "原引用 https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=5 經複驗判定不含本題主張；已換為 https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284，該頁上的逐字引文已機械驗證存在且支持本題答案。"
         }
       },
       "sources": [
-        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=5",
+        "https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=6",
         "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
       ],
@@ -6408,10 +6994,22 @@
           "previous_answer": "A",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007916",
+            "quote": "（一）目標年指定目標：指碳費徵收對象（以下簡稱事業）依附表一或附\n表二之指定削減率規定，推估目標年溫室氣體年排放量，納入自主\n減量計畫，報請中央主管機關核定據以執行之目標。\n（二）年度指定目",
+            "supports_option": ""
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "citation_replaced",
+          "detail": "原引用 https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=11 經複驗判定不含本題主張；已換為 https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007916，該頁上的逐字引文已機械驗證存在且支持本題答案。"
         }
       },
       "sources": [
-        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=11",
+        "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007916",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=5",
         "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
       ],
@@ -6464,6 +7062,18 @@
           "previous_answer": "B",
           "method": "ladder_reversed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=6",
+            "quote": "事業取得中央主管機關核定之自主減量計畫，並經審查認定屬高碳洩漏風險行業，其適用之排放量調整係數值規定如下：\n一、第一期排放量調整係數值為零點二。\n二、第二期排放",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -6520,10 +7130,22 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007955",
+            "quote": "（二）於徵收年度，碳費費額占所屬法人營業毛利百分之三十以上或所屬\n法人於徵收年度營業毛利為負值之事業。\n（三）",
+            "supports_option": ""
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "citation_replaced",
+          "detail": "原引用 https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=6 經複驗判定不含本題主張；已換為 https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007955，該頁上的逐字引文已機械驗證存在且支持本題答案。"
         }
       },
       "sources": [
-        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=6",
+        "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007955",
         "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
         "https://www.moenv.gov.tw/cca/0b0e6d47b07ea2cd"
       ],
@@ -6576,6 +7198,18 @@
           "previous_answer": "C",
           "method": "ladder_kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=5",
+            "quote": "前項K值為二萬五千公噸二氧化碳當量；其屬高碳洩漏風險之事業，K值為零。",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -6630,6 +7264,18 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=4",
+            "quote": "事業應於碳費徵收費率公告生效次年起，每年五月底前，依其前一年度一月一日至十二月三十一日之溫室氣體排放量，按公告之費率自行計算應繳納之費額，並依中央主管機關規定之格式",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -6686,6 +7332,18 @@
           "previous_answer": "B",
           "method": "ladder_kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+            "quote": "以2030年為目標年，二種指定削減率適用不同優惠費率",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -6741,6 +7399,18 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=32",
+            "quote": "中央主管機關應成立溫室氣體管理基金，基金來源如下：\n一、第二十四條與前條之代金及第二十八條之碳費。\n二、第二十五條及第三十六條之手續費。\n三、第三十五條拍賣或配售之所得。\n四、政府循預算程序之撥款。\n五、人民、事業或團體之捐贈。\n六、其他之收入。",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -6796,6 +7466,18 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=49",
+            "quote": "事業違反依第二十一條第二項所定辦法中有關排放量盤查、登錄之頻率、紀錄、應登錄事項、期限或管理之規定，經通知限期補正或改善，屆期仍未補正或完成改善者，處新臺幣十萬元以上一百萬元以下罰鍰",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -6852,6 +7534,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=7",
+            "quote": "一、移除類型專案：\n（一）展延型：以二十年為限，最多得展延二次，每次展延以十年為限。\n（二）固定型：以三十年為限。\n二、減少或避免排放類型專案：\n（一）展延型：以五年為限，最多得展延二次，每次展延以五年為限。\n（二）固定型：以十年為限。",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -6906,6 +7600,18 @@
           "previous_answer": "A",
           "method": "ladder_kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=7",
+            "quote": "自願減量專案之計入期，依專案類型於申請註冊階段選擇展延型或固定型，於通過註冊後始得起算，其年限規定如下：\n一、移除類型專案：\n（一）展延型：以二十年為限，最多得展延二次，每次展延以十年為限。\n（二）固定型：以三十年為限。\n二、減少或避免排放類型專案：",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -6961,10 +7667,22 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://oaout.moenv.gov.tw/law/Download.ashx?FileID=134380&id=GL006011&type=LAW",
+            "quote": "一 \n各行業 \n各製程排放源 \n全廠（場）化石燃料燃燒之直接\n排放產生溫室氣體年排放量達\n二點五萬公噸二氧化碳當量者。",
+            "supports_option": ""
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "citation_replaced",
+          "detail": "原引用 https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=21 經複驗判定不含本題主張；已換為 https://oaout.moenv.gov.tw/law/Download.ashx?FileID=134380&id=GL006011&type=LAW，該頁上的逐字引文已機械驗證存在且支持本題答案。"
         }
       },
       "sources": [
-        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=21",
+        "https://oaout.moenv.gov.tw/law/Download.ashx?FileID=134380&id=GL006011&type=LAW",
         "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
         "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
       ],
@@ -7017,6 +7735,18 @@
           "previous_answer": "B",
           "method": "ladder_kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=15",
+            "quote": "五、以相同計算方法，事業盤查登錄之總排放量與主管機關查核結果差異達百分之五以上。",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -7071,6 +7801,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=6",
+            "quote": "事業依第三條至前條規定辦理排放量盤查，應於每年四月三十日前，依中央主管機關所定格式，將前一年度之溫室氣體排放量清冊（以下簡稱排放量清冊）及溫室氣體盤查報告書（以下簡稱盤查報告書），以網路傳輸方式，登錄於中央主管機關指定之事業溫室氣體排放量資訊平台（以下簡稱資訊平台）。",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -7127,10 +7869,22 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007761",
+            "quote": "前項抵換來源之抵換比例為一比一。",
+            "supports_option": ""
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "citation_replaced",
+          "detail": "原引用 https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=24 經複驗判定不含本題主張；已換為 https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007761，該頁上的逐字引文已機械驗證存在且支持本題答案。"
         }
       },
       "sources": [
-        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=24",
+        "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007761",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=26"
       ],
       "quality_flags": []
@@ -7182,6 +7936,18 @@
           "previous_answer": "B",
           "method": "ladder_reversed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0070319",
+            "quote": "一、新建建築物建築面積達一千平方公尺以上。\n二、建築物增建時，增加之建築面積達一千平方公尺以上。\n三、建築物改建時，變更屋頂之面積達一千平方公尺以上。",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -7240,6 +8006,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=10",
+            "quote": "非屬經審查認定之高碳洩漏風險事業依本法第二十七條規定，以符合中央主管機關認可之國外減量額度申請第五條第二項收費排放量之扣除，其扣除上限不得超過事業收費排放量之百分之五。",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -7296,6 +8074,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=14",
+            "quote": "一、查核未達目標年指定目標或年度指定目標：經查核且未達指定目標之年度改為一般費率。\n\n二、廢止自主減量計畫：自廢止當年度及其後年度，改為一般費率。",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -7354,6 +8144,18 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=22",
+            "quote": "查驗機構應先向中央主管機關或其委託（任）之認證機關（構）申請認證後，並取得中央主管機關許可，始得辦理本法所定查驗事宜。",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -7410,6 +8212,18 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=26",
+            "quote": "前條減量額度用途如下：\n\n一、進行第二十四條第一項之溫室氣體增量抵換。\n\n二、扣除第二十八條第一項各款之排放量。\n\n三、扣除第三十一條第一項之排碳差額。\n\n四、抵銷第三十六條第二項之超額量。\n\n五、其他經中央主管機關認可之用途。",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -7465,6 +8279,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "dead",
+          "detail": "被引頁面已失效（含 Wayback 亦無存檔）"
         }
       },
       "sources": [
@@ -7522,6 +8341,11 @@
           "previous_answer": "B",
           "method": "ladder_kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -7578,6 +8402,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=12",
+            "quote": "中央主管機關應就溫室氣體減量措施類型，審定具備專案範疇、適用條件、專案邊界、基線情境及專案情境等內容之溫室氣體減量方法。",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -7633,6 +8469,18 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "quote": "前條盤查報告書應包括下列事項：\n\n一、基本資料：\n\n（一）事業名稱及地址。\n\n（二）事業負責人姓名。\n\n二、廠（場）排放源平面配置圖說。\n\n三、製程流程圖說、產製期程及產品產量。\n\n四、排放源之單元名稱或程序及其排放之溫室氣體種類。\n\n五、與排放量有關之原（物）料、燃料之種類、成分、碳含量、低位熱值及用量。",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -7689,6 +8537,18 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=35",
+            "quote": "中央主管機關應公告納入總量管制之排放源，分階段訂定排放總量目標，於總量管制時應考量各行業之貿易強度、總量管制成本等因素，以避免碳洩漏影響全球減碳及國家整體競爭力之原則，將各階段排放總量所對應排放源之排放額度，以免費核配、拍賣或配售方式，核配其事業。",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -7746,6 +8606,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=37",
+            "quote": "中央主管機關得公告一定種類、規模之產品，其製造、輸入或販賣業者，應於指定期限內向中央主管機關申請核定碳足跡，經中央主管機關審查、查驗及核算後核定之，並於規定期限內依核定內容使用及分級標示於產品之容器或外包裝。",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -7802,6 +8674,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=60",
+            "quote": "未依第二十四條第二項、第二十八條第四項及第三十一條第三項所定辦法，於期限內繳納代金、碳費者，每逾一日按滯納之金額加徵百分之零點五滯納金，一併繳納；逾期三十日仍未繳納者，移送強制執行。",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -7857,6 +8741,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -7912,6 +8801,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -7965,6 +8859,11 @@
           "model_family": "unspecified",
           "generation_date": "2026-04-25",
           "verifier_round": 2
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -8025,11 +8924,23 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
+            "quote": "Authorised CBAM declarants are required to submit an annual CBAM declaration containing the calculation of embedded emissions on the basis of either default values or actual values verified by accredited verifiers. Default values should be calculated and made available by the Commission. The verification of embedded emissions should therefore only apply to actual values.",
+            "supports_option": "none"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "citation_replaced",
+          "detail": "原引用 https://eur-lex.europa.eu/eli/reg/2023/956/oj 經複驗判定不含本題主張；已換為 https://eur-lex.europa.eu/eli/reg/2025/2083/oj，該頁上的逐字引文已機械驗證存在且支持本題答案。"
         }
       },
       "sources": [
-        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
-        "https://eur-lex.europa.eu/eli/reg/2023/956/oj"
+        "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
+        "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en"
       ],
       "quality_flags": [
         "low_confidence",
@@ -8083,6 +8994,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -8259,6 +9175,11 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "citation_disputed",
+          "detail": "agent 判定原引用 https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
         }
       },
       "sources": [
@@ -8317,6 +9238,18 @@
           "previous_answer": "A",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.iaasb.org/news-events/2025-05/iaasb-announces-withdrawal-isae-3410-assurance-engagements-greenhouse-gas-statements",
+            "quote": "Consequently, the withdrawal of ISAE 3410 will take effect from the effective date of ISSA 5000.",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -8374,6 +9307,18 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/",
+            "quote": "IFRS S1 requires an entity to disclose information about all sustainability-related risks and opportunities that could reasonably be expected to affect the entity’s cash flows, its access to finance or cost of capital over the short, medium or long term",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -8432,6 +9377,18 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.efrag.org/sites/default/files/sites/webpublishing/SiteAssets/IG%201%20Materiality%20Assessment_final.pdf",
+            "quote": "Double materiality covers both impact and financial materiality. Impact \nmateriality pertains to the material information about the undertaking’s \nimpacts on people or the environment related to a sustainability matter; \nfinancial materiality pertains to the material information about risks and \nopportunities related to a sustainability matter.",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         }
       },
       "sources": [
@@ -8489,6 +9446,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [
@@ -8546,6 +9508,11 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         }
       },
       "sources": [

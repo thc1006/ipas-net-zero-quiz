@@ -147,7 +147,20 @@ def patch(path, pattern, val, label):
 
 docs = {README: open(README, encoding='utf-8').read(), CURRENCY: open(CURRENCY, encoding='utf-8').read()}
 
+# ⚠️ **這份清單漏一條，就等於在說謊。**
+#
+# 第一版漏掉了 README 與 CONTENT-CURRENCY 的「本輪只實查 N / 773 題」——
+# 於是 `--check` 說「✅ 所有衍生數字都已一致」，但 CI 是紅的。
+# **一個只檢查一半的同步工具，比沒有工具更糟：它的綠燈是一句假的保證。**
+#
+# 這裡涵蓋的是**會隨資料改動而變**的數字。
+# 不涵蓋（因為它們不隨我的修改而變，且各自有 gate 守著）：
+#   - 考科一/考科二題數、練習池 54+100 的組成
+#   - restoration-manifest 的 159 題重建
+#   - llms.txt 的 external_mock / ai_generated 題數
 RULES = [
+    (README, r'本輪只實查\s*\*\*(\d+)\s*/', N['reverified'], 'README 本輪實查題數'),
+    (CURRENCY, r'本輪只實查了\s*\*\*(\d+)\s*/', N['reverified'], 'CURRENCY 本輪實查題數'),
     (README, r'\*\*(\d+) / 773\*\*', N['main_quote'], '主題庫逐字引文'),
     (README, r'連結（季排程每季檢查是否還通） \| (\d+) / 773', N['main_primary'], '主題庫一手來源'),
     (README, r'\*\*無從查證\*\* \| (\d+) / 773', N['main_nosource'], '主題庫無來源'),
