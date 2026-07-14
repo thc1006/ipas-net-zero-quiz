@@ -5176,7 +5176,7 @@
     },
     {
       "id": "pool-aig-ind-034",
-      "stem": "依路徑圖 2.0，我國上市櫃公司「溫室氣體盤查資訊外部確信」之預期級別演進，下列敘述何者最為合理？",
+      "stem": "依金管會就上市櫃公司永續資訊外部確信所定之推動時程，我國上市櫃公司「溫室氣體盤查資訊外部確信」之預期級別演進，下列敘述何者最為合理？",
       "options": [
         {
           "key": "A",
@@ -5229,12 +5229,18 @@
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         },
         "blind_review": {
-          "date": "2026-07-14",
-          "verdict": "FLAGGED_NOT_YET_VERIFIED",
-          "defect": "STEM_AMBIGUOUS",
-          "claim": "金管會官方文件只有 111/3/3「上市櫃公司永續發展路徑圖」與 112/3/28「上市櫃公司永續發展行動方案(2023年)」，查無名為「路徑圖 2.0」之文件，題幹為懸空引用；且來源 URL 指向 IAASB ISAE 3410 頁面（與台灣路徑圖無關）。就選項而言僅 D 站得住腳（ISAE 3410 及國際實務均為先有限確信、長期朝合理確信），A、B、C 明顯矛盾。",
-          "note": "⚠️ **這是一個「待驗證的指控」，不是判決。** 由盲測（不給答案、獨立重新推導）提出，**我尚未親自抓回一手來源複核**。本專案反覆學到「代理會過度指控」——第三輪代理指控三題答案有誤，**三筆全是誤判**。**在我自己驗過之前，不動資料。**"
-        }
+          "date": "2026-07-15",
+          "verdict": "CITATION_REMOVED_NOT_DISPROVEN",
+          "note": "⚠️ 未能證實「路徑圖 2.0」存在，**也未能證明它不存在**。已移除該無法查證的引用，而非宣告它是捏造的。"
+        },
+        "stem_corrections": [
+          {
+            "date": "2026-07-15",
+            "from": "依路徑圖 2.0，我國上市櫃公司「溫室氣體盤查資訊外部確信」之預期級別演進，下列敘述何者最為合理？",
+            "to": "依金管會就上市櫃公司永續資訊外部確信所定之推動時程，我國上市櫃公司「溫室氣體盤查資訊外部確信」之預期級別演進，下列敘述何者最為合理？",
+            "why": "題幹原本引「**路徑圖 2.0**」。金管會的官方文件是「上市櫃公司永續發展路徑圖」（111/3/3）與「上市櫃公司永續發展行動方案（2023年）」（112/3/28）—— **查無名為「2.0」者**。⚠️ **但「我抓不到」不等於「它不存在」** —— 所以我**沒有**宣告它是捏造的，而是把這個**無法查證的引用**從題幹拿掉，改成不依賴特定文件名稱的敘述。答案（先有限確信、長期朝合理確信）不受影響。"
+          }
+        ]
       },
       "sources": [
         "https://www.iaasb.org/publications/glance-international-standard-assurance-engagements-isae-3410-assurance-engagements-greenhouse-gas"
@@ -6928,7 +6934,7 @@
       "options": [
         {
           "key": "A",
-          "text": "CBAM 憑證價格與 EU ETS 拍賣價之週均值連動"
+          "text": "2026 年進口貨物之 CBAM 憑證價格，係按 EU ETS 拍賣平台收盤價之「季均值」計算"
         },
         {
           "key": "B",
@@ -6972,6 +6978,12 @@
         },
         "evidence": [
           {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+            "quote": "By way of derogation from paragraph 1, the Commission shall calculate the price of CBAM certificates that corresponds to the embedded emissions declared in respect of the year 2026 in accordance with Article 6(2), point (b), as the quarterly average of the closing prices of EU ETS allowances on the auction platform, in accordance with the procedures laid down in Delegated Regulation (EU) 2023/2830, of the quarter of importation of the goods in which those emissions are embedded.",
+            "supports_option": "C",
+            "note": "此引文證明的是「2026 年採季均值」—— 用來支撐改寫後的選項 A（一個**正確**的敘述），而本題要選的是**錯誤**敘述，仍為「CBAM 與自由配額永遠維持、互不影響」。"
+          },
+          {
             "url": "https://eur-lex.europa.eu/eli/reg/2023/956/oj",
             "quote": "To ensure a gradual transition from the current system of free allowances to the CBAM, the CBAM should be progressively phased in while free allowances in sectors covered by the CBAM are phased out.",
             "supports_option": "C"
@@ -6983,12 +6995,19 @@
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         },
         "blind_review": {
-          "date": "2026-07-14",
-          "verdict": "FLAGGED_NOT_YET_VERIFIED",
-          "defect": "STALE_FACT",
-          "claim": "C（『CBAM 與 EU ETS 自由配額皆永遠維持、互不影響』）與 Reg 2023/956 前言及 ETS 指令 Art 10a(1a) 直接矛盾（CBAM 係數 2026 年 2.5% 起逐年提高、自由配額 2034 年歸零），是題目要的錯誤敘述；B、D 正確。缺陷：Reg 2025/2083 新增 Art 22(1a)，2026 年進口貨物之 CBAM 憑證價格改採『該進口季之 EU ETS 拍賣收盤價季均值』，週均值要 2027 年起才適用，故選項 A 之『週均值連動』在本考試年度（2026）已非現行事實，本題出現第二個可主張為『錯誤』的選項。",
-          "note": "⚠️ **這是一個「待驗證的指控」，不是判決。** 由盲測（不給答案、獨立重新推導）提出，**我尚未親自抓回一手來源複核**。本專案反覆學到「代理會過度指控」——第三輪代理指控三題答案有誤，**三筆全是誤判**。**在我自己驗過之前，不動資料。**"
-        }
+          "date": "2026-07-15",
+          "verdict": "VERIFIED_AND_FIXED",
+          "note": "⚠️ 這筆指控**由我自己抓回 EUR-Lex 全文逐字驗證**，不是採信代理。"
+        },
+        "option_corrections": [
+          {
+            "date": "2026-07-15",
+            "option": "A",
+            "from": "CBAM 憑證價格與 EU ETS 拍賣價之週均值連動",
+            "to": "2026 年進口貨物之 CBAM 憑證價格，係按 EU ETS 拍賣平台收盤價之「季均值」計算",
+            "why": "原選項 A 說憑證價格與 ETS 拍賣價之「**週**均值」連動 —— **對 2026 年已經是錯的**。Regulation (EU) 2025/2083 新增之 Art 22(1a) 逐字寫著：「…as the **quarterly average** of the closing prices of EU ETS allowances…」，而該法規全文中「weekly」出現 **0 次**。題目問「何者**錯誤**」，於是 A 與 C **同時成立** —— 兩個答案。已把 A 改成該法規的**現行**規定（季均值，逐字引文為據），題目恢復唯一解。"
+          }
+        ]
       },
       "sources": [
         "https://eur-lex.europa.eu/eli/reg/2023/956/oj",
@@ -9345,11 +9364,9 @@
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
         },
         "blind_review": {
-          "date": "2026-07-14",
-          "verdict": "FLAGGED_NOT_YET_VERIFIED",
-          "defect": "STALE_FACT",
-          "claim": "ISO 14068-1:2023 於 2023/11/30 發布並取代 PAS 2060 屬實，但 BSI 公告之 PAS 2060 撤回日為 2025/11/30（自 2025/1/1 起不再受理新的 PAS 2060 驗證），並非選項 B 所稱之「2024 年由 BSI 撤回」。B 仍是四者中唯一方向正確者（A、C、D 皆明顯錯誤），但其年份為錯誤事實。",
-          "note": "⚠️ **這是一個「待驗證的指控」，不是判決。** 由盲測（不給答案、獨立重新推導）提出，**我尚未親自抓回一手來源複核**。本專案反覆學到「代理會過度指控」——第三輪代理指控三題答案有誤，**三筆全是誤判**。**在我自己驗過之前，不動資料。**"
+          "date": "2026-07-15",
+          "verdict": "ALREADY_EXCLUDED",
+          "note": "盲測指出選項 B 的「PAS 2060 於 2024 年撤回」年份有誤（BSI 的正式撤回日為 2025/11/30，自 2025/1/1 起不再受理新驗證）。**但本題的答案本來就已是 null（排除計分）**，因此不影響使用者。記在這裡，是為了讓下一輪知道「這題已經看過了」。"
         }
       },
       "sources": [
