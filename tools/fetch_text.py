@@ -59,19 +59,53 @@ def norm(t):
 
 
 def _get(url, timeout=60):
-    # ⚠️ `Accept-Encoding: identity` 是必要的。
-    # icao.int 會回**壓縮過的 bytes**，而 urllib **不會自動解壓** ——
-    # 於是我們拿到一坨亂碼，然後把一筆真的引文判成「查無此句（捏造）」。
-    # 這又是一次「檢查器比資料還常出錯」：**亂碼不是「頁面上沒有這句話」。**
+    """抓回 (bytes, content-type, status)。**壓縮一定要自己解。**
+
+    第一版寫 `Accept-Encoding: identity`，理由是 icao.int 會回壓縮 bytes 而
+    urllib **不會自動解壓** —— 拿到一坨亂碼，然後把真引文判成「捏造」。
+
+    ⚠️ 但那個修法只是**請求**對方不要壓縮，而 **web.archive.org 根本不理**：
+       它照樣回 gzip。於是亂碼又回來了 —— 而且這次更陰險，因為
+       **一坨亂碼的字元數輕鬆超過 MIN_CHARS**，守衛放它過關，
+       接著「loss and damage 出現 0 次」。**那個 0 是假的。**
+
+    → 正解：**大方接受壓縮，然後照 `Content-Encoding` 自己解。**
+      不要去求伺服器配合，要讓自己有能力處理它給的東西。
+    """
     req = urllib.request.Request(url, headers={
         'User-Agent': _UA,
-        'Accept-Encoding': 'identity',
+        'Accept-Encoding': 'gzip, deflate',
     })
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE   # 學術網站憑證鏈常不完整；抓不到頁面 != 捏造
     with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
-        return r.read(), (r.headers.get('Content-Type') or '').lower(), r.status
+        raw = r.read()
+        enc = (r.headers.get('Content-Encoding') or '').lower()
+        if 'gzip' in enc or raw[:2] == b'\x1f\x8b':      # 也認 magic bytes：標頭會說謊
+            import gzip
+            raw = gzip.decompress(raw)
+        elif 'deflate' in enc:
+            import zlib
+            try:
+                raw = zlib.decompress(raw)
+            except zlib.error:
+                raw = zlib.decompress(raw, -zlib.MAX_WBITS)   # raw deflate（無 zlib 標頭）
+        return raw, (r.headers.get('Content-Type') or '').lower(), r.status
+
+
+def _readable(t):
+    """這段文字是**人看得懂的**，還是解壓失敗後的亂碼？
+
+    ⚠️ 這個守衛是必要的，`MIN_CHARS` 擋不住它 ——
+    一坨 gzip 亂碼 decode('utf-8', errors='replace') 之後，
+    字元數輕鬆上萬，於是「頁面很長」而「關鍵詞 0 次」。
+    **那不是「頁面上沒有」，那是我根本沒解開它。**
+    """
+    if not t:
+        return False
+    bad = t.count('�')                       # decode 失敗留下的替換字元
+    return bad / max(len(t), 1) < 0.02
 
 
 def _to_text(raw, ctype):
@@ -114,7 +148,7 @@ def fetch(url):
     try:
         raw, ctype, _ = _get(url)
         txt = _to_text(raw, ctype)
-        if len(norm(txt)) >= MIN_CHARS:
+        if len(norm(txt)) >= MIN_CHARS and _readable(txt):
             return txt, url
     except Exception:
         pass
@@ -124,7 +158,7 @@ def fetch(url):
     try:
         raw, ctype, _ = _get(snap, timeout=90)
         txt = _to_text(raw, ctype)
-        if len(norm(txt)) >= MIN_CHARS:
+        if len(norm(txt)) >= MIN_CHARS and _readable(txt):
             return txt, snap
     except Exception:
         pass

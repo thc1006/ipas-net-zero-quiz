@@ -150,10 +150,32 @@ def key_letter(block):
     return src, None, '認不出答案卡格式'
 
 
+def load_overrides():
+    """restoration-manifest 裡**有記錄、有一手依據**的刻意偏離。
+
+    ⚠️ 這個 repo **早就有**一套「答案必須等於 PDF 答案卡」的閘門
+    （restoration-manifest.test.ts），而偏離答案卡必須登記成 `answer_override` 並附依據。
+
+    我寫這支新工具時**完全不知道那套機制存在** —— 於是它把 `S_CHU_06-q094`
+    報成「第 33 個錯答案」，我還差點改下去。實際上那是一個 2026-07-13 的**刻意決定**：
+    PDF 答案卡印 (D) 以上皆非，但那與 ISO 14064-1:2018 對 base year 的定義不符，
+    所以採 (C)，並把理由與一手依據寫進 manifest。
+
+    **兩個互不知道的系統，一定會漂。** 這支工具必須讀那份 manifest。
+    """
+    try:
+        m = json.load(open('quiz-app/src/data/restoration-manifest.json', encoding='utf-8'))
+    except OSError:
+        return {}
+    return {e['item_id']: e['answer_override']
+            for e in m.get('entries', []) if e.get('answer_override')}
+
+
 def main():
     ds = json.load(open('quiz-app/src/data/integrated_dataset.json', encoding='utf-8'))
     pool = json.load(open('quiz-app/src/data/practice_pool.json', encoding='utf-8'))
     ALL = ds['gist_items'] + ds['our_unique_items'] + pool['items']
+    OVERRIDE = load_overrides()
 
     def qid(q):
         return q.get('id') or q.get('item_id') or f"gist[{q.get('index')}]"
@@ -164,10 +186,18 @@ def main():
     idx_all = {qid(q): q for q in ALL}
     cache, rows = {}, []
     for q in ALL:
+        # ⚠️ **母體要看 sources，不能只看 evidence。**
+        #   第一版只掃「有 evidence 的題目」—— 於是 S_CHU_06-q094 整個被漏掉：
+        #   它的 sources 指著答案卡 PDF，但沒人替它抽過引文。
+        #   而它正是**唯一一題與官方答案卡不符的**（答案卡 (D)，題庫標 C）。
+        #   **一個把該查的題目排除在母體外的檢查，它的綠燈是一句假的保證。**
         ev = (node(q).get('evidence') or [None])[0]
-        if not ev or not any(k in (ev.get('url') or '') for k in KEYED):
+        cand = [ev['url']] if (ev and ev.get('url')) else []
+        cand += [x for x in ((q.get('metadata') or {}).get('sources') or q.get('sources') or [])
+                 if isinstance(x, str)]
+        u = next((x for x in cand if any(k in x for k in KEYED)), None)
+        if not u:
             continue
-        u = ev['url']
         if u not in cache:
             cache[u] = fetch(u)[0]
         r = {'id': qid(q), 'url': u, 'answer': q.get('answer')}
@@ -178,7 +208,8 @@ def main():
             # 刻意標成無答案（多重正解）的題目，本來就沒有「題庫答案」可比
             rows.append({**r, 'verdict': 'ANSWER_NULL'})
             continue
-        blks = blocks_of(cache[u], q.get('stem') or q.get('question'), ev.get('quote'))
+        blks = blocks_of(cache[u], q.get('stem') or q.get('question'),
+                         (ev or {}).get('quote'))
         if not blks:
             rows.append({**r, 'verdict': 'NOT_FOUND'})
             continue
@@ -232,10 +263,16 @@ def main():
         bk = m_s2b.get(lead)
         r |= {'how': how, 'key_text': (src.get(lead) or '').strip()[:46], 'best': bk,
               'score': round(scores.get(lead, 0), 2), 'fit': round(fit(blk), 2)}
+        ov = OVERRIDE.get(r['id'])
         if not bk:
             rows.append({**r, 'verdict': 'AMBIGUOUS'})
         elif bk == q.get('answer'):
             rows.append({**r, 'verdict': 'AGREE'})
+        elif ov and ov.get('corrected_answer') == q.get('answer'):
+            # **有記錄、有一手依據的刻意偏離** —— 不是錯，是一個被寫下來的判斷。
+            # 「這題我覺得應該是 D」不是推翻它的理由。
+            rows.append({**r, 'verdict': 'DOCUMENTED_OVERRIDE',
+                         'why': (ov.get('reason') or '')[:90]})
         else:
             rows.append({**r, 'verdict': 'MISMATCH'})
 
@@ -275,8 +312,8 @@ def main():
     c = collections.Counter(x['verdict'] for x in rows)
     print('=' * 70)
     print(f'  母體（引文來自答案卡 PDF）: {len(rows)} 題')
-    for k in ('AGREE', 'MISMATCH', 'AMBIGUOUS', 'NO_KEY', 'NOT_SAMPLE_Q',
-              'ANSWER_NULL', 'NOT_FOUND', 'FETCH_FAIL'):
+    for k in ('AGREE', 'MISMATCH', 'DOCUMENTED_OVERRIDE', 'AMBIGUOUS', 'NO_KEY',
+              'NOT_SAMPLE_Q', 'ANSWER_NULL', 'NOT_FOUND', 'FETCH_FAIL'):
         if c[k]:
             print(f'    {k:11} {c[k]:4}')
     print('=' * 70)
@@ -285,6 +322,11 @@ def main():
             print(f"  🚨 {x['id']:22} 答案卡→{x['best']} 題庫→{x['answer']}  "
                   f"(配對相似度 {x['score']}, 題目吻合度 {x['fit']}) {x['how']}")
             print(f"       答案卡原文：{(x['key_text'] or '').splitlines()[0][:46]}")
+    for x in rows:
+        if x['verdict'] == 'DOCUMENTED_OVERRIDE':
+            print(f"  📌 {x['id']:22} 答案卡→{x['best']} 題庫→{x['answer']}  "
+                  f"**有記錄的刻意偏離**（restoration-manifest 的 answer_override）")
+            print(f"       理由：{x['why']}")
     print()
     print('  ⚠️ AGREE 以外的**每一種**都不是「答案沒問題」，是「我沒驗到」。')
     json.dump(rows, open('scratchpad_answer_key.json', 'w', encoding='utf-8'),

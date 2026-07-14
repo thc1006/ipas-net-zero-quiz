@@ -22,3 +22,6 @@ PROGRESS_DASHBOARD.md
 batch_*_raw.json
 REMAINING_*.json
 check_progress.sh
+
+# 交叉比對的中間輸出（不入庫）
+scratchpad_answer_key.json

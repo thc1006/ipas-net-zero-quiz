@@ -213,6 +213,11 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unverifiable",
+          "detail": "第八輪：cca.gov.tw 的出版品頁抓不到。⚠️ **「我抓不到」不等於「引用是錯的」** —— 這裡誠實記為「未能查證」，不動資料，也不假裝驗過了。"
         }
       },
       "sources": [
@@ -1233,6 +1238,11 @@
           "previous_answer": "B",
           "method": "ladder_reversed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "第八輪：把該頁抓回來讀了 —— ghgregistry.moenv.gov.tw 抓回 19,723 字，**「連鎖便利商店」只出現在一則「輔導說明會」的標題裡**，**查無「100 家」這個納管門檻**；另一個來源（溫管辦法 O0020102）「連鎖便利商店」**0 次**。兩個引用都**沒有**說這件事。答案未必錯，但**這兩個引用撐不起它**。 ⚠️ **這不是「答案錯了」，是「這個引用證明不了這個答案」。**"
         }
       },
       "sources": [
@@ -1479,6 +1489,11 @@
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unverifiable",
+          "detail": "第八輪：唯一的來源是 vocus.cc（**非一手來源**），沒有可驗證的官方依據。⚠️ **「我抓不到」不等於「引用是錯的」** —— 這裡誠實記為「未能查證」，不動資料，也不假裝驗過了。"
         }
       },
       "sources": [
@@ -3719,9 +3734,22 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139",
+            "quote": "其溫室氣體年排放量合計值達二萬五千公噸二氧化碳當量以上之電力、燃氣供應業及製造業",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第八輪：這一題原本「有 URL，但從來沒有人打開來看過」。已把該頁抓回來逐字讀過，並抽出支持答案的原文（引文經機械比對確認存在）。"
         }
       },
       "sources": [
+        "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139",
         "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
         "https://csr.cw.com.tw/article/42974"
       ],
@@ -3838,6 +3866,18 @@
           "date": "2026-07-14",
           "verdict": "fixed",
           "what": "原解析把角色講反（不是「台電持有憑證」，而是躉售電力自始不核發憑證）。⚠️ 我上一版的更正又引入了新的「條/款」錯誤（第四項 vs 第四款）—— 已移除該標號。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.trec.org.tw/faq",
+            "quote": "設備商若已將電力躉售給台電，不可申請憑證",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第八輪：這一題原本「有 URL，但從來沒有人打開來看過」。已把該頁抓回來逐字讀過，並抽出支持答案的原文（引文經機械比對確認存在）。"
         }
       },
       "sources": [
@@ -4017,6 +4057,18 @@
           "previous_answer": "A",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://pr.tsmc.com/english/news/3227",
+            "quote": "Key milestones include peaking carbon emissions in 2025",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第八輪：這一題原本「有 URL，但從來沒有人打開來看過」。已把該頁抓回來逐字讀過，並抽出支持答案的原文（引文經機械比對確認存在）。"
         }
       },
       "sources": [
@@ -4208,6 +4260,18 @@
           "previous_answer": "A",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://support.ecovadis.com/hc/en-us/articles/210460227-Understanding-EcoVadis-Medals-and-Badges",
+            "quote": "Platinum - Top 1% (99+ percentile)",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第八輪：這一題原本「有 URL，但從來沒有人打開來看過」。已把該頁抓回來逐字讀過，並抽出支持答案的原文（引文經機械比對確認存在）。"
         }
       },
       "sources": [
@@ -4260,6 +4324,18 @@
           "previous_answer": "C",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202412310005&dtable=News",
+            "quote": "先就「氣候變遷減緩」環境目的訂定「具實質貢獻之技術篩選標準」，且以未對其他環境目的(如氣候變遷調適、水資源保護等)及社會保障造成重大危害為判斷原則",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第八輪：這一題原本「有 URL，但從來沒有人打開來看過」。已把該頁抓回來逐字讀過，並抽出支持答案的原文（引文經機械比對確認存在）。"
         }
       },
       "sources": [
@@ -5453,6 +5529,11 @@
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unverifiable",
+          "detail": "第八輪：unfccc.int 的 cooperative-implementation 頁抓不到（活站與 Wayback 皆失敗）。⚠️ **「我抓不到」不等於「引用是錯的」** —— 這裡誠實記為「未能查證」，不動資料，也不假裝驗過了。"
         }
       },
       "sources": [
@@ -5712,6 +5793,18 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "evidence": [
+          {
+            "url": "https://unfccc.int/news/cop28-agreement-signals-beginning-of-the-end-of-the-fossil-fuel-era",
+            "quote": "Parties reached a historic agreement on the operationalization of the loss and damage fund",
+            "supports_option": "B"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第八輪：這一題原本「有 URL，但從來沒有人打開來看過」。已把該頁抓回來逐字讀過，並抽出支持答案的原文（引文經機械比對確認存在）。"
         }
       },
       "sources": [
@@ -5767,6 +5860,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unverifiable",
+          "detail": "第八輪：unfccc.int/cop30 抓不到；cop30.br 只回 1,447 字的 JS 空殼。⚠️ **「我抓不到」不等於「引用是錯的」** —— 這裡誠實記為「未能查證」，不動資料，也不假裝驗過了。"
         }
       },
       "sources": [
@@ -6238,6 +6336,11 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "第八輪：把該頁抓回來讀了 —— icao.int 的 CORSIA 首頁抓回 11,344 字（可讀），但「first phase」「2027」「mandatory」**各 0 次**—— 那是一頁導覽，不是內容；而它連到的 CORSIA_FAQs PDF **抓不到**。 ⚠️ **這不是「答案錯了」，是「這個引用證明不了這個答案」。**"
         }
       },
       "sources": [
@@ -6499,6 +6602,11 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "no_quote",
+          "detail": "第八輪：把該頁抓回來讀了 —— cma2024_L18E.pdf 抓回 3,136 字（可讀），「reversal」「removal」「leakage」「monitoring」**各 0 次**。 ⚠️ **這不是「答案錯了」，是「這個引用證明不了這個答案」。**"
         }
       },
       "sources": [
@@ -9320,6 +9428,11 @@
           "previous_answer": "D",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第八輪：這一題原本「有 URL，但從來沒有人打開來看過」。there100.org 的官方 RE100 會員名單抓回 166,020 字：其他三個選項 TSMC、Hon Hai（鴻海）、Delta（台達電）**都在名單上**；而「中油」「CPC」「CPC Corporation」「Chinese Petroleum」**四種寫法在名單上各出現 0 次**。這是在**權威的完整名單上窮舉**，不是「我找不到」—— 答案（中油不是會員）成立。"
         }
       },
       "sources": [

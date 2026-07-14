@@ -10,7 +10,7 @@
     "total_questions": 773,
     "gist_questions": 545,
     "our_unique_questions": 228,
-    "corrections_applied": 32,
+    "corrections_applied": 31,
     "by_subject": {
       "考科1": 431,
       "考科2": 342
@@ -100,11 +100,11 @@
       "date": "2026-07-14",
       "what": "對 383 題「附了一手來源 URL、但從來沒有人打開來看過」的題目，逐題把那一頁抓回來，檢查它到底有沒有說這件事。",
       "population": 383,
-      "supported": 303,
+      "supported": 314,
       "wrong_source": 28,
       "replaced": 27,
       "disputed": 1,
-      "no_quote": 35,
+      "no_quote": 38,
       "dead": 4,
       "note": "引錯的 URL **全部都回 HTTP 200** —— 連結健康檢查一個都抓不到。disputed 是「代理說引錯、但提不出可驗證的替代來源」：否定命題無法機械驗證，僅憑代理一句話不足以動資料，故引用維持不變但標記存疑。"
     },
@@ -121,8 +121,8 @@
     },
     "answer_key_check": {
       "date": "2026-07-14",
-      "population": 159,
-      "confirmed": 120,
+      "population": 161,
+      "confirmed": 121,
       "what": "iPAS 公版教材的範例題 PDF **直接印答案卡**。把題庫的答案拿去跟官方答案卡逐題交叉比對 —— 這是本專案第一個能機械驗證「答案」（而非「引用」）的檢查。",
       "note": "⚠️ **按文字比對，不按字母**：題庫把選項順序打散、文字也改寫過，照字母抄會抄出錯答案。confirmed 以外的題目**不是「沒問題」，是「沒驗到」**。"
     }
@@ -4469,11 +4469,23 @@
         },
         "explanation_audit": {
           "date": "2026-07-14",
-          "verdict": "unsupported",
-          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+          "verdict": "rewritten",
+          "why": "原解析寫「B『降低碳排放』亦為條文明列之間接目的，屬可接受答」—— 一題不能有兩個答案，而官方題目裡「降低碳排放」是誘答選項。"
+        },
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
+            "quote": "CBAM 的設計目的是為了防範碳洩漏",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第八輪：原本「有 URL 從沒人打開過」，且原解析自我矛盾（宣稱 B 亦為「可接受答」）。已改引 iPAS 公版教材 —— 該教材的同題官方答案是「防範碳洩漏」，而「降低歐盟內部的碳排放量」正是它的誘答選項。解析已重寫。"
         }
       },
-      "explanation": "依 Regulation (EU) 2023/956 Article 1(1)：CBAM 直接目的為『防止碳洩漏（prevent carbon leakage）』，藉此『降低全球碳排放（thereby reducing global carbon emissions）』並支持巴黎協定目標。四選項中以 D『保護本地產業競爭力』最貼近『防碳洩漏』意涵；B『降低碳排放』亦為條文明列之間接目的，屬可接受答案。本題因無『防止碳洩漏』選項，官方建議以「減少碳洩漏風險」為最佳解。資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+      "explanation": "依 iPAS 公版教材《淨零碳管理基礎概論》：「**CBAM 的設計目的是為了防範碳洩漏**，即防止生產活動從歐盟轉移到排放標準較寬鬆的國家」；而防範碳洩漏的手段，教材寫得很直接：「**以確保歐盟廠商競爭力，避免碳洩漏**」—— 所以四個選項中，「**保護本地產業競爭力**」才是「防範碳洩漏」在本題選項裡的對應說法。Regulation (EU) 2023/956 Article 1(1) 亦明定 CBAM 係「in order to **prevent the risk of carbon leakage**」。⚠️ **「降低碳排放」不是答案。** 公版教材同一份 PDF 裡就有原題「CBAM 的主要目的是什麼？」，官方答案是「**防範碳洩漏**」，而「**降低歐盟內部的碳排放量**」在那一題裡**正是誘答選項**。法規原文把減排寫成「thereby reducing global carbon emissions」——那是**防碳洩漏之後的連帶結果**，不是 CBAM 的目的本身。",
       "quality_flags": [
         "time_sensitive"
       ]
@@ -5744,6 +5756,18 @@
           "verification_batch": "E",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139",
+            "quote": "其溫室氣體年排放量合計值達二萬五千公噸二氧化碳當量以上之電力、燃氣供應業及製造業",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第八輪：這一題原本「有 URL，但從來沒有人打開來看過」。已把該頁抓回來逐字讀過，並抽出支持答案的原文（引文經機械比對確認存在）。"
         }
       },
       "quality_flags": [
@@ -5943,6 +5967,18 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139",
+            "quote": "其溫室氣體年排放量合計值達二萬五千公噸二氧化碳當量以上之電力、燃氣供應業及製造業",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第八輪：這一題原本「有 URL，但從來沒有人打開來看過」。已把該頁抓回來逐字讀過，並抽出支持答案的原文（引文經機械比對確認存在）。"
         }
       },
       "quality_flags": [
@@ -33151,6 +33187,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "防止碳洩漏",
+          "how": "A:行首答案卡"
         }
       },
       "quality_flags": [
@@ -39141,15 +39185,26 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf"
         ],
-        "prior_answer": "D",
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
           "confidence": "high",
           "verification_date": "2026-07-13",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+            "quote": "(D) 94.什麼是溫室氣體盤查的基線年？",
+            "supports_option": "D",
+            "note": "⚠️ **這筆引文支持的是 D，而我們刻意採用 C。**來源 PDF 的答案卡印 (D) 以上皆非，但那與 ISO 14064-1:2018 對 base year 的定義不符 ——見 restoration-manifest.json 的 answer_override（2026-07-13，附一手依據）。把這個不一致**留在資料裡**，而不是把它藏起來。"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第八輪：已從答案卡 PDF 抽出這一題的原文與答案卡。⚠️ **答案卡印 (D)，而題庫採 (C)** —— 這是一個**有記錄的刻意偏離**（restoration-manifest.json 的 answer_override，依據 ISO 14064-1:2018 的 base year 定義）。"
         }
-      },
-      "_correction_note": "2026-07-13 更正：來源 PDF（商研院模擬試題 S_CHU_06 第 94 題）的答案卡印 D（以上皆非），但那與 ISO 14064-1:2018 對「基準年（base year）」的定義不符 —— 該標準將基準年定義為「為了隨時間比較溫室氣體排放、移除或其他 GHG 相關資訊而選定的特定歷史期間」，正是選項 C「與其他年份進行比較的參考年份」。A（開始盤查的年份）與 B（設定減碳目標的年份）都不是。故正解為 C。此偏離已列入 restoration-manifest 的 answer_override 並附依據 —— 預設一律以來源答案卡為錨點，推翻它必須拿得出一手條文。"
+      }
     },
     {
       "item_id": "S_CHU_06-q095",
