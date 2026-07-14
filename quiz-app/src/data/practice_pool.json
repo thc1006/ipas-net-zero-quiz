@@ -907,7 +907,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**條號錯位＋日期無中生有。10月31日上傳查驗總結報告及聲明書的規定其實在第9條，不是第10條；第10條規範的是主管機關對盤查文件/查驗結果之『補正』程序（30日內補正），與上傳期限無關。此外，現行辦法查無任何『8月31日』期限——前一年度盤查登錄的期限是第6條規定的『每年四月三十日前』，不是8月31日。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=9）逐字：「事業依前條規定辦理查驗作業，應於每年十月三十一日前，依中央主管機關所定格式，將溫室氣體查驗總結報告及查驗聲明書之查驗結果，以網路傳輸方式，上傳至中央主管機關指定之資訊平台。」\n\n**第10條實際條文與『10月31日上傳』或『盤查登錄』完全無關，是補正期限規定。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=10）逐字：「事業登錄之盤查文件或上傳之查驗結果，經中央主管機關審查有欠缺或不合規定者，應通知事業限期補正，其補正總日數不得超過三十日；屆期未補正或補正仍不合規定者，駁回登錄之盤查文件或上傳之查驗結果。」\n\n**『8月31日』這個日期在本辦法中查無依據；盤查登錄的期限是第6條的『每年四月三十日前』。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=6）逐字：「事業依第三條至前條規定辦理排放量盤查，應於每年四月三十日前，依中央主管機關所定格式，將前一年度之溫室氣體排放量清冊...登錄於中央主管機關指定之事業溫室氣體排放量資訊平台」\n\n**更正後應為**：『依管理辦法第10條』改為『依管理辦法第9條』；『應於每年8月31日前完成前一年度盤查登錄』改為『應於每年4月30日前完成前一年度盤查登錄（第6條）』。第10條實際規範的是盤查文件/查驗結果的補正程序（30日），與登錄或上傳期限無關，不應被引用為期限依據。",
+      "explanation": "依《溫室氣體排放量盤查登錄及查驗管理辦法》**第 9 條**：事業辦理查驗作業，應於每年**十月三十一日**前，將查驗總結報告與聲明書上傳至中央主管機關指定之資訊平台。\n\n⚠️ 條號更正：原解析把這條規定掛在「**第 10 條**」—— **§10 其實是補正程序**（主管機關通知限期補正，補正總日數不得超過三十日），與期限無關。\n⚠️ 另移除一個無依據的日期：原解析寫「應於每年 **8 月 31 日**前完成前一年度盤查登錄」——盤查登錄的期限是**第 6 條**的「每年**四月三十日**前」，法規全文查無 8 月 31 日。",
       "subject": null,
       "topic_tags": [
         "盤查查驗",
@@ -941,10 +941,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [
-            "依管理辦法第10條，列管事業應於每年 8 月 31 日前完成前一年度盤查登錄，並於 10 月 31 日前完成查驗並上傳查驗總結報告與聲明書至 GHG 平台。"
-          ],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析把 10/31 的規定掛在 §10（實為 §9），並憑空生出「8/31 盤查登錄期限」（實為 §6 的 4/30）。已依法條逐字更正。"
         }
       },
       "sources": [
@@ -1986,7 +1983,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "CCUS 三階段：Capture（捕集，A,C 例外）、Utilization（利用，A、D）、Storage（封存）。封存指將 CO2 注入深層鹹水層、枯竭油氣田或岩層永久隔離，依 IEA 定義須具地質長期穩定性（>1000 年）。",
+      "explanation": "CCUS 三階段：Capture（捕集）、Utilization（利用：製成飲料用氣體、轉為化學品）、Storage（封存）。封存指將 CO2 注入深層鹹水層、枯竭油氣田或岩層永久隔離，依 IEA 定義須具地質長期穩定性（>1000 年）。",
       "subject": null,
       "topic_tags": [
         "CCUS",
@@ -2046,7 +2043,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "依 GHG Protocol Scope 3 Standard，電子業上游採購（晶片、PCB、外殼等）屬 **Category 1（Purchased goods and services）**，屬**範疇三**，通常占總排放 60% 以上。\n\n其餘選項：**B（鍋爐燃料燃燒）與 D（自家車隊柴油）為範疇一**（自有或控制之排放源之直接排放）；**C（辦公室外購電力）為範疇二**。\n\n⚠️ 條列更正：原解析寫「**A、D 為 Scope 1**」—— **與它自己前一句自相矛盾**（前句才剛說 A 屬 Category 1、也就是範疇三）。正確為「**B、D** 為 Scope 1」。**一個字母之差，卻在教「採購原物料算範疇一」，那是徹底錯的觀念。**",
+      "explanation": "依 GHG Protocol Scope 3 Standard，電子業上游採購（晶片、PCB、外殼等）屬 **Category 1（Purchased goods and services）**，屬**範疇三**，通常占總排放 60% 以上。\n\n其餘選項：**B（鍋爐燃料燃燒）與 D（自家車隊柴油）為範疇一**（自有或控制之排放源之直接排放）；**C（辦公室外購電力）為範疇二**。\n\n⚠️ 條列更正：原解析寫「採購原物料與自家車隊柴油同屬範疇一」—— **與它自己前一句自相矛盾**（前句才剛說 A 屬 Category 1、也就是範疇三）。正確為「**鍋爐燃料燃燒與自家車隊柴油**屬範疇一」。**一個字母之差，卻在教「採購原物料算範疇一」，那是徹底錯的觀念。**",
       "subject": null,
       "topic_tags": [
         "Scope 3",
@@ -3590,7 +3587,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "首批國際碳權僅限作為「自願性碳中和宣告」或品牌商供應鏈中和要求使用，「不得」用於折抵我國碳費或 EU CBAM；其餘 A、B、D 皆與 TCX 公告一致。",
+      "explanation": "首批國際碳權僅限作為「自願性碳中和宣告」或品牌商供應鏈中和要求使用，「不得」用於折抵我國碳費或 EU CBAM；其餘敘述皆與 TCX 公告一致。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -4676,7 +4673,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "轉型風險源自政策、法規、技術、市場、聲譽變化，如碳定價、CBAM、消費偏好移轉；\n\n⚠️ **本題解析已更正** ——\n\n**IFRS S2 Appendix A 定義：碳定價（policy risk）屬『climate-related transition risks』，不是實體風險；解析前一句才剛把『碳定價』列為轉型風險的例子（'轉型風險源自政策、法規...如碳定價'），下一句卻自我矛盾地把 B 歸入『A、B、D 屬實體風險』，與本題正解（轉型風險）直接衝突。同時 C（海平面上升）依定義屬 chronic physical risk，卻被解析漏列在實體風險之外。正確應為『A、C、D 屬實體風險』。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html）逐字：「Risks that arise from efforts to transition to a lower-carbon economy. Transition risks include policy, legal, technological, market and reputational risks. These risks could carry financial implications fo」\n\n**IFRS S2 Appendix A 對實體風險（acute/chronic）之定義與例示：颱風/洪水/熱浪屬 acute（對應 A、D），海平面上升屬 chronic（對應 C）；碳定價政策（B）不在此定義範圍內，證實解析把 B 錯放進實體風險清單是條號/類別錯位，而非單純用字問題。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html）逐字：「Risks resulting from climate change that can be event-driven (acute physical risk) or from longer-term shifts in climatic patterns (chronic physical risk). Acute physical risks arise from weather-related events such as storms, floods, drought or heatwaves, which are increasing in severity and」\n\n**更正後應為**：將『A、B、D 屬實體風險（急性或慢性）』改為『A、C、D 屬實體風險（A、D 為急性 acute；C 為慢性 chronic）；B 碳定價政策屬轉型風險，即為本題正解』。",
+      "explanation": "**轉型風險**源自邁向低碳經濟的努力 —— 政策、法規、技術、市場、聲譽的變化。「碳定價政策上路造成營運成本上升」正是典型的**政策型轉型風險**，故為正解。\n\n其餘三項都是**實體風險**：颱風造成廠房淹水、極端高溫造成工人停工，屬**急性**（acute）；海平面上升導致沿海資產減損，屬**慢性**（chronic）。\n\n⚠️ 本題解析已更正：原文前一句才把「碳定價」列為轉型風險的例子，下一句卻把它歸進實體風險清單 —— **自我矛盾**，而且把真正的慢性實體風險（海平面上升）漏掉了。\n　依據 IFRS S2 Appendix A 逐字：\"Risks that arise from efforts to transition to a lower-carbon economy. Transition risks include policy, legal, technological, market and reputational risks.\"",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
       "difficulty": "medium",
@@ -4706,10 +4703,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [
-            "A、B、D 屬實體風險（急性或慢性）。"
-          ],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析自我矛盾：前句把碳定價列為轉型風險，後句又把它歸進實體風險清單，並漏掉海平面上升。已重寫。"
         }
       },
       "sources": [

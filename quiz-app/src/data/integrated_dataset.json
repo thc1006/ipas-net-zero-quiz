@@ -10,12 +10,12 @@
     "total_questions": 773,
     "gist_questions": 545,
     "our_unique_questions": 228,
-    "corrections_applied": 30,
+    "corrections_applied": 31,
     "by_subject": {
       "考科1": 431,
       "考科2": 342
     },
-    "with_answer": 772,
+    "with_answer": 771,
     "last_updated": "2026-07-13T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -728,7 +728,7 @@
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
-      "explanation": "臺灣 2050 淨零排放路徑的**兩大治理基礎**是「科技研發」與「氣候法制」；「淨零轉型」是整體目標／四大轉型的統稱，不是治理基礎，故選 A。",
+      "explanation": "臺灣 2050 淨零排放路徑的**兩大治理基礎**是「科技研發」與「氣候法制」；「淨零轉型」是整體目標／四大轉型的統稱，不是治理基礎，故正解為「淨零轉型」。",
       "metadata": {
         "original_id": "c1-014",
         "_legacy_pipeline_metadata": {
@@ -1134,7 +1134,7 @@
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
-      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**同一份來源 PDF 在題目正上方明白將 JI 稱為「共同執行（Joint Implementation, JI）」，而非「共同減量機制」。解析把 JI 的中文名稱寫錯，與同文件內、緊鄰該題選項 A「共同執行 (JI)」的官方用詞自相矛盾。**\n　依據（https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf）逐字：「彈性減量機制(Kyoto Flexible Mechanisms),在此機制下建立包括「清潔發展機制」(Clean Development Mechanism, CDM)、排放交易(Emissions trading, ET)及共同執行(Joint Implementation, JI)。」\n\n**更正後應為**：將「共同減量機制（JI）」改為「共同執行（JI, Joint Implementation）」，與選項 A 及來源用詞一致。",
+      "explanation": "京都議定書的三大彈性機制是：**共同執行（Joint Implementation, JI）**、**清潔發展機制（CDM）**、**排放交易（ET）**。\n\n「環境可持續指數（ESI）」是耶魯／哥倫比亞大學提出的**國家環境績效評比指標**，與京都議定書的減量機制無關，故為正解。\n\n⚠️ 用詞更正：原解析把 JI 稱為「共同**減量**機制」，而公版教材與國際慣用譯名皆為「**共同執行**（Joint Implementation）」。",
       "metadata": {
         "original_id": "c1-022",
         "_legacy_pipeline_metadata": {
@@ -1156,10 +1156,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [
-            "京都議定書的彈性減量機制包括國際排放交易（IET）、共同減量機制（JI）和清潔發展機制（CDM）。"
-          ],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析把 JI 誤稱為「共同減量機制」，來源教材用的是「共同執行」。已更正用詞並重寫解析。"
         }
       }
     },
@@ -2441,7 +2438,7 @@
           }
         ]
       },
-      "explanation": "MRV 一詞最早出自 UNFCCC 2007 年峇里路線圖（Bali Action Plan, Decision 1/CP.13）§1(b)(ii) 條約原文，使用形容詞型「measurable, reportable and verifiable」描述開發中國家減緩行動應達成的特性。iPAS 淨零碳教材依此 UNFCCC 體系，正解為 A「可測量、可報告、可查證」。注意：EU MRV Regulation 2015/757（海運）、EU ETS、CBAM 等操作層級法規改用名詞型「Monitoring / Reporting / Verification」(D)，是另一個治理體系的用詞，不適用 iPAS。"
+      "explanation": "MRV 一詞最早出自 UNFCCC 2007 年峇里路線圖（Bali Action Plan, Decision 1/CP.13）§1(b)(ii) 條約原文，使用形容詞型「measurable, reportable and verifiable」描述開發中國家減緩行動應達成的特性。iPAS 淨零碳教材依此 UNFCCC 體系，正解為「可測量／可報告／可查證」「可測量、可報告、可查證」。注意：EU MRV Regulation 2015/757（海運）、EU ETS、CBAM 等操作層級法規改用名詞型「Monitoring / Reporting / Verification」(D)，是另一個治理體系的用詞，不適用 iPAS。"
     },
     {
       "index": 47,
@@ -2994,7 +2991,7 @@
         "valid_as_of": "2026-07-14",
         "found_by": "r3-no-source-audit"
       },
-      "explanation": "碳費收費辦法第 9 條第一項第二款：先期專案減量額度「其扣除比率為**零點三**」。第一款的「一點二」是自願減量／抵換專案的比率（選項 D）—— 兩者不可混用。0.8 在 §9 全文中並不存在。",
+      "explanation": "碳費收費辦法第 9 條第一項第二款：先期專案減量額度「其扣除比率為**零點三**」。第一款的「一點二」是自願減量／抵換專案的比率（即「1.2」那一項）—— 兩者不可混用。0.8 在 §9 全文中並不存在。",
       "_correction_note": "2026-07-14 更正：原答 A（0.8）為誤，正解為 C（0.3）。依據為本專案釘選的碳費收費辦法 §9 逐字原文（law-articles.pinned.json，sha256 0dc8f453…）：「其扣除比率為零點三」。§9 全文查無「零點八」。",
       "quality_flags": [
         "time_sensitive"
@@ -10180,7 +10177,7 @@
       "source": "gist",
       "original_section": "考科2",
       "exam_subject": "考科2",
-      "explanation": "在溫室氣體盤查中，\n\n⚠️ **本題解析已更正** ——\n\n**來源投影片（逸散排放-滅火器範例）將 BC型、KBC型明確歸類為『乾粉滅火器』，緊接其後的重點提示框指出『乾粉滅火器不用盤查』（僅需新購/換藥核銷紀錄），並未把 BC 型與 CO2、FM200 等氣體滅火器並列為需要盤查的對象。真正需要盤查（列入溫室氣體盤查）的只有 CO2 滅火器與 FM200，BC/KBC 型和 ABC 型一樣都不用盤查。解析把 BC 型錯誤地歸到『需要列入盤查』一類，與來源矛盾。**\n　依據（https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf）逐字：「乾粉滅火器不用盤查，當年有新購或是換藥等核銷紀錄」\n\n**更正後應為**：把『CO2滅火器、BC型滅火器（含碳酸氫鈉）、FM200（HFCs）...需要列入盤查，而ABC乾粉滅火器則不需要』改成『CO2滅火器與FM200（HFCs）等氣體滅火器需要列入盤查；乾粉滅火器（含ABC型與BC/KBC型）皆不用盤查，僅需保留新購或換藥等核銷紀錄』",
+      "explanation": "溫室氣體盤查中，需要列入盤查的是**氣體型滅火器** —— **CO₂ 滅火器**（藥劑本身即溫室氣體）與 **FM200**（HFC-227ea，屬 HFCs）。\n\n**乾粉滅火器不用盤查** —— 這包含 **ABC 型**與 **BC／KBC 型**（碳酸氫鈉）**兩者**，只需保留當年度新購或換藥的核銷紀錄即可。\n\n⚠️ 分類更正：原解析把 BC 型歸在「需要盤查」那一邊。依 iPAS 公版教材（https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf）逸散排放－滅火器範例，BC／KBC 型被明確歸類為**乾粉滅火器**，其重點提示逐字為：「乾粉滅火器不用盤查，當年有新購或是換藥等核銷紀錄」。",
       "metadata": {
         "original_id": "c2-010",
         "_legacy_pipeline_metadata": {
@@ -10202,10 +10199,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [
-            "CO2滅火器、BC型滅火器（含碳酸氫鈉）、FM200（HFCs）等含有或會產生溫室氣體的滅火器需要列入盤查，而ABC乾粉滅火器則不需要。"
-          ],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析把 BC 型滅火器歸為「需要盤查」，但來源教材把 BC/KBC 型歸類為乾粉滅火器，而乾粉滅火器（含 ABC 與 BC/KBC）皆不用盤查。已依教材逐字更正。"
         }
       }
     },
@@ -12789,11 +12783,11 @@
           "text": "產品碳足跡量化的要求"
         }
       ],
-      "answer": "C",
+      "answer": null,
       "source": "gist",
       "original_section": "考科2",
       "exam_subject": "考科2",
-      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**ISO 官方頁面的 Abstract 明白寫出「碳足跡的溝通（communication）」是被明文排除在 ISO 14067:2018 範圍之外的項目，解析卻反過來說它『提供』溝通的要求——把明文排除的項目說成有包含。verified_quote 只擷取了 Abstract 第一句，漏看了同一段落緊接著的排除句。ISO 14067:2018 的正式標題也已不含 2013 舊版 ISO/TS 14067 標題裡的 'communication' 字樣，只剩 'Requirements and guidelines for quantification'。**\n　依據（https://www.iso.org/standard/71206.html）逐字：「Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document.」\n\n**更正後應為**：刪除「溝通的要求」，改為：「ISO 14067:2018 標準提供了產品碳足跡量化的要求及部分碳足跡的計算方法；碳足跡的溝通（communication）與碳抵換（carbon offsetting）被明文排除在本標準範圍之外，碳足跡標籤的設計規範同樣不在其中。」",
+      "explanation": "**這題有兩個正確答案，無法作答，已排除計分。**\n\nISO 14067:2018 的官方摘要（iso.org）逐字寫著：\n　\"**Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document.**\"\n\n也就是說「**產品碳足跡溝通的要求**」被標準**明文排除**在範圍之外 —— 它同樣是「不包括」的項目。\n而「碳足跡標籤的設計規範」（原答案）確實也不在 ISO 14067 裡（那屬 ISO 14026／14025）。\n\n**兩個選項都成立**，因此本題無法作答。\n另外兩項則都**在**範圍內：同一段摘要明載「Requirements and guidelines for the quantification of a **partial CFP** are also specified」，而產品碳足跡的量化要求正是本標準的核心。",
       "metadata": {
         "original_id": "c2-065",
         "_legacy_pipeline_metadata": {
@@ -12808,19 +12802,22 @@
         "evidence": [
           {
             "url": "https://www.iso.org/standard/71206.html",
-            "quote": "This document specifies principles, requirements and guidelines for the quantification and reporting of the carbon footprint of a product (CFP), in a manner consistent with International Standards on life cycle assessment (LCA) (ISO 14040 and ISO 14044).",
-            "supports_option": "C"
+            "quote": "Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document.",
+            "supports_option": null
           }
         ],
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [
-            "ISO 14067標準提供了產品碳足跡量化、溝通的要求及部分碳足跡的計算方法，但不包括碳足跡標籤的設計規範。"
-          ],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
-        }
-      }
+          "what": "發現本題有兩個正解（「溝通」被 ISO 14067 摘要明文排除，「標籤設計」也不在範圍內）。已改為 answer=null + ambiguous，排除計分。"
+        },
+        "prior_answer": "C",
+        "answer_ambiguity_note": "「溝通的要求」與「標籤設計規範」**兩者都不包括在 ISO 14067 內**，而且「溝通」的依據更強（標準摘要**明文排除**），「標籤設計」只是「沒提到」。**改成任何單一字母都是猜的。**"
+      },
+      "quality_flags": [
+        "ambiguous"
+      ],
+      "_correction_note": "2026-07-14：答案由 C 改為 **null（排除計分）**。ISO 14067 官方摘要明文排除「溝通」，故該選項與原答案「標籤設計規範」**同為正解**。"
     },
     {
       "index": 259,
@@ -13570,7 +13567,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "根據我國2030年淨零轉型階段目標，\n\n⚠️ **本題解析已更正** ——\n\n**來源（iPAS例題淨零碳規劃管理基礎概論模擬題）Q48原文是「商業營業場域燈具採LED燈100%」，指的是全部商業營業場域的燈具汰換，並未限定「新建築物」；解析憑空加上「新建築物」這個限定語，把目標範圍從『所有商業營業場域』窄化／改成『新建築物』，屬於來源上找不到、且與原文範圍不符的敘述。**\n　依據（https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf）逐字：「以下何者為我國2030淨零轉型之階段目標?\nA.電動車市售比100%, B.商業營業場域燈具\n採LED燈100%, C.製造業電力消費100%使用\n綠電, D.以上皆非」\n\n**更正後應為**：刪除「新建築物」，改為：「根據我國2030年淨零轉型階段目標，商業部門的目標之一是商業營業場域燈具100%採用LED燈具。」",
+      "explanation": "我國 2030 年淨零轉型階段目標之一是：**商業營業場域**的燈具 100% 採用 LED 燈。\n\n⚠️ 範圍更正：原解析寫成「**新建築物** 100% 採用 LED」—— 那是把目標範圍**窄化**了。依 iPAS 公版教材範例題（https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf）逐字：「商業營業場域燈具採LED燈100%」，指的是**全部**商業營業場域，不限新建築物。",
       "metadata": {
         "original_id": "c2-081",
         "_legacy_pipeline_metadata": {
@@ -13592,10 +13589,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [
-            "商業部門的目標之一是新建築物100%採用LED燈具。"
-          ],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析把目標範圍從「商業營業場域」窄化為「新建築物」，與來源逐字不符。已更正。"
         }
       }
     },
@@ -14968,7 +14962,7 @@
       "_correction_note": "2026-07-14 二次更正：D -> C（2026-07-13）-> A。前一次更正正確地排除了 B、D（ICA 屬非附件一國家機制；附件一國家用的是 §44 的 international assessment / IAR），但**落錯選項**：它選了 C（與目標相關基線資料計算），而 Decision 1/CP.16 全文（31 頁、90,592 字）搜尋 baseline / base year **各 0 次** —— C 在一手來源裡沒有任何文字依據。§40(a) 逐字要求報告 \"mitigation actions ... and emission reductions achieved\"，正是選項 A 的「減緩行動（項目與成果）」。⚠️ 取證過程：unfccc.int 對本機直接抓取回 212 bytes 的 Incapsula 擋頁，PyMuPDF 會把它默默解成「1 頁 0 字」的 PDF —— 那個「baseline 出現 0 次」是假的。真正的 PDF 是改用瀏覽器型抓取取得後，才在本機以 PyMuPDF 解出並逐字比對。",
       "_correction_by": "henrychen-bot",
       "exam_subject": "考科1",
-      "explanation": "坎昆協議（Decision 1/CP.16）第 40 段 (a) 款規定附件一國家的強化報告義務：提交年度溫室氣體清冊，以及「**減緩行動**（mitigation actions）與**已達成之減量成果**（emission reductions achieved）」的雙年報告 —— 即選項 A。第 44 段另定附件一國家接受「國際評估」（international assessment，IAR）；「國際諮商與分析」（ICA）則適用於非附件一國家，故 B、D 皆非。至於選項 C 的「基線資料計算」—— 全文查無 baseline／base year（0 次）。",
+      "explanation": "坎昆協議（Decision 1/CP.16）第 40 段 (a) 款規定附件一國家的強化報告義務：提交年度溫室氣體清冊，以及「**減緩行動**（mitigation actions）與**已達成之減量成果**（emission reductions achieved）」的雙年報告 —— 即「強化減緩行動報告（項目與成果）」。第 44 段另定附件一國家接受「國際評估」（international assessment，IAR）；「國際諮商與分析」（ICA）則適用於非附件一國家，故涉及 ICA 的兩個選項皆非。至於「基線資料計算」—— 全文查無 baseline／base year（0 次）。",
       "metadata": {
         "verification_source": "UNFCCC Cancún Agreements 1/CP.16: Annex I -> BR + IAR; non-Annex I -> BUR + ICA",
         "original_id": "c2-111",
@@ -16462,7 +16456,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "題目問「ISSB S1 描述**何者錯誤**」，答案 A 即為**錯誤的那一項** ——\n\n「不得以商業機密規避揭露」這個**絕對禁止**的說法並不正確：IFRS S1 對「涉及商業機密的**機會**相關資訊」設有**豁免揭露**的機制（並非一律不得規避）。\n\n⚠️ **本題解析已更正** —— 原文寫「即使涉及商業機密，**仍須揭露**」，**那正是選項 A 的意思，而 A 是本題判定為「錯誤」的敘述** —— **解析在替它自己要否定的選項背書，自我推翻。**\n\n⚠️ **來源限制（誠實說明）**：IFRS S1 正文在 ifrs.org 的登入牆之後，本專案**無法取得可逐字驗證的一手引文**。上述更正的依據是**本題自身的邏輯一致性**（解析不能斷言題目判定為錯的那個選項），而**不是**一手條文。因此本題仍列為「無逐字引文」—— 我們不會為了讓它看起來有依據，就編一個驗不了的條號。",
+      "explanation": "題目問「ISSB S1 描述**何者錯誤**」，「不得以商業機密規避揭露」即為**錯誤的那一項** ——\n\n「不得以商業機密規避揭露」這個**絕對禁止**的說法並不正確：IFRS S1 對「涉及商業機密的**機會**相關資訊」設有**豁免揭露**的機制（並非一律不得規避）。\n\n⚠️ **本題解析已更正** —— 原文寫「即使涉及商業機密，**仍須揭露**」，**那正是本題判定為「錯誤」的那一項敘述的意思** —— **解析在替它自己要否定的選項背書，自我推翻。**\n\n⚠️ **來源限制（誠實說明）**：IFRS S1 正文在 ifrs.org 的登入牆之後，本專案**無法取得可逐字驗證的一手引文**。上述更正的依據是**本題自身的邏輯一致性**（解析不能斷言題目判定為錯的那個選項），而**不是**一手條文。因此本題仍列為「無逐字引文」—— 我們不會為了讓它看起來有依據，就編一個驗不了的條號。",
       "metadata": {
         "original_id": "c2-141",
         "sources": [
@@ -16524,7 +16518,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**本題答案 A 是『廣泛考量全部ESG面向』，其依據正是來源原文：IFRS S1 要求揭露『所有』永續相關風險與機會，而非特別聚焦氣候。把 S1 的重點說成『皆強調氣候相關風險與機會』，等於是在替選項 B（強調氣候風險與機會）背書，而 B 並非本題的正解，這與答案 A 所依據的『廣泛涵蓋全部ESG面向』直接矛盾——氣候聚焦是 S2 的差異化特徵，不是 S1 的定義特徵。**\n　依據（https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/）逐字：「IFRS S1 requires an entity to disclose information about all sustainability-related risks and opportunities that could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital」\n\n**更正後應為**：改為：IFRS S1 要求企業揭露『所有』永續相關風險與機會（不限氣候），這正是選項 A『廣泛考量全部ESG面向』為正解的依據；氣候相關風險與機會的專門強調則是 IFRS S2 的範疇。",
+      "explanation": "IFRS S1 的揭露範圍是「**所有**永續相關的風險與機會」—— 它是**通用**的永續財務資訊揭露準則，涵蓋全部 ESG 面向，並非聚焦氣候。\n\n**聚焦氣候的是 IFRS S2**，那是 S1 與 S2 的關鍵分工。\n\n⚠️ 本題解析已更正：原文寫「ISSB S1 和 S2 **皆強調氣候**相關的風險與機會」—— 那等於在替「強調氣候風險與機會」那一項背書，**而那正是本題的干擾選項**，也正好抹掉了 S1 之所以是正解的理由（廣泛涵蓋、非氣候專屬）。",
       "metadata": {
         "original_id": "c2-142",
         "sources": [
@@ -16554,10 +16548,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [
-            "ISSB S1和S2皆強調氣候相關的風險與機會，並要求企業揭露其對財務狀況的影響。"
-          ],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析寫「S1 和 S2 皆強調氣候」，等於替干擾選項背書，並抹掉 S1 正解的理由（廣泛涵蓋全部 ESG）。已重寫。"
         }
       },
       "quality_flags": [
@@ -19354,7 +19345,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "iPAS 公版教材「活動數據整理－本標的產品的各項投入產出」該頁（環境部碳足跡盤查清冊的質量平衡表）明確把兩邊分開：**投入量＝主要原物料投入總量**；**產出量＝標的產品產量＋製程廢棄物的產出量**。「製程廢棄物」是**產出**側的項目，不屬於投入量 —— 選項 C 把產出算進了投入。",
+      "explanation": "iPAS 公版教材「活動數據整理－本標的產品的各項投入產出」該頁（環境部碳足跡盤查清冊的質量平衡表）明確把兩邊分開：**投入量＝主要原物料投入總量**；**產出量＝標的產品產量＋製程廢棄物的產出量**。「製程廢棄物」是**產出**側的項目，不屬於投入量 —— 「原物料投入、能源使用、廢棄物產出」那一項把產出算進了投入。",
       "metadata": {
         "original_id": "c2-202",
         "_legacy_pipeline_metadata": {
@@ -19947,7 +19938,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**解析引用的法規名稱是舊名。環境部已於112年9月14日將「溫室氣體排放量盤查登錄管理辦法」正式更名為「溫室氣體排放量盤查登錄及查驗管理辦法」，自113年1月1日起施行，現行（2026年）有效法規名稱是後者，不是解析裡寫的前者。營運控制法這個結論本身沒錯，但引用的法規名稱已過時。**\n　依據（https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/8d5700d8-629c-4b5d-bf0a-95a9055d7821）逐字：「環境部於今(112)年9月14日將「溫室氣體排放量盤查登錄管理辦法」名稱修正為「溫室氣體排放量盤查登錄及查驗管理辦法」，修正條文計有17條，自明(113)年1月1日起施行。」\n\n**更正後應為**：把法規名稱改成現行名稱「溫室氣體排放量盤查登錄及查驗管理辦法」（112年9月14日修正、113年1月1日施行，舊名「溫室氣體排放量盤查登錄管理辦法」已停用）；「採用營運控制法」的結論不用改。",
+      "explanation": "我國列管事業之組織邊界，依環境部規定應採**營運控制法**（確保排放源受到全面監控）。\n\n⚠️ 法規名稱更正：原解析引用的是**舊名**「溫室氣體排放量盤查登錄管理辦法」。環境部已於 **112 年 9 月 14 日**將其更名為「**溫室氣體排放量盤查登錄及查驗管理辦法**」，並自 **113 年 1 月 1 日**起施行。結論（營運控制法）不受影響，只是法規名稱已停用逾兩年。",
       "metadata": {
         "original_id": "c2-214",
         "_legacy_pipeline_metadata": {
@@ -19970,10 +19961,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [
-            "根據環境部「溫室氣體排放量盤查登錄管理辦法」，應盤查登錄之事業應以其具有營運控制權之所有廠（場）進行盤查，即採用營運控制法。"
-          ],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析引用的是已停用兩年的舊法規名稱。結論無誤，已更正名稱。"
         }
       }
     },
@@ -20003,7 +19991,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "ISO 14064-1:2018 §9.3.1 Required information 逐項列出強制揭露內容，A、B、C 都在其中：(A) 人為生物源 CO₂ 排放與移除須「分開」量化及報告，CH₄／N₂O 等其他人為生物源溫室氣體亦須納入人為排放的量化與報告；(B) §9.3.1(g) 明確要求說明生物源 CO₂ 排放與移除在盤查中的「處理方式」，並將相關數量分開揭露；(C) 規範性附錄 E（Annex E, normative）要求輸入電力原則上採「地點基礎法」量化，若改用市場基礎法或契約工具，另有記錄與報告要求。(D) 則不是 §9.3.1 所列的獨立強制揭露項目 —— 標準採用的分類是「非生物源排放」、「人為生物源排放」，以及有量化時的「非人為生物源排放」，而不是籠統要求揭露「產生自化石與生質碳之所有 GHG 排放與移除」。故選 D。",
+      "explanation": "ISO 14064-1:2018 §9.3.1 Required information 逐項列出強制揭露內容，生物源排放、生物源 CO₂ 移除、電力處理方式都在其中：(A) 人為生物源 CO₂ 排放與移除須「分開」量化及報告，CH₄／N₂O 等其他人為生物源溫室氣體亦須納入人為排放的量化與報告；(B) §9.3.1(g) 明確要求說明生物源 CO₂ 排放與移除在盤查中的「處理方式」，並將相關數量分開揭露；(C) 規範性附錄 E（Annex E, normative）要求輸入電力原則上採「地點基礎法」量化，若改用市場基礎法或契約工具，另有記錄與報告要求。(D) 則不是 §9.3.1 所列的獨立強制揭露項目 —— 標準採用的分類是「非生物源排放」、「人為生物源排放」，以及有量化時的「非人為生物源排放」，而不是籠統要求揭露「產生自化石與生質碳之所有 GHG 排放與移除」。故正解為「化石與生質碳排放與移除」。",
       "metadata": {
         "verification_source": "ISO 14064-1:2018 §9.3.1(g) + Annex E (normative); 商研院 S_CHU_07#13 answer key",
         "original_id": "c2-215",
@@ -24500,7 +24488,7 @@
       "quality_flags": [
         "time_sensitive"
       ],
-      "explanation": "環境部《溫室氣體排放量盤查作業指引》（113 年版）依溫管辦法 §4 第 2 項，把排放係數的採用來源**依序**列為：(1) 本部**公告**之溫室氣體排放係數 →(2) 國際文獻 →(3) 檢測報告所得之**自廠係數**。**自廠係數是最後一順位**，不是優先採用 —— 故選 A。",
+      "explanation": "環境部《溫室氣體排放量盤查作業指引》（113 年版）依溫管辦法 §4 第 2 項，把排放係數的採用來源**依序**列為：(1) 本部**公告**之溫室氣體排放係數 →(2) 國際文獻 →(3) 檢測報告所得之**自廠係數**。**自廠係數是最後一順位**，不是優先採用 —— 故正解為「以中央主管機關公告為主」。",
       "_correction_note": "2026-07-14 更正：原答 C（以自廠係數為主）為誤，正解為 A（以中央主管機關公告為主）。環境部盤查作業指引（113 年版）逐字列出採用順序：(1) 本部公告排放係數 (2) 國際文獻 (3) 檢測報告所得之自廠係數 —— **自廠係數排在最後**。釘選的溫管辦法 §4 亦把「採用中央主管機關公告之溫室氣體排放係數」列為第一款。已標 time_sensitive：作業指引逐年改版（現為 113 年版）。"
     },
     {
@@ -26603,7 +26591,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**解析從頭到尾沒有提到本題正確答案 B「租賃資產的排放」，卻用「外購商品」（並非任何一個選項）作為結論，完全沒有交代為什麼答案是 B。來源（考科2溫室氣體盤查規範與程序概要，表1.1.1）明確把「8.上游租賃資產」列在類別4底下，這才是選項B對應到類別4的依據；而選項A「商務差旅」與選項C「員工通勤」，同一張表清楚列在類別3（運輸產生的間接溫室氣體排放，含6.商務旅行、7.員工通勤），並非類別4。解析的論證品項與正確答案的依據對不上。**\n　依據（https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf）逐字：「類別4-使用產品的間接溫\n室氣體排放 \n範疇三 1.購買產品及服務,2.資本財,3.燃料與能源相關活動 \n5.營運產生廢棄物,8.上游租賃資產」\n\n**來源表1.1.1明確將商務旅行、員工通勤歸入類別3（運輸產生的間接溫室氣體排放），而非類別4，解析完全沒有引用這項關鍵區分。**\n　依據（https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf）逐字：「類別3-運輸產生的間接溫\n室氣體排放 \n範疇三 \n4.上游原物料運輸及分配,6.商務旅行 \n7.員工通勤,9.下游產品運輸及分配」\n\n**更正後應為**：改為：「依來源表1.1.1，類別4（使用產品的間接溫室氣體排放）涵蓋：1.購買產品及服務、2.資本財、3.燃料與能源相關活動、5.營運產生廢棄物、8.上游租賃資產——選項B『租賃資產的排放』正屬此類，故選B。商務差旅（A）與員工通勤（C）依同表歸屬類別3（運輸產生的間接排放）；購入電力（D）屬類別2（輸入能源的間接排放）；兩者均非類別4。」",
+      "explanation": "ISO 14064-1:2018 的**類別 4**是「**來自組織使用的產品**之間接排放」（組織**去使用**他人的產品 —— 上游），涵蓋採購之貨物與服務、資本財、委外活動，以及作為**承租人的租賃資產**。故正解為「租賃資產的排放」。\n\n其餘選項：**商務差旅**與**員工通勤**屬**類別 3**（來自運輸之間接排放）；**購入電力**屬**類別 2**（來自輸入能源之間接排放）。\n\n⚠️ 本題解析已更正：原文從頭到尾沒有交代「租賃資產」為什麼是正解，卻用「外購商品」（**根本不是任何一個選項**）作結，論證與答案對不上。",
       "metadata": {
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -26625,10 +26613,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [
-            "根據ISO 14064-1:2018，類別4指的是「由組織使用的產品所產生之間接溫室氣體排放」，其中包括外購商品、資本商品、廢物處理等。因此，外購商品的排放屬於類別4。"
-          ],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析未交代正解「租賃資產」的依據，反而以「外購商品」（非任何選項）作結。已重寫。"
         }
       }
     },
@@ -27084,7 +27069,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "第 26(1) 條：授權申報人未繳交憑證者，「按其未繳交之每一張 CBAM 憑證」，處以與 Directive 2003/87/EC 第 16(3) 條之 ETS 超額排放罰鍰相同之金額（並依同指令第 16(4) 條調升）。選項 B 的 3–5 倍是第 26(2) 條，適用對象是「非授權之人輸入貨物」，行為人不同。選項 D 描述的是第 22(3) 條季末餘額不足時的補正程序，不是繳交義務的罰則。",
+      "explanation": "第 26(1) 條：授權申報人未繳交憑證者，「按其未繳交之每一張 CBAM 憑證」，處以與 Directive 2003/87/EC 第 16(3) 條之 ETS 超額排放罰鍰相同之金額（並依同指令第 16(4) 條調升）。「處以第 26(1) 條罰鍰之 3 至 5 倍」一項 的 3–5 倍是第 26(2) 條，適用對象是「非授權之人輸入貨物」，行為人不同。「不處罰鍰，僅須於 1 個月內補足憑證」一項 描述的是第 22(3) 條季末餘額不足時的補正程序，不是繳交義務的罰則。",
       "metadata": {
         "verification_source": "CELEX 02023R0956-20251020 Art 26(1); Dir 2003/87/EC Art 16(3)-(4)",
         "valid_as_of": "2026-07-13",
@@ -43004,7 +42989,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**explanation 欄位整個是空的教學內容——它捕捉到的是來源 PDF 的『頁尾/文件結尾分隔線』，不是對第70題（生命週期闡釋的目的）的解析文字。來源在此題選項 (D)招聘員工 之後直接就是文件結尾分隔線，完全沒有接續的說明段落（相較之下，同一份文件的 Q30、Q35 在選項後面確實有一段解析文字，Q70 沒有）。目前 explanation 對使用者沒有任何教學內容，等同解析缺失。**\n　依據（https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf）逐字：「(D)招聘員工 \n===============================================」\n\n**更正後應為**：explanation 應改寫為實質內容，例如：『生命週期闡釋（interpretation）是 LCA 的第四階段，目的在合併盤查分析（LCI）與衝擊評估（LCIA）的結果，據以形成結論、限制與建議，供決策使用（呼應 bank_answer B）。』並移除誤植的頁尾分隔線字串。",
+      "explanation": "**生命週期闡釋（Life Cycle Interpretation）**是 LCA 的**第四階段**（目標與範疇界定 → 生命週期盤查分析 LCI → 生命週期衝擊評估 LCIA → **闡釋**）。\n\n它的目的是**合併 LCI 與 LCIA 的結果**，經完整性、敏感度與一致性檢查後，形成**結論與建議**，供決策使用。\n\n⚠️ 本題原本的「解析」欄位其實是來源 PDF 的**頁尾分隔線**（`====…`）被擷取程式誤抓進來的殘留物，對使用者沒有任何教學內容。已補上實質解析。",
       "source": {
         "source_id": "S_CHU_07",
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
@@ -43047,10 +43032,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [
-            "==============================================="
-          ],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原「解析」欄位是來源 PDF 頁尾分隔線的擷取殘留物（=====），完全沒有教學內容。已補寫。"
         }
       }
     }

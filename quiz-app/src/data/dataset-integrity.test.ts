@@ -823,6 +823,13 @@ describe('quality_flags 的一致性', () => {
         '(b) 化石排放與 (e) 航空器運輸排放是兩個獨立項目，原答案把後者併進了前者',
     },
     {
+      id: 'gist[258]',
+      why:
+        '已改為 answer=null（排除計分）—— 本題**有兩個正解**：ISO 14067 的官方摘要' +
+        '**明文排除**「CFP 的溝通」（"communication of CFP ... outside the scope"），' +
+        '而原答案「碳足跡標籤的設計規範」也不在 ISO 14067 裡。缺陷在題目本身，不隨時間變',
+    },
+    {
       id: 'gist[61]',
       why:
         '這題已改為 answer=null（排除計分），因為它**有兩個正解** —— iPAS 公版教材明示' +
