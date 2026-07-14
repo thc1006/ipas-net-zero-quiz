@@ -94,12 +94,16 @@
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "CO2-equivalent emissions are commonly used to compare emissions of different GHGs, but should not be taken to imply that these emissions have an equivalent effect across all key measures of climate change.",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "CO2-equivalent emissions are commonly used to compare emissions of different GHGs, but should not be taken to imply that these emissions have an equivalent effect across all key measures of climate change.",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipcc.ch/report/ar6/wg1/downloads/report/IPCC_AR6_WGI_AnnexVII.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -150,12 +154,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "The Paris Agreement, inter alia, sets out a long-term goal in line with the objective to keep the global temperature increase well below 2 °C above pre-industrial levels and to pursue efforts to keep it to 1,5 °C above pre-industrial levels.",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "The Paris Agreement, inter alia, sets out a long-term goal in line with the objective to keep the global temperature increase well below 2 °C above pre-industrial levels and to pursue efforts to keep it to 1,5 °C above pre-industrial levels.",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016D1841",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -259,12 +267,16 @@
           "method": "ladder_reversed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "優惠費率A（符合「徵收對象溫室氣體減量指定目標」公告附表一行業別指定削減率規定）：新臺幣50元/公噸二氧化碳當量。",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "優惠費率A（符合「徵收對象溫室氣體減量指定目標」公告附表一行業別指定削減率規定）：新臺幣50元/公噸二氧化碳當量。",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -373,12 +385,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "The requirements in IFRS S2 Climate-related Disclosures issued by the International Sustainability Standards Board (ISSB) integrate, and are consistent with, the four core recommendations and 11 recommended disclosures published by the Task Force on Climate-related Financial Disclosures (TCFD).",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "The requirements in IFRS S2 Climate-related Disclosures issued by the International Sustainability Standards Board (ISSB) integrate, and are consistent with, the four core recommendations and 11 recommended disclosures published by the Task Force on Climate-related Financial Disclosures (TCFD).",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ifrs.org/content/dam/ifrs/supporting-implementation/ifrs-s2/ifrs-s2-comparison-tcfd.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -488,12 +504,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "確認其非法規要求、不具投資效益、非技術普遍或存在技術障礙之分析",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        },
+        "evidence": [
+          {
+            "quote": "確認其非法規要求、不具投資效益、非技術普遍或存在技術障礙之分析",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=2",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ],
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
@@ -549,12 +569,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "These are 5-10 year GHG mitigation targets in line with 1.5°C pathways",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "These are 5-10 year GHG mitigation targets in line with 1.5°C pathways",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -721,12 +745,16 @@
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "Through JI, a country with an emission reduction or limitation commitment under the Kyoto Protocol may take part in an emission reduction (or emission removal) project in any other country with a commitment under the Protocol",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Through JI, a country with an emission reduction or limitation commitment under the Kyoto Protocol may take part in an emission reduction (or emission removal) project in any other country with a commitment under the Protocol",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://cdm.unfccc.int/about/cdm_kpm.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -756,7 +784,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "我國環境部依《空氣污染防制法》及《蒙特婁議定書》吉佳利修正案，於114年（2025年）7月1日起將 HFCs 列為列管化學品，未經許可不得輸出入，逐步削減基線量以對接國際時程。",
+      "explanation": "我國環境部依《空氣污染防制法》及《蒙特婁議定書》吉佳利修正案，於114年（2025年）7月1日起將 HFCs 列為列管化學品，未經許可不得輸出入，逐步削減基線量以對接國際時程。\n\n⚠️ **本題解析已更正** ——\n\n**法規原文（全國法規資料庫，氣候變遷因應法第38條）：「中央主管機關得公告禁止或限制國際環保公約管制之高溫暖化潛勢溫室氣體及利用該溫室氣體相關產品之製造、輸入、輸出、販賣、使用或排放。」內容與 HFCs 管制完全對應，確認正確法源是氣候變遷因應法第38條而非空氣污染防制法。**\n　依據（https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098）逐字：「中央主管機關得公告禁止或限制國際環保公約管制之高溫暖化潛勢溫室氣體及利用該溫室氣體相關產品之製造、輸入、輸出、販賣、使用或排放。」\n\n**更正後應為**：把「依《空氣污染防制法》」改成「依《氣候變遷因應法》第38條」，其餘敘述（114年7月1日起未經核准不得輸出入）正確不動。",
       "subject": null,
       "topic_tags": [
         "HFCs",
@@ -777,11 +805,21 @@
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "自中華民國一百十四年七月一日起，氫氟碳化物未經核准不得輸入或輸出，且限向遵守蒙特婁議定書規定之國家或地區為之。",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
+        "evidence": [
+          {
+            "quote": "自中華民國一百十四年七月一日起，氫氟碳化物未經核准不得輸入或輸出，且限向遵守蒙特婁議定書規定之國家或地區為之。",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007931",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [
@@ -869,7 +907,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "依管理辦法第10條，列管事業應於每年 8 月 31 日前完成前一年度盤查登錄，並於 10 月 31 日前完成查驗並上傳查驗總結報告與聲明書至 GHG 平台。",
+      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**條號錯位＋日期無中生有。10月31日上傳查驗總結報告及聲明書的規定其實在第9條，不是第10條；第10條規範的是主管機關對盤查文件/查驗結果之『補正』程序（30日內補正），與上傳期限無關。此外，現行辦法查無任何『8月31日』期限——前一年度盤查登錄的期限是第6條規定的『每年四月三十日前』，不是8月31日。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=9）逐字：「事業依前條規定辦理查驗作業，應於每年十月三十一日前，依中央主管機關所定格式，將溫室氣體查驗總結報告及查驗聲明書之查驗結果，以網路傳輸方式，上傳至中央主管機關指定之資訊平台。」\n\n**第10條實際條文與『10月31日上傳』或『盤查登錄』完全無關，是補正期限規定。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=10）逐字：「事業登錄之盤查文件或上傳之查驗結果，經中央主管機關審查有欠缺或不合規定者，應通知事業限期補正，其補正總日數不得超過三十日；屆期未補正或補正仍不合規定者，駁回登錄之盤查文件或上傳之查驗結果。」\n\n**『8月31日』這個日期在本辦法中查無依據；盤查登錄的期限是第6條的『每年四月三十日前』。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=6）逐字：「事業依第三條至前條規定辦理排放量盤查，應於每年四月三十日前，依中央主管機關所定格式，將前一年度之溫室氣體排放量清冊...登錄於中央主管機關指定之事業溫室氣體排放量資訊平台」\n\n**更正後應為**：『依管理辦法第10條』改為『依管理辦法第9條』；『應於每年8月31日前完成前一年度盤查登錄』改為『應於每年4月30日前完成前一年度盤查登錄（第6條）』。第10條實際規範的是盤查文件/查驗結果的補正程序（30日），與登錄或上傳期限無關，不應被引用為期限依據。",
       "subject": null,
       "topic_tags": [
         "盤查查驗",
@@ -890,11 +928,23 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "事業依前條規定辦理查驗作業，應於每年十月三十一日前，依中央主管機關所定格式，將溫室氣體查驗總結報告及查驗聲明書之查驗結果，以網路傳輸方式，上傳至中央主管機關指定之資訊平台。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
+        "evidence": [
+          {
+            "quote": "事業依前條規定辦理查驗作業，應於每年十月三十一日前，依中央主管機關所定格式，將溫室氣體查驗總結報告及查驗聲明書之查驗結果，以網路傳輸方式，上傳至中央主管機關指定之資訊平台。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=9",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "依管理辦法第10條，列管事業應於每年 8 月 31 日前完成前一年度盤查登錄，並於 10 月 31 日前完成查驗並上傳查驗總結報告與聲明書至 GHG 平台。"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [
@@ -946,12 +996,16 @@
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "屬第一項第一款之相同類型逸散排放源，其排放量低於事業總排放量百分之零點零五且未達五公噸二氧化碳當量，得連續二年採用其最近一期經盤查登錄之排放量。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "屬第一項第一款之相同類型逸散排放源，其排放量低於事業總排放量百分之零點零五且未達五公噸二氧化碳當量，得連續二年採用其最近一期經盤查登錄之排放量。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=3",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -1059,12 +1113,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "一定規模之服務業、運輸業、醫療機構、大專校院及製造業為應盤查登錄對象",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "一定規模之服務業、運輸業、醫療機構、大專校院及製造業為應盤查登錄對象",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgregistry.moenv.gov.tw/Upload/News3/00003251_002.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -1233,12 +1291,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "事業之特約或加盟門市由其他事業經營者，其排放量盤查至少應涵蓋外購電力之能源間接排放。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "事業之特約或加盟門市由其他事業經營者，其排放量盤查至少應涵蓋外購電力之能源間接排放。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -1289,12 +1351,16 @@
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "事業使用經中央主管機關公告之燃料及原（物）料者，得以該燃料及原（物）料商品標示之熱值或碳含量計算排放量，不適用前項規定。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "事業使用經中央主管機關公告之燃料及原（物）料者，得以該燃料及原（物）料商品標示之熱值或碳含量計算排放量，不適用前項規定。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -1352,12 +1418,16 @@
           "evidence": "2025 年版國家溫室氣體清冊報告（service.cca.gov.tw，327 頁 PDF）逐字寫著：「這些源自於生物的二氧化碳被視為**中性碳(carbon-neutral)**，因此移除事業盤查資料中所產生的二氧化碳排放。」",
           "why": "題目問的是「**2025 年版 NIR** 把它視為哪一類碳」。把整份 327 頁的 NIR 搜過 ——「**生物碳**」出現 **0 次**；NIR 自己用的詞是「**中性碳(carbon-neutral)**」。原答案「生物碳」是錯的。（我先前「修」過這題的解析，寫「依 IPCC 指南，生物起源 CO2 視為短期碳循環」—— 那是國際慣用語，但**我從來沒去看過 NIR 本身**。題目問的是 NIR 怎麼寫。）"
         },
-        "evidence": {
-          "quote": "這些源自於生物的二氧化碳被視為中性碳(carbon-neutral)，因此移除事業盤查資料中所產生的二氧化碳排放。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + 機械逐字比對（抓回 service.cca.gov.tw 的 NIR PDF，確認引文逐字存在）"
-        }
+        "evidence": [
+          {
+            "quote": "這些源自於生物的二氧化碳被視為中性碳(carbon-neutral)，因此移除事業盤查資料中所產生的二氧化碳排放。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + 機械逐字比對（抓回 service.cca.gov.tw 的 NIR PDF，確認引文逐字存在）",
+            "url": "https://service.cca.gov.tw/File/Get/cca/zh-tw/5aP6jPYTHl31hKi",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -1408,6 +1478,11 @@
           "previous_answer": "B",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "sources": [
@@ -1521,6 +1596,11 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "sources": [
@@ -1575,6 +1655,11 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "sources": [
@@ -1682,12 +1767,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "A market-based method reflects emissions from electricity that companies have purposefully chosen (or their lack of choice).",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "A market-based method reflects emissions from electricity that companies have purposefully chosen (or their lack of choice).",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/2023-03/Scope%202%20Guidance.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -1738,12 +1827,16 @@
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "coastal wetlands including mangrove forests, tidal marshes and seagrass meadows, and constructed wetlands for wastewater treatment",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "coastal wetlands including mangrove forests, tidal marshes and seagrass meadows, and constructed wetlands for wastewater treatment",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipcc.ch/site/assets/uploads/2018/09/FS_TFI_Wetlands.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -1794,12 +1887,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "外加性分析：指事業或各級政府針對其所提出之自願減量專案進行法規外加性、財務外加性、普遍性及障礙分析，確認其非法規要求、不具投資效益、非技術普遍或存在技術障礙之分析",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "外加性分析：指事業或各級政府針對其所提出之自願減量專案進行法規外加性、財務外加性、普遍性及障礙分析，確認其非法規要求、不具投資效益、非技術普遍或存在技術障礙之分析",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=2",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -1850,12 +1947,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "小規模減量方法 造林與植林碳匯專案活動 版本 01.0 範疇別： 11 林業",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "小規模減量方法 造林與植林碳匯專案活動 版本 01.0 範疇別： 11 林業",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://carbonoffset.moenv.gov.tw/Content/files/AR-TMS0001%E9%80%A0%E6%9E%97%E8%88%87%E6%A4%8D%E6%9E%97%E7%A2%B3%E5%8C%AF%E5%B0%88%E6%A1%88%E6%B4%BB%E5%8B%95.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -1906,12 +2007,16 @@
           "method": "ladder_kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "injected into deep geological formations (including depleted oil and gas reservoirs or saline formations) which trap the CO2 for permanent storage",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "injected into deep geological formations (including depleted oil and gas reservoirs or saline formations) which trap the CO2 for permanent storage",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.iea.org/reports/about-ccus",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -1962,12 +2067,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "Category 1 includes emissions from all purchased goods and services not otherwise included in the other categories of upstream scope 3 emissions",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        },
+        "evidence": [
+          {
+            "quote": "Category 1 includes emissions from all purchased goods and services not otherwise included in the other categories of upstream scope 3 emissions",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/2022-12/Chapter1.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ],
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
@@ -2023,12 +2132,16 @@
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "Embedded emissions in goods other than electricity shall be determined based on the actual emissions in accordance with the methods set out in points 2 and 3 of Annex IV.",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Embedded emissions in goods other than electricity shall be determined based on the actual emissions in accordance with the methods set out in points 2 and 3 of Annex IV.",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32023R0956",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -2079,12 +2192,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "Actionable, globally recognized supplier scorecards",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Actionable, globally recognized supplier scorecards",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ecovadis.com/solutions/ratings/",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -2135,12 +2252,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "Additional information on more active forms of training and capacity-building are covered in section 5.",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Additional information on more active forms of training and capacity-building are covered in section 5.",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://files.sciencebasedtargets.org/production/files/Supplier-Engagement-Guidance.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -2191,12 +2312,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "事業具有經中央主管機關公告之排放源，應進行排放量盤查，並於規定期限前登錄於中央主管機關指定資訊平台；其經中央主管機關公告指定應查驗者，盤查相關資料並應經查驗機構查驗",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "事業具有經中央主管機關公告之排放源，應進行排放量盤查，並於規定期限前登錄於中央主管機關指定資訊平台；其經中央主管機關公告指定應查驗者，盤查相關資料並應經查驗機構查驗",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=21",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -2247,12 +2372,16 @@
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "The objective of IFRS S2 is to require an entity to disclose information about its climate-related risks and opportunities that is useful to users of general purpose financial reports in making decisions relating to providing resources to the entity.",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "The objective of IFRS S2 is to require an entity to disclose information about its climate-related risks and opportunities that is useful to users of general purpose financial reports in making decisions relating to providing resources to the entity.",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -2306,12 +2435,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "Transition risks include policy, legal, technological, market and reputational risks.",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Transition risks include policy, legal, technological, market and reputational risks.",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -2365,12 +2498,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "The TNFD has developed a set of disclosure recommendations and guidance that encourage and enable business and finance to assess, report and act on their nature-related dependencies, impacts, risks and opportunities.",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "The TNFD has developed a set of disclosure recommendations and guidance that encourage and enable business and finance to assess, report and act on their nature-related dependencies, impacts, risks and opportunities.",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ifrs.org/content/dam/ifrs/meetings/2025/february/issb/ap3c-introduction-tnfd-recommendations.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -2421,12 +2558,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "Double materiality has two dimensions, namely: impact materiality and financial materiality.",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Double materiality has two dimensions, namely: impact materiality and financial materiality.",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32023R2772",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
@@ -2478,12 +2619,16 @@
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "IFRS S1 prescribes how an entity prepares and reports its sustainability-related financial disclosures. It sets out general requirements for the content and presentation of those disclosures so that the information disclosed is useful to users in making decisions relating to providing resources to the entity.",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "IFRS S1 prescribes how an entity prepares and reports its sustainability-related financial disclosures. It sets out general requirements for the content and presentation of those disclosures so that the information disclosed is useful to users in making decisions relating to providing resources to the entity.",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
@@ -2516,7 +2661,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "依 GHG Protocol Scope 3 Calculation Guidance §6 與 ISO 14064-1:2018 §7.3，組織應先建立資料蒐集架構與資料品質管理計畫（Data Quality Plan），再逐年透過初級資料置換次級資料，並擴展至上下游 Tier。",
+      "explanation": "依 GHG Protocol Scope 3 Calculation Guidance §6 與 ISO 14064-1:2018 §7.3，組織應先建立資料蒐集架構與資料品質管理計畫（Data Quality Plan），再逐年透過初級資料置換次級資料，並擴展至上下游 Tier。\n\n⚠️ **本題解析已更正** ——\n\n**In the actual GHG Protocol 'Technical Guidance for Calculating Scope 3 Emissions' document, Chapter 6 covers setting the scope 3 boundary, NOT data collection/data quality. Data collection and data quality guidance is Chapter 7, not Chapter 6. This is confirmed by the document's own 'How to use this document' section (page 10), which is also the source of this very question's own verified_quote.**\n　依據（https://ghgprotocol.org/sites/default/files/standards/Scope3_Calculation_Guidance_0.pdf）逐字：「Chapter 6, which provides guidance on setting the scope 3 boundary ... Chapter 7, which provides guidance on collecting data, including prioritizing data collection efforts, selecting among different types of data, and ensuring data quality」\n\n**更正後應為**：改為：「依 GHG Protocol Scope 3 Calculation Guidance §7（非§6，§6 為劃定範疇三邊界）與 ISO 14064-1:2018 §8（非§7.3，§7.3 為減量目標 GHG emission reduction or removal enhancement targets；資料/存量品質管理實為第8章 GHG inventory quality management），組織應先建立資料蒐集架構與資料品質管理計畫（Data Quality Plan），再逐年透過初級資料置換次級資料，並擴展至上下游 Tier。」核心概念（先建立資料品質管理計畫、逐步以初級資料取代次級資料）本身正確，錯的只是兩個章節號。",
       "subject": null,
       "topic_tags": [
         "Scope 3",
@@ -2537,11 +2682,21 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "Chapter 7, which provides guidance on collecting data, including prioritizing data collection efforts, selecting among different types of data, and ensuring data quality",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
+        "evidence": [
+          {
+            "quote": "Chapter 7, which provides guidance on collecting data, including prioritizing data collection efforts, selecting among different types of data, and ensuring data quality",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/standards/Scope3_Calculation_Guidance_0.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [
@@ -2593,12 +2748,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "It focuses on quantifying, reducing, and offsetting carbon footprints, utilizing a hierarchical approach prioritizing direct and indirect GHG emission reductions and removal enhancements within the value chain over offsetting.",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        },
+        "evidence": [
+          {
+            "quote": "It focuses on quantifying, reducing, and offsetting carbon footprints, utilizing a hierarchical approach prioritizing direct and indirect GHG emission reductions and removal enhancements within the value chain over offsetting.",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.iso.org/standard/43279.html",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ],
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
@@ -2767,12 +2926,16 @@
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "The attributed direct and indirect emissions shall then be converted into specific embedded direct and indirect emissions of the goods resulting from the production process using Equations 50 and 51.",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "The attributed direct and indirect emissions shall then be converted into specific embedded direct and indirect emissions of the goods resulting from the production process using Equations 50 and 51.",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32023R1773",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/68010e53fd897800010b717c",
@@ -3028,12 +3191,16 @@
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
         },
-        "evidence": {
-          "quote": "Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document.",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document.",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.iso.org/standard/71206.html",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "sources": [
         "https://vocus.cc/article/68b53f5efd89780001e60438",
@@ -3650,7 +3817,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "FIT 躉購制度下台電已取得相對應憑證，企業不能再向台電「重複」購買憑證；常見合法路徑為轉供（直供/PPA）、自用、向再生能源售電業購買等。",
+      "explanation": "；常見合法路徑為轉供（直供/PPA）、自用、向再生能源售電業購買等。\n\n⚠️ **本題解析已更正** ——\n\n**來源說的不是「台電已取得憑證、企業不能重複買」，而是躉售給台電的電力根本不會核發憑證給任何人——躉購賣家依法被排除在申請人資格之外，該部分電力自始沒有憑證存在，不是台電持有憑證。**\n　依據（https://www.trec.org.tw/faq）逐字：「設備商若已將電力躉售給台電，不可申請憑證；若設備商未來想由躉售轉換至綠電交易市場，或電力自用，可申請再生能源憑證。」\n\n**法源『再生能源憑證實施辦法』第二條第四項明文將採躉購制度者排除於憑證申請人資格之外，代表該電力完全不進入憑證體系，而非憑證歸台電所有。**\n　依據（https://www.trec.org.tw/faq）逐字：「申請人：指再生能源發電業、再生能源售電業或再生能源自用發電設備設置者，但 採躉購制度 與 溫室氣體排放額度抵換專案減量額度者除外 。」\n\n**更正後應為**：改為：FIT 躉購制度下的電力，依『再生能源憑證實施辦法』第2條第4項規定，該躉售電力之發電業者被排除於憑證申請人資格之外，該部分電力自始不會核發任何憑證（並非台電取得憑證）；因此企業無法透過『向台電購買FIT電力』取得T-REC，仍須透過轉供、自用或向再生能源售電業購買等合法路徑取得。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -3671,6 +3838,14 @@
           "previous_answer": "C",
           "method": "transposed",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "FIT 躉購制度下台電已取得相對應憑證，企業不能再向台電「重複」購買憑證"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [
@@ -3946,7 +4121,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "SBTi FLAG 規範：屬指定產業（食品生產、農業、林產等），或 FLAG 相關排放 ≥ 20% 之企業，需設 FLAG 目標；其涵蓋 1+2 排放 ≥ 95%、範疇 3 ≥ 67%；並須最遲於 2025/12/31 公開零毀林承諾。",
+      "explanation": "SBTi FLAG 規範：屬指定產業（食品生產、農業、林產等），或 FLAG 相關排放 ≥ 20% 之企業，需設 FLAG 目標；、範疇 3 ≥ 67%；。\n\n⚠️ **本題解析已更正** ——\n\n**來源只要求FLAG範疇1排放涵蓋率≥95%，並未將範疇2併入此門檻（FLAG指引通篇僅提『FLAG-related scope 1』95%與『FLAG-related scope 3』67%兩項，沒有『範疇1+2』的組合門檻）。**\n　依據（https://files.sciencebasedtargets.org/production/files/SBTiFLAGGuidance.pdf）逐字：「The FLAG target must cover at least 95% of FLAG-related scope 1 emissions.」\n\n**來源（現行版本，2026年3月版）規定零毀林承諾之目標年限為『FLAG目標提交日起2年內，且不得晚於2030年12月31日』，是一個隨提交日期滾動、上限為2030年的規則，並非固定的『2025/12/31』。**\n　依據（https://files.sciencebasedtargets.org/production/files/SBTiFLAGGuidance.pdf）逐字：「with a target date of [no later than 2 years after FLAG target submission date. The target date cannot be later than 31 December 2030]」\n\n**更正後應為**：改為：FLAG目標須涵蓋FLAG相關範疇1排放≥95%、FLAG相關範疇3排放≥67%（兩項門檻各自獨立達成）；零毀林承諾之目標日期不得晚於FLAG目標提交日起2年，且不得晚於2030年12月31日（依現行SBTi FLAG Guidance版本；舊版曾採2025/12/31之固定期限，請以送審當下之最新版本為準）。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -3979,6 +4154,15 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "其涵蓋 1+2 排放 ≥ 95%",
+            "並須最遲於 2025/12/31 公開零毀林承諾"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [
@@ -4492,7 +4676,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "轉型風險源自政策、法規、技術、市場、聲譽變化，如碳定價、CBAM、消費偏好移轉；A、B、D 屬實體風險（急性或慢性）。",
+      "explanation": "轉型風險源自政策、法規、技術、市場、聲譽變化，如碳定價、CBAM、消費偏好移轉；\n\n⚠️ **本題解析已更正** ——\n\n**IFRS S2 Appendix A 定義：碳定價（policy risk）屬『climate-related transition risks』，不是實體風險；解析前一句才剛把『碳定價』列為轉型風險的例子（'轉型風險源自政策、法規...如碳定價'），下一句卻自我矛盾地把 B 歸入『A、B、D 屬實體風險』，與本題正解（轉型風險）直接衝突。同時 C（海平面上升）依定義屬 chronic physical risk，卻被解析漏列在實體風險之外。正確應為『A、C、D 屬實體風險』。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html）逐字：「Risks that arise from efforts to transition to a lower-carbon economy. Transition risks include policy, legal, technological, market and reputational risks. These risks could carry financial implications fo」\n\n**IFRS S2 Appendix A 對實體風險（acute/chronic）之定義與例示：颱風/洪水/熱浪屬 acute（對應 A、D），海平面上升屬 chronic（對應 C）；碳定價政策（B）不在此定義範圍內，證實解析把 B 錯放進實體風險清單是條號/類別錯位，而非單純用字問題。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html）逐字：「Risks resulting from climate change that can be event-driven (acute physical risk) or from longer-term shifts in climatic patterns (chronic physical risk). Acute physical risks arise from weather-related events such as storms, floods, drought or heatwaves, which are increasing in severity and」\n\n**更正後應為**：將『A、B、D 屬實體風險（急性或慢性）』改為『A、C、D 屬實體風險（A、D 為急性 acute；C 為慢性 chronic）；B 碳定價政策屬轉型風險，即為本題正解』。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
       "difficulty": "medium",
@@ -4518,6 +4702,14 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "A、B、D 屬實體風險（急性或慢性）。"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [
@@ -4928,6 +5120,11 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "sources": [
@@ -5255,6 +5452,11 @@
           "previous_answer": "B",
           "method": "kept",
           "why": "原題庫正解集中於 B（全池 60%、vocus 批 73.6%），永遠選 B 即得 60 分；已比對來源答案卡確認偏斜繼承自來源而非抄錯，故重排位置而非更動內容。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "sources": [
@@ -6919,7 +7121,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "依《碳費收費辦法》§5：碳費＝收費排放量 × 徵收費率；收費排放量＝（年排放量 − K 值）× 排放量調整係數值。K 值為 25,000 公噸 CO2e（高碳洩漏風險之事業 K 值為零）—— K 值與「排放量調整係數值」是兩個不同的量，調整係數值規定在 §6（0.2／0.4／0.6，非高碳洩漏者為 1），不要混用。費率本身不在《碳費收費辦法》裡，而是由環境部公告：2024/10/07 費率審議會通過並公告，一般費率 NT$300／公噸 CO2e，優惠費率 A 為 NT$50（達行業別指定削減率）、優惠費率 B 為 NT$100（達技術標竿指定削減率），自 2025/01/01 起算。",
+      "explanation": "依《碳費收費辦法》§5：碳費＝收費排放量 × 徵收費率；收費排放量＝（年排放量 − K 值）× 排放量調整係數值。K 值為 25,000 公噸 CO2e（高碳洩漏風險之事業 K 值為零）—— K 值與「排放量調整係數值」是兩個不同的量，調整係數值規定在 §6（0.2／0.4／0.6，非高碳洩漏者為 1），不要混用。費率本身不在《碳費收費辦法》裡，而是由環境部公告：，一般費率 NT$300／公噸 CO2e，優惠費率 A 為 NT$50（達行業別指定削減率）、優惠費率 B 為 NT$100（達技術標竿指定削減率），自 2025/01/01 起算。\n\n⚠️ **本題解析已更正** ——\n\n**113年10月7日只是碳費費率審議會「完成審議」的日期；環境部於10月8日進行預告，正式「公告」碳費徵收費率的日期是113年10月21日（生效日仍為114年1月1日）。解析把審議會決議日與正式公告日誤植為同一天。**\n　依據（https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284）逐字：「於113年10月21日公告「碳費徵收費率」，並訂於114年1月1日生效」\n\n**更正後應為**：改為：費率審議會於113/10/07完成審議，環境部於113/10/08預告、113/10/21正式公告「碳費徵收費率」，114/01/01生效。一般費率 NT$300／公噸 CO2e，優惠費率 A 為 NT$50，優惠費率 B 為 NT$100。",
       "subject": null,
       "topic_tags": [
         "碳費",
@@ -6956,6 +7158,14 @@
           "date": "2026-07-14",
           "verdict": "citation_replaced",
           "detail": "原引用 https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=5 經複驗判定不含本題主張；已換為 https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284，該頁上的逐字引文已機械驗證存在且支持本題答案。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "2024/10/07 費率審議會通過並公告"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [
@@ -6989,7 +7199,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "依《自主減量計畫管理辦法》§11，事業之自主減量計畫經中央主管機關核定後，於每年 6 月 30 日前申請者當年度起、7 月 1 日後申請者次年度起得適用優惠費率。優惠費率 A（NT$50）對應環境部 2024/10/07 公告「碳費徵收對象溫室氣體減量指定目標」之「行業別指定削減率」（或符合 SBTi 1.5°C 目標）；優惠費率 B（NT$100）對應「技術標竿削減率」。費率金額本身載於環境部公告，非《碳費收費辦法》§8（§8 為發電業電力消費排放量證明扣除）。",
+      "explanation": "依《自主減量計畫管理辦法》§11，事業之自主減量計畫經中央主管機關核定後，於每年 6 月 30 日前申請者當年度起、7 月 1 日後申請者次年度起得適用優惠費率。優惠費率 A（NT$50）對應之「行業別指定削減率」（或符合 SBTi 1.5°C 目標）；優惠費率 B（NT$100）對應「技術標竿削減率」。費率金額本身載於環境部公告，非《碳費收費辦法》§8（§8 為發電業電力消費排放量證明扣除）。\n\n⚠️ **本題解析已更正** ——\n\n**「碳費徵收對象溫室氣體減量指定目標」與《碳費收費辦法》《自主減量計畫管理辦法》同屬碳費三子法，於113年8月29日一併發布，並非10/07。10/7是碳費費率審議會完成審議「費率」（NT$300/50/100）的日期，審議標的是費率而非指定目標；解析把兩件事的日期混為一談。**\n　依據（https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html）逐字：「環境部於113年8月29日發布「碳費收費辦法」及「自主減量計畫管理辦法」，並公告「碳費徵收對象溫室氣體減量指定目標」」\n\n**更正後應為**：改為：優惠費率 A（NT$50）對應環境部113/08/29公告「碳費徵收對象溫室氣體減量指定目標」之「行業別指定削減率」（或符合SBTi 1.5°C目標）；優惠費率 B（NT$100）對應「技術標竿削減率」。",
       "subject": null,
       "topic_tags": [
         "碳費",
@@ -7026,6 +7236,14 @@
           "date": "2026-07-14",
           "verdict": "citation_replaced",
           "detail": "原引用 https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=11 經複驗判定不含本題主張；已換為 https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007916，該頁上的逐字引文已機械驗證存在且支持本題答案。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "環境部 2024/10/07 公告「碳費徵收對象溫室氣體減量指定目標」"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [
@@ -7767,6 +7985,11 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "sources": [
@@ -8043,6 +8266,11 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "sources": [
@@ -8279,7 +8507,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "我國上市櫃公司氣候相關財務揭露之直接法源並非《氣候變遷因應法》§36（§36 規範的是核配排放額度之帳戶開立、移轉交易與超額量扣減抵銷，與財務揭露無關），而是金管會職權：(1) 金管會 2023/08/17 公告、2024/08 滾動修訂之「我國接軌 IFRS 永續揭露準則藍圖」，分階段（資本額 100 億元以上 2026 年、50 億 2027 年、其餘 2028 年）強制適用 IFRS S1（永續一般揭露）／S2（氣候）；(2)《公開發行公司年報應行記載事項準則》§10-4 載明氣候相關事項應於年報揭露之內容。",
+      "explanation": "我國上市櫃公司氣候相關財務揭露之直接法源並非《氣候變遷因應法》§36（§36 規範的是核配排放額度之帳戶開立、移轉交易與超額量扣減抵銷，與財務揭露無關），而是金管會職權：(1) 金管會 2023/08/17 公告、2024/08 滾動修訂之「我國接軌 IFRS 永續揭露準則藍圖」，分階段（資本額 100 億元以上 2026 年、50 億 2027 年、其餘 2028 年）強制適用 IFRS S1（永續一般揭露）／S2（氣候）；(2)《公開發行公司年報應行記載事項準則》§10-4 載明氣候相關事項應於年報揭露之內容。\n\n⚠️ **本題解析已更正** ——\n\n**《公開發行公司年報應行記載事項準則》全法規逐條核對，根本沒有「第10-4條」這一條。氣候相關資訊之揭露，依§10第一項第三款第五目規定應揭露於附表二之二之三；而依IFRS永續揭露準則（S1/S2）編製與揭露永續相關財務資訊之規範格式，是2024/2025年金管會新增的「第10-1條」（第十條之一），不是「§10-4」。新聞稿也證實金管會修正的是「第七條、第十條之一、第二十三條」，同樣沒有10-4。此外source_url（fsc.gov.tw/ch/home.jsp?id=130...）本身已失效（跳轉至/ch/error.jsp錯誤頁），無法支持任何引文。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0400022&flno=10-1）逐字：「符合第七條第二項一定條件之公司,其永續相關財務資訊之編製及揭露,應依下列各款及有關法令辦理,其未規定者,依本會認可之國際財務報導準則永續揭露準則(以下簡稱永續揭露準則)辦理」\n\n**更正後應為**：將「§10-4」改為「§10-1（第十條之一）」。其餘關於金管會2023/08/17發布、分階段（資本額100億以上2026年、50億以上2027年、其餘2028年）強制適用IFRS S1/S2之敘述，已透過金管會/交易所新聞稿與第三方報導核實無誤（三階段門檻與年度完全相符）。",
       "subject": null,
       "topic_tags": [
         "金管會",
@@ -8309,6 +8537,12 @@
           "date": "2026-07-14",
           "verdict": "dead",
           "detail": "被引頁面已失效（含 Wayback 亦無存檔）"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [
@@ -8402,7 +8636,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "《溫室氣體自願減量專案管理辦法》§12 規定：「中央主管機關應就溫室氣體減量措施類型，審定具備專案範疇、適用條件、專案邊界、基線情境及專案情境等內容之溫室氣體減量方法」，且同條第三項規定「前項審定之溫室氣體減量方法，中央主管機關應公開於指定資訊平台」。截至 2025 年初，環境部公告認可之減量方法已逾 140 項（首批 2025/02 公告），來源包含本國新訂與外部方法學（CDM、VCS、GS）審定通過者。注意：§7 為「計入期年限」之規定，非方法學條。",
+      "explanation": "《溫室氣體自願減量專案管理辦法》§12 規定：「中央主管機關應就溫室氣體減量措施類型，審定具備專案範疇、適用條件、專案邊界、基線情境及專案情境等內容之溫室氣體減量方法」，。截至 2025 年初，環境部公告認可之減量方法已逾 140 項（首批 2025/02 公告），來源包含本國新訂與外部方法學（CDM、VCS、GS）審定通過者。注意：§7 為「計入期年限」之規定，非方法學條。\n\n⚠️ **本題解析已更正** ——\n\n**《溫室氣體自願減量專案管理辦法》§12全文只有兩項（第一項、第二項），並無第三項。第一項規範中央主管機關應審定減量方法；緊接著的第二項才是「前項審定之溫室氣體減量方法，中央主管機關應公開於指定資訊平台」——條文本身就用「前項」二字指稱其為第一項的下一項（即第二項），可見這句話是第二項，不是第三項。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=12）逐字：「中央主管機關應就溫室氣體減量措施類型,審定具備專案範疇、適用條件、專案邊界、基線情境及專案情境等內容之溫室氣體減量方法。必要時,並得於審定時,指定溫室氣體減量方法中減量措施或減量成果之確證或查證方式。\n前項審定之溫室氣體減量方法,中央主管機關應公開於指定資訊平台。」\n\n**更正後應為**：將「同條第三項規定」改為「同條第二項規定」。§12第一項本文引文、§7側註（計入期年限規定，非方法學條）皆核實無誤，正解本身仍成立。",
       "subject": null,
       "topic_tags": [
         "自願減量",
@@ -8439,6 +8673,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "且同條第三項規定「前項審定之溫室氣體減量方法，中央主管機關應公開於指定資訊平台」"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [
@@ -8771,6 +9013,11 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "sources": [
@@ -9136,12 +9383,16 @@
           "why_it_slipped": "練習池的「解析不得指名選項字母」gate 的 pattern 只認「答案為/故選/選項」，**漏了「正解」** —— 而主題庫的同一道 gate 有認。兩道守同一件事的 gate 寬窄不一，窄的那道就是個洞。已補齊。",
           "evidence": "EUR-Lex CELEX:32025R2083 Art. 6(1)：「By 30 September of each year, and for the first time in 2027 for the year 2026, each authorised CBAM declarant shall … submit a CBAM declaration」"
         },
-        "evidence": {
-          "quote": "By 30 September of each year, and for the first time in 2027 for the year 2026, each authorised CBAM declarant shall use the CBAM registry referred to in Article 14 to submit a CBAM declaration for the preceding calendar year.",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        },
+        "evidence": [
+          {
+            "quote": "By 30 September of each year, and for the first time in 2027 for the year 2026, each authorised CBAM declarant shall use the CBAM registry referred to in Article 14 to submit a CBAM declaration for the preceding calendar year.",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ],
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
@@ -9210,6 +9461,11 @@
           "date": "2026-07-14",
           "verdict": "citation_disputed",
           "detail": "agent 判定原引用 https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "sources": [
@@ -9312,7 +9568,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "依 IFRS S1 §17，企業應揭露「could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital over the short, medium or long term」之永續相關風險與機會 — 此即 ISSB 採用之「單一財務重大性」(single financial materiality)。「任何對人類或環境有顯著影響之永續議題，無論對企業現金流是否有影響」描述的是 ESRS「雙重重大性」中的 impact materiality 面向，不在 IFRS S1 的範圍內。",
+      "explanation": "— 此即 ISSB 採用之「單一財務重大性」(single financial materiality)。「任何對人類或環境有顯著影響之永續議題，無論對企業現金流是否有影響」描述的是 ESRS「雙重重大性」中的 impact materiality 面向，不在 IFRS S1 的範圍內。\n\n⚠️ **本題解析已更正** ——\n\n**這句英文原文其實是 IFRS S1 第3段的文字，不是第17段。第17段的實際條文是：「An entity shall disclose material information about the sustainability-related risks and opportunities that could reasonably be expected to affect the entity's prospects.」—— 用的是「prospects」這個定義用詞（其定義才回頭連到第3段的 cash flows/finance/cost of capital 那句話），第17段本身並沒有逐字出現解析引用的那句話。§18 才是重大性（omitting, misstating or obscuring...）的定義，這部分解析是對的；但把第3段的話安到第17段頭上，是條號錯位。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs1.html）逐字：「This Standard requires an entity to disclose information about all sustainability-related risks and opportunities that could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital over the short, medium or long term. For the purposes of this Standard, these risks and opportunities are collectively referred to as 'sustainability-related risks and opportunities that could reasonably be expected to affect the entity's prospects'.」\n\n**更正後應為**：改成：「依 IFRS S1 §3，本準則要求企業揭露 could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital... 之永續相關風險與機會（此即 §17 所稱之 entity's prospects）；§18 進一步定義重大性 = omitting, misstating or obscuring...」",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S1",
@@ -9349,6 +9605,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "依 IFRS S1 §17，企業應揭露「could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital over the short, medium or long term」之永續相關風險與機會"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [
@@ -9451,7 +9715,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "依 IFRS S2 §15(a)–(b)，企業應揭露氣候相關風險與機會對「當期財務狀況、財務績效及現金流量」與「預期影響」之定量資訊；§16 進一步指出，當無法精確估計時，得以「單一金額或區間」(single amount or range) 呈現。「僅須以定性敘述方式揭露，無須量化」是過時的 TCFD 早期實務，非 IFRS S2 之強制要求；而「不允許使用區間或範圍估計」則與 §16 直接衝突。",
+      "explanation": "依 IFRS S2 §15(a)–(b)，企業應揭露氣候相關風險與機會對「當期財務狀況、財務績效及現金流量」與「預期影響」之定量資訊；「僅須以定性敘述方式揭露，無須量化」是過時的 TCFD 早期實務，非 IFRS S2 之強制要求；而「不允許使用區間或範圍估計」則與 §16 直接衝突。\n\n⚠️ **本題解析已更正** ——\n\n**「single amount or a range」是 IFRS S2 第17段的文字，不是第16段。第16段的內容是要求揭露「(a) 氣候相關風險與機會如何影響當期財務狀況、財務績效及現金流量」等量化與質化資訊的項目清單，並未出現「單一金額或區間」這個措辭。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html）逐字：「16 Specifically, an entity shall disclose quantitative and qualitative information about: (a) how climate-related risks and opportunities have affected its financial position, financial performance and cash flows for the reporting period ... 17 In providing quantitative information, an entity may disclose a single amount or a range.」\n\n**更正後應為**：改成：「§16 規定應揭露的量化/質化項目清單；§17 進一步指出，提供量化資訊時得以『單一金額或區間』(single amount or range) 呈現。」",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S2",
@@ -9481,6 +9745,14 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "§16 進一步指出，當無法精確估計時，得以「單一金額或區間」(single amount or range) 呈現。"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [
@@ -9513,7 +9785,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "依 IFRS S2 Appendix B 關於衡量不確定性之揭露要求，當以區間或估計方式揭露氣候相關財務影響時，企業應揭露：(1) 衡量不確定性的程度；(2) 所使用之輸入值、假設與估計技術；(3) 必要時說明為何無法提供更精確之金額；(4) 預計後續期間之影響因素。此屬強制揭露項目，並適用於所有範疇排放對應之財務影響，非僅限範疇 1。",
+      "explanation": "依 IFRS S2 Appendix B 關於衡量不確定性之揭露要求，當以區間或估計方式揭露氣候相關財務影響時，企業應揭露：(1) 衡量不確定性的程度；(2) 所使用之輸入值、假設與估計技術；(3) 必要時說明為何無法提供更精確之金額；(4) 預計後續期間之影響因素。此屬強制揭露項目，並適用於所有範疇排放對應之財務影響，非僅限範疇 1。\n\n⚠️ **本題解析已更正** ——\n\n**這組揭露要求（識別高度不確定金額、揭露不確定性來源、揭露衡量時所用之假設/近似值/判斷、揭露預期不確定性之解決時點與變動說明）規定在 IFRS S1 本文第77–82段，段落標題就是「Measurement uncertainty」——這是 IFRS S1（一般規定），不是 IFRS S2（氣候揭露），而且是本文段落，不是任何一部的 Appendix B。IFRS S2 全文只在第19(b)段出現過一次「measurement uncertainty」，內容是『企業可以不提供量化資訊』的豁免條件之一，性質是免揭露的理由，不是揭露義務清單。IFRS S2 的 Appendix B 實際涵蓋的是氣候韌性評估、溫室氣體衡量方法、範疇2/3排放等產業別應用指引，跟衡量不確定性無關。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs1.html）逐字：「77 An entity shall disclose information to enable users of general purpose financial reports to understand the most significant uncertainties affecting the amounts reported in its sustainability-related financial disclosures. 78 An entity shall: (a) identify the amounts that it has disclosed that are subject to a high level of measurement uncertainty」\n\n**更正後應為**：改成：「依 IFRS S1 本文第77–82段（Measurement uncertainty）之揭露要求，企業應：(1) 識別具高度衡量不確定性之金額；(2) 揭露其不確定性來源及衡量時所用之假設、近似值與判斷；(3) 視情況揭露不確定性之預期解決時點與範圍。IFRS S2 第19(b)段則是把『衡量不確定性過高』列為可以不提供量化資訊的豁免理由之一。」",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S2",
@@ -9543,6 +9815,12 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "sources": [

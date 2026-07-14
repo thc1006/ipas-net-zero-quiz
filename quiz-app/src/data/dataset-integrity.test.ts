@@ -853,6 +853,42 @@ describe('quality_flags 的一致性', () => {
     ).toEqual([]);
   });
 
+  // ⚠️ **一筆沒有記錄 URL 的「驗證紀錄」，不是驗證紀錄。**
+  //
+  // 這是這個 pilot 最隱蔽的一次自我欺騙：
+  // 第一、二輪的寫回程式只存了 `quote`，**沒存 `url`**。於是 137 筆 evidence 變成
+  //   「這句話已經機械驗證逐字存在於某一頁上」—— **但沒有人知道是哪一頁。**
+  //
+  // README 宣稱第 ① 級是「我們把來源網頁抓回來，**逐字確認那句話真的在上面**」。
+  // 對那 137 題，**那句話無法從資料裡被重驗** —— 一句**無法被推翻的保證，就是一句沒有價值的保證**。
+  //
+  // 而且它造成了實害：後來我建解析稽核的批次時寫了 `evidence.url or sources[0]`，
+  // 於是把「對著 ipcc.ch 驗過的引文」配上「vocus 的網址」餵給 71 個代理，
+  // 並在契約裡對它們說「這段引文已機械驗證存在於該頁」—— **那是一句假話**，
+  // 而且是**一個代理發現並回報給我的**。
+  //
+  // 137 筆已全部逐題回頭比對來源、補回 url（每一段引文都確實在該題某個來源上找到了）。
+  // 這道 gate 確保它不會再發生。
+  it('每一筆 evidence 都必須記錄它是在哪一個 URL 上驗證的', () => {
+    const bad: string[] = [];
+    for (const it of ALL) {
+      const md = it.metadata as unknown as {
+        evidence?: { url?: string | null; quote?: string }[] | { url?: string | null };
+      };
+      const ev = md?.evidence;
+      if (!ev) continue;
+      const list = Array.isArray(ev) ? ev : [ev];
+      for (const e of list) {
+        if (!e.url) {
+          bad.push(
+            `${who(it)}：evidence 沒有 url —— 「已機械驗證」這句話無法被重驗，也就無法被推翻`
+          );
+        }
+      }
+    }
+    expect(bad, 'evidence 缺少 url').toEqual([]);
+  });
+
   // 改答案是「偏離」，**把整組選項換掉是更大的偏離** —— 那等於換了一題。
   //
   // gist[14] 是第一個：社群共筆保留了 iPAS 官方題幹（「何者非屬治理基礎？」），

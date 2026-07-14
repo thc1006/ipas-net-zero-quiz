@@ -107,6 +107,17 @@
       "no_quote": 35,
       "dead": 4,
       "note": "引錯的 URL **全部都回 HTTP 200** —— 連結健康檢查一個都抓不到。disputed 是「代理說引錯、但提不出可驗證的替代來源」：否定命題無法機械驗證，僅憑代理一句話不足以動資料，故引用維持不變但標記存疑。"
+    },
+    "explanation_audit": {
+      "date": "2026-07-14",
+      "what": "把 506 題**有解析**的題目全部複驗一遍：解析裡的每一個可被證偽的主張（條號、日期、數字、因果、角色歸屬）是否與一手來源相符。**這一輪查的是「解析」，不是「答案」** —— 答案對、解析錯的題目，會通過本專案現有的每一道 gate。",
+      "population": 506,
+      "wrong": 36,
+      "unsupported": 35,
+      "ok": 435,
+      "error_rate_pct": 7.1,
+      "fixed": 32,
+      "note": "錯法幾乎全是**條號與角色的錯位**（「第 2 條第六款」寫成「第 6 條」、上游／下游講反、過渡期／定價期標籤對調、意思整個相反、解析自我矛盾），不是打錯字。⚠️ 先前的 40 題抽樣得出 18%，那是**偏誤的** —— 抽樣母體被我篩成「含條號／數字且有引文」，而條號錯位正好都住在那裡。**全量的真實錯誤率是 7.1%。**"
     }
   },
   "gist_items": [
@@ -140,6 +151,7 @@
         "verification_source": "ISO 14064-1:2018 §5.2.4; cross-check vs gist_items[546]",
         "prior_answer": "A",
         "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
           "https://www.iso.org/standard/66453.html",
           "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
         ],
@@ -152,14 +164,20 @@
           "verification_date": "2026-04-25",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "類別4：由組織使用的產品所產生之間接溫室氣體排放",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+            "quote": "類別4-來自組織使用的產品之間接溫室氣體排放量",
+            "supports_option": "B"
+          }
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "what": "類別 4 的定義被寫成類別 5 的（上游／下游講反）。已依 iPAS 公版教材逐字更正。"
         }
       },
-      "explanation": "ISO 14064-1:2018 類別 4「使用自組織之產品所致之間接排放」涵蓋採購之貨物與服務、設備、委外活動，以及作為承租人之租賃資產等。商務差旅與員工通勤屬類別 3（運輸造成之間接排放），購入電力屬類別 2。故本題正解為租賃資產的排放（B）。資料來源：https://www.iso.org/standard/66453.html"
+      "explanation": "ISO 14064-1:2018 類別 4 是「**來自組織使用的產品**之間接排放」（組織**去使用**他人的產品 —— 上游），涵蓋採購之貨物與服務、設備、委外活動，以及作為承租人之**租賃資產**。\n\n商務差旅與員工通勤屬**類別 3**（來自運輸之間接排放）；購入電力屬**類別 2**（來自輸入能源之間接排放）。故正解為租賃資產（B）。\n\n⚠️ **本題解析已更正** —— 原文把類別 4 寫成「使用**自組織之產品**所致之間接排放」，**那是類別 5 的定義**（別人使用組織的產品 —— 下游），方向整個反了。\n　依據（iPAS 公版教材，https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf）逐字：\n　「類別4-來自組織使用的產品之間接溫室氣體排放量」\n　「類別5-來自使用組織的產品所衍生的間接溫室氣體排放量」"
     },
     {
       "index": 2,
@@ -676,7 +694,12 @@
             "quote": "GRI (全球報告倡議組織)準則被廣泛認為是全球範圍內用於編制永續發展報告的最佳實踐標準。這些準則旨在幫助組織透明地報告其在經濟、環境和社會層面的影響",
             "supports_option": "A"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        }
       }
     },
     {
@@ -969,13 +992,17 @@
         "sources": [
           "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=8"
         ],
-        "evidence": {
-          "quote": "查驗結果應為合理保證等級。",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "查驗結果應為合理保證等級。",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=8",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -1107,7 +1134,7 @@
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
-      "explanation": "京都議定書的彈性減量機制包括國際排放交易（IET）、共同減量機制（JI）和清潔發展機制（CDM）。",
+      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**同一份來源 PDF 在題目正上方明白將 JI 稱為「共同執行（Joint Implementation, JI）」，而非「共同減量機制」。解析把 JI 的中文名稱寫錯，與同文件內、緊鄰該題選項 A「共同執行 (JI)」的官方用詞自相矛盾。**\n　依據（https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf）逐字：「彈性減量機制(Kyoto Flexible Mechanisms),在此機制下建立包括「清潔發展機制」(Clean Development Mechanism, CDM)、排放交易(Emissions trading, ET)及共同執行(Joint Implementation, JI)。」\n\n**更正後應為**：將「共同減量機制（JI）」改為「共同執行（JI, Joint Implementation）」，與選項 A 及來源用詞一致。",
       "metadata": {
         "original_id": "c1-022",
         "_legacy_pipeline_metadata": {
@@ -1125,7 +1152,15 @@
             "quote": "京都議定書的彈性減量機制不包括下列哪項？ (A)清潔發展機制(CDM)；(B)排放交易(ET)；(C)共同執行(JI)；(D)環境可持續指數(ESI)",
             "supports_option": "C"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "京都議定書的彈性減量機制包括國際排放交易（IET）、共同減量機制（JI）和清潔發展機制（CDM）。"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+        }
       }
     },
     {
@@ -1222,6 +1257,11 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "quality_flags": [
@@ -1732,6 +1772,11 @@
           "date": "2026-07-14",
           "verdict": "citation_disputed",
           "detail": "agent 判定原引用 https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020 **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "quality_flags": [
@@ -1891,6 +1936,11 @@
           "date": "2026-07-14",
           "verdict": "citation_disputed",
           "detail": "agent 判定原引用 https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020 **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "quality_flags": [
@@ -2440,7 +2490,12 @@
             "quote": "Any process, activity or mechanism which removes a greenhouse gas, an aerosol or a precursor of a greenhouse gas from the atmosphere.",
             "supports_option": "B"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        }
       },
       "explanation": "碳匯是指吸收並儲存二氧化碳的天然或人工倉庫，如森林、海洋、土壤、地層等，而野火則是排放二氧化碳的來源。"
     },
@@ -3965,13 +4020,17 @@
         "sources": [
           "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=50"
         ],
-        "evidence": {
-          "quote": "檢驗測定機構未依第四十一條第一項取得許可證逕行檢驗測定，處新臺幣十萬元以上一百萬元以下罰鍰",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。（引文片段皆真，但被代理重新排序 —— 內容可信）",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "檢驗測定機構未依第四十一條第一項取得許可證逕行檢驗測定，處新臺幣十萬元以上一百萬元以下罰鍰",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。（引文片段皆真，但被代理重新排序 —— 內容可信）",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=50",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -4284,6 +4343,11 @@
           "verification_batch": "D",
           "verification_date": "2026-04-25",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "explanation": "依 Regulation (EU) 2023/956 Article 1(1)：CBAM 直接目的為『防止碳洩漏（prevent carbon leakage）』，藉此『降低全球碳排放（thereby reducing global carbon emissions）』並支持巴黎協定目標。四選項中以 D『保護本地產業競爭力』最貼近『防碳洩漏』意涵；B『降低碳排放』亦為條文明列之間接目的，屬可接受答案。本題因無『防止碳洩漏』選項，官方建議以 D 為最佳解。資料來源：https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
@@ -5800,13 +5864,17 @@
         "sources": [
           "https://service.cca.gov.tw/File/Get/cca/zh-tw/f53nWB30RClHNZh"
         ],
-        "evidence": {
-          "quote": "請說明碳中和主體為何以及公司選擇此主體之理由，並清楚描述碳中和主體邊界、碳中和期程與時間表。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "請說明碳中和主體為何以及公司選擇此主體之理由，並清楚描述碳中和主體邊界、碳中和期程與時間表。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://service.cca.gov.tw/File/Get/cca/zh-tw/f53nWB30RClHNZh",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -6208,13 +6276,17 @@
         "sources": [
           "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=23"
         ],
-        "evidence": {
-          "quote": "中央主管機關公告之產品，其生產過程排放溫室氣體，應符合效能標準。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "中央主管機關公告之產品，其生產過程排放溫室氣體，應符合效能標準。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=23",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -6542,13 +6614,17 @@
         "sources": [
           "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=10"
         ],
-        "evidence": {
-          "quote": "非屬經審查認定之高碳洩漏風險事業依本法第二十七條規定，以符合中央主管機關認可之國外減量額度申請第五條第二項收費排放量之扣除，其扣除上限不得超過事業收費排放量之百分之五",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "非屬經審查認定之高碳洩漏風險事業依本法第二十七條規定，以符合中央主管機關認可之國外減量額度申請第五條第二項收費排放量之扣除，其扣除上限不得超過事業收費排放量之百分之五",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=10",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -7009,13 +7085,17 @@
         "sources": [
           "https://www.cdp.net/en/guidance"
         ],
-        "evidence": {
-          "quote": "A record 3,500+ companies disclosed on climate change, deforestation and water security together in 2025.",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "A record 3,500+ companies disclosed on climate change, deforestation and water security together in 2025.",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://www.cdp.net/en/guidance",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -7429,12 +7509,16 @@
         },
         "stem_edit_note": "題幹修潤使對應影子碳定價定義",
         "stem_edit_note_recorded_on": "2026-07-13",
-        "evidence": {
-          "quote": "utilize a shadow price – attaching a hypothetical cost of carbon to each ton of CO2e – as a tool to reveal hidden risks and opportunities throughout its operations and supply chain and to support strategic decision-making related to future capital investments",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "utilize a shadow price – attaching a hypothetical cost of carbon to each ton of CO2e – as a tool to reveal hidden risks and opportunities throughout its operations and supply chain and to support strategic decision-making related to future capital investments",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://cdn.cdp.net/cdp-production/cms/guidance_docs/pdfs/000/001/567/original/CDP-technical-note-carbon-pricing.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "explanation": "影子碳定價（Shadow Carbon Price）為企業內部假設性、非實際課徵之碳價格，用於評估長期投資之碳風險與機會；與實際課徵之碳稅、碳費及碳交易模式不同。資料來源：https://www.cdp.net/en"
     },
@@ -7646,6 +7730,11 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "explanation": "依環境部 113 年 2 月 22 日環部氣字第 1139101260 號公告「事業應盤查登錄及查驗溫室氣體排放量之排放源」：全廠（場）化石燃料燃燒之固定污染源直接排放及使用電力、熱或蒸汽之能源間接排放，年排放量合計達 2 萬 5 千公噸 CO₂e 以上之製造業，應辦理溫室氣體排放量盤查登錄與查驗。資料來源：https://www.cca.gov.tw/ ; https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
@@ -8329,13 +8418,17 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "供應商配合的意願？ • 有無誘因？ • 是否涉及商業機密？",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "供應商配合的意願？ • 有無誘因？ • 是否涉及商業機密？",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -8953,12 +9046,16 @@
           "verification_date": "2026-04-25",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "類別5：與組織的產品使用相關聯之間接溫室氣體排放",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "類別5：與組織的產品使用相關聯之間接溫室氣體排放",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "explanation": "ISO 14064-1:2018 §5.2.4：Category 5 為『使用自組織產品所致之間接排放』（下游使用階段）；Category 4 為『使用自組織之產品（上游）所致之間接排放』（採購商品與服務、廢棄物處理、作為承租人之租賃資產等）。由產品使用階段產生之排放屬 Cat 5。資料來源：https://www.iso.org/standard/66453.html"
     },
@@ -9330,13 +9427,17 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/2022-12/Chapter1.pdf"
         ],
-        "evidence": {
-          "quote": "Hybrid method – uses a combination of supplier-specific activity data (where available) and secondary data to fill the gaps.",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "Hybrid method – uses a combination of supplier-specific activity data (where available) and secondary data to fill the gaps.",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://ghgprotocol.org/sites/default/files/2022-12/Chapter1.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -9796,6 +9897,11 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       }
     },
@@ -9833,6 +9939,11 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       }
     },
@@ -9935,13 +10046,17 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/691673213.pdf"
         ],
-        "evidence": {
-          "quote": "假設、方法及數據以相同方式應用於整個CFP 研究中，以達成符合目標與範圍界定之結論。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "假設、方法及數據以相同方式應用於整個CFP 研究中，以達成符合目標與範圍界定之結論。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/691673213.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "explanation": "CFP研究中的「一致性」原則要求，在整個研究過程中，假設、方法及數據的應用方式應保持一致。"
     },
@@ -10065,7 +10180,7 @@
       "source": "gist",
       "original_section": "考科2",
       "exam_subject": "考科2",
-      "explanation": "在溫室氣體盤查中，CO2滅火器、BC型滅火器（含碳酸氫鈉）、FM200（HFCs）等含有或會產生溫室氣體的滅火器需要列入盤查，而ABC乾粉滅火器則不需要。",
+      "explanation": "在溫室氣體盤查中，\n\n⚠️ **本題解析已更正** ——\n\n**來源投影片（逸散排放-滅火器範例）將 BC型、KBC型明確歸類為『乾粉滅火器』，緊接其後的重點提示框指出『乾粉滅火器不用盤查』（僅需新購/換藥核銷紀錄），並未把 BC 型與 CO2、FM200 等氣體滅火器並列為需要盤查的對象。真正需要盤查（列入溫室氣體盤查）的只有 CO2 滅火器與 FM200，BC/KBC 型和 ABC 型一樣都不用盤查。解析把 BC 型錯誤地歸到『需要列入盤查』一類，與來源矛盾。**\n　依據（https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf）逐字：「乾粉滅火器不用盤查，當年有新購或是換藥等核銷紀錄」\n\n**更正後應為**：把『CO2滅火器、BC型滅火器（含碳酸氫鈉）、FM200（HFCs）...需要列入盤查，而ABC乾粉滅火器則不需要』改成『CO2滅火器與FM200（HFCs）等氣體滅火器需要列入盤查；乾粉滅火器（含ABC型與BC/KBC型）皆不用盤查，僅需保留新購或換藥等核銷紀錄』",
       "metadata": {
         "original_id": "c2-010",
         "_legacy_pipeline_metadata": {
@@ -10083,7 +10198,15 @@
             "quote": "一般乾粉滅火器(ABC型)不用盤查\n• CO2滅火器與FM200要盤查(一般出現在機房裡)",
             "supports_option": "B"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "CO2滅火器、BC型滅火器（含碳酸氫鈉）、FM200（HFCs）等含有或會產生溫室氣體的滅火器需要列入盤查，而ABC乾粉滅火器則不需要。"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+        }
       }
     },
     {
@@ -10167,6 +10290,11 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       }
     },
@@ -10258,13 +10386,17 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/2022-12/Chapter1.pdf"
         ],
-        "evidence": {
-          "quote": "Mass or volume of material inputs (e.g., bill of materials), mass or volume of fuel inputs used, and distance from the origin of the raw material inputs to the supplier",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "Mass or volume of material inputs (e.g., bill of materials), mass or volume of fuel inputs used, and distance from the origin of the raw material inputs to the supplier",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://ghgprotocol.org/sites/default/files/2022-12/Chapter1.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -10677,6 +10809,11 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       }
     },
@@ -10714,6 +10851,11 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       }
     },
@@ -10798,6 +10940,11 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       }
     },
@@ -10839,13 +10986,17 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/standards_supporting/Chapter4.pdf"
         ],
-        "evidence": {
-          "quote": "The actual distances should be used when available, and each leg of the transportation supply chain should be collected separately.",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "The actual distances should be used when available, and each leg of the transportation supply chain should be collected separately.",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://ghgprotocol.org/sites/default/files/standards_supporting/Chapter4.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -10933,13 +11084,17 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf"
         ],
-        "evidence": {
-          "quote": "CO2 排放係數= 88/26 = 3.385 公噸/公噸乙炔",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "CO2 排放係數= 88/26 = 3.385 公噸/公噸乙炔",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -11507,13 +11662,17 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "預期的應用-預期哪些使用者會看到這個結果，要怎麼對這些讀者溝通",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "預期的應用-預期哪些使用者會看到這個結果，要怎麼對這些讀者溝通",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -11977,13 +12136,17 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "1. 基本資料 2. 盤查項目清單 3. 熱點排名 4. 敏感度分析 5. 數據品質指標等級評核 6. 碳足跡簡表",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "1. 基本資料 2. 盤查項目清單 3. 熱點排名 4. 敏感度分析 5. 數據品質指標等級評核 6. 碳足跡簡表",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -12071,13 +12234,17 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "備考1.不確定性可包括，例：－參數不確定性，例：溫室氣體排放係數(3.1.2.7)、活動數據。－情境不確定性，例：使用階段情境、生命終結階段情境。－模型不確定性。",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "備考1.不確定性可包括，例：－參數不確定性，例：溫室氣體排放係數(3.1.2.7)、活動數據。－情境不確定性，例：使用階段情境、生命終結階段情境。－模型不確定性。",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -12626,7 +12793,7 @@
       "source": "gist",
       "original_section": "考科2",
       "exam_subject": "考科2",
-      "explanation": "ISO 14067標準提供了產品碳足跡量化、溝通的要求及部分碳足跡的計算方法，但不包括碳足跡標籤的設計規範。",
+      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**ISO 官方頁面的 Abstract 明白寫出「碳足跡的溝通（communication）」是被明文排除在 ISO 14067:2018 範圍之外的項目，解析卻反過來說它『提供』溝通的要求——把明文排除的項目說成有包含。verified_quote 只擷取了 Abstract 第一句，漏看了同一段落緊接著的排除句。ISO 14067:2018 的正式標題也已不含 2013 舊版 ISO/TS 14067 標題裡的 'communication' 字樣，只剩 'Requirements and guidelines for quantification'。**\n　依據（https://www.iso.org/standard/71206.html）逐字：「Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document.」\n\n**更正後應為**：刪除「溝通的要求」，改為：「ISO 14067:2018 標準提供了產品碳足跡量化的要求及部分碳足跡的計算方法；碳足跡的溝通（communication）與碳抵換（carbon offsetting）被明文排除在本標準範圍之外，碳足跡標籤的設計規範同樣不在其中。」",
       "metadata": {
         "original_id": "c2-065",
         "_legacy_pipeline_metadata": {
@@ -12644,7 +12811,15 @@
             "quote": "This document specifies principles, requirements and guidelines for the quantification and reporting of the carbon footprint of a product (CFP), in a manner consistent with International Standards on life cycle assessment (LCA) (ISO 14040 and ISO 14044).",
             "supports_option": "C"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "ISO 14067標準提供了產品碳足跡量化、溝通的要求及部分碳足跡的計算方法，但不包括碳足跡標籤的設計規範。"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+        }
       }
     },
     {
@@ -13063,12 +13238,16 @@
           "verification_date": "2026-05-16",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "4 November 2016, in accordance with article 21(1) : \"The Agreement enters into force on the thirtieth day after the date on which at least 55 Parties to the Convention accounting in total for at least an estimated 55 per cent of the total global greenhouse gas emissions have deposited their instruments of ratification, acceptance, approval or accession\"",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "4 November 2016, in accordance with article 21(1) : \"The Agreement enters into force on the thirtieth day after the date on which at least 55 Parties to the Convention accounting in total for at least an estimated 55 per cent of the total global greenhouse gas emissions have deposited their instruments of ratification, acceptance, approval or accession\"",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XXVII-7-d&chapter=27&clang=_en",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -13208,6 +13387,11 @@
           "date": "2026-07-14",
           "verdict": "citation_disputed",
           "detail": "agent 判定原引用 https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "quality_flags": [
@@ -13386,7 +13570,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "根據我國2030年淨零轉型階段目標，商業部門的目標之一是新建築物100%採用LED燈具。",
+      "explanation": "根據我國2030年淨零轉型階段目標，\n\n⚠️ **本題解析已更正** ——\n\n**來源（iPAS例題淨零碳規劃管理基礎概論模擬題）Q48原文是「商業營業場域燈具採LED燈100%」，指的是全部商業營業場域的燈具汰換，並未限定「新建築物」；解析憑空加上「新建築物」這個限定語，把目標範圍從『所有商業營業場域』窄化／改成『新建築物』，屬於來源上找不到、且與原文範圍不符的敘述。**\n　依據（https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf）逐字：「以下何者為我國2030淨零轉型之階段目標?\nA.電動車市售比100%, B.商業營業場域燈具\n採LED燈100%, C.製造業電力消費100%使用\n綠電, D.以上皆非」\n\n**更正後應為**：刪除「新建築物」，改為：「根據我國2030年淨零轉型階段目標，商業部門的目標之一是商業營業場域燈具100%採用LED燈具。」",
       "metadata": {
         "original_id": "c2-081",
         "_legacy_pipeline_metadata": {
@@ -13404,7 +13588,15 @@
             "quote": "商業營業場域燈具採LED燈100%",
             "supports_option": "D"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "商業部門的目標之一是新建築物100%採用LED燈具。"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+        }
       }
     },
     {
@@ -14597,13 +14789,17 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/436281603.pdf"
         ],
-        "evidence": {
-          "quote": "臺灣2050淨零排放路徑及12項關鍵策略",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "臺灣2050淨零排放路徑及12項關鍵策略",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/436281603.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -14833,13 +15029,17 @@
         "sources": [
           "https://sciencebasedtargets.org/blog/science-based-targets-101-near-term-and-net-zero"
         ],
-        "evidence": {
-          "quote": "A near-term target must include at least 95% of a company's direct emissions (scopes 1 and 2).",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。｜WebFetch 獨立確認：sciencebasedtargets.org 該頁逐字含此句（機械抓取被 Cloudflare 403 擋下）",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "A near-term target must include at least 95% of a company's direct emissions (scopes 1 and 2).",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。｜WebFetch 獨立確認：sciencebasedtargets.org 該頁逐字含此句（機械抓取被 Cloudflare 403 擋下）",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://sciencebasedtargets.org/blog/science-based-targets-101-near-term-and-net-zero",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -14996,7 +15196,12 @@
             "quote": "本指引適用於企業就其溫室氣體排放進行盤查、減量及採取抵換作為有具體結果後，對下列事項進行碳中和",
             "supports_option": "A"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        }
       }
     },
     {
@@ -15280,7 +15485,12 @@
             "quote": "依據環境部盤查作業指引要求，我國列管事業應以何種方式進行溫室氣體彙總方法？(A)財務控制法；(B)營運控制法；(C)股權持分法；(D)以上皆可 (B)營運控制法",
             "supports_option": "A"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        }
       }
     },
     {
@@ -16000,7 +16210,12 @@
             "quote": "依據溫室氣體盤查作業基本程序， 下列描述何者正確？ \nA.若企業具有環境部公告納管事業者， 該納管事業之盤查\n邊界由企業自行設定， 並依據營運控制權法區分為直接排\n放或能源間接排放的單元或程序B.金管會要求盤查邊界設\n定不需要與財務報表一致， 但對於子公司溫室氣體排放量\n納入統計方法並無規範， 僅要求企業內部子公司必須一致\nC.溫室氣體盤查主要依循四個步驟：決定排放量計算方\n式、蒐集活動數據、選擇合適的排放係數、計算溫室氣體\n排放量  D.不論依循任溫室氣體盤查規範，企業都不一定\n要界定盤查的範圍\n C.溫室氣體盤查主要依循四個步\n驟：決定排放量計算方式、蒐集\n活動數據、選擇\n合適的排放係數、計算溫室氣體\n排放量",
             "supports_option": "C"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        }
       }
     },
     {
@@ -16247,7 +16462,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "根據ISSB S1，若某項資訊對企業價值有重大影響，即使涉及商業機密，仍須揭露，但可透過特定方式保護機敏資訊。",
+      "explanation": "題目問「ISSB S1 描述**何者錯誤**」，答案 A 即為**錯誤的那一項** ——\n\n「不得以商業機密規避揭露」這個**絕對禁止**的說法並不正確：IFRS S1 對「涉及商業機密的**機會**相關資訊」設有**豁免揭露**的機制（並非一律不得規避）。\n\n⚠️ **本題解析已更正** —— 原文寫「即使涉及商業機密，**仍須揭露**」，**那正是選項 A 的意思，而 A 是本題判定為「錯誤」的敘述** —— **解析在替它自己要否定的選項背書，自我推翻。**\n\n⚠️ **來源限制（誠實說明）**：IFRS S1 正文在 ifrs.org 的登入牆之後，本專案**無法取得可逐字驗證的一手引文**。上述更正的依據是**本題自身的邏輯一致性**（解析不能斷言題目判定為錯的那個選項），而**不是**一手條文。因此本題仍列為「無逐字引文」—— 我們不會為了讓它看起來有依據，就編一個驗不了的條號。",
       "metadata": {
         "original_id": "c2-141",
         "sources": [
@@ -16263,11 +16478,20 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "IFRS S1 relieves a company from disclosing information otherwise required by an ISSB Standard if law or regulation prohibits the company from disclosing that information. The Standard also relieves a company from disclosing information about a sustainability‑related opportunity if that information is commercially sensitive.",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
+        "evidence": [
+          {
+            "quote": "IFRS S1 relieves a company from disclosing information otherwise required by an ISSB Standard if law or regulation prohibits the company from disclosing that information. The Standard also relieves a company from disclosing information about a sustainability‑related opportunity if that information is commercially sensitive.",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ifrs.org/content/dam/ifrs/project/general-sustainability-related-disclosures/project-summary.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "what": "原解析斷言的正是題目判定為「錯誤」的那個選項（自我推翻）。已依邏輯一致性更正；IFRS S1 正文在登入牆後，無法取得一手逐字引文，已於解析中誠實揭露。"
         }
       },
       "quality_flags": [
@@ -16300,7 +16524,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "ISSB S1和S2皆強調氣候相關的風險與機會，並要求企業揭露其對財務狀況的影響。",
+      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**本題答案 A 是『廣泛考量全部ESG面向』，其依據正是來源原文：IFRS S1 要求揭露『所有』永續相關風險與機會，而非特別聚焦氣候。把 S1 的重點說成『皆強調氣候相關風險與機會』，等於是在替選項 B（強調氣候風險與機會）背書，而 B 並非本題的正解，這與答案 A 所依據的『廣泛涵蓋全部ESG面向』直接矛盾——氣候聚焦是 S2 的差異化特徵，不是 S1 的定義特徵。**\n　依據（https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/）逐字：「IFRS S1 requires an entity to disclose information about all sustainability-related risks and opportunities that could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital」\n\n**更正後應為**：改為：IFRS S1 要求企業揭露『所有』永續相關風險與機會（不限氣候），這正是選項 A『廣泛考量全部ESG面向』為正解的依據；氣候相關風險與機會的專門強調則是 IFRS S2 的範疇。",
       "metadata": {
         "original_id": "c2-142",
         "sources": [
@@ -16317,11 +16541,23 @@
         },
         "prior_answer": "B",
         "verification_source": "IFRS Foundation 官方 IFRS S1 導覽頁：「IFRS S1 requires an entity to disclose information about all sustainability-related risks and opportunities」",
-        "evidence": {
-          "quote": "IFRS S1 requires an entity to disclose information about all sustainability-related risks and opportunities that could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + 機械逐字比對（抓回 ifrs.org 原頁，確認引文逐字存在）"
+        "evidence": [
+          {
+            "quote": "IFRS S1 requires an entity to disclose information about all sustainability-related risks and opportunities that could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + 機械逐字比對（抓回 ifrs.org 原頁，確認引文逐字存在）",
+            "url": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "ISSB S1和S2皆強調氣候相關的風險與機會，並要求企業揭露其對財務狀況的影響。"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
       "quality_flags": [
@@ -16371,12 +16607,16 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "Cross-industry metric categories In addition to GHG emissions, cross-industry metric categories include: • climate-related transition risks—the amount and percentage of assets or business activities vulnerable to transition risks; • climate-related physical risks—the amount and percentage of assets or business activities vulnerable to physical risks; • climate-related opportunities—the amount and percentage of assets or business activities aligned with climate-related opportunities; • capital deployment—the amount of capital expenditure, financing or investment deployed towards climate-related risks and opportunities; • internal carbon prices used to assess the cost of emissions; and • remuneration of executives and management linked to climate‑related considerations.",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Cross-industry metric categories In addition to GHG emissions, cross-industry metric categories include: • climate-related transition risks—the amount and percentage of assets or business activities vulnerable to transition risks; • climate-related physical risks—the amount and percentage of assets or business activities vulnerable to physical risks; • climate-related opportunities—the amount and percentage of assets or business activities aligned with climate-related opportunities; • capital deployment—the amount of capital expenditure, financing or investment deployed towards climate-related risks and opportunities; • internal carbon prices used to assess the cost of emissions; and • remuneration of executives and management linked to climate‑related considerations.",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ifrs.org/content/dam/ifrs/project/general-sustainability-related-disclosures/project-summary.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -16424,12 +16664,16 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "規劃自2026年會計年度起分三階段適用IFRS永續揭露準則：1.2026年：資本額達100億元以上之上市櫃公司適用。2.2027年：資本額達50億元以上未達100億元之上市櫃公司適用。3.2028年：其餘所有上市櫃公司適用。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "規劃自2026年會計年度起分三階段適用IFRS永續揭露準則：1.2026年：資本額達100億元以上之上市櫃公司適用。2.2027年：資本額達50億元以上未達100億元之上市櫃公司適用。3.2028年：其餘所有上市櫃公司適用。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -16610,6 +16854,11 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       }
     },
@@ -16651,13 +16900,17 @@
         "sources": [
           "https://www.moeaea.gov.tw/ecw/populace/news/News.aspx?kind=9&menu_id=4360&news_id=9808"
         ],
-        "evidence": {
-          "quote": "於供給面推動於2025年達20%(再生能源)-30%(燃煤)-50%(天然氣)之低碳潔淨之發電能源配比目標",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "於供給面推動於2025年達20%(再生能源)-30%(燃煤)-50%(天然氣)之低碳潔淨之發電能源配比目標",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://www.moeaea.gov.tw/ecw/populace/news/News.aspx?kind=9&menu_id=4360&news_id=9808",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -16858,12 +17111,16 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "公司編製氣候相關資訊中有關範疇一及範疇二溫室氣體排放資訊應依本會規定方式取得獨立第三方之確信意見及揭露；另範疇三溫室氣體排放資訊應依本會所定時程揭露。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "公司編製氣候相關資訊中有關範疇一及範疇二溫室氣體排放資訊應依本會規定方式取得獨立第三方之確信意見及揭露；另範疇三溫室氣體排放資訊應依本會所定時程揭露。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0400022",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -16911,12 +17168,16 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "the jurisdictional requirement does not exempt the entity from applying the requirements in this Standard to disclose the entity’s Scope 1, Scope 2 and Scope 3 greenhouse gas emissions for the entity as a whole",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "the jurisdictional requirement does not exempt the entity from applying the requirements in this Standard to disclose the entity’s Scope 1, Scope 2 and Scope 3 greenhouse gas emissions for the entity as a whole",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -17338,13 +17599,17 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "LCI乃是LCA之一個階段，包括產品整個生命週期階段的投入與產出的彙總與量化。",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "LCI乃是LCA之一個階段，包括產品整個生命週期階段的投入與產出的彙總與量化。",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -17624,12 +17889,16 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "The recommendations are structured around four thematic areas that represent core elements of how organizations operate: governance, strategy, risk management, and metrics and targets.",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "The recommendations are structured around four thematic areas that represent core elements of how organizations operate: governance, strategy, risk management, and metrics and targets.",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.fsb-tcfd.org/recommendations/",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -17676,12 +17945,16 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "Describe the board’s oversight of climate-related risks and opportunities.",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Describe the board’s oversight of climate-related risks and opportunities.",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.fsb-tcfd.org/recommendations/",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -17732,6 +18005,11 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "quality_flags": [
@@ -17781,11 +18059,20 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "An entity shall disclose information that enables users of general purpose financial reports to understand the current and anticipated effects of climate-related risks and opportunities on the entity’s business model and value chain.",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
+        "evidence": [
+          {
+            "quote": "An entity shall disclose information that enables users of general purpose financial reports to understand the current and anticipated effects of climate-related risks and opportunities on the entity’s business model and value chain.",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "quality_flags": [
@@ -18639,13 +18926,17 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "Q5 產品碳足跡盤查過程中數據確證不會採用哪種方式？(答案：A) (A)總量平衡(B)能量平衡(C)相似過程的比較(D)質量平衡",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "Q5 產品碳足跡盤查過程中數據確證不會採用哪種方式？(答案：A) (A)總量平衡(B)能量平衡(C)相似過程的比較(D)質量平衡",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -18786,7 +19077,12 @@
             "quote": "穩定生產的產品以整年優先考慮\n客製品或季節性產品: 最近一批\n標的產品在調查期間內生產所在工廠的位置\n多個生產地點時，須考慮代表性",
             "supports_option": "A"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        }
       }
     },
     {
@@ -18956,7 +19252,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "根據《商品標示法》及相關子法，若碳足跡標示不實，可能被視為標示不實或誤導性標示，主管機關可依法處以罰鍰，其金額範圍可能落在此區間。",
+      "explanation": "罰則出自《氣候變遷因應法》：第三十七條課予「一定種類、規模之產品」申請核定碳足跡並標示的義務；違反者依第五十四條，處新臺幣一萬元以上一百萬元以下罰鍰，並通知限期改善，屆期未改善者按次處罰。\n\n⚠️ **本題解析已更正** —— 原文把法源講成《商品標示法》，**與本罰則無關**。金額區間本身沒錯，錯的是法源。\n\n依據（iPAS 公版教材，https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf）—— 教材投影片逐字列出：\n　法規要求-氣候變遷因應法\n　第三十七條　中央主管機關得公告一定種類、規模之產品，其製造、輸入或販賣業者，應於指定期限內向中央主管機關申請核定碳足跡…\n　第五十四條　有下列情形之一者，由主管機關處新臺幣一萬元以上一百萬元以下罰鍰，並通知限期改善；屆期仍未完成改善者，按次處罰",
       "metadata": {
         "original_id": "c2-200",
         "_legacy_pipeline_metadata": {
@@ -18974,7 +19270,15 @@
             "quote": "違反第三十七條第一項規定，未於中央主管機關指定期限內申請核定碳足跡，或\n未於規定期限內依核定內容使用或標示於產品之容器或外包裝。\n•\n二、違反依第三十七條第三項所定辦法中有關碳足跡標示、使用或管理之規定。",
             "supports_option": "B"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "根據《商品標示法》及相關子法，若碳足跡標示不實，可能被視為標示不實或誤導性標示，主管機關可依法處以罰鍰，其金額範圍可能落在此區間。"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+        }
       }
     },
     {
@@ -19643,7 +19947,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "根據環境部「溫室氣體排放量盤查登錄管理辦法」，應盤查登錄之事業應以其具有營運控制權之所有廠（場）進行盤查，即採用營運控制法。",
+      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**解析引用的法規名稱是舊名。環境部已於112年9月14日將「溫室氣體排放量盤查登錄管理辦法」正式更名為「溫室氣體排放量盤查登錄及查驗管理辦法」，自113年1月1日起施行，現行（2026年）有效法規名稱是後者，不是解析裡寫的前者。營運控制法這個結論本身沒錯，但引用的法規名稱已過時。**\n　依據（https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/8d5700d8-629c-4b5d-bf0a-95a9055d7821）逐字：「環境部於今(112)年9月14日將「溫室氣體排放量盤查登錄管理辦法」名稱修正為「溫室氣體排放量盤查登錄及查驗管理辦法」，修正條文計有17條，自明(113)年1月1日起施行。」\n\n**更正後應為**：把法規名稱改成現行名稱「溫室氣體排放量盤查登錄及查驗管理辦法」（112年9月14日修正、113年1月1日施行，舊名「溫室氣體排放量盤查登錄管理辦法」已停用）；「採用營運控制法」的結論不用改。",
       "metadata": {
         "original_id": "c2-214",
         "_legacy_pipeline_metadata": {
@@ -19653,7 +19957,8 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
-          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+          "https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/8d5700d8-629c-4b5d-bf0a-95a9055d7821"
         ],
         "evidence": [
           {
@@ -19661,7 +19966,15 @@
             "quote": "依據環境部盤查作業指引要求，我國列管事業應以何種方式進行溫室氣體彙總\n方法？ \n(A)財務控制法；(B)營運控制法；(C)股權持分法；(D)以上皆可",
             "supports_option": "B"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "根據環境部「溫室氣體排放量盤查登錄管理辦法」，應盤查登錄之事業應以其具有營運控制權之所有廠（場）進行盤查，即採用營運控制法。"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+        }
       }
     },
     {
@@ -20274,7 +20587,12 @@
             "quote": "全球逾52間國營石油公司(如：Saudi Aramco)與民營石油公司",
             "supports_option": "D"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        }
       }
     },
     {
@@ -20325,6 +20643,11 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "quality_flags": [
@@ -20379,6 +20702,11 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "quality_flags": [
@@ -20611,13 +20939,17 @@
         "sources": [
           "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
         ],
-        "evidence": {
-          "quote": "國際間溫室氣體盤查涵蓋範疇可分為直接排放（範疇一）、能源間接排放（範疇二）及其他間接排放（範疇三）三類",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "國際間溫室氣體盤查涵蓋範疇可分為直接排放（範疇一）、能源間接排放（範疇二）及其他間接排放（範疇三）三類",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -20663,13 +20995,17 @@
         "sources": [
           "https://ghgregistry.moenv.gov.tw/upload/Tools/00%20%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E7%99%BB%E9%8C%84%E4%BD%9C%E6%A5%ADQA%EF%BC%88111.10.18%EF%BC%89.pdf"
         ],
-        "evidence": {
-          "quote": "本公告納管之排放源依規定以管制編號為邊界",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "本公告納管之排放源依規定以管制編號為邊界",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/00%20%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E7%99%BB%E9%8C%84%E4%BD%9C%E6%A5%ADQA%EF%BC%88111.10.18%EF%BC%89.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -20847,6 +21183,11 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       }
     },
@@ -20935,13 +21276,17 @@
         "sources": [
           "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf"
         ],
-        "evidence": {
-          "quote": "使用百年尺度之溫暖化潛勢。依據環境部溫室氣體排放量盤查作業指引之規定，規範溫暖化潛勢（GWP）應採用百年尺度，引用版本為IPCC AR5 評估報告之GWP 值進行計算。",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "使用百年尺度之溫暖化潛勢。依據環境部溫室氣體排放量盤查作業指引之規定，規範溫暖化潛勢（GWP）應採用百年尺度，引用版本為IPCC AR5 評估報告之GWP 值進行計算。",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -21029,13 +21374,17 @@
         "sources": [
           "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351"
         ],
-        "evidence": {
-          "quote": "企業應證明已盡可能減少碳中和主體之溫室氣體排放量，以及增加溫室氣體移除量，最後視需求透過註銷溫室氣體減量額度對剩餘之溫室氣體淨排放量進行補償。",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "企業應證明已盡可能減少碳中和主體之溫室氣體排放量，以及增加溫室氣體移除量，最後視需求透過註銷溫室氣體減量額度對剩餘之溫室氣體淨排放量進行補償。",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -21146,12 +21495,16 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "Disclosing through CDP provides a competitive edge and enables organizations to get ahead of incoming regulation and market demands.",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Disclosing through CDP provides a competitive edge and enables organizations to get ahead of incoming regulation and market demands.",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.cdp.net/en/disclose/why-disclose",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -21951,13 +22304,17 @@
         "sources": [
           "https://sciencebasedtargets.org/blog/science-based-net-zero-targets-less-net-more-zero"
         ],
-        "evidence": {
-          "quote": "A limited dependance on carbon removals to neutralize emissions that cannot yet be eliminated (5-10%)",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。｜WebFetch 獨立確認：sciencebasedtargets.org 該頁逐字含此句（連原文的錯字 \"dependance\" 都一致）",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "A limited dependance on carbon removals to neutralize emissions that cannot yet be eliminated (5-10%)",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。｜WebFetch 獨立確認：sciencebasedtargets.org 該頁逐字含此句（連原文的錯字 \"dependance\" 都一致）",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://sciencebasedtargets.org/blog/science-based-net-zero-targets-less-net-more-zero",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -22356,13 +22713,17 @@
         "sources": [
           "https://service.cca.gov.tw/File/Get/cca/zh-tw/OTUWcNktpcSPSdP"
         ],
-        "evidence": {
-          "quote": "各締約方應當在衡平的基礎上，根據它們共同但有區別的責任和各自的能力，為人類當代和後代的利益保護氣候系統。因此，已開發國家締約方應當率先處理氣候變遷及其不利影響。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "各締約方應當在衡平的基礎上，根據它們共同但有區別的責任和各自的能力，為人類當代和後代的利益保護氣候系統。因此，已開發國家締約方應當率先處理氣候變遷及其不利影響。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://service.cca.gov.tw/File/Get/cca/zh-tw/OTUWcNktpcSPSdP",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -22544,13 +22905,17 @@
         "sources": [
           "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=4"
         ],
-        "evidence": {
-          "quote": "國家溫室氣體長期減量目標為中華民國一百三十九年溫室氣體淨零排放。",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "國家溫室氣體長期減量目標為中華民國一百三十九年溫室氣體淨零排放。",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=4",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -23041,12 +23406,16 @@
           "verification_date": "2026-04-25",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "Sulphur hexafluoride SF6 3,200.0 0.57 4.37e-10 17,500 2.16e-09 23,500",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Sulphur hexafluoride SF6 3,200.0 0.57 4.37e-10 17,500 2.16e-09 23,500",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter08_FINAL.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "explanation": "50 kg SF₆ × 23,500 kgCO₂e/kgSF₆ = 1,175,000 kgCO₂e = 1,175 tCO₂e。本題採 IPCC AR5（2013）SF₆ GWP100 值 23,500，亦為我國環境部 113/2/5 環部授氣字第 1139101231 號公告採用之版本。（註：先前題目所用 22,800 為 AR4 值，已更新）資料來源：https://www.ipcc.ch/report/ar5/wg1/ ; https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter08_FINAL.pdf ; https://ghgregistry.moenv.gov.tw/"
     },
@@ -23545,9 +23914,15 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       },
-      "explanation": "8,000,000 kWh × 0.2 kgCO2e/kWh = 1,600,000 kgCO2e = **1,600 tCO2e**。\n\n⚠️ **但這題的題幹本身在教一件錯的事。** 具再生能源憑證（T-REC）的綠電，其排放係數是 **0**，不是題幹給的 0.2 kgCO2e/kWh。本題答案依題目給定的係數計算無誤，但實務上「購買綠電」的能源間接排放不會是這個數字。"
+      "explanation": "8,000,000 kWh × 0.2 kgCO2e/kWh = 1,600,000 kgCO2e = **1,600 tCO2e**。\n\n⚠️ **但這題的題幹本身在教一件錯的事。** 具再生能源憑證（T-REC）的綠電，其排放係數是 **0**，不是題幹給的 0.2 kgCO2e/kWh。本題答案依題目給定的係數計算無誤，但實務上「購買綠電」的能源間接排放不會是這個數字。\n\n⚠️ **本題解析已更正** ——\n\n**來源（環境部溫室氣體排放量盤查作業指引113年版）明定：只有「太陽能及風力類型」之再生能源，且同時符合「電證合一」並檢具轉供證明、憑證核發用途正確宣告等條件，其排放係數才為0；生質能之再生能源憑證則被明文排除，不可視為0計算，須自行依生質能與廢棄物之種類與組成比例計算排放係數。解析把「T-REC 綠電＝排放係數0」講成一個不分能源類型的通則，與來源牴觸。**\n　依據（https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf）逐字：「另生質能之再生能源憑證其排放係\n數不可視為「0」計算,事業應依其生質能與廢棄物之種類與組成\n比例自行計算其排放係數始得使用。」\n\n**更正後應為**：改為：「僅『太陽能及風力』類型且『電證合一』的再生能源憑證，排放係數才為0；生質能之再生能源憑證明文不可視為0計算，須自行計算。因此『購買綠電排放係數必為0』的說法並不成立，需視電力來源類型而定。」"
     },
     {
       "index": 491,
@@ -23723,12 +24098,16 @@
           "verification_date": "2026-04-25",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "Sulphur hexafluoride SF6 3,200.0 0.57 4.37e-10 17,500 2.16e-09 23,500",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Sulphur hexafluoride SF6 3,200.0 0.57 4.37e-10 17,500 2.16e-09 23,500",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter08_FINAL.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "explanation": "60 kg SF₆ × 23,500 kgCO₂e/kgSF₆ = 1,410,000 kgCO₂e = 1,410 tCO₂e。本題採 IPCC AR5（2013）SF₆ GWP100 值 23,500，亦為我國環境部 113/2/5 公告採用之版本。（註：先前題目所用 22,800 為 AR4 值，已更新）資料來源：https://www.ipcc.ch/report/ar5/wg1/ ; https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter08_FINAL.pdf"
     },
@@ -24350,13 +24729,17 @@
         "sources": [
           "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=6"
         ],
-        "evidence": {
-          "quote": "應於每年四月三十日前，依中央主管機關所定格式，將前一年度之溫室氣體排放量清冊（以下簡稱排放量清冊）及溫室氣體盤查報告書（以下簡稱盤查報告書），以網路傳輸方式，登錄於中央主管機關指定之事業溫室氣體排放量資訊平台",
-          "supports_option": "D",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "應於每年四月三十日前，依中央主管機關所定格式，將前一年度之溫室氣體排放量清冊（以下簡稱排放量清冊）及溫室氣體盤查報告書（以下簡稱盤查報告書），以網路傳輸方式，登錄於中央主管機關指定之事業溫室氣體排放量資訊平台",
+            "supports_option": "D",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=6",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -25886,13 +26269,17 @@
         "sources": [
           "https://www.cca.gov.tw/climatetalks/net-zero-roadmap/carbon-capture-utilization-and-storage/1903.html"
         ],
-        "evidence": {
-          "quote": "為達成 2050 年淨零排放，碳捕捉利用及封存（CCUS）將是關鍵技術之一。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-          "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。"
-        }
+        "evidence": [
+          {
+            "quote": "為達成 2050 年淨零排放，碳捕捉利用及封存（CCUS）將是關鍵技術之一。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
+            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
+            "url": "https://www.cca.gov.tw/climatetalks/net-zero-roadmap/carbon-capture-utilization-and-storage/1903.html",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -26216,7 +26603,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "根據ISO 14064-1:2018，類別4指的是「由組織使用的產品所產生之間接溫室氣體排放」，其中包括外購商品、資本商品、廢物處理等。因此，外購商品的排放屬於類別4。",
+      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**解析從頭到尾沒有提到本題正確答案 B「租賃資產的排放」，卻用「外購商品」（並非任何一個選項）作為結論，完全沒有交代為什麼答案是 B。來源（考科2溫室氣體盤查規範與程序概要，表1.1.1）明確把「8.上游租賃資產」列在類別4底下，這才是選項B對應到類別4的依據；而選項A「商務差旅」與選項C「員工通勤」，同一張表清楚列在類別3（運輸產生的間接溫室氣體排放，含6.商務旅行、7.員工通勤），並非類別4。解析的論證品項與正確答案的依據對不上。**\n　依據（https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf）逐字：「類別4-使用產品的間接溫\n室氣體排放 \n範疇三 1.購買產品及服務,2.資本財,3.燃料與能源相關活動 \n5.營運產生廢棄物,8.上游租賃資產」\n\n**來源表1.1.1明確將商務旅行、員工通勤歸入類別3（運輸產生的間接溫室氣體排放），而非類別4，解析完全沒有引用這項關鍵區分。**\n　依據（https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf）逐字：「類別3-運輸產生的間接溫\n室氣體排放 \n範疇三 \n4.上游原物料運輸及分配,6.商務旅行 \n7.員工通勤,9.下游產品運輸及分配」\n\n**更正後應為**：改為：「依來源表1.1.1，類別4（使用產品的間接溫室氣體排放）涵蓋：1.購買產品及服務、2.資本財、3.燃料與能源相關活動、5.營運產生廢棄物、8.上游租賃資產——選項B『租賃資產的排放』正屬此類，故選B。商務差旅（A）與員工通勤（C）依同表歸屬類別3（運輸產生的間接排放）；購入電力（D）屬類別2（輸入能源的間接排放）；兩者均非類別4。」",
       "metadata": {
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -26234,7 +26621,15 @@
             "quote": "類別4-使用產品的間接溫 室氣體排放 範疇三 1.購買產品及服務，2.資本財，3.燃料與能源相關活動 5.營運產生廢棄物，8.上游租賃資產 類別5-產品使用相關的間 接溫室氣",
             "supports_option": "B"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "根據ISO 14064-1:2018，類別4指的是「由組織使用的產品所產生之間接溫室氣體排放」，其中包括外購商品、資本商品、廢物處理等。因此，外購商品的排放屬於類別4。"
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+        }
       }
     },
     {
@@ -26285,6 +26680,11 @@
           "date": "2026-07-14",
           "verdict": "citation_disputed",
           "detail": "agent 判定原引用 https://www.iso.org/standard/43279.html **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "unsupported",
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         }
       },
       "quality_flags": [
@@ -26781,12 +27181,16 @@
         "sources": [
           "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf"
         ],
-        "evidence": {
-          "quote": "下列何者不屬於可再生能源的優點？ \n(A)可隨意裝置；(B)協助能源供應穩定；(C)減少空氣污染；(D)減少溫室氣體排放 \n解答：(A)",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "下列何者不屬於可再生能源的優點？ \n(A)可隨意裝置；(B)協助能源供應穩定；(C)減少空氣污染；(D)減少溫室氣體排放 \n解答：(A)",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -26847,12 +27251,16 @@
         "sources": [
           "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf"
         ],
-        "evidence": {
-          "quote": "根據 ISO 14064-1 標準，企業在進行碳排放盤查時，應納入哪一範圍的排放？ \n(A)只包括直接排放；(B)包括直接和間接排放；(C)只包括間接排放；(D)只包括生產過\n程中的排放 \n解答：(B)",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "根據 ISO 14064-1 標準，企業在進行碳排放盤查時，應納入哪一範圍的排放？ \n(A)只包括直接排放；(B)包括直接和間接排放；(C)只包括間接排放；(D)只包括生產過\n程中的排放 \n解答：(B)",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -26911,12 +27319,16 @@
         "sources": [
           "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf"
         ],
-        "evidence": {
-          "quote": "「A 公司在溫盤報告書提到盤查的範圍包含台灣廠與大陸廠。」請問這段描述內容描\n述的是界定何種邊界？ \n(A)營運邊界；(B)組織邊界；(C)報告邊界；(D)以上皆非 \n解答：(B)",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "「A 公司在溫盤報告書提到盤查的範圍包含台灣廠與大陸廠。」請問這段描述內容描\n述的是界定何種邊界？ \n(A)營運邊界；(B)組織邊界；(C)報告邊界；(D)以上皆非 \n解答：(B)",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -26977,12 +27389,16 @@
         "sources": [
           "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf"
         ],
-        "evidence": {
-          "quote": "下列何者屬於產品碳足跡「目的與範疇」階段，應界定的項目？ \n(A)分配程序；(B)功能單位；(C)重要單元過程清冊；(D)特定的GHG 排放與移除 \n解答：(B)",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "下列何者屬於產品碳足跡「目的與範疇」階段，應界定的項目？ \n(A)分配程序；(B)功能單位；(C)重要單元過程清冊；(D)特定的GHG 排放與移除 \n解答：(B)",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -27041,12 +27457,16 @@
         "sources": [
           "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf"
         ],
-        "evidence": {
-          "quote": "使用電力 500,000 kWh（每kWh 電力產生0.527 公斤二氧化碳） \n使用柴油 20,000 公升（每公升柴油產生2.68 公斤二氧化碳） \n使用天然氣 100,000 立方米（每立方米天然氣產生1.85 公斤二氧化碳） \n請計算該工廠一年內總共產生的二氧化碳排放量。 \n \n(A) 371,350 公斤；(B) 502,100 公斤；(C) 413,000 公斤；(D) 421,500 公斤 \n解答：(B)",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "使用電力 500,000 kWh（每kWh 電力產生0.527 公斤二氧化碳） \n使用柴油 20,000 公升（每公升柴油產生2.68 公斤二氧化碳） \n使用天然氣 100,000 立方米（每立方米天然氣產生1.85 公斤二氧化碳） \n請計算該工廠一年內總共產生的二氧化碳排放量。 \n \n(A) 371,350 公斤；(B) 502,100 公斤；(C) 413,000 公斤；(D) 421,500 公斤 \n解答：(B)",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -27108,12 +27528,16 @@
         "sources": [
           "https://files.sciencebasedtargets.org/production/files/SBT-Commitment-Letter.pdf"
         ],
-        "evidence": {
-          "quote": "Setting a science-based target is a five-step process: \n \nStep 1. Register online and submit the commitment letter \n \nSigning this commitment letter indicates that your organization will work to set a science-based \nemission reduction target aligned with the SBTi's target-setting criteria.",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Setting a science-based target is a five-step process: \n \nStep 1. Register online and submit the commitment letter \n \nSigning this commitment letter indicates that your organization will work to set a science-based \nemission reduction target aligned with the SBTi's target-setting criteria.",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://files.sciencebasedtargets.org/production/files/SBT-Commitment-Letter.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -27177,12 +27601,16 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/standards/ghg-protocol-revised.pdf"
         ],
-        "evidence": {
-          "quote": "Direct GHG emissions are emissions from sources that\nare owned or controlled by the company.",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Direct GHG emissions are emissions from sources that\nare owned or controlled by the company.",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/standards/ghg-protocol-revised.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -27244,12 +27672,16 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "7.3CFP 研究報告要求之資訊\n針對CFP 量化之下列資訊，應列入CFP 研究報告中。\n(a)功能單位與參考流( 參照6 . 3 . 3 )。\n(b)系統界限，包括下列各項。\n- 作為基本流之系統投入與產出的類型，與\n- 決定關於單元過程處理的準則，考慮其對CFP 研究中結論的重要性。\n(c)重要單元過程清冊。\n(d)數據蒐集資訊，包括數據來源( 參照6 . 4 . 2 )。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "7.3CFP 研究報告要求之資訊\n針對CFP 量化之下列資訊，應列入CFP 研究報告中。\n(a)功能單位與參考流( 參照6 . 3 . 3 )。\n(b)系統界限，包括下列各項。\n- 作為基本流之系統投入與產出的類型，與\n- 決定關於單元過程處理的準則，考慮其對CFP 研究中結論的重要性。\n(c)重要單元過程清冊。\n(d)數據蒐集資訊，包括數據來源( 參照6 . 4 . 2 )。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -27311,12 +27743,16 @@
         "sources": [
           "https://www.ipcc.ch/site/assets/uploads/2018/03/WG1AR5_SummaryVolume_FINAL_CHINESE.pdf"
         ],
-        "evidence": {
-          "quote": "由CO2排放导致的大部分人为气候变化是不可逆转的，除非在持续时期\n内将大气中的CO2大量净移除。在净人为CO2排放完全停止后，表面温度仍会在多个世纪基本维持在较高\n水平上。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "由CO2排放导致的大部分人为气候变化是不可逆转的，除非在持续时期\n内将大气中的CO2大量净移除。在净人为CO2排放完全停止后，表面温度仍会在多个世纪基本维持在较高\n水平上。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipcc.ch/site/assets/uploads/2018/03/WG1AR5_SummaryVolume_FINAL_CHINESE.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -27388,12 +27824,16 @@
         "sources": [
           "https://oaout.moenv.gov.tw/law/Download.ashx?FileID=135145&id=GL007755&type=LAW"
         ],
-        "evidence": {
-          "quote": "若執行本規範之組織的排放貢獻未達其產品或投入之上游溫室氣體排放的百分之十以上，則一級活動數據之蒐集，應適用於累計貢獻達產品或投入之上游排放百分之十的組織與任何上游供應商",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "若執行本規範之組織的排放貢獻未達其產品或投入之上游溫室氣體排放的百分之十以上，則一級活動數據之蒐集，應適用於累計貢獻達產品或投入之上游排放百分之十的組織與任何上游供應商",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://oaout.moenv.gov.tw/law/Download.ashx?FileID=135145&id=GL007755&type=LAW",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -27529,12 +27969,16 @@
           "answer_origin": "batch_verification",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "evidence": {
-          "quote": "如實收資本額50〜100 億元之上市櫃公司(第二階段公司)，應於\n114 年申報年報時揭露個體公司113 年溫室氣體盤查資訊",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "如實收資本額50〜100 億元之上市櫃公司(第二階段公司)，應於\n114 年申報年報時揭露個體公司113 年溫室氣體盤查資訊",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.fsc.gov.tw/userfiles/file/114_4_14%E6%9B%B4%E6%96%B0-%E6%B0%B8%E7%BA%8C%E7%99%BC%E5%B1%95%E8%B7%AF%E5%BE%91%E5%9C%96%E5%95%8F%E7%AD%94%E9%9B%86(1).pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -27606,12 +28050,16 @@
         "sources": [
           "https://ghgregistry.moenv.gov.tw/upload/Tools/AI/113%E5%B9%B42%E6%9C%885%E6%97%A5%E5%85%AC%E5%91%8A%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E4%BF%82%E6%95%B8.pdf"
         ],
-        "evidence": {
-          "quote": "資料來源為The Working Group I contribution to the Fifth Assessment Report of the IPCC, 2013",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "資料來源為The Working Group I contribution to the Fifth Assessment Report of the IPCC, 2013",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/AI/113%E5%B9%B42%E6%9C%885%E6%97%A5%E5%85%AC%E5%91%8A%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E4%BF%82%E6%95%B8.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -27670,12 +28118,16 @@
         "sources": [
           "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf"
         ],
-        "evidence": {
-          "quote": "ISO 14067:2018 是一項國際標準，專門針對計算和報告單一產品的碳足跡。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "ISO 14067:2018 是一項國際標準，專門針對計算和報告單一產品的碳足跡。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -27734,12 +28186,16 @@
         "sources": [
           "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf"
         ],
-        "evidence": {
-          "quote": "依本標準之CFP 研究應包括生命週期評估之四個階段，亦即是針對CFP 或部分CFP 之目標與範圍界定、生命週期盤查分析",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "依本標準之CFP 研究應包括生命週期評估之四個階段，亦即是針對CFP 或部分CFP 之目標與範圍界定、生命週期盤查分析",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -27798,12 +28254,16 @@
         "sources": [
           "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf"
         ],
-        "evidence": {
-          "quote": "功能單位在目標範疇定義階段被定義清楚。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "功能單位在目標範疇定義階段被定義清楚。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -27862,12 +28322,16 @@
         "sources": [
           "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf"
         ],
-        "evidence": {
-          "quote": "「功能單位」是一個關鍵概念，用於碳足跡和環境影響評估中，它提供了一個",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "「功能單位」是一個關鍵概念，用於碳足跡和環境影響評估中，它提供了一個",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -27991,12 +28455,16 @@
         "sources": [
           "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf"
         ],
-        "evidence": {
-          "quote": "以計算產品對於全球氣候暖化之潛在貢獻，並以二氧化碳當量(CO2e)表示之。",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "以計算產品對於全球氣候暖化之潛在貢獻，並以二氧化碳當量(CO2e)表示之。",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -28055,12 +28523,16 @@
         "sources": [
           "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf"
         ],
-        "evidence": {
-          "quote": "進行溫室氣體排放量計算時所引用的IPCC 全球暖化潛勢值得選用時，應挑選",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "進行溫室氣體排放量計算時所引用的IPCC 全球暖化潛勢值得選用時，應挑選",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -28119,12 +28591,16 @@
         "sources": [
           "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934"
         ],
-        "evidence": {
-          "quote": "（一）商品：包含原（物）料取得、製造、配送銷售、使用及廢棄處理。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "（一）商品：包含原（物）料取得、製造、配送銷售、使用及廢棄處理。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -28183,12 +28659,16 @@
         "sources": [
           "https://cfp.moenv.gov.tw/Carbon/WebPage/PCR_FileDownload.ashx?fid=87c147a3-ae89-4062-9e50-7644752f8382&sid=f"
         ],
-        "evidence": {
-          "quote": "任何單一溫室氣體源之排放貢獻占產品預期之生命週期內溫室氣體排放量≦1%者，此程序/活動可於盤查時被忽略，累計不得超過5%。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "任何單一溫室氣體源之排放貢獻占產品預期之生命週期內溫室氣體排放量≦1%者，此程序/活動可於盤查時被忽略，累計不得超過5%。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://cfp.moenv.gov.tw/Carbon/WebPage/PCR_FileDownload.ashx?fid=87c147a3-ae89-4062-9e50-7644752f8382&sid=f",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -28250,12 +28730,16 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard-EReader_041613_0.pdf"
         ],
-        "evidence": {
-          "quote": "uncertainty can assist companies in understanding the steps needed to improve inventory quality and increase the level of confidence users have in the inventory results",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "uncertainty can assist companies in understanding the steps needed to improve inventory quality and increase the level of confidence users have in the inventory results",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard-EReader_041613_0.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -28386,12 +28870,16 @@
         "sources": [
           "https://www.iso.org/standard/71206.html"
         ],
-        "evidence": {
-          "quote": "This document specifies principles, requirements and guidelines for the quantification and reporting of the carbon footprint of a product (CFP)",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "This document specifies principles, requirements and guidelines for the quantification and reporting of the carbon footprint of a product (CFP)",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.iso.org/standard/71206.html",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -28450,12 +28938,16 @@
         "sources": [
           "https://www.iso.org/standard/66455.html"
         ],
-        "evidence": {
-          "quote": "This document specifies principles and requirements and provides guidance for verifying and validating greenhouse gas (GHG) statements",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "This document specifies principles and requirements and provides guidance for verifying and validating greenhouse gas (GHG) statements",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.iso.org/standard/66455.html",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -28579,12 +29071,16 @@
         "sources": [
           "https://cfp.moenv.gov.tw/WebPage/Index.aspx"
         ],
-        "evidence": {
-          "quote": "透過碳標籤制度的施行，能使產品各階段的碳排放來源透明化，促使企業調整其產品碳排放量較大的製程，也能促使消費者正確地使用產品，以達到減低產品碳排放量的最大效益。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "透過碳標籤制度的施行，能使產品各階段的碳排放來源透明化，促使企業調整其產品碳排放量較大的製程，也能促使消費者正確地使用產品，以達到減低產品碳排放量的最大效益。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://cfp.moenv.gov.tw/WebPage/Index.aspx",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -28643,12 +29139,16 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/standards/Corporate-Value-Chain-Accounting-Reporing-Standard-EReader_041613_0.pdf"
         ],
-        "evidence": {
-          "quote": "4.  \t Upstream transportation and distribution \n5.  \t Waste generated in operations\n6.  \t Business travel\n7.  \t Employee commuting",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "4.  \t Upstream transportation and distribution \n5.  \t Waste generated in operations\n6.  \t Business travel\n7.  \t Employee commuting",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/standards/Corporate-Value-Chain-Accounting-Reporing-Standard-EReader_041613_0.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -28707,12 +29207,16 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard-EReader_041613_0.pdf"
         ],
-        "evidence": {
-          "quote": "To identify the influence of these selections on results, parameters (or combinations of parameters) are varied in an exercise known as scenario analysis. Scenario analysis is also commonly called sensitivity analysis.",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "To identify the influence of these selections on results, parameters (or combinations of parameters) are varied in an exercise known as scenario analysis. Scenario analysis is also commonly called sensitivity analysis.",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard-EReader_041613_0.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -28840,12 +29344,16 @@
         "sources": [
           "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934"
         ],
-        "evidence": {
-          "quote": "七、經中央主管機關許可之查驗機構出具之查驗聲明書。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "七、經中央主管機關許可之查驗機構出具之查驗聲明書。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -28904,12 +29412,16 @@
         "sources": [
           "https://www.iso.org/standard/71206.html"
         ],
-        "evidence": {
-          "quote": "This document specifies principles, requirements and guidelines for the quantification and reporting of the carbon footprint of a product (CFP), in a manner consistent with International Standards on life cycle assessment (LCA) (ISO 14040 and ISO 14044).",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "This document specifies principles, requirements and guidelines for the quantification and reporting of the carbon footprint of a product (CFP), in a manner consistent with International Standards on life cycle assessment (LCA) (ISO 14040 and ISO 14044).",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.iso.org/standard/71206.html",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -28971,12 +29483,16 @@
         "sources": [
           "https://www.iso.org/standard/37456.html"
         ],
-        "evidence": {
-          "quote": "ISO 14040:2006 describes the principles and framework for life cycle assessment (LCA) including: definition of the goal and scope of the LCA, the life cycle inventory analysis (LCI) phase, the life cycle impact assessment (LCIA) phase, the life cycle interpretation phase",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "ISO 14040:2006 describes the principles and framework for life cycle assessment (LCA) including: definition of the goal and scope of the LCA, the life cycle inventory analysis (LCI) phase, the life cycle impact assessment (LCIA) phase, the life cycle interpretation phase",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.iso.org/standard/37456.html",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -29100,12 +29616,16 @@
         "sources": [
           "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007755"
         ],
-        "evidence": {
-          "quote": "碳足跡產品類別規則：指對一個或多個產品類別之產品碳足跡量化與溝通的要求事項和指導綱要的一套特定規則。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）（片段皆真但被重排）"
-        }
+        "evidence": [
+          {
+            "quote": "碳足跡產品類別規則：指對一個或多個產品類別之產品碳足跡量化與溝通的要求事項和指導綱要的一套特定規則。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）（片段皆真但被重排）",
+            "url": "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007755",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -29297,12 +29817,16 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf"
         ],
-        "evidence": {
-          "quote": "Total inventory results in CO2e per unit of analysis, which includes all emissions and removals included in the boundary from biogenic sources",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Total inventory results in CO2e per unit of analysis, which includes all emissions and removals included in the boundary from biogenic sources",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -29361,12 +29885,16 @@
         "sources": [
           "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007755"
         ],
-        "evidence": {
-          "quote": "產品碳足跡：指商品由原料取得、製造、配送銷售、使用及廢棄處理等生命週期各階段",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）（片段皆真但被重排）"
-        }
+        "evidence": [
+          {
+            "quote": "產品碳足跡：指商品由原料取得、製造、配送銷售、使用及廢棄處理等生命週期各階段",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）（片段皆真但被重排）",
+            "url": "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007755",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -29438,12 +29966,16 @@
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
           "https://ghgprotocol.org/product-standard"
         ],
-        "evidence": {
-          "quote": "5.8 一致性",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "人工抓取 iPAS 公版教材 PDF（usr.chu.edu.tw）以 PyMuPDF 解碼後逐條核對 ISO 14067 §5 的原則清單"
-        }
+        "evidence": [
+          {
+            "quote": "5.8 一致性",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "人工抓取 iPAS 公版教材 PDF（usr.chu.edu.tw）以 PyMuPDF 解碼後逐條核對 ISO 14067 §5 的原則清單",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -29567,12 +30099,16 @@
         "sources": [
           "https://cfp.moenv.gov.tw/Carbon/WebPage/PCR_FileDownload.ashx?fid=fdcbde87-f22c-42ff-8e2a-fc7f5351dfe5&sid=f"
         ],
-        "evidence": {
-          "quote": "任何單一溫室氣體源之排放貢獻占服務預期之生命週期內溫室氣體排放量≦1%者，此程序/活動可於盤查時被忽略，累計不得超過5%。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "任何單一溫室氣體源之排放貢獻占服務預期之生命週期內溫室氣體排放量≦1%者，此程序/活動可於盤查時被忽略，累計不得超過5%。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://cfp.moenv.gov.tw/Carbon/WebPage/PCR_FileDownload.ashx?fid=fdcbde87-f22c-42ff-8e2a-fc7f5351dfe5&sid=f",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -29631,12 +30167,16 @@
         "sources": [
           "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934"
         ],
-        "evidence": {
-          "quote": "查驗：指以系統化、文件化及獨立性等方式，執行查證之作業。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "查驗：指以系統化、文件化及獨立性等方式，執行查證之作業。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -29698,12 +30238,16 @@
         "sources": [
           "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934"
         ],
-        "evidence": {
-          "quote": "標示：指為揭露產品碳足跡資訊，於產品包裝、網站或其他行銷載體，記載產品碳足跡標籤或其數值。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "標示：指為揭露產品碳足跡資訊，於產品包裝、網站或其他行銷載體，記載產品碳足跡標籤或其數值。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -29762,12 +30306,16 @@
         "sources": [
           "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934"
         ],
-        "evidence": {
-          "quote": "依前項第五款規定以排放係數法計算溫室氣體排放量，應以單一活動項目為單位，並符合下列規定之一：一、採用中央主管機關公開之碳足跡排放係數。二、國際文獻或國內外生命週期資料庫之係數。三、檢測報告或依 ISO 14067  產品碳足跡標準計算所得之自廠係數。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "依前項第五款規定以排放係數法計算溫室氣體排放量，應以單一活動項目為單位，並符合下列規定之一：一、採用中央主管機關公開之碳足跡排放係數。二、國際文獻或國內外生命週期資料庫之係數。三、檢測報告或依 ISO 14067  產品碳足跡標準計算所得之自廠係數。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -29826,12 +30374,16 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf"
         ],
-        "evidence": {
-          "quote": "parameters (or combinations of parameters) are varied in an exercise known as scenario analysis. Scenario analysis is also commonly called sensitivity analysis.",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "parameters (or combinations of parameters) are varied in an exercise known as scenario analysis. Scenario analysis is also commonly called sensitivity analysis.",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -29895,12 +30447,16 @@
         "sources": [
           "https://cfp.moenv.gov.tw/Carbon/WebPage/PCR_FileDownload.ashx?fid=039bdf4e-e566-4e33-bf91-12a2714d58e2&sid=f"
         ],
-        "evidence": {
-          "quote": "本項文件係由精誠科技整合股份有限公司及金屬工業研究發展中心產業升級服務處共同制定，並共同邀請台灣螺絲同業公會及台灣螺絲貿易協會，及相關主要業者與利害相關團體為代表，公開磋商討論。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "本項文件係由精誠科技整合股份有限公司及金屬工業研究發展中心產業升級服務處共同制定，並共同邀請台灣螺絲同業公會及台灣螺絲貿易協會，及相關主要業者與利害相關團體為代表，公開磋商討論。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://cfp.moenv.gov.tw/Carbon/WebPage/PCR_FileDownload.ashx?fid=039bdf4e-e566-4e33-bf91-12a2714d58e2&sid=f",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30094,12 +30650,16 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf"
         ],
-        "evidence": {
-          "quote": "Cradle-to-grave inventory\tRemovals and emissions of a studied product from material acquisition through to end-of-life.",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Cradle-to-grave inventory\tRemovals and emissions of a studied product from material acquisition through to end-of-life.",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30158,12 +30718,16 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf"
         ],
-        "evidence": {
-          "quote": "The boundary of a cradle-to-gate partial life cycle inventory shall not include product use or end-of-life processes in the inventory results",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "The boundary of a cradle-to-gate partial life cycle inventory shall not include product use or end-of-life processes in the inventory results",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30222,12 +30786,16 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf"
         ],
-        "evidence": {
-          "quote": "Gate-to-gate\tThe emissions and removals attributable to a studied product while it is under the ownership or control of the reporting company.",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Gate-to-gate\tThe emissions and removals attributable to a studied product while it is under the ownership or control of the reporting company.",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30285,12 +30853,16 @@
         },
         "prior_answer": "C",
         "verification_source": "iPAS 公版教材（usr.chu.edu.tw）引 CNS 14044 §4.2.3.6.2：「數據品質特性須涵蓋下列項目：…(d) 精密度：量測每個數據值所表現的變異性(例：變異數)。(e) 完整性…(f) 代表性…」—— 清單中無「準確度」",
-        "evidence": {
-          "quote": "數據品質特性須涵蓋下列項目：",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "人工抓取 iPAS 公版教材 PDF（usr.chu.edu.tw）以 PyMuPDF 解碼，逐字核對 CNS 14044 §4.2.3.6.2 的數據品質清單。**蒐證代理原本判定 CONTRADICTED（引歐盟 PEF 方法），我以「證據間接」為由駁回 ——但公版教材本身證實代理是對的。我錯在把 ISO 14067 的「原則」§5 與「數據品質」§6.3.5 混為一談。**"
-        },
+        "evidence": [
+          {
+            "quote": "數據品質特性須涵蓋下列項目：",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "人工抓取 iPAS 公版教材 PDF（usr.chu.edu.tw）以 PyMuPDF 解碼，逐字核對 CNS 14044 §4.2.3.6.2 的數據品質清單。**蒐證代理原本判定 CONTRADICTED（引歐盟 PEF 方法），我以「證據間接」為由駁回 ——但公版教材本身證實代理是對的。我錯在把 ISO 14067 的「原則」§5 與「數據品質」§6.3.5 混為一談。**",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ],
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ]
@@ -30353,12 +30925,16 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf"
         ],
-        "evidence": {
-          "quote": "(C) 22. 什麼是全球暖化潛勢(Global Warming Potential, GWP)？ (A)一種溫室氣體吸收熱量的能力 (B)一種溫室氣體在大氣中停留的時間 (C)一種溫室氣體相對於二氧化碳的暖化能力 (D)一種溫室氣體的排放量",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "(C) 22. 什麼是全球暖化潛勢(Global Warming Potential, GWP)？ (A)一種溫室氣體吸收熱量的能力 (B)一種溫室氣體在大氣中停留的時間 (C)一種溫室氣體相對於二氧化碳的暖化能力 (D)一種溫室氣體的排放量",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30427,12 +31003,16 @@
         "sources": [
           "https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter08_FINAL.pdf"
         ],
-        "evidence": {
-          "quote": "Table 8.7 |  GWP and GTP with and without inclusion of climate–carbon feedbacks (cc fb) in response to emissions of the indicated non-CO2 gases (climate-carbon feedbacks in response to the reference gas CO2 are always included). Lifetime (years) GWP20 GWP100 GTP20 GTP100 CH4 b 12.4a No cc fb 84 28 67 4 With cc fb 86 34 70 11",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Table 8.7 |  GWP and GTP with and without inclusion of climate–carbon feedbacks (cc fb) in response to emissions of the indicated non-CO2 gases (climate-carbon feedbacks in response to the reference gas CO2 are always included). Lifetime (years) GWP20 GWP100 GTP20 GTP100 CH4 b 12.4a No cc fb 84 28 67 4 With cc fb 86 34 70 11",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter08_FINAL.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30491,12 +31071,16 @@
         "sources": [
           "https://www.ipcc.ch/report/ar6/wg1/downloads/report/IPCC_AR6_WGI_Chapter_07_Supplementary_Material.pdf"
         ],
-        "evidence": {
-          "quote": "Table 7.SM.7: Greenhouse gas lifetimes, radiative efficiencies, Global Warming Potentials (GWPs)... Nitrous oxide N2O 109 0.0032 6.65 273 24.5 273 40.7 130 0.124 290 0.0919 233",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）（片段皆真但被重排）"
-        }
+        "evidence": [
+          {
+            "quote": "Table 7.SM.7: Greenhouse gas lifetimes, radiative efficiencies, Global Warming Potentials (GWPs)... Nitrous oxide N2O 109 0.0032 6.65 273 24.5 273 40.7 130 0.124 290 0.0919 233",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）（片段皆真但被重排）",
+            "url": "https://www.ipcc.ch/report/ar6/wg1/downloads/report/IPCC_AR6_WGI_Chapter_07_Supplementary_Material.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30555,12 +31139,16 @@
         "sources": [
           "https://ccl.moenv.gov.tw/Article/Knowledge"
         ],
-        "evidence": {
-          "quote": "不同的溫室氣體造成的暖化程度不同。GWP是用來衡量溫室氣體增強溫室效應的程度，以二氧化碳當量(CO₂-e)為單位，代表某種溫室氣體與相同質量的二氧化碳相比，在特定時間內（通常定為100年）吸收紅外線輻射熱的程度。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "不同的溫室氣體造成的暖化程度不同。GWP是用來衡量溫室氣體增強溫室效應的程度，以二氧化碳當量(CO₂-e)為單位，代表某種溫室氣體與相同質量的二氧化碳相比，在特定時間內（通常定為100年）吸收紅外線輻射熱的程度。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ccl.moenv.gov.tw/Article/Knowledge",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30622,12 +31210,16 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
         ],
-        "evidence": {
-          "quote": "Q61 衝擊評估階段屬於生命週期評估作業LCA的第幾階段？(A)第㇐階段；(B)第二階段；(C)第三階段；(D)第四階段 (C)第三階段 Q62 盤查分析階段屬於生命週期評估作業LCA的第幾階段？(A)第㇐階段；(B)第二階段；(C)第三階段；(D)第四階段 (B)第二階段",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Q61 衝擊評估階段屬於生命週期評估作業LCA的第幾階段？(A)第㇐階段；(B)第二階段；(C)第三階段；(D)第四階段 (C)第三階段 Q62 盤查分析階段屬於生命週期評估作業LCA的第幾階段？(A)第㇐階段；(B)第二階段；(C)第三階段；(D)第四階段 (B)第二階段",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30686,12 +31278,16 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
         ],
-        "evidence": {
-          "quote": "生命週期盤查分析(LCI)主要包括哪些內容？(A)數據收集與清單計算；(B)員工訓練計畫；(C)銷售策略分析；(D)市場調研 (A)數據收集與清單計算",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "生命週期盤查分析(LCI)主要包括哪些內容？(A)數據收集與清單計算；(B)員工訓練計畫；(C)銷售策略分析；(D)市場調研 (A)數據收集與清單計算",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30750,12 +31346,16 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
         ],
-        "evidence": {
-          "quote": "在LCA的衝擊評估階段，溫室氣體排放與移除量應選擇何種GWP值計算？(A) GWP-10 年；(B) GWP-100 年；(C)該GWP-200年；(D) GWP-500年 (B) GWP-100年",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "在LCA的衝擊評估階段，溫室氣體排放與移除量應選擇何種GWP值計算？(A) GWP-10 年；(B) GWP-100 年；(C)該GWP-200年；(D) GWP-500年 (B) GWP-100年",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30814,12 +31414,16 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "闡釋階段應包括以下步驟：(a) 根據在LCI 與LCIA 階段之CFP 與部分CFP 之量化結果為基礎，來進行重大議題鑑別。(b) 進行考量完整性、敏感度分析及一致性的評估。(c) 作成結論、限制與建議。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "人工抓取 iPAS 公版教材 PDF（usr.chu.edu.tw）以 PyMuPDF 解碼後逐字核對。（蒐證代理原本回報「找不到一手來源」—— **它過度保守了**：教材明文把「一致性的評估」列為闡釋階段的步驟 (b)。）"
-        }
+        "evidence": [
+          {
+            "quote": "闡釋階段應包括以下步驟：(a) 根據在LCI 與LCIA 階段之CFP 與部分CFP 之量化結果為基礎，來進行重大議題鑑別。(b) 進行考量完整性、敏感度分析及一致性的評估。(c) 作成結論、限制與建議。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "人工抓取 iPAS 公版教材 PDF（usr.chu.edu.tw）以 PyMuPDF 解碼後逐字核對。（蒐證代理原本回報「找不到一手來源」—— **它過度保守了**：教材明文把「一致性的評估」列為闡釋階段的步驟 (b)。）",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30878,12 +31482,16 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf"
         ],
-        "evidence": {
-          "quote": "Cradle-to-gate inventory A partial life cycle of an intermediate product, from material acquisition through to when the product leaves the reporting company's gate (e.g., immediately following the product's production). Cradle-to-grave inventory Removals and emissions of a studied product from material acquisition through to end-of-life.",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Cradle-to-gate inventory A partial life cycle of an intermediate product, from material acquisition through to when the product leaves the reporting company's gate (e.g., immediately following the product's production). Cradle-to-grave inventory Removals and emissions of a studied product from material acquisition through to end-of-life.",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -30942,12 +31550,16 @@
         "sources": [
           "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf"
         ],
-        "evidence": {
-          "quote": "Gate-to-gate The emissions and removals attributable to a studied product while it is under the ownership or control of the reporting company.",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "Gate-to-gate The emissions and removals attributable to a studied product while it is under the ownership or control of the reporting company.",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -31006,12 +31618,16 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "代表性：定性評估其數據組合能反映到利害關係者真實之群體之程度(即:地理涵蓋面、時間期間與技術涵蓋面)。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "代表性：定性評估其數據組合能反映到利害關係者真實之群體之程度(即:地理涵蓋面、時間期間與技術涵蓋面)。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -31070,12 +31686,16 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "納入研究產品系統之CFP 或部分CFP 提供重大貢獻的所有GHG 排放與移除量。重大性程度係依截斷準則( 參照6 . 3 .4 .3 ) 決定。",
-          "supports_option": "A",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "納入研究產品系統之CFP 或部分CFP 提供重大貢獻的所有GHG 排放與移除量。重大性程度係依截斷準則( 參照6 . 3 .4 .3 ) 決定。",
+            "supports_option": "A",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -31134,12 +31754,16 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "CFP 與部分CFP 之量化為正確、可查證、相關及不誤導，且儘可能在實務上減少偏差與不確定性。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "CFP 與部分CFP 之量化為正確、可查證、相關及不誤導，且儘可能在實務上減少偏差與不確定性。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -31205,12 +31829,16 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "再乘以100年全球暖化潛勢，以IPCC所示的「每kg排放CO2ekg數」表示(具備IPCC規定之碳回饋者)。",
-          "supports_option": "C",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "再乘以100年全球暖化潛勢，以IPCC所示的「每kg排放CO2ekg數」表示(具備IPCC規定之碳回饋者)。",
+            "supports_option": "C",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -31269,12 +31897,16 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
-        "evidence": {
-          "quote": "產品系統間的比較，應基於相同的功能單位。如省略的生命週期階段相同，則允許進行部分碳足跡(宣告單位)的比較(參照附錄B)。",
-          "supports_option": "B",
-          "verified_on": "2026-07-13",
-          "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）"
-        }
+        "evidence": [
+          {
+            "quote": "產品系統間的比較，應基於相同的功能單位。如省略的生命週期階段相同，則允許進行部分碳足跡(宣告單位)的比較(參照附錄B)。",
+            "supports_option": "B",
+            "verified_on": "2026-07-13",
+            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "url_backfilled_on": "2026-07-14"
+          }
+        ]
       }
     },
     {
@@ -42372,7 +43004,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "===============================================",
+      "explanation": "\n\n⚠️ **本題解析已更正** ——\n\n**explanation 欄位整個是空的教學內容——它捕捉到的是來源 PDF 的『頁尾/文件結尾分隔線』，不是對第70題（生命週期闡釋的目的）的解析文字。來源在此題選項 (D)招聘員工 之後直接就是文件結尾分隔線，完全沒有接續的說明段落（相較之下，同一份文件的 Q30、Q35 在選項後面確實有一段解析文字，Q70 沒有）。目前 explanation 對使用者沒有任何教學內容，等同解析缺失。**\n　依據（https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf）逐字：「(D)招聘員工 \n===============================================」\n\n**更正後應為**：explanation 應改寫為實質內容，例如：『生命週期闡釋（interpretation）是 LCA 的第四階段，目的在合併盤查分析（LCI）與衝擊評估（LCIA）的結果，據以形成結論、限制與建議，供決策使用（呼應 bank_answer B）。』並移除誤植的頁尾分隔線字串。",
       "source": {
         "source_id": "S_CHU_07",
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
@@ -42411,6 +43043,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "removed_claims": [
+            "==============================================="
+          ],
+          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         }
       }
     }
