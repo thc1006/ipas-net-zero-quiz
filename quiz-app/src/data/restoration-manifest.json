@@ -2094,13 +2094,25 @@
       "column": "right",
       "source_question_number": 30,
       "answer_key": "A",
-      "answer_override": null,
+      "answer_override": {
+        "corrected_answer": "C",
+        "reason": "來源 PDF 的答案卡 (A) 與其被證實位移的 (C) 欄一致地錯。",
+        "evidence": "乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 右欄答案卡：(C) 直接監測法通過監測排氣濃度和流率來量測，而質量平衡法通過計算物質的進出和轉換來估算。",
+        "decided_on": "2026-07-14"
+      },
       "raw_pdf_text_sha256": "64d331ecd9dbd0261c51b140931af62f1d24588e8c124bb1d3f78fa9f25397af",
-      "canonical_source_text_sha256": "64d331ecd9dbd0261c51b140931af62f1d24588e8c124bb1d3f78fa9f25397af",
-      "dataset_text_sha256": "64d331ecd9dbd0261c51b140931af62f1d24588e8c124bb1d3f78fa9f25397af",
-      "transformations": [],
+      "canonical_source_text_sha256": "e90f786eff14607756e918fa08fda7c482966625ca7a31b5c918733a14d95fbe",
+      "dataset_text_sha256": "e90f786eff14607756e918fa08fda7c482966625ca7a31b5c918733a14d95fbe",
+      "transformations": [
+        {
+          "fix": "option (C) text: 「功能單位或宣告單位」 -> 「直接監測法通過監測排氣濃度和流率來量測，而質量平衡法通過計算物質的進出和轉換來估算」",
+          "why": "來源 PDF 214245506.pdf 的 (C) 欄**整欄位移一題** —— 每一題的 (C) 都是下一題的 (C)。",
+          "evidence": "同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 上，本題的 (C) 為「直接監測法通過監測排氣濃度和流率來量測，而質量平衡法通過計算物質的進出和轉換來估算」；其餘三個選項與題幹皆逐字相符（以題幹配對，非題號）。",
+          "decided_on": "2026-07-14"
+        }
+      ],
       "matches_source": true,
-      "dataset_answer": "A"
+      "dataset_answer": "C"
     },
     {
       "item_id": "S_CHU_07-q031",
@@ -2113,9 +2125,16 @@
       "answer_key": "D",
       "answer_override": null,
       "raw_pdf_text_sha256": "ffad98f317c7a95a960c1a7fa9361bafdd548ef9ef9c027fd04af6441850e5ea",
-      "canonical_source_text_sha256": "ffad98f317c7a95a960c1a7fa9361bafdd548ef9ef9c027fd04af6441850e5ea",
-      "dataset_text_sha256": "ffad98f317c7a95a960c1a7fa9361bafdd548ef9ef9c027fd04af6441850e5ea",
-      "transformations": [],
+      "canonical_source_text_sha256": "cf56d690b64bca63a81e83206878dce5134e0b389695de50d652b643ea6ec0e4",
+      "dataset_text_sha256": "cf56d690b64bca63a81e83206878dce5134e0b389695de50d652b643ea6ec0e4",
+      "transformations": [
+        {
+          "fix": "option (C) text: 「內外部議題」 -> 「功能單位或宣告單位」",
+          "why": "來源 PDF 214245506.pdf 的 (C) 欄**整欄位移一題** —— 每一題的 (C) 都是下一題的 (C)。",
+          "evidence": "同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 上，本題的 (C) 為「功能單位或宣告單位」；其餘三個選項與題幹皆逐字相符（以題幹配對，非題號）。",
+          "decided_on": "2026-07-14"
+        }
+      ],
       "matches_source": true,
       "dataset_answer": "D"
     },
@@ -2130,9 +2149,16 @@
       "answer_key": "A",
       "answer_override": null,
       "raw_pdf_text_sha256": "3f6517c9875ce577de9f6231eb256204aa7fb35e9bda0aec074df464d9432df2",
-      "canonical_source_text_sha256": "3f6517c9875ce577de9f6231eb256204aa7fb35e9bda0aec074df464d9432df2",
-      "dataset_text_sha256": "3f6517c9875ce577de9f6231eb256204aa7fb35e9bda0aec074df464d9432df2",
-      "transformations": [],
+      "canonical_source_text_sha256": "e679d54a3195b65e244e38f3cdc8db7f2ec5972d9d7a261344269d3cb0317f36",
+      "dataset_text_sha256": "e679d54a3195b65e244e38f3cdc8db7f2ec5972d9d7a261344269d3cb0317f36",
+      "transformations": [
+        {
+          "fix": "option (C) text: 「場址特定數據」 -> 「ISO9001」",
+          "why": "來源 PDF 214245506.pdf 的 (C) 欄**整欄位移一題** —— 每一題的 (C) 都是下一題的 (C)。",
+          "evidence": "同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 上，本題的 (C) 為「ISO9001」；其餘三個選項與題幹皆逐字相符（以題幹配對，非題號）。",
+          "decided_on": "2026-07-14"
+        }
+      ],
       "matches_source": true,
       "dataset_answer": "A"
     },
@@ -2145,13 +2171,25 @@
       "column": "left",
       "source_question_number": 34,
       "answer_key": "A",
-      "answer_override": null,
+      "answer_override": {
+        "corrected_answer": "B",
+        "reason": "來源 PDF 的答案卡 (A) 與其被證實位移的 (C) 欄一致地錯。",
+        "evidence": "乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 右欄答案卡：(B) 次級數據。",
+        "decided_on": "2026-07-14"
+      },
       "raw_pdf_text_sha256": "1427b1e2235e37fd6e77bd8f676662dbfcb5fcb732600bdb1ecaab87f9271f87",
-      "canonical_source_text_sha256": "1427b1e2235e37fd6e77bd8f676662dbfcb5fcb732600bdb1ecaab87f9271f87",
-      "dataset_text_sha256": "1427b1e2235e37fd6e77bd8f676662dbfcb5fcb732600bdb1ecaab87f9271f87",
-      "transformations": [],
+      "canonical_source_text_sha256": "0c547f8c13b8d71541b1f46f1e20e7c04e03c82f6a41c226436a511eee4c41ea",
+      "dataset_text_sha256": "0c547f8c13b8d71541b1f46f1e20e7c04e03c82f6a41c226436a511eee4c41ea",
+      "transformations": [
+        {
+          "fix": "option (C) text: 「確保量化結果的全面性和準確性」 -> 「場址特定數據」",
+          "why": "來源 PDF 214245506.pdf 的 (C) 欄**整欄位移一題** —— 每一題的 (C) 都是下一題的 (C)。",
+          "evidence": "同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 上，本題的 (C) 為「場址特定數據」；其餘三個選項與題幹皆逐字相符（以題幹配對，非題號）。",
+          "decided_on": "2026-07-14"
+        }
+      ],
       "matches_source": true,
-      "dataset_answer": "A"
+      "dataset_answer": "B"
     },
     {
       "item_id": "S_CHU_07-q035",
@@ -2164,9 +2202,16 @@
       "answer_key": "C",
       "answer_override": null,
       "raw_pdf_text_sha256": "79e2efc30451a1873d3d14fe9e202a68322f021c195647a1d88c79e165611e71",
-      "canonical_source_text_sha256": "79e2efc30451a1873d3d14fe9e202a68322f021c195647a1d88c79e165611e71",
-      "dataset_text_sha256": "79e2efc30451a1873d3d14fe9e202a68322f021c195647a1d88c79e165611e71",
-      "transformations": [],
+      "canonical_source_text_sha256": "4a5f36705b2039322c285a70dc040eb083e15d8625fcadac4b4425650fcc0f6e",
+      "dataset_text_sha256": "4a5f36705b2039322c285a70dc040eb083e15d8625fcadac4b4425650fcc0f6e",
+      "transformations": [
+        {
+          "fix": "option (C) text: 「增加報告的複雜度」 -> 「確保量化結果的全面性和準確性」",
+          "why": "來源 PDF 214245506.pdf 的 (C) 欄**整欄位移一題** —— 每一題的 (C) 都是下一題的 (C)。",
+          "evidence": "同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 上，本題的 (C) 為「確保量化結果的全面性和準確性」；其餘三個選項與題幹皆逐字相符（以題幹配對，非題號）。",
+          "decided_on": "2026-07-14"
+        }
+      ],
       "matches_source": true,
       "dataset_answer": "C"
     },
@@ -2181,9 +2226,16 @@
       "answer_key": "B",
       "answer_override": null,
       "raw_pdf_text_sha256": "28ae2c61388887473265cab99ebef68dcf70c105bc70f209454d8897d9740cbc",
-      "canonical_source_text_sha256": "28ae2c61388887473265cab99ebef68dcf70c105bc70f209454d8897d9740cbc",
-      "dataset_text_sha256": "28ae2c61388887473265cab99ebef68dcf70c105bc70f209454d8897d9740cbc",
-      "transformations": [],
+      "canonical_source_text_sha256": "452f2b2ca2d82a4e29d4dded3723d35643c36276d1564fc8b45c41f8dd0d944c",
+      "dataset_text_sha256": "452f2b2ca2d82a4e29d4dded3723d35643c36276d1564fc8b45c41f8dd0d944c",
+      "transformations": [
+        {
+          "fix": "option (C) text: 「保證結果的客觀性和可靠性」 -> 「增加報告的複雜度」",
+          "why": "來源 PDF 214245506.pdf 的 (C) 欄**整欄位移一題** —— 每一題的 (C) 都是下一題的 (C)。",
+          "evidence": "同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 上，本題的 (C) 為「增加報告的複雜度」；其餘三個選項與題幹皆逐字相符（以題幹配對，非題號）。",
+          "decided_on": "2026-07-14"
+        }
+      ],
       "matches_source": true,
       "dataset_answer": "B"
     },
@@ -2215,9 +2267,16 @@
       "answer_key": "C",
       "answer_override": null,
       "raw_pdf_text_sha256": "cdf191858bfef8b06abd15848485f9970c56c0378e3f27675686cae016f029eb",
-      "canonical_source_text_sha256": "cdf191858bfef8b06abd15848485f9970c56c0378e3f27675686cae016f029eb",
-      "dataset_text_sha256": "cdf191858bfef8b06abd15848485f9970c56c0378e3f27675686cae016f029eb",
-      "transformations": [],
+      "canonical_source_text_sha256": "583727023fb2bbbd21ebfe8ee1df619e9d1f9cf53423d6e5daf274d45caaadaf",
+      "dataset_text_sha256": "583727023fb2bbbd21ebfe8ee1df619e9d1f9cf53423d6e5daf274d45caaadaf",
+      "transformations": [
+        {
+          "fix": "option (C) text: 「適當揭露假設、方法及數據的使用」 -> 「納入所有重大GHG排放與移除量」",
+          "why": "來源 PDF 214245506.pdf 的 (C) 欄**整欄位移一題** —— 每一題的 (C) 都是下一題的 (C)。",
+          "evidence": "同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 上，本題的 (C) 為「納入所有重大GHG排放與移除量」；其餘三個選項與題幹皆逐字相符（以題幹配對，非題號）。",
+          "decided_on": "2026-07-14"
+        }
+      ],
       "matches_source": true,
       "dataset_answer": "C"
     },
@@ -2249,9 +2308,16 @@
       "answer_key": "B",
       "answer_override": null,
       "raw_pdf_text_sha256": "089721ce7d20e8a9a7e3d24d3adb66ba92e4f61c8b1da0653740847511d2d2f5",
-      "canonical_source_text_sha256": "089721ce7d20e8a9a7e3d24d3adb66ba92e4f61c8b1da0653740847511d2d2f5",
-      "dataset_text_sha256": "089721ce7d20e8a9a7e3d24d3adb66ba92e4f61c8b1da0653740847511d2d2f5",
-      "transformations": [],
+      "canonical_source_text_sha256": "3abf5bdb0ba1d81eee97b7c387ca410af334b5756c68001867218443fd0c89e8",
+      "dataset_text_sha256": "3abf5bdb0ba1d81eee97b7c387ca410af334b5756c68001867218443fd0c89e8",
+      "transformations": [
+        {
+          "fix": "option (C) text: 「功能單位或宣告單位」 -> 「重複計算所有排放源」",
+          "why": "來源 PDF 214245506.pdf 的 (C) 欄**整欄位移一題** —— 每一題的 (C) 都是下一題的 (C)。",
+          "evidence": "同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 上，本題的 (C) 為「重複計算所有排放源」；其餘三個選項與題幹皆逐字相符（以題幹配對，非題號）。",
+          "decided_on": "2026-07-14"
+        }
+      ],
       "matches_source": true,
       "dataset_answer": "B"
     },

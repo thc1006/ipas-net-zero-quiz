@@ -222,6 +222,12 @@ RULES = [
     (README, r'\| 🔧 \*\*引錯地方[^|]*\| \*\*(\d+)\*\*', N['ca_wrong'], 'README 引錯地方'),
     (README, r'\| 📝 主題相關[^|]*\| (\d+)', N['ca_no_quote'], 'README 主題相關無引文'),
     (README, r'\| ☠️ 連結已死[^|]*\| (\d+)', N['ca_dead'], 'README 連結已死'),
+    # ⚠️ 這兩條**第一版漏掉了**（第四次犯同一個錯）。docs-counts.test.ts 有守它們，
+    #    但這支沒有 —— 於是 README 的「已換成…」凍在 27，而資料走到 29，CI 紅。
+    #    **gate 守幾個數字，這裡就要涵蓋幾個。**
+    (README, r'\*\*(\d+) 題\*\*已換成經機械驗證的一手來源', N['ca_replaced'], 'README 已換來源'),
+    (README, r'\*\*(\d+) 題\*\*[^\n]*`citation_audit\.verdict = citation_disputed`',
+     N['ca_disputed'], 'README 仍存疑'),
     (README, r'\*\*(\d+) 題的答案已與官方答案卡逐題對過', N['akc_confirmed'], 'README 答案卡確認'),
 ]
 

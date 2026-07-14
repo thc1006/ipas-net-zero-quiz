@@ -183,19 +183,41 @@ def main():
     def node(q):
         return q.get('metadata') or q.get('provenance') or {}
 
+    # ⚠️ **母體的判準是「這一題驗得了嗎」，不是「有沒有人記得引用它」。**
+    #
+    #   第一版只掃「有 evidence 的題目」—— 於是 S_CHU_06-q094 整個被漏掉，
+    #   而我在程式碼裡寫下：「一個把該查的題目排除在母體外的檢查，
+    #   它的綠燈是一句假的保證。」
+    #
+    #   然後我**只修了一半** —— 把母體從 evidence 放寬到 sources，
+    #   卻**仍然讓「有沒有人引用過」決定「要不要驗」**。
+    #   實測：全庫 927 題裡，題幹能在答案卡 PDF 上找到的有 **218 題**，
+    #   而當時只驗了 121 題 —— **另外約 119 題一直都驗得了，只是沒人去對。**
+    #
+    #   → 現在直接**拿題幹去 6 份答案卡 PDF 裡搜**。引用只是提示，不是門票。
+    KEY_PAGES = {}
+    for k in KEYED:
+        for base in ('https://usr.chu.edu.tw/var/file/81/1081/img/1034/',
+                     'https://usr.chu.edu.tw/var/file/81/1081/img/'):
+            t = fetch(base + k + '.pdf')[0]
+            if t:
+                KEY_PAGES[base + k + '.pdf'] = t
+                break
+
+    def find_pdf(q):
+        """題幹出現在哪一份答案卡 PDF 上？找不到就回 None。"""
+        stem = re.sub(r'\s+', '', (q.get('stem') or q.get('question') or ''))[:14]
+        if len(stem) < 8:
+            return None
+        for u, t in KEY_PAGES.items():
+            if stem in re.sub(r'\s+', '', t):
+                return u
+        return None
+
     idx_all = {qid(q): q for q in ALL}
-    cache, rows = {}, []
+    cache, rows = dict(KEY_PAGES), []
     for q in ALL:
-        # ⚠️ **母體要看 sources，不能只看 evidence。**
-        #   第一版只掃「有 evidence 的題目」—— 於是 S_CHU_06-q094 整個被漏掉：
-        #   它的 sources 指著答案卡 PDF，但沒人替它抽過引文。
-        #   而它正是**唯一一題與官方答案卡不符的**（答案卡 (D)，題庫標 C）。
-        #   **一個把該查的題目排除在母體外的檢查，它的綠燈是一句假的保證。**
-        ev = (node(q).get('evidence') or [None])[0]
-        cand = [ev['url']] if (ev and ev.get('url')) else []
-        cand += [x for x in ((q.get('metadata') or {}).get('sources') or q.get('sources') or [])
-                 if isinstance(x, str)]
-        u = next((x for x in cand if any(k in x for k in KEYED)), None)
+        u = find_pdf(q)
         if not u:
             continue
         if u not in cache:
@@ -208,6 +230,7 @@ def main():
             # 刻意標成無答案（多重正解）的題目，本來就沒有「題庫答案」可比
             rows.append({**r, 'verdict': 'ANSWER_NULL'})
             continue
+        ev = (node(q).get('evidence') or [None])[0]
         blks = blocks_of(cache[u], q.get('stem') or q.get('question'),
                          (ev or {}).get('quote'))
         if not blks:
