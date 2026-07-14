@@ -118,6 +118,13 @@
       "error_rate_pct": 7.1,
       "fixed": 32,
       "note": "錯法幾乎全是**條號與角色的錯位**（「第 2 條第六款」寫成「第 6 條」、上游／下游講反、過渡期／定價期標籤對調、意思整個相反、解析自我矛盾），不是打錯字。⚠️ 先前的 40 題抽樣得出 18%，那是**偏誤的** —— 抽樣母體被我篩成「含條號／數字且有引文」，而條號錯位正好都住在那裡。**全量的真實錯誤率是 7.1%。**"
+    },
+    "answer_key_check": {
+      "date": "2026-07-14",
+      "population": 159,
+      "confirmed": 120,
+      "what": "iPAS 公版教材的範例題 PDF **直接印答案卡**。把題庫的答案拿去跟官方答案卡逐題交叉比對 —— 這是本專案第一個能機械驗證「答案」（而非「引用」）的檢查。",
+      "note": "⚠️ **按文字比對，不按字母**：題庫把選項順序打散、文字也改寫過，照字母抄會抄出錯答案。confirmed 以外的題目**不是「沒問題」，是「沒驗到」**。"
     }
   },
   "gist_items": [
@@ -2371,7 +2378,15 @@
             "quote": "工業部門轉型向淨零排放的關鍵策略是什麼？ (A)降低能效；(B)增加對煤炭的依賴；(C)創新與綠色技術採納；(D)減少出口",
             "supports_option": "B"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "key_text": "創",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -2727,7 +2742,15 @@
             "quote": "台灣在因應氣候變遷的基本原則中，不包括以下哪項？ (A)遵循「巴黎協定」；(B)實施碳交易制度；(C)新增核能發電；(D)增強化資訊公開及公民參與",
             "supports_option": "C"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
+          "key_text": "新增核能發電；",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -7465,7 +7488,15 @@
             "quote": "Q35 CDP 原本的名稱是什麼？\n(A)碳排放計畫；(B)碳揭露計畫；(C)氣候變\n化計畫；(D)環境保護計畫\n(B)碳揭露計\n畫",
             "supports_option": "B"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
+          "key_text": "碳揭露計畫；",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -7717,7 +7748,15 @@
             "quote": "於埃及沙姆沙伊赫舉辦的COP27 著重於適應氣候變遷\n的行動和資金，特別是設立了什麼來支持那些因氣候變\n遷遭受重大損失的國家？\n(A)綠色氣候基金；(B)國際環境機構；(C)損\n失和損害資金；(D)全球氣候恢復基金\n(C)損失和損\n害資金",
             "supports_option": "D"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
+          "key_text": "損",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -7886,7 +7925,15 @@
             "quote": "Q39 CDP 的主要目的是什麼？\n(A)提供全球性的金融服務；(B)推動全球森林\n砍伐；(C)促進全球範圍內的貿易自由化；\n(D)促進投資\n者、公司、城\n市、州和地區\n管理其環境影\n響",
             "supports_option": "A"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
+          "key_text": "促進投資者、公司、城市、州和地區管理",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -14167,7 +14214,15 @@
             "quote": "聯合國氣候變化大會是指《聯合國氣候變遷綱要公約》\n締約國每年一次的首腦峰會，討論氣候變化和各國的應\n對方案、承諾和行動。聯合國氣候變化大會英文縮寫為\n何\n(A) IPCC\n(B) COP\n(C) WEF\n(D) WHO。\n(B) COP",
             "supports_option": "B"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+          "key_text": "COP",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -14214,7 +14269,15 @@
             "quote": "Q22 .關於「再生能源」的定義，下列何者正確？\n(A)100%不排放碳的能源; (B)只使用太陽能和風能的能源;\n(C)從持續不斷地補充的自然過程中得到的能量來源; (D)由\n動植物質產生的能源\n(C)從持續不斷地補充的自然過程\n中得到的能量來源",
             "supports_option": "C"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+          "key_text": "從持續不斷地補充的自然過程中得到的能量來源;",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -14261,7 +14324,15 @@
             "quote": "Q23 下列何者不是碳捕捉和儲存(CCS)的主要階段？\n(A)捕捉; (B)儲存; (C)輸送; (D)再生\n(D)再生",
             "supports_option": "D"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+          "key_text": "再生",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -14308,7 +14379,15 @@
             "quote": "Q24 下列何者並非我國2050淨零排放路徑之四大轉型？\n(A)能源轉型; (B)產業轉型; (C)生態轉型; (D)社會轉型\n(C)生態轉型",
             "supports_option": "C"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+          "key_text": "生態轉型;",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -14355,7 +14434,15 @@
             "quote": "Q25 下列何者非為溫室氣體減量的方式？\n (A)太陽能發電; (B)風力發電; (C)使用氫能發電; (D)使用天\n然氣取代煤碳\n(D)使用天然氣取代煤碳",
             "supports_option": "D"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+          "key_text": "使用天",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -14496,7 +14583,15 @@
             "quote": "5. 以下何者為B2B 產品在生命週期的描述方式？ \n(A)從搖籃到大門；(B)從搖籃到墳墓；(C)從搖籃到天堂；(D)以上皆非",
             "supports_option": "B"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+          "key_text": "從搖籃到大門；",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -15205,7 +15300,15 @@
             "quote": "下列何者並非我國2050淨零排放路徑之四大轉型？(A)能源轉型; (B)產業轉型; (C)生態轉型; (D)社會轉型 (C)生態轉型",
             "supports_option": "D"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+          "key_text": "生態轉型;",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -15609,6 +15712,14 @@
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "key_text": "營運控制法；",
+          "how": "C:雙欄答案卡"
         }
       }
     },
@@ -17131,7 +17242,15 @@
             "quote": "Q27\n在全球前七大溫室氣體中，何種方式產生之主要溫室氣\n體對地球威脅最大且多？\n(A) 燃燒化石燃料\n(B) 反芻動物與垃圾填埋場排放\n(C) 冷氣及製冷設備排放\n(D) 農作物肥料使用排放\n(A) 燃燒化石\n燃料",
             "supports_option": "A"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+          "key_text": "燃燒化石燃料",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -17180,7 +17299,15 @@
             "supports_option": "A"
           }
         ],
-        "found_by": "r3-no-source-audit"
+        "found_by": "r3-no-source-audit",
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+          "key_text": "碳捕捉封存",
+          "how": "C:雙欄答案卡"
+        }
       },
       "_correction_note": "2026-07-14 更正：原答 D（減少排碳）為誤，正解為 A（碳捕捉封存）。iPAS 公版教材範例題 Q12 與本題**選項及順序完全相同**，其答案卡印 (A) 碳捕捉封存。題幹問的是降低「大氣中」的 CO₂ 濃度 —— 減排只是停止增加，移除才能降低既有濃度。"
     },
@@ -18850,7 +18977,15 @@
             "quote": "Q50 產品碳足跡計算乘上的活動資料就是下列何者? (A) 排放係數 (B) 生產使用量 (C) 原料採購量 (D) 回收量。 (B) 生產使用量",
             "supports_option": "B"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+          "key_text": "生產使用量",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -21212,7 +21347,15 @@
             "quote": "下列哪種類排放係數的不確定性最高？\n(A)國際排放係數；(B)量測/質能平衡係數；\n(C)區域排放係數；(D)國家排放係數\n(A)國際排放\n係數",
             "supports_option": "D"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "key_text": "國際排放係數；",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -21990,7 +22133,15 @@
             "quote": "我國如果課徵碳稅通常由哪個部門徵收？\n(A)環境部；(B)財政部；(C)金管會；(D)行政\n院\n(B)財政部",
             "supports_option": "A"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "key_text": "財政部；",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -23341,7 +23492,15 @@
             "quote": "在世界經濟論壇的十大全球風險報告中，大多數的議題\n是什麼類型\n(A) 經濟\n(B) 環境\n(C) 社會\n(D) 科技。\n(B) 環境",
             "supports_option": "B"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+          "key_text": "環境",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -23388,7 +23547,15 @@
             "quote": "NASA 的報告，在 2021 年已經迎來地表最熱的紀錄，\n在科學家預測最快在西元幾年，將面臨北極第一次夏季\n無冰\n(A) 2025\n(B) 2030\n(C) 2050\n(D) 2100。\n(B) 2030",
             "supports_option": "B"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+          "key_text": "2030",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -25274,7 +25441,15 @@
             "quote": "下列何者不是溫室氣體盤查的範疇？ (A)範疇一：直接排放 (B)範疇二：能源間接排放 (C)範疇三：其他間接排放 (D)範疇四：碳匯",
             "supports_option": "B"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "範疇四：碳匯",
+          "how": "A:行首答案卡"
+        }
       }
     },
     {
@@ -25321,7 +25496,15 @@
             "quote": "CDP 的數據集重點不包括哪㇐項？ (A)氣候變化；(B)森林砍伐；(C)水安全；(D)城市擴張",
             "supports_option": "D"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "key_text": "城市擴張",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -25589,7 +25772,15 @@
             "quote": "Q11 1碳稅費與排放交易之間的觀念，何者為非？(A)排放交易為強制性市場，應設定排放上限(B)排放交易制度得在主管機關的授權下使用認可的減量額度進行超額排放量扣抵(C)只要是排放交易市場，涵蓋的部門別都一致(D)企業的總體碳成本可以包含法遵管制成本、內部碳定價成本與間接碳成本 (C)只要是排放交易市場，涵蓋的部門別都一致",
             "supports_option": "C"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+          "key_text": "只要是排放交易市場，涵蓋的部門別都一致",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -25777,7 +25968,15 @@
             "quote": "台灣政策配套中，不包括以下哪項？(A)推動綠色金融；(B)檢討與改善再生能源等法令；(C)發展氣候變遷科學及衝擊調適研究；(D)全面禁止再生能源的發展",
             "supports_option": "D"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "key_text": "全面禁止再生能源的發展",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -25824,7 +26023,15 @@
             "quote": "氣候變遷調適(Adaptation)是指？(A)降低二氧化碳排放；(B)增加綠色植被面積；(C)人類與自然系統回應氣候變遷風險的調整過程；(D)減少工業化進程",
             "supports_option": "C"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "key_text": "人類與自然系統回應氣候變遷風險的",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -25871,7 +26078,15 @@
             "quote": "碳洩漏(Carbon Leakage)是指？(A)碳的物理洩漏；(B)碳排放管制導致產業轉移到碳管制較寬鬆的地區；(C)植物吸收二氧化碳的過程；(D)溫室氣體的自然循環",
             "supports_option": "A"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "key_text": "碳排放管制導致產業轉",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -25944,7 +26159,15 @@
           "source_url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
           "why": "**原選項讓本題有兩個正解。** 原本的 B「分離排放源中的 CO₂」（＝捕捉）與 C「將 CO₂ 封存或用於其他用途」（＝封存／利用）**都是 CCUS 涵蓋的過程**，而題幹問的是「包含哪些過程」—— 兩個都對，無法作答。iPAS 公版教材模擬題 C 的 Q24 為同一題，其官方選項把「僅指捕捉」明列為錯誤選項、正解為「從排放源捕捉二氧化碳及儲存過程」（涵蓋捕捉＋儲存）。此處還原官方選項與答案卡。"
         },
-        "found_by": "r3-no-source-audit"
+        "found_by": "r3-no-source-audit",
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "key_text": "從排放源捕捉二氧化碳及儲",
+          "how": "C:雙欄答案卡"
+        }
       },
       "explanation": "CCUS 是「捕捉 + 利用／封存」的**整段流程** —— 只做捕捉（B）不算，把 CO₂ 從排放源捕捉下來**並加以儲存**才是（C）。iPAS 公版教材模擬題 C 的 Q24 為同一題，答案卡印 (C)。",
       "_correction_note": "2026-07-14：**選項整組還原**（原題有兩個正解）。詳見 metadata.options_replaced。"
@@ -26811,7 +27034,15 @@
             "quote": "Q102 PAS 2060 要求組織制定什麼來支持其碳中和聲明？\n(A)減排行動計畫；(B)市場營銷策略；(C)投\n資回報分析；(D)員工培訓計畫\n(A)減排行動\n計畫",
             "supports_option": "A"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "key_text": "減排行動計畫；",
+          "how": "C:雙欄答案卡"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -26908,7 +27139,15 @@
             "quote": "Q106 碳中和聲明的準確性和真實性應該由誰進行驗證？ (A)組織內部審計；(B)政府機構；(C)獨立第 三方；(D)非政府組織 (C)獨立第三 方 Q107 PAS 2060 標",
             "supports_option": "C"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "key_text": "獨立第",
+          "how": "C:雙欄答案卡"
+        }
       }
     },
     {
@@ -27138,7 +27377,15 @@
             "quote": "Q110 PAS 2060 對碳抵消項目的社會、經濟和環境影響有何\n要求？\n(A)無具體要求；(B)輕微正面影響；(C)顯著\n正面影響；(D)僅環境影響\n(C)顯著正面\n影響",
             "supports_option": "D"
           }
-        ]
+        ],
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "key_text": "顯著",
+          "how": "C:雙欄答案卡"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -32116,6 +32363,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "京都議定書",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -32186,6 +32441,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "建築業 ",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -32256,6 +32519,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "產品整個生命週期中所產生的所有溫室氣體",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -32326,6 +32597,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "增加員工福利",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -32396,6 +32675,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "對碳排放量設定價格，以鼓勵減排",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -32466,6 +32753,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "組織層級溫室氣體排放量盤查與查證",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -32536,6 +32831,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以上皆是",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -32606,6 +32909,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "範疇四：碳匯",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -32676,6 +32987,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業根據科學證據設定的減碳目標，與將全",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -32748,6 +33067,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以上皆是",
+          "how": "A:行首答案卡"
         }
       },
       "quality_flags": [
@@ -32897,6 +33224,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "股票選擇權",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -32967,6 +33302,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業揭露其氣候變遷風險與機會",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33037,6 +33380,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業的碳排放量等於其碳抵換量",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33107,6 +33458,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "界定盤查邊界、蒐集活動數據、計算排放量、",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33177,6 +33536,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "減量目標設定",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33247,6 +33614,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以上皆是",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33317,6 +33692,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "基於成本的目標(Cost-based targets)",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33387,6 +33770,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "適應氣候變遷的能力",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33457,6 +33848,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "由第三方機構確認企業的碳盤查結果是否符",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33527,6 +33926,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "二氧化硫(SO2)",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33597,6 +34004,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "一種溫室氣體相對於二氧化碳的暖化能力",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33667,6 +34082,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "天然氣",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33737,6 +34160,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "使用較少能源產生相同產出的能力",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33807,6 +34238,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "鼓勵資源回收再利用的經濟模式",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33877,6 +34316,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "將二氧化碳長期儲存地下的技術",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -33947,6 +34394,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "產品行銷",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34017,6 +34472,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "管理供應鏈中的環境風險",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34087,6 +34550,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業因氣候變遷導致財務損失的風險",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34157,6 +34628,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "適應氣候變遷的行動",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34227,6 +34706,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以上皆是",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34297,6 +34784,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業之間交易碳權的市場機制",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34367,6 +34862,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業將生產轉移到碳排放管制較寬鬆的國家",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34437,6 +34940,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以上皆是",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34507,6 +35018,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "對環境有益的工作",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34577,6 +35096,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "ISO14001",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34647,6 +35174,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "用於資助綠色項目的債券",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34717,6 +35252,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "聯合國提出的17 項全球目標，旨在實現更美",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34787,6 +35330,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "評估企業因氣候變遷導致財務損失的風險",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34857,6 +35408,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "其生命週期碳排放量經過碳抵換的產品",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34927,6 +35486,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業評估永續發展績效的指標",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -34997,6 +35564,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以上皆是",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35067,6 +35642,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "對環境友善的科技",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35137,6 +35720,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "標示產品碳排放量的標籤",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35207,6 +35798,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "購買環保產品的行為",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35277,6 +35876,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "碳排放量等於碳吸收量",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35347,6 +35954,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "為了將全球暖化控制在一定範圍內，所能排",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35417,6 +36032,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以上皆是",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35487,6 +36110,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "非營利組織推動企業揭露環境資訊的平台",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35557,6 +36188,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "吸收二氧化碳的自然或人工儲存庫",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35627,6 +36266,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "在不損害後代滿足其需求能力的前提下，滿",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35697,6 +36344,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "長期氣候平均狀態的顯著改變",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35767,6 +36422,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "對環境友善的能源",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35837,6 +36500,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以低碳、資源效率和社會包容為特徵的經濟",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35907,6 +36578,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以上皆是",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -35977,6 +36656,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "標示產品能源效率的標籤",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36047,6 +36734,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以上皆是",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36120,6 +36815,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "對進口產品徵收碳稅的機制",
+          "how": "A:行首答案卡"
         }
       },
       "quality_flags": [
@@ -36193,6 +36896,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "2015 年簽署的國際氣候協議，旨在將全球暖",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36263,6 +36974,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "減緩氣候變遷的行動",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36333,6 +37052,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "政府對碳排放設定上限並允許企業交易排放",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36403,6 +37130,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業測量、報告和管理其碳排放的過程",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36473,6 +37208,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "在整個供應鏈中納入環境考量的供應鏈",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36543,6 +37286,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "將二氧化碳轉化為其他產品的技術",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36613,6 +37364,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "研究如何減少化學品對環境和人類健康影響",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36683,6 +37442,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以上皆是 ",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36753,6 +37520,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業揭露其氣候變遷風險與機會",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36823,6 +37598,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "在保護環境、社會和經濟的前提下，生產糧",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36893,6 +37676,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以上皆是",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -36963,6 +37754,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "標示產品碳排放量的標籤",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37033,6 +37832,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "以上皆是",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37103,6 +37910,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "在旅遊過程中減少對環境影響的旅遊",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37173,6 +37988,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "評估社區或生態系統對氣候變遷的敏感性和",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37243,6 +38066,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業公開其碳排放資訊的行為",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37313,6 +38144,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "碳排放量等於碳移除量",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37383,6 +38222,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "減少溫室氣體排放和增加碳匯的行動",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37453,6 +38300,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "適應氣候變遷影響的行動",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37523,6 +38378,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "對碳排放設定價格的政策工具",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37593,6 +38456,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "對碳排放設定價格的稅收",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37663,6 +38534,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "促進環境可持續發展的金融服務",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37733,6 +38612,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "考慮環境、社會和治理(ESG)因素的投資",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37803,6 +38690,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "聯合國支持的、由投資者發起的倡議，旨在",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37873,6 +38768,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業因氣候變遷導致財務損失的風險",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -37943,6 +38846,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "計算企業溫室氣體排放量的過程",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -38013,6 +38924,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業直接產生的溫室氣體排放",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -38083,6 +39002,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業因使用外購電力產生的溫室氣體排放",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -38153,6 +39080,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "企業供應鏈產生的溫室氣體排放",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -38283,6 +39218,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "A",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "計算溫室氣體排放量時使用的係數",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -38353,6 +39296,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "D",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "產品從原料取得、製造、配送、使用到廢棄",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -38423,6 +39374,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "B",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "計算產品生命週期碳排放量的過程",
+          "how": "A:行首答案卡"
         }
       }
     },
@@ -38493,6 +39452,14 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_key_check": {
+          "date": "2026-07-14",
+          "verdict": "agrees_with_official_key",
+          "answer": "C",
+          "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "key_text": "規劃、執行、監測和報告產品碳足跡的過程",
+          "how": "A:行首答案卡"
         }
       }
     },

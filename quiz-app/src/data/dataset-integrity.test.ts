@@ -46,6 +46,61 @@ const DS = datasetRaw as unknown as {
 const ALL: Item[] = [...DS.gist_items, ...DS.our_unique_items];
 const who = (it: Item) => it.item_id ?? `gist[${it.index}]`;
 
+// ── 官方答案卡：把 120 個「已跟官方答案對過」的答案釘死 ────────────────
+//
+// iPAS 公版教材的範例題 PDF **直接印答案卡**。`tools/answer_key_crosscheck.py`
+// 把題庫的答案逐題拿去跟官方答案卡比對過了 —— 這是本專案**第一個能機械驗證
+// 「答案」（而不是「引用」）的檢查**。32 個錯答案在此之前全靠人一題一題挖。
+//
+// ⚠️ 那支工具要抓 PDF，**CI 不跑它**（我們刻意不讓 CI 下載/解析 PDF）。
+//    所以線上驗一次、把結果凍進資料，再由**這一道離線 gate 守一輩子**：
+//    **只要有人改動這 120 題的答案，CI 就紅。**（跟釘法條 sha256 同一個模式。）
+//
+// ⚠️ 比對必須**按文字、不按字母**：題庫把選項順序打散、文字也改寫過。
+//    我親手踩過 —— 教材印 (D)、題庫標 (A)，我差點宣告它是錯答案，
+//    但教材的 (D) 就是題庫的 (A)。**字母是排版，文字才是內容。**
+interface AnswerKeyCheck {
+  verdict: string;
+  answer: string;
+  source: string;
+  key_text: string;
+}
+const akc = (it: Item): AnswerKeyCheck | undefined =>
+  (it.metadata as unknown as { answer_key_check?: AnswerKeyCheck })?.answer_key_check;
+
+describe('官方答案卡：對過的答案不准再被改動', () => {
+  const meta = DS.meta.answer_key_check as { confirmed: number; population: number } | undefined;
+  const checked = ALL.filter((it) => akc(it));
+
+  it('meta.answer_key_check.confirmed 必須等於資料裡實際蓋章的題數', () => {
+    expect(meta, 'meta.answer_key_check 不見了').toBeDefined();
+    expect(checked.length, '蓋章題數與 meta 不符').toBe(meta!.confirmed);
+    expect(meta!.confirmed, '一題都沒對過 —— 這條測試在空轉').toBeGreaterThan(0);
+    expect(meta!.confirmed).toBeLessThanOrEqual(meta!.population);
+  });
+
+  it('每一題的 answer 都必須仍等於官方答案卡確認過的那個答案', () => {
+    const drifted = checked
+      .filter((it) => it.answer !== akc(it)!.answer)
+      .map((it) => `${who(it)}: 現在=${it.answer} 但官方答案卡確認的是=${akc(it)!.answer}`);
+    expect(drifted, '有題目的答案偏離了官方答案卡').toEqual([]);
+  });
+
+  it('蓋章必須留下可回溯的證據（答案卡出處與原文）', () => {
+    const bad = checked
+      .filter((it) => {
+        const a = akc(it)!;
+        return (
+          a.verdict !== 'agrees_with_official_key' ||
+          !/^https:\/\/usr\.chu\.edu\.tw\/.*\.pdf$/.test(a.source ?? '') ||
+          !(a.key_text ?? '').trim()
+        );
+      })
+      .map(who);
+    expect(bad, 'answer_key_check 缺出處或答案卡原文 —— 那就只是一句宣稱').toEqual([]);
+  });
+});
+
 // 來源 PDF 的頁首/頁尾，絕對不該出現在題幹或選項裡
 const PDF_FURNITURE = [/ML\s*\(?\s*2024\.08\.16/, /模擬試題/, /商研院/];
 

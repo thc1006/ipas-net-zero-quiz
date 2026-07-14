@@ -114,6 +114,15 @@ def verdict(q):
 
 
 BOTH = ALL + POOL
+
+
+def _nd(q):
+    return q.get('metadata') or q.get('provenance') or {}
+
+
+# 官方答案卡蓋章數（tools/answer_key_crosscheck.py 寫進去的）
+N['akc_confirmed'] = sum(1 for q in BOTH if _nd(q).get('answer_key_check'))
+
 N['ca_supported'] = sum(1 for q in BOTH if verdict(q) == 'supported')
 N['ca_replaced'] = sum(1 for q in BOTH if verdict(q) == 'citation_replaced')
 N['ca_disputed'] = sum(1 for q in BOTH if verdict(q) == 'citation_disputed')
@@ -169,6 +178,7 @@ set_meta('citation_audit.disputed', N['ca_disputed'])
 set_meta('citation_audit.no_quote', N['ca_no_quote'])
 set_meta('citation_audit.dead', N['ca_dead'])
 set_meta('citation_audit.wrong_source', N['ca_wrong'])
+set_meta('answer_key_check.confirmed', N['akc_confirmed'])
 
 
 # （這裡本來還有一個沒人呼叫的 `patch()` —— 而它裡面正是我剛修掉的那個
@@ -212,6 +222,7 @@ RULES = [
     (README, r'\| 🔧 \*\*引錯地方[^|]*\| \*\*(\d+)\*\*', N['ca_wrong'], 'README 引錯地方'),
     (README, r'\| 📝 主題相關[^|]*\| (\d+)', N['ca_no_quote'], 'README 主題相關無引文'),
     (README, r'\| ☠️ 連結已死[^|]*\| (\d+)', N['ca_dead'], 'README 連結已死'),
+    (README, r'\*\*(\d+) 題的答案已與官方答案卡逐題對過', N['akc_confirmed'], 'README 答案卡確認'),
 ]
 
 dead_rules = []
