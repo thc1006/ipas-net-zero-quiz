@@ -68,6 +68,87 @@ interface AnswerKeyCheck {
 const akc = (it: Item): AnswerKeyCheck | undefined =>
   (it.metadata as unknown as { answer_key_check?: AnswerKeyCheck })?.answer_key_check;
 
+// ── evidence.supports_option：這筆引文**確立了哪個選項是答案** ──────────
+//
+// 定義（過去它同時有四種意思，所以先把定義釘死）：
+//   **「在『本題庫的選項編號』下，這筆引文所確立的正解。」**
+//
+// 它**不是**下列任何一種：
+//   ✗ 來源文件上的字母 —— 題庫把選項**打散過、也改寫過文字**。
+//     gist[50] 標 C，因為來源 PDF 上是 (C)「新增核能發電」；但在題庫裡它是 (B)。
+//   ✗ 「引文肯定了哪個選項」—— 對「何者**錯誤**」的題目，那**正好是答案的反面**。
+//     gist[374] 標 D（引文肯定的那個真敘述），但答案是 C（那個假敘述）。
+//   ✗ 'N/A' / 'none' / '' —— **一個沒有指向任何選項的標籤，不該存在。**
+//     引文釘不住答案就**不要寫這個欄位**，不要塞垃圾值假裝有。
+//
+// ⚠️ **這道 gate 紅了的時候，不要改 `answer` 去遷就 `supports_option`。**
+//    `answer` 是內容，`supports_option` 只是標籤 —— 而**過去 5 次不一致，5 次都是標籤錯**。
+//    先去把那筆引文讀完。改錯方向會把 5 個正確答案改成錯的。
+describe('evidence.supports_option 必須真的指向本題的答案', () => {
+  const evOf = (it: Item) =>
+    (it.metadata as unknown as { evidence?: { supports_option?: string }[] })?.evidence?.[0];
+
+  it('若有 supports_option，它必須是本題**存在的**選項代號', () => {
+    const bad = ALL.filter((it) => {
+      const s = evOf(it)?.supports_option;
+      return s !== undefined && !it.options.some((o) => o.key === s);
+    }).map((it) => `${who(it)}: supports_option=${JSON.stringify(evOf(it)?.supports_option)}`);
+    expect(bad, "不是選項代號的值（'N/A' / 'none' / ''）請直接刪掉這個欄位").toEqual([]);
+  });
+
+  it('supports_option 必須等於 answer —— 除非那是有記錄的刻意偏離', () => {
+    // S_CHU_06-q094：引文（來源答案卡）確實支持 D，而我們**刻意**採 C，
+    // 依據寫在 restoration-manifest.json 的 answer_override 裡。
+    // 這個不一致是**故意留在資料裡的**，不是疏漏 —— 把它藏起來才是問題。
+    const OVERRIDDEN = new Set(['S_CHU_06-q094']);
+    const bad = ALL.filter((it) => {
+      const s = evOf(it)?.supports_option;
+      if (s === undefined || OVERRIDDEN.has(who(it))) return false;
+      return s !== it.answer;
+    }).map(
+      (it) =>
+        `${who(it)}: 引文標 ${evOf(it)?.supports_option}，但答案是 ${it.answer}。` +
+        `⚠️ 先讀那筆引文 —— **不要改 answer 去遷就標籤**（過去 5 次不一致，5 次都是標籤錯）`
+    );
+    expect(bad).toEqual([]);
+  });
+
+  it('答案為 null（多重正解）的題目不該有 supports_option —— 沒有答案可以「支持」', () => {
+    const bad = ALL.filter((it) => !it.answer && evOf(it)?.supports_option !== undefined).map(who);
+    expect(bad).toEqual([]);
+  });
+
+  it('這條測試不能空轉 —— 必須真的有一批帶 supports_option 的引文', () => {
+    expect(ALL.filter((it) => evOf(it)?.supports_option).length).toBeGreaterThan(500);
+  });
+
+  // ⚠️ **上面那道 gate 有一個它自己擋不住的漏洞，突變測試證實過：**
+  //    把 `supports_option` 和 `answer` **一起**改成同一個錯的值 —— 兩邊「一致」了，gate 變綠。
+  //    而 gist[374] 之類的題目沒有官方答案卡可對，於是**沒有任何閘門攔得住**。
+  //
+  //    所以這 5 題（它們的 supports_option **曾經全部標錯過**）多釘一個錨點：
+  //    `answer_pinned` —— 而且它帶著**人看得懂的理由**。
+  //    要偷偷改動它們，就得連這段理由一起改掉；那在 code review 裡藏不住。
+  //
+  //    誠實地說：**沒有任何離線 gate 擋得住一個「三個地方一起改」的人。**
+  //    gate 能做的是讓**無心的漂移**變得不可能，並且讓有心的改動**留下痕跡**。
+  it('answer_pinned：曾經標錯過的那批，答案不准再無聲地變', () => {
+    const pinned = ALL.map((it) => ({
+      it,
+      p: (it.metadata as unknown as { answer_pinned?: { answer: string; why: string } })
+        ?.answer_pinned,
+    })).filter((x) => x.p);
+    expect(pinned.length, 'answer_pinned 一筆都沒有 —— 這條測試在空轉').toBeGreaterThan(0);
+    const bad = pinned
+      .filter(({ it, p }) => it.answer !== p!.answer)
+      .map(({ it, p }) => `${who(it)}: 現在=${it.answer}，但已釘死在 ${p!.answer}（${p!.why.slice(0, 40)}…）`);
+    expect(bad, '有題目的答案偏離了已釘死的判斷').toEqual([]);
+    for (const { it, p } of pinned) {
+      expect(p!.why?.length, `${who(it)} 的 answer_pinned 沒寫理由 —— 那就只是一句宣稱`).toBeGreaterThan(20);
+    }
+  });
+});
+
 describe('官方答案卡：對過的答案不准再被改動', () => {
   const meta = DS.meta.answer_key_check as { confirmed: number; population: number } | undefined;
   const checked = ALL.filter((it) => akc(it));

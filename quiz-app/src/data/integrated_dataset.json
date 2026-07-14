@@ -1161,8 +1161,7 @@
         "evidence": [
           {
             "url": "https://www.bsigroup.com/en-US/products-and-services/standards/pas-2060-carbon-neutrality/",
-            "quote": "Define a structured process for developing a detailed carbon neutrality management plan.",
-            "supports_option": "none"
+            "quote": "Define a structured process for developing a detailed carbon neutrality management plan."
           }
         ],
         "citation_audit": {
@@ -2740,7 +2739,8 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
             "quote": "台灣在因應氣候變遷的基本原則中，不包括以下哪項？ (A)遵循「巴黎協定」；(B)實施碳交易制度；(C)新增核能發電；(D)增強化資訊公開及公民參與",
-            "supports_option": "C"
+            "supports_option": "B",
+            "label_fixed": "引文是**來源 PDF 的原題**，而題庫把選項打散過：來源的 (C)「新增核能發電」＝題庫的 (B)。原本標的是**來源的字母**。（且本題的答案已由官方答案卡獨立確認為 B。）"
           }
         ],
         "answer_key_check": {
@@ -2750,6 +2750,12 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
           "key_text": "新增核能發電；",
           "how": "C:雙欄答案卡"
+        },
+        "answer_pinned": {
+          "date": "2026-07-14",
+          "answer": "B",
+          "why": "引文是來源 PDF 的原題，其官方答案卡確認「新增核能發電」為正解 —— 在本題庫的編號下那是 (B)。另有 answer_key_check 獨立確認。",
+          "evidence_url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf"
         }
       }
     },
@@ -3328,8 +3334,7 @@
         "evidence": [
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
-            "quote": "何者不是ISO14068-1/PAS2060所涵蓋的範疇？(A)一場演唱會活動碳中和（GRI）(B)新北市政府大樓年度排放碳中和(C)賣產品給客戶做碳中和宣告（TCFD）(D)國家淨零排放宣告",
-            "supports_option": null
+            "quote": "何者不是ISO14068-1/PAS2060所涵蓋的範疇？(A)一場演唱會活動碳中和（GRI）(B)新北市政府大樓年度排放碳中和(C)賣產品給客戶做碳中和宣告（TCFD）(D)國家淨零排放宣告"
           }
         ],
         "found_by": "r3-no-source-audit"
@@ -3381,9 +3386,16 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
             "quote": "什麼是碳定價(Carbon pricing)？ (A)對碳排放設定價格的政策工具 (B)對低碳產品提供補貼的政策工具 (C)對高碳排放產品徵收關稅的政策工具 (D)以上皆是",
-            "supports_option": "A"
+            "supports_option": "C",
+            "label_fixed": "同上：來源的 (A)「對碳排放設定價格的政策工具」＝題庫的 (C)「為二氧化碳排放訂定價格之政策工具措施」—— 題庫連文字都改寫過。"
           }
-        ]
+        ],
+        "answer_pinned": {
+          "date": "2026-07-14",
+          "answer": "C",
+          "why": "來源教材的原題選項「對碳排放設定價格的政策工具」為正解；本題庫把它改寫成「為二氧化碳排放訂定價格之政策工具措施」，即 (C)。",
+          "evidence_url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf"
+        }
       }
     },
     {
@@ -3488,13 +3500,20 @@
           {
             "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
             "quote": "Emissions from mobile machinery for transportation purposes shall be excluded.",
-            "supports_option": "B"
+            "supports_option": "C",
+            "label_fixed": "引文「Emissions from mobile machinery for transportation purposes shall be excluded」支持的是「移動源排放」（題庫的 C），原本卻標成 B。**單純標錯。**"
           }
         ],
         "citation_audit": {
           "date": "2026-07-14",
           "verdict": "citation_replaced",
           "detail": "原引用 https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020 經複驗判定不含本題主張；已換為 https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773，該頁上的逐字引文已機械驗證存在且支持本題答案。"
+        },
+        "answer_pinned": {
+          "date": "2026-07-14",
+          "answer": "C",
+          "why": "引文（CBAM 施行細則）：「Emissions from mobile machinery for transportation purposes shall be excluded.」—— 明示排除的是**移動源**，即 (C)。",
+          "evidence_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773"
         }
       },
       "quality_flags": [
@@ -4639,8 +4658,7 @@
         "evidence": [
           {
             "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098",
-            "quote": "直接排放源：依其排放量，向排放源之所有人徵收；其所有人非使用人或管理人者，向實際使用人或管理人徵收。",
-            "supports_option": ""
+            "quote": "直接排放源：依其排放量，向排放源之所有人徵收；其所有人非使用人或管理人者，向實際使用人或管理人徵收。"
           }
         ],
         "citation_audit": {
@@ -7154,8 +7172,7 @@
         "evidence": [
           {
             "url": "https://www.cca.gov.tw/affairs/cbam/25848.html",
-            "quote": "歐盟CBAM相關資訊，亦可參考經濟部國際貿易署",
-            "supports_option": ""
+            "quote": "歐盟CBAM相關資訊，亦可參考經濟部國際貿易署"
           }
         ],
         "citation_audit": {
@@ -11665,13 +11682,19 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
             "quote": "事業依前條規定辦理查驗作業，應於每年十月三十一日前，依中央主管機關所定格式，將溫室氣體查驗總結報告及查驗聲明書之查驗結果，以網路傳輸方式，上傳至中央主管機關指定之資訊平台。",
-            "supports_option": null
+            "supports_option": "B"
           }
         ],
         "citation_audit": {
           "date": "2026-07-14",
           "verdict": "citation_replaced",
           "detail": "原引用 https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098 經複驗判定不含本題主張；已換為 https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102，該頁上的逐字引文已機械驗證存在且支持本題答案。"
+        },
+        "answer_pinned": {
+          "date": "2026-07-14",
+          "answer": "B",
+          "why": "引文（氣候法授權辦法）：「應於每年**十月三十一日**前…上傳至中央主管機關指定之資訊平台」—— 即 (B) 10 月 31 日。",
+          "evidence_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
         }
       },
       "quality_flags": [
@@ -13003,8 +13026,7 @@
         "evidence": [
           {
             "url": "https://www.iso.org/standard/71206.html",
-            "quote": "Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document.",
-            "supports_option": null
+            "quote": "Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document."
           }
         ],
         "explanation_audit": {
@@ -17220,8 +17242,7 @@
         "evidence": [
           {
             "url": "https://unfccc.int/sites/default/files/english_paris_agreement.pdf",
-            "quote": "reflect its highest possible ambition, reflecting its common but differentiated \nresponsibilities and respective capabilities, in the light of different national \ncircumstances.",
-            "supports_option": "N/A"
+            "quote": "reflect its highest possible ambition, reflecting its common but differentiated \nresponsibilities and respective capabilities, in the light of different national \ncircumstances."
           }
         ],
         "citation_audit": {
@@ -18635,9 +18656,16 @@
           {
             "url": "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007755",
             "quote": "碳足跡盤查之溫室氣體排放量，應依據ＩＳＯ14067：2018 及本部「產品碳足跡數據量化與查證規範」（如附件三）計算。 前項碳足跡資料，應經產品碳足跡查驗機構查證取得查證聲明書或關鍵性審查出具之總結報告，始得申請產品碳足跡標籤。",
-            "supports_option": "D"
+            "supports_option": "C",
+            "label_fixed": "題目問「何者**錯誤**」。引文證明「查證可由第三方**或**關鍵性審查」——也就是說「只能由國內關鍵審查」是**錯的**，那才是答案（題庫的 C）。原本標的是引文所**肯定**的那個選項（D）—— **「引文肯定哪個選項」不等於「哪個選項是答案」。**"
           }
-        ]
+        ],
+        "answer_pinned": {
+          "date": "2026-07-14",
+          "answer": "C",
+          "why": "題目問「何者**錯誤**」。引文（環境部產品碳足跡管理要點）證明查證可由**查驗機構查證****或****關鍵性審查**擇一，因此「只能由國內關鍵審查」是**錯的**，那正是本題要的答案 (C)。⚠️ 引文**肯定**的是另一個選項 —— 不要把「引文肯定哪個」當成「答案是哪個」。",
+          "evidence_url": "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007755"
+        }
       }
     },
     {
@@ -19895,8 +19923,7 @@
         "evidence": [
           {
             "url": "https://sciencebasedtargets.org/resources/files/SBTi-criteria.pdf",
-            "quote": "Companies must follow the GHG Protocol Corporate Standard, Scope 2 Guidance, and \nCorporate Value Chain (Scope 3) Accounting and Reporting Standard.",
-            "supports_option": "N/A"
+            "quote": "Companies must follow the GHG Protocol Corporate Standard, Scope 2 Guidance, and \nCorporate Value Chain (Scope 3) Accounting and Reporting Standard."
           }
         ],
         "citation_audit": {
@@ -22017,8 +22044,7 @@
         "evidence": [
           {
             "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
-            "quote": "By way of derogation from paragraph 1, a reporting declarant may modify the CBAM reports for the first two reporting periods until the submission deadline for the third CBAM report.",
-            "supports_option": "N/A"
+            "quote": "By way of derogation from paragraph 1, a reporting declarant may modify the CBAM reports for the first two reporting periods until the submission deadline for the third CBAM report."
           }
         ],
         "citation_audit": {
@@ -22364,8 +22390,7 @@
         "evidence": [
           {
             "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
-            "quote": "Member States shall apply penalties in the following cases: (a) where the reporting declarant has not taken the necessary steps to comply with the obligation to submit a CBAM report",
-            "supports_option": "N/A"
+            "quote": "Member States shall apply penalties in the following cases: (a) where the reporting declarant has not taken the necessary steps to comply with the obligation to submit a CBAM report"
           }
         ],
         "citation_audit": {
@@ -23470,8 +23495,7 @@
         "evidence": [
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=J0130032&flno=3",
-            "quote": "再生能源:指太陽能、生質能、地熱能、海洋能、風力、非抽蓄式水力、國內一般廢棄物與一般事業廢棄物等直接利用或經處理所產生之能源,或其他經中央主管機關認定可永續利用之能源。",
-            "supports_option": "N/A"
+            "quote": "再生能源:指太陽能、生質能、地熱能、海洋能、風力、非抽蓄式水力、國內一般廢棄物與一般事業廢棄物等直接利用或經處理所產生之能源,或其他經中央主管機關認定可永續利用之能源。"
           }
         ],
         "citation_audit": {
@@ -25750,8 +25774,7 @@
         "evidence": [
           {
             "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020140",
-            "quote": "中央主管機關審查通過自主減量計畫，應核定下列事項：",
-            "supports_option": ""
+            "quote": "中央主管機關審查通過自主減量計畫，應核定下列事項："
           }
         ],
         "citation_audit": {
@@ -30034,12 +30057,13 @@
         ],
         "evidence": [
           {
-            "quote": "碳足跡產品類別規則：指對一個或多個產品類別之產品碳足跡量化與溝通的要求事項和指導綱要的一套特定規則。",
+            "quote": "碳足跡產品類別規則：係指對一個或多個產品類別之產品碳足跡量化與溝通的要求事項和指導綱要的一套特定規則",
             "supports_option": "B",
             "verified_on": "2026-07-13",
             "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）（片段皆真但被重排）",
             "url": "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007755",
-            "url_backfilled_on": "2026-07-14"
+            "url_backfilled_on": "2026-07-14",
+            "quote_corrected": "2026-07-14：原引文抄漏一個字（「指」應為「**係**指」），因此**不是逐字原文**。舊的驗證器把它切在「：」上、兩段各自都在頁面上，於是判成「拼接」放行；新的**貪婪連續段**驗證器（最短 12 字）抓到了它 —— 第一段只有 9 個字就斷在「係」上。已改為法規原文。（原引文：「碳足跡產品類別規則：指對一個或多個產品類別之產品碳足跡量…」）"
           }
         ]
       }
@@ -30310,12 +30334,13 @@
         ],
         "evidence": [
           {
-            "quote": "產品碳足跡：指商品由原料取得、製造、配送銷售、使用及廢棄處理等生命週期各階段",
+            "quote": "產品碳足跡：係指商品由原料取得、製造、配送銷售、使用及廢棄處理等生命週期各階段",
             "supports_option": "B",
             "verified_on": "2026-07-13",
             "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）（片段皆真但被重排）",
             "url": "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007755",
-            "url_backfilled_on": "2026-07-14"
+            "url_backfilled_on": "2026-07-14",
+            "quote_corrected": "2026-07-14：原引文抄漏一個字（「指」應為「**係**指」），因此**不是逐字原文**。舊的驗證器把它切在「：」上、兩段各自都在頁面上，於是判成「拼接」放行；新的**貪婪連續段**驗證器（最短 12 字）抓到了它 —— 第一段只有 9 個字就斷在「係」上。已改為法規原文。（原引文：「產品碳足跡：指商品由原料取得、製造、配送銷售、使用及廢棄…」）"
           }
         ]
       }
