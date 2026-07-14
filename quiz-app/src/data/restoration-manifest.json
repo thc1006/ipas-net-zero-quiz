@@ -46,7 +46,29 @@
       "pip install pdfplumber",
       "python tools/restore_from_source_pdf.py --verify"
     ],
-    "ci_note": "CI 不下載 PDF。restoration-manifest.test.ts 只驗 manifest ↔ dataset 一致。"
+    "ci_note": "CI 不下載 PDF。restoration-manifest.test.ts 只驗 manifest ↔ dataset 一致。",
+    "source_documents": {
+      "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf": {
+        "items": 67,
+        "subject": "S_CHU_07",
+        "status": "DEFECTIVE",
+        "defect": "**選項 (C) 欄整欄位移一題** —— 每一題的 (C) 都是「下一題的 (C)」。Q33「生命週期評估依據哪份 **ISO 標準**文件？」的 (C) 竟然是「場址特定數據」；Q34「在組織邊界外所獲得的數據」的 (C) 是「確保量化結果的全面性和準確性」，而且**答案卡跟著錯**（印 (A) 初級數據，正解是 (B) 次級數據）。",
+        "how_found": "2026-07-14。把答案卡交叉比對的母體從「有引用指向答案卡 PDF 的題目」改成「**題幹在答案卡 PDF 上找得到的題目**」之後跳出來的。判準應該是「這一題驗得了嗎」，不是「有沒有人記得引用它」。",
+        "resolution": "8 題已依同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 修正（該版本把答案印在每題正右方欄位）。67/67 題已用**題幹**（不是題號）與乾淨版本逐選項比對過 —— 只有 (C) 欄壞掉，A/B/D 是乾淨的。",
+        "warning": "⚠️ 題庫**忠實地複製了這份壞掉的 PDF**，所以 `matches_source: true` 一直是綠的。**一個「忠實複製一份壞掉的來源」的檢查，永遠是綠的。**"
+      },
+      "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf": {
+        "items": 92,
+        "subject": "S_CHU_06",
+        "status": "NO_SECOND_SOURCE",
+        "cross_check": "⚠️ **92 題裡有 91 題只存在於這一份 PDF** —— 找遍 usr.chu.edu.tw 上 12 份教材/範例題 PDF，都沒有第二份可以交叉比對。所以「來源本身對不對」**無法用機械交叉驗證**。",
+        "human_review": "2026-07-14：改用人工逐題檢視全部 92 題（題幹 + 四個選項 + 答案），尋找 214245506.pdf 那種「選項與題目語意不通」的錯位指紋 —— **沒有發現**。每一題的四個選項都是同一主題上的合理替代項。旁證：q011「碳關稅(CBAM)」的答案是「防止碳洩漏」，與 iPAS 公版教材《淨零碳管理基礎概論》一致。",
+        "honest_limit": "⚠️ **「我讀過而且沒看到問題」不是「已驗證」。** 這是一個人工的陰性結果，沒有第二份來源可以背書。不要把它寫成「已交叉驗證」。"
+      }
+    },
+    "tried_and_rejected": {
+      "answer_vs_explanation_detector": "曾寫過一支「答案的文字對不對得上該題解析」的偵測器，想用**單一來源的內部一致性**取代交叉比對。**在已知有病的 214245506.pdf 上驗證後放棄**：已知錯位的題目分數是 0.00 / 0.12 / 0.58，而**健康的題目也有 0.00 / 0.06 / 0.06** ——分佈完全重疊，**沒有鑑別力**；而且 159 題裡只有 21 題抽得出解析。**一個分不開陽性與陰性的偵測器，它的綠燈是一句假的保證。** 已刪除，不 ship。"
+    }
   },
   "entries": [
     {
