@@ -784,7 +784,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "我國環境部依《空氣污染防制法》及《蒙特婁議定書》吉佳利修正案，於114年（2025年）7月1日起將 HFCs 列為列管化學品，未經許可不得輸出入，逐步削減基線量以對接國際時程。\n\n⚠️ **本題解析已更正** ——\n\n**法規原文（全國法規資料庫，氣候變遷因應法第38條）：「中央主管機關得公告禁止或限制國際環保公約管制之高溫暖化潛勢溫室氣體及利用該溫室氣體相關產品之製造、輸入、輸出、販賣、使用或排放。」內容與 HFCs 管制完全對應，確認正確法源是氣候變遷因應法第38條而非空氣污染防制法。**\n　依據（https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098）逐字：「中央主管機關得公告禁止或限制國際環保公約管制之高溫暖化潛勢溫室氣體及利用該溫室氣體相關產品之製造、輸入、輸出、販賣、使用或排放。」",
+      "explanation": "我國自 **114 年 7 月 1 日**起，氫氟碳化物（HFCs）未經核准不得輸入或輸出。\n\n法源是**《氣候變遷因應法》第 38 條**（中央主管機關得公告禁止或限制國際環保公約管制之高溫暖化潛勢溫室氣體之製造、輸入、輸出、販賣、使用或排放），及依其第 3 項訂定的子法《氫氟碳化物管理辦法》。\n\n⚠️ 法源更正：原解析寫成「依**《空氣污染防制法》**」—— 那是錯的法源。",
       "subject": null,
       "topic_tags": [
         "HFCs",
@@ -818,8 +818,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析把法源寫成《空氣污染防制法》，實為《氣候變遷因應法》§38 及其子法《氫氟碳化物管理辦法》。⚠️ 上一版只在後面加了更正註腳，主文的錯誤法源沒改掉，導致自我矛盾。已整段重寫。"
         }
       },
       "sources": [
@@ -2658,7 +2657,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "依 GHG Protocol Scope 3 Calculation Guidance §6 與 ISO 14064-1:2018 §7.3，組織應先建立資料蒐集架構與資料品質管理計畫（Data Quality Plan），再逐年透過初級資料置換次級資料，並擴展至上下游 Tier。\n\n⚠️ **本題解析已更正** ——\n\n**In the actual GHG Protocol 'Technical Guidance for Calculating Scope 3 Emissions' document, Chapter 6 covers setting the scope 3 boundary, NOT data collection/data quality. Data collection and data quality guidance is Chapter 7, not Chapter 6. This is confirmed by the document's own 'How to use this document' section (page 10), which is also the source of this very question's own verified_quote.**\n　依據（https://ghgprotocol.org/sites/default/files/standards/Scope3_Calculation_Guidance_0.pdf）逐字：「Chapter 6, which provides guidance on setting the scope 3 boundary ... Chapter 7, which provides guidance on collecting data, including prioritizing data collection efforts, selecting among different types of data, and ensuring data quality」",
+      "explanation": "依 GHG Protocol 的 Scope 3 Calculation Guidance，組織應先建立**資料蒐集架構與資料品質管理計畫**，再逐步以一級數據取代二級數據。\n\n該指引的官方導讀逐字說明：**Chapter 6** 談的是**設定範疇三的邊界**；**Chapter 7** 才是**資料蒐集與資料品質**（\"Chapter 7, which provides guidance on collecting data…and ensuring data quality\"）。\n\n⚠️ 條號更正：原解析把資料蒐集/品質的規範掛在「**§6**」—— 應為 **§7**。",
       "subject": null,
       "topic_tags": [
         "Scope 3",
@@ -2692,8 +2691,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析把「資料蒐集與資料品質」掛在 GHG Protocol Scope 3 Guidance §6（實為 §7）。⚠️ 上一版只加了更正註腳、主文的 §6 沒改掉，導致自我矛盾。已整段重寫。"
         }
       },
       "sources": [
@@ -3814,7 +3812,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "；常見合法路徑為轉供（直供/PPA）、自用、向再生能源售電業購買等。\n\n⚠️ **本題解析已更正** ——\n\n**來源說的不是「台電已取得憑證、企業不能重複買」，而是躉售給台電的電力根本不會核發憑證給任何人——躉購賣家依法被排除在申請人資格之外，該部分電力自始沒有憑證存在，不是台電持有憑證。**\n　依據（https://www.trec.org.tw/faq）逐字：「設備商若已將電力躉售給台電，不可申請憑證；若設備商未來想由躉售轉換至綠電交易市場，或電力自用，可申請再生能源憑證。」\n\n**法源『再生能源憑證實施辦法』第二條第四項明文將採躉購制度者排除於憑證申請人資格之外，代表該電力完全不進入憑證體系，而非憑證歸台電所有。**\n　依據（https://www.trec.org.tw/faq）逐字：「申請人：指再生能源發電業、再生能源售電業或再生能源自用發電設備設置者，但 採躉購制度 與 溫室氣體排放額度抵換專案減量額度者除外 。」",
+      "explanation": "躉售給台電的再生能源電力，**根本不會核發憑證** —— 依《再生能源憑證實施辦法》，已將電力躉售予台電者**被排除在憑證申請人資格之外**（trec.org.tw 逐字：「設備商若已將電力躉售給台電，不可申請憑證」）。\n\n也就是說：那部分電力**自始不進入憑證體系**，並不是「台電持有憑證、企業不能重複買」。\n\n⚠️ 更正說明：原解析寫成「台電已取得相對應憑證，企業不能再重複購買」—— 角色講反了。\n（另：我上一版的更正曾寫「第二條**第四項**」，但那其實是**第四款** —— **項與款是不同的法規層級**。已移除該標號，不寫一個我沒把握的層級。）",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -3839,10 +3837,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [
-            "FIT 躉購制度下台電已取得相對應憑證，企業不能再向台電「重複」購買憑證"
-          ],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析把角色講反（不是「台電持有憑證」，而是躉售電力自始不核發憑證）。⚠️ 我上一版的更正又引入了新的「條/款」錯誤（第四項 vs 第四款）—— 已移除該標號。"
         }
       },
       "sources": [
@@ -8501,7 +8496,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "我國上市櫃公司氣候相關財務揭露之直接法源並非《氣候變遷因應法》§36（§36 規範的是核配排放額度之帳戶開立、移轉交易與超額量扣減抵銷，與財務揭露無關），而是金管會職權：(1) 金管會 2023/08/17 公告、2024/08 滾動修訂之「我國接軌 IFRS 永續揭露準則藍圖」，分階段（資本額 100 億元以上 2026 年、50 億 2027 年、其餘 2028 年）強制適用 IFRS S1（永續一般揭露）／S2（氣候）；(2)《公開發行公司年報應行記載事項準則》§10-4 載明氣候相關事項應於年報揭露之內容。\n\n⚠️ **本題解析已更正** ——\n\n**《公開發行公司年報應行記載事項準則》全法規逐條核對，根本沒有「第10-4條」這一條。氣候相關資訊之揭露，依§10第一項第三款第五目規定應揭露於附表二之二之三；而依IFRS永續揭露準則（S1/S2）編製與揭露永續相關財務資訊之規範格式，是2024/2025年金管會新增的「第10-1條」（第十條之一），不是「§10-4」。新聞稿也證實金管會修正的是「第七條、第十條之一、第二十三條」，同樣沒有10-4。此外source_url（fsc.gov.tw/ch/home.jsp?id=130...）本身已失效（跳轉至/ch/error.jsp錯誤頁），無法支持任何引文。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0400022&flno=10-1）逐字：「符合第七條第二項一定條件之公司,其永續相關財務資訊之編製及揭露,應依下列各款及有關法令辦理,其未規定者,依本會認可之國際財務報導準則永續揭露準則(以下簡稱永續揭露準則)辦理」",
+      "explanation": "氣候相關資訊之揭露，依《公開發行公司年報應行記載事項準則》**第 10 條第一項第三款第五目**（附表二之二之三）辦理；而依 IFRS 永續揭露準則編製格式的新增條文是**第 10 條之一**。\n\n⚠️ 條號更正：原解析寫成「**§10-4**」—— **該準則根本沒有第 10-4 條**。",
       "subject": null,
       "topic_tags": [
         "金管會",
@@ -8535,8 +8530,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析引「§10-4」，但該準則沒有這一條。⚠️ 上一版只加了註腳、主文沒改掉，導致自我矛盾。已重寫。"
         }
       },
       "sources": [
@@ -9709,7 +9703,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "依 IFRS S2 §15(a)–(b)，企業應揭露氣候相關風險與機會對「當期財務狀況、財務績效及現金流量」與「預期影響」之定量資訊；「僅須以定性敘述方式揭露，無須量化」是過時的 TCFD 早期實務，非 IFRS S2 之強制要求；而「不允許使用區間或範圍估計」則與 §16 直接衝突。\n\n⚠️ **本題解析已更正** ——\n\n**「single amount or a range」是 IFRS S2 第17段的文字，不是第16段。第16段的內容是要求揭露「(a) 氣候相關風險與機會如何影響當期財務狀況、財務績效及現金流量」等量化與質化資訊的項目清單，並未出現「單一金額或區間」這個措辭。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html）逐字：「16 Specifically, an entity shall disclose quantitative and qualitative information about: (a) how climate-related risks and opportunities have affected its financial position, financial performance and cash flows for the reporting period ... 17 In providing quantitative information, an entity may disclose a single amount or a range.」",
+      "explanation": "IFRS S2 允許在提供量化資訊時，**以單一金額或一個區間（single amount or a range）呈現** ——該規定在**第 17 段**逐字：\"In providing quantitative information, an entity may disclose a single amount or a range.\"\n\n**第 16 段**只列出「應揭露哪些內容」，並沒有提到金額或區間。\n\n⚠️ 條號更正：原解析把「單一金額或區間」掛在 **§16**，應為 **§17**。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S2",
@@ -9743,10 +9737,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [
-            "§16 進一步指出，當無法精確估計時，得以「單一金額或區間」(single amount or range) 呈現。"
-          ],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析把「single amount or a range」掛在 IFRS S2 §16（實為 §17）。⚠️ 上一版只加了更正註腳、主文的 §16 沒改掉，導致自我矛盾。已整段重寫。"
         }
       },
       "sources": [
@@ -9779,7 +9770,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "依 IFRS S2 Appendix B 關於衡量不確定性之揭露要求，當以區間或估計方式揭露氣候相關財務影響時，企業應揭露：(1) 衡量不確定性的程度；(2) 所使用之輸入值、假設與估計技術；(3) 必要時說明為何無法提供更精確之金額；(4) 預計後續期間之影響因素。此屬強制揭露項目，並適用於所有範疇排放對應之財務影響，非僅限範疇 1。\n\n⚠️ **本題解析已更正** ——\n\n**這組揭露要求（識別高度不確定金額、揭露不確定性來源、揭露衡量時所用之假設/近似值/判斷、揭露預期不確定性之解決時點與變動說明）規定在 IFRS S1 本文第77–82段，段落標題就是「Measurement uncertainty」——這是 IFRS S1（一般規定），不是 IFRS S2（氣候揭露），而且是本文段落，不是任何一部的 Appendix B。IFRS S2 全文只在第19(b)段出現過一次「measurement uncertainty」，內容是『企業可以不提供量化資訊』的豁免條件之一，性質是免揭露的理由，不是揭露義務清單。IFRS S2 的 Appendix B 實際涵蓋的是氣候韌性評估、溫室氣體衡量方法、範疇2/3排放等產業別應用指引，跟衡量不確定性無關。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs1.html）逐字：「77 An entity shall disclose information to enable users of general purpose financial reports to understand the most significant uncertainties affecting the amounts reported in its sustainability-related financial disclosures. 78 An entity shall: (a) identify the amounts that it has disclosed that are subject to a high level of measurement uncertainty」",
+      "explanation": "關於**衡量不確定性**（measurement uncertainty）的揭露要求 —— 辨識高度不確定的金額、揭露不確定性的來源、揭露所用的假設／近似值／判斷 —— 規定在 **IFRS S1 本文第 77–82 段**（該節標題即為 \"Measurement uncertainty\"）。\n\n⚠️ 標準與位置雙重更正：原解析寫成「**IFRS S2 的 Appendix B**」——**標準錯了（S2→S1）、位置也錯了（附錄→本文）**。IFRS S2 的 Appendix B 談的是氣候韌性評估與溫室氣體衡量方法，與此無關。\n\n⚠️ **題幹本身也有同樣的問題**：它寫「依 IFRS S2 之 Appendix B 關於衡量不確定性…」——這個前提站不住。答案本身（其內容與 IFRS S1 §77–82 相符）不受影響。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S2",
@@ -9813,8 +9804,7 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
-          "removed_claims": [],
-          "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
+          "what": "原解析把「衡量不確定性」的揭露要求掛在 IFRS S2 Appendix B，實為 IFRS S1 本文 §77–82（標準與位置雙錯）。⚠️ 上一版只加了更正註腳、主文沒改掉，導致自我矛盾。已整段重寫。⚠️ 另記：**題幹本身**也寫「依 IFRS S2 之 Appendix B」，同樣站不住 —— 但答案不受影響。"
         }
       },
       "sources": [

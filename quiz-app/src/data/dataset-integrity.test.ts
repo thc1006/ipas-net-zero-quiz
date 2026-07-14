@@ -860,6 +860,38 @@ describe('quality_flags 的一致性', () => {
     ).toEqual([]);
   });
 
+  // ⚠️ **「我已經把那句錯誤敘述移除了」是一句可以被證偽的宣稱 —— 那就去證偽它。**
+  //
+  // 第五輪的寫回程式做的是**字串手術**：`ex.replace(claim, '')`。
+  // 而它在 `claim` 對不上時**靜靜地什麼都沒做**，然後照樣把更正註腳貼上去 ——
+  // 結果是：**錯誤的句子還在，下面卻跟著一段「⚠️ 本題解析已更正：那句話是錯的」。**
+  // 同一則解析自己跟自己打架。
+  //
+  // 第六輪的**對抗式覆核**（契約寫死「你的工作是證明我改錯了」）抓到 6 題，
+  // 其中 4 題正是這一種：mock-014、mock-046、ifrs2026-005、ifrs2026-006。
+  //
+  // **一個會靜靜 no-op 的寫回程式，就是這個錯的來源。**
+  // 這道 gate 把那個 no-op 變成紅燈：說了移除，就必須真的移除。
+  it('explanation_audit 宣稱移除的錯誤敘述，必須真的已經不在解析裡', () => {
+    const bad: string[] = [];
+    for (const it of ALL) {
+      const md = it.metadata as unknown as {
+        explanation_audit?: { verdict?: string; removed_claims?: string[] };
+      };
+      const a = md?.explanation_audit;
+      if (!a?.removed_claims?.length) continue;
+      for (const c of a.removed_claims) {
+        if (c && (it.explanation ?? '').includes(c)) {
+          bad.push(
+            `${who(it)}：explanation_audit 說移除了「${c.slice(0, 28)}…」，` +
+              `但那句話**還在解析裡** —— 於是解析會跟自己的更正註腳互相矛盾`
+          );
+        }
+      }
+    }
+    expect(bad, '宣稱移除了錯誤敘述，實際上沒有移除').toEqual([]);
+  });
+
   // ⚠️ **一筆沒有記錄 URL 的「驗證紀錄」，不是驗證紀錄。**
   //
   // 這是這個 pilot 最隱蔽的一次自我欺騙：
