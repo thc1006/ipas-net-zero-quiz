@@ -58,6 +58,15 @@ export const PRIMARY: readonly HostRule[] = [
   { host: 'ndc.gov.tw', who: '國家發展委員會 —— 2050 淨零路徑、12 項關鍵戰略' },
   { host: 'moeaea.gov.tw', who: '經濟部能源署 —— 電力排放係數、再生能源' },
   { host: 'ey.gov.tw', who: '行政院 —— 政策核定與公報' },
+  // 主管機關**自己的**法規查詢系統，與 law.moj.gov.tw 同一類。
+  // 「資料中心設置作業要點」的 PUE 條文就住在這裡 —— 而題庫原本只掛了 ey.gov.tw 的**首頁**。
+  // 一個首頁不是證據。
+  { host: 'law.moda.gov.tw', who: '數位發展部法規查詢系統 —— 資料中心設置作業要點等' },
+  // ⚠️ 網域是 .org.tw，但頁尾寫著「Copyright ©2011-2026 **經濟部國際貿易署**版權所有」
+  // —— 著作權人是機關本身，這就是官網。**不要用網域字尾判斷權威性。**
+  // 這兩題（CBAM 納管產品查詢）原本掛的是 **EUR-Lex 的歐盟法規**：
+  // 我抓回全文 273,630 字，「Taiwan」0 次 —— 引錯了國家。真正的依據一直在這裡。
+  { host: 'greentrade.org.tw', who: '綠色貿易資訊網（經濟部國際貿易署）—— CBAM 納管產品查詢' },
   { host: 'moi.gov.tw', who: '內政部 —— 建築物太陽光電設置標準（會銜機關）' },
   { host: 'abri.gov.tw', who: '內政部建築研究所 —— 綠建築與建築碳足跡' },
   { host: 'twse.com.tw', who: '臺灣證券交易所（含 cgc 公司治理中心）' },

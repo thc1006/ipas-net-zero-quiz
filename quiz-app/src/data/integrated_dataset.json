@@ -10,7 +10,7 @@
     "total_questions": 773,
     "gist_questions": 545,
     "our_unique_questions": 228,
-    "corrections_applied": 31,
+    "corrections_applied": 32,
     "by_subject": {
       "考科1": 431,
       "考科2": 342
@@ -25,11 +25,11 @@
         "carbon_fee",
         "carbon_neutrality"
       ],
-      "reverified_count": 111,
+      "reverified_count": 117,
       "total_questions": 773,
       "time_sensitive_count": 128,
       "not_reviewed_this_round_count": 680,
-      "carried_over_count": 17,
+      "carried_over_count": 11,
       "known_unresolved": [
         {
           "id": "PAS_2060_withdrawal_date",
@@ -100,10 +100,10 @@
       "date": "2026-07-14",
       "what": "對 383 題「附了一手來源 URL、但從來沒有人打開來看過」的題目，逐題把那一頁抓回來，檢查它到底有沒有說這件事。",
       "population": 383,
-      "supported": 294,
-      "wrong_source": 31,
-      "replaced": 19,
-      "disputed": 12,
+      "supported": 303,
+      "wrong_source": 28,
+      "replaced": 27,
+      "disputed": 1,
       "no_quote": 35,
       "dead": 4,
       "note": "引錯的 URL **全部都回 HTTP 200** —— 連結健康檢查一個都抓不到。disputed 是「代理說引錯、但提不出可驗證的替代來源」：否定命題無法機械驗證，僅憑代理一句話不足以動資料，故引用維持不變但標記存疑。"
@@ -358,6 +358,21 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=3"
+        ],
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=3",
+            "quote": "十、淨零排放：指溫室氣體排放量與碳匯量達成平衡。",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第七輪重查後找到一手來源，引文經機械逐字比對確認。"
         }
       }
     },
@@ -489,6 +504,21 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://service.cca.gov.tw/File/Get/cca/zh-tw/OTUWcNktpcSPSdP"
+        ],
+        "evidence": [
+          {
+            "url": "https://service.cca.gov.tw/File/Get/cca/zh-tw/OTUWcNktpcSPSdP",
+            "quote": "締約方大會作為本公約的最高機構，應定期審查本公約的履行情況和締約方\n大會可能通過的任何相關法律文件，並應依其職權，作出促進有效履行公約\n之必要決定。",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第七輪重查後找到一手來源，引文經機械逐字比對確認。"
         }
       }
     },
@@ -526,6 +556,21 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://service.cca.gov.tw/File/Get/cca/zh-tw/OTUWcNktpcSPSdP"
+        ],
+        "evidence": [
+          {
+            "url": "https://service.cca.gov.tw/File/Get/cca/zh-tw/OTUWcNktpcSPSdP",
+            "quote": "締約方大會作為本公約的最高機構，應定期審查本公約的履行情況和締約方\n大會可能通過的任何相關法律文件，並應依其職權，作出促進有效履行公約\n之必要決定。",
+            "supports_option": "A"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第七輪重查後找到一手來源，引文經機械逐字比對確認。"
         }
       }
     },
@@ -600,6 +645,21 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "產品碳足盤查過程中，針對特定的產品或產品群進行環境宣告之生命週期範疇界定的作業程序\n文件。目的在使相同功能產品就其環境衝擊量化後之環境宣告，具有一致性的比較基礎。這份文\n件稱之為？(答案：C)",
+            "supports_option": "C"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第七輪重查後找到一手來源，引文經機械逐字比對確認。"
         }
       }
     },
@@ -1341,6 +1401,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://taxation-customs.ec.europa.eu/news/commission-publishes-default-values-determining-embedded-emissions-during-cbam-transitional-period-2023-12-22_en",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
@@ -1357,9 +1418,16 @@
         },
         "citation_audit": {
           "date": "2026-07-14",
-          "verdict": "citation_disputed",
-          "detail": "agent 判定原引用 https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020 **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
-        }
+          "verdict": "supported",
+          "detail": "第七輪重查後找到一手來源，引文經機械逐字比對確認。"
+        },
+        "evidence": [
+          {
+            "url": "https://taxation-customs.ec.europa.eu/news/commission-publishes-default-values-determining-embedded-emissions-during-cbam-transitional-period-2023-12-22_en",
+            "quote": "On 22 December 2023, the Commission published the default values that can be used to determine embedded emissions in imported goods (except electricity)",
+            "supports_option": "D"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -1395,8 +1463,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+          "https://www.greentrade.org.tw/CBAM/search"
         ],
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -1408,9 +1475,16 @@
         },
         "citation_audit": {
           "date": "2026-07-14",
-          "verdict": "citation_disputed",
-          "detail": "agent 判定原引用 https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020 **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
-        }
+          "verdict": "citation_replaced",
+          "detail": "原引用是 **EUR-Lex 的歐盟 CBAM 法規**（全文 273,630 字，「Taiwan」0 次）——**引錯了國家**。本題問的是經濟部國際貿易署「綠色貿易資訊網」的查詢工具，已改引該工具本身的查詢頁；頁上欄位名「臺灣前6碼相同之海關編碼」證實其比對粒度為**前 6 碼**，與答案 B（前 2~6 碼）相容，而 A／C／D 皆與之矛盾。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.greentrade.org.tw/CBAM/search",
+            "quote": "臺灣前6碼相同之海關編碼",
+            "supports_option": "B"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -1450,6 +1524,21 @@
           "verification_batch": "D",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3"
+        ],
+        "evidence": [
+          {
+            "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
+            "quote": "企業應證明已盡可能減少碳中和主體之溫室氣體排放量，以及增加溫室氣體移除量，最後視需求透過註銷溫室氣體減量額度對剩餘之溫室氣體淨排放量進行補償。因此，當企業需要運用抵換來實現碳中和，應先評析已採行最佳可行技術，說明無採取進一步行動減少溫室氣體排放或增加溫室氣體移除的理由",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第七輪重查後找到一手來源，引文經機械逐字比對確認。"
         }
       }
     },
@@ -1751,8 +1840,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+          "https://www.greentrade.org.tw/CBAM/search"
         ],
         "deduped_from": [
           "gist[560]"
@@ -1767,14 +1855,21 @@
         },
         "citation_audit": {
           "date": "2026-07-14",
-          "verdict": "citation_disputed",
-          "detail": "agent 判定原引用 https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020 **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
+          "verdict": "citation_replaced",
+          "detail": "原引用是 **EUR-Lex 的歐盟 CBAM 法規**（全文 273,630 字，「Taiwan」0 次）——**引錯了國家**。已改引經濟部國際貿易署「綠色貿易資訊網」的「CBAM納管產品查詢」頁：輸入稅號即回傳納管與否，逐字證實答案 B。"
         },
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://www.greentrade.org.tw/CBAM/search",
+            "quote": "比對後無相符資料，該稅號目前不在CBAM納管範圍。",
+            "supports_option": "B"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -1920,6 +2015,7 @@
         "original_id": "c1-037",
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://taxation-customs.ec.europa.eu/news/update-technical-issues-related-cbam-transitional-registry-and-import-control-system-2-ics2-2024-01-29_en",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
@@ -1931,14 +2027,21 @@
         },
         "citation_audit": {
           "date": "2026-07-14",
-          "verdict": "citation_disputed",
-          "detail": "agent 判定原引用 https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020 **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
+          "verdict": "supported",
+          "detail": "第七輪重查後找到一手來源，引文經機械逐字比對確認。"
         },
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://taxation-customs.ec.europa.eu/news/update-technical-issues-related-cbam-transitional-registry-and-import-control-system-2-ics2-2024-01-29_en",
+            "quote": "In line with Implementing Regulation 2023/1773 governing the transitional period, they may subsequently modify and correct their first three CBAM reports until 31 July 2024.",
+            "supports_option": "A"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -8583,6 +8686,21 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "確定宣告或標示單位◼ 常使用產品銷售單位，如瓶、kg、支",
+            "supports_option": "D"
+          }
+        ],
+        "citation_audit": {
+          "date": "2026-07-14",
+          "verdict": "supported",
+          "detail": "第七輪重查後找到一手來源，引文經機械逐字比對確認。"
         }
       }
     },
@@ -13372,7 +13490,7 @@
         "original_id": "c2-077",
         "valid_as_of": "2026-07-13",
         "sources": [
-          "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/907546226.pdf"
         ],
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -13382,14 +13500,21 @@
         },
         "citation_audit": {
           "date": "2026-07-14",
-          "verdict": "citation_disputed",
-          "detail": "agent 判定原引用 https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
+          "verdict": "citation_replaced",
+          "detail": "原引用經**我自己**抓回頁面確認不含本題主張（cca.gov.tw 的台灣 NDC 頁 24,978 字，「UNEP」「排放差距」「2.5」「2.9」**各 0 次**）。已換為 https://usr.chu.edu.tw/var/file/81/1081/img/1034/907546226.pdf，該頁上的逐字引文已機械驗證存在。"
         },
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/907546226.pdf",
+            "quote": "根據聯合國環境規劃署(UNEP) 2023年排放差距報告指出，目前各國提交的NDC無法達到巴黎協定目標，本世紀末將溫升？ A.1~1.5°C, B.1.5~2°C, C.2~2.5°C, D.3~3.2°C",
+            "supports_option": "C"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -25325,14 +25450,14 @@
           "text": "25.46–26.12 GW"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-07-14",
         "sources": [
-          "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
         ],
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -25344,13 +25469,23 @@
         },
         "citation_audit": {
           "date": "2026-07-14",
-          "verdict": "citation_disputed",
-          "detail": "agent 判定原引用 https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
-        }
+          "verdict": "citation_replaced",
+          "detail": "原引用經**我自己**抓回頁面確認不含本題主張（cca.gov.tw 的台灣 NDC 頁 24,978 字，「GW」「裝置容量」「47.86」**各 0 次**）。已換為 https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf，該頁上的逐字引文已機械驗證存在。"
+        },
+        "prior_answer": "B",
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "我國2030年NDC目標約等於較2020年排放量削減29％ 再生能源：裝置容量自9.6GW (2020)增至45.46至46.12GW （離岸風電13.1GW/太陽光電31GW）",
+            "supports_option": "C"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "我國 2030 年 NDC 的五大強化關鍵作為中，再生能源裝置容量目標為**自 9.6 GW（2020）增至 45.46 至 46.12 GW** —— 其中離岸風電 13.1 GW、太陽光電 31 GW。\n\n（13.1 + 31 ≈ 44 GW，加上其他再生能源約 45–46 GW，數字對得起來。）",
+      "_correction_note": "2026-07-14 更正：原答 B（35.46–36.12 GW）為誤，正解為 C（45.46–46.12 GW）。iPAS 公版教材（《碳管理趨勢及策略》，資料來源：國發會 2022）逐字：「再生能源:裝置容量自9.6GW (2020)增至45.46至46.12GW (離岸風電13.1GW/太陽光電31GW)」。教材全文「45.46」「46.12」各 1 次，「35.46」「36.12」**各 0 次**。⚠️ 這題原本被我歸在「引用存疑、找不到替代來源」那堆裡 —— **我當初太早放棄了。**這個錯答案就藏在那堆裡。"
     },
     {
       "index": 521,
@@ -26646,7 +26781,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
-          "https://www.iso.org/standard/43279.html"
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
         ],
         "subject_corrected_2026_07_13": {
           "from": "考科2",
@@ -26662,14 +26797,21 @@
         },
         "citation_audit": {
           "date": "2026-07-14",
-          "verdict": "citation_disputed",
-          "detail": "agent 判定原引用 https://www.iso.org/standard/43279.html **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
+          "verdict": "citation_replaced",
+          "detail": "原引用 https://www.iso.org/standard/43279.html 經**我自己抓回頁面**逐字確認**不含本題主張**：我抓回該頁 21,422 字，**「PAS 2060」出現 0 次** —— 而本題問的就是 PAS 2060（那是 **BSI** 的標準，不是 ISO）。且該頁是**購買頁**（只有摘要與 CHF 標價，無條文）。 已移除，改以 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 為依據（該頁上的逐字引文已機械驗證）。⚠️ 先前這題被標成 `supported`，但那時**舊的爛來源還留在清單裡** —— 「引用正確」是一句假的保證。"
         },
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "quote": "Q102 PAS 2060 要求組織制定什麼來支持其碳中和聲明？\n(A)減排行動計畫；(B)市場營銷策略；(C)投\n資回報分析；(D)員工培訓計畫\n(A)減排行動\n計畫",
+            "supports_option": "A"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -26970,7 +27112,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
-          "https://www.iso.org/standard/43279.html"
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf"
         ],
         "subject_corrected_2026_07_13": {
           "from": "考科2",
@@ -26987,9 +27129,16 @@
         },
         "citation_audit": {
           "date": "2026-07-14",
-          "verdict": "citation_disputed",
-          "detail": "agent 判定原引用 https://www.iso.org/standard/43279.html **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
-        }
+          "verdict": "citation_replaced",
+          "detail": "原引用 https://www.iso.org/standard/43279.html 經**我自己抓回頁面**逐字確認**不含本題主張**：我抓回該頁 21,422 字，**「PAS 2060」出現 0 次** —— 而本題問的就是 PAS 2060（那是 **BSI** 的標準，不是 ISO）。且該頁是**購買頁**（只有摘要與 CHF 標價，無條文）。 已移除，改以 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 為依據（該頁上的逐字引文已機械驗證）。⚠️ 先前這題被標成 `supported`，但那時**舊的爛來源還留在清單裡** —— 「引用正確」是一句假的保證。"
+        },
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+            "quote": "Q110 PAS 2060 對碳抵消項目的社會、經濟和環境影響有何\n要求？\n(A)無具體要求；(B)輕微正面影響；(C)顯著\n正面影響；(D)僅環境影響\n(C)顯著正面\n影響",
+            "supports_option": "D"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -29725,7 +29874,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
-          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
         "source_correction_2026_07_13": "來源與題目無關，移除。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。",
         "_legacy_pipeline_metadata": {
@@ -29737,9 +29886,16 @@
         },
         "citation_audit": {
           "date": "2026-07-14",
-          "verdict": "citation_disputed",
-          "detail": "agent 判定原引用 https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
-        }
+          "verdict": "citation_replaced",
+          "detail": "原引用經**我自己**抓回頁面確認不含本題主張（cca.gov.tw 碳費專區 25,871 字，「碳費」34 次，而「LCIA」「衝擊評估」「生命週期」「LCA」**各 0 次**）。已換為 https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf，該頁上的逐字引文已機械驗證存在。"
+        },
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "在CFP研究的LCIA階段，計算產品系統的每一個GHG排放與移除之潛在氣候變遷衝擊，應乘\n         GHG 排放或移除。的質量，再乘以100年全球暖化潛勢，以IPCC所示的「每kg排放CO2ekg數」\n         表示(具備IPCC規定之碳回饋者)。",
+            "supports_option": "A"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"

@@ -133,9 +133,19 @@ describe('題庫結構完整性', () => {
       expect(DS.meta).not.toHaveProperty('content_verified_as_of');
     });
 
+    // ⚠️ **`>=`，不是 `===`。** 這裡原本寫 `=== last_review_date`，
+    // 而那個寫法有一個很醜的失敗模式：**一題查得越新，分數越低。**
+    //
+    // gist[520] 在 last_review_date（07-13）複查過。隔天我又查了一次，
+    // 而且**抓出它的答案是錯的**（B→C），於是 valid_as_of 變成 07-14 ——
+    // `=== last` 不成立，它就從「本輪已重查」掉出去，還被歸進「積欠未查」那一堆。
+    // 「我今天重查並修好了它」被記成「我沒查它」。
+    //
+    // 同一條規則在 tools/sync_derived_counts.py 有第二份實作 —— 兩邊要一起改。
+    // （ISO 日期字串的字典序 == 時序。）
     it('reverified_count 必須等於資料裡實際重查過的題數', () => {
       const actual = ALL.filter(
-        (it) => it.metadata?.valid_as_of === cr.last_review_date
+        (it) => (it.metadata?.valid_as_of ?? '') >= cr.last_review_date
       ).length;
       expect(cr.reverified_count).toBe(actual);
     });
@@ -147,12 +157,13 @@ describe('題庫結構完整性', () => {
       );
     });
 
+    // 「積欠」= time_sensitive 而且 valid_as_of **早於**本輪 —— 一樣是 `<`，不是 `!==`。
+    // 缺 valid_as_of 的一律算積欠（`'' < last`），與 sync_derived_counts.py 逐字對齊。
     it('carried_over_count 必須等於「標了 time_sensitive 但本輪沒重查」的題數', () => {
       const actual = ALL.filter(
         (it) =>
           (it.quality_flags ?? []).includes('time_sensitive') &&
-          it.metadata?.valid_as_of !== undefined &&
-          it.metadata?.valid_as_of !== cr.last_review_date
+          (it.metadata?.valid_as_of ?? '') < cr.last_review_date
       ).length;
       expect(cr.carried_over_count).toBe(actual);
     });

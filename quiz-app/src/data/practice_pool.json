@@ -4818,12 +4818,19 @@
         },
         "citation_audit": {
           "date": "2026-07-14",
-          "verdict": "citation_disputed",
-          "detail": "agent 判定原引用 https://www.ey.gov.tw/ **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
-        }
+          "verdict": "citation_replaced",
+          "detail": "原引用 https://www.ey.gov.tw/ 經**我自己抓回頁面**逐字確認**不含本題主張**：那是行政院**首頁**（根路徑）。我抓回 10,161 字，**「資料中心」「PUE」「能源使用效率」各出現 0 次**。**一個首頁不是證據。** 已移除，改以 https://law.moda.gov.tw/LawContent.aspx?id=FL083280 為依據（該頁上的逐字引文已機械驗證）。⚠️ 先前這題被標成 `supported`，但那時**舊的爛來源還留在清單裡** —— 「引用正確」是一句假的保證。"
+        },
+        "evidence": [
+          {
+            "url": "https://law.moda.gov.tw/LawContent.aspx?id=FL083280",
+            "quote": "中華民國一百零六年一月九日起新建置之資料中心，其能源使用效率\n    值應低於一點六; 一百零六年一月八日以前已設置之資料中心，其能\n    源使用效率不符前揭規定者，應逐步改善能源使用效率。",
+            "supports_option": "B"
+          }
+        ]
       },
       "sources": [
-        "https://www.ey.gov.tw/",
+        "https://law.moda.gov.tw/LawContent.aspx?id=FL083280",
         "https://www.moeaea.gov.tw/ECW/populace/Law/LawsList.aspx?kind=6&menu_id=3302"
       ],
       "quality_flags": [
@@ -9447,16 +9454,24 @@
         },
         "citation_audit": {
           "date": "2026-07-14",
-          "verdict": "citation_disputed",
-          "detail": "agent 判定原引用 https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
+          "verdict": "supported",
+          "detail": "第七輪重查後找到一手來源，引文經機械逐字比對確認。"
         },
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://isds.tpex.org.tw/download/20250103IFRS%E6%B0%B8%E7%BA%8C%E6%BA%96%E5%89%87%E5%95%8F%E7%AD%94%E9%9B%86.pdf",
+            "quote": "IFRS 永續揭露準則未要求對永續資訊進行確信，且目前納入年報的永續資訊，除溫室氣 \n體資訊外，尚未強制要求其他永續主題須經確信。未來將持續關注國際趨勢及國\n際永續確信準則（ISSA 5000）發展趨勢，評估其他永續主題確信的可行性。",
+            "supports_option": "A"
+          }
+        ]
       },
       "sources": [
+        "https://isds.tpex.org.tw/download/20250103IFRS%E6%B0%B8%E7%BA%8C%E6%BA%96%E5%89%87%E5%95%8F%E7%AD%94%E9%9B%86.pdf",
         "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News",
         "https://www.iaasb.org/publications/international-standard-sustainability-assurance-5000-general-requirements-sustainability-assurance"
       ],

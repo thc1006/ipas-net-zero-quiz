@@ -18,7 +18,6 @@ import json
 import re
 import sys
 import io
-import unicodedata
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
@@ -102,13 +101,47 @@ corrected = [q for q in ALL if md(q).get('prior_answer') and md(q)['prior_answer
 N['corr_with_url'] = sum(1 for q in corrected if main_srcs(q))
 N['corr_no_url'] = len(corrected) - N['corr_with_url']
 
+
+# ── 引用複驗（citation_audit）—— **跨兩個題庫算**，與 docs-counts.test.ts 一致 ──
+#
+# ⚠️ 這一段原本**完全不在這支工具裡**。於是資料裡的 citation_audit 標記一直在變，
+# 而 meta / README 的數字凍在第四輪 —— `--check` 照樣說「✅ 全部一致」，CI 卻是紅的。
+# **又一次：一個只檢查一半的同步工具，它的綠燈是一句假的保證。**
+def verdict(q):
+    a = (md(q).get('citation_audit') or {}).get('verdict')
+    b = ((q.get('provenance') or {}).get('citation_audit') or {}).get('verdict')
+    return a or b
+
+
+BOTH = ALL + POOL
+N['ca_supported'] = sum(1 for q in BOTH if verdict(q) == 'supported')
+N['ca_replaced'] = sum(1 for q in BOTH if verdict(q) == 'citation_replaced')
+N['ca_disputed'] = sum(1 for q in BOTH if verdict(q) == 'citation_disputed')
+N['ca_no_quote'] = sum(1 for q in BOTH if verdict(q) == 'no_quote')
+N['ca_dead'] = sum(1 for q in BOTH if verdict(q) == 'dead')
+# gate 要求的恆等式：引錯地方的 = 已換掉的 + 仍存疑的
+N['ca_wrong'] = N['ca_replaced'] + N['ca_disputed']
+
 cr = ds['meta'].get('content_review', {})
 last = cr.get('last_review_date')
-N['reverified'] = sum(1 for q in ALL if md(q).get('valid_as_of') == last)
+
+# ⚠️ **必須是 `>=`，不可以是 `==`。**
+#
+# 這條原本寫 `valid_as_of == last_review_date`，於是它有一個很醜的失敗模式：
+# **一題查得越新，分數越低。**
+#
+# gist[520] 在 07-13（last_review_date）複查過。07-14 我又查了一次，
+# 而且**抓出它的答案是錯的**（B→C），於是 valid_as_of 更新成 07-14。
+# 結果 `== last` 不成立 → 它從「本輪已重查」掉出去，還被歸進「積欠未查」那一堆。
+#
+# 「我今天重查並修好了它」被記成「我沒查它」。日期比較要用 `>=`。
+# （ISO 日期字串的字典序 == 時序，可以直接比。）
+N['reverified'] = sum(1 for q in ALL if (md(q).get('valid_as_of') or '') >= (last or ''))
 N['carried_over'] = sum(
     1
     for q in ALL
-    if 'time_sensitive' in (q.get('quality_flags') or []) and md(q).get('valid_as_of') != last
+    if 'time_sensitive' in (q.get('quality_flags') or [])
+    and (md(q).get('valid_as_of') or '') < (last or '')
 )
 
 changed = []
@@ -130,20 +163,17 @@ set_meta('corrections_applied', N['corrections'])
 set_meta('content_review.time_sensitive_count', N['time_sensitive'])
 set_meta('content_review.reverified_count', N['reverified'])
 set_meta('content_review.carried_over_count', N['carried_over'])
+set_meta('citation_audit.supported', N['ca_supported'])
+set_meta('citation_audit.replaced', N['ca_replaced'])
+set_meta('citation_audit.disputed', N['ca_disputed'])
+set_meta('citation_audit.no_quote', N['ca_no_quote'])
+set_meta('citation_audit.dead', N['ca_dead'])
+set_meta('citation_audit.wrong_source', N['ca_wrong'])
 
 
-def patch(path, pattern, val, label):
-    text = open(path, encoding='utf-8').read()
-    m = re.search(pattern, text)
-    if not m:
-        print(f'  !! {path} 找不到 pattern：{label}')
-        return text, False
-    if m.group(1) == str(val):
-        return text, False
-    changed.append(f'  {path} [{label}]: {m.group(1)} -> {val}')
-    s, e = m.span(1)
-    return text[:s] + str(val) + text[e:], True
-
+# （這裡本來還有一個沒人呼叫的 `patch()` —— 而它裡面正是我剛修掉的那個
+#   「錨點對不上就 print 一行然後 return」的行為。死碼帶著已知的 bug，
+#   等著下一個人把它接回去用。刪掉。）
 
 docs = {README: open(README, encoding='utf-8').read(), CURRENCY: open(CURRENCY, encoding='utf-8').read()}
 
@@ -158,11 +188,17 @@ docs = {README: open(README, encoding='utf-8').read(), CURRENCY: open(CURRENCY, 
 #   - 考科一/考科二題數、練習池 54+100 的組成
 #   - restoration-manifest 的 159 題重建
 #   - llms.txt 的 external_mock / ai_generated 題數
+#
+# ⚠️ **錨點要綁在結構上，不要綁在散文上。**
+#   「主題庫一手來源」那條原本錨在 `連結（季排程每季檢查是否還通） | (\d+) / 773`，
+#   後來有人在那一格加了一句「⚠️ 連結還通不代表指對地方」—— 正則就對不上了。
+#   **那條規則從此死掉**，而 README 的 740 凍在原地、資料早就走到 746。
+#   現在改成錨在列首的「② 有一手來源 URL」，散文怎麼改都不影響。
 RULES = [
     (README, r'本輪只實查\s*\*\*(\d+)\s*/', N['reverified'], 'README 本輪實查題數'),
     (CURRENCY, r'本輪只實查了\s*\*\*(\d+)\s*/', N['reverified'], 'CURRENCY 本輪實查題數'),
     (README, r'\*\*(\d+) / 773\*\*', N['main_quote'], '主題庫逐字引文'),
-    (README, r'連結（季排程每季檢查是否還通） \| (\d+) / 773', N['main_primary'], '主題庫一手來源'),
+    (README, r'② 有一手來源 URL[^|]*\|[^|]*\| (\d+) / 773', N['main_primary'], '主題庫一手來源'),
     (README, r'\*\*無從查證\*\* \| (\d+) / 773', N['main_nosource'], '主題庫無來源'),
     (README, r'\*\*(\d+) / 154\*\*', N['pool_quote'], '練習池逐字引文'),
     (README, rf'\| (\d+) / {N["pool_total"]} \|\n', N['pool_primary'], '練習池一手來源'),
@@ -171,19 +207,39 @@ RULES = [
     (README, r'另外 (\d+) 題的依據是標準條文', N['corr_no_url'], 'README 更正題無 URL'),
     (README, r'題庫中有 \*\*(\d+) 題\*\*的答案會隨法規變動', N['time_sensitive'], 'README time_sensitive'),
     (CURRENCY, r'\*\*(\d+) 題\*\*標記 `time_sensitive`', N['time_sensitive'], 'CURRENCY time_sensitive'),
+    # 引用複驗那張表 —— 這四個數字過去**完全沒人同步**
+    (README, r'\| ✅ 引用正確[^|]*\| \*\*(\d+)\*\*', N['ca_supported'], 'README 引用正確'),
+    (README, r'\| 🔧 \*\*引錯地方[^|]*\| \*\*(\d+)\*\*', N['ca_wrong'], 'README 引錯地方'),
+    (README, r'\| 📝 主題相關[^|]*\| (\d+)', N['ca_no_quote'], 'README 主題相關無引文'),
+    (README, r'\| ☠️ 連結已死[^|]*\| (\d+)', N['ca_dead'], 'README 連結已死'),
 ]
 
+dead_rules = []
 for path, pat, val, label in RULES:
     text = docs[path]
     m = re.search(pat, text)
     if not m:
-        print(f'  !! {path} 找不到 pattern：{label}')
+        # ⚠️ **這裡以前是 `continue`。** 對不上錨點的規則就這樣靜靜跳過，
+        # 然後這支工具照樣印出「✅ 所有衍生數字都已一致」、exit 0 —— 而 CI 是紅的。
+        #
+        # **一條找不到錨點的同步規則 = 一條死掉的規則。**
+        # 而一個「規則死了還發綠燈」的工具，比沒有工具更糟：
+        # 它讓我以為數字有人在顧。**對不上就硬失敗。**
+        dead_rules.append(f'  ❌ {path} 找不到錨點：{label}\n       pattern: {pat}')
         continue
     if m.group(1) == str(val):
         continue
     changed.append(f'  {path} [{label}]: {m.group(1)} -> {val}')
     s, e = m.span(1)
     docs[path] = text[:s] + str(val) + text[e:]
+
+if dead_rules:
+    print('=' * 70)
+    print('🚨 有同步規則對不上錨點 —— 它守的那個數字**現在沒人顧**：')
+    print('\n'.join(dead_rules))
+    print('\n**不要改規則去遷就文件的措辭，也不要刪掉規則。**')
+    print('把錨點綁回結構（列首的標籤），或確認那個數字是不是被誰刪掉了。')
+    sys.exit(1)
 
 print('=' * 70)
 for k, v in N.items():

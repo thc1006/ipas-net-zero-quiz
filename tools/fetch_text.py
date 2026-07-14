@@ -17,7 +17,7 @@ _UA = 'Mozilla/5.0 (compatible; ipas-quiz-quote-verifier/1.0)'
 
 
 def norm(t):
-    """比對用的正規化：NFKC + 去掉所有標點/空白。
+    """比對用的正規化：NFKC + 去掉標點、空白、項目符號、私用區字元。
 
     ⚠️ **NFKC 是必要的**：這些中文 PDF 用 CJK 相容字 ——
     「理」可能是 U+F9E4 而不是 U+7406，「生態衝擊」用 str.find() 直接找會回 -1。
@@ -25,14 +25,37 @@ def norm(t):
     ⚠️ **標點必須用 Unicode 類別剝，不可以手列**：
     我手列過一次，漏了 `'`(U+2019) 對上 `'`(U+0027)，害三筆真引文被判成捏造。
 
-    ⚠️ **但絕對不可以剝 \\p{S}（符號）**：× ÷ + − = 都是符號，
+    ⚠️ **項目符號與私用區必須剝。**
+    第七輪 `gist[169]` 的引文「確定宣告或標示單位**◼**常使用產品銷售單位」被判成「捏造」——
+    但 `◼` 是那份投影片 PDF 的**項目符號**，而 PDF 內嵌字型常把它存成
+    **私用區字元**（U+F06E 之類）。兩邊長得一樣、位元不同 → 對不上 → **我誣賴了一筆真引文**。
+
+    ⚠️ **但絕對不可以整片剝 Sm（數學符號）**：× ÷ + − = 都是 Sm，
     而題庫裡有公式題，四個選項的差別**只在運算子** —— 剝掉會塌成同一個字串。
+
+    ⚠️ 而這正是我第一次修錯的地方：我以為項目符號是 `So`，就寫「剝 So、保留 Sm」——
+    **但 `◼`(U+25FC) 的類別偏偏是 `Sm`**，於是修法完全打不到它，`gist[169]` 還是紅的。
+    「我猜這個字是什麼類別」再一次比資料本身更常出錯。
+
+    所以判準要用**區段**、不要用類別猜：剝掉
+      - **幾何圖形區 U+25A0–U+25FF**（■ ◆ ▲ ● ◼ ▪ —— 這些 PDF 的項目符號全在這裡）
+      - **So**（其他符號）與 **Co**（私用區）
+    而 **× ÷ = − + 不在幾何圖形區、類別是 Sm，全部保留。**
+
+    （去重用的正規化是另一回事 —— 那邊連 So 都不能剝。判準要跟著用途走。）
     """
     t = unicodedata.normalize('NFKC', t or '')
-    return ''.join(
-        c for c in t
-        if not (unicodedata.category(c)[0] in ('P', 'Z') or c.isspace())
-    )
+    out = []
+    for c in t:
+        cat = unicodedata.category(c)
+        if cat[0] in ('P', 'Z') or c.isspace():
+            continue
+        if cat in ('So', 'Co'):          # 其他符號、私用區 —— 剝
+            continue
+        if 0x25A0 <= ord(c) <= 0x25FF:   # 幾何圖形區（含被歸成 Sm 的 ◼）—— 剝
+            continue
+        out.append(c)                    # × ÷ = − + 留著
+    return ''.join(out)
 
 
 def _get(url, timeout=60):
@@ -118,6 +141,22 @@ def quote_status(quote, page_text):
     **兩個片段都逐字存在，只是 agent 把順序對調了讓句子讀得順。**
     內容完全正確。判成「捏造」是**我的檢查器錯**，不是資料錯。
 
+    ⚠️ 第七輪 `gist[520]` 差點被我當成捏造：代理引
+    「…排放量削減29% 再生能源:裝置容量自9.6GW…」，而投影片原文在這兩句
+    **中間夾了一行標題**「2030 NDC 五大強化關鍵作為」。代理跨過標題把兩段接起來 ——
+    兩段都逐字存在，但我當初只切**中文標點**，接縫落在片段**內部**，於是判成 'absent'。
+    **那不是捏造，是拼接。** 而那一題裡藏著一個真的錯答案（B→C），
+    我差點因為自己的檢查器而把它丟掉。
+
+    ⚠️ 修法**不可以是「連空白一起切」**。中文很少用空白，英文卻是**每個字都用空白分隔** ——
+    切下去之後 "Commission"、"published" 這種常見字各自都在頁面上，
+    於是一句**捏造的英文**會被判成「拼接」。**那會開一個比原本更大的洞。**
+
+    所以改用一個**中英都成立**的判準：把引文**貪婪拆成「頁面上的逐字連續段」**。
+      - 段數少、每段夠長  → 'reordered'（作者跨過頁首/標題把原文接起來，內容是真的）
+      - 拆不動、或碎成一堆短段 → 'absent'（真的捏造）
+    一句捏造的話沒辦法用少數幾段長的原文拼出來。
+
     回傳 'verbatim' | 'reordered' | 'absent'
     """
     pn, qn = norm(page_text), norm(quote)
@@ -125,11 +164,32 @@ def quote_status(quote, page_text):
         return 'absent'
     if qn in pn:
         return 'verbatim'
-    # 換行也要當切分點：agent 從 PDF 抄多行清單時，行與行之間可能夾著頁碼／頁首
-    frags = [x for x in re.split(r'[、，。；：…\n\r]+|\.{3}', quote) if len(norm(x)) >= 8]
-    if frags and all(norm(x) in pn for x in frags):
-        return 'reordered'
-    return 'absent'
+    return 'reordered' if _splice_runs(qn, pn) is not None else 'absent'
+
+
+_MIN_RUN = 12   # 一段「逐字連續」至少要這麼長才算數（短於此的巧合太廉價）
+_MAX_RUNS = 4   # 最多允許接幾段（跨一兩個頁首/標題是合理的；接五段以上是在拼貼）
+
+
+def _splice_runs(qn, pn):
+    """把 qn 貪婪拆成 pn 裡的逐字連續段。回傳段數；拆不成就回 None。"""
+    i, runs = 0, 0
+    while i < len(qn):
+        lo, hi = 0, len(qn) - i          # 二分找「還在頁面上」的最長前綴
+        while lo < hi:
+            mid = (lo + hi + 1) // 2
+            if qn[i:i + mid] in pn:
+                lo = mid
+            else:
+                hi = mid - 1
+        # 只有「剛好收尾」的最後一段可以短於門檻
+        if lo == 0 or (lo < _MIN_RUN and i + lo < len(qn)):
+            return None
+        i += lo
+        runs += 1
+        if runs > _MAX_RUNS:
+            return None
+    return runs
 
 
 def load_primary(path='quiz-app/src/utils/source-authority.ts'):
