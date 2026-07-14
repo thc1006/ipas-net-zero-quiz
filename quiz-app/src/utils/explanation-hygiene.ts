@@ -43,6 +43,23 @@ const KEYWORD_THEN_LETTER =
 const BARE_LETTER_LIST =
   /(?<![A-Za-z0-9])[ABCD]\s*[、,，/／與和及]\s*[ABCD](?:\s*[、,，/／與和及]\s*[ABCD])*(?![A-Za-z0-9])/u;
 
+/**
+ * 形式三：**單一字母被當成選項在用**。「說 A 屬 Category 1」「故 A 為不正確之敘述」「以 D 為最佳解」
+ *
+ * 形式二只抓「兩個以上」的字母清單，所以這種**單字母**的指稱一開始整個漏掉 ——
+ * 包括 `mock-036` 解析裡殘留的「前句才剛說 **A** 屬 Category 1」，
+ * 以及 **我自己在第三輪寫進 `gist[532]` 的「故 A 為不正確之敘述」**。
+ *
+ * ⚠️ 判準必須夠精準，否則假陽性一片。實測過的三個版本：
+ *   v1「任何裸 A–D」                 → 假陽性：`1.5°C`、`3–3.2°C`
+ *   v2「前後有中文的裸 A–D」          → 假陽性：**優惠費率 A／B**（那是碳費費率等級的**正式名稱**，不是選項）
+ *   v3「字母被當成主詞或受詞」+ 排除費率 → **3 筆真的、0 筆假陽性** ← 這個版本
+ *
+ * 「一個假陽性比真陽性還多的檢查器沒有價值。」判準寧可窄，不可吵。
+ */
+const LETTER_AS_OPTION =
+  /(?:(?<=[說選把指])\s*[ABCD](?![A-Za-z0-9°])|(?<![A-Za-z0-9°$])(?<!費率)(?<!費率\s)[ABCD]\s*(?=[屬是為則皆都]))/u;
+
 export interface LetterRef {
   id: string;
   matched: string;
@@ -56,7 +73,7 @@ export function findLetterRefs(
   for (const it of items) {
     const ex = it.explanation ?? '';
     if (!ex) continue;
-    for (const re of [KEYWORD_THEN_LETTER, BARE_LETTER_LIST]) {
+    for (const re of [KEYWORD_THEN_LETTER, BARE_LETTER_LIST, LETTER_AS_OPTION]) {
       const m = ex.match(re);
       if (m) out.push({ id: it.id, matched: m[0] });
     }
@@ -71,11 +88,16 @@ export const LETTER_REF_SAMPLES = {
     'A、D 為 Scope 1，C 為 Scope 2。',
     'ICA 屬非附件一國家機制，故 B、D 皆非。',
     '強制揭露內容，A、B、C 都在其中。',
+    '前句才剛說 A 屬 Category 1。',       // 單字母：mock-036 的殘留
+    '故 A 為不正確之敘述。',              // 單字母：我自己在第三輪寫進 gist[532] 的
+    '官方建議以 D 為最佳解。',
   ],
   shouldNotMatch: [
     '鍋爐燃料燃燒與自家車隊柴油屬範疇一；外購電力屬範疇二。',
     'ISO 14064-1 類別 4 是「來自組織使用的產品」之間接排放。',
     '依碳費收費辦法第 9 條，扣除比率為零點三。',
     'CO2 與 FM200 等氣體滅火器需要盤查。',   // 含 "2"、"200"，不可誤觸
+    '將全球升溫控制在 1.5°C 的情境。',       // 「°C」不是選項 C
+    '一般費率 NT$300，優惠費率 A 為 NT$50、優惠費率 B 為 NT$100。', // 費率等級的正式名稱
   ],
 };

@@ -784,7 +784,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "我國環境部依《空氣污染防制法》及《蒙特婁議定書》吉佳利修正案，於114年（2025年）7月1日起將 HFCs 列為列管化學品，未經許可不得輸出入，逐步削減基線量以對接國際時程。\n\n⚠️ **本題解析已更正** ——\n\n**法規原文（全國法規資料庫，氣候變遷因應法第38條）：「中央主管機關得公告禁止或限制國際環保公約管制之高溫暖化潛勢溫室氣體及利用該溫室氣體相關產品之製造、輸入、輸出、販賣、使用或排放。」內容與 HFCs 管制完全對應，確認正確法源是氣候變遷因應法第38條而非空氣污染防制法。**\n　依據（https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098）逐字：「中央主管機關得公告禁止或限制國際環保公約管制之高溫暖化潛勢溫室氣體及利用該溫室氣體相關產品之製造、輸入、輸出、販賣、使用或排放。」\n\n**更正後應為**：把「依《空氣污染防制法》」改成「依《氣候變遷因應法》第38條」，其餘敘述（114年7月1日起未經核准不得輸出入）正確不動。",
+      "explanation": "我國環境部依《空氣污染防制法》及《蒙特婁議定書》吉佳利修正案，於114年（2025年）7月1日起將 HFCs 列為列管化學品，未經許可不得輸出入，逐步削減基線量以對接國際時程。\n\n⚠️ **本題解析已更正** ——\n\n**法規原文（全國法規資料庫，氣候變遷因應法第38條）：「中央主管機關得公告禁止或限制國際環保公約管制之高溫暖化潛勢溫室氣體及利用該溫室氣體相關產品之製造、輸入、輸出、販賣、使用或排放。」內容與 HFCs 管制完全對應，確認正確法源是氣候變遷因應法第38條而非空氣污染防制法。**\n　依據（https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098）逐字：「中央主管機關得公告禁止或限制國際環保公約管制之高溫暖化潛勢溫室氣體及利用該溫室氣體相關產品之製造、輸入、輸出、販賣、使用或排放。」",
       "subject": null,
       "topic_tags": [
         "HFCs",
@@ -2043,7 +2043,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "依 GHG Protocol Scope 3 Standard，電子業上游採購（晶片、PCB、外殼等）屬 **Category 1（Purchased goods and services）**，屬**範疇三**，通常占總排放 60% 以上。\n\n其餘選項：**B（鍋爐燃料燃燒）與 D（自家車隊柴油）為範疇一**（自有或控制之排放源之直接排放）；**C（辦公室外購電力）為範疇二**。\n\n⚠️ 條列更正：原解析寫「採購原物料與自家車隊柴油同屬範疇一」—— **與它自己前一句自相矛盾**（前句才剛說 A 屬 Category 1、也就是範疇三）。正確為「**鍋爐燃料燃燒與自家車隊柴油**屬範疇一」。**一個字母之差，卻在教「採購原物料算範疇一」，那是徹底錯的觀念。**",
+      "explanation": "依 GHG Protocol Scope 3 Standard，電子業上游採購（晶片、PCB、外殼等）屬 **Category 1（Purchased goods and services）**，屬**範疇三**，通常占總排放 60% 以上。\n\n其餘選項：**B（鍋爐燃料燃燒）與 D（自家車隊柴油）為範疇一**（自有或控制之排放源之直接排放）；**C（辦公室外購電力）為範疇二**。\n\n⚠️ 條列更正：原解析寫「採購原物料與自家車隊柴油同屬範疇一」—— **與它自己前一句自相矛盾**（前句才剛說「資材／原物料採購」屬 Category 1、也就是範疇三）。正確為「**鍋爐燃料燃燒與自家車隊柴油**屬範疇一」。**一個字母之差，卻在教「採購原物料算範疇一」，那是徹底錯的觀念。**",
       "subject": null,
       "topic_tags": [
         "Scope 3",
@@ -2658,7 +2658,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "依 GHG Protocol Scope 3 Calculation Guidance §6 與 ISO 14064-1:2018 §7.3，組織應先建立資料蒐集架構與資料品質管理計畫（Data Quality Plan），再逐年透過初級資料置換次級資料，並擴展至上下游 Tier。\n\n⚠️ **本題解析已更正** ——\n\n**In the actual GHG Protocol 'Technical Guidance for Calculating Scope 3 Emissions' document, Chapter 6 covers setting the scope 3 boundary, NOT data collection/data quality. Data collection and data quality guidance is Chapter 7, not Chapter 6. This is confirmed by the document's own 'How to use this document' section (page 10), which is also the source of this very question's own verified_quote.**\n　依據（https://ghgprotocol.org/sites/default/files/standards/Scope3_Calculation_Guidance_0.pdf）逐字：「Chapter 6, which provides guidance on setting the scope 3 boundary ... Chapter 7, which provides guidance on collecting data, including prioritizing data collection efforts, selecting among different types of data, and ensuring data quality」\n\n**更正後應為**：改為：「依 GHG Protocol Scope 3 Calculation Guidance §7（非§6，§6 為劃定範疇三邊界）與 ISO 14064-1:2018 §8（非§7.3，§7.3 為減量目標 GHG emission reduction or removal enhancement targets；資料/存量品質管理實為第8章 GHG inventory quality management），組織應先建立資料蒐集架構與資料品質管理計畫（Data Quality Plan），再逐年透過初級資料置換次級資料，並擴展至上下游 Tier。」核心概念（先建立資料品質管理計畫、逐步以初級資料取代次級資料）本身正確，錯的只是兩個章節號。",
+      "explanation": "依 GHG Protocol Scope 3 Calculation Guidance §6 與 ISO 14064-1:2018 §7.3，組織應先建立資料蒐集架構與資料品質管理計畫（Data Quality Plan），再逐年透過初級資料置換次級資料，並擴展至上下游 Tier。\n\n⚠️ **本題解析已更正** ——\n\n**In the actual GHG Protocol 'Technical Guidance for Calculating Scope 3 Emissions' document, Chapter 6 covers setting the scope 3 boundary, NOT data collection/data quality. Data collection and data quality guidance is Chapter 7, not Chapter 6. This is confirmed by the document's own 'How to use this document' section (page 10), which is also the source of this very question's own verified_quote.**\n　依據（https://ghgprotocol.org/sites/default/files/standards/Scope3_Calculation_Guidance_0.pdf）逐字：「Chapter 6, which provides guidance on setting the scope 3 boundary ... Chapter 7, which provides guidance on collecting data, including prioritizing data collection efforts, selecting among different types of data, and ensuring data quality」",
       "subject": null,
       "topic_tags": [
         "Scope 3",
@@ -3814,7 +3814,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "；常見合法路徑為轉供（直供/PPA）、自用、向再生能源售電業購買等。\n\n⚠️ **本題解析已更正** ——\n\n**來源說的不是「台電已取得憑證、企業不能重複買」，而是躉售給台電的電力根本不會核發憑證給任何人——躉購賣家依法被排除在申請人資格之外，該部分電力自始沒有憑證存在，不是台電持有憑證。**\n　依據（https://www.trec.org.tw/faq）逐字：「設備商若已將電力躉售給台電，不可申請憑證；若設備商未來想由躉售轉換至綠電交易市場，或電力自用，可申請再生能源憑證。」\n\n**法源『再生能源憑證實施辦法』第二條第四項明文將採躉購制度者排除於憑證申請人資格之外，代表該電力完全不進入憑證體系，而非憑證歸台電所有。**\n　依據（https://www.trec.org.tw/faq）逐字：「申請人：指再生能源發電業、再生能源售電業或再生能源自用發電設備設置者，但 採躉購制度 與 溫室氣體排放額度抵換專案減量額度者除外 。」\n\n**更正後應為**：改為：FIT 躉購制度下的電力，依『再生能源憑證實施辦法』第2條第4項規定，該躉售電力之發電業者被排除於憑證申請人資格之外，該部分電力自始不會核發任何憑證（並非台電取得憑證）；因此企業無法透過『向台電購買FIT電力』取得T-REC，仍須透過轉供、自用或向再生能源售電業購買等合法路徑取得。",
+      "explanation": "；常見合法路徑為轉供（直供/PPA）、自用、向再生能源售電業購買等。\n\n⚠️ **本題解析已更正** ——\n\n**來源說的不是「台電已取得憑證、企業不能重複買」，而是躉售給台電的電力根本不會核發憑證給任何人——躉購賣家依法被排除在申請人資格之外，該部分電力自始沒有憑證存在，不是台電持有憑證。**\n　依據（https://www.trec.org.tw/faq）逐字：「設備商若已將電力躉售給台電，不可申請憑證；若設備商未來想由躉售轉換至綠電交易市場，或電力自用，可申請再生能源憑證。」\n\n**法源『再生能源憑證實施辦法』第二條第四項明文將採躉購制度者排除於憑證申請人資格之外，代表該電力完全不進入憑證體系，而非憑證歸台電所有。**\n　依據（https://www.trec.org.tw/faq）逐字：「申請人：指再生能源發電業、再生能源售電業或再生能源自用發電設備設置者，但 採躉購制度 與 溫室氣體排放額度抵換專案減量額度者除外 。」",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -4118,7 +4118,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "SBTi FLAG 規範：屬指定產業（食品生產、農業、林產等），或 FLAG 相關排放 ≥ 20% 之企業，需設 FLAG 目標；、範疇 3 ≥ 67%；。\n\n⚠️ **本題解析已更正** ——\n\n**來源只要求FLAG範疇1排放涵蓋率≥95%，並未將範疇2併入此門檻（FLAG指引通篇僅提『FLAG-related scope 1』95%與『FLAG-related scope 3』67%兩項，沒有『範疇1+2』的組合門檻）。**\n　依據（https://files.sciencebasedtargets.org/production/files/SBTiFLAGGuidance.pdf）逐字：「The FLAG target must cover at least 95% of FLAG-related scope 1 emissions.」\n\n**來源（現行版本，2026年3月版）規定零毀林承諾之目標年限為『FLAG目標提交日起2年內，且不得晚於2030年12月31日』，是一個隨提交日期滾動、上限為2030年的規則，並非固定的『2025/12/31』。**\n　依據（https://files.sciencebasedtargets.org/production/files/SBTiFLAGGuidance.pdf）逐字：「with a target date of [no later than 2 years after FLAG target submission date. The target date cannot be later than 31 December 2030]」\n\n**更正後應為**：改為：FLAG目標須涵蓋FLAG相關範疇1排放≥95%、FLAG相關範疇3排放≥67%（兩項門檻各自獨立達成）；零毀林承諾之目標日期不得晚於FLAG目標提交日起2年，且不得晚於2030年12月31日（依現行SBTi FLAG Guidance版本；舊版曾採2025/12/31之固定期限，請以送審當下之最新版本為準）。",
+      "explanation": "SBTi FLAG 規範：屬指定產業（食品生產、農業、林產等），或 FLAG 相關排放 ≥ 20% 之企業，需設 FLAG 目標；、範疇 3 ≥ 67%；。\n\n⚠️ **本題解析已更正** ——\n\n**來源只要求FLAG範疇1排放涵蓋率≥95%，並未將範疇2併入此門檻（FLAG指引通篇僅提『FLAG-related scope 1』95%與『FLAG-related scope 3』67%兩項，沒有『範疇1+2』的組合門檻）。**\n　依據（https://files.sciencebasedtargets.org/production/files/SBTiFLAGGuidance.pdf）逐字：「The FLAG target must cover at least 95% of FLAG-related scope 1 emissions.」\n\n**來源（現行版本，2026年3月版）規定零毀林承諾之目標年限為『FLAG目標提交日起2年內，且不得晚於2030年12月31日』，是一個隨提交日期滾動、上限為2030年的規則，並非固定的『2025/12/31』。**\n　依據（https://files.sciencebasedtargets.org/production/files/SBTiFLAGGuidance.pdf）逐字：「with a target date of [no later than 2 years after FLAG target submission date. The target date cannot be later than 31 December 2030]」",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -7115,7 +7115,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "依《碳費收費辦法》§5：碳費＝收費排放量 × 徵收費率；收費排放量＝（年排放量 − K 值）× 排放量調整係數值。K 值為 25,000 公噸 CO2e（高碳洩漏風險之事業 K 值為零）—— K 值與「排放量調整係數值」是兩個不同的量，調整係數值規定在 §6（0.2／0.4／0.6，非高碳洩漏者為 1），不要混用。費率本身不在《碳費收費辦法》裡，而是由環境部公告：，一般費率 NT$300／公噸 CO2e，優惠費率 A 為 NT$50（達行業別指定削減率）、優惠費率 B 為 NT$100（達技術標竿指定削減率），自 2025/01/01 起算。\n\n⚠️ **本題解析已更正** ——\n\n**113年10月7日只是碳費費率審議會「完成審議」的日期；環境部於10月8日進行預告，正式「公告」碳費徵收費率的日期是113年10月21日（生效日仍為114年1月1日）。解析把審議會決議日與正式公告日誤植為同一天。**\n　依據（https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284）逐字：「於113年10月21日公告「碳費徵收費率」，並訂於114年1月1日生效」\n\n**更正後應為**：改為：費率審議會於113/10/07完成審議，環境部於113/10/08預告、113/10/21正式公告「碳費徵收費率」，114/01/01生效。一般費率 NT$300／公噸 CO2e，優惠費率 A 為 NT$50，優惠費率 B 為 NT$100。",
+      "explanation": "依《碳費收費辦法》§5：碳費＝收費排放量 × 徵收費率；收費排放量＝（年排放量 − K 值）× 排放量調整係數值。K 值為 25,000 公噸 CO2e（高碳洩漏風險之事業 K 值為零）—— K 值與「排放量調整係數值」是兩個不同的量，調整係數值規定在 §6（0.2／0.4／0.6，非高碳洩漏者為 1），不要混用。費率本身不在《碳費收費辦法》裡，而是由環境部公告：，一般費率 NT$300／公噸 CO2e，優惠費率 A 為 NT$50（達行業別指定削減率）、優惠費率 B 為 NT$100（達技術標竿指定削減率），自 2025/01/01 起算。\n\n⚠️ **本題解析已更正** ——\n\n**113年10月7日只是碳費費率審議會「完成審議」的日期；環境部於10月8日進行預告，正式「公告」碳費徵收費率的日期是113年10月21日（生效日仍為114年1月1日）。解析把審議會決議日與正式公告日誤植為同一天。**\n　依據（https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284）逐字：「於113年10月21日公告「碳費徵收費率」，並訂於114年1月1日生效」",
       "subject": null,
       "topic_tags": [
         "碳費",
@@ -7193,7 +7193,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "依《自主減量計畫管理辦法》§11，事業之自主減量計畫經中央主管機關核定後，於每年 6 月 30 日前申請者當年度起、7 月 1 日後申請者次年度起得適用優惠費率。優惠費率 A（NT$50）對應之「行業別指定削減率」（或符合 SBTi 1.5°C 目標）；優惠費率 B（NT$100）對應「技術標竿削減率」。費率金額本身載於環境部公告，非《碳費收費辦法》§8（§8 為發電業電力消費排放量證明扣除）。\n\n⚠️ **本題解析已更正** ——\n\n**「碳費徵收對象溫室氣體減量指定目標」與《碳費收費辦法》《自主減量計畫管理辦法》同屬碳費三子法，於113年8月29日一併發布，並非10/07。10/7是碳費費率審議會完成審議「費率」（NT$300/50/100）的日期，審議標的是費率而非指定目標；解析把兩件事的日期混為一談。**\n　依據（https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html）逐字：「環境部於113年8月29日發布「碳費收費辦法」及「自主減量計畫管理辦法」，並公告「碳費徵收對象溫室氣體減量指定目標」」\n\n**更正後應為**：改為：優惠費率 A（NT$50）對應環境部113/08/29公告「碳費徵收對象溫室氣體減量指定目標」之「行業別指定削減率」（或符合SBTi 1.5°C目標）；優惠費率 B（NT$100）對應「技術標竿削減率」。",
+      "explanation": "依《自主減量計畫管理辦法》§11，事業之自主減量計畫經中央主管機關核定後，於每年 6 月 30 日前申請者當年度起、7 月 1 日後申請者次年度起得適用優惠費率。優惠費率 A（NT$50）對應之「行業別指定削減率」（或符合 SBTi 1.5°C 目標）；優惠費率 B（NT$100）對應「技術標竿削減率」。費率金額本身載於環境部公告，非《碳費收費辦法》§8（§8 為發電業電力消費排放量證明扣除）。\n\n⚠️ **本題解析已更正** ——\n\n**「碳費徵收對象溫室氣體減量指定目標」與《碳費收費辦法》《自主減量計畫管理辦法》同屬碳費三子法，於113年8月29日一併發布，並非10/07。10/7是碳費費率審議會完成審議「費率」（NT$300/50/100）的日期，審議標的是費率而非指定目標；解析把兩件事的日期混為一談。**\n　依據（https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html）逐字：「環境部於113年8月29日發布「碳費收費辦法」及「自主減量計畫管理辦法」，並公告「碳費徵收對象溫室氣體減量指定目標」」",
       "subject": null,
       "topic_tags": [
         "碳費",
@@ -8501,7 +8501,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "我國上市櫃公司氣候相關財務揭露之直接法源並非《氣候變遷因應法》§36（§36 規範的是核配排放額度之帳戶開立、移轉交易與超額量扣減抵銷，與財務揭露無關），而是金管會職權：(1) 金管會 2023/08/17 公告、2024/08 滾動修訂之「我國接軌 IFRS 永續揭露準則藍圖」，分階段（資本額 100 億元以上 2026 年、50 億 2027 年、其餘 2028 年）強制適用 IFRS S1（永續一般揭露）／S2（氣候）；(2)《公開發行公司年報應行記載事項準則》§10-4 載明氣候相關事項應於年報揭露之內容。\n\n⚠️ **本題解析已更正** ——\n\n**《公開發行公司年報應行記載事項準則》全法規逐條核對，根本沒有「第10-4條」這一條。氣候相關資訊之揭露，依§10第一項第三款第五目規定應揭露於附表二之二之三；而依IFRS永續揭露準則（S1/S2）編製與揭露永續相關財務資訊之規範格式，是2024/2025年金管會新增的「第10-1條」（第十條之一），不是「§10-4」。新聞稿也證實金管會修正的是「第七條、第十條之一、第二十三條」，同樣沒有10-4。此外source_url（fsc.gov.tw/ch/home.jsp?id=130...）本身已失效（跳轉至/ch/error.jsp錯誤頁），無法支持任何引文。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0400022&flno=10-1）逐字：「符合第七條第二項一定條件之公司,其永續相關財務資訊之編製及揭露,應依下列各款及有關法令辦理,其未規定者,依本會認可之國際財務報導準則永續揭露準則(以下簡稱永續揭露準則)辦理」\n\n**更正後應為**：將「§10-4」改為「§10-1（第十條之一）」。其餘關於金管會2023/08/17發布、分階段（資本額100億以上2026年、50億以上2027年、其餘2028年）強制適用IFRS S1/S2之敘述，已透過金管會/交易所新聞稿與第三方報導核實無誤（三階段門檻與年度完全相符）。",
+      "explanation": "我國上市櫃公司氣候相關財務揭露之直接法源並非《氣候變遷因應法》§36（§36 規範的是核配排放額度之帳戶開立、移轉交易與超額量扣減抵銷，與財務揭露無關），而是金管會職權：(1) 金管會 2023/08/17 公告、2024/08 滾動修訂之「我國接軌 IFRS 永續揭露準則藍圖」，分階段（資本額 100 億元以上 2026 年、50 億 2027 年、其餘 2028 年）強制適用 IFRS S1（永續一般揭露）／S2（氣候）；(2)《公開發行公司年報應行記載事項準則》§10-4 載明氣候相關事項應於年報揭露之內容。\n\n⚠️ **本題解析已更正** ——\n\n**《公開發行公司年報應行記載事項準則》全法規逐條核對，根本沒有「第10-4條」這一條。氣候相關資訊之揭露，依§10第一項第三款第五目規定應揭露於附表二之二之三；而依IFRS永續揭露準則（S1/S2）編製與揭露永續相關財務資訊之規範格式，是2024/2025年金管會新增的「第10-1條」（第十條之一），不是「§10-4」。新聞稿也證實金管會修正的是「第七條、第十條之一、第二十三條」，同樣沒有10-4。此外source_url（fsc.gov.tw/ch/home.jsp?id=130...）本身已失效（跳轉至/ch/error.jsp錯誤頁），無法支持任何引文。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0400022&flno=10-1）逐字：「符合第七條第二項一定條件之公司,其永續相關財務資訊之編製及揭露,應依下列各款及有關法令辦理,其未規定者,依本會認可之國際財務報導準則永續揭露準則(以下簡稱永續揭露準則)辦理」",
       "subject": null,
       "topic_tags": [
         "金管會",
@@ -8630,7 +8630,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "《溫室氣體自願減量專案管理辦法》§12 規定：「中央主管機關應就溫室氣體減量措施類型，審定具備專案範疇、適用條件、專案邊界、基線情境及專案情境等內容之溫室氣體減量方法」，。截至 2025 年初，環境部公告認可之減量方法已逾 140 項（首批 2025/02 公告），來源包含本國新訂與外部方法學（CDM、VCS、GS）審定通過者。注意：§7 為「計入期年限」之規定，非方法學條。\n\n⚠️ **本題解析已更正** ——\n\n**《溫室氣體自願減量專案管理辦法》§12全文只有兩項（第一項、第二項），並無第三項。第一項規範中央主管機關應審定減量方法；緊接著的第二項才是「前項審定之溫室氣體減量方法，中央主管機關應公開於指定資訊平台」——條文本身就用「前項」二字指稱其為第一項的下一項（即第二項），可見這句話是第二項，不是第三項。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=12）逐字：「中央主管機關應就溫室氣體減量措施類型,審定具備專案範疇、適用條件、專案邊界、基線情境及專案情境等內容之溫室氣體減量方法。必要時,並得於審定時,指定溫室氣體減量方法中減量措施或減量成果之確證或查證方式。\n前項審定之溫室氣體減量方法,中央主管機關應公開於指定資訊平台。」\n\n**更正後應為**：將「同條第三項規定」改為「同條第二項規定」。§12第一項本文引文、§7側註（計入期年限規定，非方法學條）皆核實無誤，正解本身仍成立。",
+      "explanation": "《溫室氣體自願減量專案管理辦法》§12 規定：「中央主管機關應就溫室氣體減量措施類型，審定具備專案範疇、適用條件、專案邊界、基線情境及專案情境等內容之溫室氣體減量方法」，。截至 2025 年初，環境部公告認可之減量方法已逾 140 項（首批 2025/02 公告），來源包含本國新訂與外部方法學（CDM、VCS、GS）審定通過者。注意：§7 為「計入期年限」之規定，非方法學條。\n\n⚠️ **本題解析已更正** ——\n\n**《溫室氣體自願減量專案管理辦法》§12全文只有兩項（第一項、第二項），並無第三項。第一項規範中央主管機關應審定減量方法；緊接著的第二項才是「前項審定之溫室氣體減量方法，中央主管機關應公開於指定資訊平台」——條文本身就用「前項」二字指稱其為第一項的下一項（即第二項），可見這句話是第二項，不是第三項。**\n　依據（https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=12）逐字：「中央主管機關應就溫室氣體減量措施類型,審定具備專案範疇、適用條件、專案邊界、基線情境及專案情境等內容之溫室氣體減量方法。必要時,並得於審定時,指定溫室氣體減量方法中減量措施或減量成果之確證或查證方式。\n前項審定之溫室氣體減量方法,中央主管機關應公開於指定資訊平台。」",
       "subject": null,
       "topic_tags": [
         "自願減量",
@@ -9562,7 +9562,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "— 此即 ISSB 採用之「單一財務重大性」(single financial materiality)。「任何對人類或環境有顯著影響之永續議題，無論對企業現金流是否有影響」描述的是 ESRS「雙重重大性」中的 impact materiality 面向，不在 IFRS S1 的範圍內。\n\n⚠️ **本題解析已更正** ——\n\n**這句英文原文其實是 IFRS S1 第3段的文字，不是第17段。第17段的實際條文是：「An entity shall disclose material information about the sustainability-related risks and opportunities that could reasonably be expected to affect the entity's prospects.」—— 用的是「prospects」這個定義用詞（其定義才回頭連到第3段的 cash flows/finance/cost of capital 那句話），第17段本身並沒有逐字出現解析引用的那句話。§18 才是重大性（omitting, misstating or obscuring...）的定義，這部分解析是對的；但把第3段的話安到第17段頭上，是條號錯位。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs1.html）逐字：「This Standard requires an entity to disclose information about all sustainability-related risks and opportunities that could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital over the short, medium or long term. For the purposes of this Standard, these risks and opportunities are collectively referred to as 'sustainability-related risks and opportunities that could reasonably be expected to affect the entity's prospects'.」\n\n**更正後應為**：改成：「依 IFRS S1 §3，本準則要求企業揭露 could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital... 之永續相關風險與機會（此即 §17 所稱之 entity's prospects）；§18 進一步定義重大性 = omitting, misstating or obscuring...」",
+      "explanation": "— 此即 ISSB 採用之「單一財務重大性」(single financial materiality)。「任何對人類或環境有顯著影響之永續議題，無論對企業現金流是否有影響」描述的是 ESRS「雙重重大性」中的 impact materiality 面向，不在 IFRS S1 的範圍內。\n\n⚠️ **本題解析已更正** ——\n\n**這句英文原文其實是 IFRS S1 第3段的文字，不是第17段。第17段的實際條文是：「An entity shall disclose material information about the sustainability-related risks and opportunities that could reasonably be expected to affect the entity's prospects.」—— 用的是「prospects」這個定義用詞（其定義才回頭連到第3段的 cash flows/finance/cost of capital 那句話），第17段本身並沒有逐字出現解析引用的那句話。§18 才是重大性（omitting, misstating or obscuring...）的定義，這部分解析是對的；但把第3段的話安到第17段頭上，是條號錯位。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs1.html）逐字：「This Standard requires an entity to disclose information about all sustainability-related risks and opportunities that could reasonably be expected to affect the entity's cash flows, its access to finance or cost of capital over the short, medium or long term. For the purposes of this Standard, these risks and opportunities are collectively referred to as 'sustainability-related risks and opportunities that could reasonably be expected to affect the entity's prospects'.」",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S1",
@@ -9709,7 +9709,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "依 IFRS S2 §15(a)–(b)，企業應揭露氣候相關風險與機會對「當期財務狀況、財務績效及現金流量」與「預期影響」之定量資訊；「僅須以定性敘述方式揭露，無須量化」是過時的 TCFD 早期實務，非 IFRS S2 之強制要求；而「不允許使用區間或範圍估計」則與 §16 直接衝突。\n\n⚠️ **本題解析已更正** ——\n\n**「single amount or a range」是 IFRS S2 第17段的文字，不是第16段。第16段的內容是要求揭露「(a) 氣候相關風險與機會如何影響當期財務狀況、財務績效及現金流量」等量化與質化資訊的項目清單，並未出現「單一金額或區間」這個措辭。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html）逐字：「16 Specifically, an entity shall disclose quantitative and qualitative information about: (a) how climate-related risks and opportunities have affected its financial position, financial performance and cash flows for the reporting period ... 17 In providing quantitative information, an entity may disclose a single amount or a range.」\n\n**更正後應為**：改成：「§16 規定應揭露的量化/質化項目清單；§17 進一步指出，提供量化資訊時得以『單一金額或區間』(single amount or range) 呈現。」",
+      "explanation": "依 IFRS S2 §15(a)–(b)，企業應揭露氣候相關風險與機會對「當期財務狀況、財務績效及現金流量」與「預期影響」之定量資訊；「僅須以定性敘述方式揭露，無須量化」是過時的 TCFD 早期實務，非 IFRS S2 之強制要求；而「不允許使用區間或範圍估計」則與 §16 直接衝突。\n\n⚠️ **本題解析已更正** ——\n\n**「single amount or a range」是 IFRS S2 第17段的文字，不是第16段。第16段的內容是要求揭露「(a) 氣候相關風險與機會如何影響當期財務狀況、財務績效及現金流量」等量化與質化資訊的項目清單，並未出現「單一金額或區間」這個措辭。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html）逐字：「16 Specifically, an entity shall disclose quantitative and qualitative information about: (a) how climate-related risks and opportunities have affected its financial position, financial performance and cash flows for the reporting period ... 17 In providing quantitative information, an entity may disclose a single amount or a range.」",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S2",
@@ -9779,7 +9779,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "依 IFRS S2 Appendix B 關於衡量不確定性之揭露要求，當以區間或估計方式揭露氣候相關財務影響時，企業應揭露：(1) 衡量不確定性的程度；(2) 所使用之輸入值、假設與估計技術；(3) 必要時說明為何無法提供更精確之金額；(4) 預計後續期間之影響因素。此屬強制揭露項目，並適用於所有範疇排放對應之財務影響，非僅限範疇 1。\n\n⚠️ **本題解析已更正** ——\n\n**這組揭露要求（識別高度不確定金額、揭露不確定性來源、揭露衡量時所用之假設/近似值/判斷、揭露預期不確定性之解決時點與變動說明）規定在 IFRS S1 本文第77–82段，段落標題就是「Measurement uncertainty」——這是 IFRS S1（一般規定），不是 IFRS S2（氣候揭露），而且是本文段落，不是任何一部的 Appendix B。IFRS S2 全文只在第19(b)段出現過一次「measurement uncertainty」，內容是『企業可以不提供量化資訊』的豁免條件之一，性質是免揭露的理由，不是揭露義務清單。IFRS S2 的 Appendix B 實際涵蓋的是氣候韌性評估、溫室氣體衡量方法、範疇2/3排放等產業別應用指引，跟衡量不確定性無關。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs1.html）逐字：「77 An entity shall disclose information to enable users of general purpose financial reports to understand the most significant uncertainties affecting the amounts reported in its sustainability-related financial disclosures. 78 An entity shall: (a) identify the amounts that it has disclosed that are subject to a high level of measurement uncertainty」\n\n**更正後應為**：改成：「依 IFRS S1 本文第77–82段（Measurement uncertainty）之揭露要求，企業應：(1) 識別具高度衡量不確定性之金額；(2) 揭露其不確定性來源及衡量時所用之假設、近似值與判斷；(3) 視情況揭露不確定性之預期解決時點與範圍。IFRS S2 第19(b)段則是把『衡量不確定性過高』列為可以不提供量化資訊的豁免理由之一。」",
+      "explanation": "依 IFRS S2 Appendix B 關於衡量不確定性之揭露要求，當以區間或估計方式揭露氣候相關財務影響時，企業應揭露：(1) 衡量不確定性的程度；(2) 所使用之輸入值、假設與估計技術；(3) 必要時說明為何無法提供更精確之金額；(4) 預計後續期間之影響因素。此屬強制揭露項目，並適用於所有範疇排放對應之財務影響，非僅限範疇 1。\n\n⚠️ **本題解析已更正** ——\n\n**這組揭露要求（識別高度不確定金額、揭露不確定性來源、揭露衡量時所用之假設/近似值/判斷、揭露預期不確定性之解決時點與變動說明）規定在 IFRS S1 本文第77–82段，段落標題就是「Measurement uncertainty」——這是 IFRS S1（一般規定），不是 IFRS S2（氣候揭露），而且是本文段落，不是任何一部的 Appendix B。IFRS S2 全文只在第19(b)段出現過一次「measurement uncertainty」，內容是『企業可以不提供量化資訊』的豁免條件之一，性質是免揭露的理由，不是揭露義務清單。IFRS S2 的 Appendix B 實際涵蓋的是氣候韌性評估、溫室氣體衡量方法、範疇2/3排放等產業別應用指引，跟衡量不確定性無關。**\n　依據（https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs1.html）逐字：「77 An entity shall disclose information to enable users of general purpose financial reports to understand the most significant uncertainties affecting the amounts reported in its sustainability-related financial disclosures. 78 An entity shall: (a) identify the amounts that it has disclosed that are subject to a high level of measurement uncertainty」",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S2",
