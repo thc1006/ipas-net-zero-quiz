@@ -202,4 +202,74 @@ describe('法條引文必須逐字', () => {
       '真的條文原文被判成捏造 —— 這道 gate 會製造假警報'
     ).toBe(true);
   });
+
+  // ── 條號存在性 ──────────────────────────────────────────────────
+  //
+  // ⚠️ **先說清楚這道 gate 抓不到什麼，免得它變成一句假的保證。**
+  //
+  // 第五輪的解析稽核找到一個真實的缺陷類別：**條號錯位**。
+  // 例如 `mock-008` 的解析寫「依《溫室氣體自願減量專案管理辦法》**第 6 條**，外加性指…」——
+  // 但「外加性分析」的定義在**第 2 條第六款**；**§6 講的是聯合共同提案，全文查無「外加性」**。
+  // 「第 2 條第**六款**」被寫成了「第 **6** 條」。
+  //
+  // **這道 gate 抓不到那個錯**，因為 §6 **是存在的**。
+  //
+  // 我試過三個機械規則想抓它，**三個都不合格**：
+  //   A. 條號必須存在        → 零假陽性，但抓不到 mock-008（§6 存在）
+  //   B. 條號緊鄰的「」引文須在該條 → 假陽性：引號裡常是**文件名稱**而非法條原文
+  //   C. 條號後的實質詞須出現在該條 → 假陽性一片，因為解析常寫**對比式／否定式**引用：
+  //      「§8 為發電業電力消費排放量證明扣除（**不是本題**）」
+  //      「§36 規範的是核配額度**與財務揭露無關**」
+  //      —— 這正是這個檔案開頭那段註解早就警告過的坑（「§3（非 §4）規定…」會被判成 §4）。
+  //      **一個假陽性比真陽性還多的檢查器沒有價值。**
+  //
+  // 所以：**條號歸屬的正確性目前沒有機械 gate**，只能靠稽核（見 metadata.explanation_audit）
+  // 與人工複驗。這句話寫在這裡，是為了不讓下面這道很弱的 gate 被誤當成保護傘。
+  //
+  // 下面這道只做一件事，而且只做得到這一件：**引到一個根本不存在的條號時變紅。**
+  // 零假陽性（條號要嘛在釘選法條裡、要嘛不在），成本為零。
+  it('解析引用的法條條號必須真的存在（釘選的 6 部法規）', () => {
+    const CN: Record<string, number> = {
+      一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9,
+    };
+    const toNum = (s: string): number => {
+      if (/^\d+$/.test(s)) return Number(s);
+      if (s === '十') return 10;
+      if (s.startsWith('十')) return 10 + (CN[s.slice(1)] ?? 0);
+      if (s.includes('十')) {
+        const [a, b] = s.split('十');
+        return (CN[a] ?? 0) * 10 + (b ? CN[b] ?? 0 : 0);
+      }
+      return CN[s] ?? 0;
+    };
+
+    // 別名一律沿用上面那份 ALIASES —— 不要在這裡再抄一份法規名稱清單。
+    // 「兩份清單一定會漂」在這個 repo 已經應驗過三次。
+    const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const pat = new RegExp(
+      `(?:《)?(${ALIASES.map(([n]) => esc(n)).join('|')})(?:》)?` +
+        `\\s*(?:第\\s*([0-9一二三四五六七八九十]+)\\s*條|§\\s*(\\d+))`,
+      'g'
+    );
+    const NAME2PCODE = new Map(ALIASES);
+
+    const check = (items: BankItem[], label: (i: BankItem) => string, bad: string[]) => {
+      for (const it of items) {
+        const ex = it.explanation ?? '';
+        if (!ex) continue;
+        for (const m of ex.matchAll(pat)) {
+          const pcode = NAME2PCODE.get(m[1])!;
+          const art = String(m[2] ? toNum(m[2]) : Number(m[3]));
+          if (!(art in PINNED[pcode].articles)) {
+            bad.push(`${label(it)}：解析引「${m[1]} 第 ${art} 條」—— 該法根本沒有這一條`);
+          }
+        }
+      }
+    };
+
+    const bad: string[] = [];
+    check(MAIN, (i) => i.id ?? `gist[${i.index}]`, bad);
+    check(POOL, (i) => i.id!, bad);
+    expect(bad, '解析引用了一個不存在的法條條號').toEqual([]);
+  });
 });

@@ -13240,7 +13240,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "COP28的全球盤點（Global Stocktake）結論中，認知到為將全球暖化限制在1.5°C，全球溫室氣體排放量應在2025年達到峰值。",
+      "explanation": "COP28 全球盤點決議（CMA.5）第 26 段的措辭是「**Recognizes the finding**（認知到 IPCC AR6 的研究發現）…based on **global modelled pathways**…that global GHG emissions are **projected to peak** between 2020 and at the latest **before 2025**」—— 是**認知到一個模型推估**，不是課予義務。\n\n⚠️ 同一段還明文寫著「**and notes that this does not imply peaking in all countries within this time frame**」（**這不代表所有國家都要在此期限內達峰**）。",
       "metadata": {
         "original_id": "c2-078",
         "_legacy_pipeline_metadata": {
@@ -13258,7 +13258,12 @@
             "quote": "global greenhouse gas emissions are projected to peak between 2020 and at the latest before 2025 in global modelled pathways that limit warming to 1.5",
             "supports_option": "B"
           }
-        ]
+        ],
+        "explanation_audit": {
+          "date": "2026-07-14",
+          "verdict": "fixed",
+          "what": "原解析寫「應在 2025 年達到峰值」—— 把決議的「認知到模型推估」寫成了規範義務，且刪去了決議自己的免責句（「這不代表所有國家都要在此期限內達峰」）。已改為逐字反映 CMA.5 §26。"
+        }
       }
     },
     {
