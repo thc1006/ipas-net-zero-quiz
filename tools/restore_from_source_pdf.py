@@ -47,6 +47,14 @@ import sys
 import urllib.request
 from pathlib import Path
 
+# 繁體中文 Windows 的預設 codepage 是 cp950 —— 而那正是這個專案的主要讀者。
+# 這支腳本印 ✓ / ✅ / 中文，在 cp950 下會直接 UnicodeEncodeError，**一題都還沒驗就死**。
+# DATA-PROVENANCE.md 的整篇論點是「每個宣稱都對應一個任何人都能自己跑一遍的檢查」——
+# 那個「任何人」如果在 Windows 上跑不動，這句話就是空的。
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+
 REPO = Path(__file__).resolve().parent.parent
 MANIFEST = REPO / 'quiz-app' / 'src' / 'data' / 'restoration-manifest.json'
 DATASET = REPO / 'quiz-app' / 'src' / 'data' / 'integrated_dataset.json'
@@ -173,6 +181,32 @@ def extract(pdf_path: Path):
             o['text'] = _tidy(o['text'])
         q['note'] = _tidy(' '.join(q['note']))
     return out
+
+
+# 來源 PDF 自己印的答案卡**是錯的**的題目。
+#
+# 這是一份刻意極小、且每一筆都必須附上一手依據的清單。預設一律以 PDF 的 answer key 為準
+# —— 它是我們的錨點，隨便推翻它，整條證據鏈就沒有意義了。
+# （實際上還發生過反過來的情況：一題 ISO 14064-1 強制揭露題，我們原本教 C、PDF 印 D，
+#   查證後是 **PDF 對、我們錯**。所以「來源錯了」這個結論必須拿得出條文。）
+#
+# 但「以來源為準」不等於「明知有錯還照抄」。差別在於：偏離必須被**記錄下來、附上憑據**，
+# 而不是安靜地改掉。這跟 transformations 是同一套規矩 —— 不允許沒被記錄的偏離。
+ANSWER_OVERRIDES = {
+    ('S_CHU_06', 94): {
+        'source_answer_key': 'D',
+        'corrected_answer': 'C',
+        'reason': 'PDF 的答案卡（D 以上皆非）與 ISO 14064-1:2018 對 base year 的定義不符。',
+        'evidence': (
+            'ISO 14064-1:2018 將「基準年（base year）」定義為：為了隨時間比較溫室氣體排放、'
+            '移除或其他溫室氣體相關資訊，而選定的特定歷史期間。'
+            '選項 C「與其他年份進行比較的參考年份」正是這個定義；'
+            'A（開始盤查的年份）與 B（設定減碳目標的年份）都不是，'
+            '故正解為 C，而非 D（以上皆非）。'
+        ),
+        'decided_on': '2026-07-13',
+    },
+}
 
 
 def patch_pdf_typos(qs, src_id):
@@ -420,6 +454,24 @@ def build(cache: Path):
                 sys.exit(f'✗ {item_id}: 沒有列明任何修正，raw 與 canonical 卻不同 —— '
                          '有未被記錄的轉換偷偷改動了來源文字。')
 
+            # 答案偏離來源 answer key 的，必須在 ANSWER_OVERRIDES 裡列明憑據。
+            ov = ANSWER_OVERRIDES.get((src_id, q['number']))
+            if ov:
+                if ov['source_answer_key'] != q['answer']:
+                    sys.exit(f'✗ {item_id}: override 宣稱來源答案是 '
+                             f'{ov["source_answer_key"]}，但 PDF 實際印的是 {q["answer"]} '
+                             '—— 來源檔可能已變動，這筆 override 必須重新確認。')
+                if ov['corrected_answer'] == q['answer']:
+                    sys.exit(f'✗ {item_id}: override 的更正答案與來源相同 —— 那不是 override。')
+                if it.get('answer') != ov['corrected_answer']:
+                    sys.exit(f'✗ {item_id}: 已列 override（應為 {ov["corrected_answer"]}），'
+                             f'但 dataset 實際是 {it.get("answer")}。')
+            elif it.get('answer') != q['answer']:
+                # 沒有列明憑據，卻偷偷跟來源不一樣 —— 這正是要根除的「沒被記錄的偏離」。
+                sys.exit(f'✗ {item_id}: dataset 答案 {it.get("answer")} 與 PDF 的 answer key '
+                         f'{q["answer"]} 不同，卻沒有列在 ANSWER_OVERRIDES 裡。'
+                         '要推翻來源的答案卡，必須拿得出一手依據。')
+
             entries.append({
                 'item_id': item_id,
                 'source_id': src_id,
@@ -429,6 +481,10 @@ def build(cache: Path):
                 'column': q['column'],
                 'source_question_number': q['number'],
                 'answer_key': q['answer'],           # PDF 自己印在題號前的答案
+                'answer_override': ({'corrected_answer': ov['corrected_answer'],
+                                     'reason': ov['reason'],
+                                     'evidence': ov['evidence'],
+                                     'decided_on': ov['decided_on']} if ov else None),
                 'raw_pdf_text_sha256': raw_h,
                 'canonical_source_text_sha256': canon_h,
                 'dataset_text_sha256': ds_hash,
@@ -552,13 +608,26 @@ def verify(cache: Path) -> int:
             print(f'  ✗ {e["item_id"]}: raw≠canonical={differs} 但 transformations '
                   f'{"有" if declared else "沒有"}列明 —— 兩者必須一致'); bad += 1
 
-    # 答案也要一致：dataset 的 answer 必須等於 PDF 自己印的 answer key
-    ans = [e['item_id'] for e in fresh['entries'] if e['dataset_answer'] != e['answer_key']]
+    # 答案要一致：dataset 的 answer 必須等於 PDF 自己印的 answer key ——
+    # **除非**那一題有列明一手依據的 answer_override（來源的答案卡本身是錯的）。
+    #
+    # 預設一律以來源的答案卡為錨點。隨便推翻它，整條證據鏈就沒有意義了。
+    # 但「以來源為準」不等於「明知有錯還照抄」—— 差別在於偏離必須被記錄下來、附上憑據。
+    ans = [e['item_id'] for e in fresh['entries']
+           if e['dataset_answer'] != e['answer_key'] and not e.get('answer_override')]
     if ans:
-        print(f'\n  ✗ 有 {len(ans)} 題的 answer 與 PDF answer key 不符：')
+        print(f'\n  ✗ 有 {len(ans)} 題的 answer 與 PDF answer key 不符，且**未列明 override**：')
         for iid in ans[:10]:
             print(f'      {iid}')
         bad += len(ans)
+
+    ov = [e for e in fresh['entries'] if e.get('answer_override')]
+    if ov:
+        print(f'\n  ℹ 有 {len(ov)} 題刻意偏離來源的 answer key（已列明一手依據）：')
+        for e in ov:
+            print(f'      {e["item_id"]}: PDF={e["answer_key"]} -> '
+                  f'{e["answer_override"]["corrected_answer"]}')
+            print(f'         {e["answer_override"]["reason"]}')
 
     print()
     if bad:

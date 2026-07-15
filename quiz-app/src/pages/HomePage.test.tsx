@@ -66,8 +66,8 @@ describe('HomePage', () => {
     render(<HomePage onStartQuiz={() => {}} />);
     const optInBtn = screen.getByRole('button', { name: '啟用加強練習池' });
     expect(optInBtn).toBeInTheDocument();
-    // 應顯示題數（157，與 practice_pool.json _meta.totals.total 同步）
-    expect(optInBtn.textContent).toMatch(/157/);
+    // 應顯示題數（154，與 practice_pool.json _meta.totals.total 同步）
+    expect(optInBtn.textContent).toMatch(/154/);
   });
 
   it('clicking opt-in badge opens PracticeOptInDialog (first-time flow)', () => {
@@ -142,7 +142,7 @@ describe('HomePage', () => {
     render(<HomePage onStartQuiz={() => {}} />);
     const tip = screen.getByTestId('practice-pool-tip');
     expect(tip).toBeInTheDocument();
-    expect(tip.textContent).toMatch(/55.*模擬.*102.*AI/);
+    expect(tip.textContent).toMatch(/54.*模擬.*100.*AI/);
     expect(tip.className).not.toMatch(/practice-pool-tip--enabled/);
   });
 
@@ -357,7 +357,7 @@ describe('HomePage', () => {
           currentIndex: 7,
           answers: new Array(7).fill({ questionId: 'x' }),
           startTime: Date.now(),
-          config: { mode: 'practice', subject: 'all', questionCount: 10, shuffleQuestions: false, shuffleOptions: false, showAnswerImmediately: true },
+          config: { mode: 'practice', subject: 'all', questionCount: 10, shuffleQuestions: false, showAnswerImmediately: true },
         },
       })
     );
@@ -381,7 +381,7 @@ describe('HomePage', () => {
           currentIndex: 3,
           answers: new Array(3).fill({ questionId: 'x' }),
           startTime: Date.now(),
-          config: { mode: 'practice', subject: 'all', questionCount: 10, shuffleQuestions: false, shuffleOptions: false, showAnswerImmediately: true },
+          config: { mode: 'practice', subject: 'all', questionCount: 10, shuffleQuestions: false, showAnswerImmediately: true },
         },
       })
     );
@@ -403,7 +403,7 @@ describe('HomePage', () => {
           currentIndex: 1,
           answers: [],
           startTime: Date.now(),
-          config: { mode: 'practice', subject: 'all', questionCount: 10, shuffleQuestions: false, shuffleOptions: false, showAnswerImmediately: true },
+          config: { mode: 'practice', subject: 'all', questionCount: 10, shuffleQuestions: false, showAnswerImmediately: true },
         },
       })
     );

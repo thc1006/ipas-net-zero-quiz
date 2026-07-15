@@ -12,6 +12,7 @@ import type {
 
 // 載入原始資料（build 時會被 Vite 處理）
 import rawData from './integrated_dataset.json';
+import { dedupeByContent as sharedDedupe } from '../utils/question-identity';
 
 /** 原始題庫資料 */
 export const dataset: QuizDataset = rawData as QuizDataset;
@@ -27,6 +28,33 @@ export const stats = {
 };
 
 /**
+ * 蒐集一題所有可顯示的來源 URL。
+ *
+ * 兩個欄位都要看：
+ *   metadata.sources[]  —— 大部分題目用這個
+ *   source.url          —— 由來源 PDF 重建的 230 題用這個（結構化的 source 物件）
+ *
+ * 先前 UI 只讀 metadata.sources，於是那 230 題**明明有指向來源 PDF 的連結，
+ * 卻永遠不會顯示出來** —— 學生本來可以點進去看原始題目，卻看不到。
+ * 「每題附來源」這個賣點，有一半是因為 UI 沒讀而落空的。
+ *
+ * 注意 gist 題目的 source 是字串 'gist'（不是物件），要濾掉。
+ */
+function collectSources(q: {
+  metadata?: { sources?: string[] };
+  source?: unknown;
+}): string[] | undefined {
+  const urls = [...(q.metadata?.sources ?? [])];
+  const src = q.source;
+  if (src && typeof src === 'object' && 'url' in src) {
+    const u = (src as { url?: unknown }).url;
+    if (typeof u === 'string' && /^https?:\/\//.test(u)) urls.push(u);
+  }
+  const uniq = [...new Set(urls.filter((u) => typeof u === 'string' && /^https?:\/\//.test(u)))];
+  return uniq.length > 0 ? uniq : undefined;
+}
+
+/**
  * 將 Gist 題目轉換為統一格式
  */
 function convertGistQuestion(q: GistQuestion): QuizQuestion {
@@ -39,7 +67,7 @@ function convertGistQuestion(q: GistQuestion): QuizQuestion {
     sourceType: 'gist',
     year: null,
     hasAnswer: q.answer !== null,
-    sources: q.metadata?.sources,
+    sources: collectSources(q),
     explanation: q.explanation,
   };
 }
@@ -57,7 +85,7 @@ function convertUniqueQuestion(q: UniqueQuestion): QuizQuestion {
     sourceType: 'unique',
     year: q.year,
     hasAnswer: q.answer !== null,
-    sources: q.metadata?.sources,
+    sources: collectSources(q),
     explanation: q.explanation ?? undefined,
   };
 }
@@ -102,19 +130,13 @@ export function getQuestionsBySubject(
  * 所以在「抽題」這一層依內容去重，資料層不動。
  */
 export function dedupeByContent(qs: QuizQuestion[]): QuizQuestion[] {
-  const seen = new Set<string>();
-  return qs.filter((q) => {
-    const sig =
-      q.stem.replace(/\s+/g, '') +
-      '||' +
-      q.options
-        .map((o) => o.text.replace(/\s+/g, ''))
-        .sort()
-        .join('|');
-    if (seen.has(sig)) return false;
-    seen.add(sig);
-    return true;
-  });
+  // 指紋的定義搬到 utils/question-identity.ts，與 CI 的重複檢查**共用同一套**。
+  //
+  // 原本這裡是 `.replace(/\s+/g, '')` —— **只剝空白**，而 CI 的 gate 用的是
+  // NFKC + 剝掉標點與分隔符。兩套定義不一致的後果：CI 擋得住的重複，
+  // 使用者的考卷上照樣會出現兩次（實測有 5 組重複是被 U+2011/U+2013 連字號、
+  // 「」vs “”、臺/台 遮住的）。gate 與執行期對「同一題」的定義必須是同一個。
+  return sharedDedupe(qs);
 }
 
 /**

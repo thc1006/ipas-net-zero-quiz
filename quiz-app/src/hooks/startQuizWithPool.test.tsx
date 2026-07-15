@@ -29,7 +29,7 @@ describe('useQuiz.startQuizWithPool', () => {
         subject: 'all',
         questionCount: 5,
         shuffleQuestions: true,
-        shuffleOptions: false,
+
         showAnswerImmediately: true,
         includePracticePool: false,
       });
@@ -54,7 +54,7 @@ describe('useQuiz.startQuizWithPool', () => {
         subject: 'all',
         questionCount: 400, // 取夠多，才會涵蓋到跨科重複的題目
         shuffleQuestions: false, // ← 走 dedupeByContent 的循序分支
-        shuffleOptions: false,
+
         showAnswerImmediately: true,
         includePracticePool: false,
       });
@@ -88,7 +88,7 @@ describe('useQuiz.startQuizWithPool', () => {
         subject: 'all',
         questionCount: 600,
         shuffleQuestions: true,
-        shuffleOptions: false,
+
         showAnswerImmediately: true,
         includePracticePool: true,
       });
@@ -112,7 +112,7 @@ describe('useQuiz.startQuizWithPool', () => {
         subject: 'all',
         questionCount: 30,
         shuffleQuestions: false,
-        shuffleOptions: false,
+
         showAnswerImmediately: false,
         includePracticePool: true,
       });
@@ -132,7 +132,7 @@ describe('useQuiz.startQuizWithPool', () => {
         subject: '考科1',
         questionCount: 50,
         shuffleQuestions: true,
-        shuffleOptions: false,
+
         showAnswerImmediately: true,
         includePracticePool: true,
       });

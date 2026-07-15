@@ -1,5 +1,34 @@
 // 還原憑證（restoration manifest）—— 讓「159 題都正確還原」這個宣稱可以被獨立驗證。
 //
+// ⚠️⚠️ **先讀這一段：這份 manifest 驗的是「忠實」，不是「正確」。** ⚠️⚠️
+//
+// `matches_source: true` 的意思是「repo 的文字 == 來源 PDF 的文字（+ 已列明的修正）」。
+// 它**證明不了那份 PDF 是對的**。
+//
+// 而 2026-07-14 我們發現：**來源 PDF `214245506.pdf` 本身就是壞的。**
+// 它的選項 **(C) 整欄位移了一題** —— 每一題的 (C) 都是「下一題的 (C)」：
+//
+//   Q33「產品碳足跡計算的生命週期評估依據哪份 **ISO 標準**文件？」
+//       的 (C) 竟然是「**場址特定數據**」——「場址特定數據」不是一份 ISO 標準。
+//   Q34「在組織邊界外所獲得的數據稱之為？」
+//       的 (C) 是「確保量化結果的全面性和準確性」，而且答案卡跟著錯（印 (A) 初級數據，
+//       正解是 (B) 次級數據 —— LCA 最基本的定義）。
+//
+// 題庫**忠實地複製了它**，所以這道 gate 一直是綠的。
+//
+// > **一個「忠實複製一份壞掉的來源」的檢查，永遠是綠的。**
+//
+// 最惡劣的是 q035 / q038：**答案就是 (C)，而 (C) 的文字是從別題偷來的誘答選項** ——
+// 使用者看到的「正解」，是另一題的錯誤答案。**答案字母對，內容全錯。**
+//
+// 8 題已依同一份模擬卷的**乾淨版本**（190841777.pdf，答案印在每題正右方欄位）修正，
+// 每一筆都登記在 `transformations[]`，兩題答案改動登記在 `answer_override`。
+//
+// **這道 gate 沒有壞 —— 它只是回答了一個比我們以為的更弱的問題。**
+// 真正能查「來源本身對不對」的，是 `tools/answer_key_crosscheck.py`：
+// 它拿題庫的答案去跟**多份獨立的**官方答案卡比對。那支要抓 PDF，CI 不跑它；
+// 結果凍在 `metadata.answer_key_check` / `answer_pinned`，由離線 gate 釘住。
+//
 // 問題：repo 裡原本的測試只驗「總題數對不對、選項結構對不對、答案字母在不在選項裡」。
 // 這些都證明不了「每一道還原題確實對應到來源 PDF 的哪一頁、哪一欄、第幾題、
 // answer key 是什麼」。也就是說，那個宣稱光看 repo 內容是無法重現的。
@@ -43,8 +72,15 @@ interface DsItem {
   exam_subject?: string;
   source?: { source_id?: string };
 }
+interface AnswerOverride {
+  corrected_answer: string;
+  reason: string;
+  evidence: string;
+  decided_on: string;
+}
 interface Entry {
   item_id: string;
+  answer_override?: AnswerOverride | null;
   source_id: string;
   source_document: string;
   source_sha256: string;
@@ -134,12 +170,49 @@ describe('restoration manifest', () => {
     expect(bad).toEqual([]);
   });
 
-  it('每題的 answer 必須等於 PDF 自己印的 answer key', () => {
+  // 預設一律以**來源 PDF 自己印的 answer key** 為錨點。隨便推翻它，整條證據鏈就沒有意義了
+  // ——「這題我覺得應該是 C」不是理由。實際上還發生過反過來的情況：一題 ISO 14064-1
+  // 強制揭露題，我們原本教 C、PDF 印 D，查證後是 **PDF 對、我們錯**。
+  //
+  // 但「以來源為準」不等於「明知有錯還照抄」。差別在於：偏離必須被**記錄下來、附上一手依據**，
+  // 而不是安靜地改掉。這跟 transformations 是同一套規矩 —— **不允許沒被記錄的偏離**。
+  it('每題的 answer 必須等於 PDF 的 answer key —— 除非有列明依據的 answer_override', () => {
     const bad = RESTORED.filter((it) => {
       const e = BY_ID.get(it.item_id);
-      return !e || e.answer_key !== it.answer || e.dataset_answer !== it.answer;
-    }).map((it) => `${it.item_id}: dataset=${it.answer} manifest_key=${BY_ID.get(it.item_id)?.answer_key}`);
+      if (!e) return true;
+      if (e.dataset_answer !== it.answer) return true;          // manifest 與 dataset 自己就對不上
+      if (e.answer_key === it.answer) return false;             // 與來源一致 -> 正常
+      // 與來源不一致 -> 必須有 override，且 override 說的就是現在這個答案
+      return !e.answer_override || e.answer_override.corrected_answer !== it.answer;
+    }).map(
+      (it) =>
+        `${it.item_id}: dataset=${it.answer} PDF_key=${BY_ID.get(it.item_id)?.answer_key}` +
+        `（要偏離來源的答案卡，必須在 ANSWER_OVERRIDES 列明一手依據）`
+    );
     expect(bad).toEqual([]);
+  });
+
+  it('每一筆 answer_override 都必須附上理由與一手依據，且真的與來源不同', () => {
+    const overrides = MAN.entries.filter((e) => e.answer_override);
+    // 前提：真的存在 override，否則下面在空轉
+    expect(overrides.length, '沒有任何 answer_override —— 這條測試在空轉').toBeGreaterThan(0);
+    for (const e of overrides) {
+      const o = e.answer_override!;
+      expect(o.reason, `${e.item_id} 的 override 沒寫理由`).toBeTruthy();
+      expect(o.evidence, `${e.item_id} 的 override 沒附一手依據`).toBeTruthy();
+      expect(o.decided_on, `${e.item_id} 的 override 沒記日期`).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(
+        o.corrected_answer,
+        `${e.item_id} 的 override 更正答案與來源相同 —— 那不是 override`
+      ).not.toBe(e.answer_key);
+    }
+  });
+
+  // override 是刻意極小的清單。它一旦變大，就代表我們開始習慣性推翻來源 ——
+  // 那時候該檢討的是「來源選錯了」，不是「再多加一筆例外」。
+  it('answer_override 必須是極少數（超過 5 筆代表來源本身有問題，該重新檢討）', () => {
+    const n = MAN.entries.filter((e) => e.answer_override).length;
+    expect(n, `目前有 ${n} 筆 override —— 太多了，該檢討的是來源的選擇`).toBeLessThanOrEqual(5);
   });
 
   it('每題都要有可追溯的來源座標（PDF sha256 / 頁碼 / 欄位 / 題號）', () => {

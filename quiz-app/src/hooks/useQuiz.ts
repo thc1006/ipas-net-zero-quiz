@@ -49,7 +49,6 @@ export const defaultConfig: QuizConfig = {
   subject: 'all',
   questionCount: 20,
   shuffleQuestions: true,
-  shuffleOptions: false,
   showAnswerImmediately: true,
 };
 
@@ -82,14 +81,6 @@ export function useQuiz() {
       // 順序取題（同樣依內容去重：跨科重複在 'all' 模式下會同時落進池子）
       const pool = dedupeByContent(getQuestionsBySubject(config.subject));
       questions = pool.slice(0, config.questionCount);
-    }
-
-    // 如果需要打亂選項順序
-    if (config.shuffleOptions) {
-      questions = questions.map((q) => ({
-        ...q,
-        options: shuffleArray([...q.options]),
-      }));
     }
 
     setState({
@@ -157,13 +148,6 @@ export function useQuiz() {
             : subjectFiltered;
         questions = answerFiltered.slice(0, config.questionCount);
       }
-    }
-
-    if (config.shuffleOptions) {
-      questions = questions.map((q) => ({
-        ...q,
-        options: shuffleArray([...q.options]),
-      }));
     }
 
     setState({
@@ -400,16 +384,6 @@ export function useQuiz() {
     softReset,
     resumeQuiz,
   };
-}
-
-// 工具函數：打亂陣列
-function shuffleArray<T>(array: T[]): T[] {
-  const result = [...array];
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-  return result;
 }
 
 export default useQuiz;

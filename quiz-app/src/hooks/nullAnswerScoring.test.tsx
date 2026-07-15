@@ -32,7 +32,7 @@ const baseConfig: QuizConfig = {
   subject: 'all',
   questionCount: 2000, // 取滿，確保整個池子（含 fixture-6）都被納入
   shuffleQuestions: false, // 循序 → 決定性，抓得到 fixture-6
-  shuffleOptions: false,
+
   showAnswerImmediately: true,
   includePracticePool: true,
 };
@@ -142,7 +142,15 @@ describe('無標準答案的題目（answer=null + ambiguous）不得計分', ()
 
     // 分母：只能算有答案的題目。若把無答案題也算進分母，分數會被無聲稀釋。
     expect(r.totalAnswerable).toBe(questions.filter((q) => q.hasAnswer).length);
-    expect(r.totalAnswerable).toBe(questions.length - 1); // 池子裡剛好一題無答案
+
+    // 不可以寫成 `questions.length - 1`。
+    // 那假設了「主題庫零題無答案」—— 一個**規則上允許為假**的前提
+    // （question-integrity 明確允許 ambiguous + answer=null）。
+    // 主題庫後來真的多了 4 題排除計分的題目，這條就假性變紅了。
+    // 從資料實算，不要寫死。
+    const noAnswer = questions.filter((q) => !q.hasAnswer).length;
+    expect(noAnswer, '沒有任何無答案題 —— 這條測試在空轉').toBeGreaterThan(0);
+    expect(r.totalAnswerable).toBe(questions.length - noAnswer);
 
     // 我們答對 1 題、又「答了」1 題無答案題。
     // 正確行為：correct=1、wrong=0 —— 那題無答案的兩邊都不算。

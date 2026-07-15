@@ -43,6 +43,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 這一步驗的是「內容變了沒」，不是「連結還通不通」——
+      # 這個 workflow 其餘部分只做後者，而後者驗不出兩件已經發生過的事：
+      #   1. 連結是活的，但指到錯的法規（19 題碳費題引到溫管辦法，兩個 URL 都回 200）
+      #   2. 連結是活的，但法條被修訂了 —— 網址永遠是 200，內容卻已經不同
+      #
+      # 釘選檔 law-articles.pinned.json 存了題庫引用到的每一部法規的逐條原文與 sha256。
+      # 這裡重新抓一次、比 sha256：**法規一被修訂，這一步就紅**，然後有人必須去看
+      # 哪些題目受影響。這是整個 repo 第一個能偵測來源「內容」變動的機制。
+      - name: 法條原文是否仍與釘選檔一致
+        id: lawpin
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          python3 tools/pin_law_articles.py --check
+
       - name: Find time-sensitive 題目 + URLs
         id: list
         run: |
@@ -268,12 +283,61 @@ jobs:
               console.log('已開新 issue');
             }
 
+      # 法條被修訂 —— 這是連結檢查永遠抓不到的那種變動（網址全程 200）。
+      - name: Open issue if 法條原文變了
+        if: steps.lawpin.outcome == 'failure' && (github.event_name == 'schedule' || github.event.inputs.open_issue == 'true')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = '⚖️ 釘選的法條原文已變動 —— 請人工確認修法內容';
+            const body = [
+              '`tools/pin_law_articles.py --check` 偵測到 **法規條文與釘選檔不一致**。',
+              '',
+              '**這不是連結失效。** 網址仍然是 200 —— 是**內容變了**：',
+              '題庫引用的法條可能已被修訂，題目的答案、解析、引文都可能因此過時。',
+              '連結健康檢查永遠抓不到這種變動，所以才有這個檢查。',
+              '',
+              '### 該做什麼',
+              '1. 看 workflow log，哪一部法的 sha256 對不上、條數有沒有變',
+              '2. 到全國法規資料庫比對修法內容（沿革頁會列出修正條文）',
+              '3. 檢查引用到該條的題目：答案還對嗎？解析裡的引文還逐字嗎？',
+              '4. 修完題目後，重新釘選：`python tools/pin_law_articles.py`',
+              '',
+              `— 由 [quarterly-time-sensitive-verify](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) 自動開立`,
+            ].join('\n');
+            const { data: open } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', labels: 'law-drift',
+            });
+            if (open.length) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: open[0].number, body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: ['law-drift', 'content-currency'],
+              });
+            }
+
       - name: Summary
         if: always()
         run: |
           {
             echo "## Quarterly time-sensitive verify summary"
             echo ""
+            if [ "${{ steps.lawpin.outcome }}" = 'failure' ]; then
+              echo "### ⚖️ 法條原文已變動"
+              echo ""
+              echo "> 釘選的法規條文與現行條文不一致 —— **法規可能已被修訂**。"
+              echo "> 這是連結檢查抓不到的那類變動（網址全程都是 200）。"
+              echo "> 受影響題目的答案與解析都需要重新確認。"
+              echo ""
+            else
+              echo "法條原文：與釘選檔一致 ✅"
+              echo ""
+            fi
             echo "URLs checked: **${{ steps.list.outputs.count }}**"
             echo ""
             echo "| 分類 | 判定條件 | 數量 | 開 issue？ |"

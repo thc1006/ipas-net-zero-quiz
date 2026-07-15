@@ -109,7 +109,7 @@ function makeResult(overrides: Partial<QuizResult> = {}): QuizResult {
       subject: 'all',
       questionCount: 1,
       shuffleQuestions: false,
-      shuffleOptions: false,
+
       showAnswerImmediately: true,
     },
     startTime: 1_700_000_000_000,

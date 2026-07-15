@@ -230,3 +230,61 @@ describe('question-integrity — 批次與輸出', () => {
     expect(s).toContain('answer_not_in_options');
   });
 });
+
+// 來源「網站」的殘留 —— 跟 PDF 頁首頁尾是不同的一類。
+//
+// 實際踩到的：兩題的題幹開頭是「【已刪除】90. 根據台灣環境部碳足跡計算指引…」。
+// 「【已刪除】」是 yamol 的頁面標題（該站自己把題目下架了）、「90.」是 yamol 的題號 ——
+// 都是來源站的**站內狀態**，不是題目內容。
+//
+// 造成兩個實際傷害：
+//   1. 使用者在畫面上直接看到「【已刪除】90.」這串垃圾
+//   2. 在考古題 .md 裡，它跟我們的墓碑慣例「【已刪除】」**撞名**，
+//      於是那 2 題被誤算成已刪除 —— 「可用題數」少報了 2 題
+//
+// 原本的 gate 只擋 PDF 的頁首頁尾（商研院、模擬試題），
+// **完全沒想到「來源是網站」的情況**。這條補上。
+describe('source_site_residue：題幹不得含來源網站的介面文字', () => {
+  const base = {
+    id: 'x',
+    options: [
+      { key: 'A', text: 'a' },
+      { key: 'B', text: 'b' },
+      { key: 'C', text: 'c' },
+      { key: 'D', text: 'd' },
+    ],
+    answer: 'A',
+    qualityFlags: [] as string[],
+    sourceUrls: [] as string[],
+  };
+  const rules = (stem: string) =>
+    checkQuestion({ ...base, stem }).map((v) => v.rule);
+
+  it('題幹含「【已刪除】」→ 報錯（那是來源站的下架標記，且與墓碑慣例撞名）', () => {
+    expect(rules('【已刪除】90. 根據碳足跡計算指引，一級數據佔比需達多少？')).toContain(
+      'source_site_residue'
+    );
+  });
+
+  it('題幹開頭殘留來源站的題號（「105. …」）→ 報錯', () => {
+    expect(rules('105. 透過製程地圖查看哪些環節碳排放較高，稱為什麼？')).toContain(
+      'source_site_residue'
+    );
+  });
+
+  it('乾淨的題幹不得誤報', () => {
+    expect(rules('根據碳足跡計算指引，一級數據佔上游排放比需達多少％？')).not.toContain(
+      'source_site_residue'
+    );
+  });
+
+  // 題幹裡「正常出現的數字」不可以被當成題號誤殺
+  it.each([
+    '2050 年淨零排放路徑的四大轉型策略為何？',
+    '第 26(2) 條的罰鍰是幾倍？',
+    'ISO 14064-1:2018 的六大類別中，何者屬於類別 4？',
+    '113 年 2 月 5 日環境部公告採用哪一版 GWP？',
+  ])('正常題幹不得誤報：%s', (stem) => {
+    expect(rules(stem)).not.toContain('source_site_residue');
+  });
+});

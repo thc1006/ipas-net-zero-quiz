@@ -14,15 +14,56 @@ export interface QuizOption {
  * Refs #69 — 改為明列欄位、移除 `[k: string]: unknown` 索引簽章使型別更嚴）
  */
 export interface MainBankItemMetadata {
-  answer_verified?: boolean;
-  verification_date?: string;
+  /**
+   * 「憑什麼相信這個答案」的**引用** —— 法條、CELEX、公告字號、ISO 條號、教材頁次。
+   *
+   * ⚠️ 它**不可以**是資料管線的註記。歷史上它曾經是：
+   *   - `"sync_from_310"`（270 題）—— 意思是「答案從 questions.json（309 題的舊檔）
+   *     **複製**過來」，而那個檔案 0 條來源、93% 的解析帶著捏造的引用編號。**複製不是查證。**
+   *     （`questions.json` 已於 2026-07-14 刪除：app 從來不載入它，它卻與出貨資料
+   *     有 8 題答案不一致 —— 保存的是更正**前**的錯答案，而回歸測試正對著它斷言。）
+   *   - `"batch_verification"`（72 題）—— 沒說驗了什麼。
+   *   - `"research_agent"`（14 題）—— AI 代理自評。
+   * 這三種值已被搬到 `_legacy_pipeline_metadata.answer_origin`，並由
+   * `metadata-honesty.test.ts` 擋住它們回來。
+   *
+   * 為什麼要緊：這個欄位是「改過答案就必須留下理由」那道 gate 的合法理由之一 ——
+   * **如果它可以是 "sync_from_310"，那道 gate 就等於不存在。**
+   */
   verification_source?: string;
   original_id?: string;
-  confidence?: string;
   /** 該題對應的 primary-source URL 陣列（PR #68 起寫入；季度 workflow 會 curl 驗） */
   sources?: string[];
   /** sources 上次 curl 驗 200 OK 的日期（YYYY-MM-DD） */
   sources_verified_date?: string;
+  /** 這一題的**時效性內容**實際查證到哪一天。只有 time_sensitive 的題目才有。 */
+  valid_as_of?: string;
+  /** 答案被更正前的舊答案 */
+  prior_answer?: string;
+  /** 題幹被修潤過的紀錄（是「偏離」，不是「來源」—— 不要放進 verification_source） */
+  stem_edit_note?: string;
+  stem_edit_note_recorded_on?: string;
+
+  /**
+   * **名字在說謊的舊欄位** —— 保留歷史，但不再冒充證據。
+   *
+   * `answer_verified: true` 出現在**全部 773 題**上，包括後來被證實答案是錯的 15 題；
+   * `sources_count: 3` 出現在 168 題上，而它們的 `sources` 根本不存在（幽靈計數）；
+   * `confidence: high` 是自評，沒有依據。
+   *
+   * **一個叫「已查證」但其實沒查證的欄位，比沒有這個欄位危險得多** ——
+   * 它會讓下一個人（或下一個 AI）跳過查證。詳見 `metadata-honesty.test.ts`。
+   */
+  _legacy_pipeline_metadata?: {
+    answer_verified?: boolean;
+    verification_date?: string;
+    verification_batch?: string;
+    sources_count?: number;
+    confidence?: string;
+    /** 舊的 verification_source，其實不是來源（sync_from_310 / batch_verification / research_agent） */
+    answer_origin?: string;
+    _why_moved?: string;
+  };
 }
 
 /** 來源資訊 */
@@ -135,7 +176,15 @@ export interface QuizConfig {
   subject: ExamSubject | 'all';
   questionCount: number;
   shuffleQuestions: boolean;
-  shuffleOptions: boolean;
+  // shuffleOptions 已移除（2026-07）。它是一段**不可達、零測試、而且啟用會壞掉**的死碼：
+  //   - HomePage 從來沒有它的開關，預設 false，**沒有任何使用者能打開它**
+  //   - 每一個測試都寫死 shuffleOptions: false，`true` 那條分支一行都沒跑過
+  //   - 它洗的是 {key,text} 物件陣列，但 QuestionCard 直接印 option.key 當字母
+  //     —— 真的啟用，畫面會變成「C. … A. … D. … B. …」
+  //
+  // 而且它本來也不該存在：主題庫是從來源 PDF 分欄重建的，選項順序有證據鏈
+  // （--verify 逐題比對），執行期洗牌會讓畫面上的題目與已驗證的來源不一致。
+  // 練習池原本的答案偏斜（永遠選 B 得 60 分）已在資料層重排解決（χ²=0.02）。
   /** 是否將加強練習池題目混入抽題範圍（須使用者已 opt-in） */
   includePracticePool?: boolean;
   showAnswerImmediately: boolean;
