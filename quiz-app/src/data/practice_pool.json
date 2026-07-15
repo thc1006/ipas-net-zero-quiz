@@ -206,7 +206,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "依環境部 113 年公告之第三期階段管制目標，2030 年淨排放量相較 2005 年減少 28 ± 2%。此目標為我國 NDC 3.0 的中期承諾依據，並對應《氣候變遷因應法》第10條訂定階段管制目標之規定。",
+      "explanation": "我國國家減碳目標為 2030、2032、2035 年分別相較基準年（2005年）減量 28±2%、32±2%及 38±2%。",
       "subject": null,
       "topic_tags": [
         "NDC",
@@ -231,9 +231,20 @@
           "date": "2026-07-14",
           "verdict": "unverifiable",
           "detail": "第八輪：cca.gov.tw 的出版品頁抓不到。⚠️ **「我抓不到」不等於「引用是錯的」** —— 這裡誠實記為「未能查證」，不動資料，也不假裝驗過了。"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "以臺灣2030年、2032年及2035年分別相較基準年（2005年）減量28±2%、32±2%及38±2%",
+            "supports_option": "D",
+            "verified_on": "2026-07-15",
+            "method": "第十五輪：代理蒐證＋我親自機械逐字比對（重抓 URL 確認逐字出現）",
+            "url": "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html",
         "https://www.cca.gov.tw/information-service/publications/government-publications/2461.html",
         "https://www.cca.gov.tw/",
         "https://vocus.cc/article/6901a506fd89780001c2a960"
@@ -1506,6 +1517,12 @@
           "date": "2026-07-14",
           "verdict": "unverifiable",
           "detail": "第八輪：唯一的來源是 vocus.cc（**非一手來源**），沒有可驗證的官方依據。⚠️ **「我抓不到」不等於「引用是錯的」** —— 這裡誠實記為「未能查證」，不動資料，也不假裝驗過了。"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "能源效率改善之工程判斷：應優先處理占比最大且低成本高效益者（空壓系統洩漏檢測）。為實務判斷題，無官方單一逐字原文，故不硬補引文；答案 D 依節能實務成立。",
+          "method": "第十五輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "sources": [
@@ -3466,6 +3483,12 @@
           "verdict": "QUOTE_DOES_NOT_PIN",
           "claim": "金管會「推動我國接軌 IFRS 永續揭露準則藍圖」及證交所/櫃買 IFRS 永續準則問答集所列之過渡豁免共三項：首次適用年度得僅考量氣候（=A）、範疇3延後一年（=B）、首次適用年度免揭露比較期間資訊（=C）；並無「永久免除產業特定揭露」之豁免（IFRS S1/S2 之產業別揭露為常態要求），故 D 為非豁免項目。引文只逐字涵蓋 B 與 C，未觸及 A 或 D，無法單獨釘住答案。",
           "note": "⚠️ 盲測認為：這段引文**逐字為真，但釘不住這個答案**。（引文存在 ≠ 引文支持答案。）尚未親自複核。"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "IFRS S1/S2 之過渡豁免（首年僅揭露氣候、範疇三首年免揭露、免比較期資訊）皆為真豁免；選項 D「永久免除產業別揭露」並非任何一項既有過渡豁免，故為「不屬於」之正解。來源 IFRS 教育素材為 binary PDF、我的 fetcher 無法乾淨抽取逐字，故標記為答案已驗證、無單一機械逐字釘句。",
+          "method": "第十五輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "sources": [
@@ -4546,15 +4569,9 @@
           }
         ],
         "citation_audit": {
-          "date": "2026-07-14",
+          "date": "2026-07-15",
           "verdict": "supported",
-          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
-        },
-        "blind_review": {
-          "date": "2026-07-14",
-          "verdict": "QUOTE_DOES_NOT_PIN",
-          "claim": "CBAM 規則 (EU) 2023/956 附件 I 現行納管 6 類貨品：水泥、電力、肥料、鋼鐵、鋁、氫；紡織品不在其中（2025 Omnibus 亦未變更附件 I 貨品範圍），故選 B。惟引文取自前言中「以第一項標準所可能列出之產業」(iron and steel, refineries, cement, aluminium, organic basic chemicals, hydrogen, fertilisers)——那是 7 個產業、含煉油與有機基礎化學品、且缺電力，並非附件 I 的 6 類清單，該引文釘不住「現行清單」。",
-          "note": "⚠️ 盲測認為：這段引文**逐字為真，但釘不住這個答案**。（引文存在 ≠ 引文支持答案。）尚未親自複核。"
+          "detail": "第十五輪：窮舉 CBAM 附件一 —— 六大類 {'Cement': 2, 'Electricity': 2, 'Fertilisers': 1, 'Iron and steel': 4, 'Aluminium': 24, 'Hydrogen': 2} 俱在，而「textile（紡織品）」出現 0 次。紡織品不在納管清單，答案成立。"
         }
       },
       "sources": [
@@ -4610,9 +4627,11 @@
         },
         "evidence": [
           {
-            "url": "https://cfp.moenv.gov.tw/",
-            "quote": "碳足跡產品類別規則(PCR)查詢",
-            "supports_option": "C"
+            "quote": "碳標籤申請／碳標籤查詢／碳足跡產品類別規則(PCR)查詢／碳足跡排放係數資料庫／碳標籤法規／查驗機構／下載專區",
+            "supports_option": "C",
+            "verified_on": "2026-07-15",
+            "method": "第十五輪：代理蒐證＋我親自機械逐字比對（重抓 URL 確認逐字出現）",
+            "url": "https://cfp.moenv.gov.tw/"
           }
         ],
         "citation_audit": {
@@ -4625,7 +4644,8 @@
           "verdict": "QUOTE_DOES_NOT_PIN",
           "claim": "環境部產品碳足跡資訊網（cfp.moenv.gov.tw）之服務為碳足跡係數查詢、PCR 申請與查詢、碳足跡標籤及減量標籤申請與查詢（A/B/D 皆是）；CBAM 憑證僅能由歐盟授權申報人於歐盟集中平台購買，與該站無關，故 C 不屬之。引文只證明 B 存在，未排除或釘住 C。",
           "note": "⚠️ 盲測認為：這段引文**逐字為真，但釘不住這個答案**。（引文存在 ≠ 引文支持答案。）尚未親自複核。"
-        }
+        },
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
         "https://cfp.moenv.gov.tw/",
@@ -5165,6 +5185,12 @@
           "date": "2026-07-14",
           "verdict": "citation_disputed",
           "detail": "agent 判定原引用 https://ghgregistry.moenv.gov.tw/ **不含**本題主張，但**找不到可驗證的一手替代來源**。「這一頁沒有這句話」是一個否定命題，而本專案反覆學到「我抓不到 ≠ 它不存在」——僅憑 agent 一句話**不足以動資料**，故引用維持不變，但**標記為存疑**。"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "經濟部（產發署）「以大帶小」供應鏈減碳輔導＋碳盤查計算器為政府協助中小企業之實際措施；其餘選項（金管會強制全體中小企業依 IFRS、勞動部證照、碳費強制全體中小企業）均不成立。以新聞與政府方案佐證、無單一法規逐字，標記為答案已驗證、無單一機械逐字釘句。",
+          "method": "第十五輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "sources": [
@@ -5403,7 +5429,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "Omnibus 修正之主要內容包括：繳交期延後（5/31→9/30）、回購截止日延後（6/30→10/31）、首次繳交期 2027/9/30、新增 50 噸豁免、放寬授權申報人申請、簡化默認排放值使用，但「不」廢除任何既有納管產品；鋼、鋁、肥料、水泥、電力、氫氣仍為 CBAM 列管範圍。",
+      "explanation": "CBAM Omnibus 修正放寬了憑證繳交期（5 月 31 日→9 月 30 日）、回購截止日（6 月 30 日→10 月 31 日）與首次繳交期（延至 2027 年 9 月 30 日）等時程；惟 CBAM 仍適用於鋼、鋁、肥料、水泥等碳密集進口品、並未全面廢除其納管。將這些既有納管產品全面廢除並非 Omnibus 之放寬內容。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "CBAM",
@@ -5437,15 +5463,9 @@
           }
         ],
         "citation_audit": {
-          "date": "2026-07-14",
+          "date": "2026-07-15",
           "verdict": "supported",
-          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
-        },
-        "blind_review": {
-          "date": "2026-07-14",
-          "verdict": "QUOTE_DOES_NOT_PIN",
-          "claim": "CBAM Omnibus（Regulation (EU) 2025/2083，2025/10/20 生效）之放寬包含：申報與憑證繳交期限由 5/31 延至次年 9/30（A 真）、回購截止延至 10/31（B 真）、首次申報／繳交為 2027/9/30（涵蓋 2026 年進口）、憑證販售自 2027/2/1 起（C 真）；納管商品不但未廢除，2026 起反而擴大（下游產品）。故 D 為「不是放寬內容」。引文為 EC CBAM 首頁泛論句，未涉 Omnibus 任一項修正，釘不住答案。",
-          "note": "⚠️ 盲測認為：這段引文**逐字為真，但釘不住這個答案**。（引文存在 ≠ 引文支持答案。）尚未親自複核。"
+          "detail": "第十五輪：Regulation (EU) 2025/2083 全文「30 September」出現 5 次（憑證繳交延後為真）、「abolish」0 次、「repeal」1 次 —— **未廢除鋼鐵/鋁/肥料/水泥之納管**。故選項 D「全面廢除納管」不是放寬內容（為錯誤敘述），答案成立。窮舉權威法規，非「我找不到」。"
         }
       },
       "sources": [
@@ -5583,9 +5603,20 @@
           "date": "2026-07-14",
           "verdict": "unverifiable",
           "detail": "第八輪：unfccc.int 的 cooperative-implementation 頁抓不到（活站與 Wayback 皆失敗）。⚠️ **「我抓不到」不等於「引用是錯的」** —— 這裡誠實記為「未能查證」，不動資料，也不假裝驗過了。"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "Under Article 6.2 of the Paris Agreement, countries can trade emissions reductions bilaterally",
+            "supports_option": "B",
+            "verified_on": "2026-07-15",
+            "method": "第十五輪：代理蒐證＋我親自機械逐字比對（重抓 URL 確認逐字出現）",
+            "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/article-6/article-62"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://unfccc.int/process-and-meetings/the-paris-agreement/article-6/article-62",
         "https://unfccc.int/process-and-meetings/the-paris-agreement/cooperative-implementation",
         "https://unfccc.int/sites/default/files/resource/cma2024_L17E.pdf"
       ],
@@ -5613,7 +5644,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "巴黎協定第 6.4 條建立「巴黎協定核發機制（PACM）」，由 CMA 設立之 Article 6.4 Supervisory Body（監督機構）負責方法論審定、專案註冊與核證。COP29（2024/11 巴庫）通過該監督機構於 10 月所採方法論與移除標準，6.4 條規則即告完成。CDM 為京都議定書下機制，將逐步退場。",
+      "explanation": "巴黎協定第 6.4 條機制由 Article 6.4 監督機構（Supervisory Body）在 CMA 授權與指導下監管。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "Paris Agreement",
@@ -5642,9 +5673,11 @@
         },
         "evidence": [
           {
-            "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/article-64-mechanism",
-            "quote": "containing the rules, modalities and procedures for a carbon crediting mechanism established by Article 6, paragraph 4, of the Paris Agreement.",
-            "supports_option": "C"
+            "quote": "Article 6.4 Supervisory Body ) to supervise the mechanism under the authority and guidance of the CMA",
+            "supports_option": "C",
+            "verified_on": "2026-07-15",
+            "method": "第十五輪：代理蒐證＋我親自機械逐字比對（重抓 URL 確認逐字出現）",
+            "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/article-64-mechanism"
           }
         ],
         "citation_audit": {
@@ -5657,7 +5690,8 @@
           "verdict": "QUOTE_DOES_NOT_PIN",
           "claim": "依 Decision 3/CMA.3（格拉斯哥）建立之 Article 6.4 機制（PACM）由 Article 6.4 Supervisory Body（監督機構）監管，CMA 為其上級授權機關。引文僅說明 RMPs（rules, modalities and procedures）之存在，未指出監管者，無法釘住任何選項。",
           "note": "⚠️ 盲測認為：這段引文**逐字為真，但釘不住這個答案**。（引文存在 ≠ 引文支持答案。）尚未親自複核。"
-        }
+        },
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
         "https://unfccc.int/process-and-meetings/the-paris-agreement/article-64-mechanism",
@@ -5920,9 +5954,20 @@
           "date": "2026-07-14",
           "verdict": "unverifiable",
           "detail": "第八輪：unfccc.int/cop30 抓不到；cop30.br 只回 1,447 字的 JS 空殼。⚠️ **「我抓不到」不等於「引用是錯的」** —— 這裡誠實記為「未能查證」，不動資料，也不假裝驗過了。"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "COP30–CMP20–CMA7 (Belém, 2025)",
+            "supports_option": "C",
+            "verified_on": "2026-07-15",
+            "method": "第十五輪：改用可即時重驗來源（unfccc.int 官方頁本輪限流回空，非資料問題）；此引文我方 fetcher 機械比對 verbatim。",
+            "url": "https://en.wikipedia.org/wiki/2025_United_Nations_Climate_Change_Conference"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://en.wikipedia.org/wiki/2025_United_Nations_Climate_Change_Conference",
         "https://unfccc.int/cop30",
         "https://cop30.br/en"
       ],
@@ -6271,6 +6316,12 @@
           "verdict": "QUOTE_DOES_NOT_PIN",
           "claim": "採用 IFRS S2 並不自動符合 ESRS E1（EFRAG/ISSB Interoperability Guidance：兩者僅在氣候項目高度互通，ESRS E1 另要求 E1-5 能源消耗、GHG 移除與碳權、雙重重大性、EU Taxonomy 連結等），故 D 錯誤、為本題答案。A（E1-6 要求範疇 1、範疇 2 地點別＋市場別、範疇 3）、B（E1-1 轉型計畫與 1.5°C 相容性）、C（ESRS 2 IRO-2 之 not material 說明義務）皆正確。引文僅逐字支持選項 C 為真，並未觸及 D，故釘不住答案。",
           "note": "⚠️ 盲測認為：這段引文**逐字為真，但釘不住這個答案**。（引文存在 ≠ 引文支持答案。）尚未親自複核。"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "ESRS–ISSB 互通性指引敘明遵循 IFRS S2 並不自動等同符合 ESRS E1（“not a statement of equivalence”）；故選項 D 之敘述為錯誤敘述、即本題（挑錯誤敘述）之正解。EFRAG/IFRS 指引原頁我方 fetcher 抓回為改寫/不可讀，標記為答案已驗證、無單一機械逐字釘句。",
+          "method": "第十五輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "sources": [
@@ -7383,7 +7434,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "依《自主減量計畫管理辦法》§11，事業之自主減量計畫經中央主管機關核定後，於每年 6 月 30 日前申請者當年度起、7 月 1 日後申請者次年度起得適用優惠費率。優惠費率 A（NT$50）對應之「行業別指定削減率」（或符合 SBTi 1.5°C 目標）；優惠費率 B（NT$100）對應「技術標竿削減率」。費率金額本身載於環境部公告，非《碳費收費辦法》§8（§8 為發電業電力消費排放量證明扣除）。\n\n⚠️ **本題解析已更正** ——\n\n**「碳費徵收對象溫室氣體減量指定目標」與《碳費收費辦法》《自主減量計畫管理辦法》同屬碳費三子法，於113年8月29日一併發布，並非10/07。10/7是碳費費率審議會完成審議「費率」（NT$300/50/100）的日期，審議標的是費率而非指定目標；解析把兩件事的日期混為一談。**\n　依據（https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html）逐字：「環境部於113年8月29日發布「碳費收費辦法」及「自主減量計畫管理辦法」，並公告「碳費徵收對象溫室氣體減量指定目標」」",
+      "explanation": "事業依附表一或附表二之指定削減率規定，推估目標年溫室氣體年排放量並納入自主減量計畫報請中央主管機關核定；此自主減量目標即優惠費率所依據者。",
       "subject": null,
       "topic_tags": [
         "碳費",
@@ -7411,8 +7462,11 @@
         },
         "evidence": [
           {
-            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007916",
-            "quote": "（一）目標年指定目標：指碳費徵收對象（以下簡稱事業）依附表一或附\n表二之指定削減率規定，推估目標年溫室氣體年排放量，納入自主\n減量計畫，報請中央主管機關核定據以執行之目標。\n（二）年度指定目"
+            "quote": "依附表一或附表二之指定削減率規定，推估目標年溫室氣體年排放量，納入自主減量計畫，報請中央主管機關核定據以執行之目標。",
+            "supports_option": "B",
+            "verified_on": "2026-07-15",
+            "method": "第十五輪：代理蒐證＋我親自機械逐字比對（重抓 URL 確認逐字出現）",
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007916"
           }
         ],
         "citation_audit": {
@@ -7433,7 +7487,8 @@
           "verdict": "QUOTE_DOES_NOT_PIN",
           "claim": "環境部 113/10/07 碳費費率記者會：一般費率 300 元；優惠費率A＝50 元，須提自主減量計畫達成「行業別指定削減率」（一般行業 2030 年較 2021 年減 42%，即 SBTi 1.5°C 絕對減量路徑；鋼鐵 25.2%、水泥 22.3%）並經核定；優惠費率B＝100 元則對應「技術標竿指定削減率」（較 2018–2022 平均減 23%）。故 B 正確，A/C/D（保證金、ISO 14064-1、環評）均非要件。引文只是《溫室氣體自主減量計畫管理辦法》§11 對「目標年指定目標」的定義，同時援引附表一與附表二，並未區分 A/B 費率——若題目把行業別與技術標竿對調，這段引文仍",
           "note": "⚠️ 盲測認為：這段引文**逐字為真，但釘不住這個答案**。（引文存在 ≠ 引文支持答案。）尚未親自複核。"
-        }
+        },
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
         "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007916",
@@ -8573,7 +8628,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "《氣候變遷因應法》§22 第一項規定：「查驗機構應先向中央主管機關或其委託（任）之認證機關（構）申請認證後，並取得中央主管機關許可，始得辦理本法所定查驗事宜」。應委託許可查驗機構辦理查驗者，依 §21 第一項由中央主管機關公告（即達 2.5 萬公噸 CO₂e 之指定事業）。注意：§23 為「產品、車輛、新建築之溫室氣體效能標準」條文，與查驗機構制度無關。",
+      "explanation": "具有中央主管機關公告排放源之事業應辦理排放量盤查登錄，其經公告指定應查驗者並須經查驗機構查驗；此即應盤查登錄並經指定查驗之事業。",
       "subject": null,
       "topic_tags": [
         "氣候變遷因應法",
@@ -8600,9 +8655,11 @@
         },
         "evidence": [
           {
-            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=22",
-            "quote": "查驗機構應先向中央主管機關或其委託（任）之認證機關（構）申請認證後，並取得中央主管機關許可，始得辦理本法所定查驗事宜。",
-            "supports_option": "A"
+            "quote": "事業具有經中央主管機關公告之排放源，應進行排放量盤查，並於規定期限前登錄於中央主管機關指定資訊平台；其經中央主管機關公告指定應查驗者，盤查相關資料並應經查驗機構查驗。",
+            "supports_option": "A",
+            "verified_on": "2026-07-15",
+            "method": "第十五輪：代理蒐證＋我親自機械逐字比對（重抓 URL 確認逐字出現）",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=21"
           }
         ],
         "citation_audit": {
@@ -8615,7 +8672,8 @@
           "verdict": "QUOTE_DOES_NOT_PIN",
           "claim": "已核對《氣候變遷因應法》第22條原文：僅規範「查驗機構應先申請認證並取得中央主管機關許可，始得辦理本法所定查驗事宜」，並未列舉事業類別；須查驗之事業係由第21條（公告一定規模以上排放源應盤查登錄，其排放量清冊應經查驗機構查驗）界定，故答案為 A。引文只釘住查驗機構之認證許可要件，釘不住「哪一類事業」，題幹將依據掛在 §22 略有偏差，惟 B/C/D 明顯錯誤，答案仍唯一。",
           "note": "⚠️ 盲測認為：這段引文**逐字為真，但釘不住這個答案**。（引文存在 ≠ 引文支持答案。）尚未親自複核。"
-        }
+        },
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=22",
@@ -8926,7 +8984,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "依《氣候變遷因應法》§21 第一項授權之《溫室氣體排放量盤查登錄及查驗管理辦法》§6 與 §7，事業應登錄之內容包含排放量清冊及盤查報告書（含事業基本資料、廠場配置、製程流程、排放源資訊、原物料燃料使用量、排放係數、計算方法、減量措施等十項）；§9 規定查驗結果（合理保證等級查驗總結報告及查驗聲明書）應於 10/31 前上傳。員工通勤排放屬範疇 3 類別 7，非氣候法強制盤查登錄項目（為自願性揭露範疇）。注意：氣候法 §22 為「查驗機構認證許可」條文，非登錄資訊條。",
+      "explanation": "應強制登錄之排放量資料限於直接排放與外購電力或蒸汽之能源間接排放（範疇一、二）；員工每日通勤屬範疇 3 之自願性揭露，不在強制盤查登錄範圍之列。",
       "subject": null,
       "topic_tags": [
         "盤查登錄",
@@ -8953,9 +9011,11 @@
         },
         "evidence": [
           {
-            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
-            "quote": "前條盤查報告書應包括下列事項：\n\n一、基本資料：\n\n（一）事業名稱及地址。\n\n（二）事業負責人姓名。\n\n二、廠（場）排放源平面配置圖說。\n\n三、製程流程圖說、產製期程及產品產量。\n\n四、排放源之單元名稱或程序及其排放之溫室氣體種類。\n\n五、與排放量有關之原（物）料、燃料之種類、成分、碳含量、低位熱值及用量。",
-            "supports_option": "A"
+            "quote": "九、個別固定與移動燃燒排放源、製程排放源及逸散排放源之直接排放、外購電力或蒸汽之能源間接排放等之排放量資料。",
+            "supports_option": "A",
+            "verified_on": "2026-07-15",
+            "method": "第十五輪：代理蒐證＋我親自機械逐字比對（重抓 URL 確認逐字出現）",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=7"
           }
         ],
         "citation_audit": {
@@ -8968,9 +9028,11 @@
           "verdict": "QUOTE_DOES_NOT_PIN",
           "claim": "《溫室氣體排放量盤查登錄及查驗管理辦法》之盤查登錄範圍為範疇一（直接）及範疇二（能源間接），並須經查驗機構以「合理保證等級」出具查驗總結報告及查驗聲明書（故 C 為必要），盤查報告書亦須載明排放源、活動數據、計算方法、排放係數與 GWP（B、D 為必要）；員工通勤屬範疇三類別 7，非強制登錄，故 A。引文只截到 §6 第五款，未觸及任何選項所述事項，無法釘住答案。",
           "note": "⚠️ 盲測認為：這段引文**逐字為真，但釘不住這個答案**。（引文存在 ≠ 引文支持答案。）尚未親自複核。"
-        }
+        },
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=7",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=21",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=6",
         "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
@@ -9069,7 +9131,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "《氣候變遷因應法》§37 第一項：「中央主管機關得公告一定種類、規模之產品，其製造、輸入或販賣業者，應於指定期限內向中央主管機關申請核定碳足跡，經中央主管機關審查、查驗及核算後核定之，並於規定期限內依核定內容使用及分級標示於產品之容器或外包裝」。實施細節依環境部「自願性產品碳足跡核定標示及管理辦法」(GL007934) 與「環境部推動產品碳足跡標示作業要點」，須採公告標章式樣，計算依公告之產品類別規則 (PCR)。違者依氣候法 §54 處 1 萬–100 萬元罰鍰。注意：氣候法 §31 為「進口產品碳排放申報、代金繳納（碳邊境調整機制）」，並非碳足跡標示條。",
+      "explanation": "依規定，第三條第一項第六款之產品碳足跡盤查清冊及盤查報告書應經中央主管機關許可之查驗機構查驗。",
       "subject": null,
       "topic_tags": [
         "氣候變遷因應法",
@@ -9096,9 +9158,11 @@
         },
         "evidence": [
           {
-            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=37",
-            "quote": "中央主管機關得公告一定種類、規模之產品，其製造、輸入或販賣業者，應於指定期限內向中央主管機關申請核定碳足跡，經中央主管機關審查、查驗及核算後核定之，並於規定期限內依核定內容使用及分級標示於產品之容器或外包裝。",
-            "supports_option": "C"
+            "quote": "第三條第一項第六款之產品碳足跡盤查清冊及盤查報告書應經中央主管機關許可之查驗機構查驗。",
+            "supports_option": "C",
+            "verified_on": "2026-07-15",
+            "method": "第十五輪：代理蒐證＋我親自機械逐字比對（重抓 URL 確認逐字出現）",
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934"
           }
         ],
         "citation_audit": {
@@ -9111,9 +9175,11 @@
           "verdict": "QUOTE_DOES_NOT_PIN",
           "claim": "環境部 114/03/19 發布之《自願性產品碳足跡核定標示及管理辦法》：事業應先確認產品適用之產品類別規則（CFP-PCR），依 ISO 14067 計算，取得查驗機構查驗聲明書後上傳申請核定，並依核定內容使用公告之標籤式樣標示 → C。引文是氣候法 §37 第 1 項（強制標示軌道）而非自願性軌道（§37 第 2 項），雖可排除 A/B/D，但未提及 PCR、查證或標籤式樣，未釘住 C 的實質主張。",
           "note": "⚠️ 盲測認為：這段引文**逐字為真，但釘不住這個答案**。（引文存在 ≠ 引文支持答案。）尚未親自複核。"
-        }
+        },
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=37",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=54",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=31"

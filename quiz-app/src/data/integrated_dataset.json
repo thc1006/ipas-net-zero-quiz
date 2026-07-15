@@ -104,7 +104,7 @@
       "wrong_source": 30,
       "replaced": 29,
       "disputed": 1,
-      "no_quote": 27,
+      "no_quote": 18,
       "dead": 4,
       "note": "引錯的 URL **全部都回 HTTP 200** —— 連結健康檢查一個都抓不到。disputed 是「代理說引錯、但提不出可驗證的替代來源」：否定命題無法機械驗證，僅憑代理一句話不足以動資料，故引用維持不變但標記存疑。"
     },
@@ -1316,11 +1316,12 @@
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
-      "explanation": "根據ISO 14068-1，首要步驟是確定碳中和的標的物，界定碳中和範圍與適用對象，並設定基線年作為減碳目標與績效評估的參考。",
+      "explanation": "依 iPAS 公版教材的 ISO 14068 碳中和執行步驟，承諾之後的首要操作步驟為選定碳中和標的並界定範疇邊界（設定基線），其餘步驟在其後。",
       "metadata": {
         "original_id": "c1-024",
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "https://www.iso.org/standard/43279.html"
         ],
         "_legacy_pipeline_metadata": {
@@ -1329,15 +1330,23 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        },
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        },
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "選定欲碳中和標的物與界定 範疇邊界 量化溫室氣體排放與移除",
+            "supports_option": "D",
+            "note": "第十五輪：代理查、我親自複核逐字。"
+          }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+          "why": "第十五輪：查證後補一手釘句。"
         }
       },
       "quality_flags": [
@@ -4695,8 +4704,8 @@
         },
         "citation_audit": {
           "date": "2026-07-15",
-          "verdict": "needs_implementing_reg",
-          "detail": "答案 D 概念上正確，但基本規則 (EU) 2023/956 全文中「waste」只作為稅則 7204（廢鋼）出現，**不談「廢料如何計入申報重量」** —— 該規則在施行細則 2023/1773。我親自抓回基本規則 273,630 字確認（非採信代理的 NOT_FOUND —— 代理的 WebFetch 抓不到 EUR-Lex，但我的抓取器走 Wayback 抓得到）。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
+          "verdict": "unverifiable",
+          "detail": "第十五輪：CBAM 施行細則 (EU) 2023/1773 對廢料的規定是「碳（含 scrap/waste 中）以質量平衡納入計算」，**較接近「納入碳排放計算」而非答案 D「從宣告重量中扣除」**。但無正面一手證據證明別的選項才對，故不改答案，誠實標記為**無法以一手來源釘住**，待人再查。"
         }
       },
       "quality_flags": [
@@ -5620,6 +5629,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
@@ -5631,15 +5641,24 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+            "quote": "specify whether the declarant reports actual emissions or default values made available and published by the Commission for the transitional period",
+            "supports_option": "A",
+            "note": "第十五輪：施行細則明定可申報實際排放。"
+          }
+        ],
+        "explanation_source": {
           "date": "2026-07-15",
-          "verdict": "needs_implementing_reg",
-          "detail": "實際碳含量查證的操作細節在施行細則 2023/1773，非基本規則。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
+          "anchored_on": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+          "why": "第十五輪：查證後補一手釘句，過 explanation_guard。"
         }
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "依 CBAM 施行細則，申報人可選擇申報實際排放或委員會公布之預設值；當實際碳含量低於預設值時，提供經查證之實際排放數據對進口商最有利。"
     },
     {
       "index": 99,
@@ -5843,7 +5862,7 @@
         "citation_audit": {
           "date": "2026-07-15",
           "verdict": "needs_implementing_reg",
-          "detail": "多產品碳排分攤規則在施行細則 2023/1773 附件，非基本規則。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
+          "detail": "第十五輪：CBAM 施行細則 2023/1773 以「生產過程（production process）」歸屬排放；多產品分攤的精確方法在附件 III/IV，較複雜，未能切出單一乾淨釘句。答案（按產量分攤）與「按生產過程歸屬」方向一致，但精確依據待補。"
         }
       },
       "quality_flags": [
@@ -7057,6 +7076,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=10",
           "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
         ],
         "_legacy_pipeline_metadata": {
@@ -7067,11 +7087,14 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-15",
-          "verdict": "unfetchable",
-          "detail": "來源 cca.gov.tw 的階段管制目標頁目前抓不到（活站與 Wayback 皆 0 字，JS 渲染）。cca.gov.tw 是有效一手來源，答案「5 年一期」與氣候變遷因應法 §10 一致，但**目前無法機械釘住逐字原文**。"
-        }
+        "evidence": [
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=10",
+            "quote": "為達成國家溫室氣體長期減量目標，中央主管機關得設學者專家技術諮詢小組，並應邀集中央及地方有關機關、學者、專家、民間團體，經召開公聽會程序後，訂定五年為一期之階段管制目標，報請行政院核定後實施，並對外公開。",
+            "supports_option": "C",
+            "note": "第十五輪：代理蒐證、我用自己的 fetcher 重抓並機械逐字比對確認。"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -7170,10 +7193,11 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
+        "answer_verification": {
           "date": "2026-07-15",
-          "verdict": "wrong_source",
-          "detail": "cca.gov.tw 碳費專區頁未定義「外顯碳價」—— 引錯地方（8.1% 型態）。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
+          "verdict": "CORRECT",
+          "note": "外顯碳價（explicit）＝碳稅/碳費/排放交易（ETS）；電力躉購價（FIT）屬內含碳價（implicit）。此為 OECD explicit/implicit 分類之概念題，無台灣官方單一逐字原文，故不硬補引文；答案 C 依概念成立。",
+          "method": "第十五輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "quality_flags": [
@@ -7911,8 +7935,8 @@
         },
         "citation_audit": {
           "date": "2026-07-15",
-          "verdict": "wrong_source",
-          "detail": "概念題（CORSIA 是 ICAO 的機制，非歐盟碳邊境項目）。CBAM 法規全文「CORSIA」0 次 ——那證明不了答案，只證明引錯來源。⚠️ 此題與 gist[296] 為近似重複題但答案不同，需一併複核。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
+          "verdict": "answer_verified_no_single_quote",
+          "detail": "第十五輪：此為定義題。CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制，非歐盟碳邊境管制工具；ETS 與 CBAM 皆為歐盟工具。答案（CORSIA 不屬歐盟碳邊境）為領域定義事實，正確，但無單一一手條文可正面釘住（否定/定義題的性質）。CBAM 法規全文「CORSIA」0 次，佐證其不在該框架內。"
         }
       },
       "quality_flags": [
@@ -8139,6 +8163,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
@@ -8150,15 +8175,24 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+            "quote": "A reporting declarant may modify a submitted CBAM report until two months after the end of the relevant reporting quarter",
+            "supports_option": "C",
+            "note": "第十五輪：原引文引到基本規則，規則實在施行細則 (EU) 2023/1773；已補正。"
+          }
+        ],
+        "explanation_source": {
           "date": "2026-07-15",
-          "verdict": "wrong_source",
-          "detail": "答案 2 個月正確，但條文在施行細則 (EU) 2023/1773 §9(1)。我親自查基本規則：「two months」出現 3 次，全是講查證機構註冊與授權法案異議期，**沒有一個**是「申報人修改報告」—— 引錯 doc（引到基本規則，規則在施行細則）。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
+          "anchored_on": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+          "why": "第十五輪：查證後補一手釘句，過 explanation_guard。"
         }
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "依 CBAM 施行細則，申報人可在相關報告季度結束後兩個月內修改已提交的 CBAM 報告，故為 2 個月。"
     },
     {
       "index": 145,
@@ -8498,15 +8532,16 @@
           "verification_date": "2026-04-25",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        },
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "製造業全廠直接＋能源間接達「二萬五千公噸 CO₂e」始強制盤查登錄；該門檻數值位於環境部公告（GL006011）之附表，PDF 附表無法乾淨抽取為文字、rootlaw 回 403，故不硬湊逐字引文；數值另經碳費收費辦法 K 值交叉佐證，答案成立。",
+          "method": "第十五輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "explanation": "依環境部 113 年 2 月 22 日環部氣字第 1139101260 號公告「事業應盤查登錄及查驗溫室氣體排放量之排放源」：全廠（場）化石燃料燃燒之固定污染源直接排放及使用電力、熱或蒸汽之能源間接排放，年排放量合計達 2 萬 5 千公噸 CO₂e 以上之製造業，應辦理溫室氣體排放量盤查登錄與查驗。資料來源：https://www.cca.gov.tw/ ; https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102",
@@ -15714,9 +15749,9 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+          "date": "2026-07-15",
+          "verdict": "answer_verified_no_single_quote",
+          "detail": "第十五輪：此為定義題。CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制，非歐盟碳邊境管制工具；ETS 與 CBAM 皆為歐盟工具。答案（CORSIA 不屬歐盟碳邊境）為領域定義事實，正確，但無單一一手條文可正面釘住（否定/定義題的性質）。CBAM 法規全文「CORSIA」0 次，佐證其不在該框架內。"
         }
       },
       "quality_flags": [
@@ -15980,11 +16015,12 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "根據ISO 14068-1，首要步驟是確定碳中和的標的物，界定碳中和範圍與適用對象，並設定基線年作為減碳目標與績效評估的參考。",
+      "explanation": "依 iPAS 公版教材的 ISO 14068 碳中和執行步驟，首要步驟為界定範疇邊界並設定基線。",
       "metadata": {
         "original_id": "c2-109",
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "https://www.iso.org/standard/43279.html"
         ],
         "subject_corrected_2026_07_13": {
@@ -15998,10 +16034,18 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "選定欲碳中和標的物與界定 範疇邊界 量化溫室氣體排放與移除",
+            "supports_option": "A",
+            "note": "第十五輪：代理查、我親自複核逐字。"
+          }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+          "why": "第十五輪：查證後補一手釘句。"
         }
       },
       "quality_flags": [
@@ -16937,6 +16981,7 @@
         "original_id": "c2-128",
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://unfccc.int/process-and-meetings/the-paris-agreement/nationally-determined-contributions-ndcs",
           "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
         ],
         "_legacy_pipeline_metadata": {
@@ -16945,11 +16990,14 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        }
+        "evidence": [
+          {
+            "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/nationally-determined-contributions-ndcs",
+            "quote": "NDCs are submitted every five years to the UNFCCC secretariat",
+            "supports_option": "B",
+            "note": "第十五輪：代理蒐證、我用自己的 fetcher 重抓並機械逐字比對確認。"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -19144,15 +19192,16 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        },
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "UNVERIFIABLE",
+          "note": "TCFD 並未對其三種財務影響管道（損益表/現金流量表/資產負債表）排序「投資人最關注何者」；選項 A（現金流風險）為四選項中最合理者且非錯誤，但無一手原文可機械釘住「最關注＝現金流」。答案保留、標記為無單一逐字釘句。",
+          "method": "第十五輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "quality_flags": [
@@ -21752,7 +21801,7 @@
     {
       "index": 421,
       "number": 162,
-      "stem": "下列何者不屬於 ISO 14068‑1 的範疇？",
+      "stem": "下列何者不屬於 ISO 14068-1 的範疇？",
       "options": [
         {
           "key": "A",
@@ -21775,11 +21824,12 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "ISO 14068-1碳中和標準適用於組織、產品、建築物、城市、活動等特定主體，但通常不單獨針對組織內的「部門」進行宣告，部門的排放會被包含在整個組織的排放量中。",
+      "explanation": "依 ISO 14068-1／PAS 2060，碳中和標的為組織、產品、建築物、活動或服務等實體；國家與地區等宏觀彙總則非其範疇。部門別排放量屬宏觀彙總、非 ISO 14068-1 之碳中和標的，因此不屬於其範疇。",
       "metadata": {
         "original_id": "c2-228",
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "https://www.iso.org/standard/43279.html"
         ],
         "subject_corrected_2026_07_13": {
@@ -21793,15 +21843,24 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        },
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        },
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "碳中和主體可以是國家與地區(註：非ISO14068/PAS2060範疇)， 組織、商品等實體或服務和事件等活動",
+            "supports_option": "D",
+            "note": "第十五輪：可抽取逐字證明「組織、商品（產品）」為 ISO14068 碳中和主體（A、B 在範疇內）、且「國家與地區」等宏觀彙總非範疇；據此刪除 A、B。"
+          }
+        ],
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "完整「屬範疇（組織/產品/建築物/活動）vs 非屬（國家整體/部門別/城市區域）」二分位於公版教材 p.155 圖表，圖表文字無法乾淨抽取為逐字（代理已 render 該頁視覺確認建築物在範疇內、部門別在範疇外）。可抽取逐字僅能釘住 A、B 在範疇內＋國家/地區宏觀彙總非範疇；C 建築物 vs D 部門別 的決定性依據為該圖。答案 D（部門別排放量，屬宏觀彙總、非 ISO14068-1 標的）成立。",
+          "method": "代理 render 圖表視覺確認＋我機械驗證可抽取逐字"
         }
       },
       "quality_flags": [
@@ -21834,11 +21893,12 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "一份可信的碳中和宣告，必須清楚說明其碳足跡的量化方法與邊界、已執行的減量措施與成效，以及用於抵換剩餘排放的碳權來源與品質證明。",
+      "explanation": "依環境部《企業宣告碳中和指引》，碳中和公開揭露應包含碳足跡量化方法、減量措施及用於抵換之減量額度來源。",
       "metadata": {
         "original_id": "c2-229",
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
           "https://www.iso.org/standard/43279.html"
         ],
         "subject_corrected_2026_07_13": {
@@ -21852,15 +21912,23 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        },
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        },
+        "evidence": [
+          {
+            "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
+            "quote": "（四）主體邊界的原始溫室氣體排放量，包括排放量計算方式 及是否經查驗機構查證等。 （五）主體邊界內執行的溫室氣體減量、或增加溫室氣體移除 量之措施與量化結果。 （六）減量後剩餘擬採取抵換之溫室氣體淨排放量，以及占總 排放量的比例 。 （七）用於抵換之溫室氣體減量額度來源，包括減量額度核發 機構（註冊處）、減量專案來源之專案名稱、專案編號、 專案項目的類型與地點、專案執行單位、參與單位、移 除增量或減量發生年份、以及是否經查驗機構查證等。",
+            "supports_option": "C",
+            "note": "第十五輪：代理查、我親自複核逐字。"
+          }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
+          "why": "第十五輪：查證後補一手釘句。"
         }
       },
       "quality_flags": [
@@ -23813,11 +23881,12 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "歐盟CBAM的抵減機制是基於出口國已支付的「外顯碳價」（如碳稅/費或總量管制交易下的成本）。而遵循PAS 2060或ISO 14068-1所達成的碳中和，屬於自願性行動，其使用的自願性碳權通常無法直接用來抵減CBAM的費用。",
+      "explanation": "依歐盟執委會 CBAM 問答，可扣抵者為原產國實際支付且未經退稅補償之碳價；為 PAS 2060／ISO 14068 碳中和宣告而註銷的自願性碳權並非實際支付之碳價，故無法符合 CBAM 抵減碳關稅。",
       "metadata": {
         "original_id": "c2-270",
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://taxation-customs.ec.europa.eu/document/download/013fa763-5dce-4726-a204-69fec04d5ce2_en",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
           "https://www.iso.org/standard/43279.html"
@@ -23833,10 +23902,18 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        "evidence": [
+          {
+            "url": "https://taxation-customs.ec.europa.eu/document/download/013fa763-5dce-4726-a204-69fec04d5ce2_en",
+            "quote": "The carbon price should be effectively paid, in the sense that it should not be rebated or compensated",
+            "supports_option": "D",
+            "note": "第十五輪：與 gist[147] 同源。"
+          }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://taxation-customs.ec.europa.eu/document/download/013fa763-5dce-4726-a204-69fec04d5ce2_en",
+          "why": "第十五輪：查證後補一手釘句，過 explanation_guard。"
         }
       },
       "quality_flags": [
@@ -30551,7 +30628,7 @@
         }
       ],
       "answer": "B",
-      "explanation": null,
+      "explanation": "依環境部碳標籤說明，碳標籤將產品碳足跡訊息傳達給消費者供選購參考；故其主要功能為向消費者提供產品碳排資訊。",
       "source": {
         "source_id": "S_VOCUS_01",
         "url": "https://vocus.cc/article/68d35eb3fd897800017c0ba7",
@@ -30574,6 +30651,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://service.moenv.gov.tw/file/get/MOENV/zh-tw/297570140E4A0B85",
           "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
           "https://vocus.cc/article/68d35eb3fd897800017c0ba7"
         ],
@@ -30585,10 +30663,18 @@
           "answer_origin": "batch_verification",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
+        "evidence": [
+          {
+            "url": "https://service.moenv.gov.tw/file/get/MOENV/zh-tw/297570140E4A0B85",
+            "quote": "傳達產品碳足跡訊息給消費者，供選購參",
+            "supports_option": "B",
+            "note": "第十五輪：改用環境部一手來源（原為 vocus 循環自證）。"
+          }
+        ],
+        "explanation_source": {
           "date": "2026-07-15",
-          "verdict": "circular_source",
-          "detail": "來源是 vocus.cc —— 而那正是本題出處（AI 生成練習題），屬循環自證，非獨立權威。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
+          "anchored_on": "https://service.moenv.gov.tw/file/get/MOENV/zh-tw/297570140E4A0B85",
+          "why": "第十五輪：查證後補一手釘句。"
         }
       },
       "quality_flags": [
@@ -31058,7 +31144,7 @@
         }
       ],
       "answer": "B",
-      "explanation": null,
+      "explanation": "依 CBAM 規則，本機制針對進口至歐盟關境之貨品所含溫室氣體排放；故產品欲進入歐盟市場，其碳足跡數據需符合 CBAM 要求。",
       "source": {
         "source_id": "S_VOCUS_01",
         "url": "https://vocus.cc/article/68d35eb3fd897800017c0ba7",
@@ -31089,10 +31175,18 @@
           "answer_origin": "batch_verification",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+            "quote": "This Regulation establishes a carbon border adjustment mechanism (the ‘CBAM’) to address greenhouse gas emissions embedded in the goods listed in Annex I on their importation into the customs territory of the Union",
+            "supports_option": "B",
+            "note": "第十五輪：改用 CBAM 一手法規（原引文釘不住/循環）。"
+          }
+        ],
+        "explanation_source": {
           "date": "2026-07-15",
-          "verdict": "circular_source",
-          "detail": "同上，vocus 循環來源。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
+          "anchored_on": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "why": "第十五輪：查證後補一手釘句。"
         }
       },
       "quality_flags": [
@@ -32475,7 +32569,7 @@
         }
       ],
       "answer": "B",
-      "explanation": null,
+      "explanation": "依 CBAM 規則，本機制針對進口至歐盟關境之貨品所含溫室氣體排放；在四個選項中，歐盟 CBAM 是最直接要求產品提供碳足跡（嵌入排放）數據的國際政策。",
       "source": {
         "source_id": "S_VOCUS_02",
         "url": "https://vocus.cc/article/68d4ea33fd8978000107d365",
@@ -32506,10 +32600,18 @@
           "answer_origin": "batch_verification",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+            "quote": "This Regulation establishes a carbon border adjustment mechanism (the ‘CBAM’) to address greenhouse gas emissions embedded in the goods listed in Annex I on their importation into the customs territory of the Union",
+            "supports_option": "B",
+            "note": "第十五輪：改用 CBAM 一手法規（原引文釘不住/循環）。"
+          }
+        ],
+        "explanation_source": {
           "date": "2026-07-15",
-          "verdict": "circular_source",
-          "detail": "同上，vocus 循環來源。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
+          "anchored_on": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "why": "第十五輪：查證後補一手釘句。"
         }
       },
       "quality_flags": [
