@@ -10,12 +10,12 @@
     "total_questions": 773,
     "gist_questions": 545,
     "our_unique_questions": 228,
-    "corrections_applied": 34,
+    "corrections_applied": 36,
     "by_subject": {
       "考科1": 431,
       "考科2": 342
     },
-    "with_answer": 770,
+    "with_answer": 768,
     "last_updated": "2026-07-13T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -104,7 +104,7 @@
       "wrong_source": 30,
       "replaced": 29,
       "disputed": 1,
-      "no_quote": 31,
+      "no_quote": 27,
       "dead": 4,
       "note": "引錯的 URL **全部都回 HTTP 200** —— 連結健康檢查一個都抓不到。disputed 是「代理說引錯、但提不出可驗證的替代來源」：否定命題無法機械驗證，僅憑代理一句話不足以動資料，故引用維持不變但標記存疑。"
     },
@@ -2769,8 +2769,25 @@
           "verification_batch": "C",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "evidence": [
+          {
+            "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
+            "quote": "碳中和管理計畫，其內容至少包括： 格式，逐步完成碳中和管理計畫，其內容至少包括： (1)主體及其邊界之描述；(2)要達成碳中和的時間規劃；(3)主體 基線之溫室氣體排放量；(4)碳中和路徑，包括溫室氣體減量或 移除增量之短期與長期目標；(5)預期使用之溫室氣體減量額度 數量與種類。",
+            "supports_option": "B",
+            "note": "第十四輪：依使用者的一手來源調研，補上經機械比對的逐字引文（verbatim）。"
+          }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
+          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+        },
+        "sources": [
+          "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3"
+        ]
+      },
+      "explanation": "依環境部《企業宣告碳中和指引》，碳中和管理計畫其內容至少包括主體及其邊界、達成碳中和的時間規劃、基線之溫室氣體排放量、包含短期與長期目標的碳中和路徑，以及預期使用之減量額度數量與種類 —— 遠非只列減排措施或碳權購買計畫可涵蓋。"
     },
     {
       "index": 50,
@@ -4096,6 +4113,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "https://www.iso.org/standard/43279.html"
         ],
         "_legacy_pipeline_metadata": {
@@ -4106,20 +4124,24 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        },
-        "source_review": {
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "B2C則應涵蓋全生命週期；B2B則可僅涵蓋 部份足跡",
+            "supports_option": "C",
+            "note": "第十四輪：依使用者的一手來源調研，補上經機械比對的逐字引文（verbatim）。"
+          }
+        ],
+        "explanation_source": {
           "date": "2026-07-15",
-          "verdict": "INVALID_PURCHASE_PAGE",
-          "detail": "唯一的來源是 iso.org/standard/43279.html —— 我抓回該頁 21,422 字，確認它是 **ISO 14068-1:2023 的購買頁**（只有摘要、CHF 標價、無條文內容；「PAS 2060」出現 0 次）。**拿購買頁當來源等於沒有來源。** 本題目前**沒有可驗證的一手依據** —— 答案未經獨立驗證，不寫解析（憑空寫＝假的保證）。"
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
         }
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "依iPAS公版教材的碳中和路徑設計，產品碳中和的B2C應涵蓋全生命週期，B2B則可僅涵蓋部份足跡，故B2C產品應涵蓋全生命週期。"
     },
     {
       "index": 73,
@@ -4423,6 +4445,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
           "https://www.iso.org/standard/43279.html"
         ],
         "_legacy_pipeline_metadata": {
@@ -4433,20 +4456,24 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        },
-        "source_review": {
+        "evidence": [
+          {
+            "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
+            "quote": "短 期減量目標（5 至10 年）和長期淨零目標（20 年）",
+            "supports_option": "D",
+            "note": "第十四輪：依使用者的一手來源調研，補上經機械比對的逐字引文（verbatim）。"
+          }
+        ],
+        "explanation_source": {
           "date": "2026-07-15",
-          "verdict": "INVALID_PURCHASE_PAGE",
-          "detail": "唯一的來源是 iso.org/standard/43279.html —— 我抓回該頁 21,422 字，確認它是 **ISO 14068-1:2023 的購買頁**（只有摘要、CHF 標價、無條文內容；「PAS 2060」出現 0 次）。**拿購買頁當來源等於沒有來源。** 本題目前**沒有可驗證的一手依據** —— 答案未經獨立驗證，不寫解析（憑空寫＝假的保證）。"
+          "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
+          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
         }
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "依環境部《企業宣告碳中和指引》，短期減量目標為5至10年，長期淨零目標為20年，故長期目標為20年。"
     },
     {
       "index": 79,
@@ -5962,7 +5989,7 @@
           "text": "總是向上取整"
         }
       ],
-      "answer": "B",
+      "answer": null,
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
@@ -5974,8 +6001,13 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "prior_answer": "B"
+      },
+      "quality_flags": [
+        "ambiguous"
+      ],
+      "_correction_note": "2026-07-15：**撤答案（排除計分）。** 題幹問「企業宣告碳中和時」如何四捨五入，但環境部《企業宣告碳中和指引》查無碳中和宣告的通用四捨五入規則，四個選項皆無一手依據。⚠️ 特別說明：「四捨五入取至整數」這條規則住在**產品碳足跡**制度裡（自願性產品碳足跡核定標示及管理辦法，該辦法全文「碳中和」出現 0 次）—— **不能拿它去回答「碳中和宣告」的問題**（那是兩套不同制度，正是本專案反覆警示的「條文張冠李戴」錯誤類別）。故本題撤答案，而**非改為 C**。（使用者兩輪調研共識 + 我自己抓法規原文複核）"
     },
     {
       "index": 106,
@@ -6176,6 +6208,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://www.iso.org/standard/94470.html",
           "https://www.iso.org/standard/43279.html"
         ],
         "_legacy_pipeline_metadata": {
@@ -6186,20 +6219,24 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        },
-        "source_review": {
+        "evidence": [
+          {
+            "url": "https://www.iso.org/standard/94470.html",
+            "quote": "It is not intended to be used for territories (such as regions, countries, states or cities), including signatories to the United Nations Framework Convention on Climate Change (UNFCCC) when reporting national outcomes",
+            "supports_option": "A",
+            "note": "第十四輪：依使用者的一手來源調研，補上經機械比對的逐字引文（verbatim）。"
+          }
+        ],
+        "explanation_source": {
           "date": "2026-07-15",
-          "verdict": "INVALID_PURCHASE_PAGE",
-          "detail": "唯一的來源是 iso.org/standard/43279.html —— 我抓回該頁 21,422 字，確認它是 **ISO 14068-1:2023 的購買頁**（只有摘要、CHF 標價、無條文內容；「PAS 2060」出現 0 次）。**拿購買頁當來源等於沒有來源。** 本題目前**沒有可驗證的一手依據** —— 答案未經獨立驗證，不寫解析（憑空寫＝假的保證）。"
+          "anchored_on": "https://www.iso.org/standard/94470.html",
+          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
         }
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "依ISO官方標準摘要，本標準不適用於領土（區域、國家、州或城市），包括UNFCCC締約方申報國家成果；故國家整體排放不在其適用範圍。"
     },
     {
       "index": 110,
@@ -6817,14 +6854,20 @@
         "evidence": [
           {
             "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
-            "quote": "碳中和執行路徑的設定方式及理由，應包括短期與長期減量目標及措施。",
-            "supports_option": "C"
+            "quote": "短 期減量目標（5 至10 年）和長期淨零目標（20 年）",
+            "supports_option": "C",
+            "note": "第十四輪：依使用者的一手來源調研，補上經機械比對的逐字引文（verbatim）。"
           }
         ],
         "valid_as_of": "2026-07-14",
-        "found_by": "r3-no-source-audit"
+        "found_by": "r3-no-source-audit",
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
+          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+        }
       },
-      "explanation": "環境部《企業宣告碳中和指引》：碳中和管理計畫內容至少包括「碳中和路徑，包括溫室氣體減量或移除增量之**短期與長期**目標」，並明定「短期減量目標（5 至 10 年）和長期淨零目標（20 年）」。指引全文查無「中期」一詞（0 次）。",
+      "explanation": "依環境部《企業宣告碳中和指引》，碳中和主體應設定短期減量目標與長期淨零目標，因此碳中和管理計畫的減量目標應包括短期與長期目標。",
       "_correction_note": "2026-07-14 更正：原答 A（中期與長期目標）為誤，正解為 C（短期與長期目標）。環境部《企業宣告碳中和指引》逐字為「短期與長期目標」，並明定短期＝5～10 年、長期＝20 年；指引全文出現「中期」**0 次**。（本機以 PyMuPDF 解出全文後逐字比對，非代理轉述。）",
       "quality_flags": [
         "time_sensitive"
@@ -7552,11 +7595,11 @@
         ],
         "explanation_source": {
           "date": "2026-07-15",
-          "copied_from": "gist[262]",
-          "why": "本題與 gist[262] **題幹逐字相同**，且兩題的正解在文字上等同（正解「5.20 %」在該解析中的字元覆蓋率 80%）。該解析已通過本專案的解析查核與「不得指涉選項字母」規則。⚠️ **這不是新寫的解析，是把已驗證的那一份複製過來** —— 沒有引入任何新事實。"
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
+          "why": "對抗式覆核修正：原為從 gist[262] 複製的解析，含引文外的年份（2008/2012/1990）；改為只用本題引文/選項裡有的 5.2%。"
         }
       },
-      "explanation": "《京都議定書》規範各締約國須於2008年至2012年期間，將該國溫室氣體排放量降至1990年水準平均再減5.2%。"
+      "explanation": "依《京都議定書》答案卡，附件一國家的溫室氣體排放量平均減量為5.2%。"
     },
     {
       "index": 135,
@@ -7693,7 +7736,7 @@
           "text": "不設更新機制，保持穩定性"
         }
       ],
-      "answer": "C",
+      "answer": null,
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
@@ -7705,8 +7748,13 @@
           "verification_batch": "C",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "prior_answer": "C"
+      },
+      "quality_flags": [
+        "ambiguous"
+      ],
+      "_correction_note": "2026-07-15：**撤答案（排除計分）。** 題幹把「政府指引本身的更新機制」與「企業碳中和管理計畫／宣告的更新」混為一談。現行環境部《企業宣告碳中和指引》並未規定「依實施情況與回饋調整」的指引更新機制（那是 2011 年舊版草案的形成過程，或 PAS 2060 對企業「碳足跡管理計畫」每 12 個月更新的要求）。四個選項皆無一手依據支撐對「本指引更新機制」的描述。（使用者兩輪獨立調研共識）"
     },
     {
       "index": 138,
@@ -8251,6 +8299,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://taxation-customs.ec.europa.eu/document/download/013fa763-5dce-4726-a204-69fec04d5ce2_en",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
           "https://www.iso.org/standard/43279.html"
@@ -8263,20 +8312,24 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        },
-        "source_review": {
+        "evidence": [
+          {
+            "url": "https://taxation-customs.ec.europa.eu/document/download/013fa763-5dce-4726-a204-69fec04d5ce2_en",
+            "quote": "The carbon price should be effectively paid, in the sense that it should not be rebated or compensated",
+            "supports_option": "A",
+            "note": "第十四輪：依使用者的一手來源調研，補上經機械比對的逐字引文（verbatim）。"
+          }
+        ],
+        "explanation_source": {
           "date": "2026-07-15",
-          "verdict": "INVALID_PURCHASE_PAGE",
-          "detail": "唯一的來源是 iso.org/standard/43279.html —— 我抓回該頁 21,422 字，確認它是 **ISO 14068-1:2023 的購買頁**（只有摘要、CHF 標價、無條文內容；「PAS 2060」出現 0 次）。**拿購買頁當來源等於沒有來源。** 本題目前**沒有可驗證的一手依據** —— 答案未經獨立驗證，不寫解析（憑空寫＝假的保證）。"
+          "anchored_on": "https://taxation-customs.ec.europa.eu/document/download/013fa763-5dce-4726-a204-69fec04d5ce2_en",
+          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
         }
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "依歐盟執委會CBAM問答，可扣抵的是在原產國實際支付且未經退稅或補償的碳價；為PAS 2060／ISO 14068碳中和宣告而註銷的自願性碳權，並非原產國實際支付的碳價，因此無法僅憑碳中和宣告抵減CBAM義務。"
     },
     {
       "index": 148,
@@ -8525,7 +8578,7 @@
     {
       "index": 152,
       "number": 152,
-      "stem": "在碳標籤中，數字「000」代表什麼？",
+      "stem": "碳標籤（心形圖示）內所標示的數值代表什麼？",
       "options": [
         {
           "key": "A",
@@ -8556,8 +8609,34 @@
           "verification_batch": "E",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "stem_corrections": [
+          {
+            "date": "2026-07-15",
+            "from": "在碳標籤中，數字「000」代表什麼？",
+            "to": "碳標籤（心形圖示）內所標示的數值代表什麼？",
+            "why": "原題幹的「000」在官方規定裡並非特殊代碼 —— 心形圖示內標示的是產品碳足跡數值，而「碳標字第○○○○號」是證書編號。「000」極可能只是佔位符，會誤導。改為明確問「心形圖示內所標示的數值」，答案 C（每單位產品的碳足跡）方能成立。（使用者兩輪調研共識）"
+          }
+        ],
+        "evidence": [
+          {
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
+            "quote": "圖示之心型內應依第四條第三項規定標示產品碳足跡數值及計量單位",
+            "supports_option": "C",
+            "note": "第十四輪（對抗式覆核修正）：原引文是碳標籤「用途」，釘不住「數字＝碳足跡值」；改用環境部法規原文「心型內應標示產品碳足跡數值及計量單位」，直接釘住答案。"
+          }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://service.moenv.gov.tw/file/get/MOENV/zh-tw/297570140E4A0B85",
+          "why": "過 explanation_guard。"
+        },
+        "sources": [
+          "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
+          "https://service.moenv.gov.tw/file/get/MOENV/zh-tw/297570140E4A0B85"
+        ]
+      },
+      "explanation": "依環境部規定，碳標籤圖示之心型內應標示產品碳足跡數值及計量單位；故心形圖示內的數值即該產品每一計量單位的碳足跡。"
     },
     {
       "index": 153,
@@ -8858,8 +8937,26 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+            "quote": "使用階段為消費者使用此產品之過程。本階段則視使用者實際使用 方式參考產品使用說明進行評估",
+            "supports_option": "A",
+            "note": "第十四輪（對抗式覆核修正）：原引文只證明使用階段是「情境」（排除 D），釘不住 A vs B/C；改用教材「視使用者實際使用方式…評估」，直接釘住「基於實際/代表性使用情境」。 ⚠️ 對抗式覆核註記：引文以「實際使用方式」語意支持「代表性/典型使用情境」（非逐字「情境」二字）；誘答「不考慮使用階段」雖與引文字面重疊「使用階段」，但引文「本階段視實際使用方式評估」正好否定之。"
+          }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/691673213.pdf",
+          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/691673213.pdf"
+        ]
+      },
+      "explanation": "依iPAS公版教材，使用階段為消費者使用此產品之過程，本階段視使用者實際使用方式並參考產品使用說明進行評估；故使用階段碳排放基於代表實際使用方式的使用情境，而非最差、最佳情境或忽略不計。"
     },
     {
       "index": 159,
@@ -9290,13 +9387,30 @@
           "verification_batch": "C",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "evidence": [
+          {
+            "url": "https://service.moenv.gov.tw/file/get/MOENV/zh-tw/297570140E4A0B85",
+            "quote": "傳達產品碳足跡訊息給消費者，供選購參 考。透過媒體宣傳，鼓勵民眾改變消費行為，促使企 業檢討產品製程及供應鏈中，共同減少溫室氣體排 放，提升企業責任與環保形象",
+            "supports_option": "D",
+            "note": "第十四輪：依使用者的一手來源調研，補上經機械比對的逐字引文（環境部碳標籤說明）。"
+          }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://service.moenv.gov.tw/file/get/MOENV/zh-tw/297570140E4A0B85",
+          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+        },
+        "sources": [
+          "https://service.moenv.gov.tw/file/get/MOENV/zh-tw/297570140E4A0B85"
+        ]
+      },
+      "explanation": "依環境部碳標籤說明，產品碳足跡溝通旨在傳達碳足跡訊息給消費者供選購參考、促使企業檢討製程及供應鏈以共同減少排放、提升企業責任與環保形象；增加產品銷量並不在這些溝通目的之列。"
     },
     {
       "index": 168,
       "number": 15,
-      "stem": "以下哪項不是產品碳足跡量化的潛在困難？",
+      "stem": "以下哪項較不屬於產品碳足跡量化的典型方法學挑戰？",
       "options": [
         {
           "key": "A",
@@ -9327,7 +9441,15 @@
           "verification_batch": "C",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "stem_corrections": [
+          {
+            "date": "2026-07-15",
+            "from": "以下哪項不是產品碳足跡量化的潛在困難？",
+            "to": "以下哪項較不屬於產品碳足跡量化的典型方法學挑戰？",
+            "why": "「產品銷售量」在範疇三「已售產品使用」計算中仍可能是活動資料，不能斷言在所有情境下都不構成困難。將題幹限定為「典型方法學挑戰」後，分配問題、數據可用性、使用階段行為不確定性都是 ISO 14067／教材明列的典型挑戰，而產品銷售量不是，答案 B 方能穩定成立。（使用者兩輪調研共識）"
+          }
+        ]
       }
     },
     {
@@ -9516,8 +9638,25 @@
           "verification_batch": "C",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/691673213.pdf",
+            "quote": "目標與範圍界定、生命週期盤查分析( LCI)、生命週期衝擊評估( LCIA) 及生命週期闡釋",
+            "supports_option": "B",
+            "note": "第十四輪：依使用者的一手來源調研，補上經機械比對的逐字引文（verbatim）。"
+          }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/691673213.pdf",
+          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/691673213.pdf"
+        ]
+      },
+      "explanation": "CFP研究採用生命週期評估的四個階段：目標與範圍界定、生命週期盤查分析、生命週期衝擊評估及生命週期闡釋；市場調查不在其中。"
     },
     {
       "index": 173,
@@ -10251,8 +10390,25 @@
           "verification_batch": "C",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
-      }
+        },
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+            "quote": "CFP 具代表性之時間期間應予指定並 說明理由。在選擇數據收集時間期間時，須考慮一個年度內與各年度之間的變化",
+            "supports_option": "C",
+            "note": "第十四輪：依使用者的一手來源調研，補上經機械比對的逐字引文（verbatim）。"
+          }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+        },
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf"
+        ]
+      },
+      "explanation": "依iPAS公版教材，CFP具代表性之時間期間應予指定並說明理由，並須考慮一個年度內與各年度之間的變化；因此不是永遠使用最新一年，也不是由主管機關統一規定。"
     },
     {
       "index": 187,
@@ -24437,7 +24593,7 @@
           "why": "計算題，題幹已給排放係數，解析只是把算式寫出來，未引入任何外部事實。"
         }
       },
-      "explanation": "本題為計算題，題幹**自帶排放係數**：12,000,000 kWh × 0.509 kgCO2e/kWh = 6,108,000 kg = 6,108 tCO2e，即約 6108 公噸 CO₂e（tCO₂e），與答案選項一致。（純以題幹給定數據計算，不需外部來源。）"
+      "explanation": "本題以題幹給定之年度用電量12,000,000 kWh乘以電力排放係數0.509 kgCO2e/kWh計算，結果約為6,108 tCO2e。"
     },
     {
       "index": 480,
@@ -25189,7 +25345,7 @@
           "why": "計算題，題幹已給排放係數，解析只是把算式寫出來，未引入任何外部事實。"
         }
       },
-      "explanation": "本題為計算題，題幹**自帶排放係數**：250,000 公升 × 2.75 kgCO2e/公升 = 687,500 kg = 687.5 tCO2e，即約 688 公噸 CO₂e（tCO₂e），與答案選項一致。（純以題幹給定數據計算，不需外部來源。）"
+      "explanation": "本題以題幹給定之年度航空燃油消耗量250,000公升乘以排放係數2.75 kgCO2e/公升計算，結果約為687.5 tCO2e。"
     },
     {
       "index": 494,
@@ -32211,7 +32367,7 @@
       "level": null,
       "topic_tags": [],
       "question_type": "unknown",
-      "stem": "CFP 計算的最終目的為？",
+      "stem": "CFP 計算的主要目的或效益之一為？",
       "options": [
         {
           "key": "A",
@@ -32231,7 +32387,7 @@
         }
       ],
       "answer": "A",
-      "explanation": null,
+      "explanation": "依環境部碳標籤說明，產品碳足跡的溝通會促使企業檢討產品製程及供應鏈、共同減少溫室氣體排放，並提升企業責任與環保形象；故其主要目的或效益在於提升企業永續管理與供應鏈透明度，而非增加碳稅負擔、僅符合法規或減少審查成本。",
       "source": {
         "source_id": "S_VOCUS_02",
         "url": "https://vocus.cc/article/68d4ea33fd8978000107d365",
@@ -32260,6 +32416,7 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://service.moenv.gov.tw/file/get/MOENV/zh-tw/297570140E4A0B85",
           "https://vocus.cc/article/68d4ea33fd8978000107d365"
         ],
         "citation_audit": {
@@ -32267,10 +32424,26 @@
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
         },
-        "source_review": {
+        "stem_corrections": [
+          {
+            "date": "2026-07-15",
+            "from": "CFP 計算的最終目的為？",
+            "to": "CFP 計算的主要目的或效益之一為？",
+            "why": "CFP 沒有唯一、排他的「最終目的」—— 依環境部說明，其主要目的包括促使企業檢討製程與供應鏈以共同減量、提供消費者選購資訊。原「最終目的」過於絕對，改為「主要目的或效益之一」。（使用者兩輪調研共識）"
+          }
+        ],
+        "evidence": [
+          {
+            "url": "https://service.moenv.gov.tw/file/get/MOENV/zh-tw/297570140E4A0B85",
+            "quote": "傳達產品碳足跡訊息給消費者，供選購參 考。透過媒體宣傳，鼓勵民眾改變消費行為，促使企 業檢討產品製程及供應鏈中，共同減少溫室氣體排 放，提升企業責任與環保形象",
+            "supports_option": "A",
+            "note": "第十四輪：依使用者的一手來源調研，補上經機械比對的逐字引文（環境部碳標籤說明）。"
+          }
+        ],
+        "explanation_source": {
           "date": "2026-07-15",
-          "verdict": "NON_PRIMARY_ONLY",
-          "detail": "唯一的來源是 vocus.cc（部落格平台，**非一手來源**）。本題**沒有可驗證的一手依據** —— 答案未經獨立驗證，不寫解析。"
+          "anchored_on": "https://service.moenv.gov.tw/file/get/MOENV/zh-tw/297570140E4A0B85",
+          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
         }
       }
     },
