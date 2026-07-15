@@ -15425,6 +15425,7 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
         ],
         "evidence": [
@@ -15436,9 +15437,9 @@
         ],
         "answer_verification": {
           "date": "2026-07-16",
-          "verdict": "CORRECT",
-          "note": "第十八輪語意複核：現引文釘不住此答案（循環/主題相關）；答案經概念、排除法或命題依據確認，無單一機械逐字釘句，誠實標記。",
-          "method": "代理語意審查＋我複核"
+          "verdict": "CONFIRMED_BY_ANSWER_KEY",
+          "note": "對抗式覆核（第十八輪後）：交叉比對 iPAS 答案卡 500712036.pdf／Q4 —— 答案卡明示 1.5°C（卡上排 C、題庫排 B，內容一致），與現行答案內容一致。由「概念軟驗證」升級為「答案卡確認」。",
+          "method": "答案卡 PDF 交叉比對＋我機械確認內容一致"
         }
       }
     },
@@ -17334,6 +17335,7 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
         ],
         "evidence": [
@@ -17345,9 +17347,9 @@
         ],
         "answer_verification": {
           "date": "2026-07-16",
-          "verdict": "CORRECT",
-          "note": "第十八輪：答案 A 為四選項中唯一合理者（B/C/D 荒謬）。⚠️註：UNFCCC 第2條原始目標為「穩定大氣溫室氣體濃度」，A「限制升溫」較偏巴黎協定框架、屬教材命題用語。",
-          "method": "代理語意審查＋我複核"
+          "verdict": "CONFIRMED_BY_ANSWER_KEY",
+          "note": "對抗式覆核（第十八輪後）：交叉比對 iPAS 答案卡 316660797.pdf／Q2 —— 答案卡明示 (A)「限制全球平均氣溫上升」，與現行答案內容一致。由「概念軟驗證」升級為「答案卡確認」。",
+          "method": "答案卡 PDF 交叉比對＋我機械確認內容一致"
         }
       }
     },
@@ -21851,6 +21853,7 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
         ],
         "evidence": [
@@ -21862,9 +21865,9 @@
         ],
         "answer_verification": {
           "date": "2026-07-16",
-          "verdict": "CORRECT",
-          "note": "第十八輪語意複核：現引文釘不住此答案（循環/主題相關）；答案經概念、排除法或命題依據確認，無單一機械逐字釘句，誠實標記。",
-          "method": "代理語意審查＋我複核"
+          "verdict": "CONFIRMED_BY_ANSWER_KEY",
+          "note": "對抗式覆核（第十八輪後）：交叉比對 iPAS 答案卡 190841777.pdf／Q13 —— 答案卡明示 (D)「產生自化石與生質碳之GHG排放與移除」，與現行答案內容一致。由「概念軟驗證」升級為「答案卡確認」。",
+          "method": "答案卡 PDF 交叉比對＋我機械確認內容一致"
         }
       },
       "_correction_note": "2026-07-13 更正：原答案 C（電力之處理方式）為誤，正解為 D。原解析寫「電力的計算處理方式並未強制規定揭露」，但 Annex E（Treatment of electricity）是 normative（規範性）附錄，該理由不成立。本題與來源 PDF（商研院 2024.08 模擬試題 S_CHU_07 第 13 題）為同一題，該 PDF 自己印的答案卡即為 D —— 先前把來源題當成重複丟掉，卻留下了錯的答案在教。這個矛盾是 restoration-manifest 的 disposition 稽核（duplicate_in_dataset_ANSWER_CONFLICT）揪出來的：舊版把「dataset 裡沒有」直接當成「一定是重複題」而靜默跳過，正是這種錯誤能長期存活的原因。"
@@ -22004,6 +22007,7 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
         ],
         "evidence": [
@@ -22015,9 +22019,9 @@
         ],
         "answer_verification": {
           "date": "2026-07-16",
-          "verdict": "CORRECT",
-          "note": "第十八輪語意複核：現引文為主題相關/循環（題目本身），釘不住此答案；答案經概念與選項排除法確認正確，惟無單一機械逐字釘句，誠實標記。",
-          "method": "代理語意審查＋我複核"
+          "verdict": "CONFIRMED_BY_ANSWER_KEY",
+          "note": "對抗式覆核（第十八輪後）：交叉比對 iPAS 答案卡 190841777.pdf／Q18 —— 答案卡明示 (C)「組織的財務控制權法」，與現行答案內容一致。由「概念軟驗證」升級為「答案卡確認」。",
+          "method": "答案卡 PDF 交叉比對＋我機械確認內容一致"
         }
       }
     },
@@ -28381,9 +28385,9 @@
         "found_by": "r3-no-source-audit",
         "answer_verification": {
           "date": "2026-07-16",
-          "verdict": "CORRECT",
-          "note": "第十八輪語意複核：現引文釘不住此答案（主題相關/循環/題幹複述）；答案經概念與選項排除法確認正確，無單一機械逐字釘句，誠實標記。",
-          "method": "代理語意審查＋我複核"
+          "verdict": "CONFIRMED_BY_ANSWER_KEY",
+          "note": "對抗式覆核（第十八輪後）：交叉比對 iPAS 答案卡 500712036.pdf —— 答案卡明示 A「此議題涵蓋氣候變遷對生態系統和生物多樣性的影響」為不正確者，與現行答案內容一致。由「概念軟驗證」升級為「答案卡確認」。",
+          "method": "答案卡 PDF 交叉比對＋我機械確認內容一致"
         }
       },
       "explanation": "SASB 的「生態衝擊（Ecological Impacts）」議題處理的是企業對**生態系與生物多樣性**的衝擊（棲地破壞、森林砍伐、土地與選址等），**氣候變遷的影響不屬於這個議題**（氣候另有其議題）。故「此議題涵蓋氣候變遷對生態系統和生物多樣性的影響」為不正確之敘述。iPAS 公版教材範例題為同一題，答案卡印 A。",
