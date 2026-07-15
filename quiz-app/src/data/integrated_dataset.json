@@ -818,7 +818,7 @@
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
-      "explanation": "臺灣 2050 淨零排放路徑的**兩大治理基礎**是「科技研發」與「氣候法制」；「淨零轉型」是整體目標／四大轉型的統稱，不是治理基礎，故正解為「淨零轉型」。",
+      "explanation": "依環境部淨零排放路徑，其治理基礎為「科技研發」與「氣候法制」兩項（另有四大轉型）；故四選項中非屬治理基礎者為正解。",
       "metadata": {
         "original_id": "c1-014",
         "_legacy_pipeline_metadata": {
@@ -829,13 +829,16 @@
         },
         "prior_answer": "C",
         "sources": [
+          "https://www.cca.gov.tw/climatetalks/net-zero-roadmap/1891.html",
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf"
         ],
         "evidence": [
           {
-            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
-            "quote": "Q47 以下何者非屬臺灣2050淨零排放路徑中的治理基礎？",
-            "supports_option": "A"
+            "url": "https://www.cca.gov.tw/climatetalks/net-zero-roadmap/1891.html",
+            "quote": "以「能源轉型」、「產業轉型」、「生活轉型」、「社會轉型」等四大轉型及「科技研發」、「氣候法制」兩大治理基礎",
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "note": "第十八輪語意複核：原自動引文釘不住（多為循環），改用一手原文釘住並機械比對。"
           }
         ],
         "options_replaced": {
@@ -908,7 +911,9 @@
           {
             "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_news/203d76130d7d453eac3de737be1f6302/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A%E5%AD%B8%E7%BF%92%E6%8C%87%E5%BC%95(%E8%80%83%E7%A7%91%E4%BA%8C)%E7%A2%B3%E7%AE%A1%E7%90%86%E5%88%B6%E5%BA%A6%E5%AF%A6%E5%8B%99_115_20260213164341.pdf",
             "quote": "值得注意的是，目前相關方法學的審議仍長，大多尚未成為UNFCCC 認可的方法學（如CCS 在CDM 方法學審議中一直呈現審議中狀態），或僅在部份國家或是獨立機構註冊系統中得以登錄",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -955,7 +960,9 @@
           {
             "url": "https://www.ey.gov.tw/Page/5A8A0CB5B41DA11E/46de50e1-7381-4634-93e7-4cd320ec308b",
             "quote": "政府自105年5月啟動能源轉型，以「減煤、增氣、非核、展綠」為發展方向，完整擘劃我國再生能源發展路徑及策略，明訂114年再生能源裝置容量29 GW",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -1002,7 +1009,9 @@
           {
             "url": "https://unfccc.int/files/meetings/cop_13/application/pdf/cp_bali_action.pdf",
             "quote": "Nationally appropriate mitigation actions by developing country Parties in the context of sustainable development, supported and enabled by technology, financing and capacity-building, in a measurable, reportable and verifiable manner",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -4125,7 +4134,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139",
             "quote": "二、補繳差額在新臺幣一千萬元以上，未滿新臺幣五千萬元之案件，得分二至十二期繳納，每期繳納金額不得低於二百萬元。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "valid_as_of": "2026-07-14",
@@ -4238,7 +4249,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=6",
             "quote": "事業應於繳費當年度一月三十一日前，向中央主管機關提出申請認定屬高碳洩漏風險並適用第一項排放量調整係數",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -4637,7 +4650,13 @@
             "note": "⚠️ 這段引文**逐字為真，而它證明的正是題目錯了** —— 法條說的是「**國內**」，而題庫的答案寫「國內外」。全條「國外」出現 0 次。"
           }
         ],
-        "prior_answer": "A"
+        "prior_answer": "A",
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "NULLED_DOCUMENTED",
+          "note": "2026-07-15 已撤答案（§9 檢討「國內」減量額度，選項 A 卻寫「國內外」為超集、四選項無一符合法條）。第十八輪代理建議補 A 屬過度指控，維持 null。",
+          "method": "既有決定＋我複核"
+        }
       },
       "quality_flags": [
         "ambiguous"
@@ -7110,7 +7129,9 @@
             "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023L0959",
             "quote": "From 2034, no CBAM factor shall apply.",
             "supports_option": "C",
-            "note": "⚠️ 舊引文引對了文件，但**被截斷在 2034 之前**。CBAM 係數＝CBAM 部門保留的免費配額比例，逐年遞減至 2033 剩 14%，**「From 2034, no CBAM factor shall apply」= 免費配額於 2034 完全歸零**。答案 C（2034 年）成立。已換上含 2034 的完整逐字引文。"
+            "note": "⚠️ 舊引文引對了文件，但**被截斷在 2034 之前**。CBAM 係數＝CBAM 部門保留的免費配額比例，逐年遞減至 2033 剩 14%，**「From 2034, no CBAM factor shall apply」= 免費配額於 2034 完全歸零**。答案 C（2034 年）成立。已換上含 2034 的完整逐字引文。",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -11014,7 +11035,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "所有數據的佐證文件均需保存或提供佐證文件，如: 領用單 確保所撈取的數量是該標的產品的實際使用量(若有庫存問題，請將領用量扣除庫存量)",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -11061,7 +11084,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "僅計算不包含於報告公司類別1 及類別2 排放者。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -11342,7 +11367,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "以範疇3 類別取得相關計量數據為基礎，搭配對應之次級數據（例如行業平均排放係數）進行計算。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -11389,7 +11416,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "特定供應商提供產品或服務從搖籃到大門（包含原料開採、製造/組裝、運輸等階段）的溫室氣體排放數據進行計算。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -12336,7 +12365,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "組織須量化溫室氣體移除量。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -12434,7 +12465,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "步驟2：如無法避免分配時，系統的投入與產出，須以能反映其間基本實質關係之方式，區分至不同的產品或功能之間。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -12481,7 +12514,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "組織應依照氣候變遷因應法或是ISO 14064-1:2018所要求之架構進行溫室氣體盤查報\n告書之編制。\n• 組織應視溫室氣體盤查報告書之預期使用者需求，揭露排放量資訊與減量政策。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -12528,7 +12563,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "溫室氣體盤查需收集彙整的資料橫跨組織內部不同部門，跨部門合作相當重要，因此需\n要透過高階主管召開起始會議來凝聚執行溫室氣體盤查的共識，以確保盤查作業推動順\n利。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13226,7 +13263,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/691673213.pdf",
             "quote": "配合使用之資料庫(除能源外，一般非重量單位需換算為重量單位)",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13273,7 +13312,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf",
             "quote": "活動數據為焊條重量× 焊條含碳量(%)",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13320,7 +13361,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "不鏽鋼管線材製品之生命週期涵蓋原料取得階段、製造階段、配送銷售階段、使用階段與廢棄處理階段，生命週期流程如下圖所示：",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13367,7 +13410,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf",
             "quote": "計費周期如有跨年度之情形，應以實際日數比例攤分使用量",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -14060,7 +14105,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "若廠區生活汙水有納管時，可不用計算化糞池甲烷逸散量。如果有納管但仍保留化糞池\n之情形，仍須計算逸散量。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -14107,7 +14154,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "3.1.3.9參考流(reference flow)\n•\n在已知產品系統(3.1.3.2)中，滿足以功能單位(3.1.3.7)表示的功能所需過程(3.1.3.5)投入或產出\n之量測。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -14162,7 +14211,13 @@
           "what": "發現本題有兩個正解（「溝通」被 ISO 14067 摘要明文排除，「標籤設計」也不在範圍內）。已改為 answer=null + ambiguous，排除計分。"
         },
         "prior_answer": "C",
-        "answer_ambiguity_note": "「溝通的要求」與「標籤設計規範」**兩者都不包括在 ISO 14067 內**，而且「溝通」的依據更強（標準摘要**明文排除**），「標籤設計」只是「沒提到」。**改成任何單一字母都是猜的。**"
+        "answer_ambiguity_note": "「溝通的要求」與「標籤設計規範」**兩者都不包括在 ISO 14067 內**，而且「溝通」的依據更強（標準摘要**明文排除**），「標籤設計」只是「沒提到」。**改成任何單一字母都是猜的。**",
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "NULLED_DOCUMENTED",
+          "note": "2026-07-14 已撤答案（ISO 14067 官方摘要排除「溝通」，故選項 A 與 C 同為「不包括」之正解，兩正解）。第十八輪代理建議補 C 屬過度指控，維持 null。",
+          "method": "既有決定＋我複核"
+        }
       },
       "quality_flags": [
         "ambiguous"
@@ -14211,7 +14266,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "高階主管支持與承諾：\n• 溫室氣體盤查需收集彙整的資料橫跨組織內部不同部門，跨部門合作相當重要，因此需\n要透過高階主管召開起始會議來凝聚執行溫室氣體盤查的共識，以確保盤查作業推動順\n利。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -14909,7 +14966,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "2030年全球人為甲烷排放量較2020年削減30％.",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -14956,7 +15015,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
             "quote": "商業營業場域燈具採LED燈100%",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "explanation_audit": {
@@ -15008,7 +15069,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "全球逾120間以上企業加入；承諾使用100％電動車輛，2030年達到575萬輛目標。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -15055,7 +15118,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "全球逾400間以上企業加入；承諾2050年使用100％再生能源電力。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -16671,7 +16736,9 @@
           {
             "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351",
             "quote": "本指引適用於企業就其溫室氣體排放進行盤查、減量及採取抵換作為有具體結果後，對下列事項進行碳中和",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "explanation_audit": {
@@ -16780,7 +16847,9 @@
           {
             "url": "https://www.ey.gov.tw/PageRedirect.aspx?l=1ca9d58e-43d8-4b42-a3c1-55e3fe0ddb8b",
             "quote": "使進口能源依存度由110年97.4%，降至139年50%以下",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -17020,7 +17089,9 @@
           {
             "url": "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
             "quote": "全廠（場）化石燃料燃燒之直接排放及使用電力之間接排放產生溫室氣體年排放量合計達二點五萬公噸二氧化碳當量者。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -17067,7 +17138,9 @@
           {
             "url": "https://oaout.moenv.gov.tw/law/Download.ashx?FileID=108577&id=GL004941&type=LAW",
             "quote": "廠商使用碳標籤圖示，心型內應依實標示產品碳足跡數據及計量單位；",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -18232,7 +18305,9 @@
           {
             "url": "https://www.moeaea.gov.tw/ECW/populace/content/wHandMenuFile.ashx?menu_id=20834&file_id=10970",
             "quote": "現有永安及台中接收站之天然氣供應能力為每年1,650\n萬公噸，然而我國110 年天然氣實際進口量為1,944 萬公\n噸，接收站已滿載操作。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -18281,7 +18356,13 @@
             "quote": "(D) 55.什麼是能源轉型(Energy transition)？ \n(A)從化石燃料轉向再生能源的過程 \n(B)從傳統能源轉向新能源的過程 \n(C)從集中式能源轉向分散式能源的過程 \n(D)以上皆是",
             "supports_option": "B"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文釘不住此答案（主題相關/循環/題幹複述）；答案經概念與選項排除法確認正確，無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       }
     },
     {
@@ -18328,7 +18409,13 @@
             "quote": "阿聯酋共識\n(UAE Consensus)\n表明各國應在2030年前達成全球再生能源產能提高至三倍、全球能源效率改善\n至兩倍及化石燃料之轉型脫離。",
             "supports_option": "B"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT_BUT_IMPERFECT",
+          "note": "第十八輪：答案 B 由刪去法成立（A 逐步淘汰石化、C 增加核能、D 能效提升皆為 COP28 主決議內容）。⚠️ 選項 B「再生能源增加2倍」用詞有中文倍數歧義（COP28 為三倍），建議命題者精修。",
+          "method": "代理語意審查＋我複核"
+        }
       }
     },
     {
@@ -18765,7 +18852,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "Q6 下列哪一項不是巴黎協定第二條所列的目標？(答案: A)\n(A)追求2050年淨零排放(B)限制全球溫升低於工業化前水準2°C以下，追求1.5°C以內(C)以不威脅糧食生產的方\n式增強氣候韌性，使溫室氣體朝低排放發展(D)使資金流向符合溫室氣體低排放路徑",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -19399,7 +19488,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "溫室氣體排放貢獻爭執：共同但有區別的責任？ 以現今排放水準來看：中國貢獻30％排 放量；歐盟、美國合計僅18％ 以累積排放貢獻來看：中國貢獻12％排 放量；歐盟、美國合計達27％ 國際氣候協商強調共同但有區別的責任 並考量國情與能力：歷年皆成為協商角 力重點，區分不同協商集團觀點",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -19696,7 +19787,9 @@
           {
             "url": "https://service.cca.gov.tw/File/Get/cca/zh-tw/jOcI8bQFGSbDXdc",
             "quote": "Intergovernmental Panel on Climate Change (IPCC) 聯合國政府間氣候變化專門委員會 為附屬於聯合國之下的跨政府組織，在1988 年 由世界氣象組織(World Meteorological Organi- zation, WMO)、聯合國環境署(United Nations Environment Programme, UNEP) 合作成立。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -19743,7 +19836,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
             "quote": "產品類別規則(Product Category Rules，PCR) 一個或多個產品要進行碳足跡/第三類環境宣告量化與溝通使用的一套特定 規則、要求事項及指引。依據ISO 14067 標準，若有相關PCR 或CFP-PCR 時， 應予採用。 註：產品類別規則沒有全球共通，碳標籤和第三方查證聲明書亦無共通。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -19790,7 +19885,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "計算產品碳足跡時原物料之排放係數可由下列何種方式取得？(答案：D) (A)要求供應商盤查後經查證確認後提供(B)環境部碳足跡資料庫公用碳排放係數(C)生命週期評估軟體資料庫 (D)以上皆是",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -20495,7 +20592,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "Q4 生命週期評估的最終階段，目的在於綜合盤查分析與衝擊評估的結果或是將盤查分析的結果與\n目標及範疇一致化，以達成結論與建議，請問此階段在ISO 14040:2006 中稱作？\n(A)闡釋(interpretation) (B)結論(conclusion) (C)透明(transparency) (D)決策(decision)",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -20593,7 +20692,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "Q8 使用生命週期評估進行產品碳足跡評估不會經歷哪個重要階段？(答案：A)\n(A)實驗(B)闡釋(C)目標與範圍界定(D)盤查分析",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -20640,7 +20741,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "Q9 功能單位是在哪個生命週期階段被定義？(答案：B)\n(A)盤查分析(B)目標與範疇界定(C)實驗(D)闡釋",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -20687,7 +20790,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "穩定生產的產品以整年優先考慮\n客製品或季節性產品: 最近一批\n標的產品在調查期間內生產所在工廠的位置\n多個生產地點時，須考慮代表性",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "explanation_audit": {
@@ -21342,7 +21447,9 @@
           {
             "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
             "quote": "This method only applies to scope 3, near-term targets.",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "found_by": "r3-no-source-audit"
@@ -21394,7 +21501,9 @@
           {
             "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
             "quote": "emissions, 67% \ncoverage \nWell-below \n2°C",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -21441,7 +21550,9 @@
           {
             "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
             "quote": "C12 – Carbon credits: The use of carbon credits must not be counted as emission \nreductions toward the progress of companies’ near-term or long-term science-based targets.",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -21545,7 +21656,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
             "quote": "控制權法 \n營運 \n控制法 \n若一家公司具有完全的權力去主導並執行事業體的營運政\n策，則表示其擁有該事業體的營運控制權，應100%認列其\n溫室氣體排放量和移除量。 \n財務 \n控制法 \n若一家公司有能力主導事業體的財務與營運政策時，則企\n業對事業體享有財務控制，應100%認列其溫室氣體排放量\n和移除量。 \n股權持分法 \n公司依照對各事業體所持有的股權比例，認列其溫室氣體\n排放量和移除量。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -22141,7 +22254,9 @@
           {
             "url": "https://www.ipcc.ch/sr15/chapter/glossary/",
             "quote": "Net zero emissions are achieved when anthropogenic emissions of greenhouse gases to the atmosphere are balanced by anthropogenic removals over a specified period.",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -22188,7 +22303,9 @@
           {
             "url": "https://www.ey.gov.tw/Page/5A8A0CB5B41DA11E/46de50e1-7381-4634-93e7-4cd320ec308b",
             "quote": "政府自105年5月啟動能源轉型，以「減煤、增氣、非核、展綠」為發展方向，完整擘劃我國再生能源發展路徑及策略，明訂114年再生能源裝置容量29 GW",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -22242,6 +22359,12 @@
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        },
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "SUSPECT_NEEDS_REVIEW",
+          "note": "選項 D「公共電力淨零聯盟」極可能對應 UNEZA（Utilities for Net Zero Alliance，COP28 於 2023/12 由 IRENA 與 COP28 主席國發起之真實聯盟）。若 D 為真，則 A/B/C/D 四項皆為 COP28 真實倡議、本「何者不是」題無合法正解。本輪 UNEZA 官方頁對我方 fetcher 皆限流/空回，無法機械確認，故標記存疑、待人工核對命題依據教材是否確以 D 為虛構名稱。答案暫留 D。",
+          "method": "代理疑慮＋我複核（來源限流未能確認）"
         }
       }
     },
@@ -22424,7 +22547,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
             "quote": "直接排放指的是企業營運過程中直接產生的溫室氣體排放，如燃燒化石燃料；",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -23684,7 +23809,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "碳信用一旦被創建，需要在專門的登錄處註冊，以確保其獨一無二",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -23731,7 +23858,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "的配額可以賣給那些排放量超過自身配額的組織",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -23834,7 +23963,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "碳中和途徑說明，含GHG減量及加強移除措施之短期與長期目標",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -23865,7 +23996,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "GRI與SASB的揭露框架可以整合應用於同一份永續報告書中，並不需要強制分開章節呈現。許多企業會同時採用兩套準則以滿足不同利害關係人的需求。",
+      "explanation": "依 GRI，GRI 與 SASB 準則互補而非互相取代，可整合於同一報告；故「兩者須分列不同章節、不可整合」之敘述並不正確。",
       "metadata": {
         "original_id": "c2-260",
         "_legacy_pipeline_metadata": {
@@ -23875,13 +24006,16 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://www.globalreporting.org/news/news-center/gri-and-sasb-reporting-complement-each-other/",
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/907546226.pdf"
         ],
         "evidence": [
           {
-            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/907546226.pdf",
-            "quote": "C.GRI與SASB在永續報\n告中需要分開兩個大章節分別表述資料",
-            "supports_option": "B"
+            "url": "https://www.globalreporting.org/news/news-center/gri-and-sasb-reporting-complement-each-other/",
+            "quote": "Each set of standards complements rather than substitutes the other, with GRI supporting broad and comprehensive disclosures on organizational impacts and SASB focusing on a subset of financially material issues",
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "note": "第十八輪語意複核：原自動引文釘不住（多為循環），改用一手原文釘住並機械比對。"
           }
         ]
       }
@@ -26392,7 +26526,9 @@
           {
             "url": "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
             "quote": "依管理辦法第4 條第2 項規定，排放係數採用須以下來源： \n(1) 依據本部公告溫室氣體排放係數。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "found_by": "r3-no-source-audit"
@@ -28125,7 +28261,13 @@
           "source_url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
           "why": "**原選項讓本題有兩個正解。** 題幹問「何者不正確」。原選項 A（此議題涵蓋氣候變遷對生態系影響）本來就是**錯的**（官方答案卡即指 A 為不正確），而社群共筆又把官方的 D（一段正確敘述：涵蓋勘探、開採、開發、建設與選址）換成了另一句錯的「僅限營運階段，不含場址選擇」，並把答案指向 D —— 於是 A 與 D **都是不正確的敘述**，兩個都能選。此處還原官方選項與答案卡。"
         },
-        "found_by": "r3-no-source-audit"
+        "found_by": "r3-no-source-audit",
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文釘不住此答案（主題相關/循環/題幹複述）；答案經概念與選項排除法確認正確，無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       },
       "explanation": "SASB 的「生態衝擊（Ecological Impacts）」議題處理的是企業對**生態系與生物多樣性**的衝擊（棲地破壞、森林砍伐、土地與選址等），**氣候變遷的影響不屬於這個議題**（氣候另有其議題）。故「此議題涵蓋氣候變遷對生態系統和生物多樣性的影響」為不正確之敘述。iPAS 公版教材範例題為同一題，答案卡印 A。",
       "_correction_note": "2026-07-14：**選項整組還原**（原題有兩個正解）。詳見 metadata.options_replaced。"
@@ -28796,7 +28938,9 @@
           {
             "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
             "quote": "類別4-使用產品的間接溫 室氣體排放 範疇三 1.購買產品及服務，2.資本財，3.燃料與能源相關活動 5.營運產生廢棄物，8.上游租賃資產 類別5-產品使用相關的間 接溫室氣",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "explanation_audit": {
@@ -28906,7 +29050,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "SBTi的主要目標是協助企業設定符合《巴黎協定》的減碳目標。",
+      "explanation": "依 SBTi，科學基礎減量目標旨在使企業減量幅度與速度符合巴黎協定目標；故其對齊之國際協議為巴黎協定。",
       "metadata": {
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -28916,13 +29060,16 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://sciencebasedtargets.org/faqs",
           "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf"
         ],
         "evidence": [
           {
-            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf",
-            "quote": "2. SBTi 的主要目標是為了符合哪個國際協議的目標？ (A)京都議定書；(B)蒙特利爾議定書；(C)瑞士議定書；(D)巴黎協定 3. SBTi 推動企業",
-            "supports_option": "B"
+            "url": "https://sciencebasedtargets.org/faqs",
+            "quote": "They define how much and how quickly a business must reduce its emissions to be in line with the Paris Agreement goals.",
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "note": "第十八輪語意複核：原自動引文釘不住（多為循環），改用一手原文釘住並機械比對。"
           }
         ]
       }

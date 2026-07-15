@@ -84,6 +84,7 @@ export const PRIMARY: readonly HostRule[] = [
   { host: 'efrag.org', who: 'EFRAG —— ESRS 的技術建議機構' },
   { host: 'fsb-tcfd.org', who: 'TCFD —— 氣候相關財務揭露架構' },
   { host: 'sciencebasedtargets.org', who: 'SBTi（含 files. 子網域）—— 科學基礎減量目標' },
+  { host: 'globalreporting.org', who: 'GRI 全球永續性報告協會 —— GRI 準則之制定機構' },
   { host: 'cdp.net', who: 'CDP —— 揭露問卷與評分方法' },
   { host: 'environdec.com', who: 'EPD International —— EPD 制度的營運者' },
   { host: 'there100.org', who: 'RE100 國際倡議 —— RE100 規則與會員名單' },

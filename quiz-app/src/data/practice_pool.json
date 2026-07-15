@@ -3420,7 +3420,9 @@
           {
             "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News",
             "quote": "(二)適用對象及時程：考量國內量能，規劃自2026年會計年度起分三階段適用IFRS永續揭露準則：\n1.2026年：資本額達100億元以上之上市櫃公司適用。\n2.2027年：資本額達50億元以上未達100億元之上市櫃公司適用。\n3.2028年：其餘所有上市櫃公司適用。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -3628,7 +3630,9 @@
           {
             "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0%2C2&mcustomize=news_view.jsp&dataserno=202505130005&dtable=News",
             "quote": "修正重點如下：\n一、 明定以專章揭露永續相關財務資訊，並經董事會通過：按接軌藍圖規劃之對象及時程，明定符合一定條件之公司，應以專章方式於年報中記載經董事會決議通過之「永續相關財務資訊」，以提升永續資訊之品質。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -3910,7 +3914,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139",
             "quote": "其溫室氣體年排放量合計值達二萬五千公噸二氧化碳當量以上之電力、燃氣供應業及製造業",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -3974,7 +3980,9 @@
           {
             "url": "https://www.trec.org.tw/documents/81.pdf",
             "quote": "但各國憑證運作模式相同\n• 1張憑證為1000度電\n• 以電子方式發行",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -4913,7 +4921,9 @@
           {
             "url": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures.html",
             "quote": "IFRS S2 integrates and builds on the recommendations of the Task Force on Climate-related Financial Disclosures (TCFD) and incorporates industry-based disclosure requirements derived from SASB Standards.",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -5057,6 +5067,12 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文釘不住此答案（主題相關/循環/題幹複述）；答案經概念與選項排除法確認正確，無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
         }
       },
       "sources": [
@@ -5119,7 +5135,9 @@
           {
             "url": "https://law.moda.gov.tw/LawContent.aspx?id=FL083280",
             "quote": "中華民國一百零六年一月九日起新建置之資料中心，其能源使用效率\n    值應低於一點六; 一百零六年一月八日以前已設置之資料中心，其能\n    源使用效率不符前揭規定者，應逐步改善能源使用效率。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       },
@@ -5311,7 +5329,9 @@
           {
             "url": "https://www.ey.gov.tw/File/D2A731DDD7EC55EC?A=C",
             "quote": "私人運具為主之小客車及機車,透\n過補貼讓價格合理化,建構完善且方便的使用環境,導引民眾汰\n換為電動運具,而非採禁售或禁買燃油車的強制手",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -6597,7 +6617,9 @@
           {
             "url": "https://www.sec.gov/files/rules/final/2024/33-11275.pdf",
             "quote": "Eliminating the proposed requirement to provide Scope 3 emissions disclosure (which the \nproposal would have required in certain circumstances);",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -6739,7 +6761,9 @@
           {
             "url": "https://www.iso.org/standard/43279.html",
             "quote": "ISO 14068 provides principles, requirements, and guidance for achieving and demonstrating carbon neutrality . It focuses on quantifying, reducing, and offsetting carbon footprints, utilizing a hierarchical approach prioritizing direct and indirect GHG emission reductions and removal enhancements within the value chain over offsetting.",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -6806,7 +6830,9 @@
           {
             "url": "https://www.ipcc.ch/report/ar6/wg1/chapter/chapter-7/",
             "quote": "CH 4 -fossil 11.8 ± 1.8 5.7 ± 1.4 ×10 –4 82.5 ± 25.8 29.8 ± 11 10.0 ± 3.8 13.2 ± 6.1 7.5 ± 2.9 2823 ± 1060 3531 ± 1385 CH 4 -non fossil 11.8 ± 1.8 5.7 ± 1.4 ×10 –4 79.7 ± 25.8 27.0 ± 11 7.2 ± 3.8 10.4 ± 6.1 4.7 ± 2.9 2675 ± 1057 3228 ± 1364 N 2 O 109 ± 10 2.8 ± 1.1 ×10 –3 273 ± 118 273 ± 130",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -6876,7 +6902,9 @@
           {
             "url": "https://www.globalmethanepledge.org/",
             "quote": "Participants joining the Pledge agree to take voluntary actions to contribute to a collective effort to reduce global methane emissions at least 30 percent from 2020 levels by 2030.",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -8175,7 +8203,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=32",
             "quote": "中央主管機關應成立溫室氣體管理基金，基金來源如下：\n一、第二十四條與前條之代金及第二十八條之碳費。\n二、第二十五條及第三十六條之手續費。\n三、第三十五條拍賣或配售之所得。\n四、政府循預算程序之撥款。\n五、人民、事業或團體之捐贈。\n六、其他之收入。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -8251,7 +8281,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=49",
             "quote": "事業違反依第二十一條第二項所定辦法中有關排放量盤查、登錄之頻率、紀錄、應登錄事項、期限或管理之規定，經通知限期補正或改善，屆期仍未補正或完成改善者，處新臺幣十萬元以上一百萬元以下罰鍰",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -8319,7 +8351,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=7",
             "quote": "一、移除類型專案：\n（一）展延型：以二十年為限，最多得展延二次，每次展延以十年為限。\n（二）固定型：以三十年為限。\n二、減少或避免排放類型專案：\n（一）展延型：以五年為限，最多得展延二次，每次展延以五年為限。\n（二）固定型：以十年為限。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -8385,7 +8419,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=7",
             "quote": "自願減量專案之計入期，依專案類型於申請註冊階段選擇展延型或固定型，於通過註冊後始得起算，其年限規定如下：\n一、移除類型專案：\n（一）展延型：以二十年為限，最多得展延二次，每次展延以十年為限。\n（二）固定型：以三十年為限。\n二、減少或避免排放類型專案：",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -9852,7 +9888,9 @@
         "evidence": [
           {
             "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
-            "quote": "Authorised CBAM declarants are required to submit an annual CBAM declaration containing the calculation of embedded emissions on the basis of either default values or actual values verified by accredited verifiers. Default values should be calculated and made available by the Commission. The verification of embedded emissions should therefore only apply to actual values."
+            "quote": "Authorised CBAM declarants are required to submit an annual CBAM declaration containing the calculation of embedded emissions on the basis of either default values or actual values verified by accredited verifiers. Default values should be calculated and made available by the Commission. The verification of embedded emissions should therefore only apply to actual values.",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -10144,7 +10182,9 @@
           {
             "url": "https://isds.tpex.org.tw/download/20250103IFRS%E6%B0%B8%E7%BA%8C%E6%BA%96%E5%89%87%E5%95%8F%E7%AD%94%E9%9B%86.pdf",
             "quote": "IFRS 永續揭露準則未要求對永續資訊進行確信，且目前納入年報的永續資訊，除溫室氣 \n體資訊外，尚未強制要求其他永續主題須經確信。未來將持續關注國際趨勢及國\n際永續確信準則（ISSA 5000）發展趨勢，評估其他永續主題確信的可行性。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       },
@@ -10210,7 +10250,9 @@
           {
             "url": "https://www.iaasb.org/news-events/2025-05/iaasb-announces-withdrawal-isae-3410-assurance-engagements-greenhouse-gas-statements",
             "quote": "Consequently, the withdrawal of ISAE 3410 will take effect from the effective date of ISSA 5000.",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -10279,7 +10321,9 @@
           {
             "url": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/",
             "quote": "IFRS S1 requires an entity to disclose information about all sustainability-related risks and opportunities that could reasonably be expected to affect the entity’s cash flows, its access to finance or cost of capital over the short, medium or long term",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
