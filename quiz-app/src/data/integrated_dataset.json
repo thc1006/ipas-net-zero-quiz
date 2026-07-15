@@ -19178,7 +19178,7 @@
     {
       "index": 367,
       "number": 108,
-      "stem": "TCFD 建議的氣候風險中，投資人最關注哪一項？",
+      "stem": "依 TCFD，投資人為做出財務決策，需了解氣候相關風險對企業財務狀況的影響；此影響會反映於損益表、資產負債表，以及下列何者所代表的財務面向？",
       "options": [
         {
           "key": "A",
@@ -19201,10 +19201,11 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "在TCFD建議的氣候風險中，投資人最關注的是可能對企業現金流造成的風險。",
+      "explanation": "依 TCFD 最終報告，投資人需了解氣候相關風險如何影響企業反映於損益表、現金流量表與資產負債表的財務狀況；題幹已列出損益表與資產負債表，第三張報表即現金流量表，故對應現金流面向。",
       "metadata": {
         "original_id": "c2-174",
         "sources": [
+          "https://assets.bbhub.io/company/sites/60/2020/10/FINAL-2017-TCFD-Report-11052018.pdf",
           "https://www.fsb-tcfd.org/recommendations/"
         ],
         "sources_verified_date": "2026-05-04",
@@ -19223,10 +19224,26 @@
         },
         "answer_verification": {
           "date": "2026-07-15",
-          "verdict": "UNVERIFIABLE",
-          "note": "TCFD 並未對其三種財務影響管道（損益表/現金流量表/資產負債表）排序「投資人最關注何者」；選項 A（現金流風險）為四選項中最合理者且非錯誤，但無一手原文可機械釘住「最關注＝現金流」。答案保留、標記為無單一逐字釘句。",
-          "method": "第十五輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
-        }
+          "verdict": "CORRECT",
+          "note": "原標 UNVERIFIABLE；改題幹（錨定 TCFD 三張財務報表、問缺的第三者）後，答案 A（現金流）由一手原文唯一釘住。",
+          "method": "TCFD 最終報告逐字比對"
+        },
+        "stem_corrections": [
+          {
+            "date": "2026-07-15",
+            "from": "TCFD 建議的氣候風險中，投資人最關注哪一項？",
+            "to": "依 TCFD，投資人為做出財務決策，需了解氣候相關風險對企業財務狀況的影響；此影響會反映於損益表、資產負債表，以及下列何者所代表的財務面向？",
+            "why": "原題幹「投資人最關注哪一項」要求 TCFD 對三種財務影響管道排序 —— TCFD 從未如此排序，且選項 C「氣候風險」與題幹循環，故無單一逐字可釘。改為錨定 TCFD 最終報告明列的三張財務報表（損益表、現金流量表、資產負債表）：題幹點名其二、問第三者，使答案 A（現金流）唯一且可由一手原文釘住。"
+          }
+        ],
+        "evidence": [
+          {
+            "url": "https://assets.bbhub.io/company/sites/60/2020/10/FINAL-2017-TCFD-Report-11052018.pdf",
+            "quote": "investors, lenders, and insurance underwriters need to understand how climate-related risks and opportunities are likely to impact an organization’s future financial position as reflected in its income statement, cash flow statement, and balance sheet",
+            "supports_option": "A",
+            "note": "第十五輪：改題幹後，以 TCFD 最終報告「income statement, cash flow statement, and balance sheet」三張報表釘住現金流為第三者（答案 A）。"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
