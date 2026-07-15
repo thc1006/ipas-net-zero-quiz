@@ -10,12 +10,12 @@
     "total_questions": 773,
     "gist_questions": 545,
     "our_unique_questions": 228,
-    "corrections_applied": 37,
+    "corrections_applied": 38,
     "by_subject": {
       "考科1": 431,
       "考科2": 342
     },
-    "with_answer": 768,
+    "with_answer": 767,
     "last_updated": "2026-07-13T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -11005,7 +11005,7 @@
     {
       "index": 197,
       "number": 44,
-      "stem": "在 LCA 的衝擊評估階段，溫室氣體排放與移除量應選擇哪種全球暖化潛勢 (GWP) 計算方法？",
+      "stem": "在 LCA 衝擊評估（特徵化）階段，應採用下列何種方式將溫室氣體排放與移除量換算為氣候變遷衝擊值？",
       "options": [
         {
           "key": "A",
@@ -11013,7 +11013,7 @@
         },
         {
           "key": "B",
-          "text": "跨期 GWP 加權"
+          "text": "乘以 IPCC 之 100 年全球暖化潛勢（GWP100）"
         },
         {
           "key": "C",
@@ -11028,7 +11028,7 @@
       "source": "gist",
       "original_section": "考科2",
       "exam_subject": "考科2",
-      "explanation": "在LCA的衝擊評估階段，通常會使用GWP（全球暖化潛勢）將不同溫室氣體的排放量換算為二氧化碳當量，並可能考慮不同時間尺度的影響，因此跨期GWP加權是相關的計算方法。",
+      "explanation": "依 iPAS 產品碳足跡教材，量化各溫室氣體之潛在氣候變遷衝擊時，應將其排放與移除量乘以 IPCC 之 100 年全球暖化潛勢（GWP100）換算表示。",
       "metadata": {
         "original_id": "c2-004",
         "_legacy_pipeline_metadata": {
@@ -11042,14 +11042,33 @@
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         },
-        "answer_verification": {
-          "date": "2026-07-15",
-          "verdict": "CORRECT_BUT_IMPERFECT",
-          "note": "iPAS 教材明定 GHG 排放/移除量之衝擊換算採「100 年全球暖化潛勢（GWP100）」；四選項中僅選項 B（GWP 加權）屬 GWP 方法，其餘（輸入產出分析／組織範疇／直接排放計算）非 GWP 換算法，故 B 為最合理者。⚠️題幹選項用詞不精確（未直接寫 GWP100），建議命題者精修。",
-          "method": "第十七輪：查 iPAS 公版教材與標準；概念題／否定題無單一逐字釘句，誠實標記。"
-        },
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ],
+        "stem_corrections": [
+          {
+            "date": "2026-07-15",
+            "from": "在 LCA 的衝擊評估階段，溫室氣體排放與移除量應選擇哪種全球暖化潛勢 (GWP) 計算方法？",
+            "to": "在 LCA 衝擊評估（特徵化）階段，應採用下列何種方式將溫室氣體排放與移除量換算為氣候變遷衝擊值？",
+            "why": "原題幹「哪種GWP計算方法」與選項不相稱（多數選項非GWP法）；改為問特徵化階段之換算方式。"
+          }
+        ],
+        "option_corrections": [
+          {
+            "date": "2026-07-15",
+            "option": "B",
+            "from": "跨期 GWP 加權",
+            "to": "乘以 IPCC 之 100 年全球暖化潛勢（GWP100）",
+            "why": "原「跨期GWP加權」用詞不精確；教材明定應乘以 IPCC 之 100 年全球暖化潛勢（GWP100），故精修選項 B。"
+          }
+        ],
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "再乘以100年全球暖化潛勢，以IPCC所示",
+            "supports_option": "B",
+            "note": "第十七輪：改題幹+精修選項B後，以 iPAS 教材 GWP100 逐字釘住。"
+          }
         ]
       }
     },
@@ -18162,7 +18181,7 @@
           "text": "以上皆是"
         }
       ],
-      "answer": "D",
+      "answer": null,
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
@@ -18180,16 +18199,21 @@
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         },
-        "answer_verification": {
-          "date": "2026-07-15",
-          "verdict": "CORRECT_BUT_SOFT",
-          "note": "COP28（2023 杜拜）對氣候投資之影響涵蓋審慎評估企業風險與機會、推動碳市場規範、強化永續數據管理等面向。此為綜合性「以上皆是」題、屬概略敘述，無單一權威逐字，誠實標記。",
-          "method": "第十七輪：查 iPAS 公版教材與標準；概念題／否定題無單一逐字釘句，誠實標記。"
-        },
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
-        ]
-      }
+        ],
+        "prior_answer": "D",
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "NULLED_FALSE_OPTION",
+          "note": "選項 B（VCM 明確成熟）為假（Article 6.4 標準延至 COP29 才通過），「以上皆是」不成立，題目過於籠統無單一正解 → 撤答案。",
+          "method": "UNFCCC Article 6.4 時程＋VCM 完整性事實"
+        }
+      },
+      "quality_flags": [
+        "ambiguous"
+      ],
+      "_correction_note": "2026-07-15：**撤答案（排除計分）。** 原答案 D「以上皆是」不成立 —— 選項 B「自願碳市場規範明確而成熟」為**錯誤敘述**：巴黎協定第 6.4 條機制之方法學與碳移除標準於 COP28（2023）並未通過、延至 COP29（2024）方採納，且自願碳市場（VCM）於該期間仍普遍受完整性爭議，並非「明確而成熟」。B 既為假，「以上皆是」即不成立；而本題「COP28 對氣候投資之影響」屬概略敘述、A/C 皆過於籠統，四選項無單一明確正解，故撤答案。"
     },
     {
       "index": 342,
