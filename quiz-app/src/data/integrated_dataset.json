@@ -440,7 +440,9 @@
           {
             "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
             "quote": "5.系統邊界：針對各階段的範疇(如時間、地域、技術、邊界等)納入與否的要求。...11.磋商意見及回應：經過利害相關者會議與專家學者對於建議內容進行回應並紀錄。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -487,7 +489,9 @@
           {
             "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
             "quote": "財務控制法 若一家公司有能力主導事業體的財務與營運政策時，則企業對事業體享有財務控制，應100%認列其溫室氣體排放量和移除量。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -727,7 +731,9 @@
           {
             "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
             "quote": "計算產品碳足跡時，須事先找尋符合的產品類別規則嗎？(A)需要...若有相關的PCR 應予採用。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -774,7 +780,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "GRI (全球報告倡議組織)準則被廣泛認為是全球範圍內用於編制永續發展報告的最佳實踐標準。這些準則旨在幫助組織透明地報告其在經濟、環境和社會層面的影響",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "explanation_audit": {
@@ -2649,7 +2657,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "即MRV 原則：可量測（Measurable）可報告（Reportable）可驗證（Verifiable）",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       },
@@ -2707,6 +2717,12 @@
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        },
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文釘不住此答案（主題相關/循環/算術題引文無關）；答案經概念、排除法或算術確認正確，無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
         }
       },
       "explanation": "碳匯是指吸收並儲存二氧化碳的天然或人工倉庫，如森林、海洋、土壤、地層等，而野火則是排放二氧化碳的來源。"
@@ -3280,7 +3296,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139",
             "quote": "二、於本法修正施行前，依行政院環境保護署溫室氣體先期專案暨抵換專案推動原則取得之先期專案減量額度，得供非屬經審查認定之高碳洩漏風險事業使用，其扣除比率為零點三。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "valid_as_of": "2026-07-14",
@@ -3519,7 +3537,13 @@
             "note": "⚠️ 本題答案已為 null（多重正解、排除計分）。此引文抓到的是**同一份 PDF 裡的另一道題**（「何者不是 ISO14068-1/PAS2060 所涵蓋的範疇」），與本題「碳中和的**主體範圍**」不對應 —— 引文出處本身就不對。但因本題已不計分，僅記錄，不影響使用者。"
           }
         ],
-        "found_by": "r3-no-source-audit"
+        "found_by": "r3-no-source-audit",
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "NULLED_DOCUMENTED",
+          "note": "已於 2026-07-14 撤答案（B 國家與 C 個人生活方式皆非碳中和主體，本題兩正解）。第十八輪代理建議改 B 屬過度指控（未見 C 亦成立），維持 null。",
+          "method": "既有決定＋我複核"
+        }
       },
       "quality_flags": [
         "ambiguous"
@@ -9815,7 +9839,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "報告組織中發生的結構性變化，對公司的基準年排放量有顯著的衝擊。結構性變化包括合併、併購與出脫、委外/內製會在範疇1及範疇3之間產生顯著的排放移轉。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -10730,7 +10756,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "系統的投入與產出，須以能反映其間基本實質關係之方式",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -10831,7 +10859,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
             "quote": "1. 鑑別重大議題(找出熱點)",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -10933,7 +10963,13 @@
             "quote": "生命週期各階段之數據蒐集：針對各生命週期階段數據收集之要求，如原料取",
             "supports_option": "D"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文釘不住此答案（主題相關/循環/算術題引文無關）；答案經概念、排除法或算術確認正確，無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       }
     },
     {
@@ -11847,7 +11883,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "由小組蒐集相關活動數據與計算排放量。後續應研擬減碳目標及減碳推動方案(低碳化/智慧化)，達成永續淨零。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -11894,7 +11932,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "每當有數個替代分配程序可用時，應進行敏感度分析以說明偏離所選擇方法時之後果。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -11941,7 +11981,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "燃料燃燒造成之溫室氣體排放：二氧化碳(CO2)、甲烷(CH4)與氧化亞氮(N2O)。燃料在固定式設備(如：加熱器、燃氣渦輪、鍋爐)中燃燒之結果。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -12143,7 +12185,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "Category 1\n直接溫室氣體排放量與移除量\n1.1 固定式燃燒源之直接排放\n1.2 移動式燃燒源之直接排放\n1.3 產業過程之直接排放與移除\n1.4 人為系統所釋放的溫室氣體產生的直接暫時性排放\n1.5  土地使用、土地使用變更及林業之直接排放與移除",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -12986,7 +13030,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "組織如有對外部利害關係人溝通溫室氣體排放量之需求，應先完成內部查證程序後，再委託第三方查證/確信機構進行外部查證。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13033,7 +13079,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "3.1.3.4系統界限(system boundary)\n•\n基於一組準則來表示那項單元過程(3.1.3.6)係屬於被研究系統之一部分的界限。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13080,7 +13128,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "(a)功能單位與參考流( 參照6 . 3 . 3 )。\n(b)系統界限，包括下列各項。\n- 作為基本流之系統投入與產出的類型，與\n- 決定關於單元過程處理的準則，考慮其對CFP 研究中結論的重要性。\n(c)重要單元過程清冊。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13127,7 +13177,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf",
             "quote": "Category 1\n直接溫室氣體排放量與移除量\n1.1\n固定式燃燒源之直接排放",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13801,7 +13853,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "廢棄物需提供處理方式(如: 掩埋、焚化、回收..等)",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13850,7 +13904,13 @@
             "quote": "資訊提供方式: 供應商名稱或地址或運輸距離(以google map方式查詢)",
             "supports_option": "D"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文釘不住此答案（主題相關/循環/算術題引文無關）；答案經概念、排除法或算術確認正確，無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       }
     },
     {
@@ -13895,7 +13955,9 @@
           {
             "url": "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
             "quote": "應採用供應商提供之排放係數，若來源為汽電共生設備，建議以先熱後電計算其蒸汽排放係數，詳細計算方式請參照本指引附錄二，倘供應商為為本部公告列管對象，應採用最新且經查驗之蒸汽排放係數。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13946,7 +14008,13 @@
             "supports_option": "C"
           }
         ],
-        "found_by": "r3-no-source-audit"
+        "found_by": "r3-no-source-audit",
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文釘不住此答案（主題相關/循環/算術題引文無關）；答案經概念、排除法或算術確認正確，無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       },
       "_correction_note": "2026-07-14 更正：原答 B（計入化石燃料排放）為誤，正解為 C（單獨記錄）。ISO 14067:2018 §7.2 的「應分別記錄」清單把「源自化石之淨 GHG 排放」(b) 與「來自航空器運輸之 GHG 排放」(e) 列為兩個獨立項目 —— 併入化石項即違反該條。（本機以 PyMuPDF 解出 iPAS 公版教材全文逐字比對。）"
     },
@@ -14579,7 +14647,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "巴黎協定於2015年在巴黎COP21會議通過，目標將本世紀末前的全球暖化控制於相較工業化前上升2°C之內，並致力控制於1.5°C，於2016年生效且召開第一次締約方會議(CMA1)。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -14626,7 +14696,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "巴黎協定於2015年在巴黎COP21會議通過，目標將本世紀末前的全球暖化控制於相較工業化前上升2°C之內，並致力控制於1.5°C",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -14734,7 +14806,9 @@
           {
             "url": "https://unfccc.int/sites/default/files/resource/cma5_auv_4_gst.pdf",
             "quote": "global greenhouse gas emissions are projected to peak between 2020 and at the latest before 2025 in global modelled pathways that limit warming to 1.5",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "explanation_audit": {
@@ -14786,7 +14860,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "2030 年將RE裝置容量增至3倍、能效提高至2倍；逐步淘汰無減碳效率煤電與低效化石燃料補貼",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -16066,7 +16142,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/903/367241918.pdf",
             "quote": "簡稱SDGs），共計17項目標，並將在2030年檢視各國推動成效與作為。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -16113,7 +16191,9 @@
           {
             "url": "https://www.cca.gov.tw/climatetalks/emission-and-reduction/national/1867.html",
             "quote": "第一期（2016-2020年）目標為2020年減量2%（相較於2005 年）",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -16320,7 +16400,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "即MRV 原則：• 可量測（Measurable）• 可報告（Reportable）• 可驗證（Verifiable）",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -16371,7 +16453,9 @@
           {
             "url": "https://unfccc.int/resource/docs/2010/cop16/eng/07a01.pdf",
             "quote": "Developed countries should submit annual greenhouse gas inventories and inventory reports and biennial reports on their progress in achieving emission reductions, including information on mitigation actions to achieve their quantified economy-wide emission targets and emission reductions achieved",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -17480,7 +17564,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
             "quote": "GRI 準則2021之系統架構於三個系列準則， 分別為下\n列何者？\nA.GRI 環境準則、GRI社會準則、GRI治理準則  B.GRI環\n境準則、GRI社會準則、GRI經濟準則  C.GRI通用準則、\nGRI進階準則、GRI特殊準則 D.GRI 通用準則、GRI行業準\n則、GRI主題準則\n D.GR",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -17527,7 +17613,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
             "quote": "SASB準則五大面向當中的環境（Environment)提及空\n氣品質（Air\nQuality）議題， 下列描述何者不正確？\nA.此議題涉及對固定排放源（例如工廠、發電廠）和移動\n排放源（例如卡車、運輸車輛、飛機）成的空氣質量影響\n的管理  B.此議題也包括溫室氣體排放， 與溫室氣體排放\n的議題擇一揭露即可  C.此議題涉及工業排放造成的空氣\n質量影響的管理  D.相關空氣污染物包括但不限於氮氧化\n物（NOx)、硫氧化物（SOx)、揮發性有機化合物（\nVOC)、重金屬、顆粒物和氯氟烴\nB.此議題也包括溫室氣體\n排放， 與溫室氣體排放的議題擇\n一揭露即可",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -17574,7 +17662,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
             "quote": "SASB準則五大面向當中的社會資本（Social Capital)\n， 共包含7項ESG議題， 下列選項哪一個不是？\nA.資訊安全（Data Security)  B.商業道德（Business\nEthics)  C.客戶褔利（Customer Welfare)  D.人權和社區\n關係（Human Rights & Community Relations)\nB.商業道德（Business Ethics)",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -17621,7 +17711,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
             "quote": "依據溫室氣體盤查作業基本程序， 下列描述何者正確？ \nA.若企業具有環境部公告納管事業者， 該納管事業之盤查\n邊界由企業自行設定， 並依據營運控制權法區分為直接排\n放或能源間接排放的單元或程序B.金管會要求盤查邊界設\n定不需要與財務報表一致， 但對於子公司溫室氣體排放量\n納入統計方法並無規範， 僅要求企業內部子公司必須一致\nC.溫室氣體盤查主要依循四個步驟：決定排放量計算方\n式、蒐集活動數據、選擇合適的排放係數、計算溫室氣體\n排放量  D.不論依循任溫室氣體盤查規範，企業都不一定\n要界定盤查的範圍\n C.溫室氣體盤查主要依循四個步\n驟：決定排放量計算方式、蒐集\n活動數據、選擇\n合適的排放係數、計算溫室氣體\n排放量",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "explanation_audit": {
@@ -19110,7 +19202,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "供應商上游活動數據(包含原料重量、燃料與能源使用量\n運輸距離等)、供應商製造產品過程之廢物量等，以及各\n自相應的排放係數",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -19157,7 +19251,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "混合法（Hybrid method） 定義 合併採用特定供應商之活動數據及次級數據（例如行業平均 排放係數）進行計算，包含： a. 供應商範疇1＋2 排放數據",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -19204,7 +19300,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "京都議定書成就三大市場機制： 國際排放交易(IET)、聯合履行(JI)、清潔發展機制(CDM)",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -19235,7 +19333,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "UNFCCC的主要原則包括促進永續發展、共同但有區別的責任、促進有利且開放的國際經濟體系等，但並未將促進開發中國家經濟發展列為主要原則。",
+      "explanation": "依聯合國氣候變化綱要公約，締約方應促進永續發展並支持開放之國際經濟體系；促進開發中國家經濟發展本身並非其獨立列舉之原則。",
       "metadata": {
         "original_id": "c2-170",
         "_legacy_pipeline_metadata": {
@@ -19245,13 +19343,16 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://unfccc.int/files/essential_background/background_publications_htmlpdf/application/pdf/conveng.pdf",
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
         ],
         "evidence": [
           {
-            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
-            "quote": "各締約方應在公平的基礎上，並根據它們共同但有區別的責任和各自的能力，為人類當代和後代的利益保護氣候系統。因此，已開發國家締約方應率先對付氣候變遷及其不利影響。",
-            "supports_option": "B"
+            "url": "https://unfccc.int/files/essential_background/background_publications_htmlpdf/application/pdf/conveng.pdf",
+            "quote": "The Parties have a right to, and should, promote sustainable development. Policies and measures to protect the climate system against human-induced change should be appropriate for the specific conditions of each Party and should be integrated with national development programmes, taking into account that economic development is essential for adopting measures to address climate change. 5. The Parties should cooperate to promote a supportive and open international economic system that would lead to sustainable economic growth and development in all Parties, particularly developing country Parties, thus enabling them better to address the problems of climate change.",
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "note": "第十八輪語意複核：原自動引文釘不住，改用一手原文釘住並機械比對。"
           }
         ]
       }
@@ -20080,7 +20181,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "B2C產品(business-to-consumer)：搖籃到墳墓\n•\n可直接於消費市場上販售之最終產品(如：電視機、筆記型電腦)\nB2B 產品(business-to-business)：搖籃至大門\n•\n須再經組裝之半成品/零組件等(如：液晶面板模組、車用鍛造件)",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -20127,7 +20230,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "原料取得階段包括下列過程：\n1. 主原料生命週期相關流程。\n2. 副原料生命週期相關等過程。\n3. 耗材生命週期相關等過程。\n4. 包裝材生命週期相關的過程。\n5. 各原料到製造工廠之運輸過程。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -20174,7 +20279,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "噸CO2e / 噸H型鋼\n=\nx\n碳足跡計算概念\n活動數據\n排放係數",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -20339,7 +20446,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "Q3 計算產品碳足跡時原物料之排放係數可由下列何種方式取得？(答案：D)\n(A)要求供應商盤查後經查證確認後提供(B)環境部碳足跡資料庫公用碳排放係數(C)生命週期評估軟體資料庫\n(D)以上皆是",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -20979,7 +21088,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "檢查是否有遺漏或重複寫到？\n•\n檢查單位是否有誤用？\n•\n討論分配方式，是否不當？",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -21026,7 +21137,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "配合使用之資料庫\n(除能源外，一般非\n重量單位需換算為\n重量單位)",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -21057,7 +21170,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "排放係數的定義是單位活動量所產生的溫室氣體排放量，因此其單位為「公斤 CO₂e / 單位活動數據」（例如：kgCO₂e/kWh 或 kgCO₂e/kg）。",
+      "explanation": "依溫室氣體排放量盤查登錄及查驗管理辦法，排放係數指每單位操作量（活動數據）所排放之排放量，故其常見單位為每單位活動數據之排放量。",
       "metadata": {
         "original_id": "c2-206",
         "_legacy_pipeline_metadata": {
@@ -21067,13 +21180,16 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL005954",
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
         "evidence": [
           {
-            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
-            "quote": "名稱\n數值\n(噸CO2e/單位)\n單位\n鋼\n0.677\n噸",
-            "supports_option": "B"
+            "url": "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL005954",
+            "quote": "指將每單位原（物）料、燃料使用量、產品產量或其他經中央主管機關認定之操作量所排放之排放量。",
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "note": "第十八輪語意複核：原自動引文釘不住，改用一手原文釘住並機械比對。"
           }
         ]
       }
@@ -21175,7 +21291,9 @@
           {
             "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
             "quote": "all transport-related emissions across all sectors must be reported on a well-to-wheel (WTW) basis in companies’ \nGHG inventories (well-to-wake for aviation and maritime transport)",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -21827,7 +21945,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "RE100 倡議的主要目的是什麼？ \n(A)減少全球碳排放；(B)實現100%使用再生能源；(C)增加全球溫度；(D)減少\n企業利潤",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -21874,7 +21994,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "GRI 主題準則專注於特定的經濟、環境或社會主題，提供了關於如何報告這些\n特定議題的詳細指南和要求。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -21921,7 +22043,9 @@
           {
             "url": "https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf",
             "quote": "Companies shall include a process map in their inventory \nreport. A process map illustrates the services, materials, \nand energy needed to move a product through its \nlifecycle.",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -21968,7 +22092,9 @@
           {
             "url": "https://ghgregistry.moenv.gov.tw/epa_ghg/GhgDownload/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
             "quote": "製程使用FCs（包括PFCs、SF6、NF3、HFCs）所造成的\n排放，是半導體製程的主要溫室氣體排放量之一，目前處理方向\n包括製程利用率的提升與加裝燃燒式尾氣",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -23122,7 +23248,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "通過CDP 揭露環境數據可以保護和提升公司聲譽，增強競爭優勢，發現風險",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -23352,7 +23480,13 @@
             "quote": "Installation data, comprising identification and location details for the \noperator’s installation, and contact details for the operator’s authorised \nrepresentative.",
             "supports_option": "B"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文釘不住此答案（主題相關/循環/算術題引文無關）；答案經概念、排除法或算術確認正確，無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       }
     },
     {
@@ -23397,7 +23531,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
             "quote": "歐盟CBAM自2024/7/31之後，預設值僅可用於複雜商\n品小於多少的碳排量\nA.<20%, B.<30%, C.<40%, D.以上皆非\nA.<20%",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -23499,7 +23635,9 @@
           {
             "url": "https://taxation-customs.ec.europa.eu/document/download/2980287c-dca2-4a4b-aff3-db6374806cf7_en?filename=Guidance+document+on+CBAM+implementation+for+installation+operators+outside+the+EU.pdf",
             "quote": "Reporting of indirect \nemissions  \nRequired for all CBAM goods. \n\n23 \nDefault values for \nreporting of \nembedded emissions \nGlobal values  \n(except electricity). \nMay be used for precursors of complex goods contributing up \nto 20% of the total for the complex good. \nMust be used for imports of electricity and for indirect \nemissions, unless certain criteria are met. \nFlexibility regarding \nMRV rules \nThe use of rules from other (non-EU) carbon pricing or \nreporting schemes are allowed for operators of installations \nuntil the end of 2024, if they cover the same emissions and \nprovide similar accuracy.  \nImporters may use other (estimation) methods until 31 July \n2024. \nFrequency of \nreporting \nQuarterly (importers). \nVerification of \nreported data \nNot required.  \nOperators and importers should aim to report as accurately \nand completely as possible.  \nIf verification has been undertaken this should be noted in the \nsubmission. \nSurrender of CBAM \ncertificates \nNot required.",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -24392,7 +24530,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "應採取預防措施，包括緩解其不利影響",
+      "explanation": "依聯合國氣候變化綱要公約，締約方應採取預防措施以預測、預防或減輕氣候變遷成因並緩解其不利影響。",
       "metadata": {
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -24402,13 +24540,16 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://unfccc.int/files/essential_background/background_publications_htmlpdf/application/pdf/conveng.pdf",
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
         ],
         "evidence": [
           {
-            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
-            "quote": "4. Ans (C) \n預防措施，包括緩解其不利影響。",
-            "supports_option": "C"
+            "url": "https://unfccc.int/files/essential_background/background_publications_htmlpdf/application/pdf/conveng.pdf",
+            "quote": "The Parties should take precautionary measures to anticipate, prevent or minimize the causes of climate change and mitigate its adverse effects",
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "note": "第十八輪語意複核：原自動引文釘不住，改用一手原文釘住並機械比對。"
           }
         ]
       }
@@ -24439,7 +24580,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "應融入相關社會、經濟和環境政策及行動中",
+      "explanation": "依聯合國氣候變化綱要公約，締約方應盡可能將氣候變遷考量納入其相關社會、經濟與環境政策及行動。",
       "metadata": {
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -24449,13 +24590,16 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://unfccc.int/files/essential_background/background_publications_htmlpdf/application/pdf/conveng.pdf",
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
         ],
         "evidence": [
           {
-            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
-            "quote": "5. Ans (B) \n應融入相關社會、經濟和環境政策及行動中。",
-            "supports_option": "B"
+            "url": "https://unfccc.int/files/essential_background/background_publications_htmlpdf/application/pdf/conveng.pdf",
+            "quote": "Take climate change considerations into account, to the extent feasible, in their relevant social, economic and environmental policies and actions",
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "note": "第十八輪語意複核：原自動引文釘不住，改用一手原文釘住並機械比對。"
           }
         ]
       }
@@ -25555,7 +25699,9 @@
           {
             "url": "https://www.ipcc.ch/site/assets/uploads/2018/02/ar4-wg1-chapter2-1.pdf",
             "quote": "has increased from 23 in the TAR to 25.",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       },
@@ -25873,7 +26019,13 @@
             "supports_option": "D",
             "note": "⚠️ 這是**計算題**，題幹**自帶**排放係數（2.65 kgCO2e/公升）：120,000 公升 × 2.65 = 318,000 kg = **318 tCO2e**，答案成立。原引文（柴油熱值 74,100／8,500 kcal/L 的係數表）**與本題無關** —— 本題不需要那張表。**引文引錯，但答案對、算術對。**"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文釘不住此答案（主題相關/循環/算術題引文無關）；答案經概念、排除法或算術確認正確，無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       }
     },
     {
