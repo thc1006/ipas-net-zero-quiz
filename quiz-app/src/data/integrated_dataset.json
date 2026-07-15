@@ -10,7 +10,7 @@
     "total_questions": 773,
     "gist_questions": 545,
     "our_unique_questions": 228,
-    "corrections_applied": 36,
+    "corrections_applied": 37,
     "by_subject": {
       "考科1": 431,
       "考科2": 342
@@ -4691,6 +4691,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
@@ -4702,15 +4703,25 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+            "quote": "Off-spec products, by-products, waste, and scrap produced in a production process, irrespective of whether they are returned to production processes, delivered to other installations, or disposed of, shall not be included in the determination of the activity level",
+            "supports_option": "D",
+            "note": "第十五輪複驗：以「廢料/碎屑不計入活動量」之**通用規則**釘住 D（自產出量/宣告重量排除）。另註：CBAM 對特定製程（如鋼鐵）另有質量平衡規則，將廢料的碳納入碳核算 —— 那是**特定製程的碳核算方法**、非「廢料處理的通用原則」，故不使選項 C 成為本題正解。"
+          }
+        ],
+        "answer_verification": {
           "date": "2026-07-15",
-          "verdict": "unverifiable",
-          "detail": "第十五輪：CBAM 施行細則 (EU) 2023/1773 對廢料的規定是「碳（含 scrap/waste 中）以質量平衡納入計算」，**較接近「納入碳排放計算」而非答案 D「從宣告重量中扣除」**。但無正面一手證據證明別的選項才對，故不改答案，誠實標記為**無法以一手來源釘住**，待人再查。"
+          "verdict": "CORRECT",
+          "note": "我一度想依質量平衡條文把 D 翻成 C，但讀完全文：D 由通用的活動量排除規則直接支持；C 的質量平衡是特定製程碳核算方法、非通用廢料處理原則。故 D 正確、不翻案、不撤。",
+          "method": "一手法規原文（CBAM 2023/1773）逐字比對"
         }
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "依 CBAM 施行細則，於生產程序中產出的廢料與碎屑不計入活動量（產出量）之認定；故廢料須自宣告的產品重量中排除。"
     },
     {
       "index": 83,
@@ -5841,13 +5852,14 @@
           "text": "平均分配"
         }
       ],
-      "answer": "B",
+      "answer": "A",
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
@@ -5859,15 +5871,27 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "citation_audit": {
+        "prior_answer": "B",
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+            "quote": "where different goods are produced one after the other in the same production line, inputs, outputs, and corresponding emissions shall be attributed sequentially based on the usage time per year for each production process",
+            "supports_option": "A",
+            "note": "第十五輪複驗：CBAM 施行細則對「同一生產線先後生產多種產品」的確切情境明定依使用時間比例分攤（規則(a)）。原答案 B（產量比例）對此情境無一手支持。"
+          }
+        ],
+        "answer_verification": {
           "date": "2026-07-15",
-          "verdict": "needs_implementing_reg",
-          "detail": "第十五輪：CBAM 施行細則 2023/1773 以「生產過程（production process）」歸屬排放；多產品分攤的精確方法在附件 III/IV，較複雜，未能切出單一乾淨釘句。答案（按產量分攤）與「按生產過程歸屬」方向一致，但精確依據待補。"
+          "verdict": "CORRECTED_B_TO_A",
+          "note": "以 CBAM 施行細則規則(a)（同一生產線先後生產→依使用時間分攤）翻正。",
+          "method": "一手法規原文逐字比對"
         }
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "依 CBAM 施行細則，同一條生產線先後生產不同產品時，投入、產出與對應排放應依各生產程序每年使用該生產線的時間比例循序歸屬。",
+      "_correction_note": "2026-07-15：**答案 B→A（依一手法規更正）。** CBAM 施行細則 2023/1773 就本題情境（同一條生產線先後生產多種 CBAM 產品）明定：inputs/outputs/emissions 依各生產程序「使用時間 per year」循序歸屬（規則(a)）—— 即選項 A（使用生產線的時間比例）。原答案 B（產量比例）查無一手依據。（註：法規另有規則(b)子情形，該 Wayback 快照無法抽取全文，但(a)已直接對應本題情境。）"
     },
     {
       "index": 103,
