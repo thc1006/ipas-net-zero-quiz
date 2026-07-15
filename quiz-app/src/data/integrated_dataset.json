@@ -2436,8 +2436,14 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
           "key_text": "創",
           "how": "C:雙欄答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
-      }
+      },
+      "explanation": "引文將本題答案標示為「創新與綠色技術採納」，即工業部門邁向淨零的關鍵策略在於採用創新與綠色技術。相對地，降低能效、增加對煤炭的依賴或減少出口都無助於減碳轉型，故非關鍵策略。"
     },
     {
       "index": 44,
@@ -2825,8 +2831,14 @@
           "answer": "B",
           "why": "引文是來源 PDF 的原題，其官方答案卡確認「新增核能發電」為正解 —— 在本題庫的編號下那是 (B)。另有 answer_key_check 獨立確認。",
           "evidence_url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
-      }
+      },
+      "explanation": "引文的參考答案將「新增核能發電」標為「不包括」的項目——因應氣候變遷的基本原則涵蓋遵循巴黎協定、實施碳交易制度、以及增強資訊公開及公民參與，新增核能發電不在其中。故本題要挑出的即為新增核能發電。"
     },
     {
       "index": 51,
@@ -3402,11 +3414,17 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "引文明定：『中央主管機關應令事業於九十日內繳清其應繳納之碳費』，並列出適用情形『事業執行自主減量計畫，經中央主管機關查核未達指定目標』。故事業自主減量計畫未達指定目標時，主管機關應令其於90日內繳清應繳納之碳費。"
     },
     {
       "index": 61,
@@ -3513,8 +3531,14 @@
           "answer": "C",
           "why": "來源教材的原題選項「對碳排放設定價格的政策工具」為正解；本題庫把它改寫成「為二氧化碳排放訂定價格之政策工具措施」，即 (C)。",
           "evidence_url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
-      }
+      },
+      "explanation": "來源將碳定價定義為「對碳排放設定價格的政策工具」，對應到「為二氧化碳排放訂定價格之政策工具措施」這個選項。它的重點是為排放訂價的政策工具，而非碳稅的徵收標準、國際碳交易市場的價格或企業內部評估用的價格。"
     },
     {
       "index": 63,
@@ -4086,6 +4110,11 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "source_review": {
+          "date": "2026-07-15",
+          "verdict": "INVALID_PURCHASE_PAGE",
+          "detail": "唯一的來源是 iso.org/standard/43279.html —— 我抓回該頁 21,422 字，確認它是 **ISO 14068-1:2023 的購買頁**（只有摘要、CHF 標價、無條文內容；「PAS 2060」出現 0 次）。**拿購買頁當來源等於沒有來源。** 本題目前**沒有可驗證的一手依據** —— 答案未經獨立驗證，不寫解析（憑空寫＝假的保證）。"
         }
       },
       "quality_flags": [
@@ -4408,6 +4437,11 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "source_review": {
+          "date": "2026-07-15",
+          "verdict": "INVALID_PURCHASE_PAGE",
+          "detail": "唯一的來源是 iso.org/standard/43279.html —— 我抓回該頁 21,422 字，確認它是 **ISO 14068-1:2023 的購買頁**（只有摘要、CHF 標價、無條文內容；「PAS 2060」出現 0 次）。**拿購買頁當來源等於沒有來源。** 本題目前**沒有可驗證的一手依據** —— 答案未經獨立驗證，不寫解析（憑空寫＝假的保證）。"
         }
       },
       "quality_flags": [
@@ -6156,6 +6190,11 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "source_review": {
+          "date": "2026-07-15",
+          "verdict": "INVALID_PURCHASE_PAGE",
+          "detail": "唯一的來源是 iso.org/standard/43279.html —— 我抓回該頁 21,422 字，確認它是 **ISO 14068-1:2023 的購買頁**（只有摘要、CHF 標價、無條文內容；「PAS 2060」出現 0 次）。**拿購買頁當來源等於沒有來源。** 本題目前**沒有可驗證的一手依據** —— 答案未經獨立驗證，不寫解析（憑空寫＝假的保證）。"
         }
       },
       "quality_flags": [
@@ -6836,8 +6875,14 @@
             "supports_option": "B",
             "note": "⚠️ 舊引文**撐不住答案** —— 但那是**抽取瑕疵，不是資料錯**：**否定題**：引文（拉長到 500 字）逐一列出了另外三個選項，而答案「進口食品」**不在其中** —— 這正是「不屬於」的證明。新引文經機械比對確認逐字存在，且**含有答案的內容**（答案文字覆蓋率 25%）。（舊引文：「中央主管機關公告之產品，其生產過程排放溫室氣體，應符合效能標準。…」）"
           }
-        ]
-      }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=23",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
+      },
+      "explanation": "引文列出三類須負義務者：『中央主管機關公告之產品…應符合效能標準』、『事業製造或輸入…指定之車輛…應符合效能標準』、『新建築之構造、設備，應符合減緩溫室氣體排放之規定』。進口食品未見於引文所列任何一類，故不在效能標準的規範對象內。"
     },
     {
       "index": 122,
@@ -7136,8 +7181,14 @@
             "quote": "產品碳中和應透過組織盤查的結果說明產品的代表性，避免企業以特定「樣板主體」進行碳中和",
             "supports_option": "C"
           }
-        ]
-      }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
+      },
+      "explanation": "引文指出「產品碳中和應透過組織盤查的結果說明產品的代表性，避免企業以特定『樣板主體』進行碳中和」，因此應選擇最具代表性的產品並說明其理由。隨機選擇、選最新開發或排放量最少的產品，都可能淪為引文所警告的「樣板主體」，不符要求。"
     },
     {
       "index": 128,
@@ -7759,8 +7810,14 @@
             "supports_option": "B",
             "note": "⚠️ 舊引文釘不住答案。第十一輪由我親自複核一手來源：IPCC AR6 綜合報告 SPM（section A.1.2, p.5）明載溫室氣體『最大占比與成長』來自 'CO2 from fossil fuels combustion and industrial processes (CO2-FFI)'。四選項（農業、化石燃料燃燒、廢棄物、水資源管理）中 新引文經機械比對確認（verbatim）。"
           }
-        ]
-      }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://www.ipcc.ch/report/ar6/syr/downloads/report/IPCC_AR6_SYR_SPM.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
+      },
+      "explanation": "引文指出溫室氣體排放中「占比最大且成長最多的是化石燃料燃燒與工業製程所產生的二氧化碳（CO2-FFI），其次為甲烷」。既然最大來源是化石燃料燃燒，故答案為化石燃料燃燒；農業活動、廢棄物處理、水資源管理皆非最大來源。"
     },
     {
       "index": 140,
@@ -8210,6 +8267,11 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "source_review": {
+          "date": "2026-07-15",
+          "verdict": "INVALID_PURCHASE_PAGE",
+          "detail": "唯一的來源是 iso.org/standard/43279.html —— 我抓回該頁 21,422 字，確認它是 **ISO 14068-1:2023 的購買頁**（只有摘要、CHF 標價、無條文內容；「PAS 2060」出現 0 次）。**拿購買頁當來源等於沒有來源。** 本題目前**沒有可驗證的一手依據** —— 答案未經獨立驗證，不寫解析（憑空寫＝假的保證）。"
         }
       },
       "quality_flags": [
@@ -8647,8 +8709,14 @@
             "quote": "類別二：來自輸入電力的間接排放",
             "supports_option": "B"
           }
-        ]
-      }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/273804195.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
+      },
+      "explanation": "引文載明『類別二：來自輸入電力的間接排放』，即來自輸入能源（電力）之間接溫室氣體排放歸屬於類別二（Category 2）。"
     },
     {
       "index": 156,
@@ -9132,8 +9200,14 @@
             "supports_option": "D",
             "note": "⚠️ 舊引文釘不住答案（引文引錯段落或只抄了題目）。第十一輪由我親自複核：教材第141頁「邀請供應商參與盤查」列出的挑戰：配合意願(A)『供應商配合的意願？有無誘因？』、教育訓練(B)『是否要給予教育訓練？』、商業機密(C)『是否涉及商業機密？』；並未將『增加產品成本』(D)列為供應商參與盤查的挑戰，故D為『不包括』的正解。 新引文經機械比對確認（verbatim）。"
           }
-        ]
-      }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
+      },
+      "explanation": "引文在列出供應商參與盤查的挑戰時，分別提到「是否要給予教育訓練」（教育訓練）、「供應商配合的意願」（配合意願）與「是否涉及商業機密」（商業機密），唯獨沒有提到增加產品成本。因此不屬於引文所列挑戰者，即為增加產品成本。"
     },
     {
       "index": 166,
@@ -10435,8 +10509,14 @@
             "supports_option": "A",
             "note": "⚠️ 舊引文釘不住答案（引文引錯段落或只抄了題目）。第十一輪由我親自複核：教材第41-42頁6.3.2『在界定CFP研究的範疇時，本標準…下列要求事項與指引應納入考量並明確描述：』其(f)為『特別是針對使用階段與生命終結階段的假設』，即使用/生命終結階段的假設須明確說明，支持選項A。 新引文經機械比對確認（reordered）。"
           }
-        ]
-      }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
+      },
+      "explanation": "引文要求在界定 CFP 研究範疇時，對「使用階段與生命終結階段的假設」應納入考量並「明確描述」，即應明確說明這些階段的假設。忽略這些階段、或只考慮最好或最壞情況，都與「明確描述假設」的要求不符。"
     },
     {
       "index": 192,
@@ -24350,8 +24430,14 @@
           "verification_batch": "A",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "題幹自帶數據",
+          "why": "計算題，題幹已給排放係數，解析只是把算式寫出來，未引入任何外部事實。"
         }
-      }
+      },
+      "explanation": "本題為計算題，題幹**自帶排放係數**：12,000,000 kWh × 0.509 kgCO2e/kWh = 6,108,000 kg = 6,108 tCO2e，即約 6108 公噸 CO₂e（tCO₂e），與答案選項一致。（純以題幹給定數據計算，不需外部來源。）"
     },
     {
       "index": 480,
@@ -25096,8 +25182,14 @@
           "verification_batch": "B",
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "題幹自帶數據",
+          "why": "計算題，題幹已給排放係數，解析只是把算式寫出來，未引入任何外部事實。"
         }
-      }
+      },
+      "explanation": "本題為計算題，題幹**自帶排放係數**：250,000 公升 × 2.75 kgCO2e/公升 = 687,500 kg = 687.5 tCO2e，即約 688 公噸 CO₂e（tCO₂e），與答案選項一致。（純以題幹給定數據計算，不需外部來源。）"
     },
     {
       "index": 494,
@@ -26324,8 +26416,14 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
           "key_text": "範疇四：碳匯",
           "how": "A:行首答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
-      }
+      },
+      "explanation": "引文說明溫室氣體的範疇僅涵蓋範疇一（直接排放）、範疇二（能源間接排放）與範疇三（其他間接排放），並將「範疇四：碳匯」列為並非既有的範疇。因此目標設定所不包括者即為範疇四。"
     },
     {
       "index": 517,
@@ -26380,8 +26478,14 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
           "key_text": "城市擴張",
           "how": "C:雙欄答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://www.cdp.net/en/faqs",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
-      }
+      },
+      "explanation": "引文列舉CDP揭露的環境主題為氣候變遷（climate change）、森林／毀林（deforestation）與水安全（water security），正好對應氣候變遷、森林、水三個選項。空氣污染不在所列主題之中，故為問卷不包括的領域。"
     },
     {
       "index": 518,
@@ -26611,11 +26715,17 @@
           "date": "2026-07-14",
           "verdict": "citation_replaced",
           "detail": "原引用 https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139 經複驗判定不含本題主張；已換為 https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020140，該頁上的逐字引文已機械驗證存在且支持本題答案。"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020140",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "引文列明中央主管機關審查通過自主減量計畫後『應核定下列事項』，包含『自主減量計畫邊界』、『目標年指定目標及年度指定目標』、『適用之優惠費率級別』等款。此清單中並無『事業的年度營業額』，故年度營業額不屬應核定事項。"
     },
     {
       "index": 522,
@@ -26890,8 +27000,14 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
           "key_text": "全面禁止再生能源的發展",
           "how": "C:雙欄答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
-      }
+      },
+      "explanation": "引文直接標示答案為「全面禁止再生能源的發展」，對應到「完全禁止再生能源發展」這個選項。引文同時把「推動綠色金融」「檢討與改善再生能源等法令」「發展氣候變遷科學及衝擊調適研究」列為政策配套，故不包含在配套中的即為全面禁止再生能源發展。"
     },
     {
       "index": 527,
@@ -26946,8 +27062,14 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
           "key_text": "人類與自然系統回應氣候變遷風險的",
           "how": "C:雙欄答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
-      }
+      },
+      "explanation": "引文將本題答案標示為「人類與自然系統回應氣候變遷風險的調整過程」，即氣候變遷調適是指使人類與自然系統適應（回應）氣候變遷風險的過程。降低二氧化碳排放、增加綠色植被或減少工業化，都不符合此定義。"
     },
     {
       "index": 528,
@@ -27002,8 +27124,14 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
           "key_text": "碳排放管制導致產業轉",
           "how": "C:雙欄答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
-      }
+      },
+      "explanation": "引文的參考答案把碳洩漏定義為「碳排放管制導致產業轉移到碳管制較寬鬆的地區」，即在碳限制下產業移往減碳要求較寬鬆地區的情形。植物吸收二氧化碳、溫室氣體自然循環等屬自然過程，並非碳洩漏。"
     },
     {
       "index": 529,
@@ -27676,8 +27804,14 @@
             "supports_option": "B",
             "note": "⚠️ 舊引文**撐不住答案** —— 但那是**抽取瑕疵，不是資料錯**：從原引文位置往後拉長到 400 字（原引文被截斷）；答案的文字**逐字連續**出現在新引文裡。新引文經機械比對確認逐字存在，且**含有答案的內容**（答案文字覆蓋率 100%）。（舊引文：「9. 在臺灣的淨零排放策略中，綠色金融扮演什麼角色？ (A)減少對綠…」）"
           }
-        ]
-      }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
+      },
+      "explanation": "引文附有該題解答鍵『9. Ans (B)』，其對應之選項內容為『為轉型到可持續經濟提供資金』，故綠色金融在臺灣淨零策略中的角色即為轉型到可持續經濟提供資金。"
     },
     {
       "index": 542,
@@ -27825,8 +27959,14 @@
             "supports_option": "B",
             "note": "⚠️ 舊引文**撐不住答案** —— 但那是**抽取瑕疵，不是資料錯**：從原引文位置往後拉長到 400 字（原引文被截斷）；答案的文字**逐字連續**出現在新引文裡。新引文經機械比對確認逐字存在，且**含有答案的內容**（答案文字覆蓋率 100%）。（舊引文：「6. 總量管制與排放交易系統(Cap and trade)的主要特點…」）"
           }
-        ]
-      }
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
+      },
+      "explanation": "引文中此制度的名稱「總量管制與排放交易（Cap and trade）」本身即包含兩個要素：為排放設定上限（總量管制）與允許排放權交易（排放交易）。四個選項中，唯一同時涵蓋「設定一個上限」並「允許排放權的交易」者即為本答案；只設固定不變上限而無交易、僅限特定產業、或鼓勵自由排放，都未能同時反映這兩項特點。"
     },
     {
       "index": 546,
@@ -28165,11 +28305,17 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       },
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "explanation": "引文說明CBAM對水泥與化肥產品同時計入直接與間接排放，而對鋁及鋼鐵產品「僅計入直接排放」（only direct emissions are considered）。既然鋼鐵、鋁只計直接排放，其間接（電力）排放即不納入憑證課徵範圍；水泥與化肥則兩者皆計入，故不符題意。答案為鋼鐵、鋁及其中下游產品。"
     },
     {
       "index": 565,
@@ -29277,7 +29423,7 @@
         }
       ],
       "answer": "C",
-      "explanation": null,
+      "explanation": "引文以『鑑別重大議題(找出熱點)』說明找出重大（高碳排）環節即是『找出熱點』，故碳排放較高之環節即稱為熱點。四個選項中唯有『關鍵熱點』使用此一用語，其餘（關鍵係數、重要碳排點、高碳排點）均未見於引文，故為正解。",
       "source": {
         "source_id": "S_YAMOL_023",
         "url": "https://yamol.tw/item-67.+%E9%80%8F%E9%81%8E%E8%A3%BD%E7%A8%8B%E5%9C%B0%E5%9C%96%E7%9A%84%E6%AF%8F%E5%80%8B%E6%AD%A5%E9%A9%9F%EF%BC%8C%E6%9F%A5%E7%9C%8B%E5%93%AA%E4%BA%9B%E7%92%B0%E7%AF%80%E7%9A%84%E7%A2%B3%E6%8E%92%E6%94%BE%E8%BC%83%E9%AB%98%EF%BC%8C%E6%88%91%E5%80%91%E7%A8%B1%E6%AD%A4%E7%92%B0%E7%AF%80%E7%82%BA%E4%BB%80%0D+%E9%BA%BC-3267590.htm",
@@ -29317,7 +29463,12 @@
             "supports_option": "C",
             "note": "⚠️ 舊引文釘不住答案（引文引錯段落或只抄了題目）。第十一輪由我親自複核：教材將生命週期闡釋首步定義為「鑑別重大議題(找出熱點)」，且報告資訊含「熱點排名」，可見碳排較高的環節專有名詞為「熱點/hotspot」。四選項中僅 C『關鍵熱點』含此詞（關鍵係數/重要碳排點/高碳排點皆非教材用語），故 C 正確。 新引文經機械比對確認（verbatim）。"
           }
-        ]
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
       }
     },
     {
@@ -29876,7 +30027,7 @@
         }
       ],
       "answer": "C",
-      "explanation": null,
+      "explanation": "引文指出碳足跡「以計算產品對於全球氣候暖化之潛在貢獻，並以二氧化碳當量(CO2e)表示之」，明確說明計算結果以二氧化碳當量（CO₂e）表示。四個選項中只有公噸 CO₂ 當量 (CO₂e) 符合；CH₄、N₂O 或碳稅額度皆非引文所述的表示方式。",
       "source": {
         "source_id": "S_VOCUS_01",
         "url": "https://vocus.cc/article/68d35eb3fd897800017c0ba7",
@@ -29913,7 +30064,12 @@
             "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
             "url_backfilled_on": "2026-07-14"
           }
-        ]
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%912%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81114_20251226025824.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
       }
     },
     {
@@ -30090,7 +30246,7 @@
         }
       ],
       "answer": "A",
-      "explanation": null,
+      "explanation": "引文說明切斷準則的內容：「任何單一溫室氣體源之排放貢獻占產品預期之生命週期內溫室氣體排放量≦1%者，此程序/活動可於盤查時被忽略，累計不得超過5%」。也就是允許把貢獻極小（≦1%、累計≦5%）的項目忽略，即排除不重要的項目。此準則與控制外部稽核、定義碳稅率或減少查驗要求都無關。",
       "source": {
         "source_id": "S_VOCUS_01",
         "url": "https://vocus.cc/article/68d35eb3fd897800017c0ba7",
@@ -30127,7 +30283,12 @@
             "url": "https://cfp.moenv.gov.tw/Carbon/WebPage/PCR_FileDownload.ashx?fid=87c147a3-ae89-4062-9e50-7644752f8382&sid=f",
             "url_backfilled_on": "2026-07-14"
           }
-        ]
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://cfp.moenv.gov.tw/Carbon/WebPage/PCR_FileDownload.ashx?fid=87c147a3-ae89-4062-9e50-7644752f8382&sid=f",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
       }
     },
     {
@@ -32105,6 +32266,11 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "source_review": {
+          "date": "2026-07-15",
+          "verdict": "NON_PRIMARY_ONLY",
+          "detail": "唯一的來源是 vocus.cc（部落格平台，**非一手來源**）。本題**沒有可驗證的一手依據** —— 答案未經獨立驗證，不寫解析。"
         }
       }
     },
@@ -32795,7 +32961,7 @@
         }
       ],
       "answer": "B",
-      "explanation": null,
+      "explanation": "引文明載『盤查分析階段屬於生命週期評估作業LCA的…第二階段』、『衝擊評估階段屬於…第三階段』，故清單分析（LCI）與影響評估（LCIA）皆非第一步；另引文指出『功能單位…在目標範疇定義』階段被定義，此為評估的前提設定，故四階段的第一步為目標與範疇界定。",
       "source": {
         "source_id": "S_VOCUS_03",
         "url": "https://vocus.cc/article/68d5d622fd89780001c2392c",
@@ -32833,7 +32999,12 @@
             "supports_option": "B",
             "note": "⚠️ 舊引文**撐不住答案** —— 但那是**抽取瑕疵，不是資料錯**：從原引文位置往後拉長到 700 字（原引文被截斷）；答案的文字**逐字連續**出現在新引文裡。新引文經機械比對確認逐字存在，且**含有答案的內容**（答案文字覆蓋率 100%）。（舊引文：「Q61 衝擊評估階段屬於生命週期評估作業LCA的第幾階段？(A)第㇐…」）"
           }
-        ]
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
       }
     },
     {
@@ -33297,7 +33468,7 @@
         }
       ],
       "answer": "A",
-      "explanation": null,
+      "explanation": "引文要求「納入研究產品系統之 CFP 或部分 CFP 提供重大貢獻的所有 GHG 排放與移除量」，強調要涵蓋所有 GHG，對應到「所有溫室氣體都需考慮」。因此僅計 CO₂、僅範疇一都與引文所稱的「所有 GHG」不符。",
       "source": {
         "source_id": "S_VOCUS_03",
         "url": "https://vocus.cc/article/68d5d622fd89780001c2392c",
@@ -33332,7 +33503,12 @@
             "supports_option": "A",
             "note": "⚠️ 舊引文釘不住答案（引文引錯段落或只抄了題目）。第十一輪由我親自複核：教材原則『5.7 完整性』定義為納入 CFP 提供重大貢獻的『所有 GHG 排放與移除量』，關鍵在『所有 GHG』（並非僅 CO2→排除 B、並非僅範疇一→排除 C）；『只需重大排放源(D)』與完整性追求全面性相悖。故 A『所有溫室氣體都需考慮』正確。 新引文經機械比對確認（verbatim）。"
           }
-        ]
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
       }
     },
     {
@@ -33436,7 +33612,7 @@
         }
       ],
       "answer": "C",
-      "explanation": null,
+      "explanation": "引文指出計算時應乘以「100年全球暖化潛勢」，並「以IPCC所示」的每kg CO2e數值表示，可見 GWP 值應以 IPCC 所公布者為依據。四個選項中，唯一以 IPCC 為依據的即是 IPCC 公布之 AR5 或 AR6；企業自訂係數、ISO 14064-3 或當地法規允許的排放係數都不是引文所指的 IPCC 依據。",
       "source": {
         "source_id": "S_VOCUS_03",
         "url": "https://vocus.cc/article/68d5d622fd89780001c2392c",
@@ -33480,7 +33656,12 @@
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "url_backfilled_on": "2026-07-14"
           }
-        ]
+        ],
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        }
       }
     },
     {
@@ -33584,7 +33765,7 @@
         }
       ],
       "answer": "B",
-      "explanation": null,
+      "explanation": "引文的參考答案標為京都議定書，即國際上於1997年為避免溫室氣體造成全球嚴重暖化而簽署的議定書。倫敦議定書、首爾議定書、多倫多議定書皆非此議定書。",
       "source": {
         "source_id": "S_CHU_06",
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
@@ -33632,6 +33813,11 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
           "key_text": "京都議定書",
           "how": "A:行首答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       }
     },
@@ -33741,7 +33927,7 @@
         }
       ],
       "answer": "B",
-      "explanation": null,
+      "explanation": "引文於題號前標註『(B)』為本題解答，對應選項內容『產品整個生命週期中所產生的所有溫室氣體排放量』，故碳足跡係指產品整個生命週期中所產生的所有溫室氣體排放量。",
       "source": {
         "source_id": "S_CHU_06",
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
@@ -33789,6 +33975,11 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
           "key_text": "產品整個生命週期中所產生的所有溫室氣體",
           "how": "A:行首答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       }
     },
@@ -33820,7 +34011,7 @@
         }
       ],
       "answer": "D",
-      "explanation": null,
+      "explanation": "引文標示答案為「增加員工福利」，並將「降低營運成本」「提升企業形象」「符合法規要求」列為企業推動淨零碳排的主要原因。故不屬於主要原因者，即為增加員工福利。",
       "source": {
         "source_id": "S_CHU_06",
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
@@ -33868,6 +34059,11 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
           "key_text": "增加員工福利",
           "how": "A:行首答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       }
     },
@@ -33899,7 +34095,7 @@
         }
       ],
       "answer": "A",
-      "explanation": null,
+      "explanation": "引文將本題標示以「對碳排放量設定價格，以鼓勵減排」為正解，即碳定價是對碳排放量訂定價格以促進減排。對排放設上限並罰款、對低碳企業補貼、對高碳產品徵關稅，都不是「定價」的內涵。",
       "source": {
         "source_id": "S_CHU_06",
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
@@ -33947,6 +34143,11 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
           "key_text": "對碳排放量設定價格，以鼓勵減排",
           "how": "A:行首答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       }
     },
@@ -33978,7 +34179,7 @@
         }
       ],
       "answer": "A",
-      "explanation": null,
+      "explanation": "引文的參考答案標為「組織層級溫室氣體排放量盤查與查證」，即ISO14064主要規範的內容。產品碳足跡盤查、減量專案設計查證、企業社會責任報告書編制則非其規範範疇。",
       "source": {
         "source_id": "S_CHU_06",
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
@@ -34026,6 +34227,11 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
           "key_text": "組織層級溫室氣體排放量盤查與查證",
           "how": "A:行首答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       }
     },
@@ -34057,7 +34263,7 @@
         }
       ],
       "answer": "D",
-      "explanation": null,
+      "explanation": "引文於題號前標註『(D)』為本題解答，對應選項內容『以上皆是』；即碳抵換涵蓋投資再生能源計畫、購買碳權與支持減排專案三種抵消自身碳排放的方式，故為以上皆是。",
       "source": {
         "source_id": "S_CHU_06",
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
@@ -34105,6 +34311,11 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
           "key_text": "以上皆是",
           "how": "A:行首答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       }
     },
@@ -34136,7 +34347,7 @@
         }
       ],
       "answer": "D",
-      "explanation": null,
+      "explanation": "引文標示答案為「範疇四：碳匯」，並列出範疇一（直接排放）、範疇二（能源間接排放）、範疇三（其他間接排放）為溫室氣體盤查範疇。溫室氣體盤查並無「範疇四」，故不屬於盤查範疇者即為範疇四：碳匯。",
       "source": {
         "source_id": "S_CHU_06",
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
@@ -34184,6 +34395,11 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
           "key_text": "範疇四：碳匯",
           "how": "A:行首答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       }
     },
@@ -34386,7 +34602,7 @@
         }
       ],
       "answer": "C",
-      "explanation": null,
+      "explanation": "引文載明 CBAM 是為處理輸入歐盟關稅領域之商品所含溫室氣體排放，「in order to prevent the risk of carbon leakage（以防止碳洩漏風險）」。因此其主要目的是防止碳洩漏，而非促進國際貿易、保護國內產業或增加政府收入。",
       "source": {
         "source_id": "S_CHU_06",
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
@@ -34436,6 +34652,11 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
           "key_text": "防止碳洩漏",
           "how": "A:行首答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       },
       "quality_flags": [
@@ -38362,7 +38583,7 @@
         }
       ],
       "answer": "A",
-      "explanation": null,
+      "explanation": "引文的參考答案標示的項目為「2015年簽署的國際氣候協議」，說明巴黎協定是2015年簽署、以控制全球暖化為目標的國際氣候協議。將其描述為促進自由貿易的貿易協議、或保護生物多樣性的環境協議者則不正確。",
       "source": {
         "source_id": "S_CHU_06",
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
@@ -38409,6 +38630,11 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
           "key_text": "2015 年簽署的國際氣候協議，旨在將全球暖",
           "how": "A:行首答案卡"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       }
     },
@@ -43709,7 +43935,7 @@
         }
       ],
       "answer": "C",
-      "explanation": null,
+      "explanation": "引文標示答案為「納入所有重大GHG排放與移除量」，說明 CFP 研究確保完整性的方式即為納入所有重大 GHG 排放與移除量。相對地，僅關注主要排放源、忽略不重要排放源或僅計算直接排放，都不符合「納入所有重大」的要求。",
       "source": {
         "source_id": "S_CHU_07",
         "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
@@ -43749,6 +43975,11 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "explanation_source": {
+          "date": "2026-07-15",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
         }
       }
     },
