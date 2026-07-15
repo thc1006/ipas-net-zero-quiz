@@ -722,7 +722,13 @@
             "quote": "所謂的「稅」它是財政部主政，統收統支",
             "supports_option": "A"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文為主題相關/循環（題目本身），釘不住此答案；答案經概念與選項排除法確認正確，惟無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
@@ -1090,7 +1096,9 @@
           {
             "url": "https://service.cca.gov.tw/File/Get/cca/zh-tw/B1cCTPs8ZlovtNE",
             "quote": "現行UNFCCC 規範，使用IPCC AR5 中GWP 百年平均值，作為計算溫室氣體當量之基礎。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       },
@@ -1207,7 +1215,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=9",
             "quote": "事業依本法第三十條規定，得以國內減量額度申請第五條第二項收費排放量之扣除，其扣除上限不得超過事業收費排放量之百分之十，減量額度之種類及其額度",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -1786,7 +1796,13 @@
             "quote": "企業因規模較大且須購買長期綠電，可直接洽綠能發電業訂定雙邊購電契約或透過售電業購買綠電",
             "supports_option": "D"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文為主題相關/循環（題目本身），釘不住此答案；答案經概念與選項排除法確認正確，惟無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       },
       "sources": [
         "https://vocus.cc/article/691f0d31fd897800016ba3c7",
@@ -4209,7 +4225,9 @@
           {
             "url": "https://pr.tsmc.com/english/news/3227",
             "quote": "Key milestones include peaking carbon emissions in 2025",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -4274,7 +4292,9 @@
           {
             "url": "https://sciencebasedtargets.org/resources/files/SBTi-criteria.pdf",
             "quote": "C4 – Scope 3: If a company's relevant scope 3 emissions are 40% or more of total scope 1, 2, and 3 emissions, they shall be included in near-term science-based targets.",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -4338,7 +4358,9 @@
           {
             "url": "https://files.sciencebasedtargets.org/production/files/SBTiFLAGGuidance.pdf",
             "quote": "Companies in any other sector with FLAG-related emissions that total more than 20% of overall emissions across scopes 1, 2 and 3.",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -4412,7 +4434,9 @@
           {
             "url": "https://support.ecovadis.com/hc/en-us/articles/210460227-Understanding-EcoVadis-Medals-and-Badges",
             "quote": "Platinum - Top 1% (99+ percentile)",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -5653,7 +5677,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "CBAM 進入定價期（2026/01/01 起）後，依 Regulation (EU) 2023/956 Art. 5 與 Omnibus 修正，僅「授權 CBAM 申報人」得進口 CBAM 商品；申請須向會員國主管機關（NCA）提出並通過審查。過渡期（2023/10–2025/12）僅須季報，不須事先授權。",
+      "explanation": "依 CBAM 規則，貨品僅得由授權之 CBAM 申報人進口至歐盟關境；故進口 CBAM 貨品前須先取得授權申報人身分。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "CBAM",
@@ -5681,18 +5705,22 @@
         },
         "evidence": [
           {
-            "url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
-            "quote": "Importers of CBAM goods (or their indirect customs representatives) are urged to apply for the status of authorised CBAM declarants.",
-            "supports_option": "A"
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+            "quote": "Goods shall be imported into the customs territory of the Union only by an authorised CBAM declarant.",
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "note": "第十八輪語意複核：原自動引文釘不住，改用一手原文釘住並機械比對。"
           }
         ],
         "citation_audit": {
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
-        }
+        },
+        "citation_fixed_on": "2026-07-16"
       },
       "sources": [
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
         "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
         "https://eur-lex.europa.eu/eli/reg/2023/956/oj"
       ],
@@ -5907,7 +5935,9 @@
           {
             "url": "https://unfccc.int/sites/default/files/resource/cma2024_L22E.pdf",
             "quote": "with developed \ncountry Parties taking the lead, of at least USD 300 billion per year by 2035 for developing \ncountry Parties for climate action",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -5975,7 +6005,9 @@
           {
             "url": "https://unfccc.int/sites/default/files/resource/cma2023_L17_adv.pdf",
             "quote": "Transitioning away from fossil fuels in energy systems, in a just, orderly and \nequitable manner, accelerating action in this critical decade, so as to achieve net zero by 2050 \nin keeping with the science",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -6042,7 +6074,9 @@
           {
             "url": "https://unfccc.int/news/cop28-agreement-signals-beginning-of-the-end-of-the-fossil-fuel-era",
             "quote": "Parties reached a historic agreement on the operationalization of the loss and damage fund",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -7394,7 +7428,9 @@
           {
             "url": "https://www.icao.int/environmental-protection/CORSIA/Pages/CORSIA-Emissions-Units.aspx",
             "quote": "The CORSIA Eligible Emissions Units are approved by the Council, by considering recommendations of the Technical Advisory Body (TAB), through the assessment of emissions unit programmes with the CORSIA Emissions Unit Eligibility Criteria.",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -7535,7 +7571,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=3",
             "quote": "碳費徵收對象為具有本法第二十一條第一項公告應盤查登錄及查驗溫室氣體排放量之排放源，且其全廠（場）之直接排放及使用電力之間接排放，其溫室氣體年排放量合計值達二萬五千公噸二氧化碳當量以上之電力、燃氣供應業及製造業（以下簡稱事業）。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -7602,7 +7640,9 @@
         "evidence": [
           {
             "url": "https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284",
-            "quote": "一般費率\n：新臺幣\n300元/公噸\n二氧化碳當量。\n◆\n優惠費率A\n（符合「徵收"
+            "quote": "一般費率\n：新臺幣\n300元/公噸\n二氧化碳當量。\n◆\n優惠費率A\n（符合「徵收",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -7765,7 +7805,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=6",
             "quote": "事業取得中央主管機關核定之自主減量計畫，並經審查認定屬高碳洩漏風險行業，其適用之排放量調整係數值規定如下：\n一、第一期排放量調整係數值為零點二。\n二、第二期排放",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -8588,7 +8630,9 @@
         "evidence": [
           {
             "url": "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007761",
-            "quote": "前項抵換來源之抵換比例為一比一。"
+            "quote": "前項抵換來源之抵換比例為一比一。",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -8660,7 +8704,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0070319",
             "quote": "一、新建建築物建築面積達一千平方公尺以上。\n二、建築物增建時，增加之建築面積達一千平方公尺以上。\n三、建築物改建時，變更屋頂之面積達一千平方公尺以上。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -8730,7 +8776,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=10",
             "quote": "非屬經審查認定之高碳洩漏風險事業依本法第二十七條規定，以符合中央主管機關認可之國外減量額度申請第五條第二項收費排放量之扣除，其扣除上限不得超過事業收費排放量之百分之五。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {
@@ -8803,7 +8851,9 @@
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=14",
             "quote": "一、查核未達目標年指定目標或年度指定目標：經查核且未達指定目標之年度改為一般費率。\n\n二、廢止自主減量計畫：自廢止當年度及其後年度，改為一般費率。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "citation_audit": {

@@ -182,7 +182,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "類別4-來自組織使用的產品之間接溫室氣體排放量",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "explanation_audit": {
@@ -235,7 +237,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "GRI 準則為一套模組化系統，由相互關聯的準則組成。報告流程建立於三個部分的準則：適用於所有組織的GRI 通用準則，適用於特定行業的GRI 行業準則，以及包括特定主題內容的GRI 主題準則。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -282,7 +286,9 @@
           {
             "url": "https://enews.moenv.gov.tw/page/3b3c62c78849f32f/4f7e0e2b-6153-4422-a338-50124516c488",
             "quote": "應用於高科技產業的高暖化潛勢溫室氣體--全氟化物（PFCs）業已引起國際間高度關注。全氟化物對溫室效應的影響遠高過二氧化碳數千倍，...我國一向是全球半導體產業重鎮，總產量超過全球三成以上，全氟化物排放量更是名列前茅",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -332,7 +338,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "已開發國家締約方，應提供新的、額外的資金以滿足對開發中國家承諾義務之支出。已開發國家締約方應幫助易受氣候變遷不利影響的開發中國家此等影響之調適費用。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       },
@@ -1635,7 +1643,9 @@
           {
             "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
             "quote": "The Commission shall have the oversight role in the review of CBAM declarations.",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       },
@@ -1866,7 +1876,13 @@
             "quote": "台灣制定氣候變遷調適策略的願景是什麼？ (A)增加溫室氣體排放；(B)減少自然資源的使用；(C)為建構能適應氣候風險之低碳家園；(D)完全依賴再生能源",
             "supports_option": "A"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文為主題相關/循環（題目本身），釘不住此答案；答案經概念與選項排除法確認正確，惟無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       }
     },
     {
@@ -1979,7 +1995,9 @@
           {
             "url": "https://service.cca.gov.tw/File/Get/cca/zh-tw/f53nWB30RClHNZh",
             "quote": "不論是進行組織、產品或服務之碳中和，企業皆應優先進行組織之溫室氣體排放量盤查，應明確鑑別所有溫室氣體排放源及碳匯，且依適用之標準量化所有排放源及碳匯之溫室氣體排放及移除",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       },
@@ -2206,7 +2224,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "碳洩漏(Carbon Leakage)是指？ (A)碳的物理洩漏；(B)碳排放管制導致產業轉移到碳管制較寬鬆的地區；(C)植物吸收二氧化碳的過程；(D)溫室氣體的自然循環",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -9325,7 +9345,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "產品類別規則(PCR) 所指定的邊界狀\n況形成產品的系統界線。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -9426,7 +9448,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "當蒐集一級數據並非實際可行或針對不太重要過程時，方能對投入與產出使用二級數據。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -9639,7 +9663,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "組織邊界地理範圍中若涵蓋其他設施非屬組織所有，應清楚註明並加以排除；地理範圍外有屬於組織所有，同樣應加以註明與說明。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -9686,7 +9712,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "生命終結過程可包括：(a)生命終結產品之蒐集、包裝及運輸。(b)準備回收再利用及再使用。(c)從生命終結產品中拆除之組件。(d)粉碎與分類。(e)物料的回收再利用。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -11623,7 +11651,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "CFP 之量化需要考量產品的整個生命週期，包括原物料取得、製造、運輸/ 配送、使用及生命終結處理。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -11670,7 +11700,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "CFP 與部分CFP 之量化為正確、可查證、相關及不誤導，且儘可能在實務上減少偏差與不確定性。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -11717,7 +11749,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
             "quote": "生命週期闡釋階段旨在整合生命週期盤查分析和生命週期衝擊評估的結果，並與評估的目的和範圍相匹配，最終提供結論和建議，以支持更環境友好的決策制定。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -11764,7 +11798,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "備考1.在CFP量化(3.1.1.6)或部分CFP的量化中不允許應用碳抵換，且碳抵換的溝通超出本標準之適用範圍(參照6.3.4.1)。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -12636,7 +12672,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "如計算產品的生質碳含量，\n則應在CFP研究報告中分別列出，惟不應包括在CFP或部分CFP的結果中。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -12748,7 +12786,13 @@
             "quote": "資料庫\n市調或情境假設\n盤查\n如何取得系統界限內的資料",
             "supports_option": "A"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文為主題相關/循環（題目本身），釘不住此答案；答案經概念與選項排除法確認正確，惟無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       }
     },
     {
@@ -12793,7 +12837,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "鑑別與詳細記錄在CFP 研究報告中所選擇使用的分配方法。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -12840,7 +12886,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "聯合國為了避免工業產品中的氟氯碳化物與海龍對地球臭氧層繼續造成惡化及損害承續\n1985年保護臭氧層維也納公約的大原則，於1987年9月16日邀請所屬26個會員國在加拿\n大蒙特婁所簽署的環境保護議定書",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13557,7 +13605,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "旨在確保CFP 研究與本標準之原則與要求事項之間一致性的作業。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13604,7 +13654,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "透過上游與下游之連結，供應產品(3.1.3.1)予使用者的過程(3.1.3.5)與活動。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13651,7 +13703,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "對水體的排放-廢水與水體污染物",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -13698,7 +13752,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "CFP研究的範疇應與CFP研究之目標一致(參照6.3.1)。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -14275,7 +14331,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "UNFCCC 於1995 年在德國柏林召開第1 次締約方大會\n(COP 1)",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -14322,7 +14380,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "該議定書於2005 年2 月16\n日才正式生效。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -14369,7 +14429,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "京都議定書之減量時程為\n2008 至2012 年",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -14416,7 +14478,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
             "quote": "京都議定書第二承諾期雖於2020年底結束，但仍持續辦理相關會議進行與巴黎協定的銜接工作。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -15548,7 +15612,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
             "quote": "1. 溫室氣體盤查報告原則“不”包括以下哪項？ \n(A)準確性；(B)一致性；(C)極大化；(D)完整性",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -15595,7 +15661,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/316660797.pdf",
             "quote": "Q26 敍述在㇐段期間內㇐質量單位的溫室氣體之輻射衝擊，\n相對於相等單位的二氧化碳之係數稱之為下列何者？\n A.GWP;, B.GAP;, C.GMP;, D.GDP\nA.GWP",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -15782,7 +15850,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "藉由上述兩個階段之工作，臺灣規劃2050 淨零排放初步藍圖(如圖3)，總電\n力占比60~70%之再生能源，並搭9~12%之氫能，加上顧及能源安全下使用搭配\n碳捕捉之火力發電20~27%，以達成整體電力供應的去碳化。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -15947,7 +16017,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
             "quote": "政府間氣候變化專門委員會是一個附屬於聯合國之下的\n跨政府組織，在1988 年由世界氣象組織、聯合國環境\n署合作成立，專責研究由人類活動所造成的氣候變遷。\n政府間氣候變化專門委員會英文縮寫為何\n(A) CDP\n(B) WEF\n(C) WHO\n(D) IPCC\n(D) IPCC",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -17099,7 +17171,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "2020 年 由於COVID-19 大流行，未舉行實體會議。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -17199,7 +17273,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "8. 京都議定書的彈性減量機制不包括下列哪項？ (A)清潔發展機制(CDM)；(B)排放交易(ET)；(C)共同執行(JI)；(D)環境可持續指數(ESI) ... 8. Ans (D) 環境可持續指數(ESI)。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -17246,7 +17322,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "9. Ans (D) \n2008 年至2012 年",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -17293,7 +17371,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "10. Ans (C) \n損失和損害資金",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -18781,7 +18861,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "製造產品時\n列出製造此產品，經過哪些流程步驟\n- 比對生產/品管用流程圖或廢棄物清理計畫書\n- 直接到現場盤點，避免錯漏",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -18828,7 +18910,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "基於距離法（Distance-based method）\n定義\n以運輸相關之活動數據(例如運輸重量、運輸距離\n運輸種類或運具類型等)為基礎，搭配相應的排放\n係數進行計算。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -18875,7 +18959,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "一項CFP研究應明確指明待研究產品系統之功能或宣告單位。該功能或宣告單位應與CFP研究\n的目標與範疇一致。功能或宣告單位的主要目的，係提供與其相關投入與產出之參考。因此功\n能或宣告單位應清楚界定且可量測。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -18923,7 +19009,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "除了針對第一階段查證缺失進行覆核外，另外包含：\n• 排放量查證\n• 數據品質管理\n• 不確定性分析\n• 第二階段活動數據實際抽樣\n現場查證(stage 2 Initial Verification)",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       },
@@ -19796,7 +19884,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "3.1.6.1一級數據(primary data) • 過程(3.1.3.5)的量化值，或透過直接量測來獲得某項活動或基於其原始來源直接量測的數據。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -19843,7 +19933,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
             "quote": "時間性：穩定生產的產品以整年優先考慮；客製品或季節性產品可採最近一批 或客戶指定批次",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -19890,7 +19982,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "在CFP 研究中要做出決定時，宜優先參照自然科學( 例：物理、化學、生物學)。否則使用其他\n科學方法( 例：社會與經濟科學) 或參考有關公約以及定義於本標準6.3.2 中所載之地理範圍內\n的有效方法。",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -19937,7 +20031,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "CFP 之量化需要考量產品的整個生命週期，包括原物料取得、製造、運輸/ 配送、使用及生命\n終結處理。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -20659,7 +20755,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "罰則出自《氣候變遷因應法》：第三十七條課予「一定種類、規模之產品」申請核定碳足跡並標示的義務；違反者依第五十四條，處新臺幣一萬元以上一百萬元以下罰鍰，並通知限期改善，屆期未改善者按次處罰。\n\n⚠️ **本題解析已更正** —— 原文把法源講成《商品標示法》，**與本罰則無關**。金額區間本身沒錯，錯的是法源。\n\n依據（iPAS 公版教材，https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf）—— 教材投影片逐字列出：\n　法規要求-氣候變遷因應法\n　第三十七條　中央主管機關得公告一定種類、規模之產品，其製造、輸入或販賣業者，應於指定期限內向中央主管機關申請核定碳足跡…\n　第五十四條　有下列情形之一者，由主管機關處新臺幣一萬元以上一百萬元以下罰鍰，並通知限期改善；屆期仍未完成改善者，按次處罰",
+      "explanation": "依氣候變遷因應法，違反規定者由主管機關處新臺幣一萬元以上一百萬元以下罰鍰。",
       "metadata": {
         "original_id": "c2-200",
         "_legacy_pipeline_metadata": {
@@ -20669,13 +20765,16 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098",
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
         "evidence": [
           {
-            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
-            "quote": "違反第三十七條第一項規定，未於中央主管機關指定期限內申請核定碳足跡，或\n未於規定期限內依核定內容使用或標示於產品之容器或外包裝。\n•\n二、違反依第三十七條第三項所定辦法中有關碳足跡標示、使用或管理之規定。",
-            "supports_option": "B"
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098",
+            "quote": "有下列情形之一者，由主管機關處新臺幣一萬元以上一百萬元以下罰鍰，並通知限期改善；屆期仍未完成改善者，按次處罰",
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "note": "第十八輪語意複核：原自動引文釘不住，改用一手原文釘住並機械比對。"
           }
         ],
         "explanation_audit": {
@@ -20730,7 +20829,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "熱點排名\n4.\n敏感度分析\n5.\n數據品質指標等級評核\n6.\n碳足跡簡表",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -20778,7 +20879,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "投入量：先預設主要原物料投入總量(欄位C25-C42) ；",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
         "found_by": "r3-no-source-audit"
@@ -20827,7 +20930,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "第一階供應商無法提供實際盤查資料時，….\n•\n多階(含)以上供應商…\n可引用二級數據進行替代(ISO 14067-3.1.6.3)",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -21518,7 +21623,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
             "quote": "ISO 14064-1:2018 界定全球暖化潛勢(GWP)的溫室氣體(GHG)中，下列何者為\n非？ \n(A)二氧化碳；(B)氦氣；(C)氧化亞氮；(D)六氟化硫",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -21567,7 +21674,13 @@
             "quote": "在溫室氣體盤查中，組織邊界的設定可能根據什麼來進行？ \n(A)法規要求；(B)國際供應鏈需求；(C)組織的財務控制權法；(D)公眾的意見\n反應",
             "supports_option": "C"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文為主題相關/循環（題目本身），釘不住此答案；答案經概念與選項排除法確認正確，惟無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       }
     },
     {
@@ -21612,7 +21725,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
             "quote": "組織在建立報告邊界時，應該包含哪些內容？ \n(A)直接溫室氣體排放和移除量；(B)來自輸入能源的間接溫室氣體排放量；\n(C)來自組織使用的產品的間接溫室氣體排放量；(D)以上皆是",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -21661,7 +21776,13 @@
             "quote": "保證等級指定確證者或查證者為作成結論須具備之相對信賴度。由於諸如判斷之使用、\n測試之使用、管制之先天性限制，以及某些證據型式之品質特性等因素，絕對保證係無\n法達成。通常有二種保證等級：合理保證等級與有限保證等級。",
             "supports_option": "A"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "第十八輪語意複核：現引文為主題相關/循環（題目本身），釘不住此答案；答案經概念與選項排除法確認正確，惟無單一機械逐字釘句，誠實標記。",
+          "method": "代理語意審查＋我複核"
+        }
       }
     },
     {
@@ -22472,7 +22593,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
             "quote": "備考1.二級數據可包括數據庫與出版文獻之數據、國家盤查清冊的預設排放係數、計算數據、\n估計數或其他具代表性並由主管機關確證之數據。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -22574,7 +22697,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "一般乾粉滅火器(ABC型)不用盤查",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -22674,7 +22799,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
             "quote": "數據確證：在收集數據過程中，應進行數據確證之查核， 以確證與提供證據，\n證明符合數據品質要求事項。",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -22772,7 +22899,9 @@
           {
             "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351",
             "quote": "本指引適用於企業就其溫室氣體排放進行盤查、減量及採取抵換作為有具體",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -23967,7 +24096,9 @@
           {
             "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E8%80%83%E7%A7%911%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96114_20251226025706.pdf",
             "quote": "CDP 透過獨立的評分方法評估公司和城市在揭露和環境領導力方面的進展情\n況，目的是激勵和測量他們在氣候變化、森林保護和水安全方面的行動進展。",
-            "supports_option": "B"
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -24014,7 +24145,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "台灣旨在透過經濟誘因機制加速溫室氣體的減量",
-            "supports_option": "D"
+            "supports_option": "D",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -24061,7 +24194,9 @@
           {
             "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=AB730ED2959A1351",
             "quote": "產品或服務碳中和：指在產品或服務完整或部分生命週期內，\n人為溫室氣體排放與人為溫室氣體移除達到平衡狀態，包含\n採取抵換方式來補償溫室氣體排放。",
-            "supports_option": "A"
+            "supports_option": "A",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
@@ -24224,7 +24359,9 @@
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
             "quote": "發展中國家在公約中的特殊考慮是什麼？ \n(A)不需要減少溫室氣體排放；(B)獲得額外資金；(C)面臨的具體需要和特殊情\n況應充分考慮；(D)享有豁免權",
-            "supports_option": "C"
+            "supports_option": "C",
+            "verified_on": "2026-07-16",
+            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ]
       }
