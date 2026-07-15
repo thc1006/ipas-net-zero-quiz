@@ -100,11 +100,11 @@
       "date": "2026-07-14",
       "what": "對 383 題「附了一手來源 URL、但從來沒有人打開來看過」的題目，逐題把那一頁抓回來，檢查它到底有沒有說這件事。",
       "population": 383,
-      "supported": 312,
+      "supported": 309,
       "wrong_source": 30,
       "replaced": 29,
       "disputed": 1,
-      "no_quote": 38,
+      "no_quote": 31,
       "dead": 4,
       "note": "引錯的 URL **全部都回 HTTP 200** —— 連結健康檢查一個都抓不到。disputed 是「代理說引錯、但提不出可驗證的替代來源」：否定命題無法機械驗證，僅憑代理一句話不足以動資料，故引用維持不變但標記存疑。"
     },
@@ -4667,9 +4667,9 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+          "date": "2026-07-15",
+          "verdict": "needs_implementing_reg",
+          "detail": "答案 D 概念上正確，但基本規則 (EU) 2023/956 全文中「waste」只作為稅則 7204（廢鋼）出現，**不談「廢料如何計入申報重量」** —— 該規則在施行細則 2023/1773。我親自抓回基本規則 273,630 字確認（非採信代理的 NOT_FOUND —— 代理的 WebFetch 抓不到 EUR-Lex，但我的抓取器走 Wayback 抓得到）。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
         }
       },
       "quality_flags": [
@@ -5605,9 +5605,9 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+          "date": "2026-07-15",
+          "verdict": "needs_implementing_reg",
+          "detail": "實際碳含量查證的操作細節在施行細則 2023/1773，非基本規則。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
         }
       },
       "quality_flags": [
@@ -5814,9 +5814,9 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+          "date": "2026-07-15",
+          "verdict": "needs_implementing_reg",
+          "detail": "多產品碳排分攤規則在施行細則 2023/1773 附件，非基本規則。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
         }
       },
       "quality_flags": [
@@ -7025,9 +7025,9 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+          "date": "2026-07-15",
+          "verdict": "unfetchable",
+          "detail": "來源 cca.gov.tw 的階段管制目標頁目前抓不到（活站與 Wayback 皆 0 字，JS 渲染）。cca.gov.tw 是有效一手來源，答案「5 年一期」與氣候變遷因應法 §10 一致，但**目前無法機械釘住逐字原文**。"
         }
       },
       "quality_flags": [
@@ -7128,9 +7128,9 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+          "date": "2026-07-15",
+          "verdict": "wrong_source",
+          "detail": "cca.gov.tw 碳費專區頁未定義「外顯碳價」—— 引錯地方（8.1% 型態）。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
         }
       },
       "quality_flags": [
@@ -7862,9 +7862,9 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+          "date": "2026-07-15",
+          "verdict": "wrong_source",
+          "detail": "概念題（CORSIA 是 ICAO 的機制，非歐盟碳邊境項目）。CBAM 法規全文「CORSIA」0 次 ——那證明不了答案，只證明引錯來源。⚠️ 此題與 gist[296] 為近似重複題但答案不同，需一併複核。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
         }
       },
       "quality_flags": [
@@ -8103,9 +8103,9 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "no_quote",
-          "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+          "date": "2026-07-15",
+          "verdict": "wrong_source",
+          "detail": "答案 2 個月正確，但條文在施行細則 (EU) 2023/1773 §9(1)。我親自查基本規則：「two months」出現 3 次，全是講查證機構註冊與授權法案異議期，**沒有一個**是「申報人修改報告」—— 引錯 doc（引到基本規則，規則在施行細則）。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
         }
       },
       "quality_flags": [
@@ -30430,9 +30430,9 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "supported",
-          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+          "date": "2026-07-15",
+          "verdict": "circular_source",
+          "detail": "來源是 vocus.cc —— 而那正是本題出處（AI 生成練習題），屬循環自證，非獨立權威。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
         }
       },
       "quality_flags": [
@@ -30934,9 +30934,9 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "supported",
-          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+          "date": "2026-07-15",
+          "verdict": "circular_source",
+          "detail": "同上，vocus 循環來源。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
         }
       },
       "quality_flags": [
@@ -32334,9 +32334,9 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-14",
-          "verdict": "supported",
-          "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+          "date": "2026-07-15",
+          "verdict": "circular_source",
+          "detail": "同上，vocus 循環來源。 ⚠️ 答案本身經代理＋領域推理判為合理，但**現引來源釘不住** —— 不寫解析（沒乾淨的釘就不寫）。"
         }
       },
       "quality_flags": [
