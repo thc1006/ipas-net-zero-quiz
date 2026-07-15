@@ -16002,7 +16002,16 @@
           "verification_date": "2026-01-23",
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
-        }
+        },
+        "answer_verification": {
+          "date": "2026-07-16",
+          "verdict": "CORRECT",
+          "note": "對抗式覆核補漏（第十七輪 17 題硬殘留漏處理此題）：碳足跡採生命週期概念，總量須涵蓋原料、製造、配送銷售、使用、廢棄處理各階段（iPAS 產品碳足跡教材生命週期圖）；故最終產品處理、產品配送、生產製造皆須納入，答案為「以上皆是」。概念題、教材以生命週期圖呈現、無單一逐字釘句，誠實標記。",
+          "method": "iPAS 公版教材生命週期概念＋我複核"
+        },
+        "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
+        ]
       }
     },
     {
