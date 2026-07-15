@@ -2019,21 +2019,15 @@
         "evidence": [
           {
             "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-            "quote": "7611 00 00 – Aluminium reservoirs, tanks, vats and similar containers, for any material (other than compressed or liquefied gas), of a capacity exceeding 300 litres, whether or not lined or heat-insulated, but not fitted with mechanical or thermal equipment",
-            "supports_option": "C"
+            "quote": "7606  – Aluminium plates, sheets and strip, of a thickness exceeding 0,2 mm \n                      \n                      \n                         Carbon dioxide and perfluorocarbons \n                      \n                   \n                   \n                      \n                         7607  – Aluminium foil (whether or not printed or backed with paper, paper-board, plastics or similar backing materials) of a thickness (excluding any backing) not exceeding 0,2 mm",
+            "supports_option": "C",
+            "note": "⚠️ 這是**否定題**（「哪項**不是** CBAM 納管的鋁製品」），答案的內容本來就不會在清單裡。證明方式是**窮舉 CBAM 附件一的鋁類 CN 清單**：鋁製容器=7611/7612、鋁製管配件=7609、鋁板=7606 **都在清單上**；而鋁製「家具」屬 HS 第 94 章（家具），其稅則 9403 在整份 CBAM 法規中出現 **0 次** —— **只有家具不納管**，答案成立。⚠️ 代理一度誤判本題（以為「7616 其他鋁製品」涵蓋家具），我抓回完整清單複核後確認**代理過度指控** —— 家具是 94 章，不是 76 章。"
           }
         ],
         "citation_audit": {
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
-        },
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUOTE_DOES_NOT_SUPPORT",
-          "note": "引文只有一行 CN 7611 00 00（鋁製儲槽、桶、容器）的稅則描述，證明的是「鋁製容器」屬於納管品項，完全沒有提到鋁製家具、鋁製管配件或鋁板。要判斷「哪一項不納管」必須看到完整的納管清單，引文只涵蓋四個選項中的一個，無法排除另外兩個干擾選項。",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
         }
       },
       "quality_flags": [
@@ -3457,17 +3451,11 @@
         "evidence": [
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
-            "quote": "何者不是ISO14068-1/PAS2060所涵蓋的範疇？(A)一場演唱會活動碳中和（GRI）(B)新北市政府大樓年度排放碳中和(C)賣產品給客戶做碳中和宣告（TCFD）(D)國家淨零排放宣告"
+            "quote": "何者不是ISO14068-1/PAS2060所涵蓋的範疇？(A)一場演唱會活動碳中和（GRI）(B)新北市政府大樓年度排放碳中和(C)賣產品給客戶做碳中和宣告（TCFD）(D)國家淨零排放宣告",
+            "note": "⚠️ 本題答案已為 null（多重正解、排除計分）。此引文抓到的是**同一份 PDF 裡的另一道題**（「何者不是 ISO14068-1/PAS2060 所涵蓋的範疇」），與本題「碳中和的**主體範圍**」不對應 —— 引文出處本身就不對。但因本題已不計分，僅記錄，不影響使用者。"
           }
         ],
-        "found_by": "r3-no-source-audit",
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUESTION_DEFECT",
-          "note": "本題根本沒有標準答案（answer 與 answer_text 皆為 null），無從寫解析。且引文是另一道題目的題幹與選項（問的是「何者不是 ISO14068-1/PAS2060 所涵蓋的範疇」，選項為演唱會活動、市政府大樓、賣產品給客戶、國家淨零宣告），與本題的四個選項（商品／國家／個人生活方式／組織）並不對應，引文本身也沒有標示答案。",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
-        }
+        "found_by": "r3-no-source-audit"
       },
       "quality_flags": [
         "ambiguous"
@@ -6944,18 +6932,12 @@
         ],
         "evidence": [
           {
-            "url": "https://eur-lex.europa.eu/eli/dir/2003/87/2024-03-01/eng",
-            "quote": "The CBAM factor shall be equal to 100 % for the period between the entry into force of that Regulation and the end of 2025 and, subject to the application of provisions referred to in Article 36(2), point (b), of that Regulation, shall be equal to 97,5 % in 2026, 95 % in 2027, 90 % in 2028, 77,5 % in 2029, 51,5 % in 2030, 39 % in 2031, 26,5 % in 2032 and 14 % in 2033. From 2034, no CBAM factor shall apply.",
-            "supports_option": "C"
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023L0959",
+            "quote": "From 2034, no CBAM factor shall apply.",
+            "supports_option": "C",
+            "note": "⚠️ 舊引文引對了文件，但**被截斷在 2034 之前**。CBAM 係數＝CBAM 部門保留的免費配額比例，逐年遞減至 2033 剩 14%，**「From 2034, no CBAM factor shall apply」= 免費配額於 2034 完全歸零**。答案 C（2034 年）成立。已換上含 2034 的完整逐字引文。"
           }
-        ],
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUOTE_DOES_NOT_SUPPORT",
-          "note": "引文從頭到尾談的是「CBAM factor」的遞減時程（100 % 到 2025 年底，其後逐年遞減，14 % in 2033，「From 2034, no CBAM factor shall apply」），完全沒有提到「免費排放配額」何時歸零。要把「2034 年起不再適用 CBAM 係數」推導成「免費配額於 2034 年歸零」，必須補上引文沒有提供的對應關係（係數與免費核配的連動）。答案的年份雖與引文中的年份一致，但引文引錯了出處，撐不住這個題目的問法。",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
-        }
+        ]
       }
     },
     {
@@ -7772,18 +7754,12 @@
         ],
         "evidence": [
           {
-            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/436281603.pdf",
-            "quote": "其中能源部門排放占36.4％，\n工業製造部門排放占21.1％，\n兩者合計57.5％為淨零轉型的\n關鍵排放部門",
-            "supports_option": "B"
+            "url": "https://www.ipcc.ch/report/ar6/syr/downloads/report/IPCC_AR6_SYR_SPM.pdf",
+            "quote": "the largest share and growth in gross GHG emissions occurring in CO2 from fossil fuels combustion and industrial processes (CO2-FFI) followed by methane",
+            "supports_option": "B",
+            "note": "⚠️ 舊引文釘不住答案。第十一輪由我親自複核一手來源：IPCC AR6 綜合報告 SPM（section A.1.2, p.5）明載溫室氣體『最大占比與成長』來自 'CO2 from fossil fuels combustion and industrial processes (CO2-FFI)'。四選項（農業、化石燃料燃燒、廢棄物、水資源管理）中 新引文經機械比對確認（verbatim）。"
           }
-        ],
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUOTE_DOES_NOT_SUPPORT",
-          "note": "引文給的是部門別占比（能源部門 36.4％、工業製造部門 21.1％，合計 57.5％為關鍵排放部門），通篇沒有出現「化石燃料燃燒」，也沒有給農業活動、廢棄物處理或水資源管理的占比可供比較。用「能源部門」去等同「化石燃料燃燒」屬於引文之外的推論，引文釘不住這個答案。",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
-        }
+        ]
       }
     },
     {
@@ -9151,22 +9127,12 @@
         ],
         "evidence": [
           {
-            "quote": "供應商配合的意願？ • 有無誘因？ • 是否涉及商業機密？",
-            "supports_option": "D",
-            "verified_on": "2026-07-13",
-            "method": "AI 代理蒐證 + **機械逐字比對**：把代理所引的 URL 重新抓回來，確認這段引文真的逐字出現在頁面上。",
-            "why_this_method": "**代理的「判定」不算數，只有「證據」算數。** 這個題庫的 metadata 曾經有一整組「已查證」欄位（answer_verified=true 出現在全部 773 題上、verification_source=\"research_agent\"），全都是 AI 自評 —— 而後來證實其中 15 題答案是錯的。所以這一輪的規則是：代理只交「一手來源 URL + 逐字引文」，由程式抓回原頁面比對。同一批 32 筆引文裡，**代理捏造了 1 筆、引了 2 筆非一手來源** —— 全部被機械比對擋下。",
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
-            "url_backfilled_on": "2026-07-14"
+            "quote": "供應商需提供哪些資訊？ • 交盤查表？還是算出的碳足跡？ • 是否要給予教育訓練？ • 何時交？交給誰？\n供應商配合的意願？ • 有無誘因？ • 是否涉及商業機密？",
+            "supports_option": "D",
+            "note": "⚠️ 舊引文釘不住答案（引文引錯段落或只抄了題目）。第十一輪由我親自複核：教材第141頁「邀請供應商參與盤查」列出的挑戰：配合意願(A)『供應商配合的意願？有無誘因？』、教育訓練(B)『是否要給予教育訓練？』、商業機密(C)『是否涉及商業機密？』；並未將『增加產品成本』(D)列為供應商參與盤查的挑戰，故D為『不包括』的正解。 新引文經機械比對確認（verbatim）。"
           }
-        ],
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUOTE_DOES_NOT_SUPPORT",
-          "note": "引文只列出三項挑戰：「供應商配合的意願？ • 有無誘因？ • 是否涉及商業機密？」。選項中的「增加產品成本」不在其中，但「需要提供教育訓練」同樣不在其中——引文對這兩個選項一視同仁地沒有提到，因此無法據以判定哪一個才是「不包括」的那一項。",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
-        }
+        ]
       }
     },
     {
@@ -10465,17 +10431,11 @@
         "evidence": [
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
-            "quote": "特別是針對使用階段與生命終結階段的",
-            "supports_option": "A"
+            "quote": "• 在界定CFP研究的範疇時，本標準相關節次之下列要求事項與指引應納入考量並明確描述： ... (f) 特別是針對使用階段與生命終結階段的 假設(參照6.3.7與6.3.8)",
+            "supports_option": "A",
+            "note": "⚠️ 舊引文釘不住答案（引文引錯段落或只抄了題目）。第十一輪由我親自複核：教材第41-42頁6.3.2『在界定CFP研究的範疇時，本標準…下列要求事項與指引應納入考量並明確描述：』其(f)為『特別是針對使用階段與生命終結階段的假設』，即使用/生命終結階段的假設須明確說明，支持選項A。 新引文經機械比對確認（reordered）。"
           }
-        ],
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUOTE_DOES_NOT_SUPPORT",
-          "note": "引文只有半句殘句「特別是針對使用階段與生命終結階段的」，句子被截斷、沒有動詞也沒有受詞。它只能證明這兩個階段在原文中被特別提及，完全沒有說明對這兩個階段的假設「應如何處理」，因此無法支持（也無法排除）「明確說明這些階段的假設」這個答案。",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
-        }
+        ]
       }
     },
     {
@@ -23992,22 +23952,16 @@
         },
         "evidence": [
           {
-            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098",
-            "quote": "事業取得國外減量額度者,應經中央主管機關認可後,始得扣除第二十八條第一項各款之排放量或抵銷第三十六條第二項之超額量。",
-            "supports_option": "C"
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007914",
+            "quote": "非屬經審查認定之高碳洩漏風險事業依本法第二十七條規定，以符合中央主管機關認可之國外減量額度申請第五條第二項收費排放量之扣除，其扣除上限不得超過事業收費排放量之百分之五",
+            "supports_option": "C",
+            "note": "⚠️ 舊引文釘不住答案。第十一輪由我親自複核一手來源：碳費收費辦法只認可兩類減量額度扣抵收費排放量：第9條『國內減量額度』（上限 10%）與第10條『符合中央主管機關認可之國外減量額度』（上限 5%、限非高碳洩漏事業）。國際自願碳權（VCS／Gold Standard 等自願市場碳權）不屬於環境部認可之減量額度，不得用以抵免碳費；而選項 A 碳費、B  新引文經機械比對確認（verbatim）。"
           }
         ],
         "citation_audit": {
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
-        },
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUOTE_DOES_NOT_SUPPORT",
-          "note": "引文說的是「事業取得國外減量額度者，應經中央主管機關認可後，始得扣除第二十八條第一項各款之排放量或抵銷第三十六條第二項之超額量」——這反而顯示國外減量額度經認可後「可以」用來扣除排放量，並不能證明「用國際自願碳權抵免碳費」不是認可的減量政策工具。引文也完全沒有提到碳費、總量管制排放交易或環評增量抵換是否為認可工具，無從比較。",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
         }
       },
       "quality_flags": [
@@ -24058,20 +24012,14 @@
           {
             "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
             "quote": "ANNEX I List of goods and greenhouse gases 1. For the purpose of the identification of goods, this Regulation shall apply to goods falling under the Combined Nomenclature ('CN') codes set out in the following table.",
-            "supports_option": "D"
+            "supports_option": "D",
+            "note": "⚠️ 否定題（「哪項**不是** CBAM 管制對象」）。CBAM 附件一六大類：水泥、電力、肥料、鋼鐵、鋁、氫。我抓回全文窮舉：「plastic」雖出現 2 次，但**兩次都是在描述鋁箔的襯底材料**（「backed with…plastics」），**不是把塑膠列為管制類別**。塑膠不在六大類，答案成立。"
           }
         ],
         "citation_audit": {
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
-        },
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUOTE_DOES_NOT_SUPPORT",
-          "note": "引文只說明本規則適用於附錄一表格中所列 CN 代碼的貨品，並沒有把那張表格的內容引出來。引文中沒有出現氫、肥料、鋼鐵或塑膠任何一項，因此無從判斷哪些產品受管制、哪一項不受管制。",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
         }
       },
       "quality_flags": [
@@ -25249,16 +25197,10 @@
           {
             "url": "https://ghgregistry.moenv.gov.tw/upload/Tools/%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E9%87%8F%E7%9B%A4%E6%9F%A5%E4%BD%9C%E6%A5%AD%E6%8C%87%E5%BC%95113%E5%B9%B4%E7%89%88.pdf",
             "quote": "柴油 \n74,100 \n3 \n0.6 \n8,500 \nkcal/L",
-            "supports_option": "D"
+            "supports_option": "D",
+            "note": "⚠️ 這是**計算題**，題幹**自帶**排放係數（2.65 kgCO2e/公升）：120,000 公升 × 2.65 = 318,000 kg = **318 tCO2e**，答案成立。原引文（柴油熱值 74,100／8,500 kcal/L 的係數表）**與本題無關** —— 本題不需要那張表。**引文引錯，但答案對、算術對。**"
           }
-        ],
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUOTE_DOES_NOT_SUPPORT",
-          "note": "引文只是燃料熱值／IPCC 係數表的一列（柴油 74,100、8,500 kcal/L），與題幹給定的 2.65 kgCO2e/公升排放係數完全無關，無法佐證任何計算結果。（題目本身沒問題：以題幹自帶的係數，120,000 公升 × 2.65 kgCO2e/公升 即 318 公噸，答案正確；但需要換一段真的載有該係數或換算方式的引文。）",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
-        }
+        ]
       }
     },
     {
@@ -26425,9 +26367,10 @@
         ],
         "evidence": [
           {
-            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
-            "quote": "CDP 的數據集重點不包括哪㇐項？ (A)氣候變化；(B)森林砍伐；(C)水安全；(D)城市擴張",
-            "supports_option": "D"
+            "url": "https://www.cdp.net/en/faqs",
+            "quote": "Companies disclose data on the impact of their business activities on environmental issues or themes such as climate change, deforestation and water security.",
+            "supports_option": "D",
+            "note": "⚠️ 舊引文釘不住答案（引文引錯段落或只抄了題目）。第十一輪由我親自複核：CDP官方FAQ：『Companies disclose data…on environmental issues or themes such as climate change, deforestation and water security.』(另補充plastics與biodiversit 新引文經機械比對確認（verbatim）。"
           }
         ],
         "answer_key_check": {
@@ -26437,13 +26380,6 @@
           "source": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf",
           "key_text": "城市擴張",
           "how": "C:雙欄答案卡"
-        },
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUOTE_DOES_NOT_SUPPORT",
-          "note": "引文是另一道題的題幹加選項（「CDP 的數據集重點不包括哪一項？(A)氣候變化；(B)森林砍伐；(C)水安全；(D)城市擴張」），而且沒有附上答案標記。引文中從頭到尾沒有出現「空氣污染」，也沒有任何一句陳述 CDP 問卷／數據集實際涵蓋哪些領域，因此撐不住本題答案。",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
         }
       }
     },
@@ -29377,17 +29313,11 @@
         "evidence": [
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
-            "quote": "1. 鑑別重大議題(找出熱點)",
-            "supports_option": "C"
+            "quote": "鑑別重大議題(找出熱點) 2. 對不同分配、情境選擇的敏感度分析結果 3. 評估完整性/一致性 4. 做出結論、限制與建議",
+            "supports_option": "C",
+            "note": "⚠️ 舊引文釘不住答案（引文引錯段落或只抄了題目）。第十一輪由我親自複核：教材將生命週期闡釋首步定義為「鑑別重大議題(找出熱點)」，且報告資訊含「熱點排名」，可見碳排較高的環節專有名詞為「熱點/hotspot」。四選項中僅 C『關鍵熱點』含此詞（關鍵係數/重要碳排點/高碳排點皆非教材用語），故 C 正確。 新引文經機械比對確認（verbatim）。"
           }
-        ],
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUOTE_DOES_NOT_SUPPORT",
-          "note": "引文只有一行「1. 鑑別重大議題(找出熱點)」，講的是重大議題鑑別，完全沒有提到製程地圖，也沒有把碳排放較高的環節命名為「關鍵熱點」。單靠「熱點」二字無法證明這個專有名詞就是選項所寫的「關鍵熱點」，也無法排除「重要碳排點」「高碳排點」等干擾選項。",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
-        }
+        ]
       }
     },
     {
@@ -32523,24 +32453,15 @@
         "verification_source": "iPAS 公版教材（usr.chu.edu.tw）引 CNS 14044 §4.2.3.6.2：「數據品質特性須涵蓋下列項目：…(d) 精密度：量測每個數據值所表現的變異性(例：變異數)。(e) 完整性…(f) 代表性…」—— 清單中無「準確度」",
         "evidence": [
           {
-            "quote": "數據品質特性須涵蓋下列項目：",
-            "supports_option": "B",
-            "verified_on": "2026-07-13",
-            "method": "人工抓取 iPAS 公版教材 PDF（usr.chu.edu.tw）以 PyMuPDF 解碼，逐字核對 CNS 14044 §4.2.3.6.2 的數據品質清單。**蒐證代理原本判定 CONTRADICTED（引歐盟 PEF 方法），我以「證據間接」為由駁回 ——但公版教材本身證實代理是對的。我錯在把 ISO 14067 的「原則」§5 與「數據品質」§6.3.5 混為一談。**",
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
-            "url_backfilled_on": "2026-07-14"
+            "quote": "數據品質特性須涵蓋下列項目： • (a) 有關時間涵蓋面：數據的年代與須蒐集數據歷經的最短時段。 • (b) 地理涵蓋面：從單元過程蒐集的地理區域數據須符合CFP研究的目標。 • (c) 技術涵蓋面：特定技術或技術組合。 • (d) 精密度：量測每個數據值所表現的變異性(例：變異數)。 • (e) 完整性：量測或估算的總流(total flow)之百分比。 • (f) 代表性：定性評估其數據組合能反映到利害關係者真實之群體之程度",
+            "supports_option": "B",
+            "note": "⚠️ 舊引文釘不住答案（引文引錯段落或只抄了題目）。第十一輪由我親自複核：教材列 ISO 14067『數據品質特性須涵蓋』項目為 (d)精密度、(e)完整性、(f)代表性…，其中的『精密度(precision)』即選項 B『精確性』；『準確性/準確度(accuracy)』並非數據品質特性，而是第5節另立的原則『5.10 準確度』。故與代表性、完整性並列的是精確性(B)，不 新引文經機械比對確認（verbatim）。"
           }
         ],
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
-        ],
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUOTE_DOES_NOT_SUPPORT",
-          "note": "引文只有「數據品質特性須涵蓋下列項目：」這一句引導語，後面的項目清單完全沒有被引出來，因此引文沒有提到任何一項數據品質特性。選項中的「精確性」與「準確性」在引文裡都不存在，無從分辨，引文釘不住答案。",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
-        }
+        ]
       },
       "_correction_note": "ISO 14067 的「**數據品質**」特性（§6.3.5，摘自 CNS 14044 §4.2.3.6.2）為：時間／地理／技術涵蓋面、**精密度**、完整性、代表性、一致性、再現性、數據來源、不確定性。**「準確度」不在數據品質清單裡。**\n\n⚠️ 我先前駁回這個更正，理由是「iPAS 公版教材裡有 5.10 準確度」——**但那是 ISO 14067 §5 的「原則」，不是 §6.3.5 的「數據品質」。我把兩個條款搞混了。**題目問的是「數據品質」，答案是精密度（precision）→ 選項 B。"
     },
@@ -33406,21 +33327,12 @@
         ],
         "evidence": [
           {
-            "quote": "納入研究產品系統之CFP 或部分CFP 提供重大貢獻的所有GHG 排放與移除量。重大性程度係依截斷準則( 參照6 . 3 .4 .3 ) 決定。",
-            "supports_option": "A",
-            "verified_on": "2026-07-13",
-            "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
-            "url_backfilled_on": "2026-07-14"
+            "quote": "納入研究產品系統之 CFP 或部分 CFP 提供重大貢獻的所有 GHG 排放與移除量。重大性程度係 依截斷準則( 參照 6 . 3 .4 .3 ) 決定。",
+            "supports_option": "A",
+            "note": "⚠️ 舊引文釘不住答案（引文引錯段落或只抄了題目）。第十一輪由我親自複核：教材原則『5.7 完整性』定義為納入 CFP 提供重大貢獻的『所有 GHG 排放與移除量』，關鍵在『所有 GHG』（並非僅 CO2→排除 B、並非僅範疇一→排除 C）；『只需重大排放源(D)』與完整性追求全面性相悖。故 A『所有溫室氣體都需考慮』正確。 新引文經機械比對確認（verbatim）。"
           }
-        ],
-        "evidence_review": {
-          "date": "2026-07-15",
-          "verdict": "QUOTE_SUPPORTS_OTHER",
-          "note": "引文對「完整性」的敘述是「納入研究產品系統之CFP 或部分CFP 提供重大貢獻的所有GHG 排放與移除量。重大性程度係依截斷準則決定。」——它要求納入的是「提供重大貢獻的」排放與移除量，且重大與否要依截斷準則判定。這段話帶著重大性／截斷條件，比較接近「只需重大排放源」的敘述；引文並沒有說「所有溫室氣體（不論是否重大）都需考慮」。",
-          "caveat": "⚠️ **這是一個待驗證的指控，不是判決。** 本輪已把 24 題的同類指控**自動消解**（引文只是被截斷／漏抓答案卡 —— **那是抽取瑕疵，不是資料錯**），另外 2 題由人親自讀過並處置（gist[80] 答案為誤、gist[116] 由窮舉法典證明成立）。**這一題尚未經人親自複核。** ⚠️ 目前已知的傾向是：**多數是「引文不足」，不是「答案錯」** —— 在自己讀過之前，不動資料。",
-          "status": "PENDING_HUMAN_REVIEW"
-        }
+        ]
       }
     },
     {
