@@ -7944,6 +7944,7 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://www.icao.int/sites/default/files/environmental-protection/CORSIA/CORSIA_FAQs_Apr2024.pdf",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
@@ -7961,13 +7962,22 @@
           "date": "2026-07-15",
           "verdict": "answer_verified_no_single_quote",
           "detail": "第十五輪：此為定義題。CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制，非歐盟碳邊境管制工具；ETS 與 CBAM 皆為歐盟工具。答案（CORSIA 不屬歐盟碳邊境）為領域定義事實，正確，但無單一一手條文可正面釘住（否定/定義題的性質）。CBAM 法規全文「CORSIA」0 次，佐證其不在該框架內。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://www.icao.int/sites/default/files/environmental-protection/CORSIA/CORSIA_FAQs_Apr2024.pdf",
+            "quote": "CORSIA is implemented through Annex 16, Volume IV to the Convention on International Civil Aviation (Chicago Convention), which applies to Contracting States of the Convention.",
+            "supports_option": "B",
+            "note": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。（註：選項 CCTS 亦非明確之歐盟碳邊境工具，屬命題瑕疵；CORSIA 為明確可釘之正解。）"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
       ],
       "prior_answer_note": "原答案 A",
-      "_correction_note": "2026-07-13 更正：原答 CCTS 為誤；正解為 CORSIA。本題**有兩個事實上正確的答案**：CORSIA 是 ICAO（國際民航組織）的全球國際航空碳抵換與減量機制、CCTS 通常指印度政府建立的 Carbon Credit Trading Scheme —— **兩者都不是歐盟碳邊境制度**；而 CBAM 與 EU ETS 才是（CBAM 憑證價格甚至與 EU ETS 配額價格連動）。嚴格而言 C、D 皆可。命題者預設的單選答案是 **CORSIA**，本題庫依此計分，但保留這個瑕疵的紀錄。"
+      "_correction_note": "2026-07-13 更正：原答 CCTS 為誤；正解為 CORSIA。本題**有兩個事實上正確的答案**：CORSIA 是 ICAO（國際民航組織）的全球國際航空碳抵換與減量機制、CCTS 通常指印度政府建立的 Carbon Credit Trading Scheme —— **兩者都不是歐盟碳邊境制度**；而 CBAM 與 EU ETS 才是（CBAM 憑證價格甚至與 EU ETS 配額價格連動）。嚴格而言 C、D 皆可。命題者預設的單選答案是 **CORSIA**，本題庫依此計分，但保留這個瑕疵的紀錄。",
+      "explanation": "CORSIA 係透過國際民航公約（芝加哥公約）實施，屬國際民航組織之航空減量機制，非歐盟碳邊境管制項目。"
     },
     {
       "index": 141,
@@ -15758,12 +15768,13 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "歐盟碳邊境管制項目主要包括CBAM及ETS，CORSIA則是國際航空業的碳抵銷與減量計畫。",
+      "explanation": "CORSIA 係透過國際民航公約（芝加哥公約）實施，屬國際民航組織之航空減量機制，非歐盟碳邊境管制項目。",
       "metadata": {
         "verification_source": "ICAO CORSIA / 印度 CCTS / EU CBAM+ETS 制度歸屬",
         "original_id": "c2-103",
         "valid_as_of": "2026-07-13",
         "sources": [
+          "https://www.icao.int/sites/default/files/environmental-protection/CORSIA/CORSIA_FAQs_Apr2024.pdf",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
@@ -15776,7 +15787,15 @@
           "date": "2026-07-15",
           "verdict": "answer_verified_no_single_quote",
           "detail": "第十五輪：此為定義題。CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制，非歐盟碳邊境管制工具；ETS 與 CBAM 皆為歐盟工具。答案（CORSIA 不屬歐盟碳邊境）為領域定義事實，正確，但無單一一手條文可正面釘住（否定/定義題的性質）。CBAM 法規全文「CORSIA」0 次，佐證其不在該框架內。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://www.icao.int/sites/default/files/environmental-protection/CORSIA/CORSIA_FAQs_Apr2024.pdf",
+            "quote": "CORSIA is implemented through Annex 16, Volume IV to the Convention on International Civil Aviation (Chicago Convention), which applies to Contracting States of the Convention.",
+            "supports_option": "D",
+            "note": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。（註：選項 CCTS 亦非明確之歐盟碳邊境工具，屬命題瑕疵；CORSIA 為明確可釘之正解。）"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -20036,6 +20055,12 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "一級數據門檻＝上游排放百分之十：依環境部「產品與服務碳足跡計算指引」，累計貢獻達上游排放百分之十之組成須採一級活動數據。該指引為 4.2MB PDF、WebFetch 無法解析，數值 10% 經多次獨立檢索一致，故誠實標記。",
+          "method": "第十六輪：多源檢索一致，PDF 過大無法機械逐字。"
         }
       },
       "quality_flags": [

@@ -141,6 +141,7 @@ export const SECONDARY: readonly HostRule[] = [
   { host: 're.org.tw', who: '再生能源資訊網 —— 能源署委外之入口網，轉載而非發布' },
   { host: 'assets.bbhub.io', who: 'Bloomberg CDN —— TCFD 報告的寄存處，非發布機構' },
   { host: 'github.com', who: 'GitHub discussion —— 討論串' },
+  { host: 'cna.com.tw', who: '中央社 —— 媒體（用於查證碳交所平台啟用日等有明確日期的事件報導）' },
   // 百科全書：轉述既有事實、非發布者。用於 COP30 地點等無爭議事實，且官方頁（unfccc.int）
   // 本輪被限流抓不到時的可即時重驗替代來源。
   { host: 'wikipedia.org', who: '維基百科（含各語系子網域）—— 二手彙整，非事實發布者' },

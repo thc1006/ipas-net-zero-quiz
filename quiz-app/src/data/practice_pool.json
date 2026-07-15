@@ -902,6 +902,12 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "答案（2026 年／4 月 30 日）正確。盤查登錄及查驗管理辦法 §6 逐字明定「應於每年四月三十日前…將前一年度…盤查報告書」，佐證每年 4 月 30 日期限（排除「10 月 31 日」選項）；擴大列管自 115 年（2026）起之起始年度屬環境部擴大盤查對象公告，其門檻表為附表、無法乾淨抽取為逐字，故誠實標記。⚠️ 代理原引之 enews 新聞列表頁為動態頁、內容會變動，未採用。",
+          "method": "第十六輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "sources": [
@@ -1266,6 +1272,12 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "第八輪：把該頁抓回來讀了 —— ghgregistry.moenv.gov.tw 抓回 19,723 字，**「連鎖便利商店」只出現在一則「輔導說明會」的標題裡**，**查無「100 家」這個納管門檻**；另一個來源（溫管辦法 O0020102）「連鎖便利商店」**0 次**。兩個引用都**沒有**說這件事。答案未必錯，但**這兩個引用撐不起它**。 ⚠️ **這不是「答案錯了」，是「這個引用證明不了這個答案」。**"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "答案（門市總數 100 家以上）正確，係環境部擴大盤查對象公告對連鎖便利商店/超市/電信業之門檻；該門檻位於公告附表、無法乾淨抽取為逐字（同 gist[150] 之結構限制），故誠實標記。",
+          "method": "第十六輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "sources": [
@@ -1577,6 +1589,12 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "ISO 50001 能源績效判斷題：產量降但能耗升，須先檢查能源基線（EnB）與能源績效指標（EnPI）是否已就產量等相關變數常態化。實務判斷題，無官方單一逐字。",
+          "method": "第十六輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "sources": [
@@ -1641,6 +1659,12 @@
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "ESCO 之能源績效保證合約（EPC）由 ESCO 出前期投資、以節省電費償還，符合「不願負擔前期投資但希望降低電費」。實務判斷題，無官方單一逐字。",
+          "method": "第十六輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "sources": [
@@ -1700,6 +1724,12 @@
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "自動偵測 HVAC 異常並預測能耗屬能源管理資訊系統（EMIS）之功能。實務判斷題，無官方單一逐字。（命題依據原正解文字經選項重排後字母改變，內容正確。）",
+          "method": "第十六輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "sources": [
@@ -2831,7 +2861,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "COP30 於 2025 年 11 月 10–21 日於巴西亞馬遜地區之 Pará 州首府貝倫（Belém）舉辦，重點議題為 NDC 3.0、Article 6 全球碳市場機制細則、亞馬遜雨林保護與全球盤點後續行動。",
+      "explanation": "COP30（2025 年聯合國氣候變化綱要公約締約方大會）於巴西貝倫（Belém）舉行；主辦城市為貝倫，可與巴庫等其他城市區別。",
       "subject": null,
       "topic_tags": [
         "COP30",
@@ -2856,9 +2886,20 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "COP30–CMP20–CMA7 (Belém, 2025)",
+            "supports_option": "A",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：改用可即時重驗來源（unfccc.int 官方頁限流回空）；我方 fetcher 機械比對 verbatim。",
+            "url": "https://en.wikipedia.org/wiki/2025_United_Nations_Climate_Change_Conference"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://en.wikipedia.org/wiki/2025_United_Nations_Climate_Change_Conference",
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
         "https://unfccc.int/cop30"
       ],
@@ -3294,6 +3335,12 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "依 iPAS 產品碳足跡公版教材「1 度電的碳足跡 vs GHG（以 1 度電為例）」生命週期圖：產品碳足跡電力係數須涵蓋原料開採、運輸、發電、發電廢棄物處理至電網輸配到用戶的全生命週期，組織盤查僅計發電階段，故不能直接沿用。概念於教材為圖表呈現、無單一逐字散文句，誠實標記。",
+          "method": "第十六輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "sources": [
@@ -3387,7 +3434,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "依路徑圖 2.0，2023 起資本額逾百億及鋼鐵水泥業先行盤查，2024、2025 接續，2026 年完成個體公司盤查，2027 年全體上市櫃公司完成合併報表盤查與外部確信亦同步推動，2029 年全體完成外部確信。",
+      "explanation": "依金管會「上市櫃公司永續發展路徑圖」，分階段推動全體上市櫃公司於 2027 年完成溫室氣體盤查。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -3413,9 +3460,20 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "規劃於2027年全體上市櫃公司完成溫室氣體盤查，2029年全體上市櫃公司完成溫室氣體盤查之查證",
+            "supports_option": "C",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我機械逐字比對確認",
+            "url": "https://esg.fsc.gov.tw/News/Detail/%E9%87%91%E7%AE%A1%E6%9C%83%E5%B0%87%E6%96%BC%E8%BF%91%E6%9C%9F%E7%99%BC%E5%B8%83-%E4%B8%8A%E5%B8%82%E6%AB%83%E5%85%AC%E5%8F%B8%E6%B0%B8%E7%BA%8C%E7%99%BC%E5%B1%95%E8%B7%AF%E5%BE%91%E5%9C%96-/"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://esg.fsc.gov.tw/News/Detail/%E9%87%91%E7%AE%A1%E6%9C%83%E5%B0%87%E6%96%BC%E8%BF%91%E6%9C%9F%E7%99%BC%E5%B8%83-%E4%B8%8A%E5%B8%82%E6%AB%83%E5%85%AC%E5%8F%B8%E6%B0%B8%E7%BA%8C%E7%99%BC%E5%B1%95%E8%B7%AF%E5%BE%91%E5%9C%96-/",
         "https://cgc.twse.com.tw/responsibilityRoadMap/listCh"
       ],
       "quality_flags": [
@@ -3581,11 +3639,11 @@
         },
         {
           "key": "D",
-          "text": "2024 年 10 月 2 日"
+          "text": "2024 年 10 月 21 日"
         }
       ],
       "answer": "D",
-      "explanation": "TCX 國內減量額度交易平台於 2024/10/02 啟動，首批共 6 案（含奇美實業天然氣替代重油、中鋼鋼胚熱進爐節能、漢寶沼氣發電、漢程客運電動公車、台北 101 高效率光源等），定價 NT$2,500–4,000/噸 CO2e。",
+      "explanation": "台灣碳權交易所建置之國內減量額度交易平台於 2024 年 10 月 21 日正式啟用，並上架首批國內減量專案。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -3611,13 +3669,40 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
-        }
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "OPTION_CORRECTED",
+          "note": "原選項 D 誤植 10/2；更正為實際啟用日 10/21（中央社逐字）後，答案 D 成立並釘住。",
+          "method": "中央社逐字＋多源交叉"
+        },
+        "evidence": [
+          {
+            "quote": "台灣碳權交易所建置「國內減量額度交易平台」今天啟用",
+            "supports_option": "D",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：獨立查證啟用日 2024/10/21，更正選項 D 之誤植日期並釘住。",
+            "url": "https://www.cna.com.tw/news/afe/202410210205.aspx"
+          }
+        ],
+        "option_corrections": [
+          {
+            "date": "2026-07-15",
+            "option": "D",
+            "from": "2024 年 10 月 2 日",
+            "to": "2024 年 10 月 21 日",
+            "why": "國內減量額度交易平台實際啟用日為 2024/10/21（中央社報導當日「今天啟用」、首批 6 專案），原選項 D 誤植為 10/2；更正為 10/21 使本題有正確答案並可釘住一手來源。"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://www.cna.com.tw/news/afe/202410210205.aspx",
         "https://www.tcx.com.tw/zh/",
         "https://netzero.cna.com.tw/news/202409250044/"
       ],
-      "quality_flags": []
+      "quality_flags": [],
+      "metadata": {}
     },
     {
       "id": "pool-aig-ind-006",
@@ -3641,7 +3726,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "首批國際碳權僅限作為「自願性碳中和宣告」或品牌商供應鏈中和要求使用，「不得」用於折抵我國碳費或 EU CBAM；其餘敘述皆與 TCX 公告一致。",
+      "explanation": "依報導，碳交所國際碳權交易平台首批碳權不得用於我國碳費之抵減，故稱其可抵減碳費之敘述為錯誤。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -3667,7 +3752,17 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "這些碳權並不可以用於碳費的抵減上，同樣也無法用於歐盟CBAM的抵減，只能用於企業的自願性碳中和宣告",
+            "supports_option": "A",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我機械逐字比對確認",
+            "url": "https://csr.cw.com.tw/article/43549"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
         "https://www.tcx.com.tw/zh/",
@@ -3697,7 +3792,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "環境部公告一般費率 NT$300/噸 CO2e，提出自主減量計畫並符合「行業別指定削減率」者適用優惠費率 A（NT$50），符合「技術標竿」者適用優惠費率 B（NT$100）；2025 年試申報、2026 年 5 月起依 2025 年排放量正式繳費。",
+      "explanation": "依環境部碳費費率公告，一般費率為每公噸新臺幣 300 元；符合行業別指定削減率者適用每公噸 50 元、符合技術標竿指定削減率者適用每公噸 100 元之優惠費率。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -3723,9 +3818,20 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "一般費率 ：新臺幣 300元/公噸 二氧化碳當量。 ◆ 優惠費率A （符合「徵收對象溫室氣體減量指定目標」公告附表一行業別指定削減率規定）：新臺幣 50元/公噸 二氧化碳當量。 ◆ 優惠費率B （符合「徵收對象溫室氣體減量指定目標」公告附表二技術標竿指定削減率規定）：新臺幣 100元/公噸 二氧化碳當量",
+            "supports_option": "D",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我重抓機械逐字比對（代理原引文經改寫，改用頁面原文切片）",
+            "url": "https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284",
         "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
       ],
       "quality_flags": [
@@ -4675,7 +4781,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "「碳標籤」為產品碳足跡之揭露；「減量標籤」（碳足跡減量標籤）為動態，需 5 年內較基準減量 ≥ 3% 且通過第三方查驗，由環境部核發。",
+      "explanation": "依產品碳足跡管理要點，碳標籤與減量標籤均由環境部核發之圖示，並有相應之減量條件。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
       "difficulty": "medium",
@@ -4701,9 +4807,20 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "產品碳足跡標籤及產品碳足跡減量標籤：係指本部製作並依商標法註冊之圖示",
+            "supports_option": "D",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我機械逐字比對確認",
+            "url": "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007755"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://oaout.moenv.gov.tw/Law/LawContent.aspx?id=GL007755",
         "https://cfp.moenv.gov.tw/WebPage/Index.aspx"
       ],
       "quality_flags": []
@@ -4794,7 +4911,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "**轉型風險**源自邁向低碳經濟的努力 —— 政策、法規、技術、市場、聲譽的變化。「碳定價政策上路造成營運成本上升」正是典型的**政策型轉型風險**，故為正解。\n\n其餘三項都是**實體風險**：颱風造成廠房淹水、極端高溫造成工人停工，屬**急性**（acute）；海平面上升導致沿海資產減損，屬**慢性**（chronic）。\n\n⚠️ 本題解析已更正：原文前一句才把「碳定價」列為轉型風險的例子，下一句卻把它歸進實體風險清單 —— **自我矛盾**，而且把真正的慢性實體風險（海平面上升）漏掉了。\n　依據 IFRS S2 Appendix A 逐字：\"Risks that arise from efforts to transition to a lower-carbon economy. Transition risks include policy, legal, technological, market and reputational risks.\"",
+      "explanation": "依 IFRS S2，氣候相關轉型風險包含政策、法律、技術、市場與商譽等風險，屬轉型風險而非實體風險。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
       "difficulty": "medium",
@@ -4825,9 +4942,20 @@
           "date": "2026-07-14",
           "verdict": "fixed",
           "what": "原解析自我矛盾：前句把碳定價列為轉型風險，後句又把它歸進實體風險清單，並漏掉海平面上升。已重寫。"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "transition risks ; and Transition risk [member] Reference Member 995000 (b) climate-related opportunities available to the entity. 4 Climate-related risks and opportunities that could not reasonably be expected to affect an entity’s prospects are outside the scope of this Standard. Core content Governance 5 The objective of climate-related financial disclosures on governance is to enable users of general purpose financial reports to understand the governance processes, controls and procedures an entity uses to monitor, manage and oversee climate-related risks and opportunities. Other disclosures about governance processes, controls and procedures used to monitor, manage and oversee risks and opportunities [text block] Disclosure Text block IFRS S1.26 Disclosure Metric Code(s) S1.26.1 Commentary Metric Code(s) S2.5.1 Commentary 200000, 210000 6 To achieve this objective, an entity shall disclose information about: (a) the governance body(s) (which can include a board, committee or equivalent body charged with governance) or individual(s) responsible for oversight of climate-related risks and opportunities. Specifically, the entity shall identify that body(s) or individual(s) and disclose information about: (i) how responsibilities for climate-related risks and opportunities are reflected in the terms of reference, mandates, role descriptions and other related policies applicable to that body(s) or individual(s); How responsibilities for risks and opportunities are reflected in terms of reference, mandates, role descriptions and other related policies applicable to responsible body(s) or individual(s) [text block] Disclosure Text block IFRS S1.27 a (i) Disclosure Metric Code(s) S1.27.a.i.1 Commentary Metric Code(s) S2.6.a.i.1 Commentary 200000, 210000 (ii) how the body(s) or individual(s) determines whether appropriate skills and competencies are available or will be developed to oversee strategies designed to respond to climate-related risks and opportunities; How responsible body(s) or individual(s) determines appropriate skills and competencies are available or will be developed to oversee strategies to respond to risks and opportunities [text block] Disclosure Text block IFRS S1.27 a (ii) Disclosure Metric Code(s) S1.27.a.ii.1 Commentary Metric Code(s) S2.6.a.ii.1 Commentary 200000, 210000 (iii) how and how often the body(s) or individual(s) is informed about climate-related risks and opportunities; How and how often responsible body(s) or individual(s) is informed about risks and opportunities [text block] Disclosure Text block IFRS S1.27 a (iii) Disclosure Metric Code(s) S1.27.a.iii.1 Commentary Metric Code(s) S2.6.a.iii.1 Commentary 200000, 210000 (iv) how the body(s) or individual(s) takes into account climate-related risks and opportunities when overseeing the entity’s strategy, its decisions on major transactions and its risk management processes and related policies, including whether the body(s) or individual(s) has considered trade-offs associated with those risks and opportunities; and How responsible body(s) or individual(s) takes into account risks and opportunities when overseeing strategy, decisions on major transactions and risk management processes and related policies [text block] Disclosure Text block IFRS S1.27 a (iv) Disclosure Metric Code(s) S1.27.a.iv.1 Commentary Metric Code(s) S2.6.a.iv.1 Commentary 200000, 210000 Responsible body(s) or individual(s) considered trade-offs associated with climate-related risks and opportunities Disclosure True/False Metric Code(s) S2.6.a.iv.2 Commentary 210000 (v) how the body(s) or individual(s) oversees the setting of targets related to climate-related risks and opportunities, and monitors progress towards those targets (see paragraphs 33⁠–⁠36 ), including whether and how related performance metrics are included in remuneration policies (see paragraph 29(g) ). Climate-related performance metrics are included in remuneration policies Disclosure True/False IFRS S2.29 g (i) Disclosure Metric Code(s) S2.29.g.i.2 Commentary Metric Code(s) S2.6.a.v.3 Commentary 210000 How body(s) or individual(s) oversees setting of targets related to risks and opportunities, and monitors progress towards those targets [text block] Disclosure Text block IFRS S1.27 a (v) Disclosure Metric Code(s) S1.27.a.v.1 Commentary Metric Code(s) S2.6.a.v.1 Commentary 200000, 210000 Whether and how related performance metrics are included in remuneration policies [text block] Disclosure Text block IFRS S1.27 a (v) Disclosure IFRS S2.29 g (i) Disclosure Metric Code(s) S1.27.a.v.2 Commentary Metric Code(s) S2.29.g.i.1 Commentary Metric Code(s) S2.6.a.v.2 Commentary 200000, 210000 Identity of governance body(s) or individual(s) responsible for oversight of risks and opportunities [text block] Disclosure Text block IFRS S1.27 a Disclosure Metric Code(s) S1.27.a.1 Commentary Metric Code(s) S2.6.a.1 Commentary 200000, 210000 (b) management’s role in the governance processes, controls and procedures used to monitor, manage and oversee climate-related risks and opportunities, including information about: (i) whether the role is delegated to a specific management-level position or management-level committee and how oversight is exercised over that position or committee; and Management's role in governance processes, controls and procedures used to monitor, manage and oversee climate-related risks and opportunities is delegated to specific position or committee Disclosure True/False Metric Code(s) S2.6.b.i.2 Commentary 210000 Whether management's role in governance processes, controls and procedures used to monitor, manage and oversee risks and opportunities is delegated to specific position or committee and how oversight is exercised [text block] Disclosure Text block IFRS S1.27 b (i) Disclosure Metric Code(s) S1.27.b.i.1 Commentary Metric Code(s) S2.6.b.i.1 Commentary 200000, 210000 (ii) whether management uses controls and procedures to support the oversight of climate-related risks and opportunities and, if so, how these controls and procedures are integrated with other internal functions. Management uses controls and procedures to support oversight of climate-related risks and opportunities Disclosure True/False Metric Code(s) S2.6.b.ii.2 Commentary 210000 Whether management uses controls and procedures to support oversight of risks and opportunities, and how those are integrated with other internal functions [text block] Disclosure Text block IFRS S1.27 b (ii) Disclosure Metric Code(s) S1.27.b.ii.1 Commentary Metric Code(s) S2.6.b.ii.1 Commentary 200000, 210000 Management's role in governance processes, controls and procedures used to monitor, manage and oversee risks and opportunities [text block] Disclosure Text block IFRS S1.27 b Disclosure Metric Code(s) S1.27.b.1 Commentary Metric Code(s) S2.6.b.1 Commentary 200000, 210000 Governance processes, controls and procedures used to monitor and manage climate-related risks and opportunities [table] Reference Table 210000 Risks and opportunities [axis] Reference Axis IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference 200000, 210000, 990000 Risks and opportunities [domain] Reference Domain IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference 200000, 210000, 990000 7 In preparing disclosures to fulfil the requirements in paragraph 6 , an entity shall avoid unnecessary duplication in accordance with IFRS S1 General Requirements for Disclosure of Sustainability-related Financial Information (IFRS S1) (see paragraph B42(b) of IFRS S1). For example, although an entity shall provide the information required by paragraph 6, if oversight of sustainability-related risks and opportunities is managed on an integrated basis, the entity would avoid duplication by providing integrated governance disclosures instead of separate disclosures for each sustainability-related risk and opportunity. Climate topic [member] Reference Member IFRS S1.30 a Reference IFRS S2.10 a Reference IFRS S2.26 Reference 995000 Sustainability topics [domain] Reference Domain IFRS S1.30 a Reference IFRS S2.10 a Reference IFRS S2.26 Reference 995000 Topic(s) covered by integrated governance disclosure Reference Multiple Choice Metric Code(s) S2.7.2 Commentary 210000 Strategy 8 The objective of climate-related financial disclosures on strategy is to enable users of general purpose financial reports to understand an entity’s strategy for managing climate-related risks and opportunities. 9 Specifically, an entity shall disclose information to enable users of general purpose financial reports to understand: (a) the climate-related risks and opportunities that could reasonably be expected to affect the entity’s prospects (see paragraphs 10⁠–⁠12 ); Climate-related opportunity [member] Reference Member 995000 Climate-related risk [member] Reference Member 995000 Is climate-related risk or opportunity [domain] Reference Domain 995000 (b) the current and anticipated effects of those climate-related risks and opportunities on the entity’s business model and value chain (see paragraph 13 ); (c) the effects of those climate-related risks and opportunities on the entity’s strategy and decision-making, including information about its climate-related transition plan (see paragraph 14 ); (d) the effects of those climate-related risks and opportunities on the entity’s financial position, financial performance and cash flows for the reporting period, and their anticipated effects on the entity’s financial position, financial performance and cash flows over the short, medium and long term, taking into consideration how those climate-related risks and opportunities have been factored into the entity’s financial planning (see paragraphs 15⁠–⁠21 ); and (e) the climate resilience of the entity’s strategy and its business model to climate-related changes, developments and uncertainties, taking into consideration the entity’s identified climate-related risks and opportunities (see paragraph 22 ). Climate-related risks and opportunities 10 An entity shall disclose information that enables users of general purpose financial reports to understand the climate-related risks and opportunities that could reasonably be expected to affect the entity’s prospects. Specifically, the entity shall: (a) describe climate-related risks and opportunities that could reasonably be expected to affect the entity’s prospects; Description of risk or opportunity [text block] Disclosure Text block IFRS S1.30 a Disclosure Metric Code(s) S1.30.a.1 Commentary Metric Code(s) S2.10.a.1 Commentary 200000, 210000 Climate topic [member] Reference Member IFRS S1.30 a Reference IFRS S2.26 Reference IFRS S2.7 Reference 995000 Sustainability topics [domain] Reference Domain IFRS S1.30 a Reference IFRS S2.26 Reference IFRS S2.7 Reference 995000 Topic(s) of risk or opportunity Reference Multiple Choice IFRS S1.30 a Reference Metric Code(s) S1.30.a.2 Commentary Metric Code(s) S2.10.a.2 Commentary 200000, 210000 (b) explain, for each climate-related risk the entity has identified, whether the entity considers the risk to be a climate-related physical risk or climate-related transition risk; Category of climate-related risk Disclosure Multiple Choice Metric Code(s) S2.10.b.1 Commentary 210000 (c) specify, for each climate-related risk and opportunity the entity has identified, over which time horizons—short, medium or long term—the effects of each climate-related risk and opportunity could reasonably be expected to occur; and Time horizon(s) over which effects of risk or opportunity could reasonably be expected to occur Disclosure Multiple Choice IFRS S1.30 b Disclosure Metric Code(s) S1.30.b.2 Commentary 200000, 210000 Time horizon(s) over which effects of risk or opportunity could reasonably be expected to occur [text block] Disclosure Text block IFRS S1.30 b Disclosure Metric Code(s) S1.30.b.1 Commentary Metric Code(s) S2.10.c.1 Commentary 200000, 210000 (d) explain how the entity defines ‘short term’, ‘medium term’ and ‘long term’ and how these definitions are linked to the planning horizons used by the entity for strategic decision-making. Definition of time horizons [table] Reference Table IFRS S1.30 c Reference 200000, 210000 Long term [member] Reference Member IFRS S1.30 c Reference 200000, 210000, 995000 Medium term [member] Reference Member IFRS S1.30 c Reference 200000, 210000, 995000 Short term [member] Reference Member IFRS S1.30 c Reference 200000, 210000, 995000 Time horizon [axis] Reference Axis IFRS S1.30 c Reference 200000, 210000, 990000 Time horizon [domain] Reference Domain IFRS S1.30 b Reference IFRS S1.30 c Reference 200000, 210000, 990000, 995000 Definition of time horizon [text block] Disclosure Text block IFRS S1.30 c Disclosure Metric Code(s) S1.30.c.1 Commentary Metric Code(s) S2.10.d.1 Commentary 200000, 210000 How definition of time horizon(s) is linked to planning horizons used for strategic decision-making [text block] Disclosure Text block IFRS S1.30 c Disclosure Metric Code(s) S1.30.c.2 Commentary Metric Code(s) S2.10.d.2 Commentary 200000, 210000 Climate-related risks or opportunities [table] Reference Table 210000 Risks and opportunities [axis] Reference Axis IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 Risks and opportunities [domain] Reference Domain IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 Other disclosures that enable understanding about risks and opportunities [text block] Disclosure Text block IFRS S1.30 Disclosure Metric Code(s) S1.30.1 Commentary Metric Code(s) S2.10.2 Commentary 200000, 210000 11 In identifying the climate-related risks and opportunities that could reasonably be expected to affect an entity’s prospects, the entity shall use all reasonable and supportable information that is available to the entity at the reporting date without undue cost or effort, including information about past events, current conditions and forecasts of future conditions. 12 In identifying the climate-related risks and opportunities that could reasonably be expected to affect an entity’s prospects, the entity shall refer to and consider the applicability of the industry-based disclosure topics defined in the Industry-based Guidance on Implementing IFRS S2 . Business model and value chain 13 An entity shall disclose information that enables users of general purpose financial reports to understand the current and anticipated effects of climate-related risks and opportunities on the entity’s business model and value chain. Specifically, the entity shall disclose: (a) a description of the current and anticipated effects of climate-related risks and opportunities on the entity’s business model and value chain; and Current and anticipated effects of risks and opportunities on business model and value chain [text block] Disclosure Text block IFRS S1.32 a Disclosure Metric Code(s) S1.32.a.1 Commentary Metric Code(s) S2.13.a.1 Commentary 200000, 210000 (b) a description of where in the entity’s business model and value chain climate-related risks and opportunities are concentrated (for example, geographical areas, facilities and types of assets). Where in business model and value chain risks and opportunities are concentrated [text block] Disclosure Text block IFRS S1.32 b Disclosure Metric Code(s) S1.32.b.1 Commentary Metric Code(s) S2.13.b.1 Commentary 200000, 210000 Other disclosures about current and anticipated effects of risks and opportunities on business model and value chain [text block] Disclosure Text block IFRS S1.32 Disclosure Metric Code(s) S1.32.1 Commentary Metric Code(s) S2.13.1 Commentary 200000, 210000 Current and anticipated effects of climate-related risks and opportunities on business model and value chain [table] Reference Table 210000 Risks and opportunities [axis] Reference Axis IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 Risks and opportunities [domain] Reference Domain IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 Strategy and decision-making 14 An entity shall disclose information that enables users of general purpose financial reports to understand the effects of climate-related risks and opportunities on its strategy and decision-making. Specifically, the entity shall disclose: (a) information about how the entity has responded to, and plans to respond to, climate-related risks and opportunities in its strategy and decision-making, including how the entity plans to achieve any climate-related targets it has set and any targets it is required to meet by law or regulation. Specifically, the entity shall disclose information about: (i) current and anticipated changes to the entity’s business model, including its resource allocation, to address climate-related risks and opportunities (for example, these changes could include plans to manage or decommission carbon-, energy- or water-intensive operations; resource allocations resulting from demand or supply-chain changes; resource allocations arising from business development through capital expenditure or additional expenditure on research and development; and acquisitions or divestments); Changes to business model, including resource allocation, to address climate-related risks and opportunities [text block] Reference Text block Metric Code(s) S2.14.a.i.1 Commentary 210000 (ii) current and anticipated direct mitigation and adaptation efforts (for example, through changes in production processes or equipment, relocation of facilities, workforce adjustments, and changes in product specifications); Direct mitigation and adaptation efforts [text block] Reference Text block Metric Code(s) S2.14.a.ii.1 Commentary 210000 (iii) current and anticipated indirect mitigation and adaptation efforts (for example, through working with customers and supply chains); Indirect mitigation and adaptation efforts [text block] Reference Text block Metric Code(s) S2.14.a.iii.1 Commentary 210000 (iv) any climate-related transition plan the entity has, including information about key assumptions used in developing its transition plan, and dependencies on which the entity’s transition plan relies; and Climate-related transition plan [text block] Disclosure Text block Metric Code(s) S2.14.a.iv.1 Commentary 210000 Entity has climate-related transition plan Disclosure True/False Metric Code(s) S2.14.a.iv.2 Commentary 210000 (v) how the entity plans to achieve any climate-related targets, including any greenhouse gas emissions targets, described in accordance with paragraphs 33⁠–⁠36 . How entity plans to achieve climate-related targets [text block] Reference Text block Metric Code(s) S2.14.a.v.1 Commentary 210000 How entity responded to, and plans to respond to, risks and opportunities in its strategy and decision-making [text block] Disclosure Text block IFRS S1.33 a Disclosure Metric Code(s) S1.33.a.1 Commentary Metric Code(s) S2.14.a.1 Commentary 200000, 210000 (b) information about how the entity is resourcing, and plans to resource, the activities disclosed in accordance with paragraph 14(a). How entity is resourcing, and plans to resource, activities disclosed in relation to response to climate-related risks and opportunities in strategy and decision-making [text block] Disclosure Text block Metric Code(s) S2.14.b.1 Commentary 210000 (c) quantitative and qualitative information about the progress of plans disclosed in previous reporting periods in accordance with paragraph 14(a). Progress against plans disclosed in previous reporting periods [text block] Disclosure Text block IFRS S1.33 b Disclosure Metric Code(s) S1.33.b.1 Commentary Metric Code(s) S2.14.c.1 Commentary 200000, 210000 Other disclosures about effects of risks and opportunities on strategy and decision-making [text block] Disclosure Text block IFRS S1.33 Disclosure Metric Code(s) S1.33.1 Commentary Metric Code(s) S2.14.1 Commentary 200000, 210000 Effects of climate-related risks and opportunities on strategy and decision-making [table] Reference Table 210000 Risks and opportunities [axis] Reference Axis IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 Risks and opportunities [domain] Reference Domain IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 Financial position, financial performance and cash flows 15 An entity shall disclose information that enables users of general purpose financial reports to understand: (a) the effects of climate-related risks and opportunities on the entity’s financial position, financial performance and cash flows for the reporting period (current financial effects); and (b) the anticipated effects of climate-related risks and opportunities on the entity’s financial position, financial performance and cash flows over the short, medium and long term, taking into consideration how climate-related risks and opportunities are included in the entity’s financial planning (anticipated financial effects). Other disclosures about current and anticipated financial effects of risks and opportunities [text block] Disclosure Text block IFRS S1.34 Disclosure Metric Code(s) S1.34.1 Commentary Metric Code(s) S2.15.1 Commentary 200000, 210000 16 Specifically, an entity shall disclose quantitative and qualitative information about: (a) how climate-related risks and opportunities have affected its financial position, financial performance and cash flows for the reporting period; Current financial effects of climate-related risks and opportunities [table] Reference Table IFRS S2.16 b Reference 210000 Risks and opportunities [axis] Reference Axis IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 Risks and opportunities [domain] Reference Domain IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 How risks and opportunities have affected financial position, financial performance and cash flows for reporting period [text block] Disclosure Text block IFRS S1.35 a Disclosure IFRS S1.40 b Disclosure IFRS S1.40 c Disclosure IFRS S2.21 b Disclosure IFRS S2.21 c Disclosure Metric Code(s) S1.35.a.1 Commentary Metric Code(s) S2.16.a.2 Commentary 200000, 210000 (b) the climate-related risks and opportunities identified in paragraph 16(a) for which there is a significant risk of a material adjustment within the next annual reporting period to the carrying amounts of assets and liabilities reported in the related financial statements; Risks and opportunities with significant risk of material adjustment within next annual reporting period to carrying amounts of assets and liabilities [text block] Disclosure Text block IFRS S1.35 b Disclosure IFRS S1.40 b Disclosure IFRS S1.40 c Disclosure IFRS S2.21 b Disclosure IFRS S2.21 c Disclosure Metric Code(s) S1.35.b.1 Commentary Metric Code(s) S2.16.b.1 Commentary 200000, 210000 Current financial effects of climate-related risks and opportunities [table] Reference Table IFRS S2.16 a Reference 210000 Risks and opportunities [axis] Reference Axis IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 Risks and opportunities [domain] Reference Domain IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 (c) how the entity expects its financial position to change over the short, medium and long term, given its strategy to manage climate-related risks and opportunities, taking into consideration: (i) its investment and disposal plans (for example, plans for capital expenditure, major acquisitions and divestments, joint ventures, business transformation, innovation, new business areas, and asset retirements), including plans the entity is not contractually committed to; and (ii) its planned sources of funding to implement its strategy; and Anticipated financial effects of climate-related risks and opportunities [table] Reference Table IFRS S2.16 d Reference 210000 Risks and opportunities [axis] Reference Axis IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 Risks and opportunities [domain] Reference Domain IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 How financial position expected to change over short, medium and long term, given strategy to manage risks and opportunities [text block] Disclosure Text block IFRS S1.35 c Disclosure IFRS S1.40 b Disclosure IFRS S1.40 c Disclosure IFRS S2.21 b Disclosure IFRS S2.21 c Disclosure Metric Code(s) S1.35.c.1 Commentary Metric Code(s) S2.16.c.1 Commentary 200000, 210000 (d) how the entity expects its financial performance and cash flows to change over the short, medium and long term, given its strategy to manage climate-related risks and opportunities (for example, increased revenue from products and services aligned with a lower-carbon economy; costs arising from physical damage to assets from climate events; and expenses associated with climate adaptation or mitigation). Anticipated financial effects of climate-related risks and opportunities [table] Reference Table IFRS S2.16 c Reference 210000 Risks and opportunities [axis] Reference Axis IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 Risks and opportunities [domain] Reference Domain IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 How financial performance and cash flows expected to change over short, medium and long term given strategy to manage risks and opportunities [text block] Disclosure Text block IFRS S1.35 d Disclosure IFRS S1.40 b Disclosure IFRS S1.40 c Disclosure IFRS S2.21 b Disclosure IFRS S2.21 c Disclosure Metric Code(s) S1.35.d.1 Commentary Metric Code(s) S2.16.d.1 Commentary 200000, 210000 17 In providing quantitative information, an entity may disclose a single amount or a range. 18 In preparing disclosures about the anticipated financial effects of a climate-related risk or opportunity, an entity shall: (a) use all reasonable and supportable information that is available to the entity at the reporting date without undue cost or effort; and (b) use an approach that is commensurate with the skills, capabilities and resources that are available to the entity for preparing those disclosures. 19 An entity need not provide quantitative information about the current or anticipated financial effects of a climate-related risk or opportunity if the entity determines that: (a) those effects are not separately identifiable; or (b) the level of measurement uncertainty involved in estimating those effects is so high that the resulting quantitative information would not be useful. 20 In addition, an entity need not provide quantitative information about the anticipated financial effects of a climate-related risk or opportunity if the entity does not have the skills, capabilities or resources to provide that quantitative information. 21 If an entity determines that it need not provide quantitative information about the current or anticipated financial effects of a climate-related risk or opportunity applying the criteria set out in paragraphs 19⁠–⁠20 , the entity shall: (a) explain why it has not provided quantitative information; Explanation of why quantitative information not provided about current or anticipated financial effects of identified risk or opportunity [text block] Disclosure Text block IFRS S1.40 a Disclosure Metric Code(s) S1.40.a.1 Commentary Metric Code(s) S2.21.a.1 Commentary 200000, 210000 (b) provide qualitative information about those financial effects, including identifying line items, totals and subtotals within the related financial statements that are likely to be affected, or have been affected, by that climate-related risk or opportunity; and How financial performance and cash flows expected to change over short, medium and long term given strategy to manage risks and opportunities [text block] Disclosure Text block IFRS S1.35 d Disclosure IFRS S1.40 b Disclosure IFRS S1.40 c Disclosure IFRS S2.16 d Disclosure IFRS S2.21 c Disclosure Metric Code(s) S1.35.d.1 Commentary Metric Code(s) S2.16.d.1 Commentary 200000, 210000 How financial position expected to change over short, medium and long term, given strategy to manage risks and opportunities [text block] Disclosure Text block IFRS S1.35 c Disclosure IFRS S1.40 b Disclosure IFRS S1.40 c Disclosure IFRS S2.16 c Disclosure IFRS S2.21 c Disclosure Metric Code(s) S1.35.c.1 Commentary Metric Code(s) S2.16.c.1 Commentary 200000, 210000 How risks and opportunities have affected financial position, financial performance and cash flows for reporting period [text block] Disclosure Text block IFRS S1.35 a Disclosure IFRS S1.40 b Disclosure IFRS S1.40 c Disclosure IFRS S2.16 a Disclosure IFRS S2.21 c Disclosure Metric Code(s) S1.35.a.1 Commentary Metric Code(s) S2.16.a.2 Commentary 200000, 210000 Risks and opportunities with significant risk of material adjustment within next annual reporting period to carrying amounts of assets and liabilities [text block] Disclosure Text block IFRS S1.35 b Disclosure IFRS S1.40 b Disclosure IFRS S1.40 c Disclosure IFRS S2.16 b Disclosure IFRS S2.21 c Disclosure Metric Code(s) S1.35.b.1 Commentary Metric Code(s) S2.16.b.1 Commentary 200000, 210000 (c) provide quantitative information about the combined financial effects of that climate-related risk or opportunity with other climate-related risks or opportunities and other factors unless the entity determines that quantitative information about the combined financial effects would not be useful. How financial performance and cash flows expected to change over short, medium and long term given strategy to manage risks and opportunities [text block] Disclosure Text block IFRS S1.35 d Disclosure IFRS S1.40 b Disclosure IFRS S1.40 c Disclosure IFRS S2.16 d Disclosure IFRS S2.21 b Disclosure Metric Code(s) S1.35.d.1 Commentary Metric Code(s) S2.16.d.1 Commentary 200000, 210000 How financial position expected to change over short, medium and long term, given strategy to manage risks and opportunities [text block] Disclosure Text block IFRS S1.35 c Disclosure IFRS S1.40 b Disclosure IFRS S1.40 c Disclosure IFRS S2.16 c Disclosure IFRS S2.21 b Disclosure Metric Code(s) S1.35.c.1 Commentary Metric Code(s) S2.16.c.1 Commentary 200000, 210000 How risks and opportunities have affected financial position, financial performance and cash flows for reporting period [text block] Disclosure Text block IFRS S1.35 a Disclosure IFRS S1.40 b Disclosure IFRS S1.40 c Disclosure IFRS S2.16 a Disclosure IFRS S2.21 b Disclosure Metric Code(s) S1.35.a.1 Commentary Metric Code(s) S2.16.a.2 Commentary 200000, 210000 Risks and opportunities with significant risk of material adjustment within next annual reporting period to carrying amounts of assets and liabilities [text block] Disclosure Text block IFRS S1.35 b Disclosure IFRS S1.40 b Disclosure IFRS S1.40 c Disclosure IFRS S2.16 b Disclosure IFRS S2.21 b Disclosure Metric Code(s) S1.35.b.1 Commentary Metric Code(s) S2.16.b.1 Commentary 200000, 210000 Climate resilience 22 An entity shall disclose information that enables users of general purpose financial reports to understand the resilience of the entity’s strategy and business model to climate-related changes, developments and uncertainties, taking into consideration the entity’s identified climate-related risks and opportunities. The entity shall use climate-related scenario analysis to assess its climate resilience using an approach that is commensurate with the entity’s circumstances (see paragraphs B1⁠–⁠B18) . In providing quantitative information, the entity may disclose a single amount or a range. Specifically, the entity shall disclose: (a) the entity’s assessment of its climate resilience as at the reporting date, which shall enable users of general purpose financial reports to understand: (i) the implications, if any, of the entity’s assessment for its strategy and business model, including how the entity would need to respond to the effects identified in the climate-related scenario analysis; (ii) the significant areas of uncertainty considered in the entity’s assessment of its climate resilience; (iii) the entity’s capacity to adjust or adapt its strategy and business model to climate change over the short, medium and long term, including; (1) the availability of, and flexibility in, the entity’s existing financial resources to respond to the effects identified in the climate-related scenario analysis, including to address climate-related risks and to take advantage of climate-related opportunities; (2) the entity’s ability to redeploy, repurpose, upgrade or decommission existing assets; and (3) the effect of the entity’s current and planned investments in climate-related mitigation, adaptation and opportunities for climate resilience; and Assessment of climate resilience [text block] Disclosure Text block Metric Code(s) S2.22.a.1 Commentary 210000 (b) how and when the climate-related scenario analysis was carried out, including: (i) information about the inputs the entity used, including: (1) which climate-related scenarios the entity used for the analysis and the sources of those scenarios; (2) whether the analysis included a diverse range of climate-related scenarios; Climate-related scenario analysis included diverse range of climate-related scenarios Disclosure True/False Metric Code(s) S2.22.b.i.2.1 Commentary 210000 (3) whether the climate-related scenarios used for the analysis are associated with climate-related transition risks or climate-related physical risks; Climate-related scenarios used are associated with climate-related transition risks or climate-related physical risks Disclosure Multiple Choice Metric Code(s) S2.22.b.i.3.1 Commentary 210000 (4) whether the entity used, among its scenarios, a climate-related scenario aligned with the latest international agreement on climate change ; Climate-related scenario used that is aligned with latest international agreement on climate change Disclosure True/False Metric Code(s) S2.22.b.i.4.1 Commentary 210000 (5) why the entity decided that its chosen climate-related scenarios are relevant to assessing its resilience to climate-related changes, developments or uncertainties; (6) the time horizons the entity used in the analysis; and (7) what scope of operations the entity used in the analysis (for example, the operating locations and business units used in the analysis); (ii) the key assumptions the entity made in the analysis, including assumptions about: (1) climate-related policies in the jurisdictions in which the entity operates; (2) macroeconomic trends; (3) national- or regional-level variables (for example, local weather patterns, demographics, land use, infrastructure and availability of natural resources); (4) energy usage and mix; and (5) developments in technology; and (iii) the reporting period in which the climate-related scenario analysis was carried out (see paragraph B18 ). End of reporting period in which climate-related scenario analysis was carried out Reference Date Metric Code(s) S2.22.b.iii.2 Commentary 210000 Start of reporting period in which climate-related scenario analysis was carried out Reference Date Metric Code(s) S2.22.b.iii.1 Commentary 210000 How and when climate-related scenario analysis was carried out [text block] Disclosure Text block Metric Code(s) S2.22.b.1 Commentary 210000 Climate resilience [table] Reference Table 210000 Risks and opportunities [axis] Reference Axis IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 Risks and opportunities [domain] Reference Domain IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.25 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 23 In preparing disclosures to meet the requirements in paragraphs 13⁠–⁠22 , an entity shall refer to and consider the applicability of cross-industry metric categories, as described in paragraph 29 , and industry-based metrics associated with disclosure topics defined in the Industry-based Guidance on Implementing IFRS S2 as described in paragraph 32 . Risk management 24 The objective of climate-related financial disclosures on risk management is to enable users of general purpose financial reports to understand an entity’s processes to identify, assess, prioritise and monitor climate-related risks and opportunities, including whether and how those processes are integrated into and inform the entity’s overall risk management process. Other disclosures about risk management [text block] Disclosure Text block IFRS S1.43 Disclosure Metric Code(s) S1.43.1 Commentary Metric Code(s) S2.24.1 Commentary 200000, 210000 25 To achieve this objective, an entity shall disclose information about: (a) the processes and related policies the entity uses to identify, assess, prioritise and monitor climate-related risks, including information about: (i) the inputs and parameters the entity uses (for example, information about data sources and the scope of operations covered in the processes); Inputs and parameters used in process to identify, prioritise and monitor risks [text block] Reference Text block IFRS S1.44 a (i) Reference Metric Code(s) S1.44.a.i.2 Commentary Metric Code(s) S2.25.a.i.2 Commentary 200000, 210000 (ii) whether and how the entity uses climate-related scenario analysis to inform its identification of climate-related risks; Entity uses climate-related scenario analysis to inform identification of climate-related risks Disclosure True/False Metric Code(s) S2.25.a.ii.1 Commentary 210000 Whether and how scenario analysis used to inform identification of risks [text block] Disclosure Text block IFRS S1.44 a (ii) Disclosure Metric Code(s) S1.44.a.ii.1 Commentary Metric Code(s) S2.25.a.ii.1 Commentary 200000, 210000 (iii) how the entity assesses the nature, likelihood and magnitude of the effects of those risks (for example, whether the entity considers qualitative factors, quantitative thresholds or other criteria); How nature, likelihood and magnitude of effects of risks are assessed [text block] Reference Text block IFRS S1.44 a (iii) Reference Metric Code(s) S1.44.a.iii.2 Commentary Metric Code(s) S2.25.a.iii.2 Commentary 200000, 210000 (iv) whether and how the entity prioritises climate-related risks relative to other types of risk; Climate-related risks have been prioritised relative to other types of risk Reference True/False Metric Code(s) S2.25.a.iv.2 Commentary 210000 Whether and how sustainability-related risks have been prioritised relative to other types of risk [text block] Reference Text block IFRS S1.44 a (iv) Reference Metric Code(s) S1.44.a.iv.1 Commentary Metric Code(s) S2.25.a.iv.1 Commentary 200000, 210000 (v) how the entity monitors climate-related risks; and (vi) whether and how the entity has changed the processes it uses compared with the previous reporting period; Entity changed processes to identify, assess, prioritise and monitor risks compared with previous reporting period Disclosure True/False IFRS S1.44 a (vi) Disclosure Metric Code(s) S1.44.a.vi.2 Commentary Metric Code(s) S2.25.a.vi.2 Commentary 200000, 210000 Whether and how processes to identify, assess, prioritise and monitor risks for risk-management purposes changed compared with previous reporting period [text block] Disclosure Text block IFRS S1.44 a (vi) Disclosure Metric Code(s) S1.44.a.vi.1 Commentary Metric Code(s) S2.25.a.vi.1 Commentary 200000, 210000 Processes and related policies to identify, assess, prioritise and monitor risks [text block] Disclosure Text block IFRS S1.44 a Disclosure Metric Code(s) S1.44.a.1 Commentary Metric Code(s) S2.25.a.1 Commentary 200000, 210000 (b) the processes the entity uses to identify, assess, prioritise and monitor climate-related opportunities, including information about whether and how the entity uses climate-related scenario analysis to inform its identification of climate-related opportunities; and Entity uses climate-related scenario analysis to inform identification of climate-related opportunities Disclosure True/False Metric Code(s) S2.25.b.3 Commentary 210000 Processes used to identify, assess, prioritise and monitor opportunities [text block] Disclosure Text block IFRS S1.44 b Disclosure Metric Code(s) S1.44.b.1 Commentary Metric Code(s) S2.25.b.1 Commentary 200000, 210000 Whether and how climate-related scenario analysis used to inform identification of climate-related opportunities [text block] Disclosure Text block Metric Code(s) S2.25.b.2 Commentary 210000 (c) the extent to which, and how, the processes for identifying, assessing, prioritising and monitoring climate-related risks and opportunities are integrated into and inform the entity’s overall risk management process. Extent to which and how processes for identifying, assessing, prioritising and monitoring risks and opportunities are integrated into or inform overall risk management process [text block] Disclosure Text block IFRS S1.44 c Disclosure Metric Code(s) S1.44.c.1 Commentary Metric Code(s) S2.25.c.3 Commentary 200000, 210000 Risk management of climate-related risks and opportunities [table] Reference Table 210000 Risks and opportunities [axis] Reference Axis IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 Risks and opportunities [domain] Reference Domain IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.27 Reference IFRS S2.6 Reference 200000, 210000, 990000 26 In preparing disclosures to fulfil the requirements in paragraph 25 , an entity shall avoid unnecessary duplication in accordance with IFRS S1 (see paragraph B42(b) of IFRS S1 ). For example, although an entity shall provide the information required by paragraph 25, if oversight of sustainability-related risks and opportunities is managed on an integrated basis, the entity would avoid duplication by providing integrated risk management disclosures instead of separate disclosures for each sustainability-related risk and opportunity. Climate topic [member] Reference Member IFRS S1.30 a Reference IFRS S2.10 a Reference IFRS S2.7 Reference 995000 Sustainability topics [domain] Reference Domain IFRS S1.30 a Reference IFRS S2.10 a Reference IFRS S2.7 Reference 995000 Topic(s) covered by integrated risk management disclosure Reference Multiple Choice Metric Code(s) S2.26.1 Commentary 210000 Metrics and targets 27 The objective of climate-related financial disclosures on metrics and targets is to enable users of general purpose financial reports to understand an entity’s performance in relation to its climate-related risks and opportunities, including progress towards any climate-related targets it has set, and any targets it is required to meet by law or regulation. Metrics for risks and opportunities [table] Reference Table IFRS S1.46 Reference 200000, 210000 Risks and opportunities [axis] Reference Axis IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.6 Reference 200000, 210000, 990000 Risks and opportunities [domain] Reference Domain IFRS S1.27 Reference IFRS S1.30 a Reference IFRS S1.32 Reference IFRS S1.33 Reference IFRS S1.35 Reference IFRS S1.41 Reference IFRS S1.46 Reference IFRS S2.10 Reference IFRS S2.13 Reference IFRS S2.14 Reference IFRS S2.16 a Reference IFRS S2.16 b Reference IFRS S2.16 c Reference IFRS S2.16 d Reference IFRS S2.22 Reference IFRS S2.25 Reference IFRS S2.6 Reference 200000, 210000, 990000 Metric(s) related to risks and opportunities Disclosure Multiple Choice IFRS S1.46 Disclosure Metric Code(s) S1.46.1 Commentary Metric Code(s) S2.27.1 Commentary 200000, 210000 28 To achieve this objective, an entity shall disclose: (a) information relevant to the cross-industry metric categories (see paragraphs 29⁠–⁠31 ); (b) industry-based metrics that are associated with particular business models, activities or other common features that characterise participation in an industry (see paragraph 32 ); and (c) targets set by the entity, and any targets it is required to meet by law or regulation, to mitigate or adapt to climate-related risks or take advantage of climate-related opportunities, including metrics used by the governance body or management to measure progress towards these targets (see paragraphs 33⁠–⁠37 ). Climate-related metrics 29 An entity shall disclose information relevant to the cross-industry metric categories of: (a) greenhouse gases —the entity shall: (i) disclose its absolute gross greenhouse gas emissions generated during the reporting period, expressed as metric tonnes of CO 2 equivalent (see paragraphs B19⁠–⁠B22 ), classified as: (1) Scope 1 greenhouse gas emissions ; Absolute gross Scope 1 GHG emissions Disclosure Emissions IFRS S2.IE18 Example IFRS S2IBG - EM-CM-110a.1 Example IFRS S2IBG - EM-CO-110a.1 Example IFRS S2IBG - EM-EP-110a.1 Example IFRS S2IBG - EM-EP-110a.2 Example IFRS S2IBG - EM-IS-110a.1 Example IFRS S2IBG - EM-MD-110a.1 Example IFRS S2IBG - EM-MM-110a.1 Example IFRS S2IBG - EM-RM-110a.1 Example IFRS S2IBG - FB-AG-110a.1 Example IFRS S2IBG - FB-FR-110b.1 Example IFRS S2IBG - FB-MP-110a.1 Example IFRS S2IBG - IF-EU-110a.1 Example IFRS S2IBG - IF-WM-110a.1 Example IFRS S2IBG - RR-PP-110a.1 Example IFRS S2IBG - RT-CH-110a.1 Example IFRS S2IBG - RT-CP-110a.1 Example IFRS S2IBG - TC-SC-110a.1 Example IFRS S2IBG - TR-AF-110a.1 Example IFRS S2IBG - TR-AL-110a.1 Example IFRS S2IBG - TR-CL-110a.1 Example IFRS S2IBG - TR-MT-110a.1 Example IFRS S2IBG - TR-RA-110a.1 Example IFRS S2IBG - TR-RO-110a.1 Example Metric Code(s) S2.29.a.i.1.1,S2.IE18.1 Commentary 210000, 219000, 810100, 810200, 810300, 810400, 810500, 810600, 810700, 820100, 820300, 820400, 830100, 830700, 835400, 840200, 840300, 850400, 855100, 855200, 855600, 855700, 855800, 855900, 995000 (2) Scope 2 greenhouse gas emissions ; and Absolute gross location-based Scope 2 GHG emissions Disclosure Emissions IFRS S2.29 a (v) Disclosure Metric Code(s) S2.29.a.i.2.1 Commentary 210000, 995000 (3) Scope 3 greenhouse gas emissions ; Absolute gross Scope 3 GHG emissions Disclosure Emissions IFRS S2.IE12 Example IFRS S2.IE24 Example Metric Code(s) S2.29.a.i.3.1,S2.IE12.1,S2.IE24.1 Commentary 210000, 219000, 995000 (ii) measure its greenhouse gas emissions in accordance with the Greenhouse Gas Protocol: A Corporate Accounting and Reporting Standard (2004) unless required by a jurisdictional authority or an exchange on which the entity is listed to use a different method for measuring its greenhouse gas emissions (see paragraphs B23⁠–⁠B25 ); (iii) disclose the approach it uses to measure its greenhouse gas emissions (see paragraphs B26⁠–⁠B29 ) including: (1) the measurement approach, inputs and assumptions the entity uses to measure its greenhouse gas emissions; Measurement approach used in calculating GHG emissions if measured in accordance with GHG Protocol Disclosure List IFRS S2.B27 a Disclosure Metric Code(s) S2.29.a.iii.1.1, S2.B27.a.1 Commentary 210000 (2) the reason why the entity has chosen the measurement approach, inputs and assumptions it uses to measure its greenhouse gas emissions; and Reason why measurement approach, inputs and assumptions used to measure GHG emissions chosen [text block] Disclosure Text block IFRS S2.B27 b Disclosure IFRS S2.B28 b Disclosure Metric Code(s) S2.29.a.iii.2.1,S2.B27.b.1,S2.B28.b.1 Commentary 210000 (3) any changes the entity made to the measurement approach, inputs and assumptions during the reporting period and the reasons for those changes; Changes made to measurement approach, inputs and assumptions used to measure GHG emissions Disclosure True/False Metric Code(s) S2.29.a.iii.3.2 Commentary 210000 Changes to measurement approach, inputs and assumptions used to measure GHG emissions and reasons for changes [text block] Disclosure Text block Metric Code(s) S2.29.a.iii.3.1 Commentary 210000 Approach used to measure GHG emissions [text block] Disclosure Text block Metric Code(s) S2.29.a.iii.1 Commentary 210000 (iv) for Scope 1 and Scope 2 greenhouse gas emissions disclosed in accordance with paragraph 29(a)(i)(1)⁠–⁠(2), disaggregate emissions between: (1) the consolidated accounting group (for example, for an entity applying IFRS Accounting Standards, this group would comprise the parent and its consolidated subsidiaries); and Consolidated accounting group [member] Reference Member 210000 (2) other investees excluded from paragraph 29(a)(iv)(1) (for example, for an entity applying IFRS Accounting Standards, these investees would include associates, joint ventures and unconsolidated subsidiaries); Other investees excluded from consolidated accounting group [member] Reference Member 210000 GHG emissions disclosure basis [axis] Reference Axis 210000, 990000 GHG emissions disclosure basis [domain] Reference Domain 210000, 990000 (v) for Scope 2 greenhouse gas emissions disclosed in accordance with paragraph 29(a)(i)(2), disclose its location-based Scope 2 greenhouse gas emissions, and provide information about any contractual instruments that is necessary to inform users’ understanding of the entity’s Scope 2 greenhouse gas emissions (see paragraphs B30⁠–⁠B31 ); and Absolute gross location-based Scope 2 GHG emissions Disclosure Emissions IFRS S2.29 a (i) 2 Disclosure Metric Code(s) S2.29.a.i.2.1 Commentary 210000, 995000 Any contractual instruments that inform understanding of Scope 2 GHG emissions [text block] Disclosure Text block Metric Code(s) S2.29.a.v.1 Commentary 210000 (vi) for Scope 3 greenhouse gas emissions disclosed in accordance with paragraph 29(a)(i)(3), and with reference to paragraphs B32⁠–⁠B57 , disclose: (1) the categories included within the entity’s measure of Scope 3 greenhouse gas emissions, in accordance with the Scope 3 categories described in the Greenhouse Gas Protocol Corporate Value Chain (Scope 3) Accounting and Reporting Standard (2011); and Categories included within measure of Scope 3 GHG emissions Disclosure Multiple Choice Metric Code(s) S2.29.a.vi.1.2 Commentary 210000 Details of inclusion within Scope 3 GHG emissions [text block] Disclosure Text block Metric Code(s) S2.29.a.vi.1.1 Commentary 210000 (2) additional information about the entity’s Category 15 greenhouse gas emissions or those associated with its investments ( financed emissions ), if the entity’s activities include asset management, commercial banking or insurance (see paragraphs B58⁠–⁠B63 ); Scope 1 and 2 GHG emissions [table] Reference Table 210000 (b) climate-related transition risks—the amount and percentage of assets or business activities vulnerable to climate-related transition risks; Amount and percentage of assets or business activities vulnerable to climate-related transition risks [text block] Disclosure Text block Metric Code(s) S2.29.b.1 Commentary 210000 (c) climate-related physical risks—the amount and percentage of assets or business activities vulnerable to climate-related physical risks; Amount and percentage of assets or business activities vulnerable to climate-related physical risks [text block] Disclosure Text block Metric Code(s) S2.29.c.1 Commentary 210000 (d) climate-related opportunities—the amount and percentage of assets or business activities aligned with climate-related opportunities; Amount and percentage of assets or business activities aligned with climate-related opportunities [text block] Disclosure Text block Metric Code(s) S2.29.d.1 Commentary 210000 (e) capital deployment—the amount of capital expenditure, financing or investment deployed towards climate-related risks and opportunities; Amount of capital expenditure, financing or investment deployed towards climate-related risks and opportunities [text block] Disclosure Text block Metric Code(s) S2.29.e.1 Commentary 210000 (f) internal carbon prices —the entity shall disclose: (i) an explanation of whether and how the entity is applying a carbon price in decision-making (for example, investment decisions, transfer pricing and scenario analysis); and Entity applies carbon price in decision-making Disclosure True/False Metric Code(s) S2.29.f.i.2 Commentary 210000 Explanation of whether and how carbon price is applied in decision-making [text block] Disclosure Text block Metric Code(s) S2.29.f.i.1 Commentary 210000 (ii) the price for each metric tonne of greenhouse gas emissions the entity uses to assess the costs of its greenhouse gas emissions; Price for each metric tonne of GHG emissions used to assess costs of GHG emissions Disclosure Monetary Duration Metric Code(s) S2.29.f.ii.1 Commentary 210000, 995000 (g) remuneration—the entity shall disclose: (i) a description of whether and how climate-related considerations are factored into executive remuneration (see also paragraph 6(a)(v) ); and Climate-related performance metrics are included in remuneration policies Disclosure True/False IFRS S2.6 a (v) Disclosure Metric Code(s) S2.29.g.i.2 Commentary Metric Code(s) S2.6.a.v.3 Commentary 210000 Whether and how related performance metrics are included in remuneration policies [text block] Disclosure Text block IFRS S1.27 a (v) Disclosure IFRS S2.6 a (v) Disclosure Metric Code(s) S1.27.a.v.2 Commentary Metric Code(s) S2.29.g.i.1 Commentary Metric Code(s) S2.6.a.v.2 Commentary 200000, 210000 (ii) the percentage of executive management remuneration recognised in the current period that is linked to climate-related considerations. Percentage of executive management remuneration recognised in the current period linked to climate-related considerations Disclosure Percent Metric Code(s) S2.29.g.ii.1 Commentary 210000, 995000 30 In preparing disclosures to meet the requirements in paragraph 29(b)⁠–⁠(d) , an entity shall use all reasonable and supportable information that is available to the entity at the reporting date without undue cost or effort. 31 In preparing disclosures to meet the requirements in paragraph 29(b)⁠–⁠(g) , an entity shall refer to paragraphs B64⁠–⁠B65 . 32 An entity shall disclose industry-based metrics that are associated with one or more particular business models, activities or other common features that characterise participation in an industry. In determining the industry-based metrics that the entity discloses, the entity shall refer to and consider the applicability of the industry-based metrics associated with disclosure topics described in the Industry-based Guidance on Implementing IFRS S2 . Climate-related targets 33 An entity shall disclose the quantitative and qualitative climate-related targets it has set to monitor progress towards achieving its strategic goals, and any targets it is required to meet by law or regulation, including any greenhouse gas emissions targets. For each target, the entity shall disclose: (a) the metric used to set the target (see paragraphs B66⁠–⁠B67 ); Metric used to set target Disclosure List IFRS S1.51 a Disclosure Metric Code(s) S1.51.a.2 Commentary Metric Code(s) S2.33.a.2 Commentary 200000, 210000 Metric used to set target and to monitor progress [text block] Disclosure Text block IFRS S1.51 a Disclosure Metric Code(s) S1.51.a.1 Commentary Metric Code(s) S2.33.a.1 Commentary 200000, 210000 (b) the objective of the target (for example, mitigation, adaptation or conformance with science-based initiatives); Objective of climate-related target [text block] Disclosure Text block Metric Code(s) S2.33.b.1 Commentary 210000 (c) the part of the entity to which the target applies (for example, whether the target applies to the entity in its entirety or only a part of the entity, such as a specific business unit or specific geographical region); Part of entity to which climate-related target applies Disclosure Text Metric Code(s) S2.33.c.1 Commentary 210000 (d) the period over which the target applies; Period over which target applies Disclosure Text IFRS S1.51 c Disclosure Metric Code(s) S1.51.c.1 Commentary Metric Code(s) S2.33.d.1 Commentary 200000, 210000 (e) the base period from which progress is measured; Base period from which progress for target is measured Disclosure Year IFRS S1.51 d Disclosure Metric Code(s) S1.51.d.1 Commentary Metric Code(s) S2.33.e.1 Commentary 200000, 210000 (f) any milestones and interim targets; Milestones and interim targets [text block] Disclosure Text block IFRS S1.51 e Disclosure Metric Code(s) S1.51.e.1 Commentary Metric Code(s) S2.33.f.1 Commentary 200000, 210000 (g) if the target is quantitative, whether it is an absolute target or an intensity target; and Absolute target [member] Reference Member IFRS S2.B66 Reference 995000 Climate-related target, absolute or intensity [domain] Reference Domain 995000 Intensity target [member] Reference Member IFRS S2.B66 Reference 995000 Climate-related target is absolute target or intensity target Disclosure List Metric Code(s) S2.33.g.1 Commentary 210000 (h) how the latest international agreement on climate change, including jurisdictional commitments that arise from that agreement, has informed the target. How climate-related target informed by latest international agreement on climate change and jurisdictional commitments arising from it [text block] Disclosure Text block Metric Code(s) S2.33.h.1 Commentary 210000 Climate-related targets [table] Reference Table 210000 Targets [axis] Reference Axis IFRS S1.51 Reference IFRS S2.36 e Reference 200000, 210000, 990000 Targets [domain] Reference Domain IFRS S1.51 Reference IFRS S2.36 e Reference 200000, 210000, 990000 Description of specific quantitative or qualitative target set or required to meet [text block] Disclosure Text block IFRS S1.51 b Disclosure Metric Code(s) S1.51.b.1 Commentary Metric Code(s) S2.33.1 Commentary 200000, 210000 Target value, numeric Disclosure Decimal IFRS S1.51 b Disclosure Metric Code(s) S1.51.b.3 Commentary Metric Code(s) S2.33.3 Commentary 200000, 210000 Target value, percentage Disclosure Percent IFRS S1.51 b Disclosure Metric Code(s) S1.51.b.4 Commentary Metric Code(s) S2.33.4 Commentary 200000, 210000 Target value, text Disclosure Text IFRS S1.51 b Disclosure Metric Code(s) S1.51.b.2 Commentary Metric Code(s) S2.33.2 Commentary 200000, 210000 34 An entity shall disclose information about its approach to setting and reviewing each target, and how it monitors progress against each target, including: (a) whether the target and the methodology for setting the target has been validated by a third party; Climate-related target and methodology validated by third party Disclosure True/False Metric Code(s) S2.34.a.1 Commentary 210000 (b) the entity’s processes for reviewing the target; (c) the metrics used to monitor progress towards reaching the target; and Metric(s) used to monitor progress Disclosure Multiple Choice IFRS S1.51 a Disclosure Metric Code(s) S1.51.a.3 Commentary Metric Code(s) S2.34.c.1 Commentary 200000, 210000 (d) any revisions to the target and an explanation for those revisions. Revisions to target [text block] Disclosure Text block IFRS S1.51 g Disclosure Metric Code(s) S1.51.g.1 Commentary Metric Code(s) S2.34.d.1 Commentary 200000, 210000 Target has been revised Disclosure True/False IFRS S1.51 g Disclosure Metric Code(s) S1.51.g.2 Commentary Metric Code(s) S2.34.d.1 Commentary 200000, 210000 Approach to setting and reviewing target, and monitoring progress [text block] Disclosure Text block Metric Code(s) S2.34.1 Commentary 210000 35 An entity shall disclose information about its performance against each climate-related target and an analysis of trends or changes in the entity’s performance. Performance against target and analysis of trends or changes in performance [text block] Disclosure Text block IFRS S1.51 f Disclosure Metric Code(s) S1.51.f.1 Commentary Metric Code(s) S2.35.1 Commentary 200000, 210000 36 For each greenhouse gas emissions target disclosed in accordance with paragraphs 33⁠–⁠35 , an entity shall disclose: (a) which greenhouse gases are covered by the target. GHG emission target details [text block] Disclosure Text block IFRS S2.36 b Disclosure IFRS S2.36 c Disclosure IFRS S2.36 d Disclosure Metric Code(s) S2.36.a.1 Commentary 210000 Greenhouse gases covered by target Disclosure Multiple Choice Metric Code(s) S2.36.a.2 Commentary 210000 (b) whether Scope 1, Scope 2 or Scope 3 greenhouse gas emissions are covered by the target. GHG emissions scope [domain] Reference Domain 995000 Emissions scopes covered by target Disclosure Multiple Choice Metric Code(s) S2.36.b.1 Commentary 210000 GHG emission target details [text block] Disclosure Text block IFRS S2.36 a Disclosure IFRS S2.36 c Disclosure IFRS S2.36 d Disclosure Metric Code(s) S2.36.a.1 Commentary 210000 (c) whether the target is a gross greenhouse gas emissions target or net greenhouse gas emissions target. If the entity discloses a net greenhouse gas emissions target, the entity is also required to separately disclose its associated gross greenhouse gas emissions target (see paragraphs B68⁠–⁠B69 ). GHG emissions, gross or net [domain] Reference Domain 995000 Gross GHG emissions [member] Reference Member 995000 Net GHG emissions [member] Reference Member 995000 GHG emission target details [text block] Disclosure Text block IFRS S2.36 a Disclosure IFRS S2.36 b Disclosure IFRS S2.36 d Disclosure Metric Code(s) S2.36.a.1 Commentary 210000 Gross or net GHG emissions target Disclosure List Metric Code(s) S2.36.c.1 Commentary 210000 (d) whether the target was derived using a sectoral decarbonisation approach. Climate-related target was derived using sectoral decarbonisation approach Disclosure True/False Metric Code(s) S2.36.d.1 Commentary 210000 GHG emission target details [text block] Disclosure Text block IFRS S2.36 a Disclosure IFRS S2.36 b Disclosure IFRS S2.36 c Disclosure Metric Code(s) S2.36.a.1 Commentary 210000 (e) the entity’s planned use of carbon credits to offset greenhouse gas emissions to achieve any net greenhouse gas emissions target. In explaining its planned use of carbon credits the entity shall disclose information including, and with reference to paragraphs B70⁠–⁠B71 : (i) the extent to which, and how, achieving any net greenhouse gas emissions target relies on the use of carbon credits; Extent to which, and how, achieving net greenhouse emissions target relies on use of carbon credits [text block] Reference Text block Metric Code(s) S2.36.e.i.1 Commentary 210000 (ii) which third-party scheme(s) will verify or certify the carbon credits; Verification or certification scheme(s) to which carbon credit will be subject [text block] Disclosure Text block Metric Code(s) S2.36.e.ii.1 Commentary 210000 (iii) the type of carbon credit, including whether the underlying offset will be nature-based or based on technological carbon removals, and whether the underlying offset is achieved through carbon reduction or removal; and Carbon reduction [member] Reference Member 995000 Carbon reduction or removal [domain] Reference Domain 995000 Carbon removal [member] Reference Member 995000 Carbon removal, basis [domain] Reference Domain 995000 Nature-based carbon removals [member] Reference Member 995000 Technology-based carbon removals [member] Reference Member 995000 Carbon credit underlying offset is through carbon reduction or removal Disclosure List Metric Code(s) S2.36.e.iii.3 Commentary 210000 Carbon credit underlying offset will be nature-based or based on technological carbon removals Disclosure List Metric Code(s) S2.36.e.iii.2 Commentary 210000 Type of carbon credit [text block] Disclosure Text block Metric Code(s) S2.36.e.iii.1 Commentary 210000 (iv) any other factors necessary for users of general purpose financial reports to understand the credibility and integrity of the carbon credits the entity plans to use (for example, assumptions regarding the permanence of the carbon offset). Carbon credit [axis] Reference Axis 210000, 990000 Carbon credit [domain] Reference Domain 210000, 990000 Planned use of carbon credits [table] Reference Table 210000 Targets [axis] Reference Axis IFRS S1.51 Reference IFRS S2.33 Reference 200000, 210000, 990000 Targets [domain] Reference Domain IFRS S1.51 Reference IFRS S2.33 Reference 200000, 210000, 990000 Planned use of carbon credits [text block] Disclosure Text block Metric Code(s) S2.36.e.1 Commentary 210000 37 In identifying and disclosing the metrics used to set and monitor progress towards reaching a target described in paragraphs 33⁠–⁠34 , an entity shall refer to and consider the applicability of cross-industry metrics (see paragraph 29 ) and industry-based metrics (see paragraph 32 ), including those described in an applicable IFRS Sustainability Disclosure Standard, or metrics that otherwise satisfy the requirements in IFRS S1. Appendices Appendix A Defined terms This appendix is an integral part of IFRS S2 and has the same authority as the other parts of the Standard. carbon credit An emissions unit that is issued by a carbon crediting programme and represents an emission reduction or removal of greenhouse gases . Carbon credits are uniquely serialised, issued, tracked and cancelled by means of an electronic registry. climate resilience The capacity of an entity to adjust to climate-related changes, developments or uncertainties. Climate resilience involves the capacity to manage climate-related risks and benefit from climate-related opportunities , including the ability to respond and adapt to climate-related transition risks and climate-related physical risks . An entity’s climate resilience includes both its strategic resilience and its operational resilience to climate-related changes, developments and uncertainties. climate-related physical risks Risks resulting from climate change that can be event-driven (acute physical risk) or from longer-term shifts in climatic patterns (chronic physical risk). Acute physical risks arise from weather-related events such as storms, floods, drought or heatwaves, which are increasing in severity and frequency. Chronic physical risks arise from longer-term shifts in climatic patterns including changes in precipitation and temperature which could lead to sea level rise, reduced water availability, biodiversity loss and changes in soil productivity. These risks could carry financial implications for an entity, such as costs resulting from direct damage to assets or indirect effects of supply-chain disruption. The entity’s financial performance could also be affected by changes in water availability, sourcing and quality; and extreme temperature changes affecting the entity’s premises, operations, supply chains, transportation needs and employee health and safety. climate-related risks and opportunities Climate-related risks refers to the potential negative effects of climate change on an entity. These risks are categorised as climate-related physical risks and climate-related transition risks . Climate-related opportunities refers to the potential positive effects arising from climate change for an entity. Efforts to mitigate and adapt to climate change can produce climate-related opportunities for an entity. climate-related transition plan An aspect of an entity’s overall strategy that lays out the entity’s targets, actions or resources for its transition towards a lower-carbon economy, including actions such as reducing its greenhouse gas emissions. climate-related transition risks Risks that arise from efforts to transition to a lower-carbon economy. Transition risks include policy, legal, technological, market and reputational risks",
+            "supports_option": "B",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我機械逐字比對確認",
+            "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html",
         "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures.html"
       ],
       "quality_flags": [
@@ -4985,7 +5113,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "BERS 共 8 級：1+ 級（近零碳建築）及 1–7 級；2023/07 起公有新建辦公類建築強制達 2 級以上、社會住宅達 1 級；2024/07 起擴及公眾使用建築；2026 年再擴大適用範圍。",
+      "explanation": "依低碳建築聯盟 BERS 淨零建築評估，等級分為近零碳建築等級加上一般 1～7 級，合計八個等級。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [],
       "difficulty": "medium",
@@ -5011,7 +5139,17 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "規劃了 1+（近零碳建築）以及 1～7級共八個等級的建築能效分級制度",
+            "supports_option": "D",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我機械逐字比對確認",
+            "url": "https://nzb.bers.tw/efficiency"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
         "https://www.abri.gov.tw/News_Content.aspx?n=745&s=323435",
@@ -5041,7 +5179,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "BIPV 將光電模組整合於建築外殼（屋頂、外牆、採光罩），可降低農地、漁塭等開發爭議，並提升自發自用比率，搭配 BERS 與綠建築標章推動近零碳建築。",
+      "explanation": "依建築研究所，地狹人稠地區推動建築整合太陽光電（BIPV）之主要動機在於解決土地設置成本、將光電整合於建築外觀。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -5067,9 +5205,20 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "在地狹人稠、土地價格昂貴的地區，有效的運用BIPV作為建材是解決土地設置成本過高，與整合發電設備於建物外觀的最佳解決方案",
+            "supports_option": "A",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我機械逐字比對確認",
+            "url": "https://www.abri.gov.tw/News_Content_Table.aspx?n=807&s=38628"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://www.abri.gov.tw/News_Content_Table.aspx?n=807&s=38628",
         "https://www.abri.gov.tw/"
       ],
       "quality_flags": []
@@ -5266,7 +5415,13 @@
             "to": "依金管會就上市櫃公司永續資訊外部確信所定之推動時程，我國上市櫃公司「溫室氣體盤查資訊外部確信」之預期級別演進，下列敘述何者最為合理？",
             "why": "題幹原本引「**路徑圖 2.0**」。金管會的官方文件是「上市櫃公司永續發展路徑圖」（111/3/3）與「上市櫃公司永續發展行動方案（2023年）」（112/3/28）—— **查無名為「2.0」者**。⚠️ **但「我抓不到」不等於「它不存在」** —— 所以我**沒有**宣告它是捏造的，而是把這個**無法查證的引用**從題幹拿掉，改成不依賴特定文件名稱的敘述。答案（先有限確信、長期朝合理確信）不受影響。"
           }
-        ]
+        ],
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "外部確信級別循序演進（有限確信→合理確信）符合金管會永續發展路徑圖與 ISAE 3000/3410；cgc.twse 頁為 JS 動態、時程表無法乾淨抽取逐字，誠實標記。",
+          "method": "第十六輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
+        }
       },
       "sources": [
         "https://www.iaasb.org/publications/glance-international-standard-assurance-engagements-isae-3410-assurance-engagements-greenhouse-gas"
@@ -6423,7 +6578,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "CORSIA 三階段為：先導階段 2021–2023（自願）、第一階段 2024–2026（自願加入國家具強制力）、強制階段 2027–2035（適用所有 ICAO 成員國，但 LDC、SIDS、LLDC 與航空活動量極小者豁免）。第一階段以 2019 年排放之 85% 作為基準線，超出部分須以 CORSIA 合格排放單位（EEUs）抵換。",
+      "explanation": "依 ICAO，CORSIA 分試行階段（2021–2023）、第一階段（2024–2026）與第二階段（2027–2035）；第一階段自 2024 年起。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "CORSIA",
@@ -6453,9 +6608,20 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "第八輪：把該頁抓回來讀了 —— icao.int 的 CORSIA 首頁抓回 11,344 字（可讀），但「first phase」「2027」「mandatory」**各 0 次**—— 那是一頁導覽，不是內容；而它連到的 CORSIA_FAQs PDF **抓不到**。 ⚠️ **這不是「答案錯了」，是「這個引用證明不了這個答案」。**"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "The CORSIA has three phases: a pilot phase (2021 – 2023); a first phase (2024 – 2026); and a second phase (2027 – 2035). The difference between the phases is that the participation of States in the CORSIA offsetting in the pilot phase and in the first phase is voluntary, whereas the second phase is determined using criteria that are based on the 2018 RTK data and voluntary participation",
+            "supports_option": "B",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
+            "url": "https://www.icao.int/sites/default/files/environmental-protection/CORSIA/CORSIA_FAQs_Apr2024.pdf"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://www.icao.int/sites/default/files/environmental-protection/CORSIA/CORSIA_FAQs_Apr2024.pdf",
         "https://www.icao.int/environmental-protection/CORSIA/Pages/default.aspx",
         "https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_FAQs_December_2024.pdf"
       ],
@@ -6689,7 +6855,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "COP29（2024/11）通過之 6.4 條 Removals 標準（CMA.6 通過監督機構於 2024/10 採用之 Standard for activities involving removals），要求專案須具備穩健監測、報告、核證與第三方核查機制；明確處理逆轉（reversal）風險、量化外洩（leakage）、評估永久性，並包含自然式（造林、再生、藍碳）與工程式（DAC、BECCS）等多元移除途徑。",
+      "explanation": "依巴黎協定第 6.4 條於 COP29 通過之標準，碳移除活動之要求包含監測、報告、移除之核算、額度期間、逆轉之處理與洩漏之避免。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "Paris Agreement",
@@ -6719,9 +6885,20 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "第八輪：把該頁抓回來讀了 —— cma2024_L18E.pdf 抓回 3,136 字（可讀），「reversal」「removal」「leakage」「monitoring」**各 0 次**。 ⚠️ **這不是「答案錯了」，是「這個引用證明不了這個答案」。**"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "recommendations on activities involving removals, including appropriate monitoring, reporting, accounting for removals and crediting periods, addressing reversals, avoidance of leakage, and avoidance of other negative environmental and social impacts",
+            "supports_option": "B",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
+            "url": "https://unfccc.int/sites/default/files/resource/A6.4-SBM014-A06.pdf"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://unfccc.int/sites/default/files/resource/A6.4-SBM014-A06.pdf",
         "https://unfccc.int/process-and-meetings/the-paris-agreement/article-64-mechanism/article-64-mechanism-rules-modalities-and-procedures",
         "https://unfccc.int/sites/default/files/resource/cma2024_L18E.pdf"
       ],
@@ -6749,7 +6926,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "依巴黎協定 6.2 條規則（CMA.3 17/CMA.3 與 COP29 修正），ITMOs 跨境移轉時須執行相應調整：轉出方於其 NDC 排放帳本「加回」轉出量，轉入方於其 NDC 排放帳本「扣除」轉入量，俾確保同筆減排量不被兩國同時用於 NDC，達避免重複計算之目的。",
+      "explanation": "相應調整由移轉方就首次移轉之 ITMOs 加計、使用方就其使用之 ITMOs 扣減，以避免重複計算。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "Article 6.2",
@@ -6779,9 +6956,20 @@
           "date": "2026-07-14",
           "verdict": "dead",
           "detail": "被引頁面已失效（含 Wayback 亦無存檔）"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "(a) Adding the quantity of ITMOs authorized and first transferred, for the calendar year in which the mitigation outcomes occurred pursuant to paragraph 7 above; (b) Subtracting the quantity of ITMOs used pursuant to paragraph 7 above for the calendar year in which the mitigation outcomes are used towards the implementation and achievement of the NDC",
+            "supports_option": "C",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
+            "url": "https://unfccc.int/sites/default/files/resource/cma3_auv_12a_PA_6.2.pdf"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://unfccc.int/sites/default/files/resource/cma3_auv_12a_PA_6.2.pdf",
         "https://unfccc.int/process-and-meetings/the-paris-agreement/cooperative-implementation/article-62",
         "https://unfccc.int/sites/default/files/resource/cma2021_10_add1_advance.pdf"
       ],
@@ -6909,6 +7097,12 @@
           "date": "2026-07-14",
           "verdict": "dead",
           "detail": "被引頁面已失效（含 Wayback 亦無存檔）"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "CDM 與巴黎協定第 6.4 條機制之差異：CDM 對 2020/12/31 後之減量登錄／簽發已不受理，並有條件過渡至 6.4 機制。代理於 unfccc.int CDM 過渡 FAQ 查得，惟該官方頁本輪對我方 fetcher 限流回空、無法即時重驗逐字，故誠實標記。",
+          "method": "第十六輪：代理蒐證；官方頁限流無法重抓。"
         }
       },
       "sources": [
@@ -6939,7 +7133,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "IFRS S2 §29 規定企業應依 GHG Protocol Corporate Accounting and Reporting Standard 衡量並揭露 Scope 1、Scope 2 及 Scope 3 GHG 排放，並採用最新一份 IPCC 評估報告（即 AR6）所公布之 100 年 GWP 值；如依管轄區規則必須採用其他方法者，亦須揭露差異。",
+      "explanation": "依 IFRS S2，企業應依溫室氣體盤查議定書（企業會計與報告準則）衡量其溫室氣體排放。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S2",
@@ -6969,9 +7163,20 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "measure its greenhouse gas emissions in accordance with the Greenhouse Gas Protocol: A Corporate Accounting and Reporting Standard (2004) unless the entity is required, in whole or in part, by a jurisdictional authority or an exchange on which it is listed to use a different method",
+            "supports_option": "B",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
+            "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html",
         "https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards-issb/english/2023/issued/part-a/issb-2023-a-ifrs-s2-climate-related-disclosures.pdf",
         "https://ghgprotocol.org/corporate-standard"
       ],
@@ -7228,7 +7433,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "Fund for Responding to Loss and Damage（FRLD）依 COP27/COP28 決議設立，主要服務對象為特別易受氣候變遷不利影響之發展中國家，含小島嶼國家（SIDS）、最低度開發國家（LDC）等，協助其因應氣候變遷造成之經濟與非經濟損失與損害（slow-onset 與極端事件）。其與調適、減緩基金為不同機制，亦與 NCQG 等氣候資金來源並行。",
+      "explanation": "依損失與損害基金治理文件，該基金之宗旨為協助特別易受氣候變遷不利影響之開發中國家。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "Loss and Damage",
@@ -7259,9 +7464,20 @@
           "date": "2026-07-14",
           "verdict": "dead",
           "detail": "被引頁面已失效（含 Wayback 亦無存檔）"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "The purpose of the Fund is to assist developing countries that are particularly vulnerable to the adverse effects of climate change in responding to economic and non-economic loss and damage associated with the adverse effects of climate change, including extreme weather events and slow onset events.",
+            "supports_option": "B",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
+            "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01E.pdf"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://unfccc.int/sites/default/files/resource/cma2023_16a01E.pdf",
         "https://unfccc.int/topics/adaptation-and-resilience/groups-committees/santiago-network/loss-and-damage-fund-board",
         "https://unfccc.int/sites/default/files/resource/cp2023_L1_advance.pdf"
       ],
@@ -8771,7 +8987,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "氣候相關資訊之揭露，依《公開發行公司年報應行記載事項準則》**第 10 條第一項第三款第五目**（附表二之二之三）辦理；而依 IFRS 永續揭露準則編製格式的新增條文是**第 10 條之一**。\n\n⚠️ 條號更正：原解析寫成「**§10-4**」—— **該準則根本沒有第 10-4 條**。",
+      "explanation": "依公開發行公司年報應行記載事項準則，符合一定條件之公司其永續相關財務資訊之編製及揭露，應依本會認可之國際財務報導準則永續揭露準則辦理；此為我國上市櫃公司氣候相關財務揭露之法源。",
       "subject": null,
       "topic_tags": [
         "金管會",
@@ -8815,9 +9031,20 @@
             "to": "金管會於 2023/08 公告、2024/08 修訂之「我國接軌 IFRS 永續揭露準則藍圖」明定上市櫃公司分階段適用 IFRS S1/S2，並由金管會修正《公開發行公司年報應行記載事項準則》§10-1 規範揭露格式",
             "why": "《公開發行公司年報應行記載事項準則》(G0400022) 全文中，「第 10-1 條」出現 1 次、「第 10-4 條」出現 **0 次** —— **§10-4 是捏造的條號**。 ⚠️ 這一題自己的**解析**早就標注過這個錯，**但選項沒改** —— 而選項才是使用者看到的「正解」。"
           }
-        ]
+        ],
+        "evidence": [
+          {
+            "quote": "符合第七條第二項一定條件之公司，其永續相關財務資訊之編製及揭露，應依下列各款及有關法令辦理，其未規定者，依本會認可之國際財務報導準則永續揭露準則",
+            "supports_option": "C",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我重抓機械逐字比對（代理原引文經改寫，改用頁面原文切片）",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0400022&flno=10-1"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0400022&flno=10-1",
         "https://www.fsc.gov.tw/ch/home.jsp?id=130&parentpath=0,2",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=36"
       ],
@@ -8847,7 +9074,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "依環境部 2024/10/07 公告碳費徵收費率，達成「行業別指定削減率」者適用優惠費率 A：每公噸 CO₂e NT$50；達成「技術標竿削減率」者適用優惠費率 B：每公噸 CO₂e NT$100；一般費率為 NT$300。優惠費率之申請依《自主減量計畫管理辦法》§11（6/30 前申請當年度生效；7/1 後申請次年度生效）。注意：本辦法 §8 為「事業依核定計畫執行；變更程序」之規定，非優惠費率條。",
+      "explanation": "依環境部碳費費率公告，符合「徵收對象溫室氣體減量指定目標」公告附表一行業別指定削減率者，適用優惠費率每公噸新臺幣 50 元。",
       "subject": null,
       "topic_tags": [
         "碳費",
@@ -8877,9 +9104,20 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "優惠費率A （符合「徵收對象溫室氣體減量指定目標」公告附表一行業別指定削減率規定）：新臺幣 50元/公噸 二氧化碳當量",
+            "supports_option": "B",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我重抓機械逐字比對（代理原引文經改寫，改用頁面原文切片）",
+            "url": "https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=11",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=5",
         "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
@@ -9275,7 +9513,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "《溫室氣體自願減量專案管理辦法》§8 規定，依專案規模分級提出之外加性分析至少包含「法規外加性」（financial regulatory additionality），並得自財務外加性、障礙分析、普遍性分析中擇一執行。法令已強制要求之減量行為不具「法規外加性」，依本條不得申請註冊為自願減量專案；同時 §11 進一步限制專案邊界不得包含氣候法 §28 應繳碳費排放源、§21 第一二批應盤查事業、§35 總量管制排放源等。",
+      "explanation": "依溫室氣體自願減量專案管理辦法，法令已強制實施之減量措施不具外加性，故其外加性論證不成立。",
       "subject": null,
       "topic_tags": [
         "自願減量",
@@ -9310,7 +9548,17 @@
           "date": "2026-07-14",
           "verdict": "unsupported",
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "依第四條檢具專案計畫書之外加性分析，應分析法規外加性，並得於財務外加性、障礙分析及普遍性分析中擇一執行",
+            "supports_option": "A",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我機械逐字比對確認",
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=8"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=8",
@@ -9340,7 +9588,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "IFRS S2（氣候相關揭露）的過渡救濟條款（transition reliefs）規範於 IFRS S2 附錄 C；首年（2024 起初次適用）允許僅揭露範疇 1+2、次年起須涵蓋範疇 3。具體段落以 IFRS Foundation 公布之最新版為準。",
+      "explanation": "依 IFRS S2，企業於首次適用本準則之年度報導期間，得免揭露比較期間資訊。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "ISSB",
@@ -9370,9 +9618,20 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "not required to disclose comparative information in the first annual reporting period in which it applies this Standard",
+            "supports_option": "C",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理引文為 reordered，我重切連續句並機械比對。",
+            "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html",
         "https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards-issb/english/2023/issued/part-a/issb-2023-a-ifrs-s2-climate-related-disclosures.pdf",
         "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/"
       ],
@@ -9433,6 +9692,12 @@
           "date": "2026-07-15",
           "verdict": "ALREADY_EXCLUDED",
           "note": "盲測指出選項 B 的「PAS 2060 於 2024 年撤回」年份有誤（BSI 的正式撤回日為 2025/11/30，自 2025/1/1 起不再受理新驗證）。**但本題的答案本來就已是 null（排除計分）**，因此不影響使用者。記在這裡，是為了讓下一輪知道「這題已經看過了」。"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT_BUT_NULLED",
+          "note": "現行 answer=null（已排除計分）。正解應為 B：ISO 14068-1:2023 於 2023 年 11 月發布、BSI 宣布撤回 PAS 2060（2025/1/1 生效），且 ISO 14068-1 承襲 PAS 2060 原則。惟 iso.org 回 403、BSI 撤回公告連結改導向首頁，無法釘單一連續一手句，維持 null 並誠實記錄。",
+          "method": "第十六輪：多源佐證，一手頁 403/改導向，無法機械逐字。"
         }
       },
       "sources": [
@@ -9537,7 +9802,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "SBTi Corporate Net-Zero Standard 之淨零目標一般原則：**最遲於 2050 年**達成，且須以絕對減量達成 90% 以上之減排，殘餘排放方得以永久性碳移除中和。航空、海運、電力等行業另有專屬部門路徑（SDA）。\n\n⚠️ **版本狀態（2026-07）**：2026 年適用 **v1.3.1**；**V2.0 已於 2026/06/11 發布**，2028/02/01 起強制。各範疇的具體減量比例請以 SBTi 官網現行版本為準 —— 本題只釘「最遲 2050 年、90% 以上絕對減量」這個各版皆一致的原則。",
+      "explanation": "依 SBTi 企業淨零標準，長期科學基礎目標對多數企業相當於跨範疇至少 90% 之絕對減量。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "SBTi",
@@ -9567,9 +9832,20 @@
           "date": "2026-07-14",
           "verdict": "no_quote",
           "detail": "已抓回被引頁面複驗：頁面主題相關，但**沒有任何一句話釘得住這個答案**"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "long-term science-based targets will be equivalent to at least a 90% absolute reduction across scopes for many companies, regardless of whether the cross-sector pathway or sector-specific pathways are used.",
+            "supports_option": "A",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
+            "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
         "https://sciencebasedtargets.org/standards/net-zero-standard",
         "https://sciencebasedtargets.org/corporate-net-zero-standard-v2"
       ],
@@ -9626,6 +9902,12 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "第八輪：這一題原本「有 URL，但從來沒有人打開來看過」。there100.org 的官方 RE100 會員名單抓回 166,020 字：其他三個選項 TSMC、Hon Hai（鴻海）、Delta（台達電）**都在名單上**；而「中油」「CPC」「CPC Corporation」「Chinese Petroleum」**四種寫法在名單上各出現 0 次**。這是在**權威的完整名單上窮舉**，不是「我找不到」—— 答案（中油不是會員）成立。"
+        },
+        "answer_verification": {
+          "date": "2026-07-15",
+          "verdict": "CORRECT",
+          "note": "中油非 RE100 台灣總部會員：RE100 官方名單有台積電、鴻海、台達電（Chinese Taipei），無中油。名單為動態 JS 頁、無法乾淨抽取逐字，誠實標記。",
+          "method": "第十六輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
         }
       },
       "sources": [
@@ -10024,7 +10306,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "IFRS S2 允許在提供量化資訊時，**以單一金額或一個區間（single amount or a range）呈現** ——該規定在**第 17 段**逐字：\"In providing quantitative information, an entity may disclose a single amount or a range.\"\n\n**第 16 段**只列出「應揭露哪些內容」，並沒有提到金額或區間。\n\n⚠️ 條號更正：原解析把「單一金額或區間」掛在 **§16**，應為 **§17**。",
+      "explanation": "依 IFRS S2，企業就氣候相關風險與機會對其財務狀況、財務績效與現金流量之當期及預期影響應予揭露。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S2",
@@ -10059,9 +10341,20 @@
           "date": "2026-07-14",
           "verdict": "fixed",
           "what": "原解析把「single amount or a range」掛在 IFRS S2 §16（實為 §17）。⚠️ 上一版只加了更正註腳、主文的 §16 沒改掉，導致自我矛盾。已整段重寫。"
-        }
+        },
+        "evidence": [
+          {
+            "quote": "An entity shall disclose information that enables users of general purpose financial reports to understand: (a) the effects of climate-related risks and opportunities on the entity’s financial position, financial performance and cash flows for the reporting period (current financial effects); and (b) the anticipated effects of climate-related risks and opportunities on the entity’s financial position, financial performance and cash flows over the short, medium and long term",
+            "supports_option": "A",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
+            "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html",
         "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/",
         "https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards-issb/english/2023/issued/part-a/issb-2023-a-ifrs-s2-climate-related-disclosures.pdf"
       ],
@@ -10091,7 +10384,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "關於**衡量不確定性**（measurement uncertainty）的揭露要求 —— 辨識高度不確定的金額、揭露不確定性的來源、揭露所用的假設／近似值／判斷 —— 規定在 **IFRS S1 本文第 77–82 段**（該節標題即為 \"Measurement uncertainty\"）。\n\n⚠️ 標準與位置雙重更正：原解析寫成「**IFRS S2 的 Appendix B**」——**標準錯了（S2→S1）、位置也錯了（附錄→本文）**。IFRS S2 的 Appendix B 談的是氣候韌性評估與溫室氣體衡量方法，與此無關。\n\n⚠️ **題幹本身也有同樣的問題**：它寫「依 IFRS S2 之 Appendix B 關於衡量不確定性…」——這個前提站不住。答案本身（其內容與 IFRS S1 §77–82 相符）不受影響。",
+      "explanation": "依 IFRS S1／S2，企業應辨識所揭露金額中受高度衡量不確定性影響者，並說明其不確定性之來源。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "IFRS S2",
@@ -10134,9 +10427,20 @@
             "to": "依 IFRS S1 第 77–83 段關於「衡量不確定性 (measurement uncertainty)」之揭露要求（IFRS S2 第 21(a) 段亦有對應規定），企業就氣候相關財務影響量化資訊應揭露下列哪一項？",
             "why": "題幹原本引「IFRS S2 之 Appendix B」，但 S2 的 Appendix B 是應用指引（氣候韌性／溫室氣體／跨產業指標類別／氣候目標），**沒有衡量不確定性條款**。 ⚠️ 而**這一題自己的解析**寫的就是「規定在 IFRS S1 本文第 77–82 段（該節標題即為 Measurement uncertainty）」—— **題幹與解析互相矛盾**，錯的是題幹。"
           }
-        ]
+        ],
+        "evidence": [
+          {
+            "quote": "identify the amounts that it has disclosed that are subject to a high level of measurement uncertainty; and (b) in relation to each amount identified in paragraph 78(a), disclose information about: (i) the sources of measurement uncertainty—for example, the dependence of the amount on the outcome of a future event, on a measurement technique or on the availability and quality of data from the entity’s value chain; and (ii) the assumptions, approximations and judgements the entity has made in measuring the amount.",
+            "supports_option": "D",
+            "verified_on": "2026-07-15",
+            "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
+            "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs1.html"
+          }
+        ],
+        "citation_fixed_on": "2026-07-15"
       },
       "sources": [
+        "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs1.html",
         "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/",
         "https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards-issb/english/2023/issued/part-a/issb-2023-a-ifrs-s2-climate-related-disclosures.pdf"
       ],
