@@ -10,12 +10,12 @@
     "total_questions": 773,
     "gist_questions": 545,
     "our_unique_questions": 228,
-    "corrections_applied": 38,
+    "corrections_applied": 40,
     "by_subject": {
       "考科1": 431,
       "考科2": 342
     },
-    "with_answer": 767,
+    "with_answer": 766,
     "last_updated": "2026-07-13T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -20034,11 +20034,11 @@
           "text": "保證等級需符合預期使用者需求，並依 ISO 14060 系列"
         }
       ],
-      "answer": "D",
+      "answer": "B",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "ISO 14067的保證等級需符合預期使用者需求，但並非依ISO 14060系列，而是依循ISO 14064-3的規範。",
+      "explanation": "依 ISO 14067，其規範之必要輸出文件為產品碳足跡研究報告；標準並未將「清冊」與「報告書」定為兩份必要文件，故此敘述為非。原模擬題答案卡亦明示此項為錯誤敘述。",
       "metadata": {
         "original_id": "c2-180",
         "_legacy_pipeline_metadata": {
@@ -20048,22 +20048,27 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
-          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
         "evidence": [
           {
-            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
-            "quote": "為了滿足預期使用者與利害關係人之要求，組織應透過第三者之獨立查證(依循ISO14064-3) 來確保溫室氣體排放的量測、報告與查核之可信度、正確性與透明度。",
-            "supports_option": "D"
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+            "quote": "ISO14067 產品碳足跡 之規範何者為非？ (A) 產品每一功能單位或每一宣告單位之碳足 跡或部分碳足跡 (B) 必要文件為清冊與報告書",
+            "supports_option": "B",
+            "verified_on": "2026-07-16",
+            "note": "使用者裁定：模擬題 583537684.pdf Q32 答案卡明示答案為 (B)「必要文件為清冊與報告書」為錯誤敘述。我重抓答案卡機械逐字比對確認。"
           }
         ],
         "answer_verification": {
           "date": "2026-07-16",
-          "verdict": "CORRECT_WEAK",
-          "note": "第十八輪：答案 D 依命題依據暫留；代理於各來源找不到含此四選項＋答案鍵之原題，且 ISO 14060 系列為教材正式用語，故非鐵證、標記弱驗證。",
-          "method": "代理語意審查＋我複核"
-        }
-      }
+          "verdict": "CORRECTED_D_TO_B",
+          "note": "原答案 D 為答案卡誤置；模擬題 583537684.pdf Q32 答案卡明示 B。ISO 14067 必要輸出為 CFP 研究報告、非「清冊+報告書」兩份文件，B 為錯誤敘述。修正誤標之來源 696336508.pdf（實為 ISO 14064-1 盤查教材）。使用者最終裁定。",
+          "method": "答案卡逐字＋使用者裁定"
+        },
+        "prior_answer": "D"
+      },
+      "_correction_note": "2026-07-16：**答案由 D 更正為 B。** 模擬題答案卡 583537684.pdf Q32 明示答案為 (B)「必要文件為清冊與報告書」為錯誤敘述；ISO 14067 之必要輸出為 CFP 研究報告，並未將「清冊+報告書」定為兩份必要文件。原答案 D 為答案卡誤置，並修正誤標之來源 696336508.pdf（實為 ISO 14064-1 盤查教材）。使用者最終裁定。"
     },
     {
       "index": 374,
@@ -22434,7 +22439,7 @@
           "text": "公共電力淨零聯盟"
         }
       ],
-      "answer": "D",
+      "answer": null,
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
@@ -22450,13 +22455,6 @@
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
         ],
-        "evidence": [
-          {
-            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
-            "quote": "全球逾52間國營石油公司(如：Saudi Aramco)與民營石油公司",
-            "supports_option": "D"
-          }
-        ],
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
@@ -22464,11 +22462,16 @@
         },
         "answer_verification": {
           "date": "2026-07-16",
-          "verdict": "SUSPECT_NEEDS_REVIEW",
-          "note": "選項 D「公共電力淨零聯盟」極可能對應 UNEZA（Utilities for Net Zero Alliance，COP28 於 2023/12 由 IRENA 與 COP28 主席國發起之真實聯盟）。若 D 為真，則 A/B/C/D 四項皆為 COP28 真實倡議、本「何者不是」題無合法正解。本輪 UNEZA 官方頁對我方 fetcher 皆限流/空回，無法機械確認，故標記存疑、待人工核對命題依據教材是否確以 D 為虛構名稱。答案暫留 D。",
-          "method": "代理疑慮＋我複核（來源限流未能確認）"
-        }
-      }
+          "verdict": "NULLED_NO_CORRECT_OPTION",
+          "note": "D=UNEZA 為真實 COP28 聯盟（IRENA/COP28 官方＋教材 p.55），C 疑「脫煤→脫碳」誤植；答案不可能是 D，撤答案。使用者最終裁定。",
+          "method": "使用者裁定＋IRENA/COP28 官方來源"
+        },
+        "prior_answer": "D"
+      },
+      "quality_flags": [
+        "ambiguous"
+      ],
+      "_correction_note": "2026-07-16：**撤答案（排除計分）。** 使用者最終裁定：選項 D「公共電力淨零聯盟」即 COP28 於 2023/12 由 IRENA 與 COP28 主席國發起之真實聯盟 UNEZA（Utilities for Net Zero Alliance，25 家公用事業／31 夥伴），命題依據 328201936.pdf p.55 亦將其列為 COP28 行動；故 D 為真、「何者不是」無法選 D。另選項 C「煤轉型加速器與脫碳聯盟」疑將教材原文「脫煤聯盟」（Powering Past Coal Alliance）誤植為「脫碳聯盟」。語意判讀下四選項皆真、無正解；逐字判讀下有問題者為 C 而非 D。無論何種判讀，答案都不可能是 D → 撤答案。"
     },
     {
       "index": 421,
