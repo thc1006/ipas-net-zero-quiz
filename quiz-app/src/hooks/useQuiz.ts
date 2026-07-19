@@ -71,15 +71,20 @@ export function useQuiz() {
     let questions: QuizQuestion[];
 
     if (config.shuffleQuestions) {
-      // 隨機抽題
+      // 隨機抽題 —— 無標準答案的題目一律不出（練習與考試皆同）。
+      // 這類題答案是 null（來源互斥或多重正解，已排除計分），出到使用者面前
+      // 只會看到「沒有正解可對」而困惑（Refs #93/#94/#95）。
       questions = getRandomQuestions(
         config.questionCount,
         config.subject,
-        config.mode === 'exam' // 考試模式只選有答案的題目
+        true
       );
     } else {
       // 順序取題（同樣依內容去重：跨科重複在 'all' 模式下會同時落進池子）
-      const pool = dedupeByContent(getQuestionsBySubject(config.subject));
+      // 同樣濾掉無答案題。
+      const pool = dedupeByContent(getQuestionsBySubject(config.subject)).filter(
+        (q) => q.hasAnswer
+      );
       questions = pool.slice(0, config.questionCount);
     }
 
@@ -119,34 +124,29 @@ export function useQuiz() {
             combined,
             config.questionCount,
             config.subject,
-            config.mode === 'exam'
+            true // 無答案題一律不出（練習與考試皆同）
           )
         : (() => {
             const subjectFiltered =
               config.subject === 'all'
                 ? combined
                 : combined.filter((q) => q.subject === config.subject);
-            const answerFiltered =
-              config.mode === 'exam'
-                ? subjectFiltered.filter((q) => q.hasAnswer)
-                : subjectFiltered;
+            const answerFiltered = subjectFiltered.filter((q) => q.hasAnswer);
             return answerFiltered.slice(0, config.questionCount);
           })();
     } else {
-      // 不混練習池 — fallback 到 startQuiz 邏輯
+      // 不混練習池 — fallback 到 startQuiz 邏輯（同樣濾掉無答案題）
       if (config.shuffleQuestions) {
         questions = getRandomQuestions(
           config.questionCount,
           config.subject,
-          config.mode === 'exam'
+          true
         );
       } else {
-        const subjectFiltered = dedupeByContent(getQuestionsBySubject(config.subject));
-        const answerFiltered =
-          config.mode === 'exam'
-            ? subjectFiltered.filter((q) => q.hasAnswer)
-            : subjectFiltered;
-        questions = answerFiltered.slice(0, config.questionCount);
+        const subjectFiltered = dedupeByContent(
+          getQuestionsBySubject(config.subject)
+        ).filter((q) => q.hasAnswer);
+        questions = subjectFiltered.slice(0, config.questionCount);
       }
     }
 

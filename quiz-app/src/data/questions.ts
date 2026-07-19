@@ -219,8 +219,10 @@ export function getSimilarQuestions(
     .filter((w) => w.length >= 2);
 
   // 計算每題的相似度分數
+  // 排除無標準答案的題（answer=null，已排除計分）—— 相似題是給使用者對照作答用的，
+  // 出一題「沒有正解可對」的相似題只會困惑（同 useQuiz 抽題層的處理，Refs #93/#94/#95）。
   const scored = allQuestions
-    .filter((q) => q.id !== questionId)
+    .filter((q) => q.id !== questionId && q.hasAnswer)
     .map((q) => {
       let score = 0;
       // 同考科加分
