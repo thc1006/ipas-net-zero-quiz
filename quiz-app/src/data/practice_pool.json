@@ -9809,7 +9809,7 @@
         },
         {
           "key": "B",
-          "text": "ISO 14068-1 於 2023 年 11 月發布以取代 PAS 2060，PAS 2060 已於 2024 年由 BSI 撤回（withdrawn）"
+          "text": "ISO 14068-1 於 2023 年 11 月發布以取代 PAS 2060，PAS 2060 將於 2025 年 11 月 30 日由 BSI 撤回（withdrawn）"
         },
         {
           "key": "C",
@@ -9821,7 +9821,7 @@
         }
       ],
       "answer": null,
-      "explanation": "【已排除計分】本題涉及 PAS 2060 的「撤回日期」，而現有來源互相矛盾：BSI 停售 PAS 2060 驗證為 2024-01-01、改以 ISO 14068-1 提供驗證為 2025-01-01、而「標準文件撤回」另有 2025-11-30 之說法；三者是不同的事件，常被混為一談。在取得 BSI 對 PAS 2060:2014 的官方 withdrawal record 前，本題標記為 ambiguous 且不計分，以免題庫對互斥命題同時給出確定答案。（原解析：PAS 2060:2014 由 BSI 於 2024-01-01 起停止接受新驗證、2025-12-31 完成所有在途驗…）",
+      "explanation": "ISO 14068-1:2023 承襲並取代英國 PAS 2060，BSI 已宣布撤回 PAS 2060；此關係本身無誤。惟 PAS 2060 之退場日期在各來源間常被混淆（停售新驗證、改用 ISO 14068-1、標準文件撤回是不同事件），本題不就撤回年份給定確定答案，故排除計分。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "ISO 14068-1",
@@ -9853,18 +9853,27 @@
           "note": "盲測指出選項 B 的「PAS 2060 於 2024 年撤回」年份有誤（BSI 的正式撤回日為 2025/11/30，自 2025/1/1 起不再受理新驗證）。**但本題的答案本來就已是 null（排除計分）**，因此不影響使用者。記在這裡，是為了讓下一輪知道「這題已經看過了」。"
         },
         "answer_verification": {
-          "date": "2026-07-15",
-          "verdict": "CORRECT_BUT_NULLED",
-          "note": "現行 answer=null（已排除計分）。正解應為 B：ISO 14068-1:2023 於 2023 年 11 月發布、BSI 宣布撤回 PAS 2060（2025/1/1 生效），且 ISO 14068-1 承襲 PAS 2060 原則。惟 iso.org 回 403、BSI 撤回公告連結改導向首頁，無法釘單一連續一手句，維持 null 並誠實記錄。",
-          "method": "第十六輪：多源佐證，一手頁 403/改導向，無法機械逐字。"
-        }
+          "date": "2026-07-19",
+          "verdict": "KEPT_NULL_EXCLUDED",
+          "note": "回報 #95 指出「ISO 14068-1 承襲並取代 PAS 2060」的關係正確 —— 此點確實無誤，其餘關係敘述均錯。但本題為 AI 生成，且其中一個選項將答案綁定 PAS 2060 撤回年份，該退場涉三個常被混淆的事件（停售新驗證、改用 ISO 14068-1、標準文件於 2025/11/30 撤回）。依 practice_pool_integrity『未取得 BSI 官方 withdrawal record 前不得對撤回年份給確定答案』之既定政策，維持 null（排除計分）；該選項誤植日期仍由 2024 更正為 2025/11/30 以求正確。使用者端：本題在練習模式會顯示『此題目無標準答案，僅供練習參考』提示並附回報連結（既有設計，非缺陷）；是否進一步在練習模式亦隱藏 null 題屬產品決策，留待維護者定奪，不由本次逕改。",
+          "method": "維基 PAS 2060（引 BSI）＋既有 blind_review／citation_audit 綜合研判"
+        },
+        "option_corrections": [
+          {
+            "date": "2026-07-18",
+            "option": "B",
+            "from": "ISO 14068-1 於 2023 年 11 月發布以取代 PAS 2060，PAS 2060 已於 2024 年由 BSI 撤回（withdrawn）",
+            "to": "ISO 14068-1 於 2023 年 11 月發布以取代 PAS 2060，PAS 2060 將於 2025 年 11 月 30 日由 BSI 撤回（withdrawn）",
+            "why": "原「2024 年撤回」錯誤；PAS 2060 撤回日為 2025-11-30。"
+          }
+        ],
+        "evidence": null
       },
       "sources": [
         "https://www.iso.org/standard/43279.html",
         "https://www.bsigroup.com/en-GB/standards/PAS-2060-carbon-neutrality/"
       ],
       "quality_flags": [
-        "low_confidence",
         "ambiguous",
         "time_sensitive"
       ]
