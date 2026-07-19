@@ -23,12 +23,13 @@
         "CBAM",
         "NDC",
         "carbon_fee",
-        "carbon_neutrality"
+        "carbon_neutrality",
+        "ISSB_IFRS_TCFD"
       ],
       "reverified_count": 129,
       "total_questions": 773,
       "time_sensitive_count": 129,
-      "not_reviewed_this_round_count": 680,
+      "not_reviewed_this_round_count": 644,
       "carried_over_count": 0,
       "known_unresolved": [
         {
@@ -44,7 +45,9 @@
         },
         {
           "id": "ifrs_issb_tcfd_not_reverified",
-          "detail": "12 題（ISSB S1/S2、IFRS 我國採用時程、TCFD、CDP、金管會盤查申報時程）本輪未重查，誠實沿用 valid_as_of=2026-01-23 並標 content_reverified_2026_07=false。iPAS 115 年度考綱剛納入 IFRS S1/S2，下一輪應從這裡開始。"
+          "detail": "12 題（ISSB S1/S2、IFRS 我國採用時程、TCFD、CDP、金管會盤查申報時程）已於 2026-07-20 補查證：11 題（gist[335] 於 2026-07-13 已查）全部對 fsc.gov.tw／cgc.twse／ifrs.org／fsb-tcfd.org 一手來源確認，內容仍正確、答案不變，valid_as_of=2026-07-20、content_reverified_2026_07=true。詳見 CONTENT-CURRENCY §2.6。",
+          "resolved": true,
+          "resolved_date": "2026-07-20"
         },
         {
           "id": "coverage_gaps",
@@ -18424,7 +18427,8 @@
             "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News",
             "url_backfilled_on": "2026-07-14"
           }
-        ]
+        ],
+        "source_note_2026_07_20": "新增金管會 2026-01-20 提醒函（dataserno=202601200001）為較新一手來源，已 WebFetch 確認其 URL 存活且逐字時程未變（115 會計年度=2026）。sources_verified_date 維持 2026-05-04：isds.tpex.org.tw 於 2026-07-20 回 HTTP 403（BLOCKED，非失效，本輪無法逐一確認存活故不改該欄）。valid_as_of=2026-07-20 指內容查證日，非整批 URL 存活重驗日。"
       },
       "quality_flags": [
         "time_sensitive"

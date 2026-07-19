@@ -6,21 +6,22 @@
 這份文件記錄「已查證什麼、查證到哪個日期、以及**還有什麼沒確定**」，
 避免下一輪又把同樣的東西重新調研一遍。
 
-- 最後一次內容查證：**2026-07-13**
+- 最新查證活動：**2026-07-20**（本輪窗口自 2026-07-13；見 `meta.content_review`）
 - `integrated_dataset.json` → **`meta.content_review`**（`last_review_date` / `scope` /
   `reverified_count` / `known_unresolved`）
 
 - 每題 → `metadata.valid_as_of` + `metadata.sources[]`（一手來源，quarterly workflow 會 curl）
 
-> **`meta.content_review.last_review_date` 不代表「整份題庫已查證到那一天」。**
-> 本輪只實查了 **129 / 773** 題（`scope` 所列的 CBAM / NDC / 碳費 / 碳中和），
-> 12 題沿用 2026-01-23，另有 668 題連 `time_sensitive` 都沒標、根本沒碰過。
+> **`meta.content_review.last_review_date`（本輪窗口起點 `2026-07-13`）不代表「整份題庫已查證到那一天」。**
+> 本輪只實查了 **129 / 773** 題（含 **2026-07-20** 補查的 IFRS/ISSB/TCFD 那批；已查主題見 `meta.content_review.scope`），
+> 未查題數記於 `not_reviewed_this_round_count`。這些數字皆由 `tools/sync_derived_counts.py` 依公式算、由 gate 釘死在資料上；
+> **這裡不再內嵌會漂的快照（原本的「12 題沿用 2026-01-23」「668 題未標」已刪）。**
 >
 > 判斷**單一題目**的內容是否仍正確，請以**該題的 `metadata.valid_as_of`** 為準。
 >
 > 原本這裡叫 `content_verified_as_of`，會被下游誤讀成「全庫已查證」。已移除，
-> 並加了測試把 `reverified_count` 釘死在「資料裡實際有多少題 `valid_as_of == last_review_date`」上
-> —— meta 現在不可能說謊。
+> 並加了測試把 `reverified_count` 釘死在「資料裡實際有多少題 `valid_as_of >= last_review_date`」上
+> —— 是 **`>=` 不是 `==`**（一題查得越新，分數不該越低）—— meta 現在不可能說謊。
 
 ---
 
@@ -131,6 +132,11 @@ Art 22(1) 原文：
 `gist[334]` `gist[336]` `gist[337]` `gist[346]` `gist[347]`
 `gist[365]` `gist[366]` `gist[367]` `gist[368]` `gist[440]` `S_YAMOL_023-q078`
 （`gist[335]` 已於 2026-07-13 查證，不在此批。）
+
+**欄位語義（勿混淆）**：本次更新的是 `valid_as_of`＝**內容**查證日。各題的 `sources_verified_date`
+（＝來源 **URL 存活**檢查日）**維持 2026-05-04、本輪未整批重跑**。唯一例外：`gist[337]` 新增了金管會
+2026-01-20 一手來源並已確認其 URL 存活（isds.tpex.org.tw 於 07-20 回 403＝BLOCKED 非失效，故該題
+`sources_verified_date` 仍不改），細節記於該題 `metadata.source_note_2026_07_20`。
 
 查證重點與依據：
 
