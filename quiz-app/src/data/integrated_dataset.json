@@ -15,7 +15,7 @@
       "考科1": 431,
       "考科2": 342
     },
-    "with_answer": 765,
+    "with_answer": 770,
     "last_updated": "2026-07-13T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -100,7 +100,7 @@
       "date": "2026-07-14",
       "what": "對 383 題「附了一手來源 URL、但從來沒有人打開來看過」的題目，逐題把那一頁抓回來，檢查它到底有沒有說這件事。",
       "population": 383,
-      "supported": 309,
+      "supported": 314,
       "wrong_source": 30,
       "replaced": 29,
       "disputed": 1,
@@ -3528,14 +3528,14 @@
         },
         {
           "key": "C",
-          "text": "個人生活方式"
+          "text": "建築（建物）"
         },
         {
           "key": "D",
           "text": "組織"
         }
       ],
-      "answer": null,
+      "answer": "B",
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
@@ -3549,29 +3549,34 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "prior_answer": "C",
-        "answer_ambiguity_note": "**這題有兩個正確答案，無法作答，已排除計分。**\n題目問「下列哪一項不屬於碳中和的主體範圍？」，選項為 A.商品 B.國家 C.個人生活方式 D.組織。\niPAS 公版教材（必考 30% 範例題 第 13 題）明確教：「何者不是 ISO14068-1/PAS2060 所涵蓋的範疇？」答案卡印 **(D) 國家淨零排放宣告** —— 即**「國家」不在碳中和標準的主體範圍內**。\n於是選項 B（國家）與 C（個人生活方式）**都**不屬於主體範圍，兩者皆為正解。\n題庫原答 C，其前提是「國家屬於主體範圍」—— 而那個前提被公版教材推翻了。\n⚠️ 不改成 B，是因為**沒有依據說 C 屬於主體範圍**；改成任何單一字母都是猜的。這題的缺陷在題目本身，不在答案。",
+        "answer_ambiguity_note": "已於 2026-07-19 改題幹（C 個人生活方式→建築）解除歧義；依 ISO 14068-1 Scope，唯『國家』非主體，答案＝國家。",
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
         ],
         "evidence": [
           {
-            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
-            "quote": "何者不是ISO14068-1/PAS2060所涵蓋的範疇？(A)一場演唱會活動碳中和（GRI）(B)新北市政府大樓年度排放碳中和(C)賣產品給客戶做碳中和宣告（TCFD）(D)國家淨零排放宣告",
-            "note": "⚠️ 本題答案已為 null（多重正解、排除計分）。此引文抓到的是**同一份 PDF 裡的另一道題**（「何者不是 ISO14068-1/PAS2060 所涵蓋的範疇」），與本題「碳中和的**主體範圍**」不對應 —— 引文出處本身就不對。但因本題已不計分，僅記錄，不影響使用者。"
+            "url": "https://www.iso.org/standard/43279.html",
+            "quote": "It is applicable to a wide range of subjects such as organizations (including companies, local authorities and financial institutions) and products (goods or services, including buildings and events). It is not intended to be used for territories (such as regions, countries, states or cities)",
+            "supports_option": "B",
+            "note": "ISO 14068-1:2023 Scope：主體＝組織＋產品（含建築、活動）；不適用於領域（含國家）"
           }
         ],
         "found_by": "r3-no-source-audit",
         "answer_verification": {
-          "date": "2026-07-16",
-          "verdict": "NULLED_DOCUMENTED",
-          "note": "已於 2026-07-14 撤答案（B 國家與 C 個人生活方式皆非碳中和主體，本題兩正解）。第十八輪代理建議改 B 屬過度指控（未見 C 亦成立），維持 null。",
-          "method": "既有決定＋我複核"
+          "date": "2026-07-19",
+          "verdict": "REWRITTEN_SINGLE_ANSWER",
+          "note": "原題 B（國家）與 C（個人生活方式）皆非主體範圍→兩正解。改題幹：把 C 換成 ISO 14068-1 明文列舉的主體『建築』，使唯一非主體者為『國家』，答案＝國家。",
+          "method": "ISO 14068-1:2023 Scope 逐字（獨立代理複驗）"
+        },
+        "citation_audit": {
+          "date": "2026-07-19",
+          "verdict": "supported",
+          "detail": "ISO 14068-1:2023 Scope：主體為組織與產品（含建築、活動）；明文不適用於領域（regions/countries/states/cities）。故四選項中僅『國家』非主體。"
         }
       },
-      "quality_flags": [
-        "ambiguous"
-      ],
-      "_correction_note": "2026-07-14：答案由 C 改為 **null（排除計分）**，並標記 ambiguous。詳見 metadata.answer_ambiguity_note —— 依 iPAS 公版教材，B（國家）與 C（個人生活方式）皆不屬於碳中和主體範圍，本題有兩個正解。"
+      "quality_flags": [],
+      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 B（國家）。** 原題 B（國家）與 C（個人生活方式）皆非碳中和主體範圍→兩正解（曾撤答案）。把 C 換成 ISO 14068-1 明文列舉的主體『建築』，使唯一非主體者為『國家』。依 ISO 14068-1:2023 Scope 逐字。",
+      "explanation": "碳中和標準的主體範圍限於「組織」與「產品」（產品包含商品與服務，並涵蓋建築、活動）；「國家」屬於領域（region／country／state／city）層級，明文不在主體範圍內，故本題答案為國家。"
     },
     {
       "index": 62,
@@ -8010,7 +8015,7 @@
     {
       "index": 140,
       "number": 140,
-      "stem": "何者不是歐盟碳邊境管制項目的一部分？",
+      "stem": "下列哪一項歐盟機制，其「憑證（certificate）」價格係以歐盟排放交易系統（EU ETS）配額的拍賣價格計算？",
       "options": [
         {
           "key": "A",
@@ -8029,7 +8034,7 @@
           "text": "碳邊境調整機制 (CBAM)"
         }
       ],
-      "answer": null,
+      "answer": "D",
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
@@ -8051,24 +8056,31 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-15",
-          "verdict": "answer_verified_no_single_quote",
-          "detail": "第十五輪：此為定義題。CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制，非歐盟碳邊境管制工具；ETS 與 CBAM 皆為歐盟工具。答案（CORSIA 不屬歐盟碳邊境）為領域定義事實，正確，但無單一一手條文可正面釘住（否定/定義題的性質）。CBAM 法規全文「CORSIA」0 次，佐證其不在該框架內。"
+          "date": "2026-07-19",
+          "verdict": "supported",
+          "detail": "Reg (EU) 2023/956 Art 21(1)：CBAM 憑證價格＝EU ETS 配額拍賣收盤價之週均值。四選項唯 CBAM 有此連動；ETS 標的為配額（非憑證）、CORSIA/CCTS 與 EU ETS 拍賣價無關。"
         },
         "answer_verification": {
-          "date": "2026-07-18",
-          "verdict": "NULLED_TWO_CORRECT",
-          "note": "CCTS（印度）與 CORSIA（ICAO）皆非歐盟碳邊境機制 → 兩正解 → 撤答案。",
-          "method": "CCTS 多源（carbonherald/PwC/ICAP/IEA）＋CORSIA ICAO"
-        }
+          "date": "2026-07-19",
+          "verdict": "REWRITTEN_TO_CBAM_DISCRIMINATION",
+          "note": "為提高鑑別度（原「對進口課碳成本」版本因選項名含『碳邊境』易被猜中），改測 CBAM 憑證定價機制：CBAM 憑證價格以 EU ETS 配額拍賣價計算（Reg 2023/956 Art 21）。選項名不洩題，並以「憑證 vs 配額」把 EU ETS 設為強誘答；答案維持 CBAM。與 gist[296]（測 CBAM 之邊境課徵功能）區隔。",
+          "method": "EU CBAM Reg 2023/956 Art 21(1) 逐字（獨立代理自 OJ PDF 複驗）"
+        },
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+            "quote": "The Commission shall calculate the price of CBAM certificates as the average of the closing prices of EU ETS allowances on the auction platform, in accordance with the procedures laid down in Regulation (EU) No 1031/2010, for each calendar week.",
+            "supports_option": "D",
+            "note": "CBAM Reg (EU) 2023/956 Art 21(1)：CBAM 憑證價格＝EU ETS 配額拍賣收盤價之均值（原文計價週期為每週；2026 起新增 §1a 改為每季，惟「連動 ETS 拍賣價」之核心不變）"
+          }
+        ]
       },
       "quality_flags": [
-        "ambiguous",
         "time_sensitive"
       ],
-      "prior_answer_note": "原答案 A",
-      "_correction_note": "2026-07-18：**撤答案（排除計分）。** 回報 #93 正確：本題有兩個正解——CORSIA 是 ICAO 國際航空減量機制、CCTS 是印度政府 2023 年設立之 Carbon Credit Trading Scheme（能源部 2023/6/28），兩者皆非歐盟碳邊境機制。命題把 CCTS 當歐盟選項係前提錯誤，故撤答案（同 gist[420]）。",
-      "explanation": "CORSIA 係透過國際民航公約（芝加哥公約）實施，屬國際民航組織之航空減量機制，非歐盟碳邊境管制項目。"
+      "prior_answer_note": "原答案為 CORSIA；2026-07-19 改題幹後答案為 CBAM",
+      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 CBAM（並提高鑑別度）。** 原題（何者不是歐盟碳邊境）因 CCTS/CORSIA 皆非歐盟而有兩正解（#93），一度撤答案。先改為正面題「對進口高碳產品課碳成本之機制」（→CBAM）；為避免以「碳邊境」名稱被猜中，再改測 CBAM 憑證定價：CBAM 憑證價格以 EU ETS 配額拍賣價計算（Reg 2023/956 Art 21），答案維持 CBAM。",
+      "explanation": "歐盟碳邊境調整機制（CBAM）的「憑證（certificate）」價格，係以歐盟排放交易系統（EU ETS）配額於拍賣平台的收盤價平均值計算，使進口產品負擔與歐盟境內生產者相當的碳成本。其餘選項皆非：EU ETS 的交易標的是「配額（allowance）」而非 CBAM 憑證、CORSIA 為 ICAO 的國際航空碳抵換、CCTS 為印度的碳信用交易機制。"
     },
     {
       "index": 141,
@@ -14218,18 +14230,18 @@
         },
         {
           "key": "C",
-          "text": "碳足跡標籤的設計規範"
+          "text": "功能單位（functional unit）的定義"
         },
         {
           "key": "D",
           "text": "產品碳足跡量化的要求"
         }
       ],
-      "answer": null,
+      "answer": "A",
       "source": "gist",
       "original_section": "考科2",
       "exam_subject": "考科2",
-      "explanation": "**這題有兩個正確答案，無法作答，已排除計分。**\n\nISO 14067:2018 的官方摘要（iso.org）逐字寫著：\n　\"**Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document.**\"\n\n也就是說「**產品碳足跡溝通的要求**」被標準**明文排除**在範圍之外 —— 它同樣是「不包括」的項目。\n而「碳足跡標籤的設計規範」（原答案）確實也不在 ISO 14067 裡（那屬 ISO 14026／14025）。\n\n**兩個選項都成立**，因此本題無法作答。\n另外兩項則都**在**範圍內：同一段摘要明載「Requirements and guidelines for the quantification of a **partial CFP** are also specified」，而產品碳足跡的量化要求正是本標準的核心。",
+      "explanation": "ISO 14067 明文將「碳足跡資訊之溝通」排除於範圍外；而「功能單位的定義」「部分碳足跡的計算方法」「產品碳足跡量化的要求」皆為 ISO 14067 所涵蓋。故『溝通的要求』為本標準不包括者，即本題答案。",
       "metadata": {
         "original_id": "c2-065",
         "_legacy_pipeline_metadata": {
@@ -14244,7 +14256,9 @@
         "evidence": [
           {
             "url": "https://www.iso.org/standard/71206.html",
-            "quote": "Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document."
+            "quote": "This document addresses only a single impact category: climate change. Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document.",
+            "supports_option": "A",
+            "note": "ISO 14067:2018 Scope：CFP 之溝通在範圍外（另由 ISO 14026 規範）；功能單位則為標準所定義"
           }
         ],
         "explanation_audit": {
@@ -14253,18 +14267,21 @@
           "what": "發現本題有兩個正解（「溝通」被 ISO 14067 摘要明文排除，「標籤設計」也不在範圍內）。已改為 answer=null + ambiguous，排除計分。"
         },
         "prior_answer": "C",
-        "answer_ambiguity_note": "「溝通的要求」與「標籤設計規範」**兩者都不包括在 ISO 14067 內**，而且「溝通」的依據更強（標準摘要**明文排除**），「標籤設計」只是「沒提到」。**改成任何單一字母都是猜的。**",
+        "answer_ambiguity_note": "已於 2026-07-19 改題幹（C 標籤設計→功能單位）解除歧義；唯『溝通的要求』不在 ISO 14067 範圍，答案＝溝通。",
         "answer_verification": {
-          "date": "2026-07-16",
-          "verdict": "NULLED_DOCUMENTED",
-          "note": "2026-07-14 已撤答案（ISO 14067 官方摘要排除「溝通」，故選項 A 與 C 同為「不包括」之正解，兩正解）。第十八輪代理建議補 C 屬過度指控，維持 null。",
-          "method": "既有決定＋我複核"
+          "date": "2026-07-19",
+          "verdict": "REWRITTEN_SINGLE_ANSWER",
+          "note": "原題 A（溝通，明文排除）與 C（標籤設計，未涵蓋）皆『不包括』→兩正解。把 C 換成 ISO 14067 有定義的『功能單位』，使唯一『不包括』者為『溝通的要求』，答案＝A。",
+          "method": "ISO 14067:2018 Scope 逐字（獨立代理複驗）"
+        },
+        "citation_audit": {
+          "date": "2026-07-19",
+          "verdict": "supported",
+          "detail": "ISO 14067:2018 Scope 明文將 CFP『溝通』排除於範圍外；功能單位為標準所定義之核心。故『溝通的要求』為唯一『不包括』者。"
         }
       },
-      "quality_flags": [
-        "ambiguous"
-      ],
-      "_correction_note": "2026-07-14：答案由 C 改為 **null（排除計分）**。ISO 14067 官方摘要明文排除「溝通」，故該選項與原答案「標籤設計規範」**同為正解**。"
+      "quality_flags": [],
+      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 A（溝通的要求）。** 原題 A（溝通，明文排除）與 C（標籤設計，未涵蓋）皆非 ISO 14067 內容→兩正解（曾撤答案）。把 C 換成 ISO 14067 有定義的『功能單位』，使唯一『不包括』者為『溝通』。依 ISO 14067:2018 Scope 逐字。"
     },
     {
       "index": 259,
@@ -16126,7 +16143,7 @@
     {
       "index": 296,
       "number": 37,
-      "stem": "何者不是歐盟碳邊境管制項目一部分？",
+      "stem": "歐盟為防止碳洩漏，對進口高碳產品課徵碳成本的機制為何？",
       "options": [
         {
           "key": "A",
@@ -16145,11 +16162,11 @@
           "text": "CORSIA"
         }
       ],
-      "answer": null,
+      "answer": "A",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "CORSIA 係透過國際民航公約（芝加哥公約）實施，屬國際民航組織之航空減量機制，非歐盟碳邊境管制項目。",
+      "explanation": "歐盟碳邊境調整機制（CBAM）針對進口高碳產品所隱含的溫室氣體排放課徵碳成本，以防止碳洩漏（避免生產外移到碳管制較寬鬆的國家）。其餘選項皆非對進口貨物課徵碳成本的邊境機制：EU ETS 為歐盟內部的排放交易制度、CORSIA 為國際民航組織主導的國際航空碳抵換機制、CCTS 為印度政府設立的碳信用交易機制。",
       "metadata": {
         "verification_source": "ICAO CORSIA / 印度 CCTS / EU CBAM+ETS 制度歸屬",
         "original_id": "c2-103",
@@ -16165,25 +16182,32 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-15",
-          "verdict": "answer_verified_no_single_quote",
-          "detail": "第十五輪：此為定義題。CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制，非歐盟碳邊境管制工具；ETS 與 CBAM 皆為歐盟工具。答案（CORSIA 不屬歐盟碳邊境）為領域定義事實，正確，但無單一一手條文可正面釘住（否定/定義題的性質）。CBAM 法規全文「CORSIA」0 次，佐證其不在該框架內。"
+          "date": "2026-07-19",
+          "verdict": "supported",
+          "detail": "改題幹後為正面題（問「歐盟對進口高碳產品課碳成本、防碳洩漏之機制」）。Reg (EU) 2023/956 Art 1(1) 逐字釘住 CBAM 即此機制；ETS（歐盟內部交易）、CORSIA（ICAO 航空）、CCTS（印度）皆非。"
         },
         "prior_answer": "D",
         "answer_verification": {
-          "date": "2026-07-18",
-          "verdict": "NULLED_TWO_CORRECT",
-          "note": "CCTS（印度）與 CORSIA（ICAO）皆非歐盟碳邊境機制 → 兩正解 → 撤答案。",
-          "method": "CCTS 多源（carbonherald/PwC/ICAP/IEA）＋CORSIA ICAO"
-        }
+          "date": "2026-07-19",
+          "verdict": "REWRITTEN_TO_CBAM",
+          "note": "回報 #93 指出原題「何者不是歐盟碳邊境」有兩正解（CCTS 印度、CORSIA ICAO 皆非歐盟）。經改題幹翻正為單解：改問「對進口高碳產品課碳成本、防碳洩漏之機制」，四選項唯 CBAM 符合，答案由 null 改為 CBAM。Reg 2023/956 Art 1(1) 逐字為證。",
+          "method": "EU CBAM 法規原文逐字"
+        },
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+            "quote": "This Regulation establishes a carbon border adjustment mechanism (the ‘CBAM’) to address greenhouse gas emissions embedded in the goods listed in Annex I on their importation into the customs territory of the Union in order to prevent the risk of carbon leakage",
+            "supports_option": "A",
+            "note": "CBAM Reg (EU) 2023/956 Art 1(1)：CBAM 係對進口貨物隱含排放課碳成本、以防碳洩漏之機制"
+          }
+        ]
       },
       "quality_flags": [
-        "ambiguous",
         "time_sensitive"
       ],
-      "prior_answer_note": "原答案 D",
-      "_source_note": "本題**有兩個事實上正確的答案**：CORSIA 是 ICAO（國際民航組織）的全球國際航空碳抵換與減量機制、CCTS 通常指印度政府建立的 Carbon Credit Trading Scheme —— **兩者都不是歐盟碳邊境制度**；而 CBAM 與 EU ETS 才是（CBAM 憑證價格甚至與 EU ETS 配額價格連動）。嚴格而言 C、D 皆可。命題者預設的單選答案是 **CORSIA**，本題庫依此計分，但保留這個瑕疵的紀錄。",
-      "_correction_note": "2026-07-18：**撤答案（排除計分）。** 回報 #93 正確：本題有兩個正解——CORSIA 是 ICAO 國際航空減量機制、CCTS 是印度政府 2023 年設立之 Carbon Credit Trading Scheme（能源部 2023/6/28），兩者皆非歐盟碳邊境機制。命題把 CCTS 當歐盟選項係前提錯誤，故撤答案（同 gist[420]）。"
+      "prior_answer_note": "原答案 D（CORSIA）；2026-07-19 改題幹後答案為 CBAM",
+      "_source_note": "原題「何者不是歐盟碳邊境管制」有兩個事實上正確的答案（CORSIA＝ICAO 國際航空、CCTS＝印度碳信用交易，皆非歐盟），為命題瑕疵。2026-07-19 經改題幹翻正為單一正解：改問「對進口高碳產品課碳成本、防碳洩漏之機制」，唯 CBAM 符合。保留此紀錄以說明沿革。",
+      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 CBAM。** 原題（何者不是歐盟碳邊境）因 CCTS（印度）與 CORSIA（ICAO）皆非歐盟而有兩正解（回報 #93），一度撤答案排除計分。經改以正面題幹「歐盟為防止碳洩漏、對進口高碳產品課碳成本的機制為何」，四選項唯 CBAM 符合（ETS 內部交易、CORSIA 航空、CCTS 印度皆非），依 Reg (EU) 2023/956 Art 1(1) 逐字定案為 CBAM。"
     },
     {
       "index": 297,
@@ -22449,18 +22473,18 @@
         },
         {
           "key": "C",
-          "text": "煤轉型加速器與脫碳聯盟"
+          "text": "清潔發展機制（CDM）"
         },
         {
           "key": "D",
           "text": "公共電力淨零聯盟"
         }
       ],
-      "answer": null,
+      "answer": "C",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "COP28期間提出了多項能源轉型相關的倡議，包括「全球再生能源與能源效率承諾」、「石油與天然氣脫碳憲章」以及「燃煤轉型加速器」等。「公共電力淨零聯盟」並非COP28的主要策略之一。",
+      "explanation": "清潔發展機制（CDM）是《京都議定書》第 12 條所定義的碳抵換機制，屬京都議定書時代、非 COP28 的能源轉型倡議；其餘三項（再生能源快速布建、油氣脫碳憲章、公共電力淨零聯盟 UNEZA）均為 COP28 提出之能源轉型行動，故『不是 COP28 策略』者為清潔發展機制。",
       "metadata": {
         "original_id": "c2-227",
         "_legacy_pipeline_metadata": {
@@ -22478,17 +22502,28 @@
           "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
         },
         "answer_verification": {
-          "date": "2026-07-16",
-          "verdict": "NULLED_NO_CORRECT_OPTION",
-          "note": "D=UNEZA 為真實 COP28 聯盟（IRENA/COP28 官方＋教材 p.55），C 疑「脫煤→脫碳」誤植；答案不可能是 D，撤答案。使用者最終裁定。",
-          "method": "使用者裁定＋IRENA/COP28 官方來源"
+          "date": "2026-07-19",
+          "verdict": "REWRITTEN_SINGLE_ANSWER",
+          "note": "原題選項 D（公共電力淨零聯盟＝UNEZA）為真 COP28 行動、『何者不是』無解；且 C 有『脫碳/脫煤』誤植並與 COP23 之 PPCA 混淆。把 C 換成非 COP28 的『清潔發展機制（CDM，京都議定書第 12 條）』，其餘三項均為 COP28 launch，答案＝C。",
+          "method": "UNFCCC（CDM=京都）＋COP28 官方/IEA/IRENA（獨立代理複驗）"
         },
-        "prior_answer": "D"
+        "prior_answer": "D",
+        "citation_audit": {
+          "date": "2026-07-19",
+          "verdict": "supported",
+          "detail": "CDM 為《京都議定書》第 12 條機制，非 COP28 能源轉型策略；A/B/D（再生能源、油氣脫碳憲章、UNEZA）均為 COP28 launch。故唯 CDM『不是 COP28 策略』。"
+        },
+        "evidence": [
+          {
+            "url": "https://unfccc.int/process-and-meetings/the-kyoto-protocol/mechanisms-under-the-kyoto-protocol/the-clean-development-mechanism",
+            "quote": "The Clean Development Mechanism (CDM), defined in Article 12 of the Protocol, allows a country with an emission-reduction or emission-limitation commitment under the Kyoto Protocol (Annex B Party) to implement an emission-reduction project in developing countries.",
+            "supports_option": "C",
+            "note": "UNFCCC：CDM 為京都議定書第 12 條機制，非 COP28 倡議"
+          }
+        ]
       },
-      "quality_flags": [
-        "ambiguous"
-      ],
-      "_correction_note": "2026-07-16：**撤答案（排除計分）。** 使用者最終裁定：選項 D「公共電力淨零聯盟」即 COP28 於 2023/12 由 IRENA 與 COP28 主席國發起之真實聯盟 UNEZA（Utilities for Net Zero Alliance，25 家公用事業／31 夥伴），命題依據 328201936.pdf p.55 亦將其列為 COP28 行動；故 D 為真、「何者不是」無法選 D。另選項 C「煤轉型加速器與脫碳聯盟」疑將教材原文「脫煤聯盟」（Powering Past Coal Alliance）誤植為「脫碳聯盟」。語意判讀下四選項皆真、無正解；逐字判讀下有問題者為 C 而非 D。無論何種判讀，答案都不可能是 D → 撤答案。"
+      "quality_flags": [],
+      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 C（清潔發展機制 CDM）。** 原題選項 D（UNEZA）為真實 COP28 聯盟、『何者不是』無解，且 C 誤植『脫碳聯盟』並與 COP23 之 PPCA 混淆。把 C 換成非 COP28 的 CDM（京都議定書第 12 條），A/B/D 均為經查證之 COP28 能源轉型行動，答案＝CDM。"
     },
     {
       "index": 421,
