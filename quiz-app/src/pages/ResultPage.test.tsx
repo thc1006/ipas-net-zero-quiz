@@ -270,7 +270,7 @@ describe('ResultPage', () => {
       const fakeResponse: AIResponse = {
         success: true,
         content: '新題目：下列何者屬於範疇一直接排放？\nA. 公務車柴油燃燒\nB. 外購電力',
-        confidence: 0.5, // 介於 0 和 0.7 之間 → 觸發 ⚠️ 低信心度 branch
+        confidence: 0.5, // 介於 0 和 0.7 之間 → 觸發 低信心度 branch
         error: '',
       };
       vi.mocked(generateSimilarQuestionStream).mockResolvedValueOnce(fakeResponse);
@@ -283,7 +283,7 @@ describe('ResultPage', () => {
       });
       expect(screen.getByText(/新題目：下列何者屬於範疇一直接排放？/)).toBeInTheDocument();
       expect(screen.getByText(/A\. 公務車柴油燃燒/)).toBeInTheDocument();
-      expect(screen.getByText(/⚠️ 低信心度/)).toBeInTheDocument();
+      expect(screen.getByText(/低信心度/)).toBeInTheDocument();
     });
 
     it('success response 高信心度 → 不顯示警示徽章', async () => {
@@ -300,7 +300,7 @@ describe('ResultPage', () => {
       await waitFor(() => {
         expect(screen.getByText(/AI 生成的相似題/)).toBeInTheDocument();
       });
-      expect(screen.queryByText(/⚠️ 低信心度/)).not.toBeInTheDocument();
+      expect(screen.queryByText(/低信心度/)).not.toBeInTheDocument();
     });
 
     it('failure response → 渲染 ai-error 區塊與錯誤訊息', async () => {

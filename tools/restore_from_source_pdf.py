@@ -48,7 +48,7 @@ import urllib.request
 from pathlib import Path
 
 # 繁體中文 Windows 的預設 codepage 是 cp950 —— 而那正是這個專案的主要讀者。
-# 這支腳本印 ✓ / ✅ / 中文，在 cp950 下會直接 UnicodeEncodeError，**一題都還沒驗就死**。
+# 這支腳本印 ✓ / / 中文，在 cp950 下會直接 UnicodeEncodeError，**一題都還沒驗就死**。
 # DATA-PROVENANCE.md 的整篇論點是「每個宣稱都對應一個任何人都能自己跑一遍的檢查」——
 # 那個「任何人」如果在 Windows 上跑不動，這句話就是空的。
 if hasattr(sys.stdout, 'reconfigure'):
@@ -633,7 +633,7 @@ def verify(cache: Path) -> int:
     if bad:
         print(f'✗ {bad} 項不符 —— 還原內容與來源 PDF 對不上')
         return 1
-    print(f'✅ {len(new)} 題全部與來源 PDF 相符')
+    print(f'{len(new)} 題全部與來源 PDF 相符')
     print('   （頁碼／欄位／題號／answer key／PDF 文字 hash／repo 文字 hash 全部一致）')
     return 0
 
@@ -652,7 +652,7 @@ def main() -> int:
         man = build(cache)
         MANIFEST.write_text(
             json.dumps(man, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-        print(f'\n✅ 已寫入 {MANIFEST.relative_to(REPO)}（{man["_meta"]["restored_count"]} 題）')
+        print(f'\n已寫入 {MANIFEST.relative_to(REPO)}（{man["_meta"]["restored_count"]} 題）')
         return 0
     if a.verify:
         return verify(cache)

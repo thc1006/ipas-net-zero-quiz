@@ -36,13 +36,21 @@ def stem(q):
 
 
 def srcs(bank, q):
+    # 統一的 URL 蒐集：metadata.sources / source.url / 逐字 evidence[].url 都算「有來源」。
+    # 少了 evidence[].url，一題就可能同時被算成「有逐字引文」又「完全沒有來源」的不可能狀態。
     if bank == '主題庫':
         out = [u for u in ((q.get('metadata') or {}).get('sources') or []) if isinstance(u, str)]
         s = q.get('source')
         if isinstance(s, dict) and isinstance(s.get('url'), str):
             out.append(s['url'])
-        return out
-    return q.get('sources') or []
+        ev = (q.get('metadata') or {}).get('evidence') or []
+    else:
+        out = list(q.get('sources') or [])
+        ev = (q.get('provenance') or {}).get('evidence') or []
+    for e in ev:
+        if isinstance(e, dict) and isinstance(e.get('url'), str):
+            out.append(e['url'])
+    return out
 
 
 def evidence(bank, q):
@@ -55,8 +63,36 @@ def evidence(bank, q):
 # 這些題因此**沒有拿到任何來源**，不是因為找不到，而是因為交上來的東西被擋下了。
 FABRICATED = {'gist[5]', 'gist[8]', 'gist[9]', 'gist[11]', 'gist[28]', 'gist[169]'}
 
+def is_primary(url):
+    m = re.match(r'https?://([^/]+)', url)
+    h = m.group(1).lower() if m else ''
+    return any(h == p or h.endswith('.' + p) for p in PRIMARY)
+
+
+def has_primary(b, q):
+    return any(is_primary(u) for u in srcs(b, q))
+
+
+def primary_evidence(b, q):
+    # 「有一手逐字引文」＝ evidence 至少一筆，其 url 是一手來源、且有非空 quote。
+    # 光有 evidence 不算 —— evidence 可能來自維基／新聞／標準轉載預覽（二手）。
+    return any(
+        isinstance(e, dict) and is_primary(e.get('url', '')) and (e.get('quote') or '').strip()
+        for e in (evidence(b, q) or [])
+    )
+
+
+# 「有 URL」不等於「有一手來源」：一手來源必須由事實發布者／法規/標準制定者發布。
+# 非一手 URL（部落格、新聞、二手研究）另計為第二類，不混入「一手來源」那一類。
 no_source = [(b, q) for b, q in ITEMS if not srcs(b, q)]
-no_quote = [(b, q) for b, q in ITEMS if srcs(b, q) and not evidence(b, q)]
+# 舊版這兩類都用 `not evidence(b, q)`（有任何 evidence 就排除）——
+#    於是「有一手來源 URL、但 evidence 是維基／新聞」的題會從兩類都溜掉，
+#    被默默算進「已補齊一手逐字」。改用 primary_evidence()：一手逐字才算數。
+nonprimary = [
+    (b, q) for b, q in ITEMS
+    if srcs(b, q) and not has_primary(b, q)
+]
+no_quote = [(b, q) for b, q in ITEMS if has_primary(b, q) and not primary_evidence(b, q)]
 
 
 def is_calc(q):
@@ -82,8 +118,9 @@ L.append(
 L.append('')
 L.append('| | 題數 |')
 L.append('| --- | ---: |')
-L.append(f'| **完全沒有來源** | **{len(no_source)}** |')
-L.append(f'| 有一手來源，但沒有逐字引文 | {len(no_quote)} |')
+L.append(f'| **完全沒有 URL** | **{len(no_source)}** |')
+L.append(f'| 有 URL 但沒有一手來源（部落格／新聞／二手） | {len(nonprimary)} |')
+L.append(f'| 有一手來源，但沒有一手逐字引文 | {len(no_quote)} |')
 L.append('')
 L.append('---')
 L.append('')
@@ -105,7 +142,7 @@ L.append('')
 L.append('第三輪有代理替這些題交了「一手來源 + 逐字引文」，但 `tools/verify_agent_quotes.py`')
 L.append('把該頁面抓回來逐字比對後，**那句話不在上面**。')
 L.append('')
-L.append('⚠️ **這不代表題目是錯的** —— 只代表**我們還沒有拿到可信的證據**。')
+L.append('**這不代表題目是錯的** —— 只代表**我們還沒有拿到可信的證據**。')
 L.append('捏造的引文一筆都沒有寫進題庫，所以這些題維持「沒有來源」。')
 L.append('')
 L.append('| id | 題幹 |')
@@ -127,11 +164,26 @@ L.append('')
 
 L.append('---')
 L.append('')
-L.append(f'## 二、有一手來源，但沒有逐字引文（{len(no_quote)} 題）')
+L.append(f'## 二、有 URL 但沒有一手來源（{len(nonprimary)} 題）')
 L.append('')
-L.append('這些題**附了一手來源 URL**，但沒有人把那一頁抓回來、逐字確認引文真的在上面。')
+L.append('這些題附了 URL，但網域不在 `source-authority.ts` 的一手來源清單內（部落格、新聞、')
+L.append('二手研究等）。**有連結不代表有一手依據** —— 這批仍需換成官方／法規／標準的一手來源。')
 L.append('')
-L.append('⚠️ **連結是活的，不代表指對地方。** 我們抓到過 19 題引錯法規 ——')
+if nonprimary:
+    L.append('| id | 題庫 | 題幹 |')
+    L.append('| --- | --- | --- |')
+    for b, q in sorted(nonprimary, key=lambda x: who(x[1])):
+        L.append(f'| `{who(q)}` | {b} | {stem(q)[:56]} |')
+    L.append('')
+
+L.append('---')
+L.append('')
+L.append(f'## 三、有一手來源，但沒有一手逐字引文（{len(no_quote)} 題）')
+L.append('')
+L.append('這些題**附了一手來源 URL**，但沒有一筆「一手來源 + 逐字引文」的 evidence ——')
+L.append('可能完全沒有 evidence，也可能 evidence 只落在二手來源（維基／新聞／標準轉載預覽）上。')
+L.append('')
+L.append('**連結是活的，不代表指對地方。** 我們抓到過 19 題引錯法規 ——')
 L.append('碳費題引到溫管辦法，兩個 URL 都回 HTTP 200。')
 L.append('')
 L.append('<details>')

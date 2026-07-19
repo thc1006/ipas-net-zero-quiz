@@ -12,6 +12,7 @@
 // （gist[304]）能默默錯到線上的原因。
 import { describe, it, expect } from 'vitest';
 import datasetRaw from './integrated_dataset.json';
+import poolRaw from './practice_pool.json';
 import {
   checkFlags,
   formatFlagViolations,
@@ -45,6 +46,7 @@ const DS = datasetRaw as unknown as {
 
 const ALL: Item[] = [...DS.gist_items, ...DS.our_unique_items];
 const who = (it: Item) => it.item_id ?? `gist[${it.index}]`;
+const POOL = poolRaw as unknown as { items: { id: string; answer: string | null }[] };
 
 // ── 官方答案卡：把 120 個「已跟官方答案對過」的答案釘死 ────────────────
 //
@@ -52,11 +54,11 @@ const who = (it: Item) => it.item_id ?? `gist[${it.index}]`;
 // 把題庫的答案逐題拿去跟官方答案卡比對過了 —— 這是本專案**第一個能機械驗證
 // 「答案」（而不是「引用」）的檢查**。32 個錯答案在此之前全靠人一題一題挖。
 //
-// ⚠️ 那支工具要抓 PDF，**CI 不跑它**（我們刻意不讓 CI 下載/解析 PDF）。
+// 那支工具要抓 PDF，**CI 不跑它**（我們刻意不讓 CI 下載/解析 PDF）。
 //    所以線上驗一次、把結果凍進資料，再由**這一道離線 gate 守一輩子**：
 //    **只要有人改動這 120 題的答案，CI 就紅。**（跟釘法條 sha256 同一個模式。）
 //
-// ⚠️ 比對必須**按文字、不按字母**：題庫把選項順序打散、文字也改寫過。
+// 比對必須**按文字、不按字母**：題庫把選項順序打散、文字也改寫過。
 //    我親手踩過 —— 教材印 (D)、題庫標 (A)，我差點宣告它是錯答案，
 //    但教材的 (D) 就是題庫的 (A)。**字母是排版，文字才是內容。**
 interface AnswerKeyCheck {
@@ -81,7 +83,7 @@ const akc = (it: Item): AnswerKeyCheck | undefined =>
 //   ✗ 'N/A' / 'none' / '' —— **一個沒有指向任何選項的標籤，不該存在。**
 //     引文釘不住答案就**不要寫這個欄位**，不要塞垃圾值假裝有。
 //
-// ⚠️ **這道 gate 紅了的時候，不要改 `answer` 去遷就 `supports_option`。**
+// **這道 gate 紅了的時候，不要改 `answer` 去遷就 `supports_option`。**
 //    `answer` 是內容，`supports_option` 只是標籤 —— 而**過去 5 次不一致，5 次都是標籤錯**。
 //    先去把那筆引文讀完。改錯方向會把 5 個正確答案改成錯的。
 describe('evidence.supports_option 必須真的指向本題的答案', () => {
@@ -108,7 +110,7 @@ describe('evidence.supports_option 必須真的指向本題的答案', () => {
     }).map(
       (it) =>
         `${who(it)}: 引文標 ${evOf(it)?.supports_option}，但答案是 ${it.answer}。` +
-        `⚠️ 先讀那筆引文 —— **不要改 answer 去遷就標籤**（過去 5 次不一致，5 次都是標籤錯）`
+        `先讀那筆引文 —— **不要改 answer 去遷就標籤**（過去 5 次不一致，5 次都是標籤錯）`
     );
     expect(bad).toEqual([]);
   });
@@ -122,7 +124,7 @@ describe('evidence.supports_option 必須真的指向本題的答案', () => {
     expect(ALL.filter((it) => evOf(it)?.supports_option).length).toBeGreaterThan(500);
   });
 
-  // ⚠️ **上面那道 gate 有一個它自己擋不住的漏洞，突變測試證實過：**
+  // **上面那道 gate 有一個它自己擋不住的漏洞，突變測試證實過：**
   //    把 `supports_option` 和 `answer` **一起**改成同一個錯的值 —— 兩邊「一致」了，gate 變綠。
   //    而 gist[374] 之類的題目沒有官方答案卡可對，於是**沒有任何閘門攔得住**。
   //
@@ -269,7 +271,7 @@ describe('題庫結構完整性', () => {
       expect(DS.meta).not.toHaveProperty('content_verified_as_of');
     });
 
-    // ⚠️ **`>=`，不是 `===`。** 這裡原本寫 `=== last_review_date`，
+    // **`>=`，不是 `===`。** 這裡原本寫 `=== last_review_date`，
     // 而那個寫法有一個很醜的失敗模式：**一題查得越新，分數越低。**
     //
     // gist[520] 在 last_review_date（07-13）複查過。隔天我又查了一次，
@@ -316,6 +318,58 @@ describe('題庫結構完整性', () => {
       expect(open.map((u) => u.id)).toContain('PAS_2060_withdrawal_date');
       expect(open.map((u) => u.id)).toContain('ifrs_issb_tcfd_not_reverified');
     });
+
+    // 治理 metadata 與題目現況的交叉一致性：一旦某未解事項標了 resolved_for_scoring
+    // （代表它提到的題目「已救回、可計分」），那些題目就**必須真的有答案**。
+    // 若日後有人把其中一題重新撤成 null，或有人刪掉題目答案卻沒回頭改頂層摘要，
+    // 這條會當場紅 —— 專治「頂層說已解決、個別題卻是 null」的 split-brain。
+    it('resolved_for_scoring 的事項，其提及的題目必須真的可計分（answer 非 null）', () => {
+      const byIndex = new Map(ALL.map((it) => [it.index, it]));
+      const poolById = new Map(POOL.items.map((i) => [i.id, i]));
+      const entries = cr.known_unresolved as unknown as {
+        id: string;
+        detail?: string;
+        resolved_for_scoring?: boolean;
+      }[];
+      const scoped = entries.filter((u) => u.resolved_for_scoring);
+      expect(scoped.length, '沒有任何 resolved_for_scoring 事項 —— 這條在空轉').toBeGreaterThan(0);
+      const bad: string[] = [];
+      let checked = 0;
+      for (const u of scoped) {
+        const detail = u.detail ?? '';
+        for (const m of detail.matchAll(/gist\[(\d+)\]/g)) {
+          const q = byIndex.get(Number(m[1]));
+          if (q) {
+            checked++;
+            if (q.answer == null) bad.push(`${u.id}: gist[${m[1]}] 仍為 null`);
+          }
+        }
+        for (const m of detail.matchAll(/pool-[A-Za-z0-9_-]+/g)) {
+          const q = poolById.get(m[0]);
+          if (q) {
+            checked++;
+            if (q.answer == null) bad.push(`${u.id}: ${m[0]} 仍為 null`);
+          }
+        }
+      }
+      expect(checked, 'resolved_for_scoring 事項裡沒對到任何題目 id —— 交叉檢查在空轉').toBeGreaterThan(0);
+      expect(
+        bad,
+        '頂層 known_unresolved 標了 resolved_for_scoring，個別題卻仍是 null（治理 split-brain）'
+      ).toEqual([]);
+    });
+
+    // 頂層「誠實 metadata」不得再內嵌會漂的過期快照數字（例：103/783、422 題完全沒有來源、
+    // 351/773）。這些一律改為指向被 gate/sync 守住的欄位或自動生成的 VERIFICATION-GAPS.md。
+    it('content_review.note / metadata_honesty_note 不得內嵌會漂的過期快照數字', () => {
+      const blob =
+        JSON.stringify(cr.note) + JSON.stringify(DS.meta.metadata_honesty_note);
+      expect(blob, '出現過期總題數 783（現為 773）').not.toMatch(/783/);
+      expect(
+        blob,
+        '誠實 note 不應硬編「N 題完全沒有來源 URL」的快照 —— 請指向 VERIFICATION-GAPS.md'
+      ).not.toMatch(/\d+\s*題[^。，]{0,8}完全沒有來源\s*URL/);
+    });
   });
 
   it('AR6「次方成長」偽造題不得再出現（issue #85 迴歸防護）', () => {
@@ -340,12 +394,12 @@ describe('題庫結構完整性', () => {
     //
     // 只要題幹有任何一點雜訊，重複就抓不到 —— 這正是「【已刪除】90.」那串來源殘留
     // 能一直遮住兩題重複的原因。所以這裡用 NFKC + 剝掉所有非文數字。
-    // ⚠️ 不可以用 /[\s\W_]+/：JS 的 \W 是 [^A-Za-z0-9_]，**中文字全部符合 \W**
+    // 不可以用 /[\s\W_]+/：JS 的 \W 是 [^A-Za-z0-9_]，**中文字全部符合 \W**
     //    —— 那會把題幹的中文整段刪光，剩下的空殼互相「重複」，爆出一堆假警報。
     //    （Python 的 \W 是 Unicode-aware，行為完全不同 —— 我就是這樣被騙的。）
     //    用 Unicode property escape：剝標點(\p{P})、分隔(\p{Z})與空白，保留 CJK。
     //
-    // ⚠️ **絕對不可以連 \p{S}（符號）一起剝**。× ÷ + − = 都是 \p{S}，
+    // **絕對不可以連 \p{S}（符號）一起剝**。× ÷ + − = 都是 \p{S}，
     //    而題庫裡有公式題：
     //      A. 排放量 = 活動數據 × 排放係數 × GWP
     //      B. 排放量 = 活動數據 + 排放係數 + GWP
@@ -662,7 +716,7 @@ describe('同一道題不得有兩個不同的正解', () => {
 // ─────────────────────────────────────────────────────────────────────────────
 // 選項不得有兩個完全相同（那題就不可作答了）
 //
-// ⚠️ 正規化**不可以剝掉 \p{S}（數學符號）**。題庫裡有公式題：
+// 正規化**不可以剝掉 \p{S}（數學符號）**。題庫裡有公式題：
 //     A. 排放量 = 活動數據 × 排放係數 × GWP
 //     B. 排放量 = 活動數據 + 排放係數 + GWP
 //     C. 排放量 = 活動數據 ÷ 排放係數 × GWP
@@ -918,17 +972,16 @@ describe('quality_flags 的一致性', () => {
     {
       id: 'gist[105]',
       why:
-        '**已撤答案（answer=null、排除計分）。** 題幹問「企業宣告碳中和時」如何四捨五入，' +
-        '但該規則住在**產品碳足跡**制度（自願性產品碳足跡辦法，全文「碳中和」0 次）—— ' +
-        '兩套不同制度、四選項皆無一手依據。撤答案而非改為 C（改 C 等於張冠李戴）。' +
-        '既已排除計分，不會再變（使用者兩輪調研 + 我抓法規原文複核）',
+        '2026-07-19 改題幹救回為單一正解。原題問「碳中和宣告」如何四捨五入，但該規則不在碳中和' +
+        '宣告指引、而住在產品碳足跡制度。改題幹到規則實際所在之制度（自願性產品碳足跡核定標示及' +
+        '管理辦法 §4(3)：四捨五入取至整數位），答案＝四捨五入取至整數位。法規條文寫死、不隨時間變',
     },
     {
       id: 'gist[137]',
       why:
-        '**已撤答案（answer=null、排除計分）。** 題幹把「政府指引本身的更新機制」與' +
-        '「企業碳中和管理計畫的更新」混為一談；現行環境部指引並無「依實施情況與回饋調整」的' +
-        '更新機制，四選項皆無依據。既已排除計分，不會再變（使用者兩輪獨立調研共識）',
+        '（已標 time_sensitive，此處不需例外）2026-07-19 改題幹救回為單一正解：原題問「政府指引的' +
+        '更新機制」（現行指引無此機制），改測 ISO 14068-1:2023「碳中和管理計畫」之「評估與修訂」' +
+        '（Clause 9.3）機制。因 ISO 14068-1:2023 官方已標為待修訂、預計由 ISO/FDIS 14068 取代，故標 time_sensitive',
     },
     {
       id: 'gist[420]',
@@ -948,10 +1001,10 @@ describe('quality_flags 的一致性', () => {
     {
       id: 'gist[341]',
       why:
-        '**已撤答案（answer=null、排除計分）。** 原答案 D「以上皆是」不成立 —— 選項 B' +
-        '「自願碳市場規範明確而成熟」為錯誤敘述：Article 6.4 機制方法學/碳移除標準於 COP28（2023）' +
-        '未通過、延至 COP29（2024）方採納，VCM 於該期間仍受完整性爭議。B 為假則「以上皆是」不成立，' +
-        '且題目過於籠統、A/C 皆無單一明確依據。這是命題瑕疵、非時效性數字，撤答案後不會再變',
+        '2026-07-19 改題幹救回為單一正解。原題以「以上皆是」作答但含假敘述（自願碳市場明確成熟）→無單解。' +
+        '改寫為「下列關於 COP28 何者錯誤？」：三項真實 COP28 成果（全球盤點轉型脫離化石燃料、首日啟動' +
+        '損失與損害基金、三倍再生能源承諾）為誘答，唯一錯誤敘述「COP28 通過巴黎協定第 6.4 條方法學/碳移除' +
+        '標準」（實際遭否決、延至 COP29 方採納）為答案。COP28 之議定成果為史實、不隨時間變',
     },
     {
       id: 'S_CHU_07-q030',
@@ -1070,11 +1123,11 @@ describe('quality_flags 的一致性', () => {
     ).toEqual([]);
   });
 
-  // ⚠️ **「我已經把那句錯誤敘述移除了」是一句可以被證偽的宣稱 —— 那就去證偽它。**
+  // **「我已經把那句錯誤敘述移除了」是一句可以被證偽的宣稱 —— 那就去證偽它。**
   //
   // 第五輪的寫回程式做的是**字串手術**：`ex.replace(claim, '')`。
   // 而它在 `claim` 對不上時**靜靜地什麼都沒做**，然後照樣把更正註腳貼上去 ——
-  // 結果是：**錯誤的句子還在，下面卻跟著一段「⚠️ 本題解析已更正：那句話是錯的」。**
+  // 結果是：**錯誤的句子還在，下面卻跟著一段「本題解析已更正：那句話是錯的」。**
   // 同一則解析自己跟自己打架。
   //
   // 第六輪的**對抗式覆核**（契約寫死「你的工作是證明我改錯了」）抓到 6 題，
@@ -1102,7 +1155,7 @@ describe('quality_flags 的一致性', () => {
     expect(bad, '宣稱移除了錯誤敘述，實際上沒有移除').toEqual([]);
   });
 
-  // ⚠️ **一筆沒有記錄 URL 的「驗證紀錄」，不是驗證紀錄。**
+  // **一筆沒有記錄 URL 的「驗證紀錄」，不是驗證紀錄。**
   //
   // 這是這個 pilot 最隱蔽的一次自我欺騙：
   // 第一、二輪的寫回程式只存了 `quote`，**沒存 `url`**。於是 137 筆 evidence 變成

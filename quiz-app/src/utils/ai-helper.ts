@@ -211,7 +211,7 @@ ${question.answer ? `正確答案：${question.answer}` : '（此題無標準答
         success: true,
         content:
           content +
-          '\n\n⚠️ 提醒：此回答的信心度較低，建議參考官方教材確認。',
+          '\n\n提醒：此回答的信心度較低，建議參考官方教材確認。',
         confidence,
       };
     }
@@ -295,7 +295,7 @@ ${question.answer ? `正確答案：${question.answer}` : '（此題無標準答
 
     if (confidence < CONFIDENCE_THRESHOLD) {
       const finalContent =
-        fullContent + '\n\n⚠️ 提醒：此回答的信心度較低，建議參考官方教材確認。';
+        fullContent + '\n\n提醒：此回答的信心度較低，建議參考官方教材確認。';
       onChunk(finalContent, true);
       return {
         success: true,

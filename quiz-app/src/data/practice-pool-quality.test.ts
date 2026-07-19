@@ -174,7 +174,7 @@ describe('練習池：解析不得指名選項字母', () => {
   // 解析寫「選項 B 是…」，等於把解析綁死在一個隨時可能變的排列上；
   // 這次重排就有 6 題的解析因此會指錯選項。
   //
-  // ⚠️ **我第一版的 pattern 太窄，漏掉了一個真實缺陷。**
+  // **我第一版的 pattern 太窄，漏掉了一個真實缺陷。**
   //
   // `pool-em-ipas_vocus_mock_rescued-050` 的解析正確推導出 CBAM 申報期限是
   // 「次年 9 月 30 日」（選項 A），然後**結尾寫「正解為 C」**——
@@ -198,7 +198,7 @@ describe('練習池：解析不得指名選項字母', () => {
   it('沒有任何解析在指名 A/B/C/D', () => {
     const bad = POOL.filter((q) => NAMES_A_LETTER.test(q.explanation)).map((q) => {
       const m = q.explanation.match(NAMES_A_LETTER)!;
-      const mismatch = m[1] !== q.answer ? `  🚨 **與 answer=${q.answer} 不符**` : '';
+      const mismatch = m[1] !== q.answer ? `  **與 answer=${q.answer} 不符**` : '';
       return `${q.id}: 解析寫「${m[0]}」${mismatch}`;
     });
     expect(

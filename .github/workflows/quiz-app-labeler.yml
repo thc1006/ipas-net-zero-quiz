@@ -8,7 +8,7 @@
 #   「Resource not accessible by integration」。
 # - 改用 pull_request_target 讓此 workflow 在 base repo 權限下執行 → labeler 可加 label。
 #
-# ⚠️ 安全注意：pull_request_target 會以 base repo 的高權限執行。
+# 安全注意：pull_request_target 會以 base repo 的高權限執行。
 # - 此 workflow **故意不 checkout PR 程式碼**（actions/labeler 只透過 GitHub API 讀
 #   changed-files metadata，不需要原始碼），所以不會執行任何 fork 提供的程式碼。
 # - 若未來新增 step，**禁止**做 `actions/checkout` ref 指向 PR HEAD

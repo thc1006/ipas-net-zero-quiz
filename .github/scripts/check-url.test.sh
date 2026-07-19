@@ -266,4 +266,4 @@ fi
 echo
 echo "通過 $pass 項，失敗 $fail 項"
 [ "$fail" -eq 0 ] || exit 1
-echo '✅ check-url glue 測試全部通過'
+echo 'check-url glue 測試全部通過'

@@ -58,7 +58,7 @@ check_description() {
   fi
 
   if [ "$rc" -eq 0 ]; then
-    echo "✅ About 題數與資料一致：主題庫 $want_main、加強練習 $want_pool"
+    echo "About 題數與資料一致：主題庫 $want_main、加強練習 $want_pool"
   else
     echo "" >&2
     echo "  修正方式：" >&2

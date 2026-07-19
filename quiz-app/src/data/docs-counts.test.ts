@@ -13,7 +13,7 @@ import { resolve } from 'node:path';
 import datasetRaw from './integrated_dataset.json';
 import poolRaw from './practice_pool.json';
 import manifestRaw from './restoration-manifest.json';
-import { hasPrimarySource } from '../utils/source-authority';
+import { classifyHost, hasPrimarySource, hostOf, isPrimarySource } from '../utils/source-authority';
 
 interface Item {
   quality_flags?: string[];
@@ -285,7 +285,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
 
   // README 把「有來源」拆成三級 —— **三個數字都要有人守**。
   //
-  // ⚠️ 原本這道 gate 只守「有沒有來源」，但 README 的文字寫的是「附**一手**來源」——
+  // 原本這道 gate 只守「有沒有來源」，但 README 的文字寫的是「附**一手**來源」——
   // **文字宣稱的東西，和 gate 驗證的東西，根本不是同一件事。**
   // 那正是這整輪在修的病：一個看起來被守住、其實沒被守住的宣稱。
   //
@@ -294,24 +294,57 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
   //   ② 有一手來源 URL（source-authority.ts 的 PRIMARY）—— 連結是活的，但沒人保證內容相符
   //   ③ 完全沒有來源 —— 無從查證
   it('README 的三級來源覆蓋率（逐字引文／一手來源／無來源）都必須與資料一致', () => {
+    // 必須跟 tools/sync_derived_counts.py 的 main_srcs()/pool_srcs() 一模一樣：
+    // metadata.sources / source.url / 逐字 evidence[].url 都算「有來源」。
+    // 少了 evidence[].url，一題就會同時被算成「有逐字引文」又「完全沒有來源」的不可能狀態。
     const urlsOf = (i: Item): string[] => {
-      const md = i.metadata as unknown as { sources?: unknown[] } | undefined;
+      const md = i.metadata as unknown as
+        | { sources?: unknown[]; evidence?: { url?: unknown }[] }
+        | undefined;
       const out = (md?.sources ?? []).filter(
         (u): u is string => typeof u === 'string' && /^https?:\/\//.test(u)
       );
       const src = (i as unknown as { source?: { url?: unknown } }).source;
       if (src && typeof src === 'object' && typeof src.url === 'string') out.push(src.url);
+      for (const e of md?.evidence ?? []) {
+        if (e && typeof e.url === 'string' && /^https?:\/\//.test(e.url)) out.push(e.url);
+      }
       return out;
     };
-    const hasEvidence = ALL.filter(
-      (i) => (i.metadata as unknown as { evidence?: unknown })?.evidence != null
+    // ① 級「有一手來源的逐字引文」：evidence 至少一筆，其 url 屬一手來源、且有非空 quote。
+    // **不能只看 `evidence != null`** —— 否則塞一筆 `{url: 維基頁, quote: "任意句"}`
+    //    就能讓「機械驗證」題數 +1（正是被抓到的 false positive）。一手逐字必須由
+    //    **事實發布者**的頁面承載。這段必須跟 tools/sync_derived_counts.py 的
+    //    has_evidence() 一模一樣。
+    const primaryQuote = (evs: { url?: unknown; quote?: unknown }[] | undefined): boolean =>
+      (evs ?? []).some(
+        (e) =>
+          e != null &&
+          typeof e.url === 'string' &&
+          isPrimarySource(e.url) &&
+          typeof e.quote === 'string' &&
+          e.quote.trim().length > 0
+      );
+    const hasEvidence = ALL.filter((i) =>
+      primaryQuote(
+        (i.metadata as unknown as { evidence?: { url?: unknown; quote?: unknown }[] })?.evidence
+      )
     ).length;
     const hasPrimary = ALL.filter((i) => hasPrimarySource(urlsOf(i))).length;
     const noSource = ALL.filter((i) => urlsOf(i).length === 0).length;
 
-    const poolItems = (poolRaw as unknown as { items: { sources?: string[]; provenance?: { evidence?: unknown } }[] }).items;
-    const poolEvidence = poolItems.filter((q) => q.provenance?.evidence != null).length;
-    const poolPrimary = poolItems.filter((q) => hasPrimarySource(q.sources ?? [])).length;
+    const poolItems = (poolRaw as unknown as {
+      items: { sources?: string[]; provenance?: { evidence?: { url?: unknown; quote?: unknown }[] } }[];
+    }).items;
+    const poolUrls = (q: (typeof poolItems)[number]): string[] => {
+      const out = [...(q.sources ?? [])];
+      for (const e of q.provenance?.evidence ?? []) {
+        if (e && typeof e.url === 'string' && /^https?:\/\//.test(e.url)) out.push(e.url);
+      }
+      return out;
+    };
+    const poolEvidence = poolItems.filter((q) => primaryQuote(q.provenance?.evidence)).length;
+    const poolPrimary = poolItems.filter((q) => hasPrimarySource(poolUrls(q))).length;
 
     // README 的表格：| **① …** | … | **100 / 773** | **29 / 154** |
     const row = (label: string) =>
@@ -332,6 +365,194 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     const n = row('完全沒有來源');
     expect(n, 'README 找不到「完全沒有來源」那一列').not.toBeNull();
     expect(Number(n![1]), '主題庫「完全沒有來源」的題數與資料不符').toBe(noSource);
+  });
+
+  // evidence 的 URL 也必須能被 source-authority 分級 —— 認不得就失敗（fail-closed）。
+  // 否則往 evidence 塞一個沒分級的新網域，tier ① 的判定（isPrimarySource）會靜靜回 false，
+  // 而沒有人知道那是「該算一手卻漏標」還是「本來就二手」。source-authority.ts 已對 sources
+  // 這樣要求，這裡把同一個保證延伸到 evidence[].url。
+  it('每一筆 evidence 的 URL 都必須能被 source-authority 分級（primary/secondary，不得 unknown）', () => {
+    const unknown: string[] = [];
+    const check = (id: string, evs: { url?: unknown }[] | undefined) => {
+      for (const e of evs ?? []) {
+        if (e && typeof e.url === 'string' && /^https?:\/\//.test(e.url)) {
+          const h = hostOf(e.url);
+          if (h == null || classifyHost(h) == null) unknown.push(`${id}: ${e.url}`);
+        }
+      }
+    };
+    for (const i of ALL) {
+      const c = i as unknown as { index?: unknown; item_id?: unknown; metadata?: { evidence?: { url?: unknown }[] } };
+      check(String(c.index ?? c.item_id ?? '?'), c.metadata?.evidence);
+    }
+    for (const q of (poolRaw as unknown as {
+      items: { id: string; provenance?: { evidence?: { url?: unknown }[] } }[];
+    }).items) {
+      check(q.id, q.provenance?.evidence);
+    }
+    expect(
+      unknown,
+      'evidence 出現未分級網域 —— 請在 source-authority.ts 把它標為 primary 或 secondary'
+    ).toEqual([]);
+  });
+
+  // requirement #3：committed 題庫的全量 evidence 盤點（tools/build_evidence_manifest.py 生成
+  // evidence-manifest.json）。這裡離線重算並比對 —— 確保那份 manifest 可重現、不漂，
+  // 且它記的 tier ① 數字與 README 表格一致。CI 因此驗證的是「一份已生成的 manifest」，
+  // 不是「evidence 欄位存不存在」。
+  it('evidence-manifest.json 必須與資料逐筆一致（可重現、tier ① 與 README 相符）', () => {
+    type Entry = {
+      qid: string; bank: string; url: string; host: string;
+      authority: string; has_quote: boolean; tier1: boolean;
+    };
+    const manifest = JSON.parse(
+      readFileSync(resolve(__dirname, '../../../evidence-manifest.json'), 'utf8')
+    ) as {
+      summary: {
+        main_tier1_questions: number;
+        pool_tier1_questions: number;
+        unknown_evidence_urls: number;
+      };
+      entries: Entry[];
+    };
+
+    // 用跟 tools/build_evidence_manifest.py 一模一樣的**字串規則**重算每一筆 evidence
+    // （刻意不走 hostOf 的 URL 解析，才能跟 Python 的 `strip 協定 → split '/'` 逐字對齊）。
+    const strHost = (u: string) => u.replace(/^https?:\/\//i, '').split('/')[0].toLowerCase();
+    // 每一筆 entry 規範化成一個 tuple；資料端用同樣規則重算成一個 tuple 列表。
+    // 兩邊當**多重集合**比對 —— 同一題、同一 url、不同引文的兩筆 evidence（gist[105]／
+    // gist[258] 各引兩句）會被如實算成兩筆，不會被去重吃掉（正是第一版的 bug：909 被算成 907）。
+    const tupleOf = (e: Entry) =>
+      `${e.bank}|${e.qid}|${e.url}|${e.host}|${e.authority}|${e.has_quote}|${e.tier1}`;
+    const recomputed: string[] = [];
+    const add = (bank: string, qid: string, evs: { url?: unknown; quote?: unknown }[] | undefined) => {
+      for (const e of evs ?? []) {
+        if (!e || typeof e.url !== 'string' || !/^https?:\/\//.test(e.url)) continue;
+        const host = strHost(e.url);
+        const authority = classifyHost(host) ?? 'unknown';
+        const has_quote = typeof e.quote === 'string' && e.quote.trim().length > 0;
+        recomputed.push(
+          tupleOf({ qid, bank, url: e.url, host, authority, has_quote, tier1: authority === 'primary' && has_quote })
+        );
+      }
+    };
+    for (const i of ALL) {
+      const c = i as unknown as {
+        index?: unknown; item_id?: unknown;
+        metadata?: { evidence?: { url?: unknown; quote?: unknown }[] };
+      };
+      const qid = c.index !== undefined ? `gist[${c.index}]` : String(c.item_id ?? '?');
+      add('main', qid, c.metadata?.evidence);
+    }
+    for (const q of (poolRaw as unknown as {
+      items: { id: string; provenance?: { evidence?: { url?: unknown; quote?: unknown }[] } }[];
+    }).items) {
+      add('pool', q.id, q.provenance?.evidence);
+    }
+
+    const multiset = (arr: string[]) => {
+      const m = new Map<string, number>();
+      for (const t of arr) m.set(t, (m.get(t) ?? 0) + 1);
+      return m;
+    };
+    const dataMs = multiset(recomputed);
+    const manifestMs = multiset(manifest.entries.map(tupleOf));
+    // 逐筆對帳：任何 evidence 被增刪、改網址、改分級、加/刪引文而沒重跑生成器，這裡就紅。
+    expect(manifest.entries.length, 'manifest 條目數與資料不符 —— 請重跑 tools/build_evidence_manifest.py').toBe(
+      recomputed.length
+    );
+    const bad: string[] = [];
+    for (const [t, c] of manifestMs) {
+      if ((dataMs.get(t) ?? 0) !== c) bad.push(`manifest 多出/不符：${t}`);
+    }
+    for (const [t] of dataMs) {
+      if (!manifestMs.has(t)) bad.push(`資料有、manifest 沒有：${t}`);
+    }
+    expect(bad, 'manifest 與資料不一致 —— 請重跑 tools/build_evidence_manifest.py').toEqual([]);
+
+    // 摘要（每題級 tier ① 計數）與 README 綁定。
+    const pq = (evs: { url?: unknown; quote?: unknown }[] | undefined): boolean =>
+      (evs ?? []).some(
+        (e) =>
+          e != null &&
+          typeof e.url === 'string' &&
+          isPrimarySource(e.url) &&
+          typeof e.quote === 'string' &&
+          e.quote.trim().length > 0
+      );
+    const mainT1 = ALL.filter((i) =>
+      pq((i as unknown as { metadata?: { evidence?: { url?: unknown; quote?: unknown }[] } }).metadata?.evidence)
+    ).length;
+    const poolT1 = (poolRaw as unknown as {
+      items: { provenance?: { evidence?: { url?: unknown; quote?: unknown }[] } }[];
+    }).items.filter((q) => pq(q.provenance?.evidence)).length;
+
+    expect(manifest.summary.main_tier1_questions, 'manifest main tier1 漂了').toBe(mainT1);
+    expect(manifest.summary.pool_tier1_questions, 'manifest pool tier1 漂了').toBe(poolT1);
+    expect(manifest.summary.unknown_evidence_urls, 'manifest 仍有未分級 evidence 網域').toBe(0);
+    const m = README.match(/\|[^|\n]*逐字引文[^|\n]*\|[^|\n]*\|\s*\*?\*?(\d+)\s*\//);
+    expect(m, 'README 找不到「逐字引文」列').not.toBeNull();
+    expect(Number(m![1]), 'README tier ① 與 manifest／資料不符').toBe(mainT1);
+  });
+
+  // 不可能狀態守門：一題若有逐字 evidence，就一定要有可查證的來源 URL。
+  // 否則統計會同時把它算成「已逐字驗證」與「完全沒有來源」（自相矛盾）—— 這正是
+  // gen_gap_reports / sync / 本檔三邊 URL 蒐集不一致時發生過的事。
+  it('不得有「有逐字 evidence 卻無任何來源 URL」的題', () => {
+    const evUrls = (ev: { url?: unknown }[] | undefined) =>
+      (ev ?? [])
+        .map((e) => e?.url)
+        .filter((u): u is string => typeof u === 'string' && /^https?:\/\//.test(u));
+    const mainBad = ALL.filter((i) => {
+      const md = i.metadata as unknown as
+        | { sources?: unknown[]; evidence?: { url?: unknown }[] }
+        | undefined;
+      const ev = md?.evidence ?? [];
+      if (ev.length === 0) return false;
+      const srcUrls = (md?.sources ?? []).filter(
+        (u): u is string => typeof u === 'string' && /^https?:\/\//.test(u)
+      );
+      const src = (i as unknown as { source?: { url?: unknown } }).source;
+      if (src && typeof src === 'object' && typeof src.url === 'string') srcUrls.push(src.url);
+      return srcUrls.length + evUrls(ev).length === 0;
+    }).map((i) => (i as { item_id?: string; index?: number }).item_id ?? `gist[${(i as { index?: number }).index}]`);
+    const poolItems = (poolRaw as unknown as {
+      items: { id: string; sources?: string[]; provenance?: { evidence?: { url?: unknown }[] } }[];
+    }).items;
+    const poolBad = poolItems
+      .filter((q) => {
+        const ev = q.provenance?.evidence ?? [];
+        if (ev.length === 0) return false;
+        return (q.sources ?? []).length + evUrls(ev).length === 0;
+      })
+      .map((q) => q.id);
+    expect(
+      [...mainBad, ...poolBad],
+      '有逐字 evidence 卻無任何來源 URL —— 統計會出現「已逐字驗證」又「完全沒有來源」的自相矛盾'
+    ).toEqual([]);
+  });
+
+  // 引用稽核的百分比不得手填 —— 必須等於 round(count / population * 100, 1)。
+  // 先前 README 寫 79%／9.1%，而實算是 82.8%／4.7%：數字漂了、沒人守。
+  it('引用稽核百分比必須等於 count / population（不得手填、不得漂）', () => {
+    const pop = (DS.meta as { citation_audit?: { population?: number } }).citation_audit
+      ?.population;
+    expect(typeof pop, 'meta.citation_audit.population 缺失').toBe('number');
+    const rowPct = (label: string) => {
+      const m = README.match(
+        new RegExp(`${label}[^|\\n]*\\|\\s*\\*{0,2}(\\d+)\\*{0,2}\\s*\\|\\s*([\\d.]+)%`)
+      );
+      return m ? { count: Number(m[1]), pct: Number(m[2]) } : null;
+    };
+    const bad: string[] = [];
+    for (const label of ['引用正確', '引錯地方', '沒有一句話釘得住']) {
+      const got = rowPct(label);
+      expect(got, `README 找不到「${label}」的 count／百分比`).not.toBeNull();
+      const expected = Math.round((got!.count / pop!) * 1000) / 10;
+      if (got!.pct !== expected)
+        bad.push(`${label}: ${got!.pct}% ≠ ${expected}%（${got!.count}/${pop}）`);
+    }
+    expect(bad, '引用稽核百分比與 count/population 不符 —— 請由 count/pop 計算，勿手填').toEqual([]);
   });
 
   it('README 的「N 題答案曾被更正」必須等於實際 prior_answer 的題數', () => {
@@ -389,11 +610,11 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     }
 
     // ③ README 上的數字要對得上
-    const sup = README.match(/\| ✅ 引用正確[^|]*\| \*\*(\d+)\*\*/);
+    const sup = README.match(/\| 引用正確[^|]*\| \*\*(\d+)\*\*/);
     expect(sup, 'README 找不到「引用正確」那一列').not.toBeNull();
     expect(Number(sup![1])).toBe(a.supported);
 
-    const wr = README.match(/\| 🔧 \*\*引錯地方[^|]*\| \*\*(\d+)\*\*/);
+    const wr = README.match(/\| \*\*引錯地方[^|]*\| \*\*(\d+)\*\*/);
     expect(wr, 'README 找不到「引錯地方」那一列').not.toBeNull();
     expect(Number(wr![1]), 'README 的「引錯地方」題數與 meta 不符').toBe(a.wrong_source);
 
@@ -401,7 +622,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     expect(rep, 'README 找不到「N 題已換成經機械驗證的一手來源」').not.toBeNull();
     expect(Number(rep![1])).toBe(a.replaced);
 
-    // ⚠️ 錨點要綁在**結構**上，不要綁在**散文**上。
+    // 錨點要綁在**結構**上，不要綁在**散文**上。
     // 這條原本錨在「另外 **N 題**代理說引錯」—— 那句話後來被改寫，正則就對不上了。
     // 同一個病剛在 tools/sync_derived_counts.py 咬過一次：README 的「一手來源」列
     // 被加了一句警語，同步規則從此靜靜死掉，740 凍了一整輪沒人發現。
@@ -478,7 +699,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     expect(Number(r![2])).toBe(audit.verifiable);
     expect(Number(r![3])).toBe(audit.error_rate_pct);
 
-    // ⚠️ 這裡原本還有第 ⑤ 條：「README 不准再出現『點估計錯誤率 0%』」。
+    // 這裡原本還有第 ⑤ 條：「README 不准再出現『點估計錯誤率 0%』」。
     // **它立刻誤報了** —— 因為 README 現在正**引用**那句舊的錯話，當作一個教訓在講。
     // 一個分不出「宣稱 0%」與「引述自己曾經宣稱 0%」的檢查器，
     // 懲罰的是誠實，而不是錯誤。
@@ -583,7 +804,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
   // 「引文逐字存在」與「引文釘得住答案」**是兩件事**。
   // 補解析的過程發現 41 題的「已驗證引文」釘不住答案 —— 那 41 筆**已全部逐筆追完**。
   //
-  // ⚠️ 這道 gate 一度守「evidence_review 標記數 == README 的數字」，
+  // 這道 gate 一度守「evidence_review 標記數 == README 的數字」，
   //    但 41 筆全部解決後標記數歸零，那個等式就沒意義了。
   //    改成守**這件事的結論**：README 說 41 筆、資料裡 evidence_review 已清空（全部解決）。
   it('README 說的「41 題引文撐不住答案」是已知的歷史數字，且資料裡的指控已全部解決', () => {
@@ -600,7 +821,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
 
   // NEEDS-SOURCING.md：「真正還需要人工補來源」的題目清單。
   //
-  // ⚠️ 判準比第一版精確：一題若已被**撤答案（answer=null，排除計分）**、
+  // 判準比第一版精確：一題若已被**撤答案（answer=null，排除計分）**、
   //    或**已修正題幹／答案（有 _correction_note / stem_corrections）**，就是**已處置**，
   //    不再算「待補來源」—— 撤掉的題目沒有正確答案可補，改過題幹的答案靠排除法成立。
   //    （14 題經人工兩輪調研後全部處置：9 補來源、3 改題幹、2 撤答案 → 待補歸零。）

@@ -205,4 +205,4 @@ fi
 echo
 echo "通過 $pass 項，失敗 $fail 項"
 [ "$fail" -eq 0 ] || exit 1
-echo '✅ aggregate-results 整合測試全部通過（含 is_failure SSOT）'
+echo 'aggregate-results 整合測試全部通過（含 is_failure SSOT）'

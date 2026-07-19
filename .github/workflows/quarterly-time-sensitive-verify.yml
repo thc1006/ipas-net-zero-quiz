@@ -218,19 +218,19 @@ jobs:
               '',
               '| 分類 | 判定條件 | 本次 |',
               '|---|---|---|',
-              `| ❌ \`DEAD\` | HTTP **404 / 410** —— 資源真的不存在 | ${o.dead_count} |`,
-              `| ❌ \`DEAD_DNS\` | curl exit **6**，**且** 1.1.1.1 與 8.8.8.8 兩個獨立 resolver 都回 **NXDOMAIN** | ${o.dead_dns_count} |`,
+              `| \`DEAD\` | HTTP **404 / 410** —— 資源真的不存在 | ${o.dead_count} |`,
+              `| \`DEAD_DNS\` | curl exit **6**，**且** 1.1.1.1 與 8.8.8.8 兩個獨立 resolver 都回 **NXDOMAIN** | ${o.dead_dns_count} |`,
               '',
               '## 以下**不算**失效，只列出供參考',
               '',
               '| 分類 | 判定條件 | 本次 |',
               '|---|---|---|',
-              `| ✅ \`OK\` | 2xx / 3xx（**含 202 Accepted** —— EUR-Lex 正常回這個） | ${o.ok_count} |`,
-              `| 🔌 \`UNREACHABLE_DNS\` | curl exit 6，但**沒有**兩個 resolver 確認 NXDOMAIN —— 可能只是 resolver 抖動 | ${o.dns_count} |`,
-              `| 🟡 \`BLOCKED\` | 401 / 403 / 405 / 429 / 451 —— WAF 擋 Actions runner，站台活著 | ${o.blocked_count} |`,
-              `| 🔄 \`RETRYABLE\` | 408 / 425 / 500 / 502 / 503 / 504 —— 伺服器暫時性問題，不是連結壞掉 | ${o.retryable_count} |`,
-              `| 🔌 \`UNREACHABLE_*\`（非 DNS） | curl exit ≠ 0（7=connect、28=timeout、35/60=TLS） | ${o.unreachable_count} |`,
-              `| ❓ \`OTHER\` | 其餘 HTTP 碼 —— 明示列出，**不靜默歸成 DEAD** | ${o.other_count} |`,
+              `| \`OK\` | 2xx / 3xx（**含 202 Accepted** —— EUR-Lex 正常回這個） | ${o.ok_count} |`,
+              `| \`UNREACHABLE_DNS\` | curl exit 6，但**沒有**兩個 resolver 確認 NXDOMAIN —— 可能只是 resolver 抖動 | ${o.dns_count} |`,
+              `| \`BLOCKED\` | 401 / 403 / 405 / 429 / 451 —— WAF 擋 Actions runner，站台活著 | ${o.blocked_count} |`,
+              `| \`RETRYABLE\` | 408 / 425 / 500 / 502 / 503 / 504 —— 伺服器暫時性問題，不是連結壞掉 | ${o.retryable_count} |`,
+              `| \`UNREACHABLE_*\`（非 DNS） | curl exit ≠ 0（7=connect、28=timeout、35/60=TLS） | ${o.unreachable_count} |`,
+              `| \`OTHER\` | 其餘 HTTP 碼 —— 明示列出，**不靜默歸成 DEAD** | ${o.other_count} |`,
               '',
               `各分類加總 = ${o.total_count}（＝實際檢查的 URL 數；若對不起來代表有分類被重複計數）`,
               '',
@@ -246,7 +246,7 @@ jobs:
               '3. 不一致 → 修正答案 + 更新 `metadata.verification_date` + 附新 source URL（實測 2xx/3xx）。',
               '4. 找不到替代且內容確已失效 → 移除題目（同步更新 `_meta.totals` + `practice-pool-counts.ts`）。',
               '',
-              '> ⚠️ 這個 workflow **只驗連結還通不通，驗不出內容變了**。一個回 200 的網址，內容照樣',
+              '> 這個 workflow **只驗連結還通不通，驗不出內容變了**。一個回 200 的網址，內容照樣',
               '> 可能已經和題目對不上（CBAM 憑證繳交期限 5/31 → 9/30、臺灣 2030 NDC 24%±1% → 28%±2%，',
               '> 網址全程都是活的）。內容時效性見 `CONTENT-CURRENCY.md`。',
               '',
@@ -289,7 +289,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const title = '⚖️ 釘選的法條原文已變動 —— 請人工確認修法內容';
+            const title = '釘選的法條原文已變動 —— 請人工確認修法內容';
             const body = [
               '`tools/pin_law_articles.py --check` 偵測到 **法規條文與釘選檔不一致**。',
               '',
@@ -328,32 +328,32 @@ jobs:
             echo "## Quarterly time-sensitive verify summary"
             echo ""
             if [ "${{ steps.lawpin.outcome }}" = 'failure' ]; then
-              echo "### ⚖️ 法條原文已變動"
+              echo "### 法條原文已變動"
               echo ""
               echo "> 釘選的法規條文與現行條文不一致 —— **法規可能已被修訂**。"
               echo "> 這是連結檢查抓不到的那類變動（網址全程都是 200）。"
               echo "> 受影響題目的答案與解析都需要重新確認。"
               echo ""
             else
-              echo "法條原文：與釘選檔一致 ✅"
+              echo "法條原文：與釘選檔一致 "
               echo ""
             fi
             echo "URLs checked: **${{ steps.list.outputs.count }}**"
             echo ""
             echo "| 分類 | 判定條件 | 數量 | 開 issue？ |"
             echo "|---|---|---:|---|"
-            echo "| ✅ OK | 2xx / 3xx（含 202 Accepted） | ${{ steps.curl.outputs.ok_count }} | — |"
-            echo "| ❌ DEAD | 404 / 410 | ${{ steps.curl.outputs.dead_count }} | **是** |"
-            echo "| ❌ DEAD_DNS | curl exit 6 **且** 兩個獨立 resolver 都回 NXDOMAIN | ${{ steps.curl.outputs.dead_dns_count }} | **是** |"
-            echo "| 🔌 UNREACHABLE_DNS | curl exit 6，但未經兩個 resolver 確認（可能只是抖動） | ${{ steps.curl.outputs.dns_count }} | 否 |"
-            echo "| 🟡 BLOCKED | 401/403/405/429/451（WAF，站台活著） | ${{ steps.curl.outputs.blocked_count }} | 否 |"
-            echo "| 🔄 RETRYABLE | 408/425/500/502/503/504（伺服器暫時性） | ${{ steps.curl.outputs.retryable_count }} | 否 |"
-            echo "| 🔌 UNREACHABLE_*（非 DNS） | curl exit≠0（7/28/35/60） | ${{ steps.curl.outputs.unreachable_count }} | 否 |"
-            echo "| ❓ OTHER | 其餘 HTTP 碼（明示，不靜默歸成 DEAD） | ${{ steps.curl.outputs.other_count }} | 否 |"
+            echo "| OK | 2xx / 3xx（含 202 Accepted） | ${{ steps.curl.outputs.ok_count }} | — |"
+            echo "| DEAD | 404 / 410 | ${{ steps.curl.outputs.dead_count }} | **是** |"
+            echo "| DEAD_DNS | curl exit 6 **且** 兩個獨立 resolver 都回 NXDOMAIN | ${{ steps.curl.outputs.dead_dns_count }} | **是** |"
+            echo "| UNREACHABLE_DNS | curl exit 6，但未經兩個 resolver 確認（可能只是抖動） | ${{ steps.curl.outputs.dns_count }} | 否 |"
+            echo "| BLOCKED | 401/403/405/429/451（WAF，站台活著） | ${{ steps.curl.outputs.blocked_count }} | 否 |"
+            echo "| RETRYABLE | 408/425/500/502/503/504（伺服器暫時性） | ${{ steps.curl.outputs.retryable_count }} | 否 |"
+            echo "| UNREACHABLE_*（非 DNS） | curl exit≠0（7/28/35/60） | ${{ steps.curl.outputs.unreachable_count }} | 否 |"
+            echo "| OTHER | 其餘 HTTP 碼（明示，不靜默歸成 DEAD） | ${{ steps.curl.outputs.other_count }} | 否 |"
             echo "| **合計** | | **${{ steps.curl.outputs.total_count }}** | |"
             echo ""
             if [ "${{ steps.dig.outputs.dig_available }}" != 'true' ]; then
-              echo "> 🚨 **這次執行沒有 dig** —— DEAD_DNS 的判定需要向 1.1.1.1 / 8.8.8.8 確認 NXDOMAIN，"
+              echo "> **這次執行沒有 dig** —— DEAD_DNS 的判定需要向 1.1.1.1 / 8.8.8.8 確認 NXDOMAIN，"
               echo "> 沒有 dig 就一律降級成 UNREACHABLE_DNS。也就是說上面的 **DEAD_DNS = 0 不代表沒有網域死掉**，"
               echo "> 而是**這項檢查根本沒有啟用**。不要把它讀成好消息。"
               echo ""
@@ -362,7 +362,7 @@ jobs:
             echo "> SERVFAIL、runner 自己的 DNS 問題都長成同一個 exit code。只有 1.1.1.1 與 8.8.8.8"
             echo "> 兩邊都回 NXDOMAIN 才升級成 DEAD_DNS 並開 issue。寧可漏報，不要誤報。"
             echo ""
-            echo "> ⚠️ 這個 workflow 只檢查「連結還通不通」，**驗不出內容變了**。"
+            echo "> 這個 workflow 只檢查「連結還通不通」，**驗不出內容變了**。"
             echo "> 一個回 200 的網址，內容照樣可能已經和題目對不上"
             echo "> （例：CBAM 憑證繳交期限 5/31 → 9/30、台灣 2030 NDC 24%±1% → 28%±2%，"
             echo "> 網址全程都是活的）。內容時效性需要另一輪校正。"

@@ -107,7 +107,7 @@ describe('SourceBreakdown', () => {
       />,
     );
     expect(container.querySelector('.source-breakdown__row--low')).toBeTruthy();
-    expect(screen.getByText(/⚠ 偏低/)).toBeInTheDocument();
+    expect(screen.getByText(/偏低/)).toBeInTheDocument();
   });
 
   it('does NOT flag main_bank low accuracy (no special warning for main)', () => {

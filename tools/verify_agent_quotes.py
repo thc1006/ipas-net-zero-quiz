@@ -46,7 +46,7 @@ import json, sys, io, re, glob, collections, os
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-# ⚠️ **抓取／正規化／PRIMARY 清單一律 import，不要在這裡再寫第二份。**
+# **抓取／正規化／PRIMARY 清單一律 import，不要在這裡再寫第二份。**
 #
 # 「兩份實作一定會漂」在這個 repo 已經應驗過三次：
 #   1. 量測腳本手抄 PRIMARY → 漏了 re100.org.tw
@@ -94,14 +94,14 @@ for r in results:
         continue
 
     if not url or not quote:
-        tally['❌ 沒交來源或引文'] += 1
-        rows.append((qid, v, '❌', '宣稱有結論，卻沒有 URL 或引文'))
+        tally['沒交來源或引文'] += 1
+        rows.append((qid, v, '', '宣稱有結論，卻沒有 URL 或引文'))
         continue
 
     host = re.sub(r'^https?://', '', url).split('/')[0].lower()
     if not any(host == p or host.endswith('.' + p) for p in PRIMARY):
-        tally['❌ 不是一手來源'] += 1
-        rows.append((qid, v, '❌', f'{host} 不在一手來源清單裡'))
+        tally['不是一手來源'] += 1
+        rows.append((qid, v, '', f'{host} 不在一手來源清單裡'))
         continue
 
     if url not in cache:
@@ -111,8 +111,8 @@ for r in results:
             cache[url] = (f'__FETCH_FAIL__{e}', url)
     page, via = cache[url]
     if page.startswith('__FETCH_FAIL__'):
-        tally['⚠️ 抓不到頁面'] += 1
-        rows.append((qid, v, '⚠️', f'抓不到：{page[14:60]}'))
+        tally['抓不到頁面'] += 1
+        rows.append((qid, v, '', f'抓不到：{page[14:60]}'))
         continue
 
     # 走了存檔才讀到 —— 引文仍然算數（是同一份文件），但要說出來源是哪裡讀到的
@@ -121,7 +121,7 @@ for r in results:
     pn = norm(page)
     qn = norm(quote)
 
-    # ⚠️ **「我抓不到內容」不等於「它捏造了」。**
+    # **「我抓不到內容」不等於「它捏造了」。**
     #
     # gist[322] 打臉了我第二版：unfccc.int 那一頁是 JS 渲染的，我的抓取只拿到 84 個字元。
     # 頁面上什麼都沒有，於是「引文不在頁面上」——但那證明不了任何事，
@@ -132,17 +132,17 @@ for r in results:
     #
     # 一個「抓不到就判有罪」的驗證器，會把每一個擋爬蟲的網站都變成偽造指控。
     if len(pn) < 500:
-        tally['⚠️ 頁面抓不到內容（無法判斷，需人工／WebFetch 複驗）'] += 1
-        rows.append((qid, v, '⚠️', f'{host} 只抓到 {len(pn)} 字（JS 渲染或擋爬）—— **無法判斷，不等於捏造**'))
+        tally['頁面抓不到內容（無法判斷，需人工／WebFetch 複驗）'] += 1
+        rows.append((qid, v, '', f'{host} 只抓到 {len(pn)} 字（JS 渲染或擋爬）—— **無法判斷，不等於捏造**'))
         continue
 
     if qn in pn:
-        tally[f'✅ 逐字連續存在 ({v})'] += 1
+        tally[f'逐字連續存在 ({v})'] += 1
         where = f'{host}（活站擋爬，經 Wayback 存檔讀到）' if archived else host
-        rows.append((qid, v, '✅', f'引文在 {where} 上逐字連續存在'))
+        rows.append((qid, v, '', f'引文在 {where} 上逐字連續存在'))
         continue
 
-    # ⚠️ 「不是連續原文」不等於「捏造」。
+    # 「不是連續原文」不等於「捏造」。
     #
     # gist[77] 打臉了我的第一版：agent 引「檢驗測定機構未依第四十一條第一項取得許可證
     # 逕行檢驗測定，處新臺幣十萬元以上一百萬元以下罰鍰」，而真正的氣候法 §50 是
@@ -153,19 +153,19 @@ for r in results:
     # 這是這一輪我第 N 次犯同一個錯：**斷言比資料還嚴格時，錯的是斷言。**
     #
     # 所以分三類，不是兩類：
-    #   ✅ 逐字連續      —— 完全符合契約
-    #   ⚙️ 重組但片段皆真 —— 內容可信，引用方式不合契約（要退回請 agent 修）
-    #   🚨 片段查無此句   —— **真的捏造**
+    #   逐字連續      —— 完全符合契約
+    #   重組但片段皆真 —— 內容可信，引用方式不合契約（要退回請 agent 修）
+    #   片段查無此句   —— **真的捏造**
     # 換行也要當作切分點：agent 從 PDF 抄多行清單時，行與行之間可能夾著頁碼／頁首
     frags = [x for x in re.split(r'[、，。；：…\n\r]+|\.{3}', quote) if len(norm(x)) >= 8]
     if frags and all(norm(x) in pn for x in frags):
-        tally[f'⚙️ 重組但每個片段都逐字存在 ({v})'] += 1
-        rows.append((qid, v, '⚙️', f'{host}：片段皆真，但被重新排序（內容可信，引用方式不合契約）'))
+        tally[f'重組但每個片段都逐字存在 ({v})'] += 1
+        rows.append((qid, v, '', f'{host}：片段皆真，但被重新排序（內容可信，引用方式不合契約）'))
         continue
 
     missing = [x for x in frags if norm(x) not in pn] or [quote]
-    tally['🚨 引文查無此句（捏造）'] += 1
-    rows.append((qid, v, '🚨', f'{host} 上**查無**：「{missing[0][:36]}…」 ← 捏造'))
+    tally['引文查無此句（捏造）'] += 1
+    rows.append((qid, v, '', f'{host} 上**查無**：「{missing[0][:36]}…」 ← 捏造'))
 
 for qid, v, mark, note in rows:
     print(f'  {mark} {str(qid):14} {str(v):18} {note}')
@@ -177,9 +177,9 @@ for k, n in tally.most_common():
     print(f'  {k:34} {n:3}')
 
 ver = lambda mark, v: sum(n for k, n in tally.items() if k.startswith(mark) and v in k)
-sup = ver('✅','SUPPORTED') + ver('⚙️','SUPPORTED')
-con = ver('✅','CONTRADICTED') + ver('⚙️','CONTRADICTED')
-fab = tally['🚨 引文查無此句（捏造）']
+sup = ver('','SUPPORTED') + ver('','SUPPORTED')
+con = ver('','CONTRADICTED') + ver('','CONTRADICTED')
+fab = tally['引文查無此句（捏造）']
 nos = tally['NO_PRIMARY_SOURCE']
 checked = sup + con
 print()
@@ -190,5 +190,5 @@ if checked:
     print(f'      → 錯誤率 = {con}/{checked} = {con/checked*100:.1f}%')
 print(f'  ▶ 找不到一手來源：{nos} 題（無從查證）')
 if fab:
-    print(f'  🚨 **agent 捏造了 {fab} 筆引文** —— 這正是為什麼不能相信 AI 的「判定」')
+    print(f'  **agent 捏造了 {fab} 筆引文** —— 這正是為什麼不能相信 AI 的「判定」')
 json.dump(rows, open(f'{S}/r2/quote_check.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
