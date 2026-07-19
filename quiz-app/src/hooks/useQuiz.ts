@@ -321,7 +321,35 @@ export function useQuiz() {
   const resumeQuiz = useCallback((): boolean => {
     const saved = loadProgress();
     if (!saved || !saved.state.isActive) return false;
-    setState(saved.state);
+    const s = saved.state;
+
+    // 本次修正前存下的進度可能含無答案題（answer=null，排除計分），而進度永不過期，
+    // 之後任何時間續作都會遇到。續作時一併濾掉，讓「使用者不遇到無答案題」的保證
+    // 對舊進度也成立（Refs #93/#94/#95）。
+    const answerable = s.questions.filter((q) => q.hasAnswer);
+    if (answerable.length === 0) {
+      // 整份都是無答案題（極端）→ 沒有可續的題目，清掉舊進度、不續作。
+      clearProgress();
+      return false;
+    }
+    if (answerable.length === s.questions.length) {
+      setState(s); // 沒有無答案題 → 原樣還原（常態、快路徑）
+    } else {
+      // 有題被濾掉 → 重新錨定：currentIndex 指回原本正在作答的那一題（若它還在），
+      // 否則往前收斂；answers 只保留仍存在的題，避免 finishQuiz 的 skippedCount 算錯。
+      const curId = s.questions[s.currentIndex]?.id;
+      const survivedIdx = answerable.findIndex((q) => q.id === curId);
+      const survivingIds = new Set(answerable.map((q) => q.id));
+      setState({
+        ...s,
+        questions: answerable,
+        currentIndex:
+          survivedIdx >= 0
+            ? survivedIdx
+            : Math.min(s.currentIndex, answerable.length - 1),
+        answers: s.answers.filter((a) => survivingIds.has(a.questionId)),
+      });
+    }
     setQuestionStartTime(Date.now());
     return true;
   }, []);
