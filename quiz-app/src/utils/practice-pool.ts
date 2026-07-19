@@ -123,7 +123,6 @@ export function toQuizQuestion(item: PracticePoolItem): QuizQuestion & {
     : item.quality_flags;
 
   if (subject === null && item.subject !== null && import.meta.env?.DEV) {
-    // eslint-disable-next-line no-console
     console.warn(`[practice-pool] 題 ${item.id} subject 值無法映射：`, item.subject);
   }
 

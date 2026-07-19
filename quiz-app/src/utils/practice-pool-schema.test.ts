@@ -8,7 +8,6 @@ describe('validatePracticePool — real data', () => {
     const errs = validatePracticePool(poolJson);
     if (errs.length > 0) {
       // 印出前幾個錯誤幫助 debug
-      // eslint-disable-next-line no-console
       console.error(errs.slice(0, 5));
     }
     expect(errs).toEqual([]);

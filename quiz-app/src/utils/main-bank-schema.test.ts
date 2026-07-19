@@ -7,7 +7,6 @@ describe('validateMainBank — real data', () => {
   it('current integrated_dataset.json passes validation', () => {
     const errs = validateMainBank(dataset);
     if (errs.length > 0) {
-      // eslint-disable-next-line no-console
       console.error(errs.slice(0, 5));
     }
     expect(errs).toEqual([]);
