@@ -233,13 +233,13 @@ check_icon() {
     printf '  ✗ status_icon %-20s 期望 %s 實得 %s\n' "$cat" "$want" "$got"
   fi
 }
-check_icon OK        '✅'
-check_icon DEAD      '❌'
-check_icon DEAD_DNS  '❌'
-check_icon BLOCKED   '🟡'
-check_icon RETRYABLE '🔄'
-check_icon UNREACHABLE_DNS '🔌'
-check_icon OTHER     '❓'
+check_icon OK        '[OK]'
+check_icon DEAD      '[DEAD]'
+check_icon DEAD_DNS  '[DEAD]'
+check_icon BLOCKED   '[BLOCKED]'
+check_icon RETRYABLE '[RETRY]'
+check_icon UNREACHABLE_DNS '[UNREACH]'
+check_icon OTHER     '[?]'
 
 echo '── ALL_STATUS_CATEGORIES 必須涵蓋 classify 吐得出來的每一種分類'
 # 聚合是靠 ALL_STATUS_CATEGORIES 去列舉「哪些算失效」的（failure_categories）。
@@ -265,4 +265,4 @@ fi
 echo
 echo "通過 $pass 項，失敗 $fail 項"
 [ "$fail" -eq 0 ] || exit 1
-echo '✅ status matrix + 計數 + url_host + status_icon 全部通過'
+echo 'status matrix + 計數 + url_host + status_icon 全部通過'

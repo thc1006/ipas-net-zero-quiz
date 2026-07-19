@@ -75,7 +75,7 @@ def has_primary(b, q):
 
 def primary_evidence(b, q):
     # 「有一手逐字引文」＝ evidence 至少一筆，其 url 是一手來源、且有非空 quote。
-    # ⚠️ 光有 evidence 不算 —— evidence 可能來自維基／新聞／標準轉載預覽（二手）。
+    # 光有 evidence 不算 —— evidence 可能來自維基／新聞／標準轉載預覽（二手）。
     return any(
         isinstance(e, dict) and is_primary(e.get('url', '')) and (e.get('quote') or '').strip()
         for e in (evidence(b, q) or [])
@@ -85,7 +85,7 @@ def primary_evidence(b, q):
 # 「有 URL」不等於「有一手來源」：一手來源必須由事實發布者／法規/標準制定者發布。
 # 非一手 URL（部落格、新聞、二手研究）另計為第二類，不混入「一手來源」那一類。
 no_source = [(b, q) for b, q in ITEMS if not srcs(b, q)]
-# ⚠️ 舊版這兩類都用 `not evidence(b, q)`（有任何 evidence 就排除）——
+# 舊版這兩類都用 `not evidence(b, q)`（有任何 evidence 就排除）——
 #    於是「有一手來源 URL、但 evidence 是維基／新聞」的題會從兩類都溜掉，
 #    被默默算進「已補齊一手逐字」。改用 primary_evidence()：一手逐字才算數。
 nonprimary = [
@@ -142,7 +142,7 @@ L.append('')
 L.append('第三輪有代理替這些題交了「一手來源 + 逐字引文」，但 `tools/verify_agent_quotes.py`')
 L.append('把該頁面抓回來逐字比對後，**那句話不在上面**。')
 L.append('')
-L.append('⚠️ **這不代表題目是錯的** —— 只代表**我們還沒有拿到可信的證據**。')
+L.append('**這不代表題目是錯的** —— 只代表**我們還沒有拿到可信的證據**。')
 L.append('捏造的引文一筆都沒有寫進題庫，所以這些題維持「沒有來源」。')
 L.append('')
 L.append('| id | 題幹 |')
@@ -183,7 +183,7 @@ L.append('')
 L.append('這些題**附了一手來源 URL**，但沒有一筆「一手來源 + 逐字引文」的 evidence ——')
 L.append('可能完全沒有 evidence，也可能 evidence 只落在二手來源（維基／新聞／標準轉載預覽）上。')
 L.append('')
-L.append('⚠️ **連結是活的，不代表指對地方。** 我們抓到過 19 題引錯法規 ——')
+L.append('**連結是活的，不代表指對地方。** 我們抓到過 19 題引錯法規 ——')
 L.append('碳費題引到溫管辦法，兩個 URL 都回 HTTP 200。')
 L.append('')
 L.append('<details>')

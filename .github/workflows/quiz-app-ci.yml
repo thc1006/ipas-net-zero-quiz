@@ -120,7 +120,7 @@ jobs:
             {
               echo "## GitHub About 題數檢查"
               echo ""
-              echo "⚠️ 這次**沒有檢查成功** —— \`gh api\` 取不到 repo description。"
+              echo "這次**沒有檢查成功** —— \`gh api\` 取不到 repo description。"
               echo "這是基礎設施問題，不代表 About 是對的，也不代表它是錯的。"
             } >> "$GITHUB_STEP_SUMMARY"
             exit 0   # 拿不到資料就不下判斷。誤擋 main 比漏擋一次更糟。
@@ -136,7 +136,7 @@ jobs:
             {
               echo "## GitHub About 題數檢查"
               echo ""
-              echo "✅ About 與資料一致：主題庫 **${main_count}**、加強練習 **${pool_count}**"
+              echo "About 與資料一致：主題庫 **${main_count}**、加強練習 **${pool_count}**"
             } >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
@@ -144,7 +144,7 @@ jobs:
           {
             echo "## GitHub About 題數檢查"
             echo ""
-            echo "❌ About 宣稱的題數與實際資料不符。"
+            echo "About 宣稱的題數與實際資料不符。"
             echo ""
             echo "| | 主題庫 | 加強練習 |"
             echo "|---|---:|---:|"

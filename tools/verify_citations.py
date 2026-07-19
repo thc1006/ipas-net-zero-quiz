@@ -7,7 +7,7 @@
 # 這個題庫抓到過 19 題碳費的題目引到溫室氣體管理辦法 —— 兩個 URL 都回 HTTP 200，
 # 連結健康檢查完全看不出來。
 #
-# ⚠️ **這支工具最危險的地方，是 agent 的 WRONG_SOURCE 判定。**
+# **這支工具最危險的地方，是 agent 的 WRONG_SOURCE 判定。**
 #
 # 「這個 URL 不支持這題」是一個**否定命題**。而這個 repo 反覆學到的教訓是：
 # **「我抓不到」≠「它不存在」。**
@@ -70,24 +70,24 @@ for r in results:
     # ---- SUPPORTED：引文必須逐字在**被引用的那個 URL** 上
     if v == 'SUPPORTED':
         if not cited or not quote:
-            tally['❌ 宣稱 SUPPORTED 卻沒交 URL 或引文'] += 1
-            rows.append((qid, v, '❌', '沒有 cited_url 或 quote'))
+            tally['宣稱 SUPPORTED 卻沒交 URL 或引文'] += 1
+            rows.append((qid, v, '', '沒有 cited_url 或 quote'))
             continue
         txt, via = page(cited)
         if not txt:
-            tally['⚠️ 抓不到頁面（無法判斷，≠ 捏造）'] += 1
-            rows.append((qid, v, '⚠️', f'{cited[:44]}… 抓不到 —— **無法判斷**'))
+            tally['抓不到頁面（無法判斷，≠ 捏造）'] += 1
+            rows.append((qid, v, '', f'{cited[:44]}… 抓不到 —— **無法判斷**'))
             continue
         st = quote_status(quote, txt)
         if st == 'verbatim':
-            tag = '✅ 引用正確（引文逐字在該頁上）'
-            mark = '✅'
+            tag = '引用正確（引文逐字在該頁上）'
+            mark = ''
         elif st == 'reordered':
-            tag = '⚙️ 引用正確，但引文被重新排序（片段皆真）'
-            mark = '⚙️'
+            tag = '引用正確，但引文被重新排序（片段皆真）'
+            mark = ''
         else:
-            tag = '🚨 引文在該頁上查無此句（捏造）'
-            mark = '🚨'
+            tag = '引文在該頁上查無此句（捏造）'
+            mark = ''
         tally[tag] += 1
         rows.append((qid, v, mark, f'{cited[:52]}'))
         continue
@@ -97,27 +97,27 @@ for r in results:
         cu = (r.get('correct_source_url') or '').strip()
         cq = (r.get('correct_quote') or '').strip()
         if not cu or not cq:
-            tally[f'🔎 {v}（未提出替代證據，需人工判斷）'] += 1
-            rows.append((qid, v, '🔎', '沒有提出正確來源 —— 只是「我找不到」，不足以動資料'))
+            tally[f'{v}（未提出替代證據，需人工判斷）'] += 1
+            rows.append((qid, v, '', '沒有提出正確來源 —— 只是「我找不到」，不足以動資料'))
             needs_human.append((qid, v, cited, '（無替代來源）', ''))
             continue
         if not is_primary(cu, PRIMARY):
-            tally[f'❌ {v} 的替代來源不是一手來源'] += 1
-            rows.append((qid, v, '❌', f'替代來源 {cu[:40]} 不在一手清單裡'))
+            tally[f'{v} 的替代來源不是一手來源'] += 1
+            rows.append((qid, v, '', f'替代來源 {cu[:40]} 不在一手清單裡'))
             continue
         txt, via = page(cu)
         if not txt:
-            tally[f'⚠️ {v} 的替代來源抓不到'] += 1
-            rows.append((qid, v, '⚠️', f'{cu[:44]}… 抓不到'))
+            tally[f'{v} 的替代來源抓不到'] += 1
+            rows.append((qid, v, '', f'{cu[:44]}… 抓不到'))
             needs_human.append((qid, v, cited, cu, cq))
             continue
         st = quote_status(cq, txt)
         if st == 'absent':
-            tally[f'🚨 {v} 的替代引文查無此句（捏造）'] += 1
-            rows.append((qid, v, '🚨', f'替代引文在 {cu[:36]} 上查無此句'))
+            tally[f'{v} 的替代引文查無此句（捏造）'] += 1
+            rows.append((qid, v, '', f'替代引文在 {cu[:36]} 上查無此句'))
             continue
-        tally[f'🔎 {v}（替代證據已驗證，等我逐題複驗）'] += 1
-        rows.append((qid, v, '🔎', f'替代來源 {cu[:44]} 引文逐字存在'))
+        tally[f'{v}（替代證據已驗證，等我逐題複驗）'] += 1
+        rows.append((qid, v, '', f'替代來源 {cu[:44]} 引文逐字存在'))
         needs_human.append((qid, v, cited, cu, cq))
         continue
 

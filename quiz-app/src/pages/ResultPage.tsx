@@ -433,7 +433,7 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                             <span className="material-icons sm">auto_awesome</span>
                             <span>AI 生成的相似題</span>
                             {generatedQ.confidence > 0 && generatedQ.confidence < 0.7 && (
-                              <span className="confidence-warning">⚠️ 低信心度</span>
+                              <span className="confidence-warning">低信心度</span>
                             )}
                           </div>
                           {generatedQ.success ? (

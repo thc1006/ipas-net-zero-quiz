@@ -4,19 +4,19 @@
 # **沒有一道在查「答案對不對」**。32 個錯答案全部是靠人一題一題挖出來的 ——
 # 而我這一輪已經證明了自己會看錯。
 #
-# ⚠️ **絕對不可以按「字母」比對。**
+# **絕對不可以按「字母」比對。**
 #   題庫把選項順序打散過。我寫這支之前一分鐘才踩到：
 #   gist[151] 的教材答案卡印「(D)」、題庫標「(A)」，我差點宣告它是錯答案 ——
 #   但教材的 (D)「促進投資者…管理其環境影響」**就是題庫的 (A)**。答案本來是對的。
 #   **字母是排版，文字才是內容。**
 #
-# ⚠️ **也不可以按「字串相等」比對。**
+# **也不可以按「字串相等」比對。**
 #   題庫不只重排，還**改寫**了選項文字：
 #     gist[62]  教材「對碳排放設定價格的政策工具」/ 題庫「為二氧化碳排放訂定價格之政策工具措施」
 #   同義、不同字。前綴比對會全部落空 —— 那不是「答案錯了」，是**我比不出來**。
 #   所以改用相似度取最佳匹配，而且**分不出高下時誠實回報「驗不了」**。
 #
-# ⚠️ **這支只產出候選，不產出判決。** 每一筆 MISMATCH 都要人去讀 PDF 確認。
+# **這支只產出候選，不產出判決。** 每一筆 MISMATCH 都要人去讀 PDF 確認。
 #   「代理/工具說它錯」不等於「它錯」—— 這個 repo 已經被這件事咬過很多次。
 
 import io
@@ -60,7 +60,7 @@ def _cut(page, i):
 def blocks_of(page, stem, quote):
     """切出這一題**所有可能**的區塊（題幹在 PDF 裡可能出現不只一次）。
 
-    ⚠️ **不可以盲取第一個。** 697134715.pdf 裡「什麼是氣候變遷減緩？」
+    **不可以盲取第一個。** 697134715.pdf 裡「什麼是氣候變遷減緩？」
     出現了**兩次**（Q60 與 Q78），而**兩次的選項完全不同**。
     題庫抄的是 Q78，我的工具鎖到 Q60 —— 拿 Q60 的答案去對 Q78 的選項，
     於是相似度把它配到別的字母，**憑空報出一個錯答案**。
@@ -68,7 +68,7 @@ def blocks_of(page, stem, quote):
 
     → 回傳所有候選區塊，由呼叫端**用「哪個區塊的選項最像題庫的選項」**來決定。
 
-    ⚠️ find() 回 -1 時絕對不可以繼續切片 —— 那會靜靜切出檔案開頭。
+    find() 回 -1 時絕對不可以繼續切片 —— 那會靜靜切出檔案開頭。
     """
     flat = re.sub(r'\s+', '', page)
     # 壓平後的位置 → 原文位置
@@ -93,8 +93,8 @@ def blocks_of(page, stem, quote):
 def parse_opts(block):
     """區塊裡**來源自己的**選項。回傳 (選項字典, 行首答案字母, 去掉行首後的內文)。
 
-    ⚠️ 行首的「(D) 18.」是**答案卡**，不是選項 D —— 先剝掉它再找選項。
-    ⚠️ 每個選項的文字切到**下一個標記**為止，不是切到「下一個第一次出現的字母」——
+    行首的「(D) 18.」是**答案卡**，不是選項 D —— 先剝掉它再找選項。
+    每個選項的文字切到**下一個標記**為止，不是切到「下一個第一次出現的字母」——
        否則選項 D 會把右欄的答案卡整段吞進去，答案就永遠解析不出來。
     """
     lead = None
@@ -153,7 +153,7 @@ def key_letter(block):
 def load_overrides():
     """restoration-manifest 裡**有記錄、有一手依據**的刻意偏離。
 
-    ⚠️ 這個 repo **早就有**一套「答案必須等於 PDF 答案卡」的閘門
+    這個 repo **早就有**一套「答案必須等於 PDF 答案卡」的閘門
     （restoration-manifest.test.ts），而偏離答案卡必須登記成 `answer_override` 並附依據。
 
     我寫這支新工具時**完全不知道那套機制存在** —— 於是它把 `S_CHU_06-q094`
@@ -183,7 +183,7 @@ def main():
     def node(q):
         return q.get('metadata') or q.get('provenance') or {}
 
-    # ⚠️ **母體的判準是「這一題驗得了嗎」，不是「有沒有人記得引用它」。**
+    # **母體的判準是「這一題驗得了嗎」，不是「有沒有人記得引用它」。**
     #
     #   第一版只掃「有 evidence 的題目」—— 於是 S_CHU_06-q094 整個被漏掉，
     #   而我在程式碼裡寫下：「一個把該查的題目排除在母體外的檢查，
@@ -246,7 +246,7 @@ def main():
                        for o in _q['options']) / len(_q['options'])
         blk = max(blks, key=fit) if len(blks) > 1 else blks[0]
 
-        # ⚠️ **「來源是答案卡 PDF」不等於「這筆引文是範例題」。**
+        # **「來源是答案卡 PDF」不等於「這筆引文是範例題」。**
         #   同一份 PDF 裡也有大量實質內文，而有些題目引的正是那些內文。
         #   我原本沒擋這件事，於是工具會拿**隔壁題**的答案卡去對這一題的選項 ——
         #   gist[339] 被切到「從化石燃料轉向再生能源的過程」（那是別題的答案）。
@@ -260,7 +260,7 @@ def main():
             rows.append({**r, 'verdict': 'NO_KEY', 'how': how})
             continue
 
-        # ⚠️ **不要拿「答案卡的那段文字」去跟四個選項比相似度。**
+        # **不要拿「答案卡的那段文字」去跟四個選項比相似度。**
         #   S_CHU_06-q067 的答案卡是「以上皆是」（= 題庫的 D），但 PDF 在它後面
         #   **緊接著一行解析**（「負排放技術是能夠從大氣中移除二氧化碳…」）——
         #   那段解析把相似度整個拉去 B，於是工具報出一個**根本不存在的錯答案**。
@@ -322,14 +322,14 @@ def main():
             'date': TODAY, 'population': len(rows), 'confirmed': n,
             'what': 'iPAS 公版教材的範例題 PDF **直接印答案卡**。把題庫的答案拿去跟官方答案卡'
                     '逐題交叉比對 —— 這是本專案第一個能機械驗證「答案」（而非「引用」）的檢查。',
-            'note': '⚠️ **按文字比對，不按字母**：題庫把選項順序打散、文字也改寫過，'
+            'note': '**按文字比對，不按字母**：題庫把選項順序打散、文字也改寫過，'
                     '照字母抄會抄出錯答案。confirmed 以外的題目**不是「沒問題」，是「沒驗到」**。',
         }
         json.dump(ds, open('quiz-app/src/data/integrated_dataset.json', 'w', encoding='utf-8'),
                   ensure_ascii=False, indent=2)
         json.dump(pool, open('quiz-app/src/data/practice_pool.json', 'w', encoding='utf-8'),
                   ensure_ascii=False, indent=2)
-        print(f'\n  ✍️ 已把 {n} 題的 answer_key_check 寫回資料（離線 gate 用）')
+        print(f'\n  已把 {n} 題的 answer_key_check 寫回資料（離線 gate 用）')
 
     import collections
     c = collections.Counter(x['verdict'] for x in rows)
@@ -342,16 +342,16 @@ def main():
     print('=' * 70)
     for x in rows:
         if x['verdict'] == 'MISMATCH':
-            print(f"  🚨 {x['id']:22} 答案卡→{x['best']} 題庫→{x['answer']}  "
+            print(f"  {x['id']:22} 答案卡→{x['best']} 題庫→{x['answer']}  "
                   f"(配對相似度 {x['score']}, 題目吻合度 {x['fit']}) {x['how']}")
             print(f"       答案卡原文：{(x['key_text'] or '').splitlines()[0][:46]}")
     for x in rows:
         if x['verdict'] == 'DOCUMENTED_OVERRIDE':
-            print(f"  📌 {x['id']:22} 答案卡→{x['best']} 題庫→{x['answer']}  "
+            print(f"  {x['id']:22} 答案卡→{x['best']} 題庫→{x['answer']}  "
                   f"**有記錄的刻意偏離**（restoration-manifest 的 answer_override）")
             print(f"       理由：{x['why']}")
     print()
-    print('  ⚠️ AGREE 以外的**每一種**都不是「答案沒問題」，是「我沒驗到」。')
+    print('  AGREE 以外的**每一種**都不是「答案沒問題」，是「我沒驗到」。')
     json.dump(rows, open('scratchpad_answer_key.json', 'w', encoding='utf-8'),
               ensure_ascii=False, indent=1)
 

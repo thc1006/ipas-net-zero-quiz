@@ -108,7 +108,7 @@ describe('metadata 的欄位名稱不得說謊', () => {
     expect(
       bad,
       'verification_source 應該是「憑什麼相信這個答案」的引用（法條、CELEX、公告字號、ISO 條號）。\n' +
-        NOT_A_SOURCE.map((n) => `  ❌ "${n.value}" —— ${n.why}`).join('\n') +
+        NOT_A_SOURCE.map((n) => `  "${n.value}" —— ${n.why}`).join('\n') +
         '\n\n  這個欄位是「改過答案就必須留下理由」那道 gate 的合法理由之一 ——\n' +
         '  **如果它可以是 "sync_from_310"，那道 gate 就等於不存在。**'
     ).toEqual([]);

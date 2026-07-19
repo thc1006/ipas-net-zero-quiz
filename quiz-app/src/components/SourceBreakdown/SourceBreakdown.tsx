@@ -3,7 +3,7 @@
 import type { AnswerRecord } from '../../types/quiz';
 import './SourceBreakdown.css';
 
-/** 池題正確率低於此 threshold (%) 顯示 ⚠ 偏低警示。主題庫不適用。 */
+/** 池題正確率低於此 threshold (%) 顯示 偏低警示。主題庫不適用。 */
 export const LOW_ACCURACY_THRESHOLD_PCT = 60;
 
 interface SourceBreakdownProps {
@@ -82,7 +82,7 @@ export function SourceBreakdown({
               <span className="source-breakdown__pct">{pct}%</span>
               {lowAccuracy && (
                 <span className="source-breakdown__note" aria-label="正確率偏低提示">
-                  ⚠ 偏低
+                  偏低
                 </span>
               )}
             </li>

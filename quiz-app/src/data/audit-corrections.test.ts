@@ -1,6 +1,6 @@
 // 稽核修正回歸測試 —— 鎖定審核過的答案，避免被誤改回去。
 //
-// ⚠️ **這個檔案曾經整個守錯對象，長達好幾個月。**
+// **這個檔案曾經整個守錯對象，長達好幾個月。**
 //
 // 原本每一條斷言都寫成 `byId('c2-190')`，而 `byId` 讀的是 `questions.json` ——
 // **一個 app 從來不會載入的檔案**（真正出貨的資料模組 `questions.ts` 讀的是
@@ -189,7 +189,7 @@ describe('audit corrections regression', () => {
   // 但 answer 欄位從來沒被改過 —— 線上 App 一直發送錯的 D，explanation 甚至還在替 D 辯護。
   // 沒有測試釘住，是它能默默漏掉的唯一原因。現在釘住。
   //
-  // ⚠️ 2026-07-14：**這題被改了第二次（D → C → A）。**
+  // 2026-07-14：**這題被改了第二次（D → C → A）。**
   //
   // @henrychen-bot 的核心指認是**對的**：ICA 是非附件一國家的機制，附件一國家走 IAR。
   // Decision 1/CP.16 §44 逐字寫著 "a process for international assessment of emissions

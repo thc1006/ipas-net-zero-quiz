@@ -150,13 +150,13 @@ failure_categories() {
 # 人類可讀的圖示
 status_icon() {
   case "$1" in
-    OK)                 echo '✅' ;;
-    DEAD)               echo '❌' ;;
-    DEAD_DNS)           echo '❌' ;;
-    BLOCKED)            echo '🟡' ;;
-    RETRYABLE)          echo '🔄' ;;
-    UNREACHABLE_*)      echo '🔌' ;;  # 含 UNREACHABLE_DNS —— 只警告，不算失效
-    *)                  echo '❓' ;;
+    OK)                 echo '[OK]' ;;
+    DEAD)               echo '[DEAD]' ;;
+    DEAD_DNS)           echo '[DEAD]' ;;
+    BLOCKED)            echo '[BLOCKED]' ;;
+    RETRYABLE)          echo '[RETRY]' ;;
+    UNREACHABLE_*)      echo '[UNREACH]' ;;  # 含 UNREACHABLE_DNS —— 只警告，不算失效
+    *)                  echo '[?]' ;;
   esac
 }
 
