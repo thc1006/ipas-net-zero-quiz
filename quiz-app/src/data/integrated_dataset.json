@@ -15,7 +15,7 @@
       "考科1": 431,
       "考科2": 342
     },
-    "with_answer": 770,
+    "with_answer": 773,
     "last_updated": "2026-07-13T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -100,7 +100,7 @@
       "date": "2026-07-14",
       "what": "對 383 題「附了一手來源 URL、但從來沒有人打開來看過」的題目，逐題把那一頁抓回來，檢查它到底有沒有說這件事。",
       "population": 383,
-      "supported": 314,
+      "supported": 317,
       "wrong_source": 30,
       "replaced": 29,
       "disputed": 1,
@@ -6099,26 +6099,26 @@
     {
       "index": 105,
       "number": 105,
-      "stem": "企業宣告碳中和時，應如何處理排放量四捨五入？",
+      "stem": "依我國「自願性產品碳足跡核定標示及管理辦法」，產品碳足跡數值應如何標示？",
       "options": [
         {
           "key": "A",
-          "text": "總是向下取整"
+          "text": "向下取整（無條件捨去小數）"
         },
         {
           "key": "B",
-          "text": "明確說明四捨五入規則"
+          "text": "向上取整（無條件進位）"
         },
         {
           "key": "C",
-          "text": "採用最近整數"
+          "text": "四捨五入取至整數位"
         },
         {
           "key": "D",
-          "text": "總是向上取整"
+          "text": "保留至小數點後兩位"
         }
       ],
-      "answer": null,
+      "answer": "C",
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
@@ -6131,12 +6131,30 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "prior_answer": "B"
+        "prior_answer": "B",
+        "citation_audit": {
+          "date": "2026-07-19",
+          "verdict": "supported",
+          "detail": "自願性產品碳足跡核定標示及管理辦法 §4 第三項：產品碳足跡數值以 CO2e 表示、四捨五入取至整數位。故答案為四捨五入取至整數位。"
+        },
+        "evidence": [
+          {
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
+            "quote": "以毫克、公克、公斤、公噸或其他公制單位二氧化碳當量表示，並四捨五入取至整數位。",
+            "supports_option": "C",
+            "note": "自願性產品碳足跡核定標示及管理辦法 §4(3)：碳足跡數值四捨五入取至整數位"
+          }
+        ],
+        "answer_verification": {
+          "date": "2026-07-19",
+          "verdict": "REWRITTEN_SINGLE_ANSWER",
+          "note": "原題問『企業宣告碳中和時』如何四捨五入 —— 但碳中和宣告指引查無四捨五入規則（張冠李戴）。四捨五入規則實住在產品碳足跡制度（自願性產品碳足跡核定標示及管理辦法 §4(3)：四捨五入取至整數位）。改題幹到規則實際所在之制度，答案＝四捨五入取至整數位。",
+          "method": "MOENV 法規 §4(3) 逐字（獨立代理自法規系統＋行政院公報複驗）"
+        }
       },
-      "quality_flags": [
-        "ambiguous"
-      ],
-      "_correction_note": "2026-07-15：**撤答案（排除計分）。** 題幹問「企業宣告碳中和時」如何四捨五入，但環境部《企業宣告碳中和指引》查無碳中和宣告的通用四捨五入規則，四個選項皆無一手依據。⚠️ 特別說明：「四捨五入取至整數」這條規則住在**產品碳足跡**制度裡（自願性產品碳足跡核定標示及管理辦法，該辦法全文「碳中和」出現 0 次）—— **不能拿它去回答「碳中和宣告」的問題**（那是兩套不同制度，正是本專案反覆警示的「條文張冠李戴」錯誤類別）。故本題撤答案，而**非改為 C**。（使用者兩輪調研共識 + 我自己抓法規原文複核）"
+      "quality_flags": [],
+      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 C。** 原題問『碳中和宣告』如何四捨五入，但環境部《企業宣告碳中和指引》查無此規則（張冠李戴）。四捨五入規則實住在產品碳足跡制度（自願性產品碳足跡核定標示及管理辦法 §4(3)：四捨五入取至整數位）。改題幹到規則實際所在之制度，答案＝四捨五入取至整數位。",
+      "explanation": "依《自願性產品碳足跡核定標示及管理辦法》，產品碳足跡數值以二氧化碳當量表示，並「四捨五入取至整數位」。故正確標示方式為四捨五入取至整數位；向下取整、向上取整、保留小數兩位均非該辦法所定。"
     },
     {
       "index": 106,
@@ -7862,26 +7880,26 @@
     {
       "index": 137,
       "number": 137,
-      "stem": "關於碳中和指引的更新機制，下列哪項陳述最為準確？",
+      "stem": "依 ISO 14068-1，碳中和管理計畫（carbon neutrality management plan）之更新機制，下列何者正確？",
       "options": [
         {
           "key": "A",
-          "text": "固定每五年更新一次"
+          "text": "應定期評估並修訂，於規劃之期間及情況變動時（如新數據、組織或活動改變）更新"
         },
         {
           "key": "B",
-          "text": "只有在國際標準變更時才會更新"
+          "text": "計畫一經核准即固定，不得再更新"
         },
         {
           "key": "C",
-          "text": "將根據實施情況和回饋進行調整"
+          "text": "僅在首次宣告碳中和時更新一次"
         },
         {
           "key": "D",
-          "text": "不設更新機制，保持穩定性"
+          "text": "每季須將計畫全部重新撰寫"
         }
       ],
-      "answer": null,
+      "answer": "A",
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
@@ -7894,12 +7912,30 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
-        "prior_answer": "C"
+        "prior_answer": "C",
+        "citation_audit": {
+          "date": "2026-07-19",
+          "verdict": "supported",
+          "detail": "ISO 14068-1:2023 設有專章「碳中和管理計畫」，其中一節即為『Evaluation and revision of the carbon neutrality management plan』（評估與修訂）—— 明示計畫須定期評估並修訂。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.iso.org/standard/43279.html",
+            "quote": "Evaluation and revision of the carbon neutrality management plan",
+            "supports_option": "A",
+            "note": "ISO 14068-1:2023 專章『碳中和管理計畫』設有『評估與修訂』一節 —— 計畫須定期評估並修訂、於情況變動時更新"
+          }
+        ],
+        "answer_verification": {
+          "date": "2026-07-19",
+          "verdict": "REWRITTEN_SINGLE_ANSWER",
+          "note": "原題問『碳中和指引（政府指引）的更新機制』—— 現行環境部指引並無此機制、四選項皆無依據。改題幹到規則實際存在之處：ISO 14068-1 設有『碳中和管理計畫』專章，含『評估與修訂』一節，明示計畫須定期評估並修訂。答案＝定期評估並修訂。",
+          "method": "ISO 14068-1:2023 目次/Clause 9.3 標題逐字（正文付費；標題與 Tunley 等佐證，獨立代理複驗）"
+        }
       },
-      "quality_flags": [
-        "ambiguous"
-      ],
-      "_correction_note": "2026-07-15：**撤答案（排除計分）。** 題幹把「政府指引本身的更新機制」與「企業碳中和管理計畫／宣告的更新」混為一談。現行環境部《企業宣告碳中和指引》並未規定「依實施情況與回饋調整」的指引更新機制（那是 2011 年舊版草案的形成過程，或 PAS 2060 對企業「碳足跡管理計畫」每 12 個月更新的要求）。四個選項皆無一手依據支撐對「本指引更新機制」的描述。（使用者兩輪獨立調研共識）"
+      "quality_flags": [],
+      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 A。** 原題問『政府碳中和指引的更新機制』，但現行環境部指引並無此機制（四選項皆無依據）。改題幹到規則實際存在之處：ISO 14068-1『碳中和管理計畫』專章設有『評估與修訂（Evaluation and revision）』一節，明示計畫須定期評估並修訂。答案＝定期評估並修訂。",
+      "explanation": "依 ISO 14068-1，碳中和管理計畫並非一經核准即固定，而應定期評估並修訂 —— 於規劃之期間、以及情況變動時（如新的科學數據、組織結構或活動改變）更新。故正確者為定期評估並修訂；其餘（固定不更新、僅首次宣告時更新、每季全部重寫）均非標準所要求。"
     },
     {
       "index": 138,
@@ -18525,30 +18561,30 @@
     {
       "index": 341,
       "number": 82,
-      "stem": "COP28 對氣候投資之影響？",
+      "stem": "下列關於 COP28（2023 年杜拜）的敘述，何者錯誤？",
       "options": [
         {
           "key": "A",
-          "text": "審慎評估企業風險與機會"
+          "text": "COP28 正式通過並啟用《巴黎協定》第 6.4 條機制之方法學與碳移除標準"
         },
         {
           "key": "B",
-          "text": "自願碳市場規範明確而成熟"
+          "text": "首次全球盤點（Global Stocktake）呼籲各國推動能源系統「轉型脫離化石燃料」"
         },
         {
           "key": "C",
-          "text": "強化永續數據管理"
+          "text": "大會首日即通過並啟動「損失與損害基金（Loss and Damage Fund）」"
         },
         {
           "key": "D",
-          "text": "以上皆是"
+          "text": "通過「2030 年前全球再生能源裝置容量增為三倍、能效改善速度加倍」之承諾"
         }
       ],
-      "answer": null,
+      "answer": "A",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "COP28對氣候投資的影響包括：促使投資人更審慎評估企業的氣候風險與機會、推動自願碳市場的規範發展，以及強化企業的永續數據管理。",
+      "explanation": "其中「首次全球盤點呼籲轉型脫離化石燃料」「首日啟動損失與損害基金」「2030 年前再生能源三倍、能效加倍之承諾」均為 COP28（2023）之真實成果；而「COP28 正式通過並啟用巴黎協定第 6.4 條機制之方法學與碳移除標準」則為錯誤敘述 —— 該方法學與碳移除標準於 COP28 遭締約方否決、並未通過（延至隔年 COP29 方採納），故本題「何者錯誤」為此項。",
       "metadata": {
         "original_id": "c2-148",
         "_legacy_pipeline_metadata": {
@@ -18567,16 +18603,27 @@
         ],
         "prior_answer": "D",
         "answer_verification": {
-          "date": "2026-07-15",
-          "verdict": "NULLED_FALSE_OPTION",
-          "note": "選項 B（VCM 明確成熟）為假（Article 6.4 標準延至 COP29 才通過），「以上皆是」不成立，題目過於籠統無單一正解 → 撤答案。",
-          "method": "UNFCCC Article 6.4 時程＋VCM 完整性事實"
-        }
+          "date": "2026-07-19",
+          "verdict": "REWRITTEN_SINGLE_ANSWER",
+          "note": "原題『COP28 對氣候投資之影響』以『以上皆是』作答，但其中一敘述（自願碳市場明確成熟）為假、A/C 過於籠統→無單一正解。改寫為『下列關於 COP28 何者錯誤？』：以三項經查證之真實 COP28 成果（全球盤點、損失與損害基金、三倍再生能源）為誘答，唯一錯誤敘述『COP28 通過 Art 6.4 方法學/碳移除標準』為答案。",
+          "method": "UNFCCC 決議＋Oxford/Carbon Market Watch（獨立代理複驗）"
+        },
+        "citation_audit": {
+          "date": "2026-07-19",
+          "verdict": "supported",
+          "detail": "COP28 首次全球盤點（轉型脫離化石燃料）、首日啟動損失與損害基金、三倍再生能源承諾均屬實；巴黎協定第 6.4 條方法學/碳移除標準於 COP28 遭否決、延至 COP29 方採納，故該敘述為錯誤。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.smithschool.ox.ac.uk/news/article-6-focus-outcomes-cop28",
+            "quote": "Ultimately, the final presidency text presented on December 12th was rejected by Parties.",
+            "supports_option": "A",
+            "note": "COP28 未通過巴黎協定第 6.4 條方法學/碳移除標準（遭締約方否決，延至 COP29 方採納）；故「COP28 正式通過並啟用」為錯誤敘述"
+          }
+        ]
       },
-      "quality_flags": [
-        "ambiguous"
-      ],
-      "_correction_note": "2026-07-15：**撤答案（排除計分）。** 原答案 D「以上皆是」不成立 —— 選項 B「自願碳市場規範明確而成熟」為**錯誤敘述**：巴黎協定第 6.4 條機制之方法學與碳移除標準於 COP28（2023）並未通過、延至 COP29（2024）方採納，且自願碳市場（VCM）於該期間仍普遍受完整性爭議，並非「明確而成熟」。B 既為假，「以上皆是」即不成立；而本題「COP28 對氣候投資之影響」屬概略敘述、A/C 皆過於籠統，四選項無單一明確正解，故撤答案。"
+      "quality_flags": [],
+      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 A。** 原題『COP28 對氣候投資之影響』以『以上皆是』作答，但其中『自願碳市場明確成熟』為假、其餘過於籠統→無單一正解（曾撤答案）。改寫為『下列關於 COP28 何者錯誤？』，以三項經查證之真實 COP28 成果為誘答，唯一錯誤敘述『COP28 通過巴黎協定第 6.4 條方法學/碳移除標準』（實際遭否決、延至 COP29）為答案。"
     },
     {
       "index": 342,
