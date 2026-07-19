@@ -73,14 +73,26 @@ def has_primary(b, q):
     return any(is_primary(u) for u in srcs(b, q))
 
 
+def primary_evidence(b, q):
+    # 「有一手逐字引文」＝ evidence 至少一筆，其 url 是一手來源、且有非空 quote。
+    # ⚠️ 光有 evidence 不算 —— evidence 可能來自維基／新聞／標準轉載預覽（二手）。
+    return any(
+        isinstance(e, dict) and is_primary(e.get('url', '')) and (e.get('quote') or '').strip()
+        for e in (evidence(b, q) or [])
+    )
+
+
 # 「有 URL」不等於「有一手來源」：一手來源必須由事實發布者／法規/標準制定者發布。
 # 非一手 URL（部落格、新聞、二手研究）另計為第二類，不混入「一手來源」那一類。
 no_source = [(b, q) for b, q in ITEMS if not srcs(b, q)]
+# ⚠️ 舊版這兩類都用 `not evidence(b, q)`（有任何 evidence 就排除）——
+#    於是「有一手來源 URL、但 evidence 是維基／新聞」的題會從兩類都溜掉，
+#    被默默算進「已補齊一手逐字」。改用 primary_evidence()：一手逐字才算數。
 nonprimary = [
     (b, q) for b, q in ITEMS
-    if srcs(b, q) and not has_primary(b, q) and not evidence(b, q)
+    if srcs(b, q) and not has_primary(b, q)
 ]
-no_quote = [(b, q) for b, q in ITEMS if has_primary(b, q) and not evidence(b, q)]
+no_quote = [(b, q) for b, q in ITEMS if has_primary(b, q) and not primary_evidence(b, q)]
 
 
 def is_calc(q):
@@ -108,7 +120,7 @@ L.append('| | 題數 |')
 L.append('| --- | ---: |')
 L.append(f'| **完全沒有 URL** | **{len(no_source)}** |')
 L.append(f'| 有 URL 但沒有一手來源（部落格／新聞／二手） | {len(nonprimary)} |')
-L.append(f'| 有一手來源，但沒有逐字引文 | {len(no_quote)} |')
+L.append(f'| 有一手來源，但沒有一手逐字引文 | {len(no_quote)} |')
 L.append('')
 L.append('---')
 L.append('')
@@ -166,9 +178,10 @@ if nonprimary:
 
 L.append('---')
 L.append('')
-L.append(f'## 三、有一手來源，但沒有逐字引文（{len(no_quote)} 題）')
+L.append(f'## 三、有一手來源，但沒有一手逐字引文（{len(no_quote)} 題）')
 L.append('')
-L.append('這些題**附了一手來源 URL**，但沒有人把那一頁抓回來、逐字確認引文真的在上面。')
+L.append('這些題**附了一手來源 URL**，但沒有一筆「一手來源 + 逐字引文」的 evidence ——')
+L.append('可能完全沒有 evidence，也可能 evidence 只落在二手來源（維基／新聞／標準轉載預覽）上。')
 L.append('')
 L.append('⚠️ **連結是活的，不代表指對地方。** 我們抓到過 19 題引錯法規 ——')
 L.append('碳費題引到溫管辦法，兩個 URL 都回 HTTP 200。')

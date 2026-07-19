@@ -102,6 +102,7 @@ export const PRIMARY: readonly HostRule[] = [
   { host: 'treaties.un.org', who: '聯合國條約集 —— 條約原文與批准狀態' },
   { host: 'ipcc.ch', who: 'IPCC —— AR5／AR6 的 GWP 值' },
   { host: 'iea.org', who: '國際能源總署 —— 能源與排放統計' },
+  { host: 'irena.org', who: '國際再生能源總署（IRENA）—— 條約型政府間組織，再生能源統計與裝置容量的權威（同 iea.org 之等級）' },
   { host: 'icao.int', who: 'ICAO —— CORSIA' },
   { host: 'cop28.com', who: 'COP28 主辦國官網 —— UAE Consensus 文本' },
   { host: 'cop30.br', who: 'COP30 主辦國官網' },
@@ -146,6 +147,12 @@ export const SECONDARY: readonly HostRule[] = [
   // 百科全書：轉述既有事實、非發布者。用於 COP30 地點等無爭議事實，且官方頁（unfccc.int）
   // 本輪被限流抓不到時的可即時重驗替代來源。
   { host: 'wikipedia.org', who: '維基百科（含各語系子網域）—— 二手彙整，非事實發布者' },
+  // ISO／標準的公開預覽轉載通路。它們**轉載** ISO 全文目次（含章節標題），逐字可在此重驗，
+  // 但發布者是 ISO，不是它們 —— 所以歸二手，不計入「一手逐字」那一級。
+  { host: 'ansi.org', who: 'ANSI（含 webstore.ansi.org）—— ISO 標準公開預覽的轉載通路，非原始發布者' },
+  // 產業聯盟／學術機構對事件的自述與分析，不是決議或事實的原始發布者。
+  { host: 'ogci.com', who: 'Oil and Gas Climate Initiative —— 產業聯盟，自述其倡議（OGDC 等），非 COP 決議發布者' },
+  { host: 'smithschool.ox.ac.uk', who: '牛津大學 Smith School —— 學術對 COP 結果的評述，非 UNFCCC 決議發布者' },
 ];
 
 const matches = (host: string, rule: string) => host === rule || host.endsWith(`.${rule}`);

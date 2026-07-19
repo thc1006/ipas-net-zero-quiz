@@ -7934,10 +7934,10 @@
         },
         "evidence": [
           {
-            "url": "https://www.iso.org/standard/43279.html",
+            "url": "https://webstore.ansi.org/preview-pages/ISO/preview_ISO%2B14068-1-2023.pdf",
             "quote": "Evaluation and revision of the carbon neutrality management plan",
             "supports_option": "A",
-            "note": "ISO 14068-1:2023 專章『碳中和管理計畫』設有『評估與修訂（Evaluation and revision）』一節 —— 佐證標準設有評估與修訂機制"
+            "note": "ISO 14068-1:2023 中「碳中和管理計畫（carbon neutrality management plan）」設有評估與修訂章節，其標題即為「Evaluation and revision of the carbon neutrality management plan」，對應本題正解。此章節標題為標準全文目次項目，僅見於標準全文與公開預覽；ISO 官方頁（見 sources）確認版本與發布狀態，但頁面本身不含此逐字標題，故 evidence 改指向可逐字重驗的公開預覽（ANSI 轉載，屬二手轉載通路）。"
           }
         ],
         "answer_verification": {

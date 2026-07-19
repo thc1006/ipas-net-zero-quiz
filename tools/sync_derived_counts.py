@@ -86,9 +86,18 @@ def pool_srcs(q):
 
 
 def has_evidence(q, kind):
-    if kind == 'main':
-        return bool(md(q).get('evidence'))
-    return bool((q.get('provenance') or {}).get('evidence'))
+    # ① 級「有一手來源的逐字引文」：evidence 至少一筆，其 url 屬一手來源、且有非空 quote。
+    #
+    # ⚠️ **不能只看 `evidence != null`。** 那樣的話，只要塞一筆
+    #    `{"url": 某個維基頁, "quote": "隨便一句"}` 就會讓「機械驗證」題數 +1 ——
+    #    這正是被抓到的 false positive（gist[137] 引文不在它指的頁上、6 題 evidence 是
+    #    維基／新聞／標準轉載預覽）。一手逐字必須由**事實發布者**的頁面承載。
+    #    這段邏輯必須跟 docs-counts.test.ts 的 primaryQuote() 一模一樣。
+    evs = md(q).get('evidence') if kind == 'main' else (q.get('provenance') or {}).get('evidence')
+    return any(
+        isinstance(e, dict) and is_primary(e.get('url', '')) and (e.get('quote') or '').strip()
+        for e in (evs or [])
+    )
 
 
 N = {
