@@ -1,6 +1,7 @@
 {
   "name": "ipas-net-zero-quiz",
   "version": "1.2.0",
+  "private": true,
   "description": "iPAS 淨零碳規劃管理師 備考神器 - 考古題線上測驗",
   "type": "module",
   "packageManager": "pnpm@9.15.4",
