@@ -70,11 +70,19 @@ def main_srcs(q):
     src = q.get('source')
     if isinstance(src, dict) and isinstance(src.get('url'), str):
         out.append(src['url'])
+    # 逐字 evidence[].url 也算「有來源」—— 否則會出現「有逐字引文卻無來源」的不可能狀態
+    for e in (md(q).get('evidence') or []):
+        if isinstance(e, dict) and isinstance(e.get('url'), str) and re.match(r'^https?://', e['url']):
+            out.append(e['url'])
     return out
 
 
 def pool_srcs(q):
-    return q.get('sources') or []
+    out = [u for u in (q.get('sources') or []) if isinstance(u, str)]
+    for e in ((q.get('provenance') or {}).get('evidence') or []):
+        if isinstance(e, dict) and isinstance(e.get('url'), str) and re.match(r'^https?://', e['url']):
+            out.append(e['url'])
+    return out
 
 
 def has_evidence(q, kind):

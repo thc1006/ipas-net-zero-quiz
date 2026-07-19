@@ -16,7 +16,7 @@
       "考科2": 342
     },
     "with_answer": 773,
-    "last_updated": "2026-07-13T00:00:00.000000",
+    "last_updated": "2026-07-19T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
       "scope": [
@@ -25,15 +25,17 @@
         "carbon_fee",
         "carbon_neutrality"
       ],
-      "reverified_count": 117,
+      "reverified_count": 118,
       "total_questions": 773,
-      "time_sensitive_count": 128,
+      "time_sensitive_count": 129,
       "not_reviewed_this_round_count": 680,
       "carried_over_count": 11,
       "known_unresolved": [
         {
           "id": "PAS_2060_withdrawal_date",
-          "detail": "BSI 官方 knowledge 頁只查得到 PAS 2060:2010（2014-04-29 撤回）；2014 版無官方 withdrawal record。現有來源把「停售驗證 2024-01-01」「改用 ISO 14068-1 2025-01-01」「文件撤回 2025-11-30」混為一談 —— 三者是不同事件。pool-em-ipas_vocus_mock-007 與 pool-aig-intl_round1_rescued-intl-018 已標 ambiguous、answer=null、provenance.verify_verdict=AMBIGUOUS（prior_verify_verdict=CONFIRMED 保留舊誤判紀錄）。2026-07-13 已用測試釘住：exam mode 完全不出這兩題；practice mode 可出但 isCorrect=null，不進分子也不進分母（見 hooks/nullAnswerScoring.test.tsx）。schema 亦禁止 ambiguous 題再標成 CONFIRMED。"
+          "detail": "PAS 2060 撤回日期在官方層級仍未單一釘定：BSI knowledge 頁只查得 PAS 2060:2010（2014-04-29 撤回），2014 版無官方 withdrawal record；現有來源把「停售驗證 2024-01-01」「改用 ISO 14068-1 2025-01-01」「文件撤回 2025-11-30」混為一談（三者是不同事件）。**2026-07-19 更新：先前依賴此日期的兩題已救回、不再依賴撤回年份，故此爭議已不影響任何題目計分。** pool-em-ipas_vocus_mock-007 改測 ISO 14068-1 減緩層級（answer=A、verify_verdict=CONFIRMED）；pool-aig-intl_round1_rescued-intl-018 改測「承襲並取代」關係、選項去除年份（answer=B、verify_verdict=CONFIRMED）。此條保留，僅作為「未來命題不得斷言 PAS 2060 撤回年份」之提醒（resolved=true 指題目層影響已解除，非指官方日期已定案）。",
+          "resolved_for_scoring": true,
+          "resolved_date": "2026-07-19"
         },
         {
           "id": "gist_313_penalty_actor_ambiguity",
@@ -50,7 +52,10 @@
         },
         {
           "id": "eu_carbon_border_two_correct_answers",
-          "detail": "gist[140] / gist[296]「何者不是歐盟碳邊境管制項目」**事實上有兩個正確答案**：CORSIA（ICAO 國際航空機制）與 CCTS（印度碳信用交易制度）都不是歐盟制度。命題者預設單選答案為 CORSIA，題庫依此計分（gist[140] 原答 CCTS 為誤，已更正）。瑕疵保留紀錄，未解決的是「命題者是否承認 C 亦可」。"
+          "detail": "gist[140]/gist[296]「何者不是歐盟碳邊境管制項目」原**事實上有兩個正解**（CORSIA＝ICAO、CCTS＝印度，皆非歐盟）。**2026-07-19 已改題幹翻正為單一正解 CBAM（PR #97）**：gist[296] 改測「對進口高碳產品課碳成本、防碳洩漏之機制」（依 Reg 2023/956 Art 1(1)）、gist[140] 改測「CBAM 憑證價格連動 EU ETS 配額拍賣價」（依 Art 21）。兩題不再有雙答案，已重回計分。",
+          "resolved": true,
+          "resolved_for_scoring": true,
+          "resolved_date": "2026-07-19"
         },
         {
           "id": "srra_stage2_verification_conflict",
@@ -84,7 +89,7 @@
         "canonical-facts.test.ts —— 題庫對外主張的事實（我國採 AR5、費率 300/50/100、K 值 25,000）",
         "metadata.valid_as_of —— 這一題的時效性內容「實際查證到哪一天」"
       ],
-      "still_unverified": "422 題完全沒有來源 URL，無從查證；59 題只有社群來源；26 題有一手來源但沒有人確認過內容相符。見 VERIFICATION-GAPS.md。"
+      "still_unverified": "422 題完全沒有來源 URL，無從查證；59 題只有社群來源；25 題有一手來源但沒有人確認過內容相符。見 VERIFICATION-GAPS.md。"
     },
     "no_source_audit": {
       "date": "2026-07-14",
@@ -100,9 +105,9 @@
       "date": "2026-07-14",
       "what": "對 383 題「附了一手來源 URL、但從來沒有人打開來看過」的題目，逐題把那一頁抓回來，檢查它到底有沒有說這件事。",
       "population": 383,
-      "supported": 317,
-      "wrong_source": 30,
-      "replaced": 29,
+      "supported": 318,
+      "wrong_source": 29,
+      "replaced": 28,
       "disputed": 1,
       "no_quote": 18,
       "dead": 4,
@@ -130,7 +135,7 @@
       "date": "2026-07-15",
       "pending": 13,
       "what": "補解析的過程順帶發現：一批「已機械驗證的逐字引文」**逐字為真，卻釘不住答案**。「引文逐字存在」與「引文釘得住答案」**是兩件事** —— 過去只驗了前者。",
-      "resolved": "41 筆指控中，**24 筆是抽取瑕疵**（引文被截斷／漏抓答案卡，重抓即可），**2 筆由人親自處置**：gist[80] 的答案**確實是錯的**（碳費收費辦法 §9 寫「國內」，題庫寫「國內外」，全條「國外」0 次，而且四個選項沒有一個等於法條 → 已排除計分）；gist[116] 由**窮舉整部氣候法**證明成立（「碳關稅」0 次）。",
+      "resolved": "41 筆指控中，**24 筆是抽取瑕疵**（引文被截斷／漏抓答案卡，重抓即可），**2 筆由人親自處置**：gist[80] 的答案**確實是錯的**（碳費收費辦法 §9 寫「國內」，題庫寫「國內外」，全條「國外」0 次，而且四個選項沒有一個等於法條 → 已排除計分）；gist[116] 由**窮舉整部氣候法**證明成立（「碳關稅」0 次）。（**2026-07-19 更正：gist[80] 之後經回報 #94 複核已由 null 還原為 A** —— 碳費收費辦法 §9 定期檢討國內減量額度扣除之上限及比率、§10 定期檢討國外之上限，國內外皆定期檢討，選項 A『國內外…上限及比率』成立；當初判「答案錯、四選項無一對」是漏看 §10 所致，非題目瑕疵。此處保留舊敘述僅為紀錄，現行狀態以 gist[80] 之 metadata.answer_verification 為準。）",
       "honest_limit": "⚠️ 剩下的**尚未經人親自複核**。目前已知的傾向是「多數是引文不足，不是答案錯」——**但那是傾向，不是結論。** 不把「還沒讀」寫成「沒問題」。"
     }
   },
@@ -6143,6 +6148,12 @@
             "quote": "以毫克、公克、公斤、公噸或其他公制單位二氧化碳當量表示，並四捨五入取至整數位。",
             "supports_option": "C",
             "note": "自願性產品碳足跡核定標示及管理辦法 §4(3)：碳足跡數值四捨五入取至整數位"
+          },
+          {
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
+            "quote": "圖示之心型內應依第四條第三項規定標示產品碳足跡數值及計量單位，不得變形或加註字樣。",
+            "supports_option": "C",
+            "note": "§10 第三項第二款：標籤數值依 §4(3)（四捨五入取至整數位）標示 —— 佐證『如何標示』即取整規則"
           }
         ],
         "answer_verification": {
@@ -6150,7 +6161,10 @@
           "verdict": "REWRITTEN_SINGLE_ANSWER",
           "note": "原題問『企業宣告碳中和時』如何四捨五入 —— 但碳中和宣告指引查無四捨五入規則（張冠李戴）。四捨五入規則實住在產品碳足跡制度（自願性產品碳足跡核定標示及管理辦法 §4(3)：四捨五入取至整數位）。改題幹到規則實際所在之制度，答案＝四捨五入取至整數位。",
           "method": "MOENV 法規 §4(3) 逐字（獨立代理自法規系統＋行政院公報複驗）"
-        }
+        },
+        "sources": [
+          "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934"
+        ]
       },
       "quality_flags": [],
       "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 C。** 原題問『碳中和宣告』如何四捨五入，但環境部《企業宣告碳中和指引》查無此規則（張冠李戴）。四捨五入規則實住在產品碳足跡制度（自願性產品碳足跡核定標示及管理辦法 §4(3)：四捨五入取至整數位）。改題幹到規則實際所在之制度，答案＝四捨五入取至整數位。",
@@ -7884,7 +7898,7 @@
       "options": [
         {
           "key": "A",
-          "text": "應定期評估並修訂，於規劃之期間及情況變動時（如新數據、組織或活動改變）更新"
+          "text": "應設有評估與修訂（evaluation and revision）機制，並定期檢視更新"
         },
         {
           "key": "B",
@@ -7929,13 +7943,19 @@
         "answer_verification": {
           "date": "2026-07-19",
           "verdict": "REWRITTEN_SINGLE_ANSWER",
-          "note": "原題問『碳中和指引（政府指引）的更新機制』—— 現行環境部指引並無此機制、四選項皆無依據。改題幹到規則實際存在之處：ISO 14068-1 設有『碳中和管理計畫』專章，含『評估與修訂』一節，明示計畫須定期評估並修訂。答案＝定期評估並修訂。",
+          "note": "原題問『政府指引的更新機制』（現行指引並無此機制）。改題幹到 ISO 14068-1:2023『碳中和管理計畫』專章之『評估與修訂（Evaluation and revision）』一節，選項收斂為公開章節標題可支撐之程度（設有評估與修訂機制、定期檢視更新），不逾越付費正文。答案＝設有評估與修訂機制。註：ISO 14068-1:2023 官方標為待修訂、預計由 ISO/FDIS 14068 取代，故標 time_sensitive。",
           "method": "ISO 14068-1:2023 目次/Clause 9.3 標題逐字（正文付費；標題與 Tunley 等佐證，獨立代理複驗）"
-        }
+        },
+        "valid_as_of": "2026-07-19",
+        "sources": [
+          "https://www.iso.org/standard/43279.html"
+        ]
       },
-      "quality_flags": [],
+      "quality_flags": [
+        "time_sensitive"
+      ],
       "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 A。** 原題問『政府碳中和指引的更新機制』，但現行環境部指引並無此機制（四選項皆無依據）。改題幹到規則實際存在之處：ISO 14068-1『碳中和管理計畫』專章設有『評估與修訂（Evaluation and revision）』一節，明示計畫須定期評估並修訂。答案＝定期評估並修訂。",
-      "explanation": "依 ISO 14068-1，碳中和管理計畫並非一經核准即固定，而應定期評估並修訂 —— 於規劃之期間、以及情況變動時（如新的科學數據、組織結構或活動改變）更新。故正確者為定期評估並修訂；其餘（固定不更新、僅首次宣告時更新、每季全部重寫）均非標準所要求。"
+      "explanation": "依 ISO 14068-1:2023，碳中和管理計畫設有「評估與修訂（Evaluation and revision）」機制 —— 計畫並非一經核准即固定，而應定期檢視更新；其餘（固定不更新、僅首次宣告時更新、每季全部重寫）均非標準所定。"
     },
     {
       "index": 138,
@@ -14295,6 +14315,12 @@
             "quote": "This document addresses only a single impact category: climate change. Carbon offsetting and communication of CFP or partial CFP information are outside the scope of this document.",
             "supports_option": "A",
             "note": "ISO 14067:2018 Scope：CFP 之溝通在範圍外（另由 ISO 14026 規範）；功能單位則為標準所定義"
+          },
+          {
+            "url": "https://www.iso.org/standard/71206.html",
+            "quote": "functional unit — quantified performance of a product system for use as a reference unit",
+            "supports_option": "A",
+            "note": "功能單位為 ISO 14067 所定義（Clause 3.1.3.7），故選項『功能單位的定義』在標準範圍內、非本題答案 —— 佐證唯一『不包括』者為『溝通』"
           }
         ],
         "explanation_audit": {
@@ -18584,7 +18610,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "其中「首次全球盤點呼籲轉型脫離化石燃料」「首日啟動損失與損害基金」「2030 年前再生能源三倍、能效加倍之承諾」均為 COP28（2023）之真實成果；而「COP28 正式通過並啟用巴黎協定第 6.4 條機制之方法學與碳移除標準」則為錯誤敘述 —— 該方法學與碳移除標準於 COP28 遭締約方否決、並未通過（延至隔年 COP29 方採納），故本題「何者錯誤」為此項。",
+      "explanation": "其中「首次全球盤點呼籲轉型脫離化石燃料」「首日啟動損失與損害基金」「2030 年前再生能源三倍、能效加倍之承諾」均為 COP28（2023）之真實成果；而「COP28 正式通過並啟用巴黎協定第 6.4 條機制之方法學與碳移除標準」則為錯誤敘述 —— 該方法學與碳移除標準於 COP28／CMA5 未作成決議，係由第 6.4 條監督機構其後採納、並於 COP29 納入後續處理，故 COP28 並未通過。本題「何者錯誤」即為此項。",
       "metadata": {
         "original_id": "c2-148",
         "_legacy_pipeline_metadata": {
@@ -18619,6 +18645,24 @@
             "quote": "Ultimately, the final presidency text presented on December 12th was rejected by Parties.",
             "supports_option": "A",
             "note": "COP28 未通過巴黎協定第 6.4 條方法學/碳移除標準（遭締約方否決，延至 COP29 方採納）；故「COP28 正式通過並啟用」為錯誤敘述"
+          },
+          {
+            "url": "https://unfccc.int/sites/default/files/resource/cma5_auv_4_gst.pdf",
+            "quote": "Transitioning away from fossil fuels in energy systems, in a just, orderly and equitable manner, accelerating action in this critical decade, so as to achieve net zero by 2050 in keeping with the science",
+            "supports_option": "A",
+            "note": "首次全球盤點決議（真 COP28 成果）—— 佐證『轉型脫離化石燃料』選項為真、非本題答案"
+          },
+          {
+            "url": "https://unfccc.int/news/cop28-agreement-signals-beginning-of-the-end-of-the-fossil-fuel-era",
+            "quote": "Parties reached a historic agreement on the operationalization of the loss and damage fund and funding arrangements",
+            "supports_option": "A",
+            "note": "損失與損害基金於 COP28 首日完成運作安排（真 COP28）—— 佐證該選項為真、非本題答案"
+          },
+          {
+            "url": "https://www.cop28.com/en/global-renewables-and-energy-efficiency-pledge",
+            "quote": "Commit to work together to triple the world's installed renewable energy generation capacity to at least 11,000 GW by 2030",
+            "supports_option": "A",
+            "note": "三倍再生能源承諾（真 COP28）—— 佐證該選項為真；四選項中唯『COP28 通過 Art 6.4 方法學/碳移除標準』為假（實際遭否決、未於 COP28 通過），為答案"
           }
         ]
       },
@@ -22566,6 +22610,24 @@
             "quote": "The Clean Development Mechanism (CDM), defined in Article 12 of the Protocol, allows a country with an emission-reduction or emission-limitation commitment under the Kyoto Protocol (Annex B Party) to implement an emission-reduction project in developing countries.",
             "supports_option": "C",
             "note": "UNFCCC：CDM 為京都議定書第 12 條機制，非 COP28 倡議"
+          },
+          {
+            "url": "https://www.cop28.com/en/global-renewables-and-energy-efficiency-pledge",
+            "quote": "Commit to work together to triple the world's installed renewable energy generation capacity to at least 11,000 GW by 2030",
+            "supports_option": "C",
+            "note": "選項『再生能源快速布建』對應 COP28『全球再生能源與能效承諾』（真 COP28）—— 故非本題答案"
+          },
+          {
+            "url": "https://www.ogci.com/news/ogci-cop28-oil-gas-decarbonization-charter-an-important-milestone-for-the-industry/",
+            "quote": "The OGDC was launched at COP28 in Dubai to help rally a broad set of national, private and independent oil and gas companies to implement and accelerate climate actions in support of the Paris Agreement ambitions.",
+            "supports_option": "C",
+            "note": "選項『油氣脫碳憲章（OGDC）』為 COP28 launch —— 故非本題答案"
+          },
+          {
+            "url": "https://www.irena.org/News/pressreleases/2023/Dec/Global-Power-Utilities-Declare-Joint-Action-Plan-to-Drive-Energy-Transition-at-COP28",
+            "quote": "Global Power Utilities Declare Joint Action Plan to Drive Energy Transition at COP28",
+            "supports_option": "C",
+            "note": "選項『公共電力淨零聯盟（UNEZA）』為 COP28 launch —— 故非本題答案；唯 CDM（京都議定書第 12 條）非 COP28，為唯一正解"
           }
         ]
       },

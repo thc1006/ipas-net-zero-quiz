@@ -36,13 +36,21 @@ def stem(q):
 
 
 def srcs(bank, q):
+    # 統一的 URL 蒐集：metadata.sources / source.url / 逐字 evidence[].url 都算「有來源」。
+    # 少了 evidence[].url，一題就可能同時被算成「有逐字引文」又「完全沒有來源」的不可能狀態。
     if bank == '主題庫':
         out = [u for u in ((q.get('metadata') or {}).get('sources') or []) if isinstance(u, str)]
         s = q.get('source')
         if isinstance(s, dict) and isinstance(s.get('url'), str):
             out.append(s['url'])
-        return out
-    return q.get('sources') or []
+        ev = (q.get('metadata') or {}).get('evidence') or []
+    else:
+        out = list(q.get('sources') or [])
+        ev = (q.get('provenance') or {}).get('evidence') or []
+    for e in ev:
+        if isinstance(e, dict) and isinstance(e.get('url'), str):
+            out.append(e['url'])
+    return out
 
 
 def evidence(bank, q):

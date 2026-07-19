@@ -12,6 +12,7 @@
 // （gist[304]）能默默錯到線上的原因。
 import { describe, it, expect } from 'vitest';
 import datasetRaw from './integrated_dataset.json';
+import poolRaw from './practice_pool.json';
 import {
   checkFlags,
   formatFlagViolations,
@@ -45,6 +46,7 @@ const DS = datasetRaw as unknown as {
 
 const ALL: Item[] = [...DS.gist_items, ...DS.our_unique_items];
 const who = (it: Item) => it.item_id ?? `gist[${it.index}]`;
+const POOL = poolRaw as unknown as { items: { id: string; answer: string | null }[] };
 
 // ── 官方答案卡：把 120 個「已跟官方答案對過」的答案釘死 ────────────────
 //
@@ -315,6 +317,46 @@ describe('題庫結構完整性', () => {
       expect(open.length).toBeGreaterThan(0);
       expect(open.map((u) => u.id)).toContain('PAS_2060_withdrawal_date');
       expect(open.map((u) => u.id)).toContain('ifrs_issb_tcfd_not_reverified');
+    });
+
+    // 治理 metadata 與題目現況的交叉一致性：一旦某未解事項標了 resolved_for_scoring
+    // （代表它提到的題目「已救回、可計分」），那些題目就**必須真的有答案**。
+    // 若日後有人把其中一題重新撤成 null，或有人刪掉題目答案卻沒回頭改頂層摘要，
+    // 這條會當場紅 —— 專治「頂層說已解決、個別題卻是 null」的 split-brain。
+    it('resolved_for_scoring 的事項，其提及的題目必須真的可計分（answer 非 null）', () => {
+      const byIndex = new Map(ALL.map((it) => [it.index, it]));
+      const poolById = new Map(POOL.items.map((i) => [i.id, i]));
+      const entries = cr.known_unresolved as unknown as {
+        id: string;
+        detail?: string;
+        resolved_for_scoring?: boolean;
+      }[];
+      const scoped = entries.filter((u) => u.resolved_for_scoring);
+      expect(scoped.length, '沒有任何 resolved_for_scoring 事項 —— 這條在空轉').toBeGreaterThan(0);
+      const bad: string[] = [];
+      let checked = 0;
+      for (const u of scoped) {
+        const detail = u.detail ?? '';
+        for (const m of detail.matchAll(/gist\[(\d+)\]/g)) {
+          const q = byIndex.get(Number(m[1]));
+          if (q) {
+            checked++;
+            if (q.answer == null) bad.push(`${u.id}: gist[${m[1]}] 仍為 null`);
+          }
+        }
+        for (const m of detail.matchAll(/pool-[A-Za-z0-9_-]+/g)) {
+          const q = poolById.get(m[0]);
+          if (q) {
+            checked++;
+            if (q.answer == null) bad.push(`${u.id}: ${m[0]} 仍為 null`);
+          }
+        }
+      }
+      expect(checked, 'resolved_for_scoring 事項裡沒對到任何題目 id —— 交叉檢查在空轉').toBeGreaterThan(0);
+      expect(
+        bad,
+        '頂層 known_unresolved 標了 resolved_for_scoring，個別題卻仍是 null（治理 split-brain）'
+      ).toEqual([]);
     });
   });
 
@@ -925,9 +967,9 @@ describe('quality_flags 的一致性', () => {
     {
       id: 'gist[137]',
       why:
-        '2026-07-19 改題幹救回為單一正解。原題問「政府指引本身的更新機制」（現行環境部指引並無此' +
-        '機制）。改題幹到規則實際存在之處：ISO 14068-1「碳中和管理計畫」專章設有「評估與修訂」' +
-        '（Evaluation and revision）一節，明示計畫須定期評估並修訂。答案＝定期評估並修訂。標準條文、不隨時間變',
+        '（已標 time_sensitive，此處不需例外）2026-07-19 改題幹救回為單一正解：原題問「政府指引的' +
+        '更新機制」（現行指引無此機制），改測 ISO 14068-1:2023「碳中和管理計畫」之「評估與修訂」' +
+        '（Clause 9.3）機制。因 ISO 14068-1:2023 官方已標為待修訂、預計由 ISO/FDIS 14068 取代，故標 time_sensitive',
     },
     {
       id: 'gist[420]',
