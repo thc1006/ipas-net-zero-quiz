@@ -100,7 +100,6 @@ export function assertMainBankValid(ds: unknown): asserts ds is QuizDataset {
     const summary = errs.slice(0, 10).map((e) => `  ${e.path}: ${e.message}`).join('\n');
     const msg = `main-bank schema validation failed (${errs.length} error${errs.length > 1 ? 's' : ''}):\n${summary}${errs.length > 10 ? `\n  ...and ${errs.length - 10} more` : ''}`;
     if (env?.PROD) {
-      // eslint-disable-next-line no-console
       console.warn(msg);
     } else {
       throw new Error(msg);

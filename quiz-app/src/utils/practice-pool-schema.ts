@@ -280,7 +280,6 @@ export function assertPracticePoolValid(pool: unknown): asserts pool is Practice
     const msg = `practice_pool schema validation failed (${errs.length} error${errs.length > 1 ? 's' : ''}):\n${summary}${errs.length > 10 ? `\n  ...and ${errs.length - 10} more` : ''}`;
     if (env?.PROD) {
       // production：不 throw（避免使用者看到白屏）；只 warn
-      // eslint-disable-next-line no-console
       console.warn(msg);
     } else {
       throw new Error(msg);

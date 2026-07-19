@@ -321,96 +321,6 @@ ${question.answer ? `正確答案：${question.answer}` : '（此題無標準答
 }
 
 /**
- * 請求 AI 生成相似題目
- */
-export async function generateSimilarQuestion(
-  question: QuizQuestion
-): Promise<AIResponse> {
-  const loaded = await loadPuterSDK();
-  if (!loaded || !window.puter) {
-    return {
-      success: false,
-      content: '',
-      confidence: 0,
-      error: 'AI 服務暫時無法使用',
-    };
-  }
-
-  const prompt = `${SYSTEM_PROMPT}
-
-參考以下題目，生成一道相似但不同的練習題：
-
-原題目：${question.stem}
-
-請生成：
-1. 新題目（測試相同概念但使用不同情境或數據）
-2. 四個選項 A/B/C/D
-3. 正確答案
-4. 簡短解析
-
-格式要求：
-- 題目難度與原題相近
-- 確保答案正確
-- 避免抄襲原題`;
-
-  try {
-    const response = await window.puter.ai.chat(prompt, { model: AI_MODEL });
-    // 處理回應 - Puter.js 可能返回字串或物件
-    let content = '';
-    if (typeof response === 'string') {
-      content = response;
-    } else if (response && typeof response === 'object') {
-      // 排除 AsyncIterable（streaming 模式的回應）
-      if (Symbol.asyncIterator in response) {
-        for await (const part of response) {
-          if (part?.text) {
-            content += part.text;
-          }
-        }
-      } else {
-        // 處理各種 Puter.js 回應格式
-        const respObj = response as unknown as Record<string, unknown>;
-
-        if (respObj.message && typeof respObj.message === 'object') {
-          const message = respObj.message as Record<string, unknown>;
-          if (typeof message.content === 'string') {
-            content = message.content;
-          } else if (Array.isArray(message.content) && message.content.length > 0) {
-            const firstContent = message.content[0] as Record<string, unknown>;
-            if (typeof firstContent.text === 'string') {
-              content = firstContent.text;
-            } else if (typeof firstContent === 'string') {
-              content = firstContent;
-            }
-          }
-        } else if (typeof respObj.text === 'string') {
-          content = respObj.text;
-        } else if (typeof respObj.content === 'string') {
-          content = respObj.content;
-        } else if (typeof respObj.response === 'string') {
-          content = respObj.response;
-        }
-      }
-    }
-    const confidence = content.length > 100 ? 0.8 : 0.5;
-
-    return {
-      success: true,
-      content,
-      confidence,
-    };
-  } catch (error) {
-    logger.error('AI 生成題目失敗', error);
-    return {
-      success: false,
-      content: '',
-      confidence: 0,
-      error: 'AI 生成題目失敗',
-    };
-  }
-}
-
-/**
  * 請求 AI 生成相似題目（Streaming 版本）
  * 回應會逐步透過 onChunk 回呼傳送
  */
@@ -531,18 +441,4 @@ function estimateConfidence(content: string, _question: QuizQuestion): number {
   }
 
   return Math.min(1, Math.max(0, score));
-}
-
-/**
- * 取得 AI 服務狀態
- */
-export async function getAIStatus(): Promise<{
-  available: boolean;
-  model: string;
-}> {
-  const available = await loadPuterSDK();
-  return {
-    available,
-    model: AI_MODEL,
-  };
 }
