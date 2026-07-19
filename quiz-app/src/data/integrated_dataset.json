@@ -15,7 +15,7 @@
       "考科1": 431,
       "考科2": 342
     },
-    "with_answer": 766,
+    "with_answer": 765,
     "last_updated": "2026-07-13T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -4641,7 +4641,7 @@
           "text": "只檢討國內減量額度扣除比率"
         }
       ],
-      "answer": null,
+      "answer": "A",
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
@@ -4659,23 +4659,27 @@
         ],
         "evidence": [
           {
-            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=9",
-            "quote": "中央主管機關應依實際執行情形，定期檢討第一項國內減量額度扣除收費排放量之上限及比率。",
-            "note": "⚠️ 這段引文**逐字為真，而它證明的正是題目錯了** —— 法條說的是「**國內**」，而題庫的答案寫「國內外」。全條「國外」出現 0 次。"
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139&flno=9",
+            "quote": "定期檢討第一項國內減量額度扣除收費排放量之上限及比率",
+            "supports_option": "A",
+            "note": "國內：定期檢討上限及比率"
+          },
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139&flno=10",
+            "quote": "定期檢討前項國外減量額度扣除收費排放量之上限",
+            "supports_option": "A",
+            "note": "國外：定期檢討上限（前次撤答案漏看此條）"
           }
         ],
-        "prior_answer": "A",
         "answer_verification": {
-          "date": "2026-07-16",
-          "verdict": "NULLED_DOCUMENTED",
-          "note": "2026-07-15 已撤答案（§9 檢討「國內」減量額度，選項 A 卻寫「國內外」為超集、四選項無一符合法條）。第十八輪代理建議補 A 屬過度指控，維持 null。",
-          "method": "既有決定＋我複核"
+          "date": "2026-07-18",
+          "verdict": "RESTORED_TO_A",
+          "note": "回報 #94 正確；前次撤答案是我的錯——只讀「國內」那條、漏看「國外」亦定期檢討其上限。國內外皆檢討，選項 A 成立，由 null 還原為 A。",
+          "method": "碳費收費辦法 國內＋國外兩條逐字"
         }
       },
-      "quality_flags": [
-        "ambiguous"
-      ],
-      "_correction_note": "2026-07-15：**這一題沒有正確選項** —— 已移除答案，不列入計分。碳費收費辦法 §9 完整條文（我自己從全國法規資料庫的**原始 HTML** 逐項讀出）：「事業…得以**國內**減量額度申請…扣除…」「中央主管機關應依實際執行情形，定期檢討第一項**國內**減量額度扣除收費排放量之**上限及比率**。」**全條「國外」出現 0 次。** 原答 (A)「**國內外**減量額度…之上限及比率」—— 法條寫的是「國內」，不是「國內外」。 而 (D)「只檢討**國內**減量額度扣除**比率**」—— 法條寫的是「上限**及**比率」，(D) 漏掉「上限」。 **兩個都不對。** 這不是選錯字母，是**四個選項沒有一個等於法條**。"
+      "quality_flags": [],
+      "explanation": "依碳費收費辦法，中央主管機關應定期檢討國內減量額度扣除收費排放量之上限及比率，並定期檢討國外減量額度扣除收費排放量之上限；故其定期檢討涵蓋國內外減量額度扣除之上限及比率。"
     },
     {
       "index": 81,
@@ -8025,7 +8029,7 @@
           "text": "碳邊境調整機制 (CBAM)"
         }
       ],
-      "answer": "B",
+      "answer": null,
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
@@ -8036,7 +8040,7 @@
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
         ],
-        "prior_answer": "A",
+        "prior_answer": "B",
         "verification_source": "ICAO CORSIA / 印度 CCTS / EU CBAM+ETS 制度歸屬",
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -8051,20 +8055,19 @@
           "verdict": "answer_verified_no_single_quote",
           "detail": "第十五輪：此為定義題。CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制，非歐盟碳邊境管制工具；ETS 與 CBAM 皆為歐盟工具。答案（CORSIA 不屬歐盟碳邊境）為領域定義事實，正確，但無單一一手條文可正面釘住（否定/定義題的性質）。CBAM 法規全文「CORSIA」0 次，佐證其不在該框架內。"
         },
-        "evidence": [
-          {
-            "url": "https://www.icao.int/sites/default/files/environmental-protection/CORSIA/CORSIA_FAQs_Apr2024.pdf",
-            "quote": "CORSIA is implemented through Annex 16, Volume IV to the Convention on International Civil Aviation (Chicago Convention), which applies to Contracting States of the Convention.",
-            "supports_option": "B",
-            "note": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。（註：選項 CCTS 亦非明確之歐盟碳邊境工具，屬命題瑕疵；CORSIA 為明確可釘之正解。）"
-          }
-        ]
+        "answer_verification": {
+          "date": "2026-07-18",
+          "verdict": "NULLED_TWO_CORRECT",
+          "note": "CCTS（印度）與 CORSIA（ICAO）皆非歐盟碳邊境機制 → 兩正解 → 撤答案。",
+          "method": "CCTS 多源（carbonherald/PwC/ICAP/IEA）＋CORSIA ICAO"
+        }
       },
       "quality_flags": [
+        "ambiguous",
         "time_sensitive"
       ],
       "prior_answer_note": "原答案 A",
-      "_correction_note": "2026-07-13 更正：原答 CCTS 為誤；正解為 CORSIA。本題**有兩個事實上正確的答案**：CORSIA 是 ICAO（國際民航組織）的全球國際航空碳抵換與減量機制、CCTS 通常指印度政府建立的 Carbon Credit Trading Scheme —— **兩者都不是歐盟碳邊境制度**；而 CBAM 與 EU ETS 才是（CBAM 憑證價格甚至與 EU ETS 配額價格連動）。嚴格而言 C、D 皆可。命題者預設的單選答案是 **CORSIA**，本題庫依此計分，但保留這個瑕疵的紀錄。",
+      "_correction_note": "2026-07-18：**撤答案（排除計分）。** 回報 #93 正確：本題有兩個正解——CORSIA 是 ICAO 國際航空減量機制、CCTS 是印度政府 2023 年設立之 Carbon Credit Trading Scheme（能源部 2023/6/28），兩者皆非歐盟碳邊境機制。命題把 CCTS 當歐盟選項係前提錯誤，故撤答案（同 gist[420]）。",
       "explanation": "CORSIA 係透過國際民航公約（芝加哥公約）實施，屬國際民航組織之航空減量機制，非歐盟碳邊境管制項目。"
     },
     {
@@ -16142,7 +16145,7 @@
           "text": "CORSIA"
         }
       ],
-      "answer": "D",
+      "answer": null,
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
@@ -16166,20 +16169,21 @@
           "verdict": "answer_verified_no_single_quote",
           "detail": "第十五輪：此為定義題。CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制，非歐盟碳邊境管制工具；ETS 與 CBAM 皆為歐盟工具。答案（CORSIA 不屬歐盟碳邊境）為領域定義事實，正確，但無單一一手條文可正面釘住（否定/定義題的性質）。CBAM 法規全文「CORSIA」0 次，佐證其不在該框架內。"
         },
-        "evidence": [
-          {
-            "url": "https://www.icao.int/sites/default/files/environmental-protection/CORSIA/CORSIA_FAQs_Apr2024.pdf",
-            "quote": "CORSIA is implemented through Annex 16, Volume IV to the Convention on International Civil Aviation (Chicago Convention), which applies to Contracting States of the Convention.",
-            "supports_option": "D",
-            "note": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。（註：選項 CCTS 亦非明確之歐盟碳邊境工具，屬命題瑕疵；CORSIA 為明確可釘之正解。）"
-          }
-        ]
+        "prior_answer": "D",
+        "answer_verification": {
+          "date": "2026-07-18",
+          "verdict": "NULLED_TWO_CORRECT",
+          "note": "CCTS（印度）與 CORSIA（ICAO）皆非歐盟碳邊境機制 → 兩正解 → 撤答案。",
+          "method": "CCTS 多源（carbonherald/PwC/ICAP/IEA）＋CORSIA ICAO"
+        }
       },
       "quality_flags": [
+        "ambiguous",
         "time_sensitive"
       ],
       "prior_answer_note": "原答案 D",
-      "_source_note": "本題**有兩個事實上正確的答案**：CORSIA 是 ICAO（國際民航組織）的全球國際航空碳抵換與減量機制、CCTS 通常指印度政府建立的 Carbon Credit Trading Scheme —— **兩者都不是歐盟碳邊境制度**；而 CBAM 與 EU ETS 才是（CBAM 憑證價格甚至與 EU ETS 配額價格連動）。嚴格而言 C、D 皆可。命題者預設的單選答案是 **CORSIA**，本題庫依此計分，但保留這個瑕疵的紀錄。"
+      "_source_note": "本題**有兩個事實上正確的答案**：CORSIA 是 ICAO（國際民航組織）的全球國際航空碳抵換與減量機制、CCTS 通常指印度政府建立的 Carbon Credit Trading Scheme —— **兩者都不是歐盟碳邊境制度**；而 CBAM 與 EU ETS 才是（CBAM 憑證價格甚至與 EU ETS 配額價格連動）。嚴格而言 C、D 皆可。命題者預設的單選答案是 **CORSIA**，本題庫依此計分，但保留這個瑕疵的紀錄。",
+      "_correction_note": "2026-07-18：**撤答案（排除計分）。** 回報 #93 正確：本題有兩個正解——CORSIA 是 ICAO 國際航空減量機制、CCTS 是印度政府 2023 年設立之 Carbon Credit Trading Scheme（能源部 2023/6/28），兩者皆非歐盟碳邊境機制。命題把 CCTS 當歐盟選項係前提錯誤，故撤答案（同 gist[420]）。"
     },
     {
       "index": 297,

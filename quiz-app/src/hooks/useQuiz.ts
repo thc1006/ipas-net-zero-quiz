@@ -71,15 +71,20 @@ export function useQuiz() {
     let questions: QuizQuestion[];
 
     if (config.shuffleQuestions) {
-      // 隨機抽題
+      // 隨機抽題 —— 無標準答案的題目一律不出（練習與考試皆同）。
+      // 這類題答案是 null（來源互斥或多重正解，已排除計分），出到使用者面前
+      // 只會看到「沒有正解可對」而困惑（Refs #93/#94/#95）。
       questions = getRandomQuestions(
         config.questionCount,
         config.subject,
-        config.mode === 'exam' // 考試模式只選有答案的題目
+        true
       );
     } else {
       // 順序取題（同樣依內容去重：跨科重複在 'all' 模式下會同時落進池子）
-      const pool = dedupeByContent(getQuestionsBySubject(config.subject));
+      // 同樣濾掉無答案題。
+      const pool = dedupeByContent(getQuestionsBySubject(config.subject)).filter(
+        (q) => q.hasAnswer
+      );
       questions = pool.slice(0, config.questionCount);
     }
 
@@ -119,34 +124,29 @@ export function useQuiz() {
             combined,
             config.questionCount,
             config.subject,
-            config.mode === 'exam'
+            true // 無答案題一律不出（練習與考試皆同）
           )
         : (() => {
             const subjectFiltered =
               config.subject === 'all'
                 ? combined
                 : combined.filter((q) => q.subject === config.subject);
-            const answerFiltered =
-              config.mode === 'exam'
-                ? subjectFiltered.filter((q) => q.hasAnswer)
-                : subjectFiltered;
+            const answerFiltered = subjectFiltered.filter((q) => q.hasAnswer);
             return answerFiltered.slice(0, config.questionCount);
           })();
     } else {
-      // 不混練習池 — fallback 到 startQuiz 邏輯
+      // 不混練習池 — fallback 到 startQuiz 邏輯（同樣濾掉無答案題）
       if (config.shuffleQuestions) {
         questions = getRandomQuestions(
           config.questionCount,
           config.subject,
-          config.mode === 'exam'
+          true
         );
       } else {
-        const subjectFiltered = dedupeByContent(getQuestionsBySubject(config.subject));
-        const answerFiltered =
-          config.mode === 'exam'
-            ? subjectFiltered.filter((q) => q.hasAnswer)
-            : subjectFiltered;
-        questions = answerFiltered.slice(0, config.questionCount);
+        const subjectFiltered = dedupeByContent(
+          getQuestionsBySubject(config.subject)
+        ).filter((q) => q.hasAnswer);
+        questions = subjectFiltered.slice(0, config.questionCount);
       }
     }
 
@@ -321,7 +321,35 @@ export function useQuiz() {
   const resumeQuiz = useCallback((): boolean => {
     const saved = loadProgress();
     if (!saved || !saved.state.isActive) return false;
-    setState(saved.state);
+    const s = saved.state;
+
+    // 本次修正前存下的進度可能含無答案題（answer=null，排除計分），而進度永不過期，
+    // 之後任何時間續作都會遇到。續作時一併濾掉，讓「使用者不遇到無答案題」的保證
+    // 對舊進度也成立（Refs #93/#94/#95）。
+    const answerable = s.questions.filter((q) => q.hasAnswer);
+    if (answerable.length === 0) {
+      // 整份都是無答案題（極端）→ 沒有可續的題目，清掉舊進度、不續作。
+      clearProgress();
+      return false;
+    }
+    if (answerable.length === s.questions.length) {
+      setState(s); // 沒有無答案題 → 原樣還原（常態、快路徑）
+    } else {
+      // 有題被濾掉 → 重新錨定：currentIndex 指回原本正在作答的那一題（若它還在），
+      // 否則往前收斂；answers 只保留仍存在的題，避免 finishQuiz 的 skippedCount 算錯。
+      const curId = s.questions[s.currentIndex]?.id;
+      const survivedIdx = answerable.findIndex((q) => q.id === curId);
+      const survivingIds = new Set(answerable.map((q) => q.id));
+      setState({
+        ...s,
+        questions: answerable,
+        currentIndex:
+          survivedIdx >= 0
+            ? survivedIdx
+            : Math.min(s.currentIndex, answerable.length - 1),
+        answers: s.answers.filter((a) => survivingIds.has(a.questionId)),
+      });
+    }
     setQuestionStartTime(Date.now());
     return true;
   }, []);
