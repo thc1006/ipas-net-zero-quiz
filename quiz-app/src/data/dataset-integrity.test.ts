@@ -248,9 +248,9 @@ describe('題庫結構完整性', () => {
 
   // meta 不得對「查證範圍」說謊。
   //
-  // 原本寫 `content_verified_as_of: "2026-07-13"` —— 下游會理解成「整份 783 題都查證到
-  // 這一天」。實際上本輪只實查了 103 題（CBAM/NDC/碳費/碳中和），12 題沿用 2026-01-23，
-  // 另外 668 題連 time_sensitive 都沒標、根本沒碰過。
+  // 原本寫 `content_verified_as_of: "2026-07-13"` —— 下游會理解成「整份題庫都查證到
+  // 這一天」。實際上只實查了一部分（實查題數＝reverified_count，由下方 gate 釘死在資料上），
+  // 其餘題連 time_sensitive 都沒標、根本沒碰過。
   //
   // 改成 content_review{...}，並用這條測試把數字釘死在「資料實際長什麼樣」上：
   // reverified_count 必須等於資料裡 valid_as_of == last_review_date 的題數。
@@ -263,6 +263,7 @@ describe('題庫結構完整性', () => {
       total_questions: number;
       time_sensitive_count: number;
       carried_over_count: number;
+      not_reviewed_this_round_count: number;
       known_unresolved: { id: string; resolved?: boolean }[];
       note: string;
     };
@@ -312,11 +313,44 @@ describe('題庫結構完整性', () => {
       expect(cr.note).toMatch(/valid_as_of/); // 必須指出以每題的 valid_as_of 為準
     });
 
+    // not_reviewed_this_round_count 曾凍在舊快照 680，正確值是 total - reverified。
+    // 沒有這條 gate、sync 也沒算它，於是它一路漂成假的精確數字。現在由公式釘死。
+    it('not_reviewed_this_round_count 必須等於 total - reverified（不得是過期快照）', () => {
+      expect(cr.not_reviewed_this_round_count).toBe(cr.total_questions - cr.reverified_count);
+    });
+
     it('known_unresolved 必須列出仍未解決的事項', () => {
       const open = cr.known_unresolved.filter((u) => !u.resolved);
       expect(open.length).toBeGreaterThan(0);
       expect(open.map((u) => u.id)).toContain('PAS_2060_withdrawal_date');
-      expect(open.map((u) => u.id)).toContain('ifrs_issb_tcfd_not_reverified');
+      // 這裡原本 `toContain('ifrs_issb_tcfd_not_reverified')` —— 那把**過期的 unresolved 狀態釘死**：
+      // 11 題早已於 2026-07-20 補查證（content_reverified_2026_07=true、carried_over=0），頂層事項卻被
+      // 測試要求維持 open，於是 CI 全綠仍放過了「治理敘述與資料自相矛盾」。改為要求它已 resolved。
+      const ifrs = cr.known_unresolved.find((u) => u.id === 'ifrs_issb_tcfd_not_reverified');
+      expect(ifrs?.resolved, 'IFRS 那批已於 2026-07-20 補查證，此事項應標 resolved').toBe(true);
+    });
+
+    // 治理過期防護（#100 的教訓）：一個「仍 open」的 known_unresolved 事項，不得宣稱
+    // 「某批題本輪未重查 / content_reverified_2026_07=false」，卻在資料裡對不到任何真的未重查的題。
+    // 這正是舊 toContain 沒守住、反而幫倒忙釘死的那個洞。
+    it('open 的 known_unresolved 不得宣稱「未重查」卻與資料矛盾（治理 split-brain）', () => {
+      const open = cr.known_unresolved.filter((u) => !u.resolved);
+      const unreverified = ALL.filter(
+        (it) =>
+          (it as unknown as { metadata?: { content_reverified_2026_07?: boolean } }).metadata
+            ?.content_reverified_2026_07 === false
+      ).length;
+      const claiming = open.filter((u) =>
+        /本輪未重查|尚未重(新)?查證|content_reverified_2026_07\s*[=:]\s*false|沿用\s*valid_as_of=2026-01-23/.test(
+          (u as { detail?: string }).detail ?? ''
+        )
+      );
+      if (claiming.length > 0) {
+        expect(
+          unreverified,
+          `${claiming.map((u) => u.id).join(',')} 仍 open 宣稱有題未重查，但資料裡 content_reverified_2026_07=false 的題數為 ${unreverified} —— 治理敘述已過期`
+        ).toBeGreaterThan(0);
+      }
     });
 
     // 治理 metadata 與題目現況的交叉一致性：一旦某未解事項標了 resolved_for_scoring

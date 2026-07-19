@@ -169,6 +169,9 @@ N['carried_over'] = sum(
     if 'time_sensitive' in (q.get('quality_flags') or [])
     and (md(q).get('valid_as_of') or '') < (last or '')
 )
+# 本輪未重查題數 = 總題數 - 已重查。原本這個欄位沒人算 —— 於是它凍在舊快照 680，
+# 而正確值是 773 - 129 = 644（多批次查證後 reverified 會變，這欄若不由公式算就必漂）。
+N['not_reviewed'] = N['total'] - N['reverified']
 
 changed = []
 
@@ -189,6 +192,7 @@ set_meta('corrections_applied', N['corrections'])
 set_meta('content_review.time_sensitive_count', N['time_sensitive'])
 set_meta('content_review.reverified_count', N['reverified'])
 set_meta('content_review.carried_over_count', N['carried_over'])
+set_meta('content_review.not_reviewed_this_round_count', N['not_reviewed'])
 set_meta('citation_audit.supported', N['ca_supported'])
 set_meta('citation_audit.replaced', N['ca_replaced'])
 set_meta('citation_audit.disputed', N['ca_disputed'])
