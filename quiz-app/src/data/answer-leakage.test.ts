@@ -42,8 +42,9 @@ describe('答案洩漏：「無腦選最長」能考幾分', () => {
   });
 
   it('AI 產題的洩漏程度不准再惡化（釘在現況）', () => {
-    // 現況 66.3%。任何新增/修改若把它推得更高，就是在讓工具變得更沒用。
-    expect(pct(longestOptionScore(AI))).toBeLessThanOrEqual(66.3);
+    // 現況 65.7%（2026-07-19 救回 intl-018 時特意讓正解不是最長選項，較先前 66.3% 更低）。
+    // 任何新增/修改若把它推得更高，就是在讓工具變得更沒用。
+    expect(pct(longestOptionScore(AI))).toBeLessThanOrEqual(65.7);
   });
 
   it('主題庫（真正拿來考試的那一份）不准被 AI 產題的病傳染', () => {
