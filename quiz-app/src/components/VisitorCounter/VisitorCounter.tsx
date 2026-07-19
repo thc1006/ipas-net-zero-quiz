@@ -118,7 +118,6 @@ export function VisitorCounter({
   if (isLoading) {
     return (
       <span className="visitor-counter loading" aria-label="載入中">
-        <span className="counter-icon"></span>
         <span className="count">...</span>
       </span>
     );
@@ -128,7 +127,6 @@ export function VisitorCounter({
 
   return (
     <span className="visitor-counter" aria-label={`訪客人次：${count}`}>
-      <span className="counter-icon"></span>
       <span className="count">{count.toLocaleString()}</span>
       <span className="label">人次</span>
     </span>

@@ -36,7 +36,7 @@ describe('答案洩漏：「無腦選最長」能考幾分', () => {
   // 錨點綁在**表格列首的標籤**上，不要綁在散文上 ——
   //    這個 repo 已經被「有人潤稿，規則就靜靜死掉」咬過兩次。
   it('README 必須誠實揭露 AI 產題的「選最長」得分率，且與資料一致', () => {
-    const m = README.match(/\|\s*\s*\*\*練習池 AI 產題\*\*\s*\|\s*\*\*([\d.]+)%\*\*/);
+    const m = README.match(/\|\s*\*\*練習池 AI 產題\*\*\s*\|\s*\*\*([\d.]+)%\*\*/);
     expect(m, 'README 找不到「練習池 AI 產題」那一列的得分率').not.toBeNull();
     expect(Number(m![1]), 'README 的數字與資料實算不符').toBe(pct(longestOptionScore(AI)));
   });

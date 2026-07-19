@@ -24,10 +24,6 @@
   opacity: 0.7;
 }
 
-.visitor-counter .counter-icon {
-  font-size: 1em;
-}
-
 .visitor-counter.fallback {
   opacity: 0.8;
 }
