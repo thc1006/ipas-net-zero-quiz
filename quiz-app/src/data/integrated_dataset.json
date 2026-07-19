@@ -8010,7 +8010,7 @@
     {
       "index": 140,
       "number": 140,
-      "stem": "歐盟針對進口高碳產品、依其碳含量課徵碳成本以防止碳洩漏的機制為何？",
+      "stem": "下列哪一項歐盟機制，其「憑證（certificate）」價格係以歐盟排放交易系統（EU ETS）配額的拍賣價格計算？",
       "options": [
         {
           "key": "A",
@@ -8053,20 +8053,20 @@
         "citation_audit": {
           "date": "2026-07-19",
           "verdict": "supported",
-          "detail": "改題幹後為正面題（問「歐盟對進口高碳產品課碳成本、防碳洩漏之機制」）。Reg (EU) 2023/956 Art 1(1) 逐字釘住 CBAM 即此機制；ETS（歐盟內部交易）、CORSIA（ICAO 航空）、CCTS（印度）皆非。"
+          "detail": "Reg (EU) 2023/956 Art 21(1)：CBAM 憑證價格＝EU ETS 配額拍賣收盤價之週均值。四選項唯 CBAM 有此連動；ETS 標的為配額（非憑證）、CORSIA/CCTS 與 EU ETS 拍賣價無關。"
         },
         "answer_verification": {
           "date": "2026-07-19",
-          "verdict": "REWRITTEN_TO_CBAM",
-          "note": "回報 #93 指出原題「何者不是歐盟碳邊境」有兩正解（CCTS 印度、CORSIA ICAO 皆非歐盟）。經改題幹翻正為單解：改問「對進口高碳產品課碳成本、防碳洩漏之機制」，四選項唯 CBAM 符合，答案由 null 改為 CBAM。Reg 2023/956 Art 1(1) 逐字為證。",
-          "method": "EU CBAM 法規原文逐字"
+          "verdict": "REWRITTEN_TO_CBAM_DISCRIMINATION",
+          "note": "為提高鑑別度（原「對進口課碳成本」版本因選項名含『碳邊境』易被猜中），改測 CBAM 憑證定價機制：CBAM 憑證價格以 EU ETS 配額拍賣價計算（Reg 2023/956 Art 21）。選項名不洩題，並以「憑證 vs 配額」把 EU ETS 設為強誘答；答案維持 CBAM。與 gist[296]（測 CBAM 之邊境課徵功能）區隔。",
+          "method": "EU CBAM Reg 2023/956 Art 21(1) 逐字（獨立代理自 OJ PDF 複驗）"
         },
         "evidence": [
           {
-            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-            "quote": "This Regulation establishes a carbon border adjustment mechanism (the ‘CBAM’) to address greenhouse gas emissions embedded in the goods listed in Annex I on their importation into the customs territory of the Union in order to prevent the risk of carbon leakage",
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+            "quote": "The Commission shall calculate the price of CBAM certificates as the average of the closing prices of EU ETS allowances on the auction platform, in accordance with the procedures laid down in Regulation (EU) No 1031/2010, for each calendar week.",
             "supports_option": "D",
-            "note": "CBAM Reg (EU) 2023/956 Art 1(1)：CBAM 係對進口貨物隱含排放課碳成本、以防碳洩漏之機制"
+            "note": "CBAM Reg (EU) 2023/956 Art 21(1)：CBAM 憑證價格＝EU ETS 配額拍賣收盤價之均值（原文計價週期為每週；2026 起新增 §1a 改為每季，惟「連動 ETS 拍賣價」之核心不變）"
           }
         ]
       },
@@ -8074,8 +8074,8 @@
         "time_sensitive"
       ],
       "prior_answer_note": "原答案為 CORSIA；2026-07-19 改題幹後答案為 CBAM",
-      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 CBAM。** 原題（何者不是歐盟碳邊境）因 CCTS（印度）與 CORSIA（ICAO）皆非歐盟而有兩正解（回報 #93），一度撤答案排除計分。經改以正面題幹「歐盟針對進口高碳產品課碳成本、防碳洩漏之機制」，四選項唯 CBAM 符合，依 Reg (EU) 2023/956 Art 1(1) 逐字定案為 CBAM。",
-      "explanation": "歐盟碳邊境調整機制（CBAM）針對進口高碳產品所隱含的溫室氣體排放課徵碳成本，以防止碳洩漏。其餘選項皆非對進口貨物課碳成本的邊境機制：歐洲排放交易系統（ETS）為歐盟內部排放交易、國際航空碳減排和補償計劃（CORSIA）為國際民航組織的航空碳抵換、碳信用交易系統（CCTS）為印度政府設立之機制。"
+      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 CBAM（並提高鑑別度）。** 原題（何者不是歐盟碳邊境）因 CCTS/CORSIA 皆非歐盟而有兩正解（#93），一度撤答案。先改為正面題「對進口高碳產品課碳成本之機制」（→CBAM）；為避免以「碳邊境」名稱被猜中，再改測 CBAM 憑證定價：CBAM 憑證價格以 EU ETS 配額拍賣價計算（Reg 2023/956 Art 21），答案維持 CBAM。",
+      "explanation": "歐盟碳邊境調整機制（CBAM）的「憑證（certificate）」價格，係以歐盟排放交易系統（EU ETS）配額於拍賣平台的收盤價平均值計算，使進口產品負擔與歐盟境內生產者相當的碳成本。其餘選項皆非：EU ETS 的交易標的是「配額（allowance）」而非 CBAM 憑證、CORSIA 為 ICAO 的國際航空碳抵換、CCTS 為印度的碳信用交易機制。"
     },
     {
       "index": 141,
