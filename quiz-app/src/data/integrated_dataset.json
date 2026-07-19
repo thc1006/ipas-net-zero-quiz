@@ -15,7 +15,7 @@
       "考科1": 431,
       "考科2": 342
     },
-    "with_answer": 765,
+    "with_answer": 767,
     "last_updated": "2026-07-13T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -100,7 +100,7 @@
       "date": "2026-07-14",
       "what": "對 383 題「附了一手來源 URL、但從來沒有人打開來看過」的題目，逐題把那一頁抓回來，檢查它到底有沒有說這件事。",
       "population": 383,
-      "supported": 309,
+      "supported": 311,
       "wrong_source": 30,
       "replaced": 29,
       "disputed": 1,
@@ -8010,7 +8010,7 @@
     {
       "index": 140,
       "number": 140,
-      "stem": "何者不是歐盟碳邊境管制項目的一部分？",
+      "stem": "歐盟針對進口高碳產品、依其碳含量課徵碳成本以防止碳洩漏的機制為何？",
       "options": [
         {
           "key": "A",
@@ -8029,7 +8029,7 @@
           "text": "碳邊境調整機制 (CBAM)"
         }
       ],
-      "answer": null,
+      "answer": "D",
       "source": "gist",
       "original_section": "考科1",
       "exam_subject": "考科1",
@@ -8051,24 +8051,31 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-15",
-          "verdict": "answer_verified_no_single_quote",
-          "detail": "第十五輪：此為定義題。CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制，非歐盟碳邊境管制工具；ETS 與 CBAM 皆為歐盟工具。答案（CORSIA 不屬歐盟碳邊境）為領域定義事實，正確，但無單一一手條文可正面釘住（否定/定義題的性質）。CBAM 法規全文「CORSIA」0 次，佐證其不在該框架內。"
+          "date": "2026-07-19",
+          "verdict": "supported",
+          "detail": "改題幹後為正面題（問「歐盟對進口高碳產品課碳成本、防碳洩漏之機制」）。Reg (EU) 2023/956 Art 1(1) 逐字釘住 CBAM 即此機制；ETS（歐盟內部交易）、CORSIA（ICAO 航空）、CCTS（印度）皆非。"
         },
         "answer_verification": {
-          "date": "2026-07-18",
-          "verdict": "NULLED_TWO_CORRECT",
-          "note": "CCTS（印度）與 CORSIA（ICAO）皆非歐盟碳邊境機制 → 兩正解 → 撤答案。",
-          "method": "CCTS 多源（carbonherald/PwC/ICAP/IEA）＋CORSIA ICAO"
-        }
+          "date": "2026-07-19",
+          "verdict": "REWRITTEN_TO_CBAM",
+          "note": "回報 #93 指出原題「何者不是歐盟碳邊境」有兩正解（CCTS 印度、CORSIA ICAO 皆非歐盟）。經改題幹翻正為單解：改問「對進口高碳產品課碳成本、防碳洩漏之機制」，四選項唯 CBAM 符合，答案由 null 改為 CBAM。Reg 2023/956 Art 1(1) 逐字為證。",
+          "method": "EU CBAM 法規原文逐字"
+        },
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+            "quote": "This Regulation establishes a carbon border adjustment mechanism (the ‘CBAM’) to address greenhouse gas emissions embedded in the goods listed in Annex I on their importation into the customs territory of the Union in order to prevent the risk of carbon leakage",
+            "supports_option": "D",
+            "note": "CBAM Reg (EU) 2023/956 Art 1(1)：CBAM 係對進口貨物隱含排放課碳成本、以防碳洩漏之機制"
+          }
+        ]
       },
       "quality_flags": [
-        "ambiguous",
         "time_sensitive"
       ],
-      "prior_answer_note": "原答案 A",
-      "_correction_note": "2026-07-18：**撤答案（排除計分）。** 回報 #93 正確：本題有兩個正解——CORSIA 是 ICAO 國際航空減量機制、CCTS 是印度政府 2023 年設立之 Carbon Credit Trading Scheme（能源部 2023/6/28），兩者皆非歐盟碳邊境機制。命題把 CCTS 當歐盟選項係前提錯誤，故撤答案（同 gist[420]）。",
-      "explanation": "CORSIA 係透過國際民航公約（芝加哥公約）實施，屬國際民航組織之航空減量機制，非歐盟碳邊境管制項目。"
+      "prior_answer_note": "原答案為 CORSIA；2026-07-19 改題幹後答案為 CBAM",
+      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 CBAM。** 原題（何者不是歐盟碳邊境）因 CCTS（印度）與 CORSIA（ICAO）皆非歐盟而有兩正解（回報 #93），一度撤答案排除計分。經改以正面題幹「歐盟針對進口高碳產品課碳成本、防碳洩漏之機制」，四選項唯 CBAM 符合，依 Reg (EU) 2023/956 Art 1(1) 逐字定案為 CBAM。",
+      "explanation": "歐盟碳邊境調整機制（CBAM）針對進口高碳產品所隱含的溫室氣體排放課徵碳成本，以防止碳洩漏。其餘選項皆非對進口貨物課碳成本的邊境機制：歐洲排放交易系統（ETS）為歐盟內部排放交易、國際航空碳減排和補償計劃（CORSIA）為國際民航組織的航空碳抵換、碳信用交易系統（CCTS）為印度政府設立之機制。"
     },
     {
       "index": 141,
@@ -16126,7 +16133,7 @@
     {
       "index": 296,
       "number": 37,
-      "stem": "何者不是歐盟碳邊境管制項目一部分？",
+      "stem": "歐盟為防止碳洩漏，對進口高碳產品課徵碳成本的機制為何？",
       "options": [
         {
           "key": "A",
@@ -16145,11 +16152,11 @@
           "text": "CORSIA"
         }
       ],
-      "answer": null,
+      "answer": "A",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "CORSIA 係透過國際民航公約（芝加哥公約）實施，屬國際民航組織之航空減量機制，非歐盟碳邊境管制項目。",
+      "explanation": "歐盟碳邊境調整機制（CBAM）針對進口高碳產品所隱含的溫室氣體排放課徵碳成本，以防止碳洩漏（避免生產外移到碳管制較寬鬆的國家）。其餘選項皆非對進口貨物課徵碳成本的邊境機制：EU ETS 為歐盟內部的排放交易制度、CORSIA 為國際民航組織主導的國際航空碳抵換機制、CCTS 為印度政府設立的碳信用交易機制。",
       "metadata": {
         "verification_source": "ICAO CORSIA / 印度 CCTS / EU CBAM+ETS 制度歸屬",
         "original_id": "c2-103",
@@ -16165,25 +16172,32 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "citation_audit": {
-          "date": "2026-07-15",
-          "verdict": "answer_verified_no_single_quote",
-          "detail": "第十五輪：此為定義題。CORSIA 是 ICAO（國際民航組織）的國際航空碳抵換機制，非歐盟碳邊境管制工具；ETS 與 CBAM 皆為歐盟工具。答案（CORSIA 不屬歐盟碳邊境）為領域定義事實，正確，但無單一一手條文可正面釘住（否定/定義題的性質）。CBAM 法規全文「CORSIA」0 次，佐證其不在該框架內。"
+          "date": "2026-07-19",
+          "verdict": "supported",
+          "detail": "改題幹後為正面題（問「歐盟對進口高碳產品課碳成本、防碳洩漏之機制」）。Reg (EU) 2023/956 Art 1(1) 逐字釘住 CBAM 即此機制；ETS（歐盟內部交易）、CORSIA（ICAO 航空）、CCTS（印度）皆非。"
         },
         "prior_answer": "D",
         "answer_verification": {
-          "date": "2026-07-18",
-          "verdict": "NULLED_TWO_CORRECT",
-          "note": "CCTS（印度）與 CORSIA（ICAO）皆非歐盟碳邊境機制 → 兩正解 → 撤答案。",
-          "method": "CCTS 多源（carbonherald/PwC/ICAP/IEA）＋CORSIA ICAO"
-        }
+          "date": "2026-07-19",
+          "verdict": "REWRITTEN_TO_CBAM",
+          "note": "回報 #93 指出原題「何者不是歐盟碳邊境」有兩正解（CCTS 印度、CORSIA ICAO 皆非歐盟）。經改題幹翻正為單解：改問「對進口高碳產品課碳成本、防碳洩漏之機制」，四選項唯 CBAM 符合，答案由 null 改為 CBAM。Reg 2023/956 Art 1(1) 逐字為證。",
+          "method": "EU CBAM 法規原文逐字"
+        },
+        "evidence": [
+          {
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
+            "quote": "This Regulation establishes a carbon border adjustment mechanism (the ‘CBAM’) to address greenhouse gas emissions embedded in the goods listed in Annex I on their importation into the customs territory of the Union in order to prevent the risk of carbon leakage",
+            "supports_option": "A",
+            "note": "CBAM Reg (EU) 2023/956 Art 1(1)：CBAM 係對進口貨物隱含排放課碳成本、以防碳洩漏之機制"
+          }
+        ]
       },
       "quality_flags": [
-        "ambiguous",
         "time_sensitive"
       ],
-      "prior_answer_note": "原答案 D",
-      "_source_note": "本題**有兩個事實上正確的答案**：CORSIA 是 ICAO（國際民航組織）的全球國際航空碳抵換與減量機制、CCTS 通常指印度政府建立的 Carbon Credit Trading Scheme —— **兩者都不是歐盟碳邊境制度**；而 CBAM 與 EU ETS 才是（CBAM 憑證價格甚至與 EU ETS 配額價格連動）。嚴格而言 C、D 皆可。命題者預設的單選答案是 **CORSIA**，本題庫依此計分，但保留這個瑕疵的紀錄。",
-      "_correction_note": "2026-07-18：**撤答案（排除計分）。** 回報 #93 正確：本題有兩個正解——CORSIA 是 ICAO 國際航空減量機制、CCTS 是印度政府 2023 年設立之 Carbon Credit Trading Scheme（能源部 2023/6/28），兩者皆非歐盟碳邊境機制。命題把 CCTS 當歐盟選項係前提錯誤，故撤答案（同 gist[420]）。"
+      "prior_answer_note": "原答案 D（CORSIA）；2026-07-19 改題幹後答案為 CBAM",
+      "_source_note": "原題「何者不是歐盟碳邊境管制」有兩個事實上正確的答案（CORSIA＝ICAO 國際航空、CCTS＝印度碳信用交易，皆非歐盟），為命題瑕疵。2026-07-19 經改題幹翻正為單一正解：改問「對進口高碳產品課碳成本、防碳洩漏之機制」，唯 CBAM 符合。保留此紀錄以說明沿革。",
+      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 CBAM。** 原題（何者不是歐盟碳邊境）因 CCTS（印度）與 CORSIA（ICAO）皆非歐盟而有兩正解（回報 #93），一度撤答案排除計分。經改以正面題幹「歐盟為防止碳洩漏、對進口高碳產品課碳成本的機制為何」，四選項唯 CBAM 符合（ETS 內部交易、CORSIA 航空、CCTS 印度皆非），依 Reg (EU) 2023/956 Art 1(1) 逐字定案為 CBAM。"
     },
     {
       "index": 297,

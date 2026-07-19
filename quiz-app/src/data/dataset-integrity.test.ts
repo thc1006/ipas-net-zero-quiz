@@ -982,15 +982,15 @@ describe('quality_flags 的一致性', () => {
     {
       id: 'gist[140]',
       why:
-        '**已撤答案（answer=null、排除計分）。** 回報 #93：「何者不是歐盟碳邊境管制」有兩個正解 —— ' +
-        'CORSIA（ICAO 國際航空）與 CCTS（印度 2023 Carbon Credit Trading Scheme）皆非歐盟機制。' +
-        '命題把 CCTS 當歐盟選項係前提錯誤。制度歸屬（ICAO/印度/歐盟）為事實、不隨時間變',
+        '（已標 time_sensitive，此處不需例外）2026-07-19 改題幹翻正為單一正解 CBAM：原題「何者不是' +
+        '歐盟碳邊境」因 CCTS（印度）與 CORSIA（ICAO）皆非歐盟而有兩正解（#93），改問「對進口高碳' +
+        '產品課碳成本、防碳洩漏之機制」後唯 CBAM 符合。CBAM 規則仍受 Omnibus 修正，續標 time_sensitive',
     },
     {
       id: 'gist[296]',
       why:
-        '**已撤答案（answer=null、排除計分）。** 與 gist[140] 同題型、同瑕疵（回報 #93）：' +
-        'CCTS（印度）與 CORSIA（ICAO）皆非歐盟碳邊境機制，兩個正解。撤答案而非改選項。制度事實不變',
+        '（已標 time_sensitive，此處不需例外）與 gist[140] 同題型：2026-07-19 改題幹翻正為單一正解 ' +
+        'CBAM（原兩正解 CCTS/CORSIA 皆非歐盟，#93）。CBAM 規則受 Omnibus 修正，續標 time_sensitive',
     },
     { id: 'gist[325]', why: '（已標 time_sensitive，此處不需例外）', },
     { id: 'S_CHU_06-q094', why: 'ISO 14064-1 對 base year 的定義 —— 定義，不隨時間變' },
