@@ -16,7 +16,7 @@
       "考科2": 342
     },
     "with_answer": 773,
-    "last_updated": "2026-07-19T00:00:00.000000",
+    "last_updated": "2026-07-20T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
       "scope": [
@@ -25,11 +25,11 @@
         "carbon_fee",
         "carbon_neutrality"
       ],
-      "reverified_count": 118,
+      "reverified_count": 129,
       "total_questions": 773,
       "time_sensitive_count": 129,
       "not_reviewed_this_round_count": 680,
-      "carried_over_count": 11,
+      "carried_over_count": 0,
       "known_unresolved": [
         {
           "id": "PAS_2060_withdrawal_date",
@@ -18223,8 +18223,8 @@
           "https://www.ifrs.org/content/dam/ifrs/project/general-sustainability-related-disclosures/project-summary.pdf"
         ],
         "sources_verified_date": "2026-05-04",
-        "valid_as_of": "2026-01-23",
-        "content_reverified_2026_07": false,
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
           "verification_date": "2026-01-23",
@@ -18349,8 +18349,8 @@
           "https://www.ifrs.org/content/dam/ifrs/project/general-sustainability-related-disclosures/project-summary.pdf"
         ],
         "sources_verified_date": "2026-05-04",
-        "valid_as_of": "2026-01-23",
-        "content_reverified_2026_07": false,
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
           "verification_date": "2026-01-23",
@@ -18402,12 +18402,13 @@
       "metadata": {
         "original_id": "c2-144",
         "sources": [
+          "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202601200001&dtable=News",
           "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News",
           "https://isds.tpex.org.tw/"
         ],
         "sources_verified_date": "2026-05-04",
-        "valid_as_of": "2026-01-23",
-        "content_reverified_2026_07": false,
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
           "verification_date": "2026-01-23",
@@ -18925,8 +18926,8 @@
           "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0400022"
         ],
         "sources_verified_date": "2026-05-04",
-        "valid_as_of": "2026-01-23",
-        "content_reverified_2026_07": false,
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
           "verification_date": "2026-01-23",
@@ -18982,8 +18983,8 @@
           "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html"
         ],
         "sources_verified_date": "2026-05-04",
-        "valid_as_of": "2026-01-23",
-        "content_reverified_2026_07": false,
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
           "verification_date": "2026-01-23",
@@ -19730,8 +19731,8 @@
           "https://assets.bbhub.io/company/sites/60/2021/10/FINAL-2017-TCFD-Report.pdf"
         ],
         "sources_verified_date": "2026-05-04",
-        "valid_as_of": "2026-01-23",
-        "content_reverified_2026_07": false,
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
           "verification_date": "2026-01-23",
@@ -19786,8 +19787,8 @@
           "https://www.fsb-tcfd.org/recommendations/"
         ],
         "sources_verified_date": "2026-05-04",
-        "valid_as_of": "2026-01-23",
-        "content_reverified_2026_07": false,
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
           "verification_date": "2026-01-23",
@@ -19843,8 +19844,8 @@
           "https://www.fsb-tcfd.org/recommendations/"
         ],
         "sources_verified_date": "2026-05-04",
-        "valid_as_of": "2026-01-23",
-        "content_reverified_2026_07": false,
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
           "verification_date": "2026-01-23",
@@ -19918,8 +19919,8 @@
           "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2023/issued/issbs2.html"
         ],
         "sources_verified_date": "2026-05-04",
-        "valid_as_of": "2026-01-23",
-        "content_reverified_2026_07": false,
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
           "verification_date": "2026-01-23",
@@ -23580,8 +23581,8 @@
           "https://www.cdp.net/en/disclose/why-disclose"
         ],
         "sources_verified_date": "2026-05-04",
-        "valid_as_of": "2026-01-23",
-        "content_reverified_2026_07": false,
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
           "verification_date": "2026-01-23",
@@ -30678,8 +30679,8 @@
       "_verification_note": "114 年 (2025年)，50-100億資本額於 2025 年完成盤查",
       "_verification_source": "金管會永續發展路徑圖",
       "metadata": {
-        "valid_as_of": "2026-01-23",
-        "content_reverified_2026_07": false,
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
         "sources": [
           "https://www.fsc.gov.tw/ch/home.jsp?id=2&parentpath=0&mcustomize=news_view.jsp&dataserno=202303280001&dtable=News",
           "https://www.fsc.gov.tw/userfiles/file/114_4_14%E6%9B%B4%E6%96%B0-%E6%B0%B8%E7%BA%8C%E7%99%BC%E5%B1%95%E8%B7%AF%E5%BE%91%E5%9C%96%E5%95%8F%E7%AD%94%E9%9B%86(1).pdf"
