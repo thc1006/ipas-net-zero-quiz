@@ -63,8 +63,24 @@ def evidence(bank, q):
 # 這些題因此**沒有拿到任何來源**，不是因為找不到，而是因為交上來的東西被擋下了。
 FABRICATED = {'gist[5]', 'gist[8]', 'gist[9]', 'gist[11]', 'gist[28]', 'gist[169]'}
 
+def is_primary(url):
+    m = re.match(r'https?://([^/]+)', url)
+    h = m.group(1).lower() if m else ''
+    return any(h == p or h.endswith('.' + p) for p in PRIMARY)
+
+
+def has_primary(b, q):
+    return any(is_primary(u) for u in srcs(b, q))
+
+
+# 「有 URL」不等於「有一手來源」：一手來源必須由事實發布者／法規/標準制定者發布。
+# 非一手 URL（部落格、新聞、二手研究）另計為第二類，不混入「一手來源」那一類。
 no_source = [(b, q) for b, q in ITEMS if not srcs(b, q)]
-no_quote = [(b, q) for b, q in ITEMS if srcs(b, q) and not evidence(b, q)]
+nonprimary = [
+    (b, q) for b, q in ITEMS
+    if srcs(b, q) and not has_primary(b, q) and not evidence(b, q)
+]
+no_quote = [(b, q) for b, q in ITEMS if has_primary(b, q) and not evidence(b, q)]
 
 
 def is_calc(q):
@@ -90,7 +106,8 @@ L.append(
 L.append('')
 L.append('| | 題數 |')
 L.append('| --- | ---: |')
-L.append(f'| **完全沒有來源** | **{len(no_source)}** |')
+L.append(f'| **完全沒有 URL** | **{len(no_source)}** |')
+L.append(f'| 有 URL 但沒有一手來源（部落格／新聞／二手） | {len(nonprimary)} |')
 L.append(f'| 有一手來源，但沒有逐字引文 | {len(no_quote)} |')
 L.append('')
 L.append('---')
@@ -135,7 +152,21 @@ L.append('')
 
 L.append('---')
 L.append('')
-L.append(f'## 二、有一手來源，但沒有逐字引文（{len(no_quote)} 題）')
+L.append(f'## 二、有 URL 但沒有一手來源（{len(nonprimary)} 題）')
+L.append('')
+L.append('這些題附了 URL，但網域不在 `source-authority.ts` 的一手來源清單內（部落格、新聞、')
+L.append('二手研究等）。**有連結不代表有一手依據** —— 這批仍需換成官方／法規／標準的一手來源。')
+L.append('')
+if nonprimary:
+    L.append('| id | 題庫 | 題幹 |')
+    L.append('| --- | --- | --- |')
+    for b, q in sorted(nonprimary, key=lambda x: who(x[1])):
+        L.append(f'| `{who(q)}` | {b} | {stem(q)[:56]} |')
+    L.append('')
+
+L.append('---')
+L.append('')
+L.append(f'## 三、有一手來源，但沒有逐字引文（{len(no_quote)} 題）')
 L.append('')
 L.append('這些題**附了一手來源 URL**，但沒有人把那一頁抓回來、逐字確認引文真的在上面。')
 L.append('')

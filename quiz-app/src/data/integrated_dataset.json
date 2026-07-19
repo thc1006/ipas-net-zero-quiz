@@ -63,7 +63,7 @@
           "resolved": true
         }
       ],
-      "note": "這不是「整份題庫已查證到 last_review_date」。本輪只實查 103/783 題（scope 所列主題）。判斷單一題目的內容是否仍正確，請以該題的 metadata.valid_as_of 為準，不要用這裡的日期。",
+      "note": "這不是「整份題庫已查證到 last_review_date」。本輪只實查了一部分（實查題數見上方 reverified_count、總題數見 total_questions，兩者皆由 gate 守住）。判斷單一題目的內容是否仍正確，請以該題的 metadata.valid_as_of 為準，不要用這裡的日期。",
       "see": "CONTENT-CURRENCY.md"
     },
     "metadata_honesty_note": {
@@ -82,14 +82,14 @@
         "research_agent": "AI 代理自評 —— 與練習池的 adversarial_subagent 同一個病（那個代理對 13 個實質缺陷全部判 CONFIRMED）。"
       },
       "what_actually_verifies": [
-        "metadata.sources[] / source.url —— 真實可點擊的來源 URL（351 / 773 題）",
+        "metadata.sources[] / source.url / evidence[].url —— 真正指向的一手來源 URL（題數見 README『有一手來源』一列，由 sync/gate 守住；早期只有約三分之一，補來源後已大幅提升）",
         "restoration-manifest.json + tools/restore_from_source_pdf.py --verify —— 159 題逐頁逐欄逐題對來源 PDF，含 answer key 與文字 hash（可重跑）",
         "law-articles.pinned.json —— 6 部法規逐條原文 + sha256；解析裡的引文由 CI 逐字比對",
         "dataset-integrity.test.ts 的 CALC_ANSWERS —— 21 道計算題逐題手算",
         "canonical-facts.test.ts —— 題庫對外主張的事實（我國採 AR5、費率 300/50/100、K 值 25,000）",
         "metadata.valid_as_of —— 這一題的時效性內容「實際查證到哪一天」"
       ],
-      "still_unverified": "422 題完全沒有來源 URL，無從查證；59 題只有社群來源；25 題有一手來源但沒有人確認過內容相符。見 VERIFICATION-GAPS.md。"
+      "still_unverified": "尚未完全查證的題目（完全沒有 URL／有 URL 但非一手來源／有一手來源但尚無逐字引文）之最新題數，一律以自動生成的 VERIFICATION-GAPS.md 為準（由 tools/gen_gap_reports.py 產生、CI 有 gate）。早期曾有數百題無來源，補一手來源後已大幅下降。"
     },
     "no_source_audit": {
       "date": "2026-07-14",
@@ -7894,23 +7894,23 @@
     {
       "index": 137,
       "number": 137,
-      "stem": "依 ISO 14068-1，碳中和管理計畫（carbon neutrality management plan）之更新機制，下列何者正確？",
+      "stem": "依 ISO 14068-1:2023，碳中和管理計畫（carbon neutrality management plan）之更新機制，下列何者正確？",
       "options": [
         {
           "key": "A",
-          "text": "應設有評估與修訂（evaluation and revision）機制，並定期檢視更新"
+          "text": "應設有評估與修訂（evaluation and revision）機制"
         },
         {
           "key": "B",
-          "text": "計畫一經核准即固定，不得再更新"
+          "text": "計畫一經核准即固定，標準不允許再修訂"
         },
         {
           "key": "C",
-          "text": "僅在首次宣告碳中和時更新一次"
+          "text": "標準未就碳中和管理計畫規範評估或修訂"
         },
         {
           "key": "D",
-          "text": "每季須將計畫全部重新撰寫"
+          "text": "計畫僅於外部查證時由查證機構修訂，事業不得自行評估"
         }
       ],
       "answer": "A",
@@ -7930,21 +7930,21 @@
         "citation_audit": {
           "date": "2026-07-19",
           "verdict": "supported",
-          "detail": "ISO 14068-1:2023 設有專章「碳中和管理計畫」，其中一節即為『Evaluation and revision of the carbon neutrality management plan』（評估與修訂）—— 明示計畫須定期評估並修訂。"
+          "detail": "ISO 14068-1:2023 碳中和管理計畫專章設有「Evaluation and revision of the carbon neutrality management plan」一節 —— 標準確有評估與修訂機制。本題僅主張「設有此機制」，不逾越公開章節標題可支撐之範圍（不斷言頻率）。"
         },
         "evidence": [
           {
             "url": "https://www.iso.org/standard/43279.html",
             "quote": "Evaluation and revision of the carbon neutrality management plan",
             "supports_option": "A",
-            "note": "ISO 14068-1:2023 專章『碳中和管理計畫』設有『評估與修訂』一節 —— 計畫須定期評估並修訂、於情況變動時更新"
+            "note": "ISO 14068-1:2023 專章『碳中和管理計畫』設有『評估與修訂（Evaluation and revision）』一節 —— 佐證標準設有評估與修訂機制"
           }
         ],
         "answer_verification": {
           "date": "2026-07-19",
           "verdict": "REWRITTEN_SINGLE_ANSWER",
-          "note": "原題問『政府指引的更新機制』（現行指引並無此機制）。改題幹到 ISO 14068-1:2023『碳中和管理計畫』專章之『評估與修訂（Evaluation and revision）』一節，選項收斂為公開章節標題可支撐之程度（設有評估與修訂機制、定期檢視更新），不逾越付費正文。答案＝設有評估與修訂機制。註：ISO 14068-1:2023 官方標為待修訂、預計由 ISO/FDIS 14068 取代，故標 time_sensitive。",
-          "method": "ISO 14068-1:2023 目次/Clause 9.3 標題逐字（正文付費；標題與 Tunley 等佐證，獨立代理複驗）"
+          "note": "原題問政府指引更新機制（現行指引無此機制）。改測 ISO 14068-1:2023『碳中和管理計畫』之『評估與修訂（Evaluation and revision）』機制。選項僅主張『設有評估與修訂機制』，收斂至公開章節標題可支撐之程度、不逾越付費正文（不斷言頻率）。ISO 14068-1:2023 官方標為待修訂、預計由 ISO/FDIS 14068 取代，故標 time_sensitive。",
+          "method": "ISO 14068-1:2023 章節標題逐字（公開頁；不逾越付費正文）"
         },
         "valid_as_of": "2026-07-19",
         "sources": [
@@ -7954,8 +7954,8 @@
       "quality_flags": [
         "time_sensitive"
       ],
-      "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 A。** 原題問『政府碳中和指引的更新機制』，但現行環境部指引並無此機制（四選項皆無依據）。改題幹到規則實際存在之處：ISO 14068-1『碳中和管理計畫』專章設有『評估與修訂（Evaluation and revision）』一節，明示計畫須定期評估並修訂。答案＝定期評估並修訂。",
-      "explanation": "依 ISO 14068-1:2023，碳中和管理計畫設有「評估與修訂（Evaluation and revision）」機制 —— 計畫並非一經核准即固定，而應定期檢視更新；其餘（固定不更新、僅首次宣告時更新、每季全部重寫）均非標準所定。"
+      "_correction_note": "2026-07-19：改題幹、答案由 null 改為 A。原題問『政府指引的更新機制』（現行指引無此機制）。改題幹到 ISO 14068-1:2023『碳中和管理計畫』專章之『評估與修訂（Evaluation and revision）』機制；選項僅主張『設有此機制』，不斷言頻率（限縮於公開章節標題可支撐之範圍）。答案＝設有評估與修訂機制。",
+      "explanation": "ISO 14068-1:2023 的碳中和管理計畫章節包含「Evaluation and revision of the carbon neutrality management plan」一節，故標準確有「評估與修訂」機制、計畫並非一經核准即固定；其餘敘述（標準禁止修訂、未規範評估或修訂、僅限查證機構修訂）均與該章節不符。"
     },
     {
       "index": 138,

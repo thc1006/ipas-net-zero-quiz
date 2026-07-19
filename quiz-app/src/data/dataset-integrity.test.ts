@@ -358,6 +358,18 @@ describe('題庫結構完整性', () => {
         '頂層 known_unresolved 標了 resolved_for_scoring，個別題卻仍是 null（治理 split-brain）'
       ).toEqual([]);
     });
+
+    // 頂層「誠實 metadata」不得再內嵌會漂的過期快照數字（例：103/783、422 題完全沒有來源、
+    // 351/773）。這些一律改為指向被 gate/sync 守住的欄位或自動生成的 VERIFICATION-GAPS.md。
+    it('content_review.note / metadata_honesty_note 不得內嵌會漂的過期快照數字', () => {
+      const blob =
+        JSON.stringify(cr.note) + JSON.stringify(DS.meta.metadata_honesty_note);
+      expect(blob, '出現過期總題數 783（現為 773）').not.toMatch(/783/);
+      expect(
+        blob,
+        '誠實 note 不應硬編「N 題完全沒有來源 URL」的快照 —— 請指向 VERIFICATION-GAPS.md'
+      ).not.toMatch(/\d+\s*題[^。，]{0,8}完全沒有來源\s*URL/);
+    });
   });
 
   it('AR6「次方成長」偽造題不得再出現（issue #85 迴歸防護）', () => {
