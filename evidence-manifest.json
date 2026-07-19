@@ -6,10 +6,10 @@
     "tier1_rule": "authority == primary 且 has_quote —— 二手 evidence（維基／新聞／標準轉載預覽）不計入"
   },
   "summary": {
-    "main_tier1_questions": 754,
+    "main_tier1_questions": 756,
     "pool_tier1_questions": 138,
-    "total_evidence_urls": 909,
-    "primary_evidence_urls": 900,
+    "total_evidence_urls": 911,
+    "primary_evidence_urls": 902,
     "secondary_evidence_urls": 9,
     "unknown_evidence_urls": 0
   },
@@ -1486,6 +1486,24 @@
       "bank": "main",
       "url": "https://usr.chu.edu.tw/var/file/81/1081/img/214245506.pdf",
       "host": "usr.chu.edu.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_GAP-cbam-cert-sale-001",
+      "bank": "main",
+      "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
+      "host": "eur-lex.europa.eu",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_GAP-cbam-de-minimis-001",
+      "bank": "main",
+      "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
+      "host": "eur-lex.europa.eu",
       "authority": "primary",
       "has_quote": true,
       "tier1": true

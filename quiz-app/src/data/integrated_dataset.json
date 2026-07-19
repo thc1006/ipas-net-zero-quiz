@@ -7,15 +7,15 @@
       "爬蟲題庫: dataset_verified.json",
       "CHU 商研院模擬試題 PDF（考科1 100題 / 考科2 70題，含答案key）"
     ],
-    "total_questions": 773,
+    "total_questions": 775,
     "gist_questions": 545,
-    "our_unique_questions": 228,
+    "our_unique_questions": 230,
     "corrections_applied": 40,
     "by_subject": {
-      "考科1": 431,
+      "考科1": 433,
       "考科2": 342
     },
-    "with_answer": 773,
+    "with_answer": 775,
     "last_updated": "2026-07-20T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -26,9 +26,9 @@
         "carbon_neutrality",
         "ISSB_IFRS_TCFD"
       ],
-      "reverified_count": 129,
-      "total_questions": 773,
-      "time_sensitive_count": 129,
+      "reverified_count": 131,
+      "total_questions": 775,
+      "time_sensitive_count": 131,
       "not_reviewed_this_round_count": 644,
       "carried_over_count": 0,
       "known_unresolved": [
@@ -51,7 +51,7 @@
         },
         {
           "id": "coverage_gaps",
-          "detail": "主題庫尚無題目涵蓋：CBAM de minimis 50 公噸/年門檻、CBAM 憑證販售起始日 2027-02-01。"
+          "detail": "主題庫覆蓋缺口。2026-07-20 已補兩題：CBAM de minimis 50 公噸/年（S_GAP-cbam-de-minimis-001）、CBAM 憑證販售起始日 2027-02-01（S_GAP-cbam-cert-sale-001），皆 EUR-Lex Reg (EU) 2025/2083 逐字。仍未補：IFRS S1/S2 / ISSB 的廣度（既有題已重新查證，但題數相對 115 考綱可能不足）。詳見 CONTENT-CURRENCY §2.5。"
         },
         {
           "id": "eu_carbon_border_two_correct_answers",
@@ -47588,6 +47588,148 @@
           "what": "原「解析」欄位是來源 PDF 頁尾分隔線的擷取殘留物（=====），完全沒有教學內容。已補寫。"
         }
       }
+    },
+    {
+      "item_id": "S_GAP-cbam-de-minimis-001",
+      "year": 2025,
+      "year_confidence": "high",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [
+        "CBAM",
+        "Omnibus",
+        "EU",
+        "de_minimis"
+      ],
+      "question_type": "single_choice",
+      "stem": "依歐盟 2025 年 CBAM 簡化修正案（Omnibus，Regulation (EU) 2025/2083），最低限度（de minimis）豁免改以「單一進口商每年進口 CBAM 貨物之總質量」為準，取代原本以每批貨值計算的方式。單一進口商全年進口總量未超過下列何者，即免除申報與繳交憑證之義務？",
+      "options": [
+        {
+          "key": "A",
+          "text": "50 公噸"
+        },
+        {
+          "key": "B",
+          "text": "100 公噸"
+        },
+        {
+          "key": "C",
+          "text": "150 公噸"
+        },
+        {
+          "key": "D",
+          "text": "250 公噸"
+        }
+      ],
+      "answer": "A",
+      "explanation": "CBAM Omnibus 修正案將最低限度豁免改為以每年進口總質量計，門檻為 50 公噸；單一進口商全年進口 CBAM 貨物未超過 50 公噸即可豁免申報與繳交憑證，取代原本按每批貨值認定的作法。100、150、250 公噸均非該門檻。",
+      "source": {
+        "source_id": "S_EURLEX_2025_2083_deminimis",
+        "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
+        "publisher": "EUR-Lex",
+        "authority": "official",
+        "evidence": {
+          "page": null,
+          "quote": "should be introduced in Regulation (EU) 2023/956, and initially be set at a level of 50 tonnes."
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "should be introduced in Regulation (EU) 2023/956, and initially be set at a level of 50 tonnes.",
+      "notes": "填補 CONTENT-CURRENCY §2.5 主題庫缺口：CBAM de minimis 50 公噸/年（練習池已有 pool-aig-intl-001，主題庫原 0 題）。",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
+        "sources": [
+          "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
+          "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en"
+        ],
+        "evidence": [
+          {
+            "quote": "should be introduced in Regulation (EU) 2023/956, and initially be set at a level of 50 tonnes.",
+            "supports_option": "A",
+            "verified_on": "2026-07-20",
+            "method": "EUR-Lex Reg (EU) 2025/2083 逐字；與練習池 pool-aig-intl-001 同一引文",
+            "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj"
+          }
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
+    },
+    {
+      "item_id": "S_GAP-cbam-cert-sale-001",
+      "year": 2025,
+      "year_confidence": "high",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [
+        "CBAM",
+        "Omnibus",
+        "EU",
+        "certificates"
+      ],
+      "question_type": "single_choice",
+      "stem": "依歐盟 2025 年 CBAM 簡化修正案（Omnibus，Regulation (EU) 2025/2083 修正 Art 20(1)），會員國自下列何時起，於共同中央平台向獲授權之 CBAM 申報人販售 CBAM 憑證？",
+      "options": [
+        {
+          "key": "A",
+          "text": "2026 年 1 月 1 日"
+        },
+        {
+          "key": "B",
+          "text": "2027 年 1 月 1 日"
+        },
+        {
+          "key": "C",
+          "text": "2027 年 2 月 1 日"
+        },
+        {
+          "key": "D",
+          "text": "2027 年 9 月 30 日"
+        }
+      ],
+      "answer": "C",
+      "explanation": "依 CBAM 簡化修正案，會員國自 2027 年 2 月 1 日起才於共同中央平台向獲授權申報人販售 CBAM 憑證（就 2026 年進口之內含排放）；原先自 2026 年 1 月 1 日適用之規定已延後。2027 年 9 月 30 日則是首次繳交憑證的期限，屬不同期日。",
+      "source": {
+        "source_id": "S_EURLEX_2025_2083_certsale",
+        "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
+        "publisher": "EUR-Lex",
+        "authority": "official",
+        "evidence": {
+          "page": null,
+          "quote": "From 1 February 2027, a Member State shall sell CBAM certificates on a common central platform to authorised CBAM declarants established in that Member State."
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "From 1 February 2027, a Member State shall sell CBAM certificates on a common central platform to authorised CBAM declarants established in that Member State.",
+      "notes": "填補 CONTENT-CURRENCY §2.5 主題庫缺口：CBAM 憑證販售起始日 2027-02-01（原訂 2026-01-01，Omnibus 延後）。",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "valid_as_of": "2026-07-20",
+        "content_reverified_2026_07": true,
+        "sources": [
+          "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
+          "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en"
+        ],
+        "evidence": [
+          {
+            "quote": "From 1 February 2027, a Member State shall sell CBAM certificates on a common central platform to authorised CBAM declarants established in that Member State.",
+            "supports_option": "C",
+            "verified_on": "2026-07-20",
+            "method": "EUR-Lex Reg (EU) 2025/2083 逐字（修正 Reg 2023/956 Art 20(1)）+ Recital 27",
+            "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj"
+          }
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     }
   ]
 }
