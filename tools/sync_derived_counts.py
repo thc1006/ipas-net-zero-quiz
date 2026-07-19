@@ -170,7 +170,7 @@ N['carried_over'] = sum(
     and (md(q).get('valid_as_of') or '') < (last or '')
 )
 # 本輪未重查題數 = 總題數 - 已重查。原本這個欄位沒人算 —— 於是它凍在舊快照 680，
-# 而正確值是 773 - 129 = 644（多批次查證後 reverified 會變，這欄若不由公式算就必漂）。
+# 而正確值是 775 - 131 = 644（多批次查證後 reverified 會變，這欄若不由公式算就必漂）。
 N['not_reviewed'] = N['total'] - N['reverified']
 
 changed = []
@@ -187,6 +187,11 @@ def set_meta(path, val):
 
 
 set_meta('total_questions', N['total'])
+set_meta('content_review.total_questions', N['total'])
+set_meta('gist_questions', len(ds['gist_items']))
+set_meta('our_unique_questions', len(ds['our_unique_items']))
+# 考科分佈也由資料算 —— 原本手寫，加一題就漂。key 順序固定（考科1、考科2）以維持 byte-exact。
+set_meta('by_subject', {s: sum(1 for q in ALL if q.get('exam_subject') == s) for s in ('考科1', '考科2')})
 set_meta('with_answer', N['with_answer'])
 set_meta('corrections_applied', N['corrections'])
 set_meta('content_review.time_sensitive_count', N['time_sensitive'])
@@ -210,7 +215,7 @@ docs = {README: open(README, encoding='utf-8').read(), CURRENCY: open(CURRENCY, 
 
 # **這份清單漏一條，就等於在說謊。**
 #
-# 第一版漏掉了 README 與 CONTENT-CURRENCY 的「本輪只實查 N / 773 題」——
+# 第一版漏掉了 README 與 CONTENT-CURRENCY 的「本輪只實查 N / 775 題」——
 # 於是 `--check` 說「所有衍生數字都已一致」，但 CI 是紅的。
 # **一個只檢查一半的同步工具，比沒有工具更糟：它的綠燈是一句假的保證。**
 #
@@ -221,16 +226,16 @@ docs = {README: open(README, encoding='utf-8').read(), CURRENCY: open(CURRENCY, 
 #   - llms.txt 的 external_mock / ai_generated 題數
 #
 # **錨點要綁在結構上，不要綁在散文上。**
-#   「主題庫一手來源」那條原本錨在 `連結（季排程每季檢查是否還通） | (\d+) / 773`，
+#   「主題庫一手來源」那條原本錨在 `連結（季排程每季檢查是否還通） | (\d+) / 775`，
 #   後來有人在那一格加了一句「連結還通不代表指對地方」—— 正則就對不上了。
 #   **那條規則從此死掉**，而 README 的 740 凍在原地、資料早就走到 746。
 #   現在改成錨在列首的「② 有一手來源 URL」，散文怎麼改都不影響。
 RULES = [
     (README, r'本輪只實查\s*\*\*(\d+)\s*/', N['reverified'], 'README 本輪實查題數'),
     (CURRENCY, r'本輪只實查了\s*\*\*(\d+)\s*/', N['reverified'], 'CURRENCY 本輪實查題數'),
-    (README, r'\*\*(\d+) / 773\*\*', N['main_quote'], '主題庫逐字引文'),
-    (README, r'② 有一手來源 URL[^|]*\|[^|]*\| (\d+) / 773', N['main_primary'], '主題庫一手來源'),
-    (README, r'\*\*無從查證\*\* \| (\d+) / 773', N['main_nosource'], '主題庫無來源'),
+    (README, r'\*\*(\d+) / 775\*\*', N['main_quote'], '主題庫逐字引文'),
+    (README, r'② 有一手來源 URL[^|]*\|[^|]*\| (\d+) / 775', N['main_primary'], '主題庫一手來源'),
+    (README, r'\*\*無從查證\*\* \| (\d+) / 775', N['main_nosource'], '主題庫無來源'),
     (README, r'\*\*(\d+) / 154\*\*', N['pool_quote'], '練習池逐字引文'),
     (README, rf'\| (\d+) / {N["pool_total"]} \|\n', N['pool_primary'], '練習池一手來源'),
     (README, r'(\d+) 題答案曾被更正', N['corrections'], 'README 更正題數'),
