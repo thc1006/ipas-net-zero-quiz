@@ -411,7 +411,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
       summary: {
         main_tier1_questions: number;
         pool_tier1_questions: number;
-        unknown_evidence_urls: number;
+        unknown_evidence_records: number;
       };
       entries: Entry[];
     };
@@ -489,7 +489,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
 
     expect(manifest.summary.main_tier1_questions, 'manifest main tier1 漂了').toBe(mainT1);
     expect(manifest.summary.pool_tier1_questions, 'manifest pool tier1 漂了').toBe(poolT1);
-    expect(manifest.summary.unknown_evidence_urls, 'manifest 仍有未分級 evidence 網域').toBe(0);
+    expect(manifest.summary.unknown_evidence_records, 'manifest 仍有未分級 evidence 網域').toBe(0);
     const m = README.match(/\|[^|\n]*逐字引文[^|\n]*\|[^|\n]*\|\s*\*?\*?(\d+)\s*\//);
     expect(m, 'README 找不到「逐字引文」列').not.toBeNull();
     expect(Number(m![1]), 'README tier ① 與 manifest／資料不符').toBe(mainT1);

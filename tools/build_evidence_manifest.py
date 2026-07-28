@@ -117,10 +117,10 @@ manifest = {
     'summary': {
         'main_tier1_questions': main_t1,
         'pool_tier1_questions': pool_t1,
-        'total_evidence_urls': len(entries),
-        'primary_evidence_urls': sum(1 for e in entries if e['authority'] == 'primary'),
-        'secondary_evidence_urls': sum(1 for e in entries if e['authority'] == 'secondary'),
-        'unknown_evidence_urls': sum(1 for e in entries if e['authority'] == 'unknown'),
+        'total_evidence_records': len(entries),
+        'primary_evidence_records': sum(1 for e in entries if e['authority'] == 'primary'),
+        'secondary_evidence_records': sum(1 for e in entries if e['authority'] == 'secondary'),
+        'unknown_evidence_records': sum(1 for e in entries if e['authority'] == 'unknown'),
     },
     'entries': entries,
 }
@@ -130,6 +130,6 @@ open('evidence-manifest.json', 'w', encoding='utf-8').write(out)
 s = manifest['summary']
 print(
     f"evidence-manifest.json: main_tier1={s['main_tier1_questions']} pool_tier1={s['pool_tier1_questions']} "
-    f"total_urls={s['total_evidence_urls']} primary={s['primary_evidence_urls']} "
-    f"secondary={s['secondary_evidence_urls']} unknown={s['unknown_evidence_urls']}"
+    f"total_urls={s['total_evidence_records']} primary={s['primary_evidence_records']} "
+    f"secondary={s['secondary_evidence_records']} unknown={s['unknown_evidence_records']}"
 )

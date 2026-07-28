@@ -170,7 +170,7 @@ N['carried_over'] = sum(
     and (md(q).get('valid_as_of') or '') < (last or '')
 )
 # 本輪未重查題數 = 總題數 - 已重查。原本這個欄位沒人算 —— 於是它凍在舊快照 680，
-# 而正確值是 775 - 131 = 644（多批次查證後 reverified 會變，這欄若不由公式算就必漂）。
+# 而正確值是 781 - reverified（多批次查證後 reverified 會變，這欄若不由公式算就必漂）。
 N['not_reviewed'] = N['total'] - N['reverified']
 
 changed = []
@@ -233,9 +233,12 @@ docs = {README: open(README, encoding='utf-8').read(), CURRENCY: open(CURRENCY, 
 RULES = [
     (README, r'本輪只實查\s*\*\*(\d+)\s*/', N['reverified'], 'README 本輪實查題數'),
     (CURRENCY, r'本輪只實查了\s*\*\*(\d+)\s*/', N['reverified'], 'CURRENCY 本輪實查題數'),
-    (README, r'\*\*(\d+) / 775\*\*', N['main_quote'], '主題庫逐字引文'),
-    (README, r'② 有一手來源 URL[^|]*\|[^|]*\| (\d+) / 775', N['main_primary'], '主題庫一手來源'),
-    (README, r'\*\*無從查證\*\* \| (\d+) / 775', N['main_nosource'], '主題庫無來源'),
+    # 主題庫三級來源那三列：分子＝各級題數、分母＝總題數。**兩者都 capture、都由公式更新**
+    # （分母綁 N['total']），錨點綁在列首標籤①②③ 上，散文與題數怎麼變都不會讓規則死掉，
+    # 也不必在下次加題時手改這支工具的 781。
+    (README, r'① 逐字引文[^|]*\|[^|]*\| \*\*(\d+) / (\d+)\*\*', (N['main_quote'], N['total']), '主題庫逐字引文'),
+    (README, r'② 有一手來源 URL[^|]*\|[^|]*\| (\d+) / (\d+)', (N['main_primary'], N['total']), '主題庫一手來源'),
+    (README, r'③ 完全沒有來源[^|]*\|[^|]*\| (\d+) / (\d+)', (N['main_nosource'], N['total']), '主題庫無來源'),
     (README, r'\*\*(\d+) / 154\*\*', N['pool_quote'], '練習池逐字引文'),
     (README, rf'\| (\d+) / {N["pool_total"]} \|\n', N['pool_primary'], '練習池一手來源'),
     (README, r'(\d+) 題答案曾被更正', N['corrections'], 'README 更正題數'),
@@ -270,11 +273,21 @@ for path, pat, val, label in RULES:
         # 它讓我以為數字有人在顧。**對不上就硬失敗。**
         dead_rules.append(f'  {path} 找不到錨點：{label}\n       pattern: {pat}')
         continue
-    if m.group(1) == str(val):
+    # val 可以是單一數字（更新第 1 個 capture group），或一個 tuple（依序更新多個 group，
+    # 例如三級來源那列同時更新分子與分母）。
+    vals = val if isinstance(val, tuple) else (val,)
+    if all(m.group(i + 1) == str(v) for i, v in enumerate(vals)):
         continue
-    changed.append(f'  {path} [{label}]: {m.group(1)} -> {val}')
-    s, e = m.span(1)
-    docs[path] = text[:s] + str(val) + text[e:]
+    changed.append(
+        f'  {path} [{label}]: '
+        + ' / '.join(m.group(i + 1) for i in range(len(vals)))
+        + ' -> ' + ' / '.join(str(v) for v in vals)
+    )
+    # 由右往左替換，較前面的 span 才不會位移
+    for i in range(len(vals) - 1, -1, -1):
+        s, e = m.span(i + 1)
+        text = text[:s] + str(vals[i]) + text[e:]
+    docs[path] = text
 
 if dead_rules:
     print('=' * 70)
