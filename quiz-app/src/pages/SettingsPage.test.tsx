@@ -11,7 +11,6 @@ vi.mock('../hooks/usePracticePool', () => ({
 
 import { SettingsPage } from './SettingsPage';
 import { useAccessibility } from '../hooks/useAccessibility';
-import { renderHook } from '@testing-library/react';
 
 
 // 還原真實 localStorage 行為（test-setup.ts 把它 mock 成空函式）
@@ -38,9 +37,16 @@ afterEach(() => {
   localStorage.clear();
 });
 
+// 在「同一棵 React tree」內呼叫 useAccessibility 並傳給 SettingsPage —— 這樣 setCvdMode 等
+// 更新 hook state 時 SettingsPage 會真的 rerender（舊寫法用獨立 renderHook 傳 snapshot，
+// state 更新不會回流到 component，UI wiring 壞掉也測不出來）。
+function SettingsHarness({ onClose = () => {} }: { onClose?: () => void }) {
+  const accessibility = useAccessibility();
+  return <SettingsPage accessibility={accessibility} onClose={onClose} />;
+}
+
 function renderSettings(onClose = () => {}) {
-  const { result: accResult } = renderHook(() => useAccessibility());
-  return render(<SettingsPage accessibility={accResult.current} onClose={onClose} />);
+  return render(<SettingsHarness onClose={onClose} />);
 }
 
 describe('SettingsPage', () => {
@@ -84,6 +90,29 @@ describe('SettingsPage', () => {
     const toggle = screen.getByLabelText('啟用加強練習池') as HTMLInputElement;
     fireEvent.click(toggle);
     expect(localStorage.getItem('practice-pool-enabled')).toBe('0');
+  });
+
+  // 色覺辨認模式即時預覽 — 讓使用者切換當下就看到回饋色變化
+  describe('色覺辨認模式預覽', () => {
+    it('顯示正確/錯誤回饋色預覽 chip', () => {
+      renderSettings();
+      const preview = screen.getByTestId('cvd-preview');
+      expect(preview).toBeInTheDocument();
+      expect(preview).toHaveTextContent('正確');
+      expect(preview).toHaveTextContent('錯誤');
+    });
+
+    it('切換模式後 select 顯示新值並套用 data-cvd-mode（同棵 tree 真的 rerender）', () => {
+      renderSettings();
+      const select = screen.getByLabelText('色覺辨認模式') as HTMLSelectElement;
+      expect(select.value).toBe('none');
+      fireEvent.change(select, { target: { value: 'deuteranopia' } });
+      // controlled component：value 跟著 hook state rerender → 證明 UI wiring 完整
+      expect(select.value).toBe('deuteranopia');
+      expect(document.documentElement.getAttribute('data-cvd-mode')).toBe(
+        'deuteranopia'
+      );
+    });
   });
 
   // 清除作答統計（Refs #64）— state-driven dialog，取代 window.confirm
