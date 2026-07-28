@@ -15,18 +15,29 @@
 //   **原樣保留整個物件**（如此 resume 不需 async 載入練習池即可同步重建）。
 //
 //   重要不變量：
-//   - 計分不受重建影響 —— finishQuiz 由自足的 answers[]（correctAnswer/isCorrect）
-//     計分，不看重建後的題目物件；重建只影響 resume 時**顯示**的題目內容。
-//   - 若某題內容在 save 與 resume 之間因更正而變動（例：答案修正／換選項），resume
-//     會顯示**現行題庫**的最新內容（auto-heal，非 bug）；若該 id 已從題庫移除，
-//     整份 resume 放棄（回 null），避免題數錯位／currentIndex 越界。
+//   - 答對／答錯「數」不受重建影響 —— finishQuiz 由自足的 answers[]（correctAnswer/
+//     isCorrect）計分，不看重建後的題目物件。
+//   - 但重建用的是**現行題庫**（非保存當下）。若某題**標準答案**在 save 與 resume 之間
+//     被更正，現行題目會與凍在舊答案的紀錄分裂。此分裂由 resumeQuiz 對帳消除：correctAnswer
+//     與現行 answer 不符的紀錄一律丟棄、該題以未作答呈現、由使用者依現行內容重答（見
+//     useQuiz.resumeQuiz）。這不是 silent auto-heal —— 答案變動一律回未作答重答。殘留：選項
+//     文字在「答案字母不變」下被改寫僅屬顯示更新（計分以字母為準、相容），刻意不偵測（偵測
+//     需存舊內容，違背最小化目的）。
+//   - 若某題 id 已從題庫移除 → 整份 resume 放棄（回 null），避免題數錯位／currentIndex 越界。
 //   - 向後相容：v1（全物件）payload 仍可載入 —— 重建把物件原樣返回。
+//
+//   儲存 key 版本化（避免部署期舊分頁誤刪新資料）：v2 寫入獨立 key（…-v2），讀取先 v2、
+//   再回退 legacy v1 key。已部署的舊 bundle 只認 version=1，遇 v2 會判為壞資料並 removeItem
+//   —— 若共用同一 key，舊分頁一導覽回首頁就會刪掉新分頁剛寫的 v2 進度。分開 key 後舊 bundle
+//   看不到 v2、刪不到；新 bundle 永遠優先採 v2。
 
 import type { QuizState } from '../hooks/useQuiz';
 import type { QuizQuestion } from '../types/quiz';
 import { getQuestionById } from '../data/questions';
 
-const STORAGE_KEY = 'ipas-quiz-in-progress';
+// v2 用獨立 key，與已部署的 v1 bundle 隔離（見檔頭「儲存 key 版本化」）。
+const STORAGE_KEY = 'ipas-quiz-in-progress-v2';
+const LEGACY_STORAGE_KEY = 'ipas-quiz-in-progress'; // v1 舊 key，僅讀取時回退用
 const SCHEMA_VERSION = 2;
 // v1（全物件）與 v2（主題庫題最小化為 id）都要能載入，避免打壞既有已上線的 resume。
 const SUPPORTED_VERSIONS = new Set<number>([1, 2]);
@@ -60,8 +71,23 @@ function minifyQuestion(q: QuizQuestion): StoredQuestion {
 }
 
 /**
+ * 最小 shape 檢查：重建後的題目至少要有 id/stem/options，否則 QuizPage/QuestionCard
+ * 讀 .options/.stem 會 crash。只擋損壞／竄改的 localStorage —— 主題庫重建與正常存下的
+ * 練習池物件都必然通過；不做更深的語意驗證（那屬過度工程）。
+ */
+function isPlausibleQuestion(q: unknown): q is QuizQuestion {
+  if (!q || typeof q !== 'object') return false;
+  const x = q as Partial<QuizQuestion>;
+  return (
+    typeof x.id === 'string' &&
+    typeof x.stem === 'string' &&
+    Array.isArray(x.options)
+  );
+}
+
+/**
  * 重建整份 state.questions；任一字串 id 在現行題庫找不到 → 回 null（整份放棄 resume）。
- * 物件形態（練習池／v1 全物件）原樣返回。
+ * 物件形態（練習池／v1 全物件）原樣返回（先過最小 shape 檢查）。
  */
 function reconstructState(
   rawState: PersistedProgressRaw['state']
@@ -75,15 +101,30 @@ function reconstructState(
       // 極罕見（通常是就地更正而非刪除），故選簡單保守的整份放棄，不複製 re-anchor 邏輯。
       if (!q) return null;
       questions.push(q);
-    } else if (stored && typeof stored === 'object') {
+    } else if (isPlausibleQuestion(stored)) {
       questions.push(stored);
     } else {
-      // null／數字／其他垃圾元素 → payload 已損壞，放棄整份，
-      // 避免 resumeQuiz 對 undefined 題目取 .hasAnswer 而在「繼續測驗」時 crash。
+      // null／數字／shape 不符（缺 id/stem/options）的物件 → payload 已損壞，放棄整份。
+      // 否則 resumeQuiz 取 .hasAnswer、或 QuestionCard 讀 .options 會在「繼續測驗」時 crash，
+      // 且壞資料留在 localStorage 會導致每次重試都再 crash（poisoned state）。
       return null;
     }
   }
   return { ...rawState, questions } as QuizState;
+}
+
+/** 清掉 v2 與 legacy v1 兩個 key（各自吞掉 quota/private-mode 例外）。 */
+function removeStored(): void {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* ignore */
+  }
+  try {
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
+  } catch {
+    /* ignore */
+  }
 }
 
 /** Save in-progress quiz state. No-op if state.isActive is false. */
@@ -104,40 +145,34 @@ export function saveProgress(state: QuizState): void {
 /** Load saved progress. Returns null if absent / wrong shape / wrong version / 題目已失聯. */
 export function loadProgress(): PersistedProgress | null {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    // 先讀 v2 key，沒有再回退 legacy v1 key（部署後首次 resume 的一次性遷移）。
+    const raw =
+      localStorage.getItem(STORAGE_KEY) ??
+      localStorage.getItem(LEGACY_STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as unknown;
     if (!isValidEnvelope(parsed)) {
       // shape 不符 → 直接清掉避免下次再吃壞資料
-      localStorage.removeItem(STORAGE_KEY);
+      removeStored();
       return null;
     }
     const state = reconstructState(parsed.state);
     // 重建失敗（題目失聯）或重建後語意檢查不過 → 一併清掉
     if (!state || !isValidState(state)) {
-      localStorage.removeItem(STORAGE_KEY);
+      removeStored();
       return null;
     }
     return { version: parsed.version, savedAt: parsed.savedAt, state };
   } catch {
     // JSON.parse 失敗（壞掉的 JSON）也清掉，避免下次載入重複吃同一筆壞資料
-    // 巢狀 try：removeItem 在 quota / private mode 下亦可能 throw
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch {
-      /* ignore */
-    }
+    removeStored();
     return null;
   }
 }
 
-/** Clear stored progress unconditionally. */
+/** Clear stored progress unconditionally（v2 + legacy 兩個 key 都清）。 */
 export function clearProgress(): void {
-  try {
-    localStorage.removeItem(STORAGE_KEY);
-  } catch {
-    /* ignore */
-  }
+  removeStored();
 }
 
 /**
@@ -165,7 +200,8 @@ function isValidState(st: QuizState): boolean {
   // 基本 shape
   if (typeof st.isActive !== 'boolean') return false;
   if (!Array.isArray(st.questions)) return false;
-  if (typeof st.currentIndex !== 'number') return false;
+  // 整數 —— 拒 2.5/NaN/Infinity（否則 questions[i]=undefined → currentQuestion=null → 卡「載入中」）
+  if (!Number.isInteger(st.currentIndex)) return false;
   if (!Array.isArray(st.answers)) return false;
   // answers 每筆須為非 null 物件 —— 否則 finishQuiz 的 a.correctAnswer、submitAnswer
   // 的 a.questionId 會對 null 取值而在續作／完成時 crash（防損壞或竄改的 localStorage；

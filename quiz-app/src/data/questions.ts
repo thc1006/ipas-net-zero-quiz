@@ -184,10 +184,17 @@ export function getRandomQuestionsFromPool(
 
 
 /**
+ * id → 題目索引。allQuestions 的 id 保證唯一（cross-bank-integrity 有 gate 守），
+ * 故 Map 與線性 find 等價，但把 getQuestionById 由 O(n) 降為 O(1)。
+ * 這對 #106 的持久化最小化很關鍵：saveProgress 每次 state 變動就對每題呼叫一次。
+ */
+const questionsById = new Map(allQuestions.map((q) => [q.id, q]));
+
+/**
  * 依據 ID 取得題目
  */
 export function getQuestionById(id: string): QuizQuestion | undefined {
-  return allQuestions.find((q) => q.id === id);
+  return questionsById.get(id);
 }
 
 /**

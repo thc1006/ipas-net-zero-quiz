@@ -9,7 +9,8 @@ import {
 import type { QuizState } from '../hooks/useQuiz';
 import { allQuestions } from '../data/questions';
 
-const STORAGE_KEY = 'ipas-quiz-in-progress';
+const STORAGE_KEY = 'ipas-quiz-in-progress-v2';
+const LEGACY_STORAGE_KEY = 'ipas-quiz-in-progress'; // v1 舊 key
 
 // test-setup.ts mock 了 localStorage 為 vi.fn()（getItem 回 undefined）；
 // 此檔需真實 localStorage 行為（與 HomePage.test.tsx 同 pattern）
@@ -284,6 +285,94 @@ describe('quiz-progress-storage', () => {
       expect(loaded?.version).toBe(1);
       expect(loaded?.state.currentIndex).toBe(2);
       expect(loaded?.state.questions).toHaveLength(10);
+    });
+
+    // #107 review G3：非 null 但缺 shape 的題目物件也要擋，否則 QuestionCard 讀 .options
+    // 會 crash 進 ErrorBoundary，且壞資料沒清 → 每次重試都再 crash（poisoned state）。
+    it('題目物件缺 shape（無 stem/options）→ 放棄 resume（回 null 並清掉）', () => {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 2,
+          savedAt: 0,
+          state: {
+            isActive: true,
+            questions: [{ id: 'x', hasAnswer: true }], // 非 null 物件但缺 stem/options
+            currentIndex: 0,
+            answers: [],
+            startTime: 123,
+            config: fakeConfig,
+          },
+        })
+      );
+      expect(loadProgress()).toBeNull();
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
+    });
+
+    // #107 review G4：currentIndex 必須是整數，否則 questions[2.5]=undefined → 卡「載入中」。
+    it('currentIndex 非整數（0.5）→ 擋下（回 null 並清掉）', () => {
+      const realQ = allQuestions[0];
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 2,
+          savedAt: 0,
+          state: {
+            isActive: true,
+            questions: [realQ.id],
+            currentIndex: 0.5,
+            answers: [],
+            startTime: 123,
+            config: fakeConfig,
+          },
+        })
+      );
+      expect(loadProgress()).toBeNull();
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
+    });
+
+    // #107 review G6：50 題主題庫未作答的 payload 必須維持精簡，防未來不小心退回全物件。
+    it('50 題主題庫未作答 payload 維持精簡（<6KB，全物件約 38KB）', () => {
+      const qs = allQuestions.slice(0, 50) as unknown as QuizState['questions'];
+      saveProgress(makeState({ questions: qs, currentIndex: 0, answers: [] }));
+      const raw = localStorage.getItem(STORAGE_KEY)!;
+      expect(raw.length).toBeLessThan(6000);
+    });
+  });
+
+  // #107 review G2：v2 用獨立 key，避免部署期舊 v1 bundle 把新 v2 進度判為壞資料而刪除。
+  describe('儲存 key 版本化（避免舊分頁誤刪）', () => {
+    it('saveProgress 寫入 v2 key，不動 legacy key', () => {
+      saveProgress(makeState());
+      expect(localStorage.getItem(STORAGE_KEY)).not.toBeNull();
+      expect(localStorage.getItem(LEGACY_STORAGE_KEY)).toBeNull();
+    });
+
+    it('v2 key 無資料時回退讀 legacy v1 key（部署後一次性遷移）', () => {
+      localStorage.setItem(
+        LEGACY_STORAGE_KEY,
+        JSON.stringify({ version: 1, savedAt: 0, state: makeState({ currentIndex: 3 }) })
+      );
+      const loaded = loadProgress();
+      expect(loaded?.version).toBe(1);
+      expect(loaded?.state.currentIndex).toBe(3);
+    });
+
+    it('v2 key 優先於 legacy key', () => {
+      localStorage.setItem(
+        LEGACY_STORAGE_KEY,
+        JSON.stringify({ version: 1, savedAt: 0, state: makeState({ currentIndex: 9 }) })
+      );
+      saveProgress(makeState({ currentIndex: 4 })); // 寫 v2
+      expect(loadProgress()?.state.currentIndex).toBe(4);
+    });
+
+    it('clearProgress 清掉 v2 與 legacy 兩個 key', () => {
+      saveProgress(makeState());
+      localStorage.setItem(LEGACY_STORAGE_KEY, 'stale');
+      clearProgress();
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
+      expect(localStorage.getItem(LEGACY_STORAGE_KEY)).toBeNull();
     });
   });
 
