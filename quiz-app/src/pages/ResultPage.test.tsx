@@ -138,6 +138,34 @@ describe('ResultPage', () => {
     expect(screen.getByText(/2 分 5 秒/)).toBeInTheDocument();
   });
 
+  it('未作答統計：skippedCount=0 不顯示；>0 時顯示「未作答」與數值（答對+答錯+未作答=總題數）', () => {
+    // 沒有跳題（預設）→ 不顯示「未作答」（分支 false）
+    const { rerender } = render(
+      <ResultPage result={makeResult()} onGoHome={() => {}} onRetry={() => {}} />
+    );
+    expect(screen.queryByText('未作答')).toBeNull();
+
+    // 有跳題 → 顯示「未作答」統計（回報情境：答對 30＋答錯 19＋未作答 1 = 總題數 50）
+    rerender(
+      <ResultPage
+        result={makeResult({
+          score: 60,
+          correctCount: 30,
+          wrongCount: 19,
+          totalAnswerable: 50,
+          skippedCount: 1,
+        })}
+        onGoHome={() => {}}
+        onRetry={() => {}}
+      />
+    );
+    const skippedLabel = screen.getByText('未作答');
+    expect(skippedLabel).toBeInTheDocument();
+    const skippedItem = skippedLabel.closest('.stat-item');
+    expect(skippedItem).not.toBeNull();
+    expect(within(skippedItem as HTMLElement).getByText('1')).toBeInTheDocument();
+  });
+
   it.each([
     [100, /太棒了/],
     [95, /太棒了/],
