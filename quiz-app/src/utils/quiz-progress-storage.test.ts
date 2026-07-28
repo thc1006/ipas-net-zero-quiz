@@ -331,6 +331,33 @@ describe('quiz-progress-storage', () => {
       expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
     });
 
+    it('題目 options 元素完整（key/text 皆字串）→ 正常載入', () => {
+      const q = {
+        id: 'q-ok',
+        stem: 's',
+        options: [{ key: 'A', text: '甲' }],
+        answer: 'A',
+        subject: '考科1',
+        hasAnswer: true,
+      };
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 2,
+          savedAt: 0,
+          state: {
+            isActive: true,
+            questions: [q],
+            currentIndex: 0,
+            answers: [],
+            startTime: 123,
+            config: fakeConfig,
+          },
+        })
+      );
+      expect(loadProgress()?.state.questions[0].id).toBe('q-ok');
+    });
+
     // #107 review G4：currentIndex 必須是整數，否則 questions[2.5]=undefined → 卡「載入中」。
     it('currentIndex 非整數（0.5）→ 擋下（回 null 並清掉）', () => {
       const realQ = allQuestions[0];
