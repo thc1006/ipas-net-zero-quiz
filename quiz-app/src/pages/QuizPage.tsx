@@ -1,5 +1,5 @@
 // 測驗頁面元件
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useLayoutEffect } from 'react';
 import { QuestionCard } from '../components/QuestionCard';
 import type { useQuiz } from '../hooks/useQuiz';
 import './QuizPage.css';
@@ -29,6 +29,7 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
   const {
     currentQuestion,
     currentIndex,
+    currentAnswer,
     progress,
     config,
     isLastQuestion,
@@ -38,6 +39,18 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
     prevQuestion,
   } = quiz;
 
+  // 切換題目時（返回上一題、續作還原、以及「選擇即記錄」後的導覽），從既有作答紀錄
+  // 還原 UI 的選取／已答狀態。若不還原：回到已答題會顯示未選，考試模式還會因
+  // `!selectedAnswer` 而卡住「下一題／完成測驗」按鈕，逼使用者重答（且重答會覆蓋原紀錄）。
+  // 用 layout effect 在 paint 前完成，避免切題瞬間閃一下上一題的選取。
+  // 僅在「題目切換」時還原 —— 同題內 submitAnswer 造成的 currentAnswer 變動不重觸發。
+  useLayoutEffect(() => {
+    const prior = currentAnswer?.selectedAnswer ?? null;
+    setSelectedAnswer(prior);
+    setHasAnswered(prior !== null && !!config?.showAnswerImmediately);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentQuestion?.id]);
+
   // 選擇答案
   const handleSelectAnswer = useCallback(
     (answer: string) => {
@@ -45,43 +58,37 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
 
       setSelectedAnswer(answer);
 
+      // 一律在「選擇當下」就記錄作答 —— 兩種模式皆同（submitAnswer 依 questionId 去重，
+      // 重選會覆蓋而非追加）。
+      //
+      // 過去只有 showAnswerImmediately（練習）模式在此記錄；考試模式延到 handleNext 才
+      // submitAnswer，而**最後一題**的 handleNext 是「submitAnswer（非同步 setState）後**立刻**
+      // onFinish」—— finishQuiz 讀到的是還沒含最後一筆的舊 state closure，最後一題被吞掉，
+      // 計分永遠少一題（回報：正確 30＋錯誤 19＝49，總題數 50）。
+      // 改成選擇即記錄，該筆 setState 早在使用者按「完成測驗」前的另一個 render 就已 flush，
+      // 徹底消除這個競態。
+      submitAnswer(answer);
+
       if (config?.showAnswerImmediately) {
-        submitAnswer(answer);
         setHasAnswered(true);
       }
     },
     [hasAnswered, config?.showAnswerImmediately, submitAnswer]
   );
 
-  // 下一題
+  // 下一題（作答已於 handleSelectAnswer 當下記錄，這裡不再 submitAnswer，
+  // 以免最後一題「submit 後立刻 finish」讀到舊 state；選取狀態的清空／還原交給上面的 layout effect）
   const handleNext = useCallback(() => {
-    if (!config?.showAnswerImmediately && !hasAnswered) {
-      // 考試模式：提交當前答案
-      submitAnswer(selectedAnswer);
-    }
-
     if (isLastQuestion) {
       onFinish();
     } else {
       nextQuestion();
-      setSelectedAnswer(null);
-      setHasAnswered(false);
     }
-  }, [
-    config?.showAnswerImmediately,
-    hasAnswered,
-    isLastQuestion,
-    submitAnswer,
-    selectedAnswer,
-    onFinish,
-    nextQuestion,
-  ]);
+  }, [isLastQuestion, onFinish, nextQuestion]);
 
-  // 上一題
+  // 上一題（選取狀態由 layout effect 依該題紀錄還原）
   const handlePrev = useCallback(() => {
     prevQuestion();
-    setSelectedAnswer(null);
-    setHasAnswered(false);
   }, [prevQuestion]);
 
   if (!currentQuestion) {

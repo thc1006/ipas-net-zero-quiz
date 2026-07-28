@@ -168,6 +168,10 @@ export function useQuiz() {
       const question = questions[currentIndex];
       if (!question) return;
 
+      // timeSpent 語意：自本題開始（questionStartTime）到「選擇答案」當下的時間。
+      // 兩種模式現在都在選擇當下 submitAnswer（見 QuizPage：修正最後一題計分競態），
+      // 因此這是「作答決定時間」而非「停留在該題的總時間」；重新作答會覆蓋為重選當下的值。
+      // 目前無產品 UI 消費此欄位（ResultPage 顯示的是整份測驗的 totalTime），僅記錄／統計用途。
       const timeSpent = Date.now() - questionStartTime;
       const isCorrect =
         question.answer !== null ? selectedAnswer === question.answer : null;
