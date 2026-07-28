@@ -339,6 +339,9 @@ describe('HomePage', () => {
   });
 
   // === Resume hint（Refs #71）===
+  // 註：questions 用 { id: 'x' } 佔位而非 null —— loadProgress（#106 重建）會拒絕
+  // 含 null/垃圾元素的 payload（避免 resume 時 crash），故佔位需為非 null 物件。
+  // hint 只讀 questions.length / answers.length，佔位內容不影響斷言。
 
   it('localStorage 無進度時不顯示 resume hint', () => {
     render(<HomePage onStartQuiz={() => {}} onResumeQuiz={() => {}} />);
@@ -353,7 +356,7 @@ describe('HomePage', () => {
         savedAt: Date.now() - 5 * 60_000, // 5 分鐘前
         state: {
           isActive: true,
-          questions: new Array(20).fill(null),
+          questions: new Array(20).fill({ id: 'x' }),
           currentIndex: 7,
           answers: new Array(7).fill({ questionId: 'x' }),
           startTime: Date.now(),
@@ -377,7 +380,7 @@ describe('HomePage', () => {
         savedAt: Date.now(),
         state: {
           isActive: true,
-          questions: new Array(10).fill(null),
+          questions: new Array(10).fill({ id: 'x' }),
           currentIndex: 3,
           answers: new Array(3).fill({ questionId: 'x' }),
           startTime: Date.now(),
@@ -399,7 +402,7 @@ describe('HomePage', () => {
         savedAt: Date.now(),
         state: {
           isActive: true,
-          questions: new Array(5).fill(null),
+          questions: new Array(5).fill({ id: 'x' }),
           currentIndex: 1,
           answers: [],
           startTime: Date.now(),

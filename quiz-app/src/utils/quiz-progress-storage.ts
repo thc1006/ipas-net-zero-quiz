@@ -7,25 +7,89 @@
 // - 永不自動過期（10KB 數量級、永久 key 覆寫不膨脹）
 // - 只在 finishQuiz / resetQuiz 時清除，由 useQuiz 主動呼叫
 // - shape 不符時靜默丟棄（取代 throw，避免阻擋正常啟動）
+//
+// 最小化持久化（#106，SCHEMA_VERSION=2）：
+//   主題庫題目可由 id 從靜態題庫（getQuestionById）重建，因此**只存 id 字串**，
+//   不再把每題的 stem／options／explanation／sources 全寫進 localStorage（payload
+//   大幅縮小）。練習池題目為動態載入、不在靜態題庫中，getQuestionById 找不到 →
+//   **原樣保留整個物件**（如此 resume 不需 async 載入練習池即可同步重建）。
+//
+//   重要不變量：
+//   - 計分不受重建影響 —— finishQuiz 由自足的 answers[]（correctAnswer/isCorrect）
+//     計分，不看重建後的題目物件；重建只影響 resume 時**顯示**的題目內容。
+//   - 若某題內容在 save 與 resume 之間因更正而變動（例：答案修正／換選項），resume
+//     會顯示**現行題庫**的最新內容（auto-heal，非 bug）；若該 id 已從題庫移除，
+//     整份 resume 放棄（回 null），避免題數錯位／currentIndex 越界。
+//   - 向後相容：v1（全物件）payload 仍可載入 —— 重建把物件原樣返回。
 
 import type { QuizState } from '../hooks/useQuiz';
+import type { QuizQuestion } from '../types/quiz';
+import { getQuestionById } from '../data/questions';
 
 const STORAGE_KEY = 'ipas-quiz-in-progress';
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
+// v1（全物件）與 v2（主題庫題最小化為 id）都要能載入，避免打壞既有已上線的 resume。
+const SUPPORTED_VERSIONS = new Set<number>([1, 2]);
 
-interface PersistedProgress {
-  version: typeof SCHEMA_VERSION;
+/** 序列化時每題的儲存形態：字串 id（主題庫、可重建）或完整物件（練習池／舊格式）。 */
+type StoredQuestion = string | QuizQuestion;
+
+/** localStorage 內實際存放的 payload（questions 已最小化）。 */
+interface PersistedProgressRaw {
+  version: number;
   savedAt: number; // epoch ms
+  state: Omit<QuizState, 'questions'> & { questions: StoredQuestion[] };
+}
+
+/** loadProgress 對外回傳的 payload：questions 已重建為完整 QuizQuestion[]（對呼叫端透明）。 */
+export interface PersistedProgress {
+  version: number;
+  savedAt: number;
   state: QuizState;
+}
+
+/**
+ * 把單一題目最小化為儲存形態。
+ * 主題庫題目（getQuestionById 找得到、且 stem 相符）→ 只存 id 字串；
+ * 其餘（練習池、id 撞號或找不到）→ 原樣保留完整物件。
+ * stem 相符檢查是保險：避免練習池 id 意外撞到主題庫 id 而重建成錯題。
+ */
+function minifyQuestion(q: QuizQuestion): StoredQuestion {
+  const canonical = getQuestionById(q.id);
+  return canonical && canonical.stem === q.stem ? q.id : q;
+}
+
+/**
+ * 重建整份 state.questions；任一字串 id 在現行題庫找不到 → 回 null（整份放棄 resume）。
+ * 物件形態（練習池／v1 全物件）原樣返回。
+ */
+function reconstructState(
+  rawState: PersistedProgressRaw['state']
+): QuizState | null {
+  const questions: QuizQuestion[] = [];
+  for (const stored of rawState.questions) {
+    if (typeof stored === 'string') {
+      const q = getQuestionById(stored);
+      if (!q) return null; // id 指向的題目已從題庫移除 → 放棄，不 resume 破碎題組
+      questions.push(q);
+    } else if (stored && typeof stored === 'object') {
+      questions.push(stored);
+    } else {
+      // null／數字／其他垃圾元素 → payload 已損壞，放棄整份，
+      // 避免 resumeQuiz 對 undefined 題目取 .hasAnswer 而在「繼續測驗」時 crash。
+      return null;
+    }
+  }
+  return { ...rawState, questions } as QuizState;
 }
 
 /** Save in-progress quiz state. No-op if state.isActive is false. */
 export function saveProgress(state: QuizState): void {
   if (!state.isActive) return;
-  const payload: PersistedProgress = {
+  const payload: PersistedProgressRaw = {
     version: SCHEMA_VERSION,
     savedAt: Date.now(),
-    state,
+    state: { ...state, questions: state.questions.map(minifyQuestion) },
   };
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -34,18 +98,24 @@ export function saveProgress(state: QuizState): void {
   }
 }
 
-/** Load saved progress. Returns null if absent / wrong shape / wrong version. */
+/** Load saved progress. Returns null if absent / wrong shape / wrong version / 題目已失聯. */
 export function loadProgress(): PersistedProgress | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as unknown;
-    if (!isValidPayload(parsed)) {
+    if (!isValidEnvelope(parsed)) {
       // shape 不符 → 直接清掉避免下次再吃壞資料
       localStorage.removeItem(STORAGE_KEY);
       return null;
     }
-    return parsed;
+    const state = reconstructState(parsed.state);
+    // 重建失敗（題目失聯）或重建後語意檢查不過 → 一併清掉
+    if (!state || !isValidState(state)) {
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return { version: parsed.version, savedAt: parsed.savedAt, state };
   } catch {
     // JSON.parse 失敗（壞掉的 JSON）也清掉，避免下次載入重複吃同一筆壞資料
     // 巢狀 try：removeItem 在 quota / private mode 下亦可能 throw
@@ -67,15 +137,28 @@ export function clearProgress(): void {
   }
 }
 
-function isValidPayload(v: unknown): v is PersistedProgress {
+/**
+ * Envelope 檢查：確認外層 version / savedAt / state / questions 陣列 shape 正確，
+ * 足以安全嘗試重建。語意檢查（currentIndex 範圍、active 必要欄位）留給 isValidState
+ * 在**重建後**的完整 state 上做。
+ */
+function isValidEnvelope(v: unknown): v is PersistedProgressRaw {
   if (!v || typeof v !== 'object') return false;
-  const p = v as Partial<PersistedProgress>;
-  if (p.version !== SCHEMA_VERSION) return false;
+  const p = v as Partial<PersistedProgressRaw>;
+  if (typeof p.version !== 'number' || !SUPPORTED_VERSIONS.has(p.version)) {
+    return false;
+  }
   if (typeof p.savedAt !== 'number') return false;
-  const s = p.state;
+  const s = p.state as unknown;
   if (!s || typeof s !== 'object') return false;
+  if (!Array.isArray((s as { questions?: unknown }).questions)) return false;
+  return true;
+}
 
-  const st = s as QuizState;
+/**
+ * 語意檢查：對**重建後**的完整 QuizState 驗證欄位與範圍，確保 resume 不會卡死或算錯。
+ */
+function isValidState(st: QuizState): boolean {
   // 基本 shape
   if (typeof st.isActive !== 'boolean') return false;
   if (!Array.isArray(st.questions)) return false;

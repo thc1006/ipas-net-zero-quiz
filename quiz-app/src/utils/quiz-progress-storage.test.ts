@@ -7,6 +7,7 @@ import {
   formatRelativeTime,
 } from './quiz-progress-storage';
 import type { QuizState } from '../hooks/useQuiz';
+import { allQuestions } from '../data/questions';
 
 const STORAGE_KEY = 'ipas-quiz-in-progress';
 
@@ -96,7 +97,7 @@ describe('quiz-progress-storage', () => {
       saveProgress(makeState());
       const raw = localStorage.getItem(STORAGE_KEY);
       const parsed = JSON.parse(raw!);
-      expect(parsed.version).toBe(1);
+      expect(parsed.version).toBe(2);
       expect(typeof parsed.savedAt).toBe('number');
       expect(parsed.state).toBeDefined();
     });
@@ -112,7 +113,7 @@ describe('quiz-progress-storage', () => {
       saveProgress(state);
       const loaded = loadProgress();
       expect(loaded?.state.currentIndex).toBe(5);
-      expect(loaded?.version).toBe(1);
+      expect(loaded?.version).toBe(2);
     });
 
     it('壞掉的 JSON 回 null 不 throw', () => {
@@ -136,6 +137,109 @@ describe('quiz-progress-storage', () => {
       );
       expect(loadProgress()).toBeNull();
       expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
+    });
+  });
+
+  // #106：主題庫題最小化為 id、練習池題保留完整物件；載入時重建。
+  describe('最小化持久化（#106）', () => {
+    it('主題庫題目序列化為 id 字串，載入後由題庫重建完整內容', () => {
+      const realQ = allQuestions[0];
+      saveProgress(
+        makeState({
+          questions: [realQ] as QuizState['questions'],
+          currentIndex: 0,
+        })
+      );
+      // localStorage 內只存 id 字串（payload 最小化，不含 stem/options/...）
+      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY)!);
+      expect(parsed.state.questions[0]).toBe(realQ.id);
+      // 載入後重建為與題庫一致的完整題目
+      const loaded = loadProgress();
+      expect(loaded?.state.questions[0]).toEqual(realQ);
+    });
+
+    it('非主題庫題目（id 不在題庫，如練習池）保留完整物件', () => {
+      saveProgress(makeState()); // fakeQuestions：id q-0..q-9 不在題庫
+      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY)!);
+      expect(typeof parsed.state.questions[0]).toBe('object');
+      expect(parsed.state.questions[0].id).toBe('q-0');
+      // 載入後物件原樣返回
+      const loaded = loadProgress();
+      expect(loaded?.state.questions[0].id).toBe('q-0');
+    });
+
+    it('混合題組：主題庫題存 id、其餘存物件，載入後題數與內容都正確', () => {
+      const realQ = allQuestions[0];
+      const poolQ = fakeQuestions[0]; // id q-0，不在題庫
+      saveProgress(
+        makeState({
+          questions: [realQ, poolQ] as QuizState['questions'],
+          currentIndex: 1,
+        })
+      );
+      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY)!);
+      expect(parsed.state.questions[0]).toBe(realQ.id); // 主題庫 → 字串
+      expect(typeof parsed.state.questions[1]).toBe('object'); // 練習池 → 物件
+      const loaded = loadProgress();
+      expect(loaded?.state.questions).toHaveLength(2);
+      expect(loaded?.state.questions[0]).toEqual(realQ);
+      expect(loaded?.state.questions[1].id).toBe('q-0');
+      expect(loaded?.state.currentIndex).toBe(1);
+    });
+
+    it('v2 payload 內 id 已從題庫移除 → 放棄 resume（回 null 並清掉）', () => {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 2,
+          savedAt: 0,
+          state: {
+            isActive: true,
+            questions: ['__id_that_does_not_exist__'],
+            currentIndex: 0,
+            answers: [],
+            startTime: 123,
+            config: fakeConfig,
+          },
+        })
+      );
+      expect(loadProgress()).toBeNull();
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
+    });
+
+    it('payload 內含非法題目元素（null）→ 放棄 resume（回 null 並清掉）', () => {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 2,
+          savedAt: 0,
+          state: {
+            isActive: true,
+            questions: [null],
+            currentIndex: 0,
+            answers: [],
+            startTime: 123,
+            config: fakeConfig,
+          },
+        })
+      );
+      expect(loadProgress()).toBeNull();
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
+    });
+
+    it('v1（全物件）payload 仍可載入（向後相容）', () => {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 1,
+          savedAt: 0,
+          state: makeState({ currentIndex: 2 }),
+        })
+      );
+      const loaded = loadProgress();
+      expect(loaded?.version).toBe(1);
+      expect(loaded?.state.currentIndex).toBe(2);
+      expect(loaded?.state.questions).toHaveLength(10);
     });
   });
 
