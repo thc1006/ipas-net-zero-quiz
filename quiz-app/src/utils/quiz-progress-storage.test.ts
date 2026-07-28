@@ -227,6 +227,29 @@ describe('quiz-progress-storage', () => {
       expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
     });
 
+    it('v2 payload 重建成功但 currentIndex 越界 → 語意檢查在重建後擋下（回 null 並清掉）', () => {
+      // 拆分 isValidEnvelope / isValidState 的重點：語意檢查必須跑在**重建後**的完整
+      // state 上。此案 id 可重建（1 題）但 currentIndex 越界，須被 isValidState 擋下。
+      const realQ = allQuestions[0];
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 2,
+          savedAt: 0,
+          state: {
+            isActive: true,
+            questions: [realQ.id], // 可重建
+            currentIndex: 5, // 但越界（>= 1）
+            answers: [],
+            startTime: 123,
+            config: fakeConfig,
+          },
+        })
+      );
+      expect(loadProgress()).toBeNull();
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
+    });
+
     it('v1（全物件）payload 仍可載入（向後相容）', () => {
       localStorage.setItem(
         STORAGE_KEY,

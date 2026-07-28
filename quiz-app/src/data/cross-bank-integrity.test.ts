@@ -91,6 +91,24 @@ describe('跨題庫：同一道題不得同時存在於主題庫與練習池', (
     };
     expect(calcSignature(rewritten)).toBe(calcSignature(target!));
   });
+
+  // #106（最小化持久化）依賴此不變量：saveProgress 把「getQuestionById 找得到」的題目
+  // 最小化為 id 字串、載入時由主題庫重建；練習池題目必須永遠找不到（保留完整物件），
+  // 否則會被重建成「同 id 的主題庫題」而換錯內容（stem-guard 只在 stem 相同時擋得住）。
+  // 主題庫 runtime id 依 questions.ts：gist → `gist-<index>`、unique → item_id。
+  it('id 命名空間不得與主題庫交疊（#106 靠此保證練習池題不被重建成主題庫題）', () => {
+    const mainIds = new Set<string>([
+      ...ds.gist_items.map((q) => `gist-${q.index}`),
+      ...ds.our_unique_items.map((q) => q.item_id as string),
+    ]);
+    const collisions = POOL.map((q) => q.id as string).filter((id) =>
+      mainIds.has(id)
+    );
+    expect(
+      collisions,
+      `練習池 id 與主題庫 id 交疊 → #106 重建會換錯題：${collisions.join(', ')}`
+    ).toEqual([]);
+  });
 });
 
 describe('數值題不得有兩個選項是同一個答案', () => {
