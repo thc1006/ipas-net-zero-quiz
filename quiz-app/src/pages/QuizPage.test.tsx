@@ -188,4 +188,76 @@ describe('QuizPage — 計分競態修正（考試模式選擇答案即記錄）
     // 關鍵：完成測驗沒有再 submit 一次（舊碼正是在此 submitAnswer→onFinish 造成競態）
     expect(submitAnswer).toHaveBeenCalledTimes(1);
   });
+
+  it('練習模式：選擇答案即 submitAnswer 並顯示答案（hasAnswered 分支）', () => {
+    const submitAnswer = vi.fn();
+    render(
+      <QuizPage
+        quiz={makeQuizMock({
+          submitAnswer,
+          config: {
+            mode: 'practice',
+            subject: 'all',
+            questionCount: 3,
+            shuffleQuestions: false,
+            showAnswerImmediately: true,
+          },
+        })}
+        onFinish={vi.fn()}
+        onAbort={vi.fn()}
+      />
+    );
+    fireEvent.click(screen.getByRole('radio', { name: 'A: 選項 A' }));
+    expect(submitAnswer).toHaveBeenCalledWith('A');
+    // showAnswerImmediately → setHasAnswered(true) → 顯示答案，正確選項標記出現
+    expect(screen.getByLabelText('正確答案')).toBeInTheDocument();
+  });
+});
+
+// 導覽時依既有作答紀錄還原選取狀態（修正「選擇即記錄」後回到已答題顯示未選、
+// 考試模式按鈕被卡住的互動不一致；同時修好過去「返回上一題丟失選取」的既有缺口）
+describe('QuizPage — 導覽依紀錄還原選取狀態', () => {
+  it('切換到已作答題：依紀錄還原選取，考試模式按鈕不再被卡住', () => {
+    render(
+      <QuizPage
+        quiz={makeQuizMock({
+          currentAnswer: {
+            questionId: 'q-1',
+            selectedAnswer: 'B',
+            correctAnswer: 'A',
+            isCorrect: false,
+            timeSpent: 1,
+            timestamp: 0,
+            sourceCategory: 'main_bank',
+          },
+          config: {
+            mode: 'exam',
+            subject: 'all',
+            questionCount: 3,
+            shuffleQuestions: false,
+            showAnswerImmediately: false,
+          },
+        })}
+        onFinish={vi.fn()}
+        onAbort={vi.fn()}
+      />
+    );
+    // layout effect 依紀錄還原 → 選項 B 呈已選
+    expect(screen.getByRole('radio', { name: 'B: 選項 B' })).toBeChecked();
+    // 考試模式「下一題」不再 disabled（selectedAnswer 已還原）
+    expect(screen.getByRole('button', { name: /下一題/ })).toBeEnabled();
+  });
+
+  it('點「上一題」呼叫 prevQuestion', () => {
+    const prevQuestion = vi.fn();
+    render(
+      <QuizPage
+        quiz={makeQuizMock({ prevQuestion, isFirstQuestion: false })}
+        onFinish={vi.fn()}
+        onAbort={vi.fn()}
+      />
+    );
+    fireEvent.click(screen.getByRole('button', { name: /上一題/ }));
+    expect(prevQuestion).toHaveBeenCalledOnce();
+  });
 });

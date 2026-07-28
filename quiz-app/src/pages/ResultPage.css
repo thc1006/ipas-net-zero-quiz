@@ -86,7 +86,9 @@
 /* 統計區 */
 .stats-section {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* auto-fit：4 個統計項（含「未作答」時為 5 個）都在同一列均分，
+     不會因固定 4 欄而讓第 5 項掉到第二列落單 */
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
 }
@@ -132,6 +134,10 @@
 
 .stat-item.time .material-icons {
   color: var(--color-warning);
+}
+
+.stat-item.skipped .material-icons {
+  color: var(--color-text-secondary);
 }
 
 /* AI 免責聲明區 */

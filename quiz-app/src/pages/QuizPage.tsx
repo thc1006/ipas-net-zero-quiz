@@ -1,5 +1,5 @@
 // 測驗頁面元件
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useLayoutEffect } from 'react';
 import { QuestionCard } from '../components/QuestionCard';
 import type { useQuiz } from '../hooks/useQuiz';
 import './QuizPage.css';
@@ -29,6 +29,7 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
   const {
     currentQuestion,
     currentIndex,
+    currentAnswer,
     progress,
     config,
     isLastQuestion,
@@ -37,6 +38,18 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
     nextQuestion,
     prevQuestion,
   } = quiz;
+
+  // 切換題目時（返回上一題、續作還原、以及「選擇即記錄」後的導覽），從既有作答紀錄
+  // 還原 UI 的選取／已答狀態。若不還原：回到已答題會顯示未選，考試模式還會因
+  // `!selectedAnswer` 而卡住「下一題／完成測驗」按鈕，逼使用者重答（且重答會覆蓋原紀錄）。
+  // 用 layout effect 在 paint 前完成，避免切題瞬間閃一下上一題的選取。
+  // 僅在「題目切換」時還原 —— 同題內 submitAnswer 造成的 currentAnswer 變動不重觸發。
+  useLayoutEffect(() => {
+    const prior = currentAnswer?.selectedAnswer ?? null;
+    setSelectedAnswer(prior);
+    setHasAnswered(prior !== null && !!config?.showAnswerImmediately);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentQuestion?.id]);
 
   // 選擇答案
   const handleSelectAnswer = useCallback(
@@ -64,22 +77,18 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
   );
 
   // 下一題（作答已於 handleSelectAnswer 當下記錄，這裡不再 submitAnswer，
-  // 以免最後一題「submit 後立刻 finish」讀到舊 state）
+  // 以免最後一題「submit 後立刻 finish」讀到舊 state；選取狀態的清空／還原交給上面的 layout effect）
   const handleNext = useCallback(() => {
     if (isLastQuestion) {
       onFinish();
     } else {
       nextQuestion();
-      setSelectedAnswer(null);
-      setHasAnswered(false);
     }
   }, [isLastQuestion, onFinish, nextQuestion]);
 
-  // 上一題
+  // 上一題（選取狀態由 layout effect 依該題紀錄還原）
   const handlePrev = useCallback(() => {
     prevQuestion();
-    setSelectedAnswer(null);
-    setHasAnswered(false);
   }, [prevQuestion]);
 
   if (!currentQuestion) {
