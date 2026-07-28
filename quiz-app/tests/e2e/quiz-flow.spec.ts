@@ -82,6 +82,36 @@ test.describe('測驗流程', () => {
     await expect(page.locator('.score-value')).toBeVisible();
     await expect(page.locator('.score-label')).toBeVisible();
   });
+
+  // 有跳題時結果頁會多出第 5 張「未作答」統計卡；驗證 grid（auto-fit）讓五張卡在桌面
+  // 同一列、不落單（jsdom 無法算版面，只有真實瀏覽器測得到，故放 E2E）。
+  test('跳題後結果頁的五張統計卡在桌面寬度同列、不落單', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.getByLabel(/題數/i).fill('3');
+    await page.getByRole('button', { name: /開始測驗/i }).click();
+    await expect(page.locator('.question-card')).toBeVisible();
+
+    // 第 1 題「跳過」（練習模式允許不選就下一題）→ 產生「未作答」
+    await page.getByRole('button', { name: /下一題/i }).click();
+    // 第 2 題作答後下一題
+    await page.locator('.option-item').first().click();
+    await page.getByRole('button', { name: /下一題/i }).click();
+    // 第 3 題作答後完成
+    await page.locator('.option-item').first().click();
+    await page.getByRole('button', { name: /完成測驗/i }).click();
+
+    await expect(page.locator('.result-page')).toBeVisible();
+    // 第 5 張「未作答」卡存在
+    await expect(page.locator('.stat-item.skipped')).toContainText('未作答');
+
+    // 五張卡都在同一列 —— 取 bounding box 的 top，全部相同才算沒有落單到第二列
+    const cards = page.locator('.stats-section .stat-item');
+    await expect(cards).toHaveCount(5);
+    const tops = await cards.evaluateAll((els) =>
+      els.map((el) => Math.round(el.getBoundingClientRect().top))
+    );
+    expect(new Set(tops).size, `五張卡應在同一列，實得 top=${JSON.stringify(tops)}`).toBe(1);
+  });
 });
 
 test.describe('無障礙功能', () => {
