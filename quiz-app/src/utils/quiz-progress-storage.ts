@@ -70,7 +70,10 @@ function reconstructState(
   for (const stored of rawState.questions) {
     if (typeof stored === 'string') {
       const q = getQuestionById(stored);
-      if (!q) return null; // id 指向的題目已從題庫移除 → 放棄，不 resume 破碎題組
+      // id 指向的題目已從題庫移除 → 放棄整份 resume（保守：不 resume 破碎題組）。
+      // 註：這與 resumeQuiz 對「答案被 null 掉」的部分還原刻意不對稱 —— 題目「刪除」
+      // 極罕見（通常是就地更正而非刪除），故選簡單保守的整份放棄，不複製 re-anchor 邏輯。
+      if (!q) return null;
       questions.push(q);
     } else if (stored && typeof stored === 'object') {
       questions.push(stored);
@@ -164,6 +167,12 @@ function isValidState(st: QuizState): boolean {
   if (!Array.isArray(st.questions)) return false;
   if (typeof st.currentIndex !== 'number') return false;
   if (!Array.isArray(st.answers)) return false;
+  // answers 每筆須為非 null 物件 —— 否則 finishQuiz 的 a.correctAnswer、submitAnswer
+  // 的 a.questionId 會對 null 取值而在續作／完成時 crash（防損壞或竄改的 localStorage；
+  // 與最小化無關，但重建路徑既已加深驗證，一併把對稱的 answers 破綻補上）。
+  if (!(st.answers as unknown[]).every((a) => a !== null && typeof a === 'object')) {
+    return false;
+  }
 
   // currentIndex 必須在 questions 範圍內（避免 resume 後 currentQuestion=null
   // 觸發 QuizPage 的「載入中...」永遠 stuck）

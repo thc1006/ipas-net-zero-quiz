@@ -250,6 +250,27 @@ describe('quiz-progress-storage', () => {
       expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
     });
 
+    it('answers 含非法元素（null）→ 擋下（回 null 並清掉，避免 finishQuiz 對 null 取值 crash）', () => {
+      const realQ = allQuestions[0];
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 2,
+          savedAt: 0,
+          state: {
+            isActive: true,
+            questions: [realQ.id], // 題目可正常重建
+            currentIndex: 0,
+            answers: [null], // 但 answers 有 null 元素
+            startTime: 123,
+            config: fakeConfig,
+          },
+        })
+      );
+      expect(loadProgress()).toBeNull();
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
+    });
+
     it('v1（全物件）payload 仍可載入（向後相容）', () => {
       localStorage.setItem(
         STORAGE_KEY,
