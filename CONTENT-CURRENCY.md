@@ -13,7 +13,7 @@
 - 每題 → `metadata.valid_as_of` + `metadata.sources[]`（一手來源，quarterly workflow 會 curl）
 
 > **`meta.content_review.last_review_date`（本輪窗口起點 `2026-07-13`）不代表「整份題庫已查證到那一天」。**
-> 本輪只實查了 **131 / 775** 題（含 **2026-07-20** 補查的 IFRS/ISSB/TCFD 那批；已查主題見 `meta.content_review.scope`），
+> 本輪只實查了 **133 / 781** 題（含 **2026-07-20** 補查的 IFRS/ISSB/TCFD 那批；已查主題見 `meta.content_review.scope`），
 > 未查題數記於 `not_reviewed_this_round_count`。這些數字皆由 `tools/sync_derived_counts.py` 依公式算、由 gate 釘死在資料上；
 > **這裡不再內嵌會漂的快照（原本的「12 題沿用 2026-01-23」「668 題未標」已刪）。**
 >
@@ -42,7 +42,7 @@
 | 碳費 | — | 2026-05 首徵；一般 300 元，優惠 A 50 / B 100；高碳洩漏係數 0.2 | 環境部 |
 
 一手來源已掛進 `metadata.sources[]`（EUR-Lex 合併版 `02023R0956-20251020`、Omnibus `32025R2083`、
-環境部氣候變遷署、全國法規資料庫、ISO）。**131 題**標記 `time_sensitive`，其中 **112 題**有 source URL
+環境部氣候變遷署、全國法規資料庫、ISO）。**133 題**標記 `time_sensitive`，其中 **112 題**有 source URL
 —— 這點很重要：quarterly workflow **只看得到有 URL 的題目**，修正前 569 題中有 535 題（94 %）對它完全隱形。
 
 ---

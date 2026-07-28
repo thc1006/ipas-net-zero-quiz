@@ -7,15 +7,15 @@
       "爬蟲題庫: dataset_verified.json",
       "CHU 商研院模擬試題 PDF（考科1 100題 / 考科2 70題，含答案key）"
     ],
-    "total_questions": 775,
+    "total_questions": 781,
     "gist_questions": 545,
-    "our_unique_questions": 230,
-    "corrections_applied": 40,
+    "our_unique_questions": 236,
+    "corrections_applied": 41,
     "by_subject": {
-      "考科1": 433,
+      "考科1": 439,
       "考科2": 342
     },
-    "with_answer": 775,
+    "with_answer": 781,
     "last_updated": "2026-07-20T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -26,10 +26,10 @@
         "carbon_neutrality",
         "ISSB_IFRS_TCFD"
       ],
-      "reverified_count": 131,
-      "total_questions": 775,
-      "time_sensitive_count": 131,
-      "not_reviewed_this_round_count": 644,
+      "reverified_count": 133,
+      "total_questions": 781,
+      "time_sensitive_count": 133,
+      "not_reviewed_this_round_count": 648,
       "carried_over_count": 0,
       "known_unresolved": [
         {
@@ -18558,11 +18558,12 @@
           "text": "能源效率提升 1 倍"
         }
       ],
-      "answer": "B",
+      "answer": "C",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "COP28的主決議呼籲各國到2030年將全球再生能源發電容量增加三倍，而非兩倍。",
+      "explanation": "COP28 首次全球盤點決議（UAE Consensus）呼籲各國於 2030 年前，將再生能源裝置容量『增加 2 倍』（即增至原本的三倍）、能源效率改善速度『提升 1 倍』（即加倍），並轉型脫離化石燃料、逐步淘汰無效率的化石燃料補貼；核能在決議中僅被列為『應加速發展的零碳與低碳技術之一』，並未設定增加核能比例的目標。故『再生能源增加 2 倍』『能源效率提升 1 倍』『逐步淘汰低效石化能源』皆屬決議內容，唯『增加核能比例』不在其中。",
+      "_correction_note": "答案由 B 更正為 C（回報 issue #103）：依 UNFCCC 決議 1/CMA.5 第 28 段一手原文，再生能源裝置容量增為三倍（選項『增加 2 倍』＝增至原本三倍，非兩倍）、能源效率加倍、轉型脫離化石燃料、逐步淘汰無效率化石燃料補貼皆為 COP28 承諾；核能僅列為加速發展的低碳技術之一、決議無『增加核能比例』目標，故唯一不在決議內容者為『增加核能比例』。",
       "metadata": {
         "original_id": "c2-147",
         "_legacy_pipeline_metadata": {
@@ -18571,21 +18572,33 @@
           "answer_origin": "sync_from_310",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
+        "prior_answer": "B",
         "sources": [
-          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf"
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
+          "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf"
         ],
         "evidence": [
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
             "quote": "阿聯酋共識\n(UAE Consensus)\n表明各國應在2030年前達成全球再生能源產能提高至三倍、全球能源效率改善\n至兩倍及化石燃料之轉型脫離。",
-            "supports_option": "B"
+            "supports_option": "C"
+          },
+          {
+            "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+            "quote": "Tripling renewable energy capacity globally and doubling the global average annual rate of energy efficiency improvements by 2030;",
+            "supports_option": "C"
+          },
+          {
+            "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+            "quote": "Accelerating zero- and low-emission technologies, including, inter alia, renewables, nuclear, abatement and removal technologies such as carbon capture and utilization and storage, particularly in hard-to-abate sectors, and low-carbon hydrogen production;",
+            "supports_option": "C"
           }
         ],
         "answer_verification": {
-          "date": "2026-07-16",
-          "verdict": "CORRECT_BUT_IMPERFECT",
-          "note": "第十八輪：答案 B 由刪去法成立（A 逐步淘汰石化、C 增加核能、D 能效提升皆為 COP28 主決議內容）。選項 B「再生能源增加2倍」用詞有中文倍數歧義（COP28 為三倍），建議命題者精修。",
-          "method": "代理語意審查＋我複核"
+          "date": "2026-07-28",
+          "verdict": "CORRECTED",
+          "note": "回報 issue #103：原答案 B 由『刪去法』誤成立，本次依 UNFCCC 決議 1/CMA.5 第 28 段一手原文更正為 C。28(a) 段明訂再生能源裝置容量增為三倍（選項『增加 2 倍』＝增至原本三倍，非兩倍）、能源效率改善速度加倍，皆屬 COP28 承諾；轉型脫離化石燃料（28(d)）與逐步淘汰無效率化石燃料補貼（28(h)）對應『逐步淘汰低效石化能源』；核能僅見於 28(e) 段『加速發展的零碳與低碳技術』清單、無『增加核能比例』目標。故唯一不在決議內容者為『增加核能比例』。前一輪（2026-07-16）已註記選項『增加 2 倍』的中文倍數歧義，本次一手複核確認正解為 C。",
+          "method": "一手原文複核（UNFCCC 決議 1/CMA.5 第 28 段逐字，PyMuPDF 擷取官方 PDF）"
         }
       }
     },
@@ -47724,6 +47737,411 @@
             "verified_on": "2026-07-20",
             "method": "EUR-Lex Reg (EU) 2025/2083 逐字（修正 Reg 2023/956 Art 20(1)）+ Recital 27",
             "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj"
+          }
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
+    },
+    {
+      "item_id": "S_GAP-cop28-targets-001",
+      "year": 2023,
+      "year_confidence": "high",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [
+        "COP28",
+        "UNFCCC",
+        "再生能源",
+        "能源效率"
+      ],
+      "question_type": "single_choice",
+      "stem": "COP28（2023 年杜拜）首次全球盤點決議（UAE Consensus）呼籲各國於 2030 年前達成的全球能源目標，下列何者正確？",
+      "options": [
+        {
+          "key": "A",
+          "text": "再生能源裝置容量增為三倍，能源效率改善速度加倍"
+        },
+        {
+          "key": "B",
+          "text": "再生能源裝置容量增為兩倍，能源效率改善速度加倍"
+        },
+        {
+          "key": "C",
+          "text": "再生能源裝置容量增為三倍，能源效率改善速度增為三倍"
+        },
+        {
+          "key": "D",
+          "text": "再生能源裝置容量與能源效率改善速度均增為兩倍"
+        }
+      ],
+      "answer": "A",
+      "explanation": "COP28 首次全球盤點決議第 28 段呼籲於 2030 年前將全球再生能源裝置容量增為三倍（tripling）、能源效率改善速度加倍（doubling）。再生能源目標為三倍、能源效率目標為兩倍，兩者倍數不同，須分辨清楚。",
+      "source": {
+        "source_id": "S_UNFCCC_CMA5_para28_targets",
+        "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+        "publisher": "UNFCCC",
+        "authority": "official",
+        "evidence": {
+          "page": null,
+          "quote": "Tripling renewable energy capacity globally and doubling the global average annual rate of energy efficiency improvements by 2030;"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "Tripling renewable energy capacity globally and doubling the global average annual rate of energy efficiency improvements by 2030;",
+      "notes": "新增：COP28 首次全球盤點對再生能源（三倍）與能源效率（兩倍）的具體目標；UNFCCC 決議 1/CMA.5 第 28(a) 段逐字。與 gist[340]/[341] 同一事實、不同題型，非重複。",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "content_reverified_2026_07": true,
+        "sources": [
+          "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf"
+        ],
+        "evidence": [
+          {
+            "quote": "Tripling renewable energy capacity globally and doubling the global average annual rate of energy efficiency improvements by 2030;",
+            "supports_option": "A",
+            "verified_on": "2026-07-28",
+            "method": "UNFCCC 決議 1/CMA.5 第 28(a) 段逐字（PyMuPDF 擷取官方 PDF）",
+            "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf"
+          }
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "item_id": "S_GAP-cop28-nuclear-001",
+      "year": 2023,
+      "year_confidence": "high",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [
+        "COP28",
+        "UNFCCC",
+        "核能"
+      ],
+      "question_type": "single_choice",
+      "stem": "關於 COP28（2023）首次全球盤點決議對「核能」的處理，下列敘述何者正確？",
+      "options": [
+        {
+          "key": "A",
+          "text": "決議將核能列為應加速發展的零碳與低碳技術之一"
+        },
+        {
+          "key": "B",
+          "text": "決議設定 2030 年前全球核能發電占比增為三倍的目標"
+        },
+        {
+          "key": "C",
+          "text": "決議要求締約方逐步淘汰既有核能機組"
+        },
+        {
+          "key": "D",
+          "text": "決議全文完全未提及核能"
+        }
+      ],
+      "answer": "A",
+      "explanation": "COP28 首次全球盤點決議第 28 段將核能與再生能源、碳捕捉利用與封存等並列為「應加速發展的零碳與低碳技術」之一，屬正面表述；決議並未設定核能占比目標，也未要求淘汰核能。",
+      "source": {
+        "source_id": "S_UNFCCC_CMA5_para28_nuclear",
+        "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+        "publisher": "UNFCCC",
+        "authority": "official",
+        "evidence": {
+          "page": null,
+          "quote": "Accelerating zero- and low-emission technologies, including, inter alia, renewables, nuclear, abatement and removal technologies such as carbon capture and utilization and storage, particularly in hard-to-abate sectors, and low-carbon hydrogen production;"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "Accelerating zero- and low-emission technologies, including, inter alia, renewables, nuclear, abatement and removal technologies such as carbon capture and utilization and storage, particularly in hard-to-abate sectors, and low-carbon hydrogen production;",
+      "notes": "新增：釐清 COP28 對核能的定位（列為加速發展技術之一，非占比目標）；直接對應 issue #103 對核能的疑義。UNFCCC 決議 1/CMA.5 第 28(e) 段逐字。",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "content_reverified_2026_07": true,
+        "sources": [
+          "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf"
+        ],
+        "evidence": [
+          {
+            "quote": "Accelerating zero- and low-emission technologies, including, inter alia, renewables, nuclear, abatement and removal technologies such as carbon capture and utilization and storage, particularly in hard-to-abate sectors, and low-carbon hydrogen production;",
+            "supports_option": "A",
+            "verified_on": "2026-07-28",
+            "method": "UNFCCC 決議 1/CMA.5 第 28(e) 段逐字（PyMuPDF 擷取官方 PDF）",
+            "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf"
+          }
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "item_id": "S_GAP-cop28-fossil-001",
+      "year": 2023,
+      "year_confidence": "high",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [
+        "COP28",
+        "UNFCCC",
+        "化石燃料"
+      ],
+      "question_type": "single_choice",
+      "stem": "COP28（2023）首次全球盤點決議在能源系統的化石燃料議題上，首次於聯合國氣候大會文本納入下列何種關鍵用語？",
+      "options": [
+        {
+          "key": "A",
+          "text": "呼籲各國能源系統轉型脫離化石燃料"
+        },
+        {
+          "key": "B",
+          "text": "要求各國於 2030 年前立即全面禁止開採化石燃料"
+        },
+        {
+          "key": "C",
+          "text": "維持既有化石燃料補貼以保障能源供應"
+        },
+        {
+          "key": "D",
+          "text": "僅規範燃煤發電，未涉及其他化石燃料"
+        }
+      ],
+      "answer": "A",
+      "explanation": "COP28 首次全球盤點決議第 28 段首次於聯合國氣候大會文本納入「轉型脫離化石燃料」（transitioning away from fossil fuels）之用語；決議同時呼籲逐步淘汰無效率的化石燃料補貼，而非維持補貼，也非只針對燃煤或立即全面禁用。",
+      "source": {
+        "source_id": "S_UNFCCC_CMA5_para28_fossil",
+        "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+        "publisher": "UNFCCC",
+        "authority": "official",
+        "evidence": {
+          "page": null,
+          "quote": "Transitioning away from fossil fuels in energy systems, in a just, orderly and equitable manner, accelerating action in this critical decade, so as to achieve net zero by 2050 in keeping with the science;"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "Transitioning away from fossil fuels in energy systems, in a just, orderly and equitable manner, accelerating action in this critical decade, so as to achieve net zero by 2050 in keeping with the science;",
+      "notes": "新增：COP28 首次納入『轉型脫離化石燃料』用語（史上首次於 COP 文本點名化石燃料）；UNFCCC 決議 1/CMA.5 第 28(d) 段逐字。",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "content_reverified_2026_07": true,
+        "sources": [
+          "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf"
+        ],
+        "evidence": [
+          {
+            "quote": "Transitioning away from fossil fuels in energy systems, in a just, orderly and equitable manner, accelerating action in this critical decade, so as to achieve net zero by 2050 in keeping with the science;",
+            "supports_option": "A",
+            "verified_on": "2026-07-28",
+            "method": "UNFCCC 決議 1/CMA.5 第 28(d) 段逐字（PyMuPDF 擷取官方 PDF）",
+            "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf"
+          }
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "item_id": "S_GAP-cop28-subsidy-001",
+      "year": 2023,
+      "year_confidence": "high",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [
+        "COP28",
+        "UNFCCC",
+        "化石燃料補貼"
+      ],
+      "question_type": "single_choice",
+      "stem": "下列何者屬於 COP28（2023）首次全球盤點決議所列、締約方應共同努力的方向？",
+      "options": [
+        {
+          "key": "A",
+          "text": "逐步淘汰無助於解決能源貧窮的無效率化石燃料補貼"
+        },
+        {
+          "key": "B",
+          "text": "設定全球統一的碳價下限"
+        },
+        {
+          "key": "C",
+          "text": "於 2030 年前全面禁止燃煤發電"
+        },
+        {
+          "key": "D",
+          "text": "建立強制性的損失與損害賠償金額上限"
+        }
+      ],
+      "answer": "A",
+      "explanation": "COP28 首次全球盤點決議第 28 段呼籲儘速逐步淘汰無助於解決能源貧窮或公正轉型的無效率化石燃料補貼。決議對燃煤僅要求加速逐步減少未採取減排措施的燃煤發電，並非全面禁止；亦未設定全球統一碳價下限或強制性損失與損害賠償金額。",
+      "source": {
+        "source_id": "S_UNFCCC_CMA5_para28_subsidy",
+        "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+        "publisher": "UNFCCC",
+        "authority": "official",
+        "evidence": {
+          "page": null,
+          "quote": "Phasing out inefficient fossil fuel subsidies that do not address energy poverty or just transitions, as soon as possible;"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "Phasing out inefficient fossil fuel subsidies that do not address energy poverty or just transitions, as soon as possible;",
+      "notes": "新增：COP28 對無效率化石燃料補貼的『逐步淘汰』努力方向；UNFCCC 決議 1/CMA.5 第 28(h) 段逐字。與 fossil-001（28(d) 轉型脫離）測不同子項。",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "content_reverified_2026_07": true,
+        "sources": [
+          "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf"
+        ],
+        "evidence": [
+          {
+            "quote": "Phasing out inefficient fossil fuel subsidies that do not address energy poverty or just transitions, as soon as possible;",
+            "supports_option": "A",
+            "verified_on": "2026-07-28",
+            "method": "UNFCCC 決議 1/CMA.5 第 28(h) 段逐字（PyMuPDF 擷取官方 PDF）",
+            "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf"
+          }
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "item_id": "S_GAP-cbam-coproduction-001",
+      "year": 2023,
+      "year_confidence": "high",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [
+        "CBAM",
+        "EU",
+        "內含排放",
+        "分攤"
+      ],
+      "question_type": "single_choice",
+      "stem": "依歐盟 CBAM 施行細則（Commission Implementing Regulation (EU) 2023/1773 附件三），當同一設施「同時」產出多種產品、無法就各生產程序分別取得數據時，內含排放量原則上應如何分攤至各產品？",
+      "options": [
+        {
+          "key": "A",
+          "text": "依各產品的質量或體積比例分攤"
+        },
+        {
+          "key": "B",
+          "text": "依各產品使用該生產線的時間比例分攤"
+        },
+        {
+          "key": "C",
+          "text": "依各產品的市場售價比例分攤"
+        },
+        {
+          "key": "D",
+          "text": "由申報者在各產品之間平均分配"
+        }
+      ],
+      "answer": "A",
+      "explanation": "CBAM 施行細則附件三就製程數據分攤提供兩種原則，並取能得出較準確結果者：一是同一生產線「先後」產出不同產品時，依各製程每年使用時間分攤；二是依各產品的質量、體積或其他有科學依據的分配基準分攤。題幹為「同時」產出（共同產出）之情形，適用質量或體積基準；使用時間基準對應的是先後（循序）產出，並非本題情形。售價比例與平均分配均非施行細則所定方法。",
+      "source": {
+        "source_id": "S_EURLEX_2023_1773_coproduction",
+        "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+        "publisher": "EUR-Lex",
+        "authority": "official",
+        "evidence": {
+          "page": null,
+          "quote": "inputs, outputs, and corresponding emissions shall be attributed based on the mass or volume of individual goods produced or estimates based on the ratio of free reaction enthalpies of the chemical reactions involved or based on another suitable distribution key that is corroborated by a sound scientific methodology."
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "inputs, outputs, and corresponding emissions shall be attributed based on the mass or volume of individual goods produced or estimates based on the ratio of free reaction enthalpies of the chemical reactions involved or based on another suitable distribution key that is corroborated by a sound scientific methodology.",
+      "notes": "新增：CBAM 附件三 F.3.1(2)(b) 共同產出（同時）以質量/體積分攤；與 gist[102] 的『先後產出以使用時間分攤』(F.3.1(2)(a)) 互補，釐清 issue #102 混淆的兩款區別。EUR-Lex CELEX 32023R1773 逐字。",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "valid_as_of": "2026-07-28",
+        "content_reverified_2026_07": true,
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773"
+        ],
+        "evidence": [
+          {
+            "quote": "inputs, outputs, and corresponding emissions shall be attributed based on the mass or volume of individual goods produced or estimates based on the ratio of free reaction enthalpies of the chemical reactions involved or based on another suitable distribution key that is corroborated by a sound scientific methodology.",
+            "supports_option": "A",
+            "verified_on": "2026-07-28",
+            "method": "EUR-Lex CELEX 32023R1773 附件三 F.3.1(2)(b) 逐字（官方 HTML 直取）",
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773"
+          }
+        ]
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
+    },
+    {
+      "item_id": "S_GAP-cbam-allocation-principle-001",
+      "year": 2023,
+      "year_confidence": "high",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [
+        "CBAM",
+        "EU",
+        "內含排放",
+        "分攤"
+      ],
+      "question_type": "single_choice",
+      "stem": "依歐盟 CBAM 施行細則（Regulation (EU) 2023/1773 附件三），當無法就各生產程序分別取得所需數據、須在數種分攤原則之間選擇時，應依何種標準選定？",
+      "options": [
+        {
+          "key": "A",
+          "text": "選擇能得出較準確結果的原則"
+        },
+        {
+          "key": "B",
+          "text": "一律採用質量平衡法"
+        },
+        {
+          "key": "C",
+          "text": "由申報者依商業考量自行任選一種"
+        },
+        {
+          "key": "D",
+          "text": "由進口會員國海關指定"
+        }
+      ],
+      "answer": "A",
+      "explanation": "CBAM 施行細則附件三明定：當特定數據無法就各生產程序分別取得時，應在所列原則中選擇「能得出較準確結果」者，而非固定採用單一方法、任由申報者自行選擇或由海關指定。",
+      "source": {
+        "source_id": "S_EURLEX_2023_1773_principle",
+        "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+        "publisher": "EUR-Lex",
+        "authority": "official",
+        "evidence": {
+          "page": null,
+          "quote": "For this purpose, either of the following principles shall be applied depending on which principle yields more accurate results:"
+        }
+      },
+      "alt_sources": [],
+      "evidence_quote": "For this purpose, either of the following principles shall be applied depending on which principle yields more accurate results:",
+      "notes": "新增：CBAM 附件三 F.3.1(2) 分攤原則的選擇標準（取較準確結果者）；EUR-Lex CELEX 32023R1773 逐字。",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "_quality_score": 100,
+      "metadata": {
+        "valid_as_of": "2026-07-28",
+        "content_reverified_2026_07": true,
+        "sources": [
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773"
+        ],
+        "evidence": [
+          {
+            "quote": "For this purpose, either of the following principles shall be applied depending on which principle yields more accurate results:",
+            "supports_option": "A",
+            "verified_on": "2026-07-28",
+            "method": "EUR-Lex CELEX 32023R1773 附件三 F.3.1(2) 逐字（官方 HTML 直取）",
+            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773"
           }
         ]
       },

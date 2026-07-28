@@ -170,7 +170,7 @@ N['carried_over'] = sum(
     and (md(q).get('valid_as_of') or '') < (last or '')
 )
 # 本輪未重查題數 = 總題數 - 已重查。原本這個欄位沒人算 —— 於是它凍在舊快照 680，
-# 而正確值是 775 - 131 = 644（多批次查證後 reverified 會變，這欄若不由公式算就必漂）。
+# 而正確值是 781 - reverified（多批次查證後 reverified 會變，這欄若不由公式算就必漂）。
 N['not_reviewed'] = N['total'] - N['reverified']
 
 changed = []
@@ -233,9 +233,9 @@ docs = {README: open(README, encoding='utf-8').read(), CURRENCY: open(CURRENCY, 
 RULES = [
     (README, r'本輪只實查\s*\*\*(\d+)\s*/', N['reverified'], 'README 本輪實查題數'),
     (CURRENCY, r'本輪只實查了\s*\*\*(\d+)\s*/', N['reverified'], 'CURRENCY 本輪實查題數'),
-    (README, r'\*\*(\d+) / 775\*\*', N['main_quote'], '主題庫逐字引文'),
-    (README, r'② 有一手來源 URL[^|]*\|[^|]*\| (\d+) / 775', N['main_primary'], '主題庫一手來源'),
-    (README, r'\*\*無從查證\*\* \| (\d+) / 775', N['main_nosource'], '主題庫無來源'),
+    (README, r'\*\*(\d+) / 781\*\*', N['main_quote'], '主題庫逐字引文'),
+    (README, r'② 有一手來源 URL[^|]*\|[^|]*\| (\d+) / 781', N['main_primary'], '主題庫一手來源'),
+    (README, r'\*\*無從查證\*\* \| (\d+) / 781', N['main_nosource'], '主題庫無來源'),
     (README, r'\*\*(\d+) / 154\*\*', N['pool_quote'], '練習池逐字引文'),
     (README, rf'\| (\d+) / {N["pool_total"]} \|\n', N['pool_primary'], '練習池一手來源'),
     (README, r'(\d+) 題答案曾被更正', N['corrections'], 'README 更正題數'),

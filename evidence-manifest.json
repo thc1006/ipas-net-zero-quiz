@@ -6,10 +6,10 @@
     "tier1_rule": "authority == primary 且 has_quote —— 二手 evidence（維基／新聞／標準轉載預覽）不計入"
   },
   "summary": {
-    "main_tier1_questions": 756,
+    "main_tier1_questions": 762,
     "pool_tier1_questions": 138,
-    "total_evidence_urls": 911,
-    "primary_evidence_urls": 902,
+    "total_evidence_urls": 919,
+    "primary_evidence_urls": 910,
     "secondary_evidence_urls": 9,
     "unknown_evidence_urls": 0
   },
@@ -1491,9 +1491,27 @@
       "tier1": true
     },
     {
+      "qid": "S_GAP-cbam-allocation-principle-001",
+      "bank": "main",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+      "host": "eur-lex.europa.eu",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "S_GAP-cbam-cert-sale-001",
       "bank": "main",
       "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
+      "host": "eur-lex.europa.eu",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_GAP-cbam-coproduction-001",
+      "bank": "main",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
       "host": "eur-lex.europa.eu",
       "authority": "primary",
       "has_quote": true,
@@ -1504,6 +1522,42 @@
       "bank": "main",
       "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
       "host": "eur-lex.europa.eu",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_GAP-cop28-fossil-001",
+      "bank": "main",
+      "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_GAP-cop28-nuclear-001",
+      "bank": "main",
+      "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_GAP-cop28-subsidy-001",
+      "bank": "main",
+      "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_GAP-cop28-targets-001",
+      "bank": "main",
+      "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+      "host": "unfccc.int",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -4348,6 +4402,24 @@
       "bank": "main",
       "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
       "host": "usr.chu.edu.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[340]",
+      "bank": "main",
+      "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[340]",
+      "bank": "main",
+      "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+      "host": "unfccc.int",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
