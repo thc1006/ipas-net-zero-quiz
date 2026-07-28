@@ -23,6 +23,13 @@ test.describe('Settings 跨瀏覽器 smoke', () => {
     const select = page.getByLabel('色覺辨認模式');
     await expect(select).toBeVisible();
 
+    // select 高度要合理 —— WebKit 對 appearance:none 的 <select> 高度/文字垂直位置歷來較
+    // 敏感（正是本 PR 改自訂樣式要顧的點）。抓 bounding box 擋「塌成 0 / 撐爆」的跨瀏覽器破圖。
+    const box = await select.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.height).toBeGreaterThan(28);
+    expect(box!.height).toBeLessThan(60);
+
     // 自訂 chevron（data-URI SVG）取代原生箭頭 —— Firefox/WebKit 也要能渲染出來。
     // 用 background-image 有無 svg 判定（比 computed `appearance` 跨瀏覽器可靠）。
     const bgImage = await select.evaluate(
