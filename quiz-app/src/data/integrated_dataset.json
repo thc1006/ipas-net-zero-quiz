@@ -26,10 +26,10 @@
         "carbon_neutrality",
         "ISSB_IFRS_TCFD"
       ],
-      "reverified_count": 133,
+      "reverified_count": 132,
       "total_questions": 781,
-      "time_sensitive_count": 133,
-      "not_reviewed_this_round_count": 648,
+      "time_sensitive_count": 132,
+      "not_reviewed_this_round_count": 649,
       "carried_over_count": 0,
       "known_unresolved": [
         {
@@ -5927,7 +5927,7 @@
     {
       "index": 102,
       "number": 102,
-      "stem": "一家鋼鐵廠在同一條生產線上生產多種 CBAM 納管產品，如何正確分配碳排放？",
+      "stem": "在 CBAM 過渡期（2023 年 10 月 1 日至 2025 年 12 月 31 日），依 Commission Implementing Regulation (EU) 2023/1773 附件三，一家鋼鐵廠在同一條生產線上「先後（不同批次）」生產多種 CBAM 納管產品、且無法分別取得各生產程序數據時，如何分配碳排放？",
       "options": [
         {
           "key": "A",
@@ -5951,11 +5951,11 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-07-13",
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://eur-lex.europa.eu/eli/reg_impl/2025/2547/oj"
         ],
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -5981,11 +5981,9 @@
           "method": "一手法規原文逐字比對"
         }
       },
-      "quality_flags": [
-        "time_sensitive"
-      ],
-      "explanation": "依 CBAM 施行細則，同一條生產線先後生產不同產品時，投入、產出與對應排放應依各生產程序每年使用該生產線的時間比例循序歸屬。",
-      "_correction_note": "2026-07-15：**答案 B→A（依一手法規更正）。** CBAM 施行細則 2023/1773 就本題情境（同一條生產線先後生產多種 CBAM 產品）明定：inputs/outputs/emissions 依各生產程序「使用時間 per year」循序歸屬（規則(a)）—— 即選項 A（使用生產線的時間比例）。原答案 B（產量比例）查無一手依據。（註：法規另有規則(b)子情形，該 Wayback 快照無法抽取全文，但(a)已直接對應本題情境。）"
+      "quality_flags": [],
+      "explanation": "在 CBAM 過渡期（依 Reg (EU) 2023/1773 附件三），同一條生產線「先後」生產不同產品時，投入、產出與對應排放依各生產程序每年使用該生產線的時間比例循序歸屬（規則(a)）。註：自 2026 年正式期（definitive period）起，計算方法已改由 Reg (EU) 2025/2547 規範，改以功能單位／物理關係分攤，不再使用此「使用時間」規則。",
+      "_correction_note": "2026-07-15：**答案 B→A（依一手法規更正）。** CBAM 施行細則 2023/1773 就本題情境（同一條生產線先後生產多種 CBAM 產品）明定：inputs/outputs/emissions 依各生產程序「使用時間 per year」循序歸屬（規則(a)）—— 即選項 A（使用生產線的時間比例）。原答案 B（產量比例）查無一手依據。（註：法規另有規則(b)子情形，該 Wayback 快照無法抽取全文，但(a)已直接對應本題情境。） 2026-07-28：題幹已明確限定為 CBAM 過渡期（2023-2025）歷史題並補「先後（不同批次）」條件，使「使用時間」(規則a) 成為唯一正解（回應 issue #102 的先後/共同產出歧義）；因過渡期已結束、規則凍結，本題移除 time_sensitive 並登記 CORRECTED_BUT_STABLE。自 2026 正式期起分攤方法已由 Reg (EU) 2025/2547 改為功能單位/物理關係（見另兩題）。"
     },
     {
       "index": 103,
@@ -18543,7 +18541,7 @@
       "options": [
         {
           "key": "A",
-          "text": "逐步淘汰低效石化能源"
+          "text": "逐步淘汰未處理能源貧窮或公正轉型的無效率化石燃料補貼"
         },
         {
           "key": "B",
@@ -18562,8 +18560,8 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "COP28 首次全球盤點決議（UAE Consensus）呼籲各國於 2030 年前，將再生能源裝置容量增為三倍、能源效率改善速度提升 1 倍（即加倍），並轉型脫離化石燃料、逐步淘汰無效率的化石燃料補貼；核能在決議中僅被列為『應加速發展的零碳與低碳技術之一』，並未設定增加核能比例的目標。故『再生能源裝置容量增為三倍』『能源效率提升 1 倍』『逐步淘汰低效石化能源』皆屬決議內容，唯『增加核能比例』不在其中。",
-      "_correction_note": "答案由 B 更正為 C（回報 issue #103）：依 UNFCCC 決議 1/CMA.5 第 28 段一手原文，再生能源增為三倍、能源效率加倍、轉型脫離化石燃料、逐步淘汰無效率化石燃料補貼皆為 COP28 承諾；核能僅列為加速發展的低碳技術之一、決議無『增加核能比例』目標，故唯一不在決議內容者為『增加核能比例』。另原選項 B 措辭『再生能源增加 2 倍』有中文倍數口語歧義，本次一併改為『再生能源裝置容量增為三倍』（見 metadata.options_replaced），與姊妹題 gist[341] 用語一致、不影響答案 C。",
+      "explanation": "COP28 首次全球盤點決議（UAE Consensus）呼籲各國於 2030 年前，將再生能源裝置容量增為三倍、能源效率改善速度提升 1 倍（即加倍），並轉型脫離化石燃料、逐步淘汰未處理能源貧窮或公正轉型的無效率化石燃料補貼；核能在決議中僅被列為『應加速發展的零碳與低碳技術之一』，並未設定增加核能比例的目標。故『再生能源裝置容量增為三倍』『能源效率提升 1 倍』『逐步淘汰未處理能源貧窮或公正轉型的無效率化石燃料補貼』皆屬決議內容，唯『增加核能比例』不在其中。",
+      "_correction_note": "答案由 B 更正為 C（回報 issue #103）：依 UNFCCC 決議 1/CMA.5 第 28 段一手原文，再生能源增為三倍(28a)、能源效率加倍(28a)、轉型脫離化石燃料(28d)、逐步淘汰無效率化石燃料補貼(28h)皆為 COP28 承諾；核能僅於 28(e) 列為加速發展的低碳技術之一、決議無『增加核能比例』目標，故唯一不在決議內容者為『增加核能比例』。另本次收緊兩個選項措辭以確保 C 為唯一答案（見 metadata.options_replaced）：選項 A 原「逐步淘汰低效石化能源」非決議逐字條款、語意含糊，改為 28(h) 逐字；選項 B 原「再生能源增加 2 倍」倍數口語有歧義，改為 28(a)「再生能源裝置容量增為三倍」。",
       "metadata": {
         "original_id": "c2-147",
         "_legacy_pipeline_metadata": {
@@ -18595,7 +18593,7 @@
           ],
           "prior_answer": "B",
           "source_url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
-          "why": "僅改寫選項 B 措辭：原「再生能源增加 2 倍」用中文倍數口語有歧義（嚴格中文＝增至三倍，口語常誤讀為兩倍），為釘住 COP28『再生能源裝置容量增為三倍』並與姊妹題 gist[341] 用語一致，改為「再生能源裝置容量增為三倍」。答案 C（增加核能比例不在決議）不因此改變；依 UNFCCC 決議 1/CMA.5 第 28(a) 段。"
+          "why": "收緊兩個選項措辭以確保答案 C 為唯一不在決議者，釘住 COP28 決議 1/CMA.5 第 28 段：(1) 原選項 A「逐步淘汰低效石化能源」非決議逐字條款——決議 28(d) 為「轉型脫離化石燃料」、28(h) 為「淘汰未處理能源貧窮或公正轉型的無效率化石燃料補貼」，並無「淘汰低效石化能源」之語，恐與答案 C 並列為第二個可爭辯的不在項；改為 28(h) 逐字表述使其明確屬決議內容。(2) 原選項 B「再生能源增加 2 倍」中文倍數口語有歧義（嚴格＝三倍、常被誤讀為兩倍），改為「再生能源裝置容量增為三倍」（＝28(a)、與姊妹題 gist[341] 一致）。答案 C（增加核能比例不在決議、決議僅於 28(e) 將核能列為加速發展技術之一）不因此改變。"
         },
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/696336508.pdf",
@@ -18615,6 +18613,11 @@
           {
             "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
             "quote": "Accelerating zero- and low-emission technologies, including, inter alia, renewables, nuclear, abatement and removal technologies such as carbon capture and utilization and storage, particularly in hard-to-abate sectors, and low-carbon hydrogen production;",
+            "supports_option": "C"
+          },
+          {
+            "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+            "quote": "Phasing out inefficient fossil fuel subsidies that do not address energy poverty or just transitions, as soon as possible;",
             "supports_option": "C"
           }
         ],
@@ -47781,7 +47784,7 @@
         "能源效率"
       ],
       "question_type": "single_choice",
-      "stem": "COP28（2023 年杜拜）首次全球盤點決議（UAE Consensus）呼籲各國於 2030 年前達成的全球能源目標，下列何者正確？",
+      "stem": "COP28（2023 年杜拜）首次全球盤點決議（UAE Consensus）呼籲締約方共同為下列何組全球層級的 2030 年前能源目標作出貢獻？",
       "options": [
         {
           "key": "A",
@@ -47913,7 +47916,7 @@
         "化石燃料"
       ],
       "question_type": "single_choice",
-      "stem": "COP28（2023）首次全球盤點決議在能源系統的化石燃料議題上，首次於聯合國氣候大會文本納入下列何種關鍵用語？",
+      "stem": "COP28（2023）首次全球盤點決議在能源系統的化石燃料議題上，納入下列何種關鍵用語？",
       "options": [
         {
           "key": "A",
@@ -47983,7 +47986,7 @@
       "options": [
         {
           "key": "A",
-          "text": "逐步淘汰無助於解決能源貧窮的無效率化石燃料補貼"
+          "text": "逐步淘汰未處理能源貧窮或公正轉型的無效率化石燃料補貼"
         },
         {
           "key": "B",
@@ -48043,18 +48046,19 @@
         "CBAM",
         "EU",
         "內含排放",
-        "分攤"
+        "分攤",
+        "definitive_period"
       ],
       "question_type": "single_choice",
-      "stem": "依歐盟 CBAM 施行細則（Commission Implementing Regulation (EU) 2023/1773 附件三），當同一設施「同時」產出多種產品、無法就各生產程序分別取得數據時，內含排放量原則上應如何分攤至各產品？",
+      "stem": "自 2026 年 CBAM 正式期（definitive period）起，依 Commission Implementing Regulation (EU) 2025/2547 附件三，當同一多功能製程同時產出多種產品、且缺乏各產品數據時，內含排放量原則上應如何分攤？",
       "options": [
         {
           "key": "A",
-          "text": "依各產品的質量或體積比例分攤"
+          "text": "依相關的基礎物理關係分攤"
         },
         {
           "key": "B",
-          "text": "依各產品使用該生產線的時間比例分攤"
+          "text": "依各產品使用生產線的時間比例分攤"
         },
         {
           "key": "C",
@@ -48062,24 +48066,24 @@
         },
         {
           "key": "D",
-          "text": "由申報者在各產品之間平均分配"
+          "text": "在各產品之間平均分配"
         }
       ],
       "answer": "A",
-      "explanation": "CBAM 施行細則附件三就製程數據分攤提供兩種原則，並取能得出較準確結果者：一是同一生產線「先後」產出不同產品時，依各製程每年使用時間分攤；二是依各產品的質量、體積或其他有科學依據的分配基準分攤。題幹為「同時」產出（共同產出）之情形，適用質量或體積基準；使用時間基準對應的是先後（循序）產出，並非本題情形。售價比例與平均分配均非施行細則所定方法。",
+      "explanation": "自 2026 年 CBAM 正式期起，內含排放計算方法由 Reg (EU) 2025/2547 規範（取代過渡期的 2023/1773）。就多功能製程（同時產出多種產品）於缺乏數據時，附件三 A.2 規定依「相關的基礎物理關係」分攤（化學品與肥料另依莫耳比例、質量為後備）。過渡期以「使用時間」循序歸屬的作法已不適用；售價比例與平均分配均非法規所定方法。",
       "source": {
-        "source_id": "S_EURLEX_2023_1773_coproduction",
-        "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+        "source_id": "S_EURLEX_2025_2547_multifunctional",
+        "url": "https://eur-lex.europa.eu/eli/reg_impl/2025/2547/oj",
         "publisher": "EUR-Lex",
         "authority": "official",
         "evidence": {
           "page": null,
-          "quote": "inputs, outputs, and corresponding emissions shall be attributed based on the mass or volume of individual goods produced or estimates based on the ratio of free reaction enthalpies of the chemical reactions involved or based on another suitable distribution key that is corroborated by a sound scientific methodology."
+          "quote": "In case of lack of data as referred to in point A.1 or in case of multi-functional processes, attribution will be based on a relevant underlying physical relationship"
         }
       },
       "alt_sources": [],
-      "evidence_quote": "inputs, outputs, and corresponding emissions shall be attributed based on the mass or volume of individual goods produced or estimates based on the ratio of free reaction enthalpies of the chemical reactions involved or based on another suitable distribution key that is corroborated by a sound scientific methodology.",
-      "notes": "新增：CBAM 附件三 F.3.1(2)(b) 共同產出（同時）以質量/體積分攤；與 gist[102] 的『先後產出以使用時間分攤』(F.3.1(2)(a)) 互補，釐清 issue #102 混淆的兩款區別。EUR-Lex CELEX 32023R1773 逐字。",
+      "evidence_quote": "In case of lack of data as referred to in point A.1 or in case of multi-functional processes, attribution will be based on a relevant underlying physical relationship",
+      "notes": "更新：CBAM 正式期(2026+)多功能製程分攤＝相關物理關係（Reg (EU) 2025/2547 附件三 A.2）；取代過渡期 2023/1773 的使用時間/質量規則（原題誤引過渡期規則、已改正）。",
       "exam_subject": "考科1",
       "subject_confidence": 1.0,
       "_quality_score": 100,
@@ -48087,15 +48091,15 @@
         "valid_as_of": "2026-07-28",
         "content_reverified_2026_07": true,
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773"
+          "https://eur-lex.europa.eu/eli/reg_impl/2025/2547/oj"
         ],
         "evidence": [
           {
-            "quote": "inputs, outputs, and corresponding emissions shall be attributed based on the mass or volume of individual goods produced or estimates based on the ratio of free reaction enthalpies of the chemical reactions involved or based on another suitable distribution key that is corroborated by a sound scientific methodology.",
+            "quote": "In case of lack of data as referred to in point A.1 or in case of multi-functional processes, attribution will be based on a relevant underlying physical relationship",
             "supports_option": "A",
             "verified_on": "2026-07-28",
-            "method": "EUR-Lex CELEX 32023R1773 附件三 F.3.1(2)(b) 逐字（官方 HTML 直取）",
-            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773"
+            "method": "EUR-Lex CELEX 32025R2547 附件三 A.2 逐字（官方 PDF pdftotext 擷取）",
+            "url": "https://eur-lex.europa.eu/eli/reg_impl/2025/2547/oj"
           }
         ]
       },
@@ -48113,43 +48117,44 @@
         "CBAM",
         "EU",
         "內含排放",
-        "分攤"
+        "分攤",
+        "definitive_period"
       ],
       "question_type": "single_choice",
-      "stem": "依歐盟 CBAM 施行細則（Regulation (EU) 2023/1773 附件三），當無法就各生產程序分別取得所需數據、須在數種分攤原則之間選擇時，應依何種標準選定？",
+      "stem": "自 2026 年 CBAM 正式期（definitive period）起，依 Commission Implementing Regulation (EU) 2025/2547，將生產程序的排放歸屬至個別貨物時，預設的歸屬基準（functional unit）為何？",
       "options": [
         {
           "key": "A",
-          "text": "選擇能得出較準確結果的原則"
+          "text": "同一 CN code 下貨物的生產噸數"
         },
         {
           "key": "B",
-          "text": "一律採用質量平衡法"
+          "text": "各貨物使用生產線的時間比例"
         },
         {
           "key": "C",
-          "text": "由申報者依商業考量自行任選一種"
+          "text": "各貨物的市場售價比例"
         },
         {
           "key": "D",
-          "text": "由進口會員國海關指定"
+          "text": "各貨物的體積比例"
         }
       ],
       "answer": "A",
-      "explanation": "CBAM 施行細則附件三明定：當特定數據無法就各生產程序分別取得時，應在所列原則中選擇「能得出較準確結果」者，而非固定採用單一方法、任由申報者自行選擇或由海關指定。",
+      "explanation": "自 2026 年 CBAM 正式期起，依 Reg (EU) 2025/2547，排放先歸屬至生產程序、再依「功能單位」歸屬至個別貨物；預設功能單位為同一 CN code 下貨物的生產噸數（電力以 kWh、肥料以含氮量、水泥以熟料噸數等另定）。過渡期「使用時間或質量/體積擇較準確者」的作法已由此取代。",
       "source": {
-        "source_id": "S_EURLEX_2023_1773_principle",
-        "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+        "source_id": "S_EURLEX_2025_2547_functionalunit",
+        "url": "https://eur-lex.europa.eu/eli/reg_impl/2025/2547/oj",
         "publisher": "EUR-Lex",
         "authority": "official",
         "evidence": {
           "page": null,
-          "quote": "For this purpose, either of the following principles shall be applied depending on which principle yields more accurate results:"
+          "quote": "The quantities of goods produced in tonnes classified under the same CN code shall constitute the functional unit, except for the goods referred to in paragraphs 3, 4 and 5."
         }
       },
       "alt_sources": [],
-      "evidence_quote": "For this purpose, either of the following principles shall be applied depending on which principle yields more accurate results:",
-      "notes": "新增：CBAM 附件三 F.3.1(2) 分攤原則的選擇標準（取較準確結果者）；EUR-Lex CELEX 32023R1773 逐字。",
+      "evidence_quote": "The quantities of goods produced in tonnes classified under the same CN code shall constitute the functional unit, except for the goods referred to in paragraphs 3, 4 and 5.",
+      "notes": "更新：CBAM 正式期(2026+)預設歸屬基準＝功能單位（同一 CN code 生產噸數；Reg (EU) 2025/2547 Art 4(2)）；取代過渡期 2023/1773 的原則（原題誤引過渡期規則、已改正）。",
       "exam_subject": "考科1",
       "subject_confidence": 1.0,
       "_quality_score": 100,
@@ -48157,15 +48162,15 @@
         "valid_as_of": "2026-07-28",
         "content_reverified_2026_07": true,
         "sources": [
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773"
+          "https://eur-lex.europa.eu/eli/reg_impl/2025/2547/oj"
         ],
         "evidence": [
           {
-            "quote": "For this purpose, either of the following principles shall be applied depending on which principle yields more accurate results:",
+            "quote": "The quantities of goods produced in tonnes classified under the same CN code shall constitute the functional unit, except for the goods referred to in paragraphs 3, 4 and 5.",
             "supports_option": "A",
             "verified_on": "2026-07-28",
-            "method": "EUR-Lex CELEX 32023R1773 附件三 F.3.1(2) 逐字（官方 HTML 直取）",
-            "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773"
+            "method": "EUR-Lex CELEX 32025R2547 Art 4(2) 逐字（官方 PDF pdftotext 擷取）",
+            "url": "https://eur-lex.europa.eu/eli/reg_impl/2025/2547/oj"
           }
         ]
       },

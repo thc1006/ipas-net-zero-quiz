@@ -8,10 +8,10 @@
   "summary": {
     "main_tier1_questions": 762,
     "pool_tier1_questions": 138,
-    "total_evidence_urls": 919,
-    "primary_evidence_urls": 910,
-    "secondary_evidence_urls": 9,
-    "unknown_evidence_urls": 0
+    "total_evidence_records": 920,
+    "primary_evidence_records": 911,
+    "secondary_evidence_records": 9,
+    "unknown_evidence_records": 0
   },
   "entries": [
     {
@@ -1493,7 +1493,7 @@
     {
       "qid": "S_GAP-cbam-allocation-principle-001",
       "bank": "main",
-      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+      "url": "https://eur-lex.europa.eu/eli/reg_impl/2025/2547/oj",
       "host": "eur-lex.europa.eu",
       "authority": "primary",
       "has_quote": true,
@@ -1511,7 +1511,7 @@
     {
       "qid": "S_GAP-cbam-coproduction-001",
       "bank": "main",
-      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+      "url": "https://eur-lex.europa.eu/eli/reg_impl/2025/2547/oj",
       "host": "eur-lex.europa.eu",
       "authority": "primary",
       "has_quote": true,
@@ -4402,6 +4402,15 @@
       "bank": "main",
       "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf",
       "host": "usr.chu.edu.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[340]",
+      "bank": "main",
+      "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
+      "host": "unfccc.int",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
