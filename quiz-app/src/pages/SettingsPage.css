@@ -132,14 +132,83 @@
   outline-offset: 2px;
 }
 
-/* Select */
+/* Select — 用自訂 chevron 取代原生箭頭：原生箭頭會與文字擠在一起、位置不正（跨瀏覽器不一致）。 */
 .setting-item select {
-  padding: var(--spacing-sm) var(--spacing-md);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* 右側多留 40px 給箭頭，文字不會壓到箭頭 */
+  padding: var(--spacing-sm) 40px var(--spacing-sm) var(--spacing-md);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  background: var(--color-surface);
+  /* 用 background-color（非 background 簡寫）避免蓋掉下面的箭頭 background-image */
+  background-color: var(--color-surface);
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2379767a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px 16px;
+  color: var(--color-text-primary);
   font-size: var(--font-size-sm);
   min-width: 150px;
+  cursor: pointer;
+}
+
+/* 色覺模式：控制列 + 即時預覽垂直堆疊 */
+.setting-item--stack {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-md);
+}
+
+.setting-item__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+/* 作答回饋色即時預覽：chip 直接吃 --color-success / --color-error，
+   而 [data-cvd-mode] 覆寫的正是這兩個變數，故切換色覺模式時 chip 會即時換色。 */
+.cvd-preview {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.cvd-preview__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.cvd-preview__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 2px solid;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.cvd-preview__chip .material-icons {
+  font-size: 18px;
+}
+
+.cvd-preview__chip--correct {
+  background: var(--color-success-bg);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.cvd-preview__chip--incorrect {
+  background: var(--color-error-bg);
+  border-color: var(--color-error);
+  color: var(--color-error);
 }
 
 /* 關於區塊 */

@@ -86,6 +86,26 @@ describe('SettingsPage', () => {
     expect(localStorage.getItem('practice-pool-enabled')).toBe('0');
   });
 
+  // 色覺辨認模式即時預覽 — 讓使用者切換當下就看到回饋色變化
+  describe('色覺辨認模式預覽', () => {
+    it('顯示正確/錯誤回饋色預覽 chip', () => {
+      renderSettings();
+      const preview = screen.getByTestId('cvd-preview');
+      expect(preview).toBeInTheDocument();
+      expect(preview).toHaveTextContent('正確');
+      expect(preview).toHaveTextContent('錯誤');
+    });
+
+    it('切換模式會套用 data-cvd-mode 到 documentElement（預覽色即時生效）', () => {
+      renderSettings();
+      const select = screen.getByLabelText('色覺辨認模式');
+      fireEvent.change(select, { target: { value: 'deuteranopia' } });
+      expect(document.documentElement.getAttribute('data-cvd-mode')).toBe(
+        'deuteranopia'
+      );
+    });
+  });
+
   // 清除作答統計（Refs #64）— state-driven dialog，取代 window.confirm
   describe('清除作答統計', () => {
     const STATS_KEY = 'ipas-question-stats';

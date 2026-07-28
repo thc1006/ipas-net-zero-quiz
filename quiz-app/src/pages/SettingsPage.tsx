@@ -142,27 +142,44 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
           </label>
         </div>
 
-        <div className="setting-item">
-          <div className="setting-info">
-            <span className="material-icons">visibility</span>
-            <div>
-              <p className="setting-title">色覺辨認模式</p>
-              <p className="setting-desc">針對色覺辨認障礙調整配色</p>
+        <div className="setting-item setting-item--stack">
+          <div className="setting-item__row">
+            <div className="setting-info">
+              <span className="material-icons">visibility</span>
+              <div>
+                <p className="setting-title">色覺辨認模式</p>
+                <p className="setting-desc">針對色覺辨認障礙調整配色</p>
+              </div>
             </div>
+            <select
+              aria-label="色覺辨認模式"
+              value={settings.cvdMode}
+              onChange={(e) =>
+                setCvdMode(
+                  e.target.value as 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia'
+                )
+              }
+            >
+              <option value="none">無</option>
+              <option value="protanopia">紅色盲 (Protanopia)</option>
+              <option value="deuteranopia">綠色盲 (Deuteranopia)</option>
+              <option value="tritanopia">藍色盲 (Tritanopia)</option>
+            </select>
           </div>
-          <select
-            value={settings.cvdMode}
-            onChange={(e) =>
-              setCvdMode(
-                e.target.value as 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia'
-              )
-            }
-          >
-            <option value="none">無</option>
-            <option value="protanopia">紅色盲 (Protanopia)</option>
-            <option value="deuteranopia">綠色盲 (Deuteranopia)</option>
-            <option value="tritanopia">藍色盲 (Tritanopia)</option>
-          </select>
+          {/* 即時預覽：作答對/錯的回饋色會隨模式即時換色（chip 直接吃 --color-success/
+              --color-error，而 CVD 模式覆寫的正是這兩個變數）—— 讓使用者切換當下就看到效果。
+              附 icon + 文字，不靠顏色單一管道（符合無障礙本意）。 */}
+          <div className="cvd-preview" data-testid="cvd-preview">
+            <span className="cvd-preview__label">作答回饋色預覽</span>
+            <span className="cvd-preview__chip cvd-preview__chip--correct">
+              <span className="material-icons" aria-hidden="true">check_circle</span>
+              正確
+            </span>
+            <span className="cvd-preview__chip cvd-preview__chip--incorrect">
+              <span className="material-icons" aria-hidden="true">cancel</span>
+              錯誤
+            </span>
+          </div>
         </div>
       </section>
 
