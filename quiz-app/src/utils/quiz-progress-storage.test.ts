@@ -309,6 +309,28 @@ describe('quiz-progress-storage', () => {
       expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
     });
 
+    // #107 review G3 補強：options 陣列的元素也要有 key/text，否則 QuestionCard 對 null 取
+    // .text/.key 一樣 crash（QuestionCard.tsx: options.map(o => o.text)、o.text.startsWith）。
+    it('題目 options 元素缺 key/text（如 [null]）→ 放棄 resume（回 null 並清掉）', () => {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 2,
+          savedAt: 0,
+          state: {
+            isActive: true,
+            questions: [{ id: 'x', stem: 's', options: [null] }],
+            currentIndex: 0,
+            answers: [],
+            startTime: 123,
+            config: fakeConfig,
+          },
+        })
+      );
+      expect(loadProgress()).toBeNull();
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
+    });
+
     // #107 review G4：currentIndex 必須是整數，否則 questions[2.5]=undefined → 卡「載入中」。
     it('currentIndex 非整數（0.5）→ 擋下（回 null 並清掉）', () => {
       const realQ = allQuestions[0];

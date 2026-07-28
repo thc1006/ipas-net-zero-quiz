@@ -78,10 +78,16 @@ function minifyQuestion(q: QuizQuestion): StoredQuestion {
 function isPlausibleQuestion(q: unknown): q is QuizQuestion {
   if (!q || typeof q !== 'object') return false;
   const x = q as Partial<QuizQuestion>;
-  return (
-    typeof x.id === 'string' &&
-    typeof x.stem === 'string' &&
-    Array.isArray(x.options)
+  if (typeof x.id !== 'string' || typeof x.stem !== 'string') return false;
+  // options 不只要是陣列，每個元素也要有 key/text 字串 —— QuestionCard 會 o.text.startsWith、
+  // o.key，遇 null 或缺欄位的選項一樣 crash。這是「防 crash」的最小完整集，非語意驗證。
+  if (!Array.isArray(x.options)) return false;
+  return (x.options as unknown[]).every(
+    (o) =>
+      !!o &&
+      typeof o === 'object' &&
+      typeof (o as { key?: unknown }).key === 'string' &&
+      typeof (o as { text?: unknown }).text === 'string'
   );
 }
 
