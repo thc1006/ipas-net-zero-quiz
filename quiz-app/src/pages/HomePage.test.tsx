@@ -339,6 +339,10 @@ describe('HomePage', () => {
   });
 
   // === Resume hint（Refs #71）===
+  // 註：questions 佔位需為「合理 shape」的物件（含 id/stem/options）—— loadProgress
+  // （#106 重建）會拒絕含 null/垃圾/缺欄位的 payload（避免 resume 時 crash）。
+  // 這些 fixture 寫在 legacy v1 key 上，順帶驗證 v2 loader 對舊 key 的回退讀取；
+  // hint 只讀 questions.length / answers.length，佔位內容不影響斷言。
 
   it('localStorage 無進度時不顯示 resume hint', () => {
     render(<HomePage onStartQuiz={() => {}} onResumeQuiz={() => {}} />);
@@ -353,7 +357,7 @@ describe('HomePage', () => {
         savedAt: Date.now() - 5 * 60_000, // 5 分鐘前
         state: {
           isActive: true,
-          questions: new Array(20).fill(null),
+          questions: new Array(20).fill({ id: 'x', stem: '題', options: [] }),
           currentIndex: 7,
           answers: new Array(7).fill({ questionId: 'x' }),
           startTime: Date.now(),
@@ -377,7 +381,7 @@ describe('HomePage', () => {
         savedAt: Date.now(),
         state: {
           isActive: true,
-          questions: new Array(10).fill(null),
+          questions: new Array(10).fill({ id: 'x', stem: '題', options: [] }),
           currentIndex: 3,
           answers: new Array(3).fill({ questionId: 'x' }),
           startTime: Date.now(),
@@ -399,7 +403,7 @@ describe('HomePage', () => {
         savedAt: Date.now(),
         state: {
           isActive: true,
-          questions: new Array(5).fill(null),
+          questions: new Array(5).fill({ id: 'x', stem: '題', options: [] }),
           currentIndex: 1,
           answers: [],
           startTime: Date.now(),

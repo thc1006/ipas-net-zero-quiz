@@ -28,7 +28,7 @@ import {
   FIXTURE_NULL_ANSWER_ID,
 } from '../utils/__fixtures__/practice-pool-fixture';
 import { loadProgress } from '../utils/quiz-progress-storage';
-import type { QuizConfig } from '../types/quiz';
+import type { QuizConfig, QuizResult } from '../types/quiz';
 
 // test-setup 的 localStorage 是純 vi.fn() stub（不真的存），所以 saveProgress→
 // resumeQuiz 無法 round-trip。要測「續作舊進度還原一份含無答案題的 quiz」這條
@@ -211,6 +211,69 @@ describe('無標準答案的題目（answer=null + ambiguous）絕不送到使�
       });
       expect(ok).toBe(false);
       expect(result.current.isActive).toBe(false); // 沒 resume，維持 idle
+    });
+
+    // #106 split-brain 對帳：最小化持久化用現行題庫重建題目；若標準答案在保存後被更正，
+    // 舊紀錄的 correctAnswer 會與現行 question.answer 不符 → 丟棄該筆，讓該題以未作答呈現，
+    // 避免「畫面回饋（現行答案）與計分（舊紀錄）分裂」。
+    it('保存後標準答案被更正 → 與現行不符的舊紀錄被對帳丟棄，該題回未作答', () => {
+      const staleAnswer = ansBase.answer === 'A' ? 'B' : 'A'; // 保證 !== 現行 answer
+      const { result, ok } = resume({
+        isActive: true,
+        questions: [mkAns('sa-A'), mkAns('sa-B')],
+        currentIndex: 0,
+        answers: [
+          {
+            questionId: 'sa-A',
+            selectedAnswer: 'A',
+            correctAnswer: staleAnswer, // 模擬答案已更正：與 sa-A 現行 answer 不一致
+            isCorrect: true,
+            timeSpent: 1,
+            timestamp: Date.now(),
+            sourceCategory: 'main_bank',
+          },
+        ],
+        startTime: Date.now(),
+        config: baseConfig,
+      });
+      expect(ok).toBe(true);
+      // 兩題都在（非無答案題），但 sa-A 的過期紀錄被丟棄 → 該題未作答
+      expect(result.current.questions.map((q) => q.id)).toEqual(['sa-A', 'sa-B']);
+      expect(result.current.progress.answered).toBe(0);
+
+      // 端到端 refute review 的「畫面顯示錯、卻得 100 分」：完成測驗時，過期題計為未作答
+      // （skipped），不是答對 —— 分數為 0、correctCount 0，而非 100。
+      let fin: QuizResult | null = null;
+      act(() => {
+        fin = result.current.finishQuiz();
+      });
+      const f = fin as unknown as QuizResult;
+      expect(f.correctCount).toBe(0);
+      expect(f.score).toBe(0);
+      expect(f.skippedCount).toBe(2);
+    });
+
+    it('保存後標準答案未變 → 紀錄照常保留（對帳不誤丟）', () => {
+      const { result, ok } = resume({
+        isActive: true,
+        questions: [mkAns('sa-A'), mkAns('sa-B')],
+        currentIndex: 0,
+        answers: [
+          {
+            questionId: 'sa-A',
+            selectedAnswer: ansBase.answer,
+            correctAnswer: ansBase.answer, // 與現行一致
+            isCorrect: true,
+            timeSpent: 1,
+            timestamp: Date.now(),
+            sourceCategory: 'main_bank',
+          },
+        ],
+        startTime: Date.now(),
+        config: baseConfig,
+      });
+      expect(ok).toBe(true);
+      expect(result.current.progress.answered).toBe(1); // 紀錄保留
     });
   });
 });

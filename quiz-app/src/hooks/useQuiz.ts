@@ -336,14 +336,30 @@ export function useQuiz() {
       clearProgress();
       return false;
     }
-    if (answerable.length === s.questions.length) {
-      setState(s); // 沒有無答案題 → 原樣還原（常態、快路徑）
+    // #106 對帳：最小化持久化在 resume 時用**現行題庫**重建題目。若某題的標準答案在保存後
+    // 被更正（如 gist[340] B→C），舊 answers 紀錄的 correctAnswer 會與重建後的現行
+    // question.answer 不一致 —— 沿用會造成分裂：畫面回饋與 finishQuiz 依現行答案，該筆紀錄卻
+    // 凍在舊答案。策略：丟棄該筆紀錄，讓該題以未作答呈現，使用者依現行內容重答（重答走
+    // submitAnswer 會依現行答案重新計分）。只比得到「標準答案字母」—— 選項文字若在答案字母
+    // 不變下被改寫，紀錄仍相容（顯示自動更新為現行），無法也無需從紀錄偵測（未存舊選項）。
+    const answerById = new Map(answerable.map((q) => [q.id, q]));
+    const reconciledAnswers = s.answers.filter((a) => {
+      const q = answerById.get(a.questionId);
+      return !!q && a.correctAnswer === q.answer;
+    });
+
+    const nothingDropped =
+      answerable.length === s.questions.length &&
+      reconciledAnswers.length === s.answers.length;
+
+    if (nothingDropped) {
+      setState(s); // 常態快路徑：題目與答案紀錄都無變動
     } else {
-      // 有題被濾掉 → 重新錨定：currentIndex 指回原本正在作答的那一題（若它還在），
-      // 否則往前收斂；answers 只保留仍存在的題，避免 finishQuiz 的 skippedCount 算錯。
+      // 有題被濾掉（無答案題）或有紀錄被對帳丟棄（答案已更正）→ 重新錨定：currentIndex
+      // 指回原本正在作答的那一題（若它還在），否則往前收斂；answers 用對帳後的結果，
+      // 避免 finishQuiz 的 skippedCount 與畫面回饋算錯。
       const curId = s.questions[s.currentIndex]?.id;
       const survivedIdx = answerable.findIndex((q) => q.id === curId);
-      const survivingIds = new Set(answerable.map((q) => q.id));
       setState({
         ...s,
         questions: answerable,
@@ -351,7 +367,7 @@ export function useQuiz() {
           survivedIdx >= 0
             ? survivedIdx
             : Math.min(s.currentIndex, answerable.length - 1),
-        answers: s.answers.filter((a) => survivingIds.has(a.questionId)),
+        answers: reconciledAnswers,
       });
     }
     setQuestionStartTime(Date.now());

@@ -391,7 +391,7 @@ describe('useQuiz Hook', () => {
   // === resumeQuiz（Refs #71）===
   // 此區需要真實 localStorage 行為（test-setup mock 會讓 getItem 回 undefined）
   describe('resumeQuiz', () => {
-    const STORAGE_KEY = 'ipas-quiz-in-progress';
+    const STORAGE_KEY = 'ipas-quiz-in-progress-v2';
 
     beforeEach(() => {
       // 同 quiz-progress-storage.test.ts 的 real localStorage 安裝
