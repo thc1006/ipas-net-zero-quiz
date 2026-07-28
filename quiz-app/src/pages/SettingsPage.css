@@ -186,13 +186,17 @@
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-xs);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border: 2px solid;
+  /* 左側留白容納實色條 */
+  padding: var(--spacing-xs) var(--spacing-sm) var(--spacing-xs) 10px;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
   font-weight: 500;
-  transition: color var(--transition-fast), border-color var(--transition-fast),
-    background-color var(--transition-fast);
+  /* 文字與 icon 用可讀前景（達 WCAG AA）。語意色改由「背景 tint + 左側實色條」表現，
+     切換 CVD 模式時色條與底色即時換色。避免原本「同 hue 彩字疊 12% 同色底」的低對比
+     （實測 16 組中 14 組 < 4.5:1）；且 text-primary 會被高對比模式覆寫，一併修好高對比路徑。 */
+  color: var(--color-text-primary);
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .cvd-preview__chip .material-icons {
@@ -201,14 +205,12 @@
 
 .cvd-preview__chip--correct {
   background: var(--color-success-bg);
-  border-color: var(--color-success);
-  color: var(--color-success);
+  box-shadow: inset 4px 0 0 var(--color-success);
 }
 
 .cvd-preview__chip--incorrect {
   background: var(--color-error-bg);
-  border-color: var(--color-error);
-  color: var(--color-error);
+  box-shadow: inset 4px 0 0 var(--color-error);
 }
 
 /* 關於區塊 */

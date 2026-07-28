@@ -170,6 +170,36 @@ test.describe('無障礙功能', () => {
     const radios = page.getByRole('radio');
     await expect(radios).toHaveCount(4);
   });
+
+  // 色覺辨認模式：切換後語意色 token 與預覽 chip 的實色條要真的換色（jsdom 算不出 CSS 變數，
+  // 只有真瀏覽器測得到）。守住「切了沒反應」這個原始痛點的回歸。
+  test('色覺辨認模式切換即時改變回饋語意色', async ({ page }) => {
+    await gotoHome(page);
+    await page.getByRole('button', { name: '開啟設定' }).click();
+    const cvdSelect = page.getByLabel('色覺辨認模式');
+    await expect(cvdSelect).toBeVisible();
+
+    const successVar = () =>
+      page.evaluate(() =>
+        getComputedStyle(document.documentElement)
+          .getPropertyValue('--color-success')
+          .trim()
+          .toLowerCase()
+      );
+    const correctBar = () =>
+      page
+        .locator('.cvd-preview__chip--correct')
+        .evaluate((el) => getComputedStyle(el).boxShadow);
+
+    // none：綠 #4caf50 / rgb(76, 175, 80)
+    await expect.poll(successVar).toBe('#4caf50');
+    await expect.poll(correctBar).toContain('76, 175, 80');
+
+    // 切綠色盲 → 藍 #0288d1 / rgb(2, 136, 209)（poll 容忍 style recalc 的一拍延遲）
+    await cvdSelect.selectOption('deuteranopia');
+    await expect.poll(successVar).toBe('#0288d1');
+    await expect.poll(correctBar).toContain('2, 136, 209');
+  });
 });
 
 test.describe('響應式設計', () => {
