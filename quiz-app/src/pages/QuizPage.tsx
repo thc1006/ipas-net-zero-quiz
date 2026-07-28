@@ -45,21 +45,27 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
 
       setSelectedAnswer(answer);
 
+      // 一律在「選擇當下」就記錄作答 —— 兩種模式皆同（submitAnswer 依 questionId 去重，
+      // 重選會覆蓋而非追加）。
+      //
+      // 過去只有 showAnswerImmediately（練習）模式在此記錄；考試模式延到 handleNext 才
+      // submitAnswer，而**最後一題**的 handleNext 是「submitAnswer（非同步 setState）後**立刻**
+      // onFinish」—— finishQuiz 讀到的是還沒含最後一筆的舊 state closure，最後一題被吞掉，
+      // 計分永遠少一題（回報：正確 30＋錯誤 19＝49，總題數 50）。
+      // 改成選擇即記錄，該筆 setState 早在使用者按「完成測驗」前的另一個 render 就已 flush，
+      // 徹底消除這個競態。
+      submitAnswer(answer);
+
       if (config?.showAnswerImmediately) {
-        submitAnswer(answer);
         setHasAnswered(true);
       }
     },
     [hasAnswered, config?.showAnswerImmediately, submitAnswer]
   );
 
-  // 下一題
+  // 下一題（作答已於 handleSelectAnswer 當下記錄，這裡不再 submitAnswer，
+  // 以免最後一題「submit 後立刻 finish」讀到舊 state）
   const handleNext = useCallback(() => {
-    if (!config?.showAnswerImmediately && !hasAnswered) {
-      // 考試模式：提交當前答案
-      submitAnswer(selectedAnswer);
-    }
-
     if (isLastQuestion) {
       onFinish();
     } else {
@@ -67,15 +73,7 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
       setSelectedAnswer(null);
       setHasAnswered(false);
     }
-  }, [
-    config?.showAnswerImmediately,
-    hasAnswered,
-    isLastQuestion,
-    submitAnswer,
-    selectedAnswer,
-    onFinish,
-    nextQuestion,
-  ]);
+  }, [isLastQuestion, onFinish, nextQuestion]);
 
   // 上一題
   const handlePrev = useCallback(() => {

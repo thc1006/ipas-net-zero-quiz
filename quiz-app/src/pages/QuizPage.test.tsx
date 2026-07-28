@@ -140,3 +140,52 @@ describe('QuizPage — abort flow (#71)', () => {
     expect(screen.queryByRole('dialog')).not.toBeNull();
   });
 });
+
+// 計分競態修正（回報：正確 30＋錯誤 19＝49，總題數 50 —— 少算一題）
+//
+// 根因：考試模式（showAnswerImmediately=false）原本把 submitAnswer 延到 handleNext 才呼叫，
+// 而「最後一題」的 handleNext 是「submitAnswer（非同步 setState）→ 立刻 onFinish→finishQuiz」，
+// finishQuiz 讀到的是還沒含最後一筆的舊 state closure → 最後一題被吞掉。
+// 修正：兩種模式都改成「選擇答案當下」就 submitAnswer，該 setState 早在按「完成測驗」前的
+// 另一個 render 就 flush，徹底消除競態。這兩條測試把「選擇即記錄」與「完成不再重複 submit」釘住。
+describe('QuizPage — 計分競態修正（考試模式選擇答案即記錄）', () => {
+  const examConfig = {
+    mode: 'exam' as const,
+    subject: 'all' as const,
+    questionCount: 3,
+    shuffleQuestions: false,
+    showAnswerImmediately: false,
+  };
+
+  it('考試模式：點選選項當下即呼叫 submitAnswer（不再延到 handleNext）', () => {
+    const submitAnswer = vi.fn();
+    render(
+      <QuizPage
+        quiz={makeQuizMock({ submitAnswer, config: examConfig })}
+        onFinish={vi.fn()}
+        onAbort={vi.fn()}
+      />
+    );
+    fireEvent.click(screen.getByRole('radio', { name: 'A: 選項 A' }));
+    expect(submitAnswer).toHaveBeenCalledWith('A');
+  });
+
+  it('考試模式最後一題：submitAnswer 已於選擇時呼叫；「完成測驗」只 onFinish、不再 submit', () => {
+    const submitAnswer = vi.fn();
+    const onFinish = vi.fn();
+    render(
+      <QuizPage
+        quiz={makeQuizMock({ submitAnswer, isLastQuestion: true, config: examConfig })}
+        onFinish={onFinish}
+        onAbort={vi.fn()}
+      />
+    );
+    fireEvent.click(screen.getByRole('radio', { name: 'A: 選項 A' }));
+    expect(submitAnswer).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByRole('button', { name: /完成測驗/ }));
+    expect(onFinish).toHaveBeenCalledOnce();
+    // 關鍵：完成測驗沒有再 submit 一次（舊碼正是在此 submitAnswer→onFinish 造成競態）
+    expect(submitAnswer).toHaveBeenCalledTimes(1);
+  });
+});

@@ -25,7 +25,7 @@ interface ResultPageProps {
 }
 
 export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
-  const { score, correctCount, wrongCount, totalAnswerable, answers, totalTime } =
+  const { score, correctCount, wrongCount, totalAnswerable, skippedCount, answers, totalTime } =
     result;
 
   // AI 解析狀態（key 為 questionId）
@@ -219,6 +219,13 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
           <span className="stat-value">{wrongCount}</span>
           <span className="stat-label">答錯</span>
         </div>
+        {skippedCount > 0 && (
+          <div className="stat-item skipped">
+            <span className="material-icons">remove_circle_outline</span>
+            <span className="stat-value">{skippedCount}</span>
+            <span className="stat-label">未作答</span>
+          </div>
+        )}
         <div className="stat-item total">
           <span className="material-icons">quiz</span>
           <span className="stat-value">{totalAnswerable}</span>
