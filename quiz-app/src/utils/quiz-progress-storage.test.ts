@@ -386,6 +386,20 @@ describe('quiz-progress-storage', () => {
     it('無資料時 idempotent 不 throw', () => {
       expect(() => clearProgress()).not.toThrow();
     });
+
+    // removeItem 在 quota/private mode 下可能 throw；removeStored 兩個 key 各自吞掉例外。
+    it('removeItem throw 時 clearProgress 不 throw', () => {
+      const ls = window.localStorage;
+      const origRemove = ls.removeItem;
+      ls.removeItem = () => {
+        throw new Error('quota');
+      };
+      try {
+        expect(() => clearProgress()).not.toThrow();
+      } finally {
+        ls.removeItem = origRemove;
+      }
+    });
   });
 
   describe('formatRelativeTime', () => {
