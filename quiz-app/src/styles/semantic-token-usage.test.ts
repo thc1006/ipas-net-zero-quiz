@@ -17,9 +17,9 @@ function collectCss(dir: string, out: string[] = []): string[] {
 }
 
 describe('語意 token 用法掃描（a11y #109）', () => {
-  it('color/border 屬性不得使用裸 --color-success/error（必須用 --color-*-fg）', () => {
+  it('color/border 屬性不得使用裸 --color-success/error/info/warning（必須用 --color-*-fg）', () => {
     // 裸 token：var(--color-success) 或 var(--color-success, fallback)，但**不含** -fg/-solid/-bg
-    const bareToken = /var\(\s*--color-(?:success|error)\s*(?:,|\))/;
+    const bareToken = /var\(\s*--color-(?:success|error|info|warning)\s*(?:,|\))/;
     const fgBorderProp =
       /^\s*(?:color|border|border-color|border-top|border-right|border-bottom|border-left|border-left-color|border-right-color|border-top-color|border-bottom-color|outline|outline-color)\s*:/;
     const violations: string[] = [];

@@ -11,13 +11,13 @@
 
 .source-banner--mock {
   background: var(--color-info-bg);
-  border-left-color: var(--color-info);
+  border-left-color: var(--color-info-fg);
   color: var(--color-text-primary);
 }
 
 .source-banner--ai {
   background: var(--color-warning-bg);
-  border-left-color: var(--color-warning);
+  border-left-color: var(--color-warning-fg);
   color: var(--color-text-primary);
 }
 
@@ -32,8 +32,8 @@
   margin-top: 2px;
 }
 
-.source-banner--mock .source-banner__icon { color: var(--color-info); }
-.source-banner--ai .source-banner__icon { color: var(--color-warning); }
+.source-banner--mock .source-banner__icon { color: var(--color-info-fg); }
+.source-banner--ai .source-banner__icon { color: var(--color-warning-fg); }
 .source-banner--flagged .source-banner__icon { color: var(--color-error-fg); }
 
 .source-banner__body {

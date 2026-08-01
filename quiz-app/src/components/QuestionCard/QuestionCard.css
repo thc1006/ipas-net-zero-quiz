@@ -218,7 +218,7 @@
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-warning-bg);
   border-radius: var(--radius-sm);
-  color: var(--color-warning);
+  color: var(--color-warning-fg);
   font-size: var(--font-size-sm);
 }
 

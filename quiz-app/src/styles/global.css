@@ -247,7 +247,7 @@ textarea {
 
 .badge-warning {
   background: var(--color-warning-bg);
-  color: var(--color-warning);
+  color: var(--color-warning-fg);
 }
 
 .badge-error {
@@ -257,7 +257,7 @@ textarea {
 
 .badge-info {
   background: var(--color-info-bg);
-  color: var(--color-info);
+  color: var(--color-info-fg);
 }
 
 /* 動畫 */

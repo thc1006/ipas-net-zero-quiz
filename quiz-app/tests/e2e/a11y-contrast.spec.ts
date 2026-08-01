@@ -87,6 +87,16 @@ test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 
             errorBg: read('--color-error-bg'),
             successScore: read('--color-success-score'),
             errorScore: read('--color-error-score'),
+            infoFg: read('--color-info-fg'),
+            warningFg: read('--color-warning-fg'),
+            infoSolid: read('--color-info-solid'),
+            warningSolid: read('--color-warning-solid'),
+            onInfo: read('--color-on-info'),
+            onWarning: read('--color-on-warning'),
+            infoBg: read('--color-info-bg'),
+            warningBg: read('--color-warning-bg'),
+            infoScore: read('--color-info-score'),
+            warningScore: read('--color-warning-score'),
           });
         }
       }
@@ -103,56 +113,40 @@ test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 
     const surf = parseColor(c.surface, `${c.mode} surface`);
     const surfV = parseColor(c.surfaceVariant, `${c.mode} surface-variant`);
     const bg = parseColor(c.background, `${c.mode} background`);
-    const sFg = parseColor(c.successFg, `${c.mode} success-fg`);
-    const eFg = parseColor(c.errorFg, `${c.mode} error-fg`);
-    const sSol = parseColor(c.successSolid, `${c.mode} success-solid`);
-    const eSol = parseColor(c.errorSolid, `${c.mode} error-solid`);
-    const onS = parseColor(c.onSuccess, `${c.mode} on-success`);
-    const onE = parseColor(c.onError, `${c.mode} on-error`);
-    const sTint = alphaOver(c.successBg, surf, `${c.mode} success-bg`);
-    const eTint = alphaOver(c.errorBg, surf, `${c.mode} error-bg`);
-    // tint 也可能疊在「page background」上（如首頁 .badge-success 的 ancestor 皆透明），
-    // 那比疊在白 surface 上對比更低 —— 一定要驗這一種，否則會像上一版誤綠。
-    const sTintPage = alphaOver(c.successBg, bg, `${c.mode} success-bg/page`);
-    const eTintPage = alphaOver(c.errorBg, bg, `${c.mode} error-bg/page`);
-    const sScore = gradientStops(c.successScore, `${c.mode} success-score`);
-    const eScore = gradientStops(c.errorScore, `${c.mode} error-score`);
 
-    // -fg 文字放在所有可能背景上 >= 4.5:1
-    const successBgs: [number[], string][] = [
-      [surf, 'surface'],
-      [surfV, 'surface-variant'],
-      [bg, 'page-background'],
-      [sTint, 'success-tint'],
-      [sTintPage, 'success-tint-over-page'],
-      ...sScore.map((g, i): [number[], string] => [g, `success-score#${i}`]),
+    // 四個語意角色一起驗（success/error 受 CVD 影響；info/warning 不受、值在各 CVD 相同、
+    // 無害地重複驗）。每個角色的 -fg 文字要在 surface、surface-variant、page-background、
+    // tint 疊 surface、tint 疊 page-background、以及 score 漸層端點上都 >= 4.5:1；
+    // on-color 白字放在 -solid 上也 >= 4.5:1。
+    const roles = [
+      { name: 'success', fg: c.successFg, solid: c.successSolid, on: c.onSuccess, tintBg: c.successBg, score: c.successScore },
+      { name: 'error', fg: c.errorFg, solid: c.errorSolid, on: c.onError, tintBg: c.errorBg, score: c.errorScore },
+      { name: 'info', fg: c.infoFg, solid: c.infoSolid, on: c.onInfo, tintBg: c.infoBg, score: c.infoScore },
+      { name: 'warning', fg: c.warningFg, solid: c.warningSolid, on: c.onWarning, tintBg: c.warningBg, score: c.warningScore },
     ];
-    for (const [b, name] of successBgs) {
+    for (const r of roles) {
+      const fg = parseColor(r.fg, `${c.mode} ${r.name}-fg`);
+      const sol = parseColor(r.solid, `${c.mode} ${r.name}-solid`);
+      const on = parseColor(r.on, `${c.mode} on-${r.name}`);
+      const bgs: [number[], string][] = [
+        [surf, 'surface'],
+        [surfV, 'surface-variant'],
+        [bg, 'page-background'],
+        [alphaOver(r.tintBg, surf, `${c.mode} ${r.name}-bg`), 'tint'],
+        [alphaOver(r.tintBg, bg, `${c.mode} ${r.name}-bg/page`), 'tint-over-page'],
+        ...gradientStops(r.score, `${c.mode} ${r.name}-score`).map(
+          (g, i): [number[], string] => [g, `score#${i}`]
+        ),
+      ];
+      for (const [b, name] of bgs) {
+        expect
+          .soft(contrast(fg, b), `${c.mode} ${r.name}-fg on ${name}`)
+          .toBeGreaterThanOrEqual(4.5);
+      }
       expect
-        .soft(contrast(sFg, b), `${c.mode} success-fg on ${name}`)
+        .soft(contrast(on, sol), `${c.mode} on-${r.name} on ${r.name}-solid`)
         .toBeGreaterThanOrEqual(4.5);
     }
-    const errorBgs: [number[], string][] = [
-      [surf, 'surface'],
-      [surfV, 'surface-variant'],
-      [bg, 'page-background'],
-      [eTint, 'error-tint'],
-      [eTintPage, 'error-tint-over-page'],
-      ...eScore.map((g, i): [number[], string] => [g, `error-score#${i}`]),
-    ];
-    for (const [b, name] of errorBgs) {
-      expect
-        .soft(contrast(eFg, b), `${c.mode} error-fg on ${name}`)
-        .toBeGreaterThanOrEqual(4.5);
-    }
-
-    // 徽章/標頭：on-color 白字放在 -solid 實填上 >= 4.5:1
-    expect
-      .soft(contrast(onS, sSol), `${c.mode} on-success on success-solid`)
-      .toBeGreaterThanOrEqual(4.5);
-    expect
-      .soft(contrast(onE, eSol), `${c.mode} on-error on error-solid`)
-      .toBeGreaterThanOrEqual(4.5);
   }
 });
 

@@ -56,6 +56,17 @@
   --color-info: #2196f3;
   --color-info-bg: rgba(33, 150, 243, 0.12);
 
+  /* info / warning 的 role-based token（a11y #111，比照 success/error）。info/warning 不受 CVD
+     模式重映，故只有 light/dark、無 CVD 變體。值已用 WCAG 對「真實 fg/bg 對」驗過。 */
+  --color-info-fg: #0d47a1;
+  --color-info-solid: #1565c0;
+  --color-on-info: #ffffff;
+  --color-info-score: linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 100%);
+  --color-warning-fg: #8f5700;
+  --color-warning-solid: #bf5000;
+  --color-on-warning: #ffffff;
+  --color-warning-score: linear-gradient(135deg, #fff8e1 0%, #fffde7 100%);
+
   /* 中性色 */
   --neutral-0: #000000;
   --neutral-10: #1c1b1f;
@@ -139,6 +150,10 @@
   /* 分數卡漸層換深底 —— 原本固定淺底會與深色主題的亮 -fg 撞成 <2:1 低對比 */
   --color-success-score: linear-gradient(135deg, #12281a 0%, #16301f 100%);
   --color-error-score: linear-gradient(135deg, #2a1416 0%, #301a1e 100%);
+  --color-info-fg: #64b5f6;
+  --color-warning-fg: #ffb74d;
+  --color-info-score: linear-gradient(135deg, #0d2137 0%, #12263a 100%);
+  --color-warning-score: linear-gradient(135deg, #2a2010 0%, #302615 100%);
 
   --color-background: #121212;
   --color-surface: #1e1e1e;
