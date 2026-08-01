@@ -23,17 +23,28 @@ function contrast(a: number[], b: number[]): number {
   const lb = relLum(b);
   return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
 }
-/** fail-closed：缺值或無法解析直接丟錯，不回黑色 */
+/** fail-closed：缺值/無法解析/**帶 alpha（非不透明）**一律丟錯 —— 不把 rgba(0,0,0,.01)
+ * 靜默當成不透明黑、也不把含 alpha 的 hex 當不透明。本函式只用於「應為不透明」的色
+ * （surface/fg/solid/on/gradient stop）；帶 alpha 的 tint 走 alphaOver 做合成。 */
 function parseColor(s: string, label: string): number[] {
   const t = (s ?? '').trim();
   if (!t) throw new Error(`Missing color token: ${label}`);
-  if (/^#[0-9a-fA-F]{6}$/.test(t)) {
-    return [1, 3, 5].map((i) => parseInt(t.slice(i, i + 2), 16));
+  const hex = t.match(/^#([0-9a-fA-F]+)$/);
+  if (hex) {
+    const h = hex[1];
+    if (h.length === 6) return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+    if (h.length === 3) return [0, 1, 2].map((i) => parseInt(h[i] + h[i], 16));
+    // 4 / 8 碼 hex 含 alpha → fail-closed
+    throw new Error(`Non-opaque or invalid hex for ${label}: "${t}"`);
   }
-  const m = t.match(/rgba?\(([^)]+)\)/);
+  const m = t.match(/^rgba?\(\s*([^)]+)\)$/i);
   if (m) {
     const p = m[1].split(',').map((x) => parseFloat(x));
     if (p.length >= 3 && p.slice(0, 3).every((n) => Number.isFinite(n))) {
+      const a = p.length >= 4 ? p[3] : 1;
+      if (a !== 1) {
+        throw new Error(`Non-opaque color where opaque expected for ${label}: "${t}"`);
+      }
       return [p[0], p[1], p[2]];
     }
   }
@@ -47,13 +58,47 @@ function alphaOver(rgba: string, bg: number[], label: string): number[] {
   const a = p.length >= 4 ? p[3] : 1;
   return [p[0], p[1], p[2]].map((c, i) => Math.round(a * c + (1 - a) * bg[i]));
 }
-/** 從 gradient 字串抽出所有 hex endpoint */
-function gradientStops(g: string, label: string): number[][] {
-  const hexes = (g ?? '').match(/#[0-9a-fA-F]{6}/g);
-  if (!hexes || hexes.length === 0) {
-    throw new Error(`No color stops in gradient for ${label}: "${g}"`);
+/** 逗號切分但尊重 rgb()/hsl() 內層括號（供 gradient stop 解析） */
+function splitTopLevel(str: string): string[] {
+  const out: string[] = [];
+  let depth = 0;
+  let cur = '';
+  for (const ch of str) {
+    if (ch === '(') depth++;
+    else if (ch === ')') depth--;
+    if (ch === ',' && depth === 0) {
+      out.push(cur);
+      cur = '';
+    } else {
+      cur += ch;
+    }
   }
-  return hexes.map((h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)));
+  if (cur.trim()) out.push(cur);
+  return out;
+}
+
+/** 從 gradient 抽出**所有** color stop（不只 hex）。每個 stop 走 fail-closed parseColor：
+ * 帶 alpha 的 stop 會丟錯而非被忽略；無法解析的 segment（如具名色）也丟錯 —— 符合 fail-closed
+ * 宣稱，不會靜默漏掉某個低對比 stop。第一段若無顏色視為方向（135deg / to right）。 */
+function gradientStops(g: string, label: string): number[][] {
+  const s = (g ?? '').trim();
+  const m = s.match(/^(?:repeating-)?(?:linear|radial|conic)-gradient\(([\s\S]*)\)$/i);
+  if (!m) throw new Error(`Not a gradient for ${label}: "${s}"`);
+  const stops: number[][] = [];
+  for (const seg of splitTopLevel(m[1])) {
+    const t = seg.trim();
+    if (!t) continue;
+    const cm = t.match(/^(#[0-9a-fA-F]{3,8}|(?:rgb|rgba|hsl|hsla)\([^)]*\))/i);
+    if (!cm) {
+      if (stops.length === 0) continue; // 方向段（如 135deg），非顏色
+      throw new Error(`Gradient segment without parseable color for ${label}: "${t}"`);
+    }
+    stops.push(parseColor(cm[1], `${label} stop "${cm[1]}"`));
+  }
+  if (stops.length < 2) {
+    throw new Error(`Expected >= 2 color stops in gradient for ${label}: "${s}"`);
+  }
+  return stops;
 }
 
 test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 WCAG AA（#109）', async ({
