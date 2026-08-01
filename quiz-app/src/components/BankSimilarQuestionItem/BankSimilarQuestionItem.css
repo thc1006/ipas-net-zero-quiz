@@ -40,12 +40,12 @@
 }
 
 .bank-similar-result.ok {
-  color: var(--color-success);
+  color: var(--color-success-fg);
   font-weight: 500;
 }
 
 .bank-similar-result.bad {
-  color: var(--color-error);
+  color: var(--color-error-fg);
   font-weight: 500;
 }
 

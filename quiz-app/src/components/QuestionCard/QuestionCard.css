@@ -137,33 +137,37 @@
 /* 正確答案 */
 .option-item.correct {
   background: var(--color-success-bg);
-  border-color: var(--color-success);
+  border-color: var(--color-success-fg);
   cursor: default;
 }
 
-.option-item.correct .option-key {
-  background: var(--color-success);
-  color: white;
+/* 也涵蓋「使用者選中的那個 key」—— :checked + .option-key 特異性(0,4,1) 比 .correct .option-key
+   (0,3,0) 高，不明確覆寫的話，選中的正解 key 會停在 primary 而非 success solid。 */
+.option-item.correct .option-key,
+.option-item.correct input[type='radio']:checked + .option-key {
+  background: var(--color-success-solid);
+  color: var(--color-on-success);
 }
 
 .option-item.correct .option-icon {
-  color: var(--color-success);
+  color: var(--color-success-fg);
 }
 
 /* 錯誤答案 */
 .option-item.incorrect {
   background: var(--color-error-bg);
-  border-color: var(--color-error);
+  border-color: var(--color-error-fg);
   cursor: default;
 }
 
-.option-item.incorrect .option-key {
-  background: var(--color-error);
-  color: white;
+.option-item.incorrect .option-key,
+.option-item.incorrect input[type='radio']:checked + .option-key {
+  background: var(--color-error-solid);
+  color: var(--color-on-error);
 }
 
 .option-item.incorrect .option-icon {
-  color: var(--color-error);
+  color: var(--color-error-fg);
 }
 
 /* 禁用狀態 */
@@ -313,11 +317,14 @@
   align-items: center;
   gap: var(--spacing-sm);
   padding: var(--spacing-md);
-  color: var(--color-error);
+  color: var(--color-error-fg);
 }
 
 .ai-response.error .ai-response-header {
-  background: var(--color-error);
+  background: var(--color-error-solid);
+  /* 標頭前景在深色主題是近黑（--color-on-primary=#1c1b1f），會跟深紅 solid 撞成低對比；
+     實填底一律用純白 on-color */
+  color: var(--color-on-error);
 }
 
 /* 響應式 */

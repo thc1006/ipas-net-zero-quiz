@@ -22,7 +22,7 @@
 }
 
 .source-banner--flagged {
-  border-left-color: var(--color-error);
+  border-left-color: var(--color-error-fg);
   background: var(--color-error-bg);
 }
 
@@ -34,7 +34,7 @@
 
 .source-banner--mock .source-banner__icon { color: var(--color-info); }
 .source-banner--ai .source-banner__icon { color: var(--color-warning); }
-.source-banner--flagged .source-banner__icon { color: var(--color-error); }
+.source-banner--flagged .source-banner__icon { color: var(--color-error-fg); }
 
 .source-banner__body {
   flex: 1;
@@ -72,7 +72,7 @@
   display: flex;
   gap: var(--spacing-xs);
   font-size: var(--font-size-xs);
-  color: var(--color-error);
+  color: var(--color-error-fg);
   align-items: flex-start;
   line-height: 1.55;
 }

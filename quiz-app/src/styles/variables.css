@@ -36,6 +36,23 @@
   --color-warning-bg: rgba(255, 152, 0, 0.12);
   --color-error: #f44336;
   --color-error-bg: rgba(244, 67, 54, 0.12);
+  /* Role-based semantic tokens（a11y #109）：單一 --color-success/-error 同時當小字、icon、
+     邊界、白字底會有互斥的對比需求；拆成角色專用 token，各自達 WCAG（文字 4.5:1／非文字 3:1）。
+     - -solid：白字安全的深色實填（徽章底）；其上的文字/icon 用 --color-on-success/-error（純白）。
+     - -fg：文字/icon/邊界前景，淺色/深色各自定義（deut 的 fg 比 solid 更深 —— 要在 tint、
+       surface-variant、page-bg、score 漸層上都達 4.5，不能只對純白 surface 驗）。
+     - -score：分數卡漸層（theme-aware，深色主題換深底），讓其上的 -fg 也達標。
+     - -bg（tint）與 base --color-success/-error（裝飾 bar）維持不變。
+     全部值用 WCAG 公式對「真實前景/背景對」跨 light/dark × 4 CVD 驗過（見 a11y-contrast e2e）。 */
+  --color-success-solid: #2e7d32;
+  --color-error-solid: #c62828;
+  /* -fg 比 -solid 更深：要在「tint 疊 page-background(#f5f7fa，非白 surface)」上也達 4.5 */
+  --color-success-fg: #1b5e20;
+  --color-error-fg: #b71c1c;
+  --color-on-success: #ffffff;
+  --color-on-error: #ffffff;
+  --color-success-score: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+  --color-error-score: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
   --color-info: #2196f3;
   --color-info-bg: rgba(33, 150, 243, 0.12);
 
@@ -116,6 +133,13 @@
   --color-primary-light: var(--primary-80);
   --color-on-primary: var(--neutral-10);
 
+  /* 深色表面上的可讀語意前景（亮色）；-solid（徽章底）維持深色，白字仍安全 */
+  --color-success-fg: #81c784;
+  --color-error-fg: #ef9a9a;
+  /* 分數卡漸層換深底 —— 原本固定淺底會與深色主題的亮 -fg 撞成 <2:1 低對比 */
+  --color-success-score: linear-gradient(135deg, #12281a 0%, #16301f 100%);
+  --color-error-score: linear-gradient(135deg, #2a1416 0%, #301a1e 100%);
+
   --color-background: #121212;
   --color-surface: #1e1e1e;
   --color-surface-variant: #2d2d2d;
@@ -156,6 +180,10 @@
   --color-success-bg: rgba(25, 118, 210, 0.12);
   --color-error: #e65100;
   --color-error-bg: rgba(230, 81, 0, 0.12);
+  --color-success-solid: #1565c0;
+  --color-error-solid: #bf360c;
+  --color-success-fg: #1565c0;
+  --color-error-fg: #a83000;
 }
 
 [data-cvd-mode='deuteranopia'] {
@@ -163,6 +191,11 @@
   --color-success-bg: rgba(2, 136, 209, 0.12);
   --color-error: #d84315;
   --color-error-bg: rgba(216, 67, 21, 0.12);
+  --color-success-solid: #0277bd;
+  --color-error-solid: #c73e00;
+  /* fg 比 solid 更深：要在 tint/surface-variant/page-bg/score 漸層上都達 4.5 */
+  --color-success-fg: #01579b;
+  --color-error-fg: #a52a00;
 }
 
 [data-cvd-mode='tritanopia'] {
@@ -170,6 +203,24 @@
   --color-success-bg: rgba(0, 137, 123, 0.12);
   --color-error: #c62828;
   --color-error-bg: rgba(198, 40, 40, 0.12);
+  --color-success-solid: #00695c;
+  --color-error-solid: #b71c1c;
+  --color-success-fg: #00695c;
+  --color-error-fg: #b71c1c;
+}
+
+/* 深色主題 × CVD：-fg 覆寫為深色表面可讀的亮色（-solid 維持深色，徽章白字仍安全） */
+[data-theme='dark'][data-cvd-mode='protanopia'] {
+  --color-success-fg: #64b5f6;
+  --color-error-fg: #ffb74d;
+}
+[data-theme='dark'][data-cvd-mode='deuteranopia'] {
+  --color-success-fg: #4fc3f7;
+  --color-error-fg: #ff8a65;
+}
+[data-theme='dark'][data-cvd-mode='tritanopia'] {
+  --color-success-fg: #4db6ac;
+  --color-error-fg: #ef9a9a;
 }
 
 /* 字體大小偏好 */
