@@ -395,14 +395,15 @@
 }
 
 .btn-small.btn-generate {
-  border-color: var(--accent-50);
-  color: var(--accent-50);
+  /* 原 --accent-50 (#ff9800) 當 12px 文字/邊界僅約 2.16:1；改用 warning role token */
+  border-color: var(--color-warning-fg);
+  color: var(--color-warning-fg);
 }
 
 .btn-small.btn-generate:hover {
-  background: var(--accent-50);
-  color: white;
-  border-color: var(--accent-50);
+  background: var(--color-warning-solid);
+  color: var(--color-on-warning);
+  border-color: var(--color-warning-solid);
 }
 
 .ai-loading-inline {
@@ -489,11 +490,11 @@
 
 /* AI 生成題目專用樣式 */
 .ai-response-inline.generated {
-  border-color: var(--accent-50);
+  border-color: var(--color-warning-fg);
 }
 
 .ai-response-inline.generated .ai-response-header-inline {
-  color: var(--accent-50);
+  color: var(--color-warning-fg);
 }
 
 .generated-content {

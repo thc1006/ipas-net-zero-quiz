@@ -56,7 +56,8 @@
 }
 
 .source-banner__sources {
-  color: var(--color-text-quiet);
+  /* --color-text-quiet 未定義（原本靜默繼承其他色）；用既有的 secondary 文字色 */
+  color: var(--color-text-secondary);
 }
 
 .source-banner__flags {

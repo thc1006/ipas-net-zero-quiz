@@ -52,9 +52,36 @@ function parseDeclarations(css: string): Decl[] {
     const selector = stack.filter((x) => !x.startsWith('@')).join(' ');
     decls.push({ selector, prop, value, line });
   };
+  let str: string | null = null; // 目前所在字串的引號字元（' 或 "）
+  let paren = 0; // 括號深度（url()/rgb() 等）
   for (let i = 0; i < src.length; i++) {
     const ch = src[i];
     if (ch === '\n') line++;
+    // 字串內：一切照字面收集，直到未跳脫的同款引號（含 data-URI 內的 ; { }）
+    if (str !== null) {
+      buf += ch;
+      if (ch === str && src[i - 1] !== '\\') str = null;
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      str = ch;
+      buf += ch;
+      continue;
+    }
+    if (ch === '(') {
+      paren++;
+      buf += ch;
+      continue;
+    }
+    if (ch === ')') {
+      if (paren > 0) paren--;
+      buf += ch;
+      continue;
+    }
+    if (paren > 0) {
+      buf += ch; // 括號內的 ; { } 當字面（未加引號的 data-URI 等）
+      continue;
+    }
     if (ch === '{') {
       stack.push(buf.trim());
       buf = '';
@@ -73,14 +100,23 @@ function parseDeclarations(css: string): Decl[] {
 // 裸 base token：var(--color-success) 或 var(--color-success, fallback)，**不含** -fg/-solid/-bg/-score/-on
 const BARE_BASE = /var\(\s*--color-(?:success|error|info|warning)\s*(?:,|\))/;
 
-// 白名單：唯一允許用裸 base token 的裝飾用途（selector 片段 + 屬性）。其餘一律禁止。
-// 這些是純色塊/色條，其上沒有文字對比需求。
-const ALLOW: { sel: string; prop: string }[] = [
-  { sel: 'pool-histogram__bar', prop: 'background' }, // 抽題分布長條
-  { sel: 'source-breakdown__bar', prop: 'background' }, // 來源占比長條
-  { sel: 'cvd-preview__chip--correct', prop: 'box-shadow' }, // CVD 預覽左側實色條
-  { sel: 'cvd-preview__chip--incorrect', prop: 'box-shadow' },
+// 白名單：唯一允許裸 base token 的裝飾用途，以「檔名 + 精確 selector + 屬性」比對（非 substring）。
+// substring 會誤放行 .pool-histogram__bar-track（含 'bar' 前綴），或同組其他 selector
+// （如 `.pool-histogram__bar, .danger { background: var(--color-success) }` 整組被放行）。
+const ALLOW: { file: string; selector: string; prop: string }[] = [
+  { file: 'PracticePoolHistogram.css', selector: '.pool-histogram__row--main .pool-histogram__bar', prop: 'background' },
+  { file: 'PracticePoolHistogram.css', selector: '.pool-histogram__row--mock .pool-histogram__bar', prop: 'background' },
+  { file: 'PracticePoolHistogram.css', selector: '.pool-histogram__row--ai .pool-histogram__bar', prop: 'background' },
+  { file: 'SourceBreakdown.css', selector: '.source-breakdown__row--main .source-breakdown__bar', prop: 'background' },
+  { file: 'SourceBreakdown.css', selector: '.source-breakdown__row--mock .source-breakdown__bar', prop: 'background' },
+  { file: 'SourceBreakdown.css', selector: '.source-breakdown__row--ai .source-breakdown__bar', prop: 'background' },
+  { file: 'SourceBreakdown.css', selector: '.source-breakdown__row--low .source-breakdown__bar', prop: 'background' },
+  // CVD 預覽左側實色條（#112 仍吃裸 base；#113/#114 會改 -fg 後移除這兩條）
+  { file: 'SettingsPage.css', selector: '.cvd-preview__chip--correct', prop: 'box-shadow' },
+  { file: 'SettingsPage.css', selector: '.cvd-preview__chip--incorrect', prop: 'box-shadow' },
 ];
+
+const normSel = (s: string): string => s.replace(/\s+/g, ' ').trim();
 
 describe('語意 token 用法掃描（a11y #109/#112）', () => {
   it('裸 --color-success/error/info/warning 只能用於白名單裝飾用途，其餘一律禁止', () => {
@@ -90,7 +126,10 @@ describe('語意 token 用法掃描（a11y #109/#112）', () => {
       for (const d of parseDeclarations(readFileSync(file, 'utf8'))) {
         if (!BARE_BASE.test(d.value)) continue;
         const allowed = ALLOW.some(
-          (a) => d.selector.includes(a.sel) && d.prop === a.prop
+          (a) =>
+            rel.endsWith('/' + a.file) &&
+            normSel(d.selector) === a.selector &&
+            d.prop === a.prop
         );
         if (!allowed) {
           violations.push(`${rel}:${d.line}  {${d.selector}} ${d.prop}: ${d.value}`);
