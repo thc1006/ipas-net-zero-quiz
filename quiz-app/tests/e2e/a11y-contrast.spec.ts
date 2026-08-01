@@ -77,10 +77,24 @@ function splitTopLevel(str: string): string[] {
   return out;
 }
 
-/** 從 gradient 抽出**所有** color stop（不只 hex）。每個 stop 走 fail-closed parseColor：
- * 帶 alpha 的 stop 會丟錯而非被忽略；無法解析的 segment（如具名色）也丟錯 —— 符合 fail-closed
- * 宣稱，不會靜默漏掉某個低對比 stop。第一段若無顏色視為方向（135deg / to right）。 */
-function gradientStops(g: string, label: string): number[][] {
+/** gradient 單一 stop → 不透明 rgb：半透明 stop（如衍生分數卡的 tint 端點）疊在 backdrop 上；
+ * 不透明 stop（hex / rgb / rgba a=1）走 fail-closed parseColor。 */
+function resolveStop(tok: string, backdrop: number[], label: string): number[] {
+  const m = tok.match(/^rgba?\(\s*([^)]+)\)$/i);
+  if (m) {
+    const p = m[1].split(',').map((x) => parseFloat(x));
+    const a = p.length >= 4 ? p[3] : 1;
+    if (p.length >= 3 && p.slice(0, 3).every((n) => Number.isFinite(n)) && a !== 1) {
+      return alphaOver(tok, backdrop, label); // 半透明 → 疊底
+    }
+  }
+  return parseColor(tok, label); // 不透明
+}
+
+/** 從 gradient 抽出**所有** color stop（不只 hex）。半透明 stop（衍生分數卡的 tint 端點）疊在
+ * backdrop（分數卡背後的 page-background）上再算對比；無法解析的 segment（如具名色）丟錯 ——
+ * 不靜默漏掉低對比 stop。第一段若無顏色視為方向（135deg / to right）。 */
+function gradientStops(g: string, label: string, backdrop: number[]): number[][] {
   const s = (g ?? '').trim();
   const m = s.match(/^(?:repeating-)?(?:linear|radial|conic)-gradient\(([\s\S]*)\)$/i);
   if (!m) throw new Error(`Not a gradient for ${label}: "${s}"`);
@@ -93,7 +107,7 @@ function gradientStops(g: string, label: string): number[][] {
       if (stops.length === 0) continue; // 方向段（如 135deg），非顏色
       throw new Error(`Gradient segment without parseable color for ${label}: "${t}"`);
     }
-    stops.push(parseColor(cm[1], `${label} stop "${cm[1]}"`));
+    stops.push(resolveStop(cm[1], backdrop, `${label} stop "${cm[1]}"`));
   }
   if (stops.length < 2) {
     throw new Error(`Expected >= 2 color stops in gradient for ${label}: "${s}"`);
@@ -179,7 +193,7 @@ test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 
         [bg, 'page-background'],
         [alphaOver(r.tintBg, surf, `${c.mode} ${r.name}-bg`), 'tint'],
         [alphaOver(r.tintBg, bg, `${c.mode} ${r.name}-bg/page`), 'tint-over-page'],
-        ...gradientStops(r.score, `${c.mode} ${r.name}-score`).map(
+        ...gradientStops(r.score, `${c.mode} ${r.name}-score`, bg).map(
           (g, i): [number[], string] => [g, `score#${i}`]
         ),
       ];

@@ -179,10 +179,11 @@ test.describe('無障礙功能', () => {
     const cvdSelect = page.getByLabel('色覺辨認模式');
     await expect(cvdSelect).toBeVisible();
 
-    const successVar = () =>
+    // 預覽色條改吃 --color-success-fg（與真實選項回饋同源）；-fg 一樣受 CVD remap
+    const successFg = () =>
       page.evaluate(() =>
         getComputedStyle(document.documentElement)
-          .getPropertyValue('--color-success')
+          .getPropertyValue('--color-success-fg')
           .trim()
           .toLowerCase()
       );
@@ -191,14 +192,14 @@ test.describe('無障礙功能', () => {
         .locator('.cvd-preview__chip--correct')
         .evaluate((el) => getComputedStyle(el).boxShadow);
 
-    // none：綠 #4caf50 / rgb(76, 175, 80)
-    await expect.poll(successVar).toBe('#4caf50');
-    await expect.poll(correctBar).toContain('76, 175, 80');
+    // none：-fg #1b5e20 / rgb(27, 94, 32)
+    await expect.poll(successFg).toBe('#1b5e20');
+    await expect.poll(correctBar).toContain('27, 94, 32');
 
-    // 切綠色盲 → 藍 #0288d1 / rgb(2, 136, 209)（poll 容忍 style recalc 的一拍延遲）
+    // 切綠色盲 → -fg #01579b / rgb(1, 87, 155)（poll 容忍 style recalc 的一拍延遲）
     await cvdSelect.selectOption('deuteranopia');
-    await expect.poll(successVar).toBe('#0288d1');
-    await expect.poll(correctBar).toContain('2, 136, 209');
+    await expect.poll(successFg).toBe('#01579b');
+    await expect.poll(correctBar).toContain('1, 87, 155');
   });
 });
 

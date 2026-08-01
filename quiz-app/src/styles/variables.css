@@ -41,7 +41,10 @@
      - -solid：白字安全的深色實填（徽章底）；其上的文字/icon 用 --color-on-success/-error（純白）。
      - -fg：文字/icon/邊界前景，淺色/深色各自定義（deut 的 fg 比 solid 更深 —— 要在 tint、
        surface-variant、page-bg、score 漸層上都達 4.5，不能只對純白 surface 驗）。
-     - -score：分數卡漸層（theme-aware，深色主題換深底），讓其上的 -fg 也達標。
+     - -score：分數卡漸層，改由 tint→surface 衍生（linear-gradient(--color-X-bg, --color-surface)）。
+       tint 與 surface 皆隨 theme/CVD 自動 remap，故分數卡背景與 tint 永遠同源、切 CVD 也一致換色
+       （根因修掉「背景不隨 CVD 換色」的漂移）；兩端點即 tint-over-page 與 surface，a11y-contrast
+       e2e 已分別驗過 -fg 對其 >= 4.5，無需再逐主題/逐 CVD 手調漸層。
      - -bg（tint）與 base --color-success/-error（裝飾 bar）維持不變。
      全部值用 WCAG 公式對「真實前景/背景對」跨 light/dark × 4 CVD 驗過（見 a11y-contrast e2e）。 */
   --color-success-solid: #2e7d32;
@@ -51,8 +54,8 @@
   --color-error-fg: #b71c1c;
   --color-on-success: #ffffff;
   --color-on-error: #ffffff;
-  --color-success-score: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
-  --color-error-score: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
+  --color-success-score: linear-gradient(135deg, var(--color-success-bg), var(--color-surface));
+  --color-error-score: linear-gradient(135deg, var(--color-error-bg), var(--color-surface));
   --color-info: #2196f3;
   --color-info-bg: rgba(33, 150, 243, 0.12);
 
@@ -61,11 +64,11 @@
   --color-info-fg: #0d47a1;
   --color-info-solid: #1565c0;
   --color-on-info: #ffffff;
-  --color-info-score: linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 100%);
+  --color-info-score: linear-gradient(135deg, var(--color-info-bg), var(--color-surface));
   --color-warning-fg: #8f5700;
   --color-warning-solid: #bf5000;
   --color-on-warning: #ffffff;
-  --color-warning-score: linear-gradient(135deg, #fff8e1 0%, #fffde7 100%);
+  --color-warning-score: linear-gradient(135deg, var(--color-warning-bg), var(--color-surface));
 
   /* 中性色 */
   --neutral-0: #000000;
@@ -144,16 +147,13 @@
   --color-primary-light: var(--primary-80);
   --color-on-primary: var(--neutral-10);
 
-  /* 深色表面上的可讀語意前景（亮色）；-solid（徽章底）維持深色，白字仍安全 */
+  /* 深色表面上的可讀語意前景（亮色）；-solid（徽章底）維持深色，白字仍安全。
+     -score 已改為 tint→surface 衍生（見 :root）；tint 與 surface 皆 theme-aware，
+     深色分數卡背景自動變深底、與亮 -fg 對比達標，故此處不需再覆寫 -score。 */
   --color-success-fg: #81c784;
   --color-error-fg: #ef9a9a;
-  /* 分數卡漸層換深底 —— 原本固定淺底會與深色主題的亮 -fg 撞成 <2:1 低對比 */
-  --color-success-score: linear-gradient(135deg, #12281a 0%, #16301f 100%);
-  --color-error-score: linear-gradient(135deg, #2a1416 0%, #301a1e 100%);
   --color-info-fg: #64b5f6;
   --color-warning-fg: #ffb74d;
-  --color-info-score: linear-gradient(135deg, #0d2137 0%, #12263a 100%);
-  --color-warning-score: linear-gradient(135deg, #2a2010 0%, #302615 100%);
 
   --color-background: #121212;
   --color-surface: #1e1e1e;

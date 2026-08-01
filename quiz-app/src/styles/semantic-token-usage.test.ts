@@ -103,6 +103,7 @@ const BARE_BASE = /var\(\s*--color-(?:success|error|info|warning)\s*(?:,|\))/;
 // 白名單：唯一允許裸 base token 的裝飾用途，以「檔名 + 精確 selector + 屬性」比對（非 substring）。
 // substring 會誤放行 .pool-histogram__bar-track（含 'bar' 前綴），或同組其他 selector
 // （如 `.pool-histogram__bar, .danger { background: var(--color-success) }` 整組被放行）。
+// 註：CVD 預覽色條已在本 PR 改吃 --color-*-fg（非裸 base），故不再需要白名單豁免。
 const ALLOW: { file: string; selector: string; prop: string }[] = [
   { file: 'PracticePoolHistogram.css', selector: '.pool-histogram__row--main .pool-histogram__bar', prop: 'background' },
   { file: 'PracticePoolHistogram.css', selector: '.pool-histogram__row--mock .pool-histogram__bar', prop: 'background' },
@@ -111,9 +112,6 @@ const ALLOW: { file: string; selector: string; prop: string }[] = [
   { file: 'SourceBreakdown.css', selector: '.source-breakdown__row--mock .source-breakdown__bar', prop: 'background' },
   { file: 'SourceBreakdown.css', selector: '.source-breakdown__row--ai .source-breakdown__bar', prop: 'background' },
   { file: 'SourceBreakdown.css', selector: '.source-breakdown__row--low .source-breakdown__bar', prop: 'background' },
-  // CVD 預覽左側實色條（#112 仍吃裸 base；#113/#114 會改 -fg 後移除這兩條）
-  { file: 'SettingsPage.css', selector: '.cvd-preview__chip--correct', prop: 'box-shadow' },
-  { file: 'SettingsPage.css', selector: '.cvd-preview__chip--incorrect', prop: 'box-shadow' },
 ];
 
 const normSel = (s: string): string => s.replace(/\s+/g, ' ').trim();
