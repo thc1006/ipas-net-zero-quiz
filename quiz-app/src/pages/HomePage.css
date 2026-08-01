@@ -98,7 +98,7 @@
 
 .practice-pool-tip--enabled {
   background: var(--color-success-bg);
-  border-left-color: var(--color-success);
+  border-left-color: var(--color-success-fg);
 }
 
 .practice-pool-tip__icon {
@@ -115,7 +115,7 @@
 }
 
 .practice-pool-tip--enabled .practice-pool-tip__icon {
-  background: var(--color-success);
+  background: var(--color-success-solid);
 }
 
 .practice-pool-tip__icon .material-icons {
@@ -298,7 +298,7 @@
 }
 
 .config-item input[aria-invalid='true'] {
-  border-color: var(--color-error, #d32f2f);
+  border-color: var(--color-error-fg, #d32f2f);
 }
 
 .config-item__hint {
@@ -309,7 +309,7 @@
 }
 
 .config-item__hint--error {
-  color: var(--color-error, #d32f2f);
+  color: var(--color-error-fg, #d32f2f);
 }
 
 .checkbox-item label {

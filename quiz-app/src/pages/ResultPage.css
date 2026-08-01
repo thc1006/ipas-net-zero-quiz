@@ -60,7 +60,7 @@
 .score-section.good .score-icon .material-icons,
 .score-section.good .score-value,
 .score-section.good .score-comment {
-  color: var(--color-success);
+  color: var(--color-success-fg);
 }
 
 .score-section.pass {
@@ -80,7 +80,7 @@
 .score-section.fail .score-icon .material-icons,
 .score-section.fail .score-value,
 .score-section.fail .score-comment {
-  color: var(--color-error);
+  color: var(--color-error-fg);
 }
 
 /* 統計區 */
@@ -120,12 +120,12 @@
 
 .stat-item.correct .material-icons,
 .stat-item.correct .stat-value {
-  color: var(--color-success);
+  color: var(--color-success-fg);
 }
 
 .stat-item.wrong .material-icons,
 .stat-item.wrong .stat-value {
-  color: var(--color-error);
+  color: var(--color-error-fg);
 }
 
 .stat-item.total .material-icons {
@@ -252,7 +252,7 @@
 .weak-rate {
   font-size: var(--font-size-sm);
   font-weight: 600;
-  color: var(--color-error);
+  color: var(--color-error-fg);
   white-space: nowrap;
 }
 
@@ -273,7 +273,7 @@
   align-items: center;
   gap: var(--spacing-sm);
   font-size: var(--font-size-lg);
-  color: var(--color-error);
+  color: var(--color-error-fg);
   margin-bottom: var(--spacing-md);
 }
 
@@ -289,7 +289,7 @@
   padding: var(--spacing-md);
   background: var(--color-surface-variant);
   border-radius: var(--radius-sm);
-  border-left: 4px solid var(--color-error);
+  border-left: 4px solid var(--color-error-fg);
 }
 
 .wrong-number {
@@ -346,11 +346,11 @@
 }
 
 .text-error {
-  color: var(--color-error);
+  color: var(--color-error-fg);
 }
 
 .text-success {
-  color: var(--color-success);
+  color: var(--color-success-fg);
 }
 
 /* 操作按鈕 */
@@ -448,7 +448,7 @@
 }
 
 .ai-response-inline.error {
-  border-color: var(--color-error);
+  border-color: var(--color-error-fg);
 }
 
 .ai-response-inline .ai-error {
@@ -456,7 +456,7 @@
   align-items: center;
   gap: var(--spacing-xs);
   font-size: var(--font-size-sm);
-  color: var(--color-error);
+  color: var(--color-error-fg);
 }
 
 /* AI 回應標頭 */
@@ -596,7 +596,7 @@
 }
 
 .similar-answer {
-  color: var(--color-success);
+  color: var(--color-success-fg);
   font-weight: 500;
 }
 

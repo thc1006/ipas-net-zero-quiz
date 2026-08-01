@@ -242,7 +242,7 @@ textarea {
 
 .badge-success {
   background: var(--color-success-bg);
-  color: var(--color-success);
+  color: var(--color-success-fg);
 }
 
 .badge-warning {
@@ -252,7 +252,7 @@ textarea {
 
 .badge-error {
   background: var(--color-error-bg);
-  color: var(--color-error);
+  color: var(--color-error-fg);
 }
 
 .badge-info {

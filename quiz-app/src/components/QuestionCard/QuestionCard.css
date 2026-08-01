@@ -137,33 +137,33 @@
 /* 正確答案 */
 .option-item.correct {
   background: var(--color-success-bg);
-  border-color: var(--color-success);
+  border-color: var(--color-success-fg);
   cursor: default;
 }
 
 .option-item.correct .option-key {
-  background: var(--color-success);
+  background: var(--color-success-solid);
   color: white;
 }
 
 .option-item.correct .option-icon {
-  color: var(--color-success);
+  color: var(--color-success-fg);
 }
 
 /* 錯誤答案 */
 .option-item.incorrect {
   background: var(--color-error-bg);
-  border-color: var(--color-error);
+  border-color: var(--color-error-fg);
   cursor: default;
 }
 
 .option-item.incorrect .option-key {
-  background: var(--color-error);
+  background: var(--color-error-solid);
   color: white;
 }
 
 .option-item.incorrect .option-icon {
-  color: var(--color-error);
+  color: var(--color-error-fg);
 }
 
 /* 禁用狀態 */
@@ -313,11 +313,11 @@
   align-items: center;
   gap: var(--spacing-sm);
   padding: var(--spacing-md);
-  color: var(--color-error);
+  color: var(--color-error-fg);
 }
 
 .ai-response.error .ai-response-header {
-  background: var(--color-error);
+  background: var(--color-error-solid);
 }
 
 /* 響應式 */

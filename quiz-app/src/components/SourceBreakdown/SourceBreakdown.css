@@ -69,7 +69,7 @@
 
 .source-breakdown__note {
   font-size: var(--font-size-xs);
-  color: var(--color-error);
+  color: var(--color-error-fg);
 }
 
 .source-breakdown__hint {
