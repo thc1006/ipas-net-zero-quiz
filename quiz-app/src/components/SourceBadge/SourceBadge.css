@@ -46,6 +46,8 @@
   background: rgba(0, 0, 0, 0.08);
 }
 
-.flag-time_sensitive { background: rgba(239, 68, 68, 0.15); color: #b91c1c; }
-.flag-ambiguous     { background: rgba(168, 85, 247, 0.15); color: #6b21a8; }
-.flag-low_confidence{ background: rgba(107, 114, 128, 0.15); color: #4b5563; }
+/* 旗標文字用可讀前景（原本固定深色文字無深色變體，巢狀在 tone-mock/tone-ai badge 內、深色主題
+   實測僅約 1.25–1.88:1）；分類仍靠背景 hue + 文字內容傳達，不靠顏色單一管道。 */
+.flag-time_sensitive { background: rgba(239, 68, 68, 0.15); color: var(--color-text-primary); }
+.flag-ambiguous     { background: rgba(168, 85, 247, 0.15); color: var(--color-text-primary); }
+.flag-low_confidence{ background: rgba(107, 114, 128, 0.15); color: var(--color-text-primary); }

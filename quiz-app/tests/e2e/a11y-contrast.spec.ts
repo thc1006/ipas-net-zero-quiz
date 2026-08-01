@@ -23,17 +23,28 @@ function contrast(a: number[], b: number[]): number {
   const lb = relLum(b);
   return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
 }
-/** fail-closed：缺值或無法解析直接丟錯，不回黑色 */
+/** fail-closed：缺值/無法解析/**帶 alpha（非不透明）**一律丟錯 —— 不把 rgba(0,0,0,.01)
+ * 靜默當成不透明黑、也不把含 alpha 的 hex 當不透明。本函式只用於「應為不透明」的色
+ * （surface/fg/solid/on/gradient stop）；帶 alpha 的 tint 走 alphaOver 做合成。 */
 function parseColor(s: string, label: string): number[] {
   const t = (s ?? '').trim();
   if (!t) throw new Error(`Missing color token: ${label}`);
-  if (/^#[0-9a-fA-F]{6}$/.test(t)) {
-    return [1, 3, 5].map((i) => parseInt(t.slice(i, i + 2), 16));
+  const hex = t.match(/^#([0-9a-fA-F]+)$/);
+  if (hex) {
+    const h = hex[1];
+    if (h.length === 6) return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+    if (h.length === 3) return [0, 1, 2].map((i) => parseInt(h[i] + h[i], 16));
+    // 4 / 8 碼 hex 含 alpha → fail-closed
+    throw new Error(`Non-opaque or invalid hex for ${label}: "${t}"`);
   }
-  const m = t.match(/rgba?\(([^)]+)\)/);
+  const m = t.match(/^rgba?\(\s*([^)]+)\)$/i);
   if (m) {
     const p = m[1].split(',').map((x) => parseFloat(x));
     if (p.length >= 3 && p.slice(0, 3).every((n) => Number.isFinite(n))) {
+      const a = p.length >= 4 ? p[3] : 1;
+      if (a !== 1) {
+        throw new Error(`Non-opaque color where opaque expected for ${label}: "${t}"`);
+      }
       return [p[0], p[1], p[2]];
     }
   }
@@ -47,13 +58,47 @@ function alphaOver(rgba: string, bg: number[], label: string): number[] {
   const a = p.length >= 4 ? p[3] : 1;
   return [p[0], p[1], p[2]].map((c, i) => Math.round(a * c + (1 - a) * bg[i]));
 }
-/** 從 gradient 字串抽出所有 hex endpoint */
-function gradientStops(g: string, label: string): number[][] {
-  const hexes = (g ?? '').match(/#[0-9a-fA-F]{6}/g);
-  if (!hexes || hexes.length === 0) {
-    throw new Error(`No color stops in gradient for ${label}: "${g}"`);
+/** 逗號切分但尊重 rgb()/hsl() 內層括號（供 gradient stop 解析） */
+function splitTopLevel(str: string): string[] {
+  const out: string[] = [];
+  let depth = 0;
+  let cur = '';
+  for (const ch of str) {
+    if (ch === '(') depth++;
+    else if (ch === ')') depth--;
+    if (ch === ',' && depth === 0) {
+      out.push(cur);
+      cur = '';
+    } else {
+      cur += ch;
+    }
   }
-  return hexes.map((h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)));
+  if (cur.trim()) out.push(cur);
+  return out;
+}
+
+/** 從 gradient 抽出**所有** color stop（不只 hex）。每個 stop 走 fail-closed parseColor：
+ * 帶 alpha 的 stop 會丟錯而非被忽略；無法解析的 segment（如具名色）也丟錯 —— 符合 fail-closed
+ * 宣稱，不會靜默漏掉某個低對比 stop。第一段若無顏色視為方向（135deg / to right）。 */
+function gradientStops(g: string, label: string): number[][] {
+  const s = (g ?? '').trim();
+  const m = s.match(/^(?:repeating-)?(?:linear|radial|conic)-gradient\(([\s\S]*)\)$/i);
+  if (!m) throw new Error(`Not a gradient for ${label}: "${s}"`);
+  const stops: number[][] = [];
+  for (const seg of splitTopLevel(m[1])) {
+    const t = seg.trim();
+    if (!t) continue;
+    const cm = t.match(/^(#[0-9a-fA-F]{3,8}|(?:rgb|rgba|hsl|hsla)\([^)]*\))/i);
+    if (!cm) {
+      if (stops.length === 0) continue; // 方向段（如 135deg），非顏色
+      throw new Error(`Gradient segment without parseable color for ${label}: "${t}"`);
+    }
+    stops.push(parseColor(cm[1], `${label} stop "${cm[1]}"`));
+  }
+  if (stops.length < 2) {
+    throw new Error(`Expected >= 2 color stops in gradient for ${label}: "${s}"`);
+  }
+  return stops;
 }
 
 test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 WCAG AA（#109）', async ({
@@ -87,6 +132,16 @@ test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 
             errorBg: read('--color-error-bg'),
             successScore: read('--color-success-score'),
             errorScore: read('--color-error-score'),
+            infoFg: read('--color-info-fg'),
+            warningFg: read('--color-warning-fg'),
+            infoSolid: read('--color-info-solid'),
+            warningSolid: read('--color-warning-solid'),
+            onInfo: read('--color-on-info'),
+            onWarning: read('--color-on-warning'),
+            infoBg: read('--color-info-bg'),
+            warningBg: read('--color-warning-bg'),
+            infoScore: read('--color-info-score'),
+            warningScore: read('--color-warning-score'),
           });
         }
       }
@@ -103,56 +158,40 @@ test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 
     const surf = parseColor(c.surface, `${c.mode} surface`);
     const surfV = parseColor(c.surfaceVariant, `${c.mode} surface-variant`);
     const bg = parseColor(c.background, `${c.mode} background`);
-    const sFg = parseColor(c.successFg, `${c.mode} success-fg`);
-    const eFg = parseColor(c.errorFg, `${c.mode} error-fg`);
-    const sSol = parseColor(c.successSolid, `${c.mode} success-solid`);
-    const eSol = parseColor(c.errorSolid, `${c.mode} error-solid`);
-    const onS = parseColor(c.onSuccess, `${c.mode} on-success`);
-    const onE = parseColor(c.onError, `${c.mode} on-error`);
-    const sTint = alphaOver(c.successBg, surf, `${c.mode} success-bg`);
-    const eTint = alphaOver(c.errorBg, surf, `${c.mode} error-bg`);
-    // tint 也可能疊在「page background」上（如首頁 .badge-success 的 ancestor 皆透明），
-    // 那比疊在白 surface 上對比更低 —— 一定要驗這一種，否則會像上一版誤綠。
-    const sTintPage = alphaOver(c.successBg, bg, `${c.mode} success-bg/page`);
-    const eTintPage = alphaOver(c.errorBg, bg, `${c.mode} error-bg/page`);
-    const sScore = gradientStops(c.successScore, `${c.mode} success-score`);
-    const eScore = gradientStops(c.errorScore, `${c.mode} error-score`);
 
-    // -fg 文字放在所有可能背景上 >= 4.5:1
-    const successBgs: [number[], string][] = [
-      [surf, 'surface'],
-      [surfV, 'surface-variant'],
-      [bg, 'page-background'],
-      [sTint, 'success-tint'],
-      [sTintPage, 'success-tint-over-page'],
-      ...sScore.map((g, i): [number[], string] => [g, `success-score#${i}`]),
+    // 四個語意角色一起驗（success/error 受 CVD 影響；info/warning 不受、值在各 CVD 相同、
+    // 無害地重複驗）。每個角色的 -fg 文字要在 surface、surface-variant、page-background、
+    // tint 疊 surface、tint 疊 page-background、以及 score 漸層端點上都 >= 4.5:1；
+    // on-color 白字放在 -solid 上也 >= 4.5:1。
+    const roles = [
+      { name: 'success', fg: c.successFg, solid: c.successSolid, on: c.onSuccess, tintBg: c.successBg, score: c.successScore },
+      { name: 'error', fg: c.errorFg, solid: c.errorSolid, on: c.onError, tintBg: c.errorBg, score: c.errorScore },
+      { name: 'info', fg: c.infoFg, solid: c.infoSolid, on: c.onInfo, tintBg: c.infoBg, score: c.infoScore },
+      { name: 'warning', fg: c.warningFg, solid: c.warningSolid, on: c.onWarning, tintBg: c.warningBg, score: c.warningScore },
     ];
-    for (const [b, name] of successBgs) {
+    for (const r of roles) {
+      const fg = parseColor(r.fg, `${c.mode} ${r.name}-fg`);
+      const sol = parseColor(r.solid, `${c.mode} ${r.name}-solid`);
+      const on = parseColor(r.on, `${c.mode} on-${r.name}`);
+      const bgs: [number[], string][] = [
+        [surf, 'surface'],
+        [surfV, 'surface-variant'],
+        [bg, 'page-background'],
+        [alphaOver(r.tintBg, surf, `${c.mode} ${r.name}-bg`), 'tint'],
+        [alphaOver(r.tintBg, bg, `${c.mode} ${r.name}-bg/page`), 'tint-over-page'],
+        ...gradientStops(r.score, `${c.mode} ${r.name}-score`).map(
+          (g, i): [number[], string] => [g, `score#${i}`]
+        ),
+      ];
+      for (const [b, name] of bgs) {
+        expect
+          .soft(contrast(fg, b), `${c.mode} ${r.name}-fg on ${name}`)
+          .toBeGreaterThanOrEqual(4.5);
+      }
       expect
-        .soft(contrast(sFg, b), `${c.mode} success-fg on ${name}`)
+        .soft(contrast(on, sol), `${c.mode} on-${r.name} on ${r.name}-solid`)
         .toBeGreaterThanOrEqual(4.5);
     }
-    const errorBgs: [number[], string][] = [
-      [surf, 'surface'],
-      [surfV, 'surface-variant'],
-      [bg, 'page-background'],
-      [eTint, 'error-tint'],
-      [eTintPage, 'error-tint-over-page'],
-      ...eScore.map((g, i): [number[], string] => [g, `error-score#${i}`]),
-    ];
-    for (const [b, name] of errorBgs) {
-      expect
-        .soft(contrast(eFg, b), `${c.mode} error-fg on ${name}`)
-        .toBeGreaterThanOrEqual(4.5);
-    }
-
-    // 徽章/標頭：on-color 白字放在 -solid 實填上 >= 4.5:1
-    expect
-      .soft(contrast(onS, sSol), `${c.mode} on-success on success-solid`)
-      .toBeGreaterThanOrEqual(4.5);
-    expect
-      .soft(contrast(onE, eSol), `${c.mode} on-error on error-solid`)
-      .toBeGreaterThanOrEqual(4.5);
   }
 });
 

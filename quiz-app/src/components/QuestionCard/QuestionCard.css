@@ -66,13 +66,16 @@
 }
 
 .subject-1 {
+  /* 12px 藍字疊 12% 藍 tint 在多主題 <4.5:1（且此規則 specificity 與 .badge-info 同、較晚出現會蓋掉
+     #112 的 --color-info-fg）。改用可讀前景，藍色識別留在 tint 底。 */
   background: rgba(25, 118, 210, 0.12);
-  color: #1976d2;
+  color: var(--color-text-primary);
 }
 
 .subject-2 {
+  /* 同上：無紫色 role token，紫色識別留在 tint 底、文字用可讀前景（原 #9c27b0 dark 僅約 2.47:1） */
   background: rgba(156, 39, 176, 0.12);
-  color: #9c27b0;
+  color: var(--color-text-primary);
 }
 
 /* 題幹 */
@@ -218,7 +221,7 @@
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-warning-bg);
   border-radius: var(--radius-sm);
-  color: var(--color-warning);
+  color: var(--color-warning-fg);
   font-size: var(--font-size-sm);
 }
 
@@ -273,7 +276,10 @@
 .ai-response-header .confidence-badge {
   margin-left: auto;
   padding: 2px 8px;
-  background: rgba(255, 255, 255, 0.2);
+  /* 不疊 20% 白底（會沖淡 header 實色、使 12px 白字在 primary/error header 上 <4.5:1）；
+     改透明底 + currentColor 邊框，文字沿用 header 已驗證的 on-color 對比 */
+  background: transparent;
+  border: 1px solid currentColor;
   border-radius: var(--radius-full);
   font-size: var(--font-size-xs);
 }
@@ -393,7 +399,8 @@
 
 [data-theme="dark"] .question-sources {
   background: rgba(59, 130, 246, 0.08);
-  border-left-color: var(--color-info-fg-dark, #93c5fd);
+  /* 原 var(--color-info-fg-dark) 未定義、永遠落到硬編 fallback；--color-info-fg 深色本就是亮藍 */
+  border-left-color: var(--color-info-fg);
 }
 
 /* 小螢幕（≤640px）— question-card padding 收緊、option-item tap target */

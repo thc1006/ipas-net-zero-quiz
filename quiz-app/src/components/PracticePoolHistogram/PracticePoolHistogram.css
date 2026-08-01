@@ -62,7 +62,8 @@
 
 .pool-histogram__pct {
   font-size: var(--font-size-xs);
-  color: var(--color-text-quiet);
+  /* --color-text-quiet 未定義（原本靜默繼承）；用既有的 secondary 文字色 */
+  color: var(--color-text-secondary);
   font-variant-numeric: tabular-nums;
   text-align: right;
 }

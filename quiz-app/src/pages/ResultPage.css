@@ -41,16 +41,16 @@
 
 /* 分數等級顏色 */
 .score-section.excellent {
-  background: linear-gradient(135deg, #fff8e1 0%, #fffde7 100%);
+  background: var(--color-warning-score);
 }
 
 .score-section.excellent .score-icon .material-icons {
-  color: #ffc107;
+  color: var(--color-warning-fg);
 }
 
 .score-section.excellent .score-value,
 .score-section.excellent .score-comment {
-  color: #f57c00;
+  color: var(--color-warning-fg);
 }
 
 .score-section.good {
@@ -64,13 +64,13 @@
 }
 
 .score-section.pass {
-  background: linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 100%);
+  background: var(--color-info-score);
 }
 
 .score-section.pass .score-icon .material-icons,
 .score-section.pass .score-value,
 .score-section.pass .score-comment {
-  color: var(--color-info);
+  color: var(--color-info-fg);
 }
 
 .score-section.fail {
@@ -129,11 +129,11 @@
 }
 
 .stat-item.total .material-icons {
-  color: var(--color-info);
+  color: var(--color-info-fg);
 }
 
 .stat-item.time .material-icons {
-  color: var(--color-warning);
+  color: var(--color-warning-fg);
 }
 
 .stat-item.skipped .material-icons {
@@ -155,7 +155,7 @@
   align-items: center;
   gap: var(--spacing-xs);
   font-weight: 600;
-  color: var(--color-info);
+  color: var(--color-info-fg);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -200,7 +200,7 @@
   align-items: center;
   gap: var(--spacing-sm);
   font-size: var(--font-size-lg);
-  color: var(--color-warning);
+  color: var(--color-warning-fg);
   margin-bottom: var(--spacing-xs);
 }
 
@@ -226,7 +226,7 @@
   padding: var(--spacing-sm);
   background: var(--color-surface-variant);
   border-radius: var(--radius-sm);
-  border-left: 3px solid var(--color-warning);
+  border-left: 3px solid var(--color-warning-fg);
 }
 
 .weak-rank {
@@ -395,14 +395,15 @@
 }
 
 .btn-small.btn-generate {
-  border-color: var(--accent-50);
-  color: var(--accent-50);
+  /* 原 --accent-50 (#ff9800) 當 12px 文字/邊界僅約 2.16:1；改用 warning role token */
+  border-color: var(--color-warning-fg);
+  color: var(--color-warning-fg);
 }
 
 .btn-small.btn-generate:hover {
-  background: var(--accent-50);
-  color: white;
-  border-color: var(--accent-50);
+  background: var(--color-warning-solid);
+  color: var(--color-on-warning);
+  border-color: var(--color-warning-solid);
 }
 
 .ai-loading-inline {
@@ -484,16 +485,16 @@
 .confidence-warning {
   margin-left: auto;
   font-size: var(--font-size-xs);
-  color: var(--color-warning);
+  color: var(--color-warning-fg);
 }
 
 /* AI 生成題目專用樣式 */
 .ai-response-inline.generated {
-  border-color: var(--accent-50);
+  border-color: var(--color-warning-fg);
 }
 
 .ai-response-inline.generated .ai-response-header-inline {
-  color: var(--accent-50);
+  color: var(--color-warning-fg);
 }
 
 .generated-content {
@@ -515,14 +516,14 @@
 
 /* 題庫相似題按鈕 */
 .btn-small.btn-bank {
-  border-color: var(--color-info);
-  color: var(--color-info);
+  border-color: var(--color-info-fg);
+  color: var(--color-info-fg);
 }
 
 .btn-small.btn-bank:hover {
-  background: var(--color-info);
-  color: white;
-  border-color: var(--color-info);
+  background: var(--color-info-solid);
+  color: var(--color-on-info);
+  border-color: var(--color-info-fg);
 }
 
 /* 題庫內相似題區塊 */
@@ -531,7 +532,7 @@
   padding: var(--spacing-sm);
   background: var(--color-surface);
   border-radius: var(--radius-sm);
-  border: 1px solid var(--color-info);
+  border: 1px solid var(--color-info-fg);
 }
 
 .bank-similar-header {
@@ -540,7 +541,7 @@
   gap: var(--spacing-xs);
   font-size: var(--font-size-sm);
   font-weight: 500;
-  color: var(--color-info);
+  color: var(--color-info-fg);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -568,7 +569,7 @@
 .similar-index {
   font-size: var(--font-size-sm);
   font-weight: 600;
-  color: var(--color-info);
+  color: var(--color-info-fg);
   min-width: 24px;
 }
 
