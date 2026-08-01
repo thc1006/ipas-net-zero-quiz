@@ -40,8 +40,16 @@ function parseColor(s: string, label: string): number[] {
   const m = t.match(/^rgba?\(\s*([^)]+)\)$/i);
   if (m) {
     const p = m[1].split(',').map((x) => parseFloat(x));
-    if (p.length >= 3 && p.slice(0, 3).every((n) => Number.isFinite(n))) {
-      const a = p.length >= 4 ? p[3] : 1;
+    // arity 必須是 3 或 4；否則不接受（避免 rgb(1,2,3,4,5) 之類被誤解析）
+    if ((p.length === 3 || p.length === 4) && p.every((n) => Number.isFinite(n))) {
+      // channel 範圍：瀏覽器會把超界值 clamp（rgb(999,0,0)→255），若不驗會測到假高對比、與實際渲染不符
+      if (p.slice(0, 3).some((v) => v < 0 || v > 255)) {
+        throw new Error(`RGB channel out of 0–255 for ${label}: "${t}"`);
+      }
+      const a = p.length === 4 ? p[3] : 1;
+      if (a < 0 || a > 1) {
+        throw new Error(`Alpha out of 0–1 for ${label}: "${t}"`);
+      }
       if (a !== 1) {
         throw new Error(`Non-opaque color where opaque expected for ${label}: "${t}"`);
       }
@@ -77,10 +85,24 @@ function splitTopLevel(str: string): string[] {
   return out;
 }
 
-/** 從 gradient 抽出**所有** color stop（不只 hex）。每個 stop 走 fail-closed parseColor：
- * 帶 alpha 的 stop 會丟錯而非被忽略；無法解析的 segment（如具名色）也丟錯 —— 符合 fail-closed
- * 宣稱，不會靜默漏掉某個低對比 stop。第一段若無顏色視為方向（135deg / to right）。 */
-function gradientStops(g: string, label: string): number[][] {
+/** gradient 單一 stop → 不透明 rgb：半透明 stop（如衍生分數卡的 tint 端點）疊在 backdrop 上；
+ * 不透明 stop（hex / rgb / rgba a=1）走 fail-closed parseColor。 */
+function resolveStop(tok: string, backdrop: number[], label: string): number[] {
+  const m = tok.match(/^rgba?\(\s*([^)]+)\)$/i);
+  if (m) {
+    const p = m[1].split(',').map((x) => parseFloat(x));
+    const a = p.length >= 4 ? p[3] : 1;
+    if (p.length >= 3 && p.slice(0, 3).every((n) => Number.isFinite(n)) && a !== 1) {
+      return alphaOver(tok, backdrop, label); // 半透明 → 疊底
+    }
+  }
+  return parseColor(tok, label); // 不透明
+}
+
+/** 從 gradient 抽出**所有** color stop（不只 hex）。半透明 stop（衍生分數卡的 tint 端點）疊在
+ * backdrop（分數卡背後的 page-background）上再算對比；無法解析的 segment（如具名色）丟錯 ——
+ * 不靜默漏掉低對比 stop。第一段若無顏色視為方向（135deg / to right）。 */
+function gradientStops(g: string, label: string, backdrop: number[]): number[][] {
   const s = (g ?? '').trim();
   const m = s.match(/^(?:repeating-)?(?:linear|radial|conic)-gradient\(([\s\S]*)\)$/i);
   if (!m) throw new Error(`Not a gradient for ${label}: "${s}"`);
@@ -90,10 +112,17 @@ function gradientStops(g: string, label: string): number[][] {
     if (!t) continue;
     const cm = t.match(/^(#[0-9a-fA-F]{3,8}|(?:rgb|rgba|hsl|hsla)\([^)]*\))/i);
     if (!cm) {
-      if (stops.length === 0) continue; // 方向段（如 135deg），非顏色
+      // 只有「明確方向語法」的第一段才可略過；其他無法解析的段（如具名色 green）一律 fail-closed，
+      // 不再把非方向的第一段當方向跳過（否則 linear-gradient(green, #fff, #fff) 會漏掉 green 這個 stop）
+      const isDirection =
+        stops.length === 0 &&
+        /^(-?\d*\.?\d+(?:deg|rad|grad|turn)|to\s+(?:left|right|top|bottom)(?:\s+(?:left|right|top|bottom))?)$/i.test(
+          t
+        );
+      if (isDirection) continue;
       throw new Error(`Gradient segment without parseable color for ${label}: "${t}"`);
     }
-    stops.push(parseColor(cm[1], `${label} stop "${cm[1]}"`));
+    stops.push(resolveStop(cm[1], backdrop, `${label} stop "${cm[1]}"`));
   }
   if (stops.length < 2) {
     throw new Error(`Expected >= 2 color stops in gradient for ${label}: "${s}"`);
@@ -179,7 +208,7 @@ test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 
         [bg, 'page-background'],
         [alphaOver(r.tintBg, surf, `${c.mode} ${r.name}-bg`), 'tint'],
         [alphaOver(r.tintBg, bg, `${c.mode} ${r.name}-bg/page`), 'tint-over-page'],
-        ...gradientStops(r.score, `${c.mode} ${r.name}-score`).map(
+        ...gradientStops(r.score, `${c.mode} ${r.name}-score`, bg).map(
           (g, i): [number[], string] => [g, `score#${i}`]
         ),
       ];
@@ -193,5 +222,54 @@ test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 
         .toBeGreaterThanOrEqual(4.5);
     }
   }
+});
+
+// #113 的核心不是只有對比，而是「分數卡背景要跟著 CVD remap」。上面的對比矩陣即使把 -score
+// 改回固定但高對比的灰色仍會全綠，抓不到這個回歸；故這裡直接斷言 computed backgroundImage 的變化。
+test('分數卡背景隨 CVD remap：good/fail 換色、excellent/pass 不變（#113）', async ({
+  page,
+}) => {
+  await page.goto('/');
+  // CSS 全域打包，任一頁都載得到 .score-section；注入四張卡後讀 computed backgroundImage。
+  await page.evaluate(() => {
+    const d = document.createElement('div');
+    d.id = 'score-remap-probe';
+    d.innerHTML = ['good', 'fail', 'excellent', 'pass']
+      .map((c) => `<div class="score-section ${c}"></div>`)
+      .join('');
+    document.body.appendChild(d);
+  });
+  // set 與 read 分兩次 evaluate，讓 style recalc 完成（避免同一拍讀到舊值）
+  const grads = async (cvd: string): Promise<Record<string, string>> => {
+    await page.evaluate(
+      (m) => document.documentElement.setAttribute('data-cvd-mode', m),
+      cvd
+    );
+    return page.evaluate(() => {
+      const out: Record<string, string> = {};
+      for (const c of ['good', 'fail', 'excellent', 'pass']) {
+        out[c] = getComputedStyle(
+          document.querySelector(`.score-section.${c}`) as HTMLElement
+        ).backgroundImage;
+      }
+      return out;
+    });
+  };
+  const none = await grads('none');
+  const prot = await grads('protanopia');
+  await page.evaluate(() => {
+    document.getElementById('score-remap-probe')?.remove();
+    document.documentElement.setAttribute('data-cvd-mode', 'none');
+  });
+
+  // 必須是漸層（防止把 -score 改回固定色卻仍「不同」的假象）
+  expect(none.good).toContain('gradient');
+  expect(none.fail).toContain('gradient');
+  // good/fail（success/error）受 CVD remap → 背景必須不同
+  expect(none.good, 'good 分數卡背景應隨 CVD 換色').not.toBe(prot.good);
+  expect(none.fail, 'fail 分數卡背景應隨 CVD 換色').not.toBe(prot.fail);
+  // excellent/pass（warning/info）依設計不受 CVD 影響 → 必須相同
+  expect(prot.excellent, 'excellent 不應隨 CVD 改變').toBe(none.excellent);
+  expect(prot.pass, 'pass 不應隨 CVD 改變').toBe(none.pass);
 });
 

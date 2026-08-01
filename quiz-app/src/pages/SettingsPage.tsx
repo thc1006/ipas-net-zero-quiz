@@ -166,8 +166,8 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
               <option value="tritanopia">藍色盲 (Tritanopia)</option>
             </select>
           </div>
-          {/* 即時預覽：作答對/錯的回饋色會隨模式即時換色（chip 直接吃 --color-success/
-              --color-error，而 CVD 模式覆寫的正是這兩個變數）—— 讓使用者切換當下就看到效果。
+          {/* 即時預覽：作答對/錯的回饋色會隨模式即時換色（chip 吃 role token --color-*-bg/-fg，
+              與真實選項回饋同源，CVD 模式會 remap 這些變數）—— 讓使用者切換當下就看到效果。
               附 icon + 文字，不靠顏色單一管道（符合無障礙本意）。 */}
           <div className="cvd-preview" data-testid="cvd-preview">
             <span className="cvd-preview__label">作答回饋色預覽</span>

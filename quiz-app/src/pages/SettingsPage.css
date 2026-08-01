@@ -168,8 +168,8 @@
   flex-wrap: wrap;
 }
 
-/* 作答回饋色即時預覽：chip 直接吃 --color-success / --color-error，
-   而 [data-cvd-mode] 覆寫的正是這兩個變數，故切換色覺模式時 chip 會即時換色。 */
+/* 作答回饋色即時預覽：chip 吃 role token（tint 底 --color-*-bg + 左側 --color-*-fg 實色條），
+   與真實選項回饋同源；[data-cvd-mode] 會 remap 這些變數，故切換色覺模式時 chip 即時換色。 */
 .cvd-preview {
   display: flex;
   align-items: center;
@@ -205,12 +205,12 @@
 
 .cvd-preview__chip--correct {
   background: var(--color-success-bg);
-  box-shadow: inset 4px 0 0 var(--color-success);
+  box-shadow: inset 4px 0 0 var(--color-success-fg);
 }
 
 .cvd-preview__chip--incorrect {
   background: var(--color-error-bg);
-  box-shadow: inset 4px 0 0 var(--color-error);
+  box-shadow: inset 4px 0 0 var(--color-error-fg);
 }
 
 /* 關於區塊 */

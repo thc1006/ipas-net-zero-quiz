@@ -179,26 +179,39 @@ test.describe('無障礙功能', () => {
     const cvdSelect = page.getByLabel('色覺辨認模式');
     await expect(cvdSelect).toBeVisible();
 
-    const successVar = () =>
-      page.evaluate(() =>
-        getComputedStyle(document.documentElement)
-          .getPropertyValue('--color-success')
-          .trim()
-          .toLowerCase()
+    // 預覽色條改吃 --color-*-fg（與真實選項回饋同源）；-fg 一樣受 CVD remap。
+    // correct 與 incorrect 都要驗 —— 否則 incorrect chip 誤接 success-fg 仍會全綠。
+    const cssVar = (name: string) => () =>
+      page.evaluate(
+        (n) =>
+          getComputedStyle(document.documentElement)
+            .getPropertyValue(n)
+            .trim()
+            .toLowerCase(),
+        name
       );
-    const correctBar = () =>
+    const successFg = cssVar('--color-success-fg');
+    const errorFg = cssVar('--color-error-fg');
+    const bar = (which: 'correct' | 'incorrect') => () =>
       page
-        .locator('.cvd-preview__chip--correct')
+        .locator(`.cvd-preview__chip--${which}`)
         .evaluate((el) => getComputedStyle(el).boxShadow);
+    const correctBar = bar('correct');
+    const incorrectBar = bar('incorrect');
 
-    // none：綠 #4caf50 / rgb(76, 175, 80)
-    await expect.poll(successVar).toBe('#4caf50');
-    await expect.poll(correctBar).toContain('76, 175, 80');
+    // none：correct=success-fg #1b5e20 / rgb(27,94,32)；incorrect=error-fg #b71c1c / rgb(183,28,28)
+    await expect.poll(successFg).toBe('#1b5e20');
+    await expect.poll(correctBar).toContain('27, 94, 32');
+    await expect.poll(errorFg).toBe('#b71c1c');
+    await expect.poll(incorrectBar).toContain('183, 28, 28');
 
-    // 切綠色盲 → 藍 #0288d1 / rgb(2, 136, 209)（poll 容忍 style recalc 的一拍延遲）
+    // 切綠色盲 → correct #01579b / rgb(1,87,155)；incorrect #a52a00 / rgb(165,42,0)
+    // （poll 容忍 style recalc 的一拍延遲）
     await cvdSelect.selectOption('deuteranopia');
-    await expect.poll(successVar).toBe('#0288d1');
-    await expect.poll(correctBar).toContain('2, 136, 209');
+    await expect.poll(successFg).toBe('#01579b');
+    await expect.poll(correctBar).toContain('1, 87, 155');
+    await expect.poll(errorFg).toBe('#a52a00');
+    await expect.poll(incorrectBar).toContain('165, 42, 0');
   });
 });
 
