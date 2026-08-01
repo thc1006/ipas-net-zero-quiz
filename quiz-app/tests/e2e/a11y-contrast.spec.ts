@@ -111,6 +111,10 @@ test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 
     const onE = parseColor(c.onError, `${c.mode} on-error`);
     const sTint = alphaOver(c.successBg, surf, `${c.mode} success-bg`);
     const eTint = alphaOver(c.errorBg, surf, `${c.mode} error-bg`);
+    // tint 也可能疊在「page background」上（如首頁 .badge-success 的 ancestor 皆透明），
+    // 那比疊在白 surface 上對比更低 —— 一定要驗這一種，否則會像上一版誤綠。
+    const sTintPage = alphaOver(c.successBg, bg, `${c.mode} success-bg/page`);
+    const eTintPage = alphaOver(c.errorBg, bg, `${c.mode} error-bg/page`);
     const sScore = gradientStops(c.successScore, `${c.mode} success-score`);
     const eScore = gradientStops(c.errorScore, `${c.mode} error-score`);
 
@@ -120,6 +124,7 @@ test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 
       [surfV, 'surface-variant'],
       [bg, 'page-background'],
       [sTint, 'success-tint'],
+      [sTintPage, 'success-tint-over-page'],
       ...sScore.map((g, i): [number[], string] => [g, `success-score#${i}`]),
     ];
     for (const [b, name] of successBgs) {
@@ -132,6 +137,7 @@ test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 
       [surfV, 'surface-variant'],
       [bg, 'page-background'],
       [eTint, 'error-tint'],
+      [eTintPage, 'error-tint-over-page'],
       ...eScore.map((g, i): [number[], string] => [g, `error-score#${i}`]),
     ];
     for (const [b, name] of errorBgs) {

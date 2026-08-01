@@ -141,9 +141,12 @@
   cursor: default;
 }
 
-.option-item.correct .option-key {
+/* 也涵蓋「使用者選中的那個 key」—— :checked + .option-key 特異性(0,4,1) 比 .correct .option-key
+   (0,3,0) 高，不明確覆寫的話，選中的正解 key 會停在 primary 而非 success solid。 */
+.option-item.correct .option-key,
+.option-item.correct input[type='radio']:checked + .option-key {
   background: var(--color-success-solid);
-  color: white;
+  color: var(--color-on-success);
 }
 
 .option-item.correct .option-icon {
@@ -157,9 +160,10 @@
   cursor: default;
 }
 
-.option-item.incorrect .option-key {
+.option-item.incorrect .option-key,
+.option-item.incorrect input[type='radio']:checked + .option-key {
   background: var(--color-error-solid);
-  color: white;
+  color: var(--color-on-error);
 }
 
 .option-item.incorrect .option-icon {

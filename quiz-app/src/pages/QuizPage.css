@@ -43,8 +43,8 @@
   transition: all var(--transition-fast);
 }
 .quiz-abort-btn:hover {
-  border-color: var(--color-error, #d32f2f);
-  color: var(--color-error, #d32f2f);
+  border-color: var(--color-error-fg, #b71c1c);
+  color: var(--color-error-fg, #b71c1c);
 }
 .quiz-abort-btn:focus-visible {
   outline: 2px solid var(--color-primary);

@@ -46,8 +46,9 @@
      全部值用 WCAG 公式對「真實前景/背景對」跨 light/dark × 4 CVD 驗過（見 a11y-contrast e2e）。 */
   --color-success-solid: #2e7d32;
   --color-error-solid: #c62828;
-  --color-success-fg: #2e7d32;
-  --color-error-fg: #c62828;
+  /* -fg 比 -solid 更深：要在「tint 疊 page-background(#f5f7fa，非白 surface)」上也達 4.5 */
+  --color-success-fg: #1b5e20;
+  --color-error-fg: #b71c1c;
   --color-on-success: #ffffff;
   --color-on-error: #ffffff;
   --color-success-score: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
@@ -182,7 +183,7 @@
   --color-success-solid: #1565c0;
   --color-error-solid: #bf360c;
   --color-success-fg: #1565c0;
-  --color-error-fg: #bf360c;
+  --color-error-fg: #a83000;
 }
 
 [data-cvd-mode='deuteranopia'] {
