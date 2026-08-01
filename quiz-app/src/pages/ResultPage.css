@@ -54,7 +54,7 @@
 }
 
 .score-section.good {
-  background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+  background: var(--color-success-score);
 }
 
 .score-section.good .score-icon .material-icons,
@@ -74,7 +74,7 @@
 }
 
 .score-section.fail {
-  background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
+  background: var(--color-error-score);
 }
 
 .score-section.fail .score-icon .material-icons,

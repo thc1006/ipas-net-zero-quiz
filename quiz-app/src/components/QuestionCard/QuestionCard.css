@@ -318,6 +318,9 @@
 
 .ai-response.error .ai-response-header {
   background: var(--color-error-solid);
+  /* 標頭前景在深色主題是近黑（--color-on-primary=#1c1b1f），會跟深紅 solid 撞成低對比；
+     實填底一律用純白 on-color */
+  color: var(--color-on-error);
 }
 
 /* 響應式 */

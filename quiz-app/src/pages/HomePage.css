@@ -116,6 +116,8 @@
 
 .practice-pool-tip--enabled .practice-pool-tip__icon {
   background: var(--color-success-solid);
+  /* 深色主題的 --color-on-primary 是近黑，白 icon 假設不成立；一律用純白 on-color */
+  color: var(--color-on-success);
 }
 
 .practice-pool-tip__icon .material-icons {
