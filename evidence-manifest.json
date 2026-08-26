@@ -8,8 +8,8 @@
   "summary": {
     "main_tier1_questions": 762,
     "pool_tier1_questions": 138,
-    "total_evidence_records": 925,
-    "primary_evidence_records": 916,
+    "total_evidence_records": 926,
+    "primary_evidence_records": 917,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -6661,6 +6661,15 @@
       "bank": "main",
       "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
       "host": "eur-lex.europa.eu",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[64]",
+      "bank": "main",
+      "url": "https://taxation-customs.ec.europa.eu/system/files/2026-08/Guidance%20No.%203%20-%20CBAM%20methods%20for%20the%20calculation%20of%20emissions%20embedded%20in%20goods.pdf",
+      "host": "taxation-customs.ec.europa.eu",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
