@@ -1,0 +1,58 @@
+/* 答案依據：逐字引文 + 可追溯的出處連結 */
+.answer-evidence {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--color-surface-variant);
+  border-left: 3px solid var(--color-info-fg);
+  border-radius: var(--radius-sm);
+}
+
+.answer-evidence--compact {
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: var(--color-surface);
+}
+
+.answer-evidence__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-info-fg);
+  margin-bottom: var(--spacing-xs);
+}
+
+.answer-evidence--compact .answer-evidence__header {
+  font-size: var(--font-size-xs);
+  margin-bottom: 2px;
+}
+
+.answer-evidence__quote {
+  margin: 0 0 var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-text-primary);
+  /* 逐字引文可能是整段法條，限高可捲動 */
+  max-height: 12em;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.answer-evidence--compact .answer-evidence__quote {
+  font-size: var(--font-size-xs);
+  line-height: 1.6;
+  max-height: 8em;
+}
+
+.answer-evidence__link {
+  font-size: var(--font-size-xs);
+}
+
+.answer-evidence__grade {
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}

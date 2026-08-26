@@ -54,6 +54,54 @@ function collectSources(q: {
   return uniq.length > 0 ? uniq : undefined;
 }
 
+/** evidence 只接受 https —— 這條字串會直接進 href，不能讓 javascript: 之類的東西通過。 */
+function safeEvidenceUrl(raw?: string): string | undefined {
+  if (!raw) return undefined;
+  try {
+    const url = new URL(raw);
+    return url.protocol === 'https:' ? url.href : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * 挑出「撐住正解」的那一句逐字引文 —— **找不到就不顯示，不猜**。
+ *
+ * 這裡刻意 fail-closed。第一版寫成「找不到標記就退回第一條」，那等於把
+ * 「這題從哪抄來的」或「支持別的選項」的引文，掛在「答案依據」四個字下面 ——
+ * 標題承諾它證明了正解，實際上沒有。全庫實測：764 題有引文，其中 756 題的引文
+ * 明確標了 supports_option 等於正解且附 https 來源；把那 8 題沒標記的排除掉，
+ * 遠比讓它們冒充答案依據安全。
+ *
+ * 四個條件缺一不可：有標準答案、supports_option 對上正解、引文夠長、來源是 https。
+ */
+export function pickEvidence(q: {
+  answer?: string | null;
+  metadata?: {
+    evidence?: {
+      url?: string;
+      quote?: string;
+      supports_option?: string;
+      authority?: string;
+    }[];
+  };
+}): { quote: string; url: string; authority?: string } | undefined {
+  if (!q.answer) return undefined;
+  const list = q.metadata?.evidence;
+  if (!Array.isArray(list)) return undefined;
+
+  for (const e of list) {
+    if (e.supports_option !== q.answer) continue;
+    const quote = (e.quote ?? '').trim();
+    if (quote.length < 8) continue;
+    const url = safeEvidenceUrl(e.url);
+    if (!url) continue;
+    return e.authority ? { quote, url, authority: e.authority } : { quote, url };
+  }
+  return undefined;
+}
+
 /**
  * 將 Gist 題目轉換為統一格式
  */
@@ -68,6 +116,7 @@ function convertGistQuestion(q: GistQuestion): QuizQuestion {
     year: null,
     hasAnswer: q.answer !== null,
     sources: collectSources(q),
+    evidence: pickEvidence(q),
     explanation: q.explanation,
   };
 }
@@ -86,6 +135,7 @@ function convertUniqueQuestion(q: UniqueQuestion): QuizQuestion {
     year: q.year,
     hasAnswer: q.answer !== null,
     sources: collectSources(q),
+    evidence: pickEvidence(q),
     explanation: q.explanation ?? undefined,
   };
 }

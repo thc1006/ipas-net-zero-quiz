@@ -1,5 +1,6 @@
 // 結果頁面元件
 import { useMemo, useCallback, useState } from 'react';
+import { AnswerEvidence } from '../components/AnswerEvidence/AnswerEvidence';
 import { getQuestionById, getSimilarQuestions } from '../data/questions';
 import {
   explainQuestionStream,
@@ -343,6 +344,8 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                         <strong className="text-success">{answer.correctAnswer}</strong>
                       </span>
                     </div>
+
+                    <AnswerEvidence evidence={question.evidence} compact />
 
                     {/* AI 功能區 */}
                     <div className="wrong-ai-section">

@@ -8,8 +8,8 @@
   "summary": {
     "main_tier1_questions": 762,
     "pool_tier1_questions": 138,
-    "total_evidence_records": 920,
-    "primary_evidence_records": 911,
+    "total_evidence_records": 927,
+    "primary_evidence_records": 918,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -1926,6 +1926,33 @@
       "qid": "S_VOCUS_03-q004",
       "bank": "main",
       "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+      "host": "usr.chu.edu.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_VOCUS_03-q004",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+      "host": "usr.chu.edu.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_VOCUS_03-q004",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+      "host": "usr.chu.edu.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_VOCUS_03-q004",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
       "host": "usr.chu.edu.tw",
       "authority": "primary",
       "has_quote": true,
@@ -6634,6 +6661,42 @@
       "bank": "main",
       "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
       "host": "eur-lex.europa.eu",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[64]",
+      "bank": "main",
+      "url": "https://eur-lex.europa.eu/legal-content/en/TXT/?uri=CELEX%3A32025R2547",
+      "host": "eur-lex.europa.eu",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[64]",
+      "bank": "main",
+      "url": "https://taxation-customs.ec.europa.eu/system/files/2026-08/Guidance%20No.%203%20-%20CBAM%20methods%20for%20the%20calculation%20of%20emissions%20embedded%20in%20goods.pdf",
+      "host": "taxation-customs.ec.europa.eu",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[64]",
+      "bank": "main",
+      "url": "https://www.cca.gov.tw/affairs/cbam/resource/faq/35250.html",
+      "host": "www.cca.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[64]",
+      "bank": "main",
+      "url": "https://www.cca.gov.tw/affairs/cbam/resource/faq/35250.html",
+      "host": "www.cca.gov.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true

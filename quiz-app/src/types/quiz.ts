@@ -34,6 +34,18 @@ export interface MainBankItemMetadata {
   original_id?: string;
   /** 該題對應的 primary-source URL 陣列（PR #68 起寫入；季度 workflow 會 curl 驗） */
   sources?: string[];
+  /**
+   * 逐字引文 —— 「這句原文為什麼支持這個答案」。
+   * `supports_option` 指向它撐住的那個選項；UI 取其中對應正解的那一條顯示為「答案依據」。
+   */
+  evidence?: {
+    url?: string;
+    quote?: string;
+    supports_option?: string;
+    note?: string;
+    /** 非一手來源時標 'secondary'（與 evidence-manifest.json 的分級同步，有 gate 對帳） */
+    authority?: string;
+  }[];
   /** sources 上次 curl 驗 200 OK 的日期（YYYY-MM-DD） */
   sources_verified_date?: string;
   /** 這一題的**時效性內容**實際查證到哪一天。只有 time_sensitive 的題目才有。 */
@@ -134,6 +146,13 @@ export interface QuizQuestion {
   hasAnswer: boolean;
   /** Curl 實測通過的引用 URL（來自 metadata.sources），UI 渲染為「參考來源」 */
   sources?: string[];
+  /**
+   * 撐住正解的那一句逐字原文（來自 metadata.evidence），UI 渲染為「答案依據」。
+   *
+   * 為什麼要顯示：這些引文一直只存在資料裡，畫面上只看得到一排來源連結。
+   * 於是「教材原文」與「某篇部落格」在使用者眼中份量相同 —— 而答案其實是前者撐住的。
+   */
+  evidence?: { quote: string; url: string; authority?: string };
   /** 解析文字（給 AI helper 與 UI 參考），可能為空 */
   explanation?: string | null;
   /** 練習池題目專屬：UI 用以渲染來源徽章；主題庫題不帶 */
