@@ -23,7 +23,10 @@ vi.mock('../data/questions', () => {
     subject: '考科1',
     section: 'fixture',
     explanation: '二氧化碳為主要溫室氣體',
-    evidence: { quote: '固定測試用逐字引文：二氧化碳屬溫室氣體。' },
+    evidence: {
+      quote: '固定測試用逐字引文：二氧化碳屬溫室氣體。',
+      url: 'https://example.org/fixture',
+    },
   } as unknown as QuizQuestion;
 
   const similarFixture: QuizQuestion = {

@@ -484,12 +484,12 @@ CBAM、ISO 14068-1 屬**科目一**；**科目二只涵蓋 ISO 14064-1 與 ISO 1
 
 ## 內容時效性
 
-題庫中有 **133 題**的答案會隨法規變動（CBAM、碳費、NDC、碳中和標準）。
+題庫中有 **132 題**的答案會隨法規變動（CBAM、碳費、NDC、碳中和標準）。
 [`CONTENT-CURRENCY.md`](CONTENT-CURRENCY.md) 記錄已查證到哪一天、**還有什麼沒確定**、
 以及下一個到期日（最近的是 **2026-12-15：ISAE 3410 撤回，由 ISSA 5000 取代**）。
 
 `meta.content_review.last_review_date` **不代表整份題庫都查證到那一天** ——
-本輪只實查 **133 / 781** 題。判斷單一題目請看該題的 `metadata.valid_as_of`。
+本輪只實查 **132 / 781** 題。判斷單一題目請看該題的 `metadata.valid_as_of`。
 
 季排程 `quarterly-time-sensitive-verify` 現在做兩件事，但**能力範圍差很多**：
 

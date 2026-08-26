@@ -54,32 +54,47 @@ function collectSources(q: {
   return uniq.length > 0 ? uniq : undefined;
 }
 
+/** evidence 只接受 https —— 這條字串會直接進 href，不能讓 javascript: 之類的東西通過。 */
+function safeEvidenceUrl(raw?: string): string | undefined {
+  if (!raw) return undefined;
+  try {
+    const url = new URL(raw);
+    return url.protocol === 'https:' ? url.href : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 /**
- * 挑出「撐住正解」的那一句逐字引文。
+ * 挑出「撐住正解」的那一句逐字引文 —— **找不到就不顯示，不猜**。
  *
- * 優先取 supports_option 等於本題答案的那一條；沒有標的話退而取第一條有引文的。
- * 會濾掉「只是把題幹抄一遍」的引文 —— 那種引文證明的是這題從哪裡抄來的（provenance），
- * 不是答案為什麼對，掛在「答案依據」下面會誤導人。
+ * 這裡刻意 fail-closed。第一版寫成「找不到標記就退回第一條」，那等於把
+ * 「這題從哪抄來的」或「支持別的選項」的引文，掛在「答案依據」四個字下面 ——
+ * 標題承諾它證明了正解，實際上沒有。全庫實測：764 題有引文，其中 756 題的引文
+ * 明確標了 supports_option 等於正解且附 https 來源；把那 8 題沒標記的排除掉，
+ * 遠比讓它們冒充答案依據安全。
+ *
+ * 四個條件缺一不可：有標準答案、supports_option 對上正解、引文夠長、來源是 https。
  */
 export function pickEvidence(q: {
   answer?: string | null;
-  stem?: string;
-  metadata?: { evidence?: { url?: string; quote?: string; supports_option?: string }[] };
-}): { quote: string; url?: string } | undefined {
+  metadata?: {
+    evidence?: { url?: string; quote?: string; supports_option?: string }[];
+  };
+}): { quote: string; url: string } | undefined {
+  if (!q.answer) return undefined;
   const list = q.metadata?.evidence;
-  if (!Array.isArray(list) || list.length === 0) return undefined;
-  const stemHead = (q.stem ?? '').slice(0, 12);
-  const usable = list.filter((e) => {
+  if (!Array.isArray(list)) return undefined;
+
+  for (const e of list) {
+    if (e.supports_option !== q.answer) continue;
     const quote = (e.quote ?? '').trim();
-    if (quote.length < 8) return false;
-    // 引文開頭就跟題幹一樣 = 抄題幹，不是答案依據
-    return !(stemHead.length >= 8 && quote.startsWith(stemHead));
-  });
-  if (usable.length === 0) return undefined;
-  const preferred =
-    (q.answer ? usable.find((e) => e.supports_option === q.answer) : undefined) ?? usable[0];
-  const quote = (preferred.quote ?? '').trim();
-  return quote ? { quote, url: preferred.url } : undefined;
+    if (quote.length < 8) continue;
+    const url = safeEvidenceUrl(e.url);
+    if (!url) continue;
+    return { quote, url };
+  }
+  return undefined;
 }
 
 /**

@@ -676,33 +676,3 @@
     width: 100%;
   }
 }
-
-/* 錯題卡上的答案依據（逐字引文） */
-.wrong-evidence {
-  margin-top: var(--spacing-sm);
-  padding: var(--spacing-sm);
-  background: var(--color-surface);
-  border-left: 3px solid var(--color-info-fg);
-  border-radius: var(--radius-sm);
-}
-
-.wrong-evidence-header {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  color: var(--color-info-fg);
-  margin-bottom: 2px;
-}
-
-.wrong-evidence-quote {
-  margin: 0;
-  font-size: var(--font-size-xs);
-  line-height: 1.6;
-  color: var(--color-text-primary);
-  max-height: 8em;
-  overflow-y: auto;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
