@@ -6,7 +6,7 @@
 // 這個旗標一旦被改掉或漏掉，畫面上看不出差別（照樣會跳認證），只有第一次造訪的
 // 使用者會突然被要求註冊 —— 正是這種「安靜壞掉」需要測試。
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { ensurePuterAuth } from './ai-helper';
+import { ensurePuterAuth, loadPuterSDK } from './ai-helper';
 
 type AuthMock = {
   isSignedIn: ReturnType<typeof vi.fn>;
@@ -160,5 +160,106 @@ describe('ensurePuterAuth（明確要求臨時帳號）', () => {
 
     expect(r.ok).toBe(false);
     expect(r.error).toBeTruthy();
+  });
+});
+
+describe('loadPuterSDK 的失敗恢復', () => {
+  const SEL = 'script[data-ipas-puter-sdk="true"]';
+
+  beforeEach(() => {
+    delete (window as unknown as { puter?: unknown }).puter;
+    document.querySelectorAll(SEL).forEach((el) => el.remove());
+  });
+
+  it('載入失敗後不留下死標籤，下一次呼叫會重新插入並可能成功', async () => {
+    // 這是 eager preload 帶出來的真實退化：失敗的 <script> 留在 DOM，
+    // 舊 loader 用 src*="puter.com" 找到它就以為「還在載入」，
+    // 於是之後每次點擊都只對著死標籤空等十秒，直到重新整理才會恢復。
+    const first = loadPuterSDK();
+    const tag1 = document.querySelector<HTMLScriptElement>(SEL);
+    expect(tag1, '應該插入自己的 script').not.toBeNull();
+    tag1!.onerror?.(new Event('error'));
+    await expect(first).resolves.toBe(false);
+
+    expect(document.querySelectorAll(SEL), '失敗的 script 應被移除').toHaveLength(0);
+
+    // 第二次呼叫：重新插入，這次讓它成功
+    const retry = loadPuterSDK();
+    const tag2 = document.querySelector<HTMLScriptElement>(SEL);
+    expect(tag2, '應該重新插入 script').not.toBeNull();
+    expect(tag2).not.toBe(tag1);
+
+    installPuter({});
+    tag2!.onload?.(new Event('load'));
+    await expect(retry).resolves.toBe(true);
+  });
+
+  it('只認自己插入的 script，不會被其他 puter.com 資源誤導', async () => {
+    const stray = document.createElement('script');
+    stray.src = 'https://js.puter.com/v2/something-else.js';
+    document.head.appendChild(stray);
+
+    const p = loadPuterSDK();
+    const owned = document.querySelector<HTMLScriptElement>(SEL);
+    expect(owned, '不該把別人的 script 當成自己的').not.toBeNull();
+
+    installPuter({});
+    owned!.onload?.(new Event('load'));
+    await expect(p).resolves.toBe(true);
+    stray.remove();
+  });
+
+  it('SDK 只掛了 ai 沒掛 auth 時不算 ready（認證流程需要 auth）', async () => {
+    (window as unknown as { puter?: unknown }).puter = { ai: { chat: vi.fn() } };
+    const p = loadPuterSDK();
+    const tag = document.querySelector<HTMLScriptElement>(SEL);
+    expect(tag, 'ai 有、auth 沒有 → 仍應嘗試載入').not.toBeNull();
+    tag!.onerror?.(new Event('error'));
+    await expect(p).resolves.toBe(false);
+  });
+});
+
+describe('認證錯誤分類', () => {
+  beforeEach(() => {
+    delete (window as unknown as { puter?: unknown }).puter;
+  });
+
+  it('舊 token 觸發重新認證、使用者取消 —— 必須失敗，不能放行去呼叫 AI', async () => {
+    const auth = installPuter({
+      isSignedIn: vi.fn(() => true), // 本地還留著 token
+      getUser: vi.fn(async () => {
+        throw { status: 401, error: { code: 'auth_canceled' } };
+      }),
+    });
+
+    const r = await ensurePuterAuth();
+
+    expect(auth.signIn, '本地有 token，不會先跳 signIn').not.toHaveBeenCalled();
+    expect(r.ok, '認證未完成卻回 ok:true，等一下 ai.chat 會再跳一次登入').toBe(false);
+    expect(r.error).toBeTruthy();
+  });
+
+  it('token 失效（reauth_required）也視為認證失敗', async () => {
+    installPuter({
+      isSignedIn: vi.fn(() => true),
+      getUser: vi.fn(async () => {
+        throw { code: 'reauth_required' };
+      }),
+    });
+    const r = await ensurePuterAuth();
+    expect(r.ok).toBe(false);
+    expect(r.error).toContain('重新認證');
+  });
+
+  it('與認證無關的 profile 讀取失敗才降級放行', async () => {
+    installPuter({
+      isSignedIn: vi.fn(() => true),
+      getUser: vi.fn(async () => {
+        throw new Error('network glitch');
+      }),
+    });
+    const r = await ensurePuterAuth();
+    expect(r.ok, '純網路錯誤不該擋掉已完成的認證').toBe(true);
+    expect(r.username).toBeUndefined();
   });
 });

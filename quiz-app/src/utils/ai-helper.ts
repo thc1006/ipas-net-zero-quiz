@@ -59,77 +59,73 @@ const SYSTEM_PROMPT = `你是一位專業的 iPAS 淨零碳規劃管理師考試
 4. 使用繁體中文回答
 5. 每個選項都要分析對錯原因`;
 
+const PUTER_SDK_URL = 'https://js.puter.com/v2/';
+/** 只認自己插入的那個 script —— 不要用 src*="puter.com" 去猜別人的資源 */
+const PUTER_SCRIPT_ATTR = 'data-ipas-puter-sdk';
+
 /**
- * 檢查 Puter.js 是否已載入
+ * SDK 是否真的可用。
+ *
+ * 注意這裡要同時看 ai 與 auth：認證流程收回自己控制之後，只檢查 ai 會在
+ * auth 尚未掛上時就宣稱 ready。
  */
 export function isPuterAvailable(): boolean {
-  return typeof window !== 'undefined' && !!window.puter?.ai;
+  return typeof window !== 'undefined' && !!window.puter?.ai && !!window.puter?.auth;
 }
 
+let sdkLoadPromise: Promise<boolean> | null = null;
+
 /**
- * 載入 Puter.js SDK（如果尚未載入）
+ * 載入 Puter.js SDK。
+ *
+ * 為什麼不是「看 DOM 裡有沒有 puter script」：那個判斷會把**載入失敗留下的死標籤**
+ * 當成「還在載入中」，於是之後每一次點擊都只是對著死標籤輪詢十秒，直到使用者重新整理
+ * 才會恢復。改成單一自有 promise：失敗或逾時就移除自己插入的 script 並清空狀態，
+ * 下一次呼叫才會真的重試。
  */
 export async function loadPuterSDK(): Promise<boolean> {
-  if (isPuterAvailable()) {
-    return true;
-  }
+  if (typeof window === 'undefined') return false;
+  if (isPuterAvailable()) return true;
+  if (sdkLoadPromise) return sdkLoadPromise;
 
-  return new Promise((resolve) => {
-    // 檢查是否已有 script 標籤
-    if (document.querySelector('script[src*="puter.com"]')) {
-      // 等待載入完成
-      const checkInterval = setInterval(() => {
-        if (isPuterAvailable()) {
-          clearInterval(checkInterval);
-          resolve(true);
-        }
-      }, 100);
-
-      // 最多等待 10 秒
-      setTimeout(() => {
-        clearInterval(checkInterval);
-        resolve(false);
-      }, 10000);
-      return;
+  sdkLoadPromise = new Promise<boolean>((resolve) => {
+    let script = document.querySelector<HTMLScriptElement>(
+      `script[${PUTER_SCRIPT_ATTR}="true"]`
+    );
+    const owned = !script;
+    if (!script) {
+      script = document.createElement('script');
+      script.src = PUTER_SDK_URL;
+      script.async = true;
+      script.setAttribute(PUTER_SCRIPT_ATTR, 'true');
+      document.head.appendChild(script);
     }
 
-    // 動態載入 Puter.js
-    const script = document.createElement('script');
-    script.src = 'https://js.puter.com/v2/';
-    script.async = true;
-
-    script.onload = () => {
-      const checkInterval = setInterval(() => {
-        if (isPuterAvailable()) {
-          clearInterval(checkInterval);
-          resolve(true);
-        }
-      }, 100);
-
-      setTimeout(() => {
-        clearInterval(checkInterval);
-        resolve(isPuterAvailable());
-      }, 5000);
+    let settled = false;
+    const finish = (ok: boolean): void => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timer);
+      if (script) {
+        script.onload = null;
+        script.onerror = null;
+        // 載入失敗就把死標籤清掉，否則下次會被誤認為「還在載入」
+        if (!ok && owned) script.remove();
+      }
+      resolve(ok);
     };
 
-    script.onerror = () => {
-      resolve(false);
-    };
-
-    document.head.appendChild(script);
+    const timer = window.setTimeout(() => finish(false), 10_000);
+    script.onload = () => finish(isPuterAvailable());
+    script.onerror = () => finish(false);
+  }).then((ok) => {
+    // 只快取「進行中」的載入：成功後交給 isPuterAvailable() 判斷，
+    // 這樣既能共用同一次載入，SDK 之後若消失也不會回傳過期的 true。
+    sdkLoadPromise = null;
+    return ok;
   });
-}
 
-/**
- * 先把 Puter SDK 準備好（fire-and-forget）。
- *
- * 為什麼需要：signIn() 必須由使用者操作**直接**觸發，而第一次載入 SDK 要走網路。
- * 若等到按下按鈕才開始載入，中間這段 await 可能讓 user activation 失效、彈窗被瀏覽器擋掉。
- * 在 AI 功能可能被使用之前先呼叫這支，按鈕按下去時就只剩認證本身。
- */
-export function preloadPuterSDK(): void {
-  if (typeof window === 'undefined' || isPuterAvailable()) return;
-  void loadPuterSDK();
+  return sdkLoadPromise;
 }
 
 /** Puter 認證結果 */
@@ -147,16 +143,53 @@ export interface PuterAuthResult {
   error?: string;
 }
 
+/** 取出 Puter 錯誤碼（含巢狀 error.code 這種形狀） */
+function puterErrorCode(error: unknown): string {
+  if (typeof error === 'string') return error.toLowerCase();
+  if (!error || typeof error !== 'object') return '';
+  const e = error as { code?: unknown; error?: unknown };
+  if (typeof e.code === 'string') return e.code.toLowerCase();
+  if (typeof e.error === 'string') return e.error.toLowerCase();
+  if (e.error && typeof e.error === 'object') {
+    const nested = e.error as { code?: unknown };
+    if (typeof nested.code === 'string') return nested.code.toLowerCase();
+  }
+  return '';
+}
+
+/** 這個錯誤代表「認證沒完成」，而不是「認證好了但讀不到 profile」 */
+function isAuthFailure(error: unknown): boolean {
+  const status =
+    error && typeof error === 'object'
+      ? Number((error as { status?: unknown }).status)
+      : 0;
+  const code = puterErrorCode(error);
+  return (
+    status === 401 ||
+    [
+      'reauth_required',
+      'token_auth_failed',
+      'auth_canceled',
+      'auth_cancelled',
+      'auth_window_closed',
+      'popup_blocked',
+    ].includes(code)
+  );
+}
+
 /** 把 Puter 丟出來的錯誤轉成使用者看得懂的訊息 */
 function describePuterAuthError(error: unknown): string {
   if (typeof error === 'string') return error;
-  const e = error as { error?: string; code?: string; msg?: string; message?: string } | undefined;
-  const code = String(e?.code ?? e?.error ?? '').toLowerCase();
+  const e = error as { msg?: string; message?: string } | undefined;
+  const code = puterErrorCode(error);
   if (code.includes('cancel') || code.includes('closed') || code.includes('abort')) {
     return '尚未完成 Puter 認證（視窗被關閉），請再試一次';
   }
   if (code.includes('popup') || code.includes('blocked')) {
     return '瀏覽器擋下了 Puter 認證視窗，請允許此網站的彈出式視窗後再試一次';
+  }
+  if (code === 'reauth_required' || code === 'token_auth_failed') {
+    return '先前的 Puter 登入已失效，請重新認證後再試一次';
   }
   return e?.msg ?? e?.message ?? 'Puter 認證失敗，請稍後再試';
 }
@@ -212,13 +245,20 @@ async function runPuterAuth(): Promise<PuterAuthResult> {
     return { ok: false, error: describePuterAuthError(error) };
   }
 
-  // 認證本身已經完成。getUser() 只是要拿身分資訊來記錄與判斷是否為臨時帳號，
-  // 它失敗不該讓使用者用不到 AI —— 只是我們少知道一點事情而已。
+  // getUser() 不只是拿頭像暱稱。isSignedIn() 只看本地有沒有 token，不保證伺服器仍接受它；
+  // token 過期或被撤銷時，getUser() 可能回 401 並觸發重新認證，使用者取消還會丟出
+  // 巢狀的 auth_canceled。把這種錯誤吞掉回 ok:true，等一下 ai.chat 會再跳一次登入 ——
+  // 正是這個 PR 想消滅的「認證流程不受控制」。
+  // 因此：認證類錯誤一律失敗；只有真正與認證無關的 profile 讀取失敗才降級放行。
   let user: { username?: string; is_temp?: boolean; is_temporary?: boolean } | null = null;
   try {
     user = await auth.getUser();
   } catch (error) {
-    logger.warn('Puter 已認證，但讀不到使用者資訊', {
+    if (isAuthFailure(error)) {
+      logger.warn('Puter 認證未完成', { reason: describePuterAuthError(error) });
+      return { ok: false, error: describePuterAuthError(error) };
+    }
+    logger.warn('Puter 已認證，但暫時讀不到使用者資訊', {
       reason: describePuterAuthError(error),
     });
   }

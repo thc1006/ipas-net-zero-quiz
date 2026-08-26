@@ -1,10 +1,9 @@
 // 結果頁面元件
-import { useMemo, useCallback, useEffect, useState } from 'react';
+import { useMemo, useCallback, useState } from 'react';
 import { getQuestionById, getSimilarQuestions } from '../data/questions';
 import {
   explainQuestionStream,
   generateSimilarQuestionStream,
-  preloadPuterSDK,
   type AIResponse,
 } from '../utils/ai-helper';
 import { SourceBreakdown } from '../components/SourceBreakdown/SourceBreakdown';
@@ -32,7 +31,6 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
   // AI 解析狀態（key 為 questionId）
   const [aiResponses, setAiResponses] = useState<Record<string, AIResponse>>({});
   const [loadingAI, setLoadingAI] = useState<Record<string, boolean>>({});
-
   // Streaming 暫存內容
   const [streamingAI, setStreamingAI] = useState<Record<string, string>>({});
 
@@ -65,13 +63,6 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
     () => answers.filter((a) => a.isCorrect === false),
     [answers]
   );
-
-  // 錯題卡上就有 AI 按鈕，進頁面先把 Puter SDK 載好：
-  // signIn() 必須由點擊**直接**觸發，臨場才載入會讓 user activation 失效、彈窗被擋。
-  // 只有錯題卡上才有 AI 按鈕；全對就沒有按鈕可按，不必白載入第三方 SDK
-  useEffect(() => {
-    if (wrongAnswers.length > 0) preloadPuterSDK();
-  }, [wrongAnswers.length]);
 
   // 累積最常答錯（Refs #64）— pure 篩選/排序在 selectWeakQuestions，
   // 此處只負責 id → 題幹查找（沒查到的就過濾掉，多為已被刪除題或 pool 題未載入）

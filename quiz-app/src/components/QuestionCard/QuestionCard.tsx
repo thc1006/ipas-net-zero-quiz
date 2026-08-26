@@ -1,11 +1,7 @@
 // QuestionCard 元件 - 顯示單一題目和選項
-import { useCallback, useEffect, useId, useMemo, useState } from 'react';
+import { useCallback, useId, useMemo, useState } from 'react';
 import type { QuizQuestion, QuizOption } from '../../types/quiz';
-import {
-  explainQuestion,
-  preloadPuterSDK,
-  type AIResponse,
-} from '../../utils/ai-helper';
+import { explainQuestion, type AIResponse } from '../../utils/ai-helper';
 import { SourceBadge } from '../SourceBadge/SourceBadge';
 import { SourceBanner } from '../SourceBanner/SourceBanner';
 import { LAW_PCODE_LABELS } from '../../data/law-pcode-labels';
@@ -79,12 +75,6 @@ export function QuestionCard({
     [question.id, question.hasAnswer, allStats]
   );
   const [isLoadingAI, setIsLoadingAI] = useState(false);
-
-  // AI 按鈕一出現就先載 SDK：Puter 的 signIn() 必須由點擊**直接**觸發，
-  // 若等按下去才開始載入，中間的 await 可能讓 user activation 失效、認證彈窗被擋。
-  useEffect(() => {
-    if (showAnswer) preloadPuterSDK();
-  }, [showAnswer]);
 
   const getOptionStatus = useCallback(
     (optionKey: string): 'default' | 'selected' | 'correct' | 'incorrect' => {
