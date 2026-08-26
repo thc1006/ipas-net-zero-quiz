@@ -93,6 +93,11 @@ export function QuestionCard({
   );
   const [isLoadingAI, setIsLoadingAI] = useState(false);
 
+  // 練習池的 AI 產題也帶解析（100 題）。那些解析是模型寫的，不能和通過反捏造閘門的
+  // 題庫解析共用同一個標籤 —— 標題本身就是一種背書。
+  const isAiAuthoredExplanation = question.provenance?.source_type === 'ai_generated';
+  const explanationLabel = isAiAuthoredExplanation ? 'AI 產題解析' : '題庫解析';
+
   const getOptionStatus = useCallback(
     (optionKey: string): 'default' | 'selected' | 'correct' | 'incorrect' => {
       if (!showAnswer) {
@@ -247,12 +252,20 @@ export function QuestionCard({
           等於讓未經審核的生成內容取代已審核的內容。順序固定為
           答案 → 題庫解析 → 答案依據 → 參考來源 → AI 延伸。 */}
       {showAnswer && question.explanation && (
-        <section className="curated-explanation" aria-label="題庫解析">
+        <section
+          className={`curated-explanation${
+            isAiAuthoredExplanation ? ' curated-explanation--ai' : ''
+          }`}
+          aria-label={explanationLabel}
+        >
           <div className="curated-explanation__header">
             <span className="material-icons sm" aria-hidden="true">
               menu_book
             </span>
-            <span>題庫解析</span>
+            <span>{explanationLabel}</span>
+            {isAiAuthoredExplanation && (
+              <span className="curated-explanation__grade">未經人工逐題審核</span>
+            )}
           </div>
           <p className="curated-explanation__body">{question.explanation}</p>
         </section>

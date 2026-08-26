@@ -142,3 +142,56 @@ describe('來源與練習池徽章', () => {
     expect(document.querySelector('.source-badge')).not.toBeNull();
   });
 });
+
+describe('解析的標籤必須誠實反映來源', () => {
+  it('主題庫的解析標「題庫解析」', () => {
+    render(
+      <QuestionCard
+        question={{ ...base, explanation: '通過反捏造閘門的解析' }}
+        questionNumber={1}
+        showAnswer
+        onSelectAnswer={vi.fn()}
+      />
+    );
+    expect(screen.getByLabelText('題庫解析')).toBeInTheDocument();
+    expect(screen.queryByText('未經人工逐題審核')).not.toBeInTheDocument();
+  });
+
+  it('練習池 AI 產題的解析改標「AI 產題解析」，並標示未經人工逐題審核', () => {
+    // 練習池有 100 題 AI 產題也帶解析。那是模型寫的，不能和通過反捏造閘門的
+    // 題庫解析共用同一個標籤 —— 標題本身就是一種背書。
+    render(
+      <QuestionCard
+        question={{
+          ...base,
+          sourceType: 'practice_pool',
+          provenance: { source_type: 'ai_generated' },
+          explanation: '模型寫的解析',
+        }}
+        questionNumber={1}
+        showAnswer
+        onSelectAnswer={vi.fn()}
+      />
+    );
+    expect(screen.getByLabelText('AI 產題解析')).toBeInTheDocument();
+    expect(screen.getByText('未經人工逐題審核')).toBeInTheDocument();
+    expect(screen.queryByLabelText('題庫解析')).not.toBeInTheDocument();
+  });
+
+  it('練習池的模擬題（非 AI 產題）仍標「題庫解析」', () => {
+    render(
+      <QuestionCard
+        question={{
+          ...base,
+          sourceType: 'practice_pool',
+          provenance: { source_type: 'external_mock' },
+          explanation: '人工整理的解析',
+        }}
+        questionNumber={1}
+        showAnswer
+        onSelectAnswer={vi.fn()}
+      />
+    );
+    expect(screen.getByLabelText('題庫解析')).toBeInTheDocument();
+  });
+});

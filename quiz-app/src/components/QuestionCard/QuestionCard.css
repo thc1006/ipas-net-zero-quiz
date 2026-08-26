@@ -483,3 +483,20 @@
   background: var(--color-surface-variant);
   color: var(--color-text-secondary);
 }
+
+/* AI 產題的解析：改用中性底色，並在標頭標明未經人工逐題審核 */
+.curated-explanation--ai {
+  background: var(--color-surface-variant);
+  border-left-color: var(--color-warning-fg);
+}
+
+.curated-explanation--ai .curated-explanation__header {
+  color: var(--color-warning-fg);
+}
+
+.curated-explanation__grade {
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
