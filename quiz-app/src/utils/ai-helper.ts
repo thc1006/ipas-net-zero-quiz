@@ -89,10 +89,16 @@ export async function loadPuterSDK(): Promise<boolean> {
   if (sdkLoadPromise) return sdkLoadPromise;
 
   sdkLoadPromise = new Promise<boolean>((resolve) => {
+    // 一律用全新的 script 重來：若上一次留下了自己的標籤（例如載入成功後 SDK 又消失），
+    // 沿用它會把 handler 掛在「onload 早已觸發過」的節點上，於是只能空等到逾時，
+    // 而且因為不是本次插入的而不敢移除 —— 又變成同一種卡死。帶自家標記的節點只有我們會建立，
+    // 直接清掉重插最安全。
+    for (const stale of document.querySelectorAll(`script[${PUTER_SCRIPT_ATTR}="true"]`)) {
+      stale.remove();
+    }
     let script = document.querySelector<HTMLScriptElement>(
       `script[${PUTER_SCRIPT_ATTR}="true"]`
     );
-    const owned = !script;
     if (!script) {
       script = document.createElement('script');
       script.src = PUTER_SDK_URL;
@@ -110,7 +116,7 @@ export async function loadPuterSDK(): Promise<boolean> {
         script.onload = null;
         script.onerror = null;
         // 載入失敗就把死標籤清掉，否則下次會被誤認為「還在載入」
-        if (!ok && owned) script.remove();
+        if (!ok) script.remove();
       }
       resolve(ok);
     };

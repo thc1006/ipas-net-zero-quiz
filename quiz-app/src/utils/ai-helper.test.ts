@@ -263,3 +263,33 @@ describe('認證錯誤分類', () => {
     expect(r.username).toBeUndefined();
   });
 });
+
+describe('loadPuterSDK：SDK 載入成功後又消失', () => {
+  const SEL = 'script[data-ipas-puter-sdk="true"]';
+
+  beforeEach(() => {
+    delete (window as unknown as { puter?: unknown }).puter;
+    document.querySelectorAll(SEL).forEach((el) => el.remove());
+  });
+
+  it('不會沿用 onload 已觸發過的舊標籤而卡死', async () => {
+    // 先成功載入一次
+    const first = loadPuterSDK();
+    const tag1 = document.querySelector<HTMLScriptElement>(SEL)!;
+    installPuter({});
+    tag1.onload?.(new Event('load'));
+    await expect(first).resolves.toBe(true);
+
+    // SDK 消失（極端情況；也是測試之間最容易踩到的狀態）
+    delete (window as unknown as { puter?: unknown }).puter;
+
+    // 再次載入：必須是全新的 script，而不是對著舊節點空等
+    const again = loadPuterSDK();
+    const tag2 = document.querySelector<HTMLScriptElement>(SEL)!;
+    expect(tag2).not.toBe(tag1);
+
+    installPuter({});
+    tag2.onload?.(new Event('load'));
+    await expect(again).resolves.toBe(true);
+  });
+});
