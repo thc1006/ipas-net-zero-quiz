@@ -14,6 +14,17 @@ declare global {
           options?: { model?: string; stream?: boolean }
         ) => Promise<string | AsyncIterable<{ text?: string }>>;
       };
+      auth?: {
+        isSignedIn: () => boolean;
+        /**
+         * attempt_temp_user_creation：明確要求「直接建立臨時帳號」，
+         * 讓第一次造訪的使用者不必註冊就能用 AI 功能。
+         */
+        signIn: (options?: {
+          attempt_temp_user_creation?: boolean;
+        }) => Promise<unknown>;
+        getUser: () => Promise<{ username?: string; is_temp?: boolean } | null>;
+      };
       print: (content: string) => void;
     };
   }
@@ -105,6 +116,99 @@ export async function loadPuterSDK(): Promise<boolean> {
 }
 
 /**
+ * 先把 Puter SDK 準備好（fire-and-forget）。
+ *
+ * 為什麼需要：signIn() 必須由使用者操作**直接**觸發，而第一次載入 SDK 要走網路。
+ * 若等到按下按鈕才開始載入，中間這段 await 可能讓 user activation 失效、彈窗被瀏覽器擋掉。
+ * 在 AI 功能可能被使用之前先呼叫這支，按鈕按下去時就只剩認證本身。
+ */
+export function preloadPuterSDK(): void {
+  if (typeof window === 'undefined' || isPuterAvailable()) return;
+  void loadPuterSDK();
+}
+
+/** Puter 認證結果 */
+export interface PuterAuthResult {
+  ok: boolean;
+  /** 已完成認證的帳號名稱 */
+  username?: string;
+  /** 是否為臨時帳號（本專案主動要求建立的那種） */
+  isTemporary?: boolean;
+  /**
+   * 我們要求建立臨時帳號，但 Puter 判定不適用（例如瀏覽器已有使用紀錄或舊 session），
+   * 於是走了一般登入／註冊流程並完成認證 —— 認證仍成功，只是拿到的不是臨時帳號。
+   */
+  fellBackToRegularSignIn?: boolean;
+  error?: string;
+}
+
+/** 把 Puter 丟出來的錯誤轉成使用者看得懂的訊息 */
+function describePuterAuthError(error: unknown): string {
+  const e = error as { error?: string; code?: string; msg?: string; message?: string } | undefined;
+  const code = String(e?.code ?? e?.error ?? '').toLowerCase();
+  if (code.includes('cancel') || code.includes('closed') || code.includes('abort')) {
+    return '尚未完成 Puter 認證（視窗被關閉），請再試一次';
+  }
+  if (code.includes('popup') || code.includes('blocked')) {
+    return '瀏覽器擋下了 Puter 認證視窗，請允許此網站的彈出式視窗後再試一次';
+  }
+  return e?.msg ?? e?.message ?? 'Puter 認證失敗，請稍後再試';
+}
+
+/**
+ * 確保已完成 Puter 認證，並**明確要求**建立臨時帳號。
+ *
+ * 先前這個專案完全不碰 auth，直接呼叫 puter.ai.chat 讓 SDK 自行隱式跳認證：
+ * 我們既不能指定要臨時帳號，也讀不到最後究竟是誰在用、是不是臨時帳號。
+ * 這支把那段流程收回來自己控制。
+ *
+ * 呼叫端必須知道的兩個限制：
+ *
+ * 1. **signIn() 必須由 click／tap 等使用者操作直接觸發**，否則彈窗可能被瀏覽器封鎖。
+ *    因此本函式只能放在事件處理函式的呼叫鏈上；若在它之前還有耗時的 await，
+ *    請先用 preloadPuterSDK() 把 SDK 準備好。
+ *
+ * 2. **臨時帳號主要是給第一次造訪的使用者。** 若瀏覽器已有 Puter 使用紀錄、舊 session、
+ *    登出狀態，或被判定不適合建立臨時帳號，仍會轉向一般登入／註冊頁面。
+ *    此時認證可能照樣成功，只是拿到的不是臨時帳號 —— 見 fellBackToRegularSignIn。
+ */
+export async function ensurePuterAuth(): Promise<PuterAuthResult> {
+  const loaded = await loadPuterSDK();
+  const auth = window.puter?.auth;
+  if (!loaded || !auth) {
+    return { ok: false, error: 'AI 服務暫時無法使用，請稍後再試' };
+  }
+
+  try {
+    let requestedTempUser = false;
+    if (!auth.isSignedIn()) {
+      requestedTempUser = true;
+      await auth.signIn({ attempt_temp_user_creation: true });
+    }
+
+    const user = await auth.getUser();
+    const isTemporary = Boolean(user?.is_temp);
+    const fellBack = requestedTempUser && !isTemporary;
+
+    logger.info('Puter 認證完成', {
+      username: user?.username,
+      temporary: isTemporary,
+      fellBackToRegularSignIn: fellBack,
+    });
+
+    return {
+      ok: true,
+      username: user?.username,
+      isTemporary,
+      fellBackToRegularSignIn: fellBack,
+    };
+  } catch (error) {
+    logger.error('Puter 認證失敗', error);
+    return { ok: false, error: describePuterAuthError(error) };
+  }
+}
+
+/**
  * AI 回應結構
  */
 export interface AIResponse {
@@ -132,6 +236,16 @@ export async function explainQuestion(question: QuizQuestion): Promise<AIRespons
       content: '',
       confidence: 0,
       error: 'AI 服務暫時無法使用，請稍後再試',
+    };
+  }
+
+  const auth = await ensurePuterAuth();
+  if (!auth.ok) {
+    return {
+      success: false,
+      content: '',
+      confidence: 0,
+      error: auth.error ?? 'AI 服務需要 Puter 認證才能使用',
     };
   }
 
@@ -250,6 +364,16 @@ export async function explainQuestionStream(
     };
   }
 
+  const auth = await ensurePuterAuth();
+  if (!auth.ok) {
+    return {
+      success: false,
+      content: '',
+      confidence: 0,
+      error: auth.error ?? 'AI 服務需要 Puter 認證才能使用',
+    };
+  }
+
   const prompt = `${SYSTEM_PROMPT}
 
 請解釋以下題目：
@@ -335,6 +459,16 @@ export async function generateSimilarQuestionStream(
       content: '',
       confidence: 0,
       error: 'AI 服務暫時無法使用',
+    };
+  }
+
+  const auth = await ensurePuterAuth();
+  if (!auth.ok) {
+    return {
+      success: false,
+      content: '',
+      confidence: 0,
+      error: auth.error ?? 'AI 服務需要 Puter 認證才能使用',
     };
   }
 

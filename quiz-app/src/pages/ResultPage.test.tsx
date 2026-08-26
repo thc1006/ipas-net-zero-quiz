@@ -63,6 +63,8 @@ vi.mock('../data/questions', () => {
 vi.mock('../utils/ai-helper', () => ({
   explainQuestionStream: vi.fn(),
   generateSimilarQuestionStream: vi.fn(),
+  // ResultPage 掛載時會預載 Puter SDK（讓點擊當下不必再等載入），測試環境不需真的載
+  preloadPuterSDK: vi.fn(),
 }));
 
 import { ResultPage } from './ResultPage';
