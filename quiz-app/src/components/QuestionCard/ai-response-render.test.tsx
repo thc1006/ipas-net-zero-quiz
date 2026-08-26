@@ -66,13 +66,17 @@ describe('AI 區塊渲染', () => {
     expect(container.textContent).toContain('<img src=x');
   });
 
-  it('有信心度時顯示信心度徽章', async () => {
-    explainQuestion.mockResolvedValue({ success: true, content: '內容', confidence: 0.8 });
+  it('不顯示憑空生成的信心度百分比，只據實說明內容性質', async () => {
+    // estimateConfidence 是依「回覆長度、有沒有出現 A/B、命中幾個關鍵詞」加總出來的，
+    // 與答案正確與否無關。把它渲染成「信心度 85%」，是一個看起來精確卻憑空生成的數字。
+    explainQuestion.mockResolvedValue({ success: true, content: '內容', confidence: 0.85 });
 
     render(<QuestionCard question={question} questionNumber={1} showAnswer onSelectAnswer={vi.fn()} />);
     clickAI();
 
-    expect(await screen.findByText(/信心度/)).toBeInTheDocument();
+    expect(await screen.findByText('未經人工審核')).toBeInTheDocument();
+    expect(screen.queryByText(/信心度/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/85%/)).not.toBeInTheDocument();
   });
 
   it('失敗時顯示錯誤訊息而不是空白', async () => {

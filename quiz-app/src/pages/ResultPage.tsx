@@ -400,11 +400,8 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                           <div className="ai-response-header-inline">
                             <span className="material-icons sm">smart_toy</span>
                             <span>AI 解析</span>
-                            {aiResponse.confidence > 0 && (
-                              <span className="confidence-inline">
-                                信心度 {Math.round(aiResponse.confidence * 100)}%
-                              </span>
-                            )}
+                            {/* 不再顯示憑空生成的信心度百分比（見 ai-helper 的 AIResponse 註解） */}
+                            <span className="confidence-inline">未經人工審核</span>
                           </div>
                           {aiResponse.success ? (
                             <div className="ai-content">

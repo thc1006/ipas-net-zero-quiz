@@ -327,11 +327,10 @@ export function QuestionCard({
               <div className="ai-response-header">
                 <span className="material-icons">smart_toy</span>
                 <span>AI 解析</span>
-                {aiResponse.confidence > 0 && (
-                  <span className="confidence-badge">
-                    信心度 {Math.round(aiResponse.confidence * 100)}%
-                  </span>
-                )}
+                {/* 先前這裡渲染「信心度 85%」。那個數字來自回覆長度與關鍵詞加總，
+                    與答案正確與否無關 —— 一個憑空生成卻看起來精確的百分比，
+                    比不顯示更糟。改為據實說明這段內容的性質。 */}
+                <span className="confidence-badge">未經人工審核</span>
               </div>
               {aiResponse.success ? (
                 <div className="ai-response-content">
