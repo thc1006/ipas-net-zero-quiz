@@ -26,10 +26,10 @@
         "carbon_neutrality",
         "ISSB_IFRS_TCFD"
       ],
-      "reverified_count": 132,
+      "reverified_count": 133,
       "total_questions": 781,
-      "time_sensitive_count": 132,
-      "not_reviewed_this_round_count": 649,
+      "time_sensitive_count": 133,
+      "not_reviewed_this_round_count": 648,
       "carried_over_count": 0,
       "known_unresolved": [
         {
@@ -3713,23 +3713,23 @@
     {
       "index": 64,
       "number": 64,
-      "stem": "依歐盟 CBAM 正式期內含排放量計算方法，下列何項排放不納入 CBAM 貨品之內含排放量計算？",
+      "stem": "依歐盟 CBAM 正式期排放計算施行規則 Regulation (EU) 2025/2547 的 B.1，在監測裝置層級直接排放時，下列哪一項排放應予排除？",
       "options": [
         {
           "key": "A",
-          "text": "生產過程中產生的直接排放"
+          "text": "與受管制商品生產相關的固定燃燒排放"
         },
         {
           "key": "B",
-          "text": "水泥、肥料等貨品生產所消耗電力產生的間接排放"
+          "text": "啟動、停機及緊急狀況產生的排放"
         },
         {
           "key": "C",
-          "text": "廠內堆高機、卡車等移動機械之排放"
+          "text": "為運輸目的使用之移動機械排放"
         },
         {
           "key": "D",
-          "text": "生產所需加熱或冷卻產生的排放"
+          "text": "與受管制商品生產相關的製程排放"
         }
       ],
       "answer": "C",
@@ -3737,10 +3737,10 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-08-26",
+        "valid_as_of": "2026-08-27",
         "sources": [
+          "https://eur-lex.europa.eu/legal-content/en/TXT/?uri=CELEX%3A32025R2547",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
           "https://www.cca.gov.tw/affairs/cbam/resource/faq/35250.html",
           "https://taxation-customs.ec.europa.eu/system/files/2026-08/Guidance%20No.%203%20-%20CBAM%20methods%20for%20the%20calculation%20of%20emissions%20embedded%20in%20goods.pdf"
         ],
@@ -3754,10 +3754,17 @@
         },
         "evidence": [
           {
+            "url": "https://eur-lex.europa.eu/legal-content/en/TXT/?uri=CELEX%3A32025R2547",
+            "quote": "emissions from mobile machinery for transportation purposes shall be excluded.",
+            "supports_option": "C",
+            "note": "現行正式期法源：Commission Implementing Regulation (EU) 2025/2547（2025-12-10）Annex II，B. MONITORING OF DIRECT EMISSIONS AT INSTALLATION LEVEL，B.1 Completeness of source streams and emission sources 第 (c) 款。同節 (a) 要求涵蓋與商品生產直接或間接相關的排放源與源流，(b) 要求納入正常操作與啟動、停機、緊急狀況等異常事件的排放 —— 四個選項因此同屬這一條款、同一層級。"
+          },
+          {
             "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
             "quote": "Emissions from mobile machinery for transportation purposes shall be excluded.",
             "supports_option": "C",
-            "label_fixed": "引文「Emissions from mobile machinery for transportation purposes shall be excluded」支持的是「移動源排放」（題庫的 C），原本卻標成 B。**單純標錯。**"
+            "label_fixed": "引文「Emissions from mobile machinery for transportation purposes shall be excluded」支持的是「移動源排放」（題庫的 C），原本卻標成 B。**單純標錯。**",
+            "note": "過渡期施行規則 (EU) 2023/1773 Annex III B.1 有逐字相同的排除規定，保留為「此規則自過渡期延續至正式期」的歷史旁證，不再作為本題的主要定錨。"
           },
           {
             "url": "https://www.cca.gov.tw/affairs/cbam/resource/faq/35250.html",
@@ -3783,15 +3790,20 @@
           "detail": "原引用 https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020 經複驗判定不含本題主張；已換為 https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773，該頁上的逐字引文已機械驗證存在且支持本題答案。"
         },
         "answer_pinned": {
-          "date": "2026-07-14",
+          "date": "2026-08-27",
           "answer": "C",
-          "why": "引文（CBAM 施行細則）：「Emissions from mobile machinery for transportation purposes shall be excluded.」—— 明示排除的是**移動源**，即 (C)。",
-          "evidence_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773"
+          "why": "現行正式期法源 Regulation (EU) 2025/2547 Annex II B.1(c) 逐字明定：「emissions from mobile machinery for transportation purposes shall be excluded.」同節 (a)(b) 則把固定燃燒、製程排放與啟動、停機、緊急狀況的排放都列為應涵蓋。",
+          "evidence_url": "https://eur-lex.europa.eu/legal-content/en/TXT/?uri=CELEX%3A32025R2547",
+          "supersedes": {
+            "date": "2026-07-14",
+            "evidence_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+            "why": "原以過渡期施行規則定錨；正式期已自 2026-01-01 適用，改錨現行法源。"
+          }
         },
         "explanation_source": {
-          "date": "2026-07-15",
-          "anchored_on": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
-          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+          "date": "2026-08-27",
+          "anchored_on": "https://eur-lex.europa.eu/legal-content/en/TXT/?uri=CELEX%3A32025R2547",
+          "why": "解析只用 B.1 的逐字條文寫成（(a)(b) 應涵蓋、(c) 應排除），不引入引文以外的條號、標準編號、附錄、百分比、年份或數量。"
         },
         "prior_stem": "在歐盟 CBAM 制度中，哪類排放不計入範疇？",
         "prior_options": [
@@ -3813,13 +3825,21 @@
           }
         ],
         "question_rewritten": true,
-        "question_rewritten_date": "2026-08-26",
-        "question_rewritten_reason": "issue #115 回報「正解應為 A（間接電力排放）」，理由是「移動排放源屬範疇一、間接電力排放屬範疇三」。此主張不成立，且有兩層錯誤：(1) 外購電力是範疇二而非範疇三；(2) 更根本的是，CBAM 的內含排放量系統邊界本來就不是 GHG Protocol 的範疇一/二/三分類，兩套 taxonomy 不能互相代換。依環境部 CBAM 正式期問答，直接排放含生產所需加熱與冷卻、間接排放為生產所耗電力（水泥與肥料等貨品正式期仍須申報），而明文排除的是「移動機械（卡車、堆高機等）」。故答案維持 C。惟原題「移動源排放」四字語意過寬（固定設備運輸仍計入），且題幹未鎖制度期別，確實有歧義 —— 此即本次接受並重寫題幹與四個選項的理由：每個誘答項都能被同一份正式期一手來源在同一 scope 下否證。 ｜ 對抗性複審補正（2026-08-26）：原改寫的 B 選項寫成概括的「間接電力排放」，但正式期對鋼、鋁、氫僅申報直接排放 —— 概括寫法會讓 B 成為第二個可辯護答案，等於沒修掉原題的病。已改為貨品特定（水泥、肥料），依同一份問答為「必須申報」，故唯一正解仍是移動機械。同時補上歐盟正式期 Guidance No. 3 逐字引文，解掉「題幹鎖正式期、引文卻只有過渡期施行細則」的 scope 落差。"
+        "question_rewritten_date": "2026-08-27",
+        "question_rewritten_reason": "issue #115 回報「正解應為 A（間接電力排放）」，理由是「移動排放源屬範疇一、間接電力排放屬範疇三」。此主張不成立，且有兩層錯誤：(1) 外購電力是範疇二而非範疇三；(2) 更根本的是，CBAM 的內含排放量系統邊界本來就不是 GHG Protocol 的範疇一/二/三分類，兩套 taxonomy 不能互相代換。依環境部 CBAM 正式期問答，直接排放含生產所需加熱與冷卻、間接排放為生產所耗電力（水泥與肥料等貨品正式期仍須申報），而明文排除的是「移動機械（卡車、堆高機等）」。故答案維持 C。惟原題「移動源排放」四字語意過寬（固定設備運輸仍計入），且題幹未鎖制度期別，確實有歧義 —— 此即本次接受並重寫題幹與四個選項的理由：每個誘答項都能被同一份正式期一手來源在同一 scope 下否證。 ｜ 對抗性複審補正（2026-08-26）：原改寫的 B 選項寫成概括的「間接電力排放」，但正式期對鋼、鋁、氫僅申報直接排放 —— 概括寫法會讓 B 成為第二個可辯護答案，等於沒修掉原題的病。已改為貨品特定（水泥、肥料），依同一份問答為「必須申報」，故唯一正解仍是移動機械。同時補上歐盟正式期 Guidance No. 3 逐字引文，解掉「題幹鎖正式期、引文卻只有過渡期施行細則」的 scope 落差。 ｜ 最終定案（2026-08-27）：改以現行正式期法源 Regulation (EU) 2025/2547 B.1 重寫，四個選項全部取自同一條款同一層級（(a)(b) 為應涵蓋、(c) 為應排除），正解文字由過寬的「移動源排放」收斂為法條原文「為運輸目的使用之移動機械排放」。如此一來，原本因商品別差異（Annex II 商品僅計直接排放）而可能被辯護的「間接電力排放」誘答項亦一併移除，題目不再跨 taxonomy 拼接。",
+        "regulatory_anchor": {
+          "instrument": "Commission Implementing Regulation (EU) 2025/2547",
+          "instrument_date": "2025-12-10",
+          "provision": "Annex II, B.1(c)",
+          "regime": "definitive",
+          "effective_from": "2026-01-01",
+          "valid_as_of": "2026-08-27"
+        }
       },
       "quality_flags": [
         "time_sensitive"
       ],
-      "explanation": "一手來源明示：「移動機械（卡車、堆高機等）使用產生的排放則予以排除」，而「輸送帶運輸、管道運輸以及其他固定設備運輸所產生的排放均包含在內」——被排除的是廠內移動機械，並非廠內運輸一概不計。相對地，直接排放「涵蓋CBAM貨品生產過程中產生的排放量，包括加熱與冷卻在生產過程中產生的排放量」，故生產所需加熱或冷卻屬應計入的直接排放；間接排放「涵蓋CBAM貨品生產過程中消耗的電力所產生之排放量」，且水泥及肥料等貨品於正式期仍須申報，並非一概不納入。"
+      "explanation": "B.1 明列應涵蓋與受管制商品生產直接或間接相關的排放源與源流，正常操作以及啟動、停機、緊急狀況等異常事件的排放同樣要計入；其中唯一明文排除的是「為運輸目的使用之移動機械排放」（emissions from mobile machinery for transportation purposes shall be excluded）。因此固定燃燒排放、製程排放與啟動、停機、緊急狀況的排放都留在監測範圍內，應予排除的是為運輸目的使用之移動機械排放。本題考的是 CBAM 裝置層級直接排放的監測邊界，與 GHG Protocol 的範疇分類不是同一套判準。"
     },
     {
       "index": 65,
@@ -33856,27 +33876,27 @@
       "level": null,
       "topic_tags": [],
       "question_type": "unknown",
-      "stem": "依 ISO 14067:2018「數據與數據品質」（參照 6.3.5）所列之數據品質特性，下列何者係指「量測每個數據值所表現的變異性（例：變異數）」？",
+      "stem": "依 ISO 14067:2018 第 6.3.5 所採用的 ISO 14044 數據品質要求，下列何者與「完整性」及「代表性」同列為數據品質特性？",
       "options": [
         {
           "key": "A",
-          "text": "準確度（accuracy）"
+          "text": "成本效益"
         },
         {
           "key": "B",
-          "text": "精密度（precision）"
+          "text": "精密度"
         },
         {
           "key": "C",
-          "text": "完整性（completeness）"
+          "text": "準確度"
         },
         {
           "key": "D",
-          "text": "代表性（representativeness）"
+          "text": "可比較性"
         }
       ],
       "answer": "B",
-      "explanation": "公版教材逐字列出的數據品質特性為：「(d) 精密度：量測每個數據值所表現的變異性(例：變異數)。(e) 完整性：量測或估算的總流(total flow)之百分比。(f) 代表性：定性評估其數據組合能反映到利害關係者真實之群體之程度」。題幹描述的「變異性（例：變異數）」對應的正是精密度；完整性講的是總流之比例，代表性講的是數據反映真實群體的程度，均非變異性。至於準確度並不在這份數據品質特性清單內 —— 教材另在原則一節列有「準確度：CFP 與部分 CFP 之量化為正確、可查證、相關及不誤導」，與數據品質特性分屬不同條款，這正是本題最常見的混淆點。",
+      "explanation": "數據品質特性包含精密度、完整性與代表性等項目，與完整性及代表性同列的是精密度。精密度指的是量測每個數據值所表現的變異性（例：變異數）；準確度則是量測值接近真實值的程度，屬於標準另一層次的原則，兩者不能互換。成本效益與可比較性並不在這份數據品質特性清單內。",
       "source": {
         "source_id": "S_VOCUS_03",
         "url": "https://vocus.cc/article/68d5d622fd89780001c2392c",
@@ -33951,11 +33971,21 @@
           }
         ],
         "question_rewritten": true,
-        "question_rewritten_date": "2026-08-26",
-        "question_rewritten_reason": "issue #116 回報「應為準確性而非精確性」。此主張不成立：ISO 14067 的「準確度」是第 5 節的原則（5.10），而本題問的「數據品質特性」在 6.3.5，該清單列的是「精密度」，沒有「準確度」。（題庫答案先前已由 C 更正為 B，見 prior_answer 與 _correction_note；本次回報等同要求改回已被推翻的舊答案，故不採納。）惟原題確有兩個真實缺陷：(1) 中文「精確性」與「準確性」極易混淆，官方用語是「精密度（precision）」；(2) 原題幹「代表性、完整性與：」是開放式列舉，而6.3.5 實際有十項特性，日後只要有人把誘答項換成「一致性」或「再現性」就會出現第二個正解。故改為以定義辨識的題型（變異性→精密度），並將四個選項一律中英並列，從根本消除歧義。",
-        "source_quote_scope_note": "item 層的 evidence_quote 與 source.evidence.quote 記錄的是**本題最初被抄錄時的題幹原文**（出處為部落格），並非答案依據；改寫後該字串已不等於現行題幹，原文保留在 metadata.prior_stem。答案依據一律以 metadata.evidence 內的公版教材與 iPAS 官方考前指引逐字引文為準。"
+        "question_rewritten_date": "2026-08-27",
+        "question_rewritten_reason": "issue #116 回報「應為準確性而非精確性」。此主張不成立：ISO 14067 的「準確度」是第 5 節的原則（5.10），而本題問的「數據品質特性」在 6.3.5，該清單列的是「精密度」，沒有「準確度」。（題庫答案先前已由 C 更正為 B，見 prior_answer 與 _correction_note；本次回報等同要求改回已被推翻的舊答案，故不採納。）惟原題確有兩個真實缺陷：(1) 中文「精確性」與「準確性」極易混淆，官方用語是「精密度（precision）」；(2) 原題幹「代表性、完整性與：」是開放式列舉，而6.3.5 實際有十項特性，日後只要有人把誘答項換成「一致性」或「再現性」就會出現第二個正解。故改為以定義辨識的題型（變異性→精密度），並將四個選項一律中英並列，從根本消除歧義。 ｜ 最終定案（2026-08-27）：正解文字由近義詞「精確性」改為標準正式術語「精密度」（precision），誘答項「準確性」一併統一為「準確度」（accuracy）。題幹改為明標 ISO 14067:2018 第 6.3.5 所採用的 ISO 14044 數據品質要求，避免再與第 5 節的原則（含 5.10 準確度）混為一談。",
+        "source_quote_scope_note": "item 層的 evidence_quote 與 source.evidence.quote 記錄的是**本題最初被抄錄時的題幹原文**（出處為部落格），並非答案依據；改寫後該字串已不等於現行題幹，原文保留在 metadata.prior_stem。答案依據一律以 metadata.evidence 內的公版教材與 iPAS 官方考前指引逐字引文為準。",
+        "standard": "ISO 14067:2018",
+        "clause": "6.3.5",
+        "canonical_term_en": "precision",
+        "canonical_term_zh_TW": "精密度",
+        "valid_as_of": "2026-08-27",
+        "standard_version_watch": "ISO/WD 14067.2 開發中，尚未取代現行 ISO 14067:2018。本題鎖 2018 版與 6.3.5，新版發布時需重驗數據品質特性清單是否更動。",
+        "time_sensitive_reason": "ISO/WD 14067.2 開發中；標記讓季排程持續追蹤 6.3.5 數據品質特性清單是否隨新版更動。（本題有 valid_as_of，依 quality_flags 規則必須一併標 time_sensitive，否則排程看不到。）"
       },
-      "_correction_note": "ISO 14067 的「**數據品質**」特性（§6.3.5，摘自 CNS 14044 §4.2.3.6.2）為：時間／地理／技術涵蓋面、**精密度**、完整性、代表性、一致性、再現性、數據來源、不確定性。**「準確度」不在數據品質清單裡。**\n\n我先前駁回這個更正，理由是「iPAS 公版教材裡有 5.10 準確度」——**但那是 ISO 14067 §5 的「原則」，不是 §6.3.5 的「數據品質」。我把兩個條款搞混了。**題目問的是「數據品質」，答案是精密度（precision）→ 選項 B。"
+      "_correction_note": "ISO 14067 的「**數據品質**」特性（§6.3.5，摘自 CNS 14044 §4.2.3.6.2）為：時間／地理／技術涵蓋面、**精密度**、完整性、代表性、一致性、再現性、數據來源、不確定性。**「準確度」不在數據品質清單裡。**\n\n我先前駁回這個更正，理由是「iPAS 公版教材裡有 5.10 準確度」——**但那是 ISO 14067 §5 的「原則」，不是 §6.3.5 的「數據品質」。我把兩個條款搞混了。**題目問的是「數據品質」，答案是精密度（precision）→ 選項 B。",
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "item_id": "S_VOCUS_03-q005",

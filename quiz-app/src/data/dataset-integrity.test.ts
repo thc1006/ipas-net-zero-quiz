@@ -1100,8 +1100,9 @@ describe('quality_flags 的一致性', () => {
     {
       id: 'S_VOCUS_03-q004',
       why:
-        'ISO 14067:2018 §6.3.5 的數據品質清單（摘自 CNS 14044 §4.2.3.6.2）—— ' +
-        '版本寫死的標準條文，不隨時間變。原答案「準確度」不在該清單裡（清單裡的是「精密度」）',
+        '（2026-08-27 起已標 time_sensitive，此處不需例外）ISO 14067:2018 §6.3.5 的數據品質清單' +
+        '（摘自 CNS 14044 §4.2.3.6.2）—— 版本寫死的標準條文；改標 time_sensitive 是為了讓季排程' +
+        '追蹤開發中的 ISO/WD 14067.2 是否更動該清單。原答案「準確度」不在清單裡（清單裡的是「精密度」）',
     },
     {
       id: 'gist[529]',
@@ -1327,5 +1328,69 @@ describe('quality_flags 的一致性', () => {
       vs.length === 0 ? '' : `\n${formatFlagViolations(vs)}\n`,
       '主題庫違反了 quality_flags 規則'
     ).toBe('');
+  });
+});
+
+// ── #115 / #116 的更正回歸釘樁 ─────────────────────────────────────────────
+// 這兩題都被回報過「答案錯」，兩次都不成立，但兩次都暴露出真正的命題缺陷：
+// 跨 taxonomy 拼接（GHG Protocol 範疇 vs CBAM 系統邊界；ISO 原則 vs 數據品質特性），
+// 以及正解用近義詞代替正式術語。修好之後要擋住的是「悄悄改回去」。
+const answerText = (it: Item): string | undefined =>
+  it.options.find((o) => o.key === it.answer)?.text;
+
+describe('regression: issues #115 與 #116', () => {
+  it('gist[64] 以 CBAM 正式期法源定錨，正解不再是泛稱的「移動源」', () => {
+    const q = ALL.find((it) => who(it) === 'gist[64]');
+    expect(q).toBeDefined();
+
+    // 法條原文是較窄的「為運輸目的使用之移動機械」，不是所有移動源
+    expect(answerText(q!)).toBe('為運輸目的使用之移動機械排放');
+    expect(q!.options.map((o) => o.text)).not.toContain('移動源排放');
+    // 正式期施行規則 (EU) 2025/2547；過渡期的 2023/1773 只能當歷史旁證
+    expect(
+      (q!.metadata?.sources ?? []).some((u) => u.includes('32025R2547')),
+      'gist[64] 必須以正式期施行規則 2025/2547 為來源'
+    ).toBe(true);
+    expect(q!.metadata?.valid_as_of).toBe('2026-08-27');
+  });
+
+  it('S_VOCUS_03-q004 使用標準正式術語「精密度」，且解析講清楚與準確度的差別', () => {
+    const q = ALL.find((it) => it.item_id === 'S_VOCUS_03-q004');
+    expect(q).toBeDefined();
+
+    expect(q!.answer).toBe('B');
+    expect(answerText(q!)).toBe('精密度');
+    // 近義詞不得再出現在選項裡（「精確性」正是原本被回報的那個字）
+    expect(q!.options.map((o) => o.text)).not.toContain('精確性');
+    expect(q!.options.map((o) => o.text)).not.toContain('準確性');
+    expect(q!.explanation ?? '').toContain('精密度');
+    expect(q!.explanation ?? '').toContain('準確度');
+  });
+});
+
+// 通用 gate：evidence 寫一個術語、選項卻寫另一個近義詞 —— 這種漂移過去是全綠的。
+const NL = String.fromCharCode(10);
+
+describe('正解文字必須等於標示的正式術語', () => {
+  it('有 canonical_term_zh_TW 的題目，正解選項文字必須逐字相同', () => {
+    const bad: string[] = [];
+    let checked = 0;
+    for (const it of ALL) {
+      const term = (it.metadata as { canonical_term_zh_TW?: unknown } | undefined)
+        ?.canonical_term_zh_TW;
+      if (typeof term !== 'string' || !term) continue;
+      checked += 1;
+      const text = answerText(it);
+      if (text !== term) {
+        bad.push(`${who(it)}: canonical_term_zh_TW="${term}"，正解選項卻是「${text ?? '(無)'}」`);
+      }
+    }
+    expect(checked, '這道 gate 在空轉 —— 沒有任何題目標了 canonical_term_zh_TW').toBeGreaterThan(0);
+    expect(
+      bad,
+      '正式術語與正解選項文字不一致（evidence 寫一個、選項寫另一個近義詞）：' +
+        NL +
+        bad.join(NL)
+    ).toEqual([]);
   });
 });

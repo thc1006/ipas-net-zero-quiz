@@ -8,8 +8,8 @@
   "summary": {
     "main_tier1_questions": 762,
     "pool_tier1_questions": 138,
-    "total_evidence_records": 926,
-    "primary_evidence_records": 917,
+    "total_evidence_records": 927,
+    "primary_evidence_records": 918,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -6660,6 +6660,15 @@
       "qid": "gist[64]",
       "bank": "main",
       "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
+      "host": "eur-lex.europa.eu",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[64]",
+      "bank": "main",
+      "url": "https://eur-lex.europa.eu/legal-content/en/TXT/?uri=CELEX%3A32025R2547",
       "host": "eur-lex.europa.eu",
       "authority": "primary",
       "has_quote": true,
