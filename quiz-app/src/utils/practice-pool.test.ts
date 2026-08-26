@@ -176,3 +176,41 @@ describe('loadPracticePool (lazy)', () => {
     }
   });
 });
+
+describe('adapter 不得竄改或丟棄資料', () => {
+  it('subject 無法對應時維持 null，不冒充考科二', () => {
+    // 實際資料裡 154 題練習池有 83 題 subject 是 null；
+    // 先前為了滿足 strict type 而 fallback 成 '考科2'，等於把「不知道」寫成「考科二」，
+    // 抽題池與備考統計都會被污染。
+    const q = toQuizQuestion(baseItem({ subject: null }));
+    expect(q.subject).toBeNull();
+    expect(q.qualityFlags).toContain('unmapped_subject');
+  });
+
+  it('無法辨識的自由字串也不冒充考科二', () => {
+    const q = toQuizQuestion(baseItem({ subject: '未分類' }));
+    expect(q.subject).toBeNull();
+    expect(q.qualityFlags).toContain('unmapped_subject');
+  });
+
+  it('null subject 不會被算進任何單科池', () => {
+    const items = [
+      toQuizQuestion(baseItem({ id: 'a', subject: null })),
+      toQuizQuestion(baseItem({ id: 'b', subject: '考科2' })),
+    ];
+    expect(items.filter((q) => q.subject === '考科2').map((q) => q.id)).toEqual(['b']);
+    expect(items.filter((q) => q.subject === '考科1')).toHaveLength(0);
+  });
+
+  it('人工審核過的解析必須帶得出來', () => {
+    // 154 題練習池全部有解析，先前在 adapter 被丟掉，
+    // 使用者只能改按 AI 重猜一次。
+    const q = toQuizQuestion(baseItem({ explanation: '人工審核解析' }));
+    expect(q.explanation).toBe('人工審核解析');
+  });
+
+  it('沒有解析時為 null，不是 undefined', () => {
+    const q = toQuizQuestion(baseItem({ explanation: undefined }));
+    expect(q.explanation).toBeNull();
+  });
+});

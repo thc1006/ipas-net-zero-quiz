@@ -7,18 +7,34 @@ import { SourceBadge } from '../SourceBadge/SourceBadge';
 import { SourceBanner } from '../SourceBanner/SourceBanner';
 import { prettifySourceUrl } from '../../utils/source-label';
 import { findRedundantPrefix } from '../../utils/option-prefix';
+import { subjectClass, subjectLabel } from '../../utils/subject-label';
 import { buildFeedbackUrl } from '../../utils/question-feedback-url';
 import { useAllQuestionStats } from '../../hooks/useQuestionStats';
 import './QuestionCard.css';
 
+/** HTML 實體逸出 —— 這是 renderMarkdown 唯一的安全基礎。 */
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 /**
  * 簡易 Markdown 轉 HTML
  * 支援：**粗體**、*斜體*、`程式碼`、標題、清單
+ *
+ * **輸出會被丟進 dangerouslySetInnerHTML，而輸入來自第三方 AI 服務。**
+ * 因此第一步一定是把原始 HTML 逸出掉：先前沒有這一步，模型只要回
+ * `<img src=x onerror=...>`，那段 HTML 就會被瀏覽器當成標籤執行。
+ * 逸出之後，唯一會出現在輸出裡的標籤是本函式自己插入的 strong / em / code。
  */
-function renderMarkdown(text: string): string {
+export function renderMarkdown(text: string): string {
   if (!text) return '';
 
-  let result = text
+  let result = escapeHtml(text)
     // 標題 ### text 或 ## text
     .replace(/^###\s+(.+)$/gm, '<strong>$1</strong>')
     .replace(/^##\s+(.+)$/gm, '<strong>$1</strong>')
@@ -141,8 +157,8 @@ export function QuestionCard({
       {/* 題目標頭 */}
       <header className="question-header">
         <span className="question-number">第 {questionNumber} 題</span>
-        <span className={`badge badge-info subject-tag subject-${question.subject === '考科1' ? '1' : '2'}`}>
-          {question.subject === '考科1' ? '考科一' : '考科二'}
+        <span className={`badge badge-info subject-tag ${subjectClass(question.subject)}`}>
+          {subjectLabel(question.subject)}
         </span>
         {question.provenance && (
           <SourceBadge
@@ -226,6 +242,52 @@ export function QuestionCard({
         </div>
       )}
 
+      {/* 題庫解析 —— 人工／來源約束寫成，且通過反捏造閘門。
+          先前完全沒有渲染：918 則解析躺在資料裡，畫面上卻只有一顆「AI 解析」按鈕，
+          等於讓未經審核的生成內容取代已審核的內容。順序固定為
+          答案 → 題庫解析 → 答案依據 → 參考來源 → AI 延伸。 */}
+      {showAnswer && question.explanation && (
+        <section className="curated-explanation" aria-label="題庫解析">
+          <div className="curated-explanation__header">
+            <span className="material-icons sm" aria-hidden="true">
+              menu_book
+            </span>
+            <span>題庫解析</span>
+          </div>
+          <p className="curated-explanation__body">{question.explanation}</p>
+        </section>
+      )}
+
+      {/* 答案揭曉後才顯示依據與來源；順序：題庫解析 → 答案依據 → 參考來源 → AI 延伸 */}
+      {showAnswer && (
+        <>
+        <AnswerEvidence evidence={question.evidence} />
+
+        {question.sources && question.sources.length > 0 && (
+          <div className="question-sources" aria-label="參考來源">
+            <div className="question-sources-header">
+          <span className="material-icons sm">menu_book</span>
+          <span>參考來源</span>
+            </div>
+            <ul className="question-sources-list">
+          {sourceLabels.map(({ url, label }) => (
+            <li key={url}>
+              <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="source-link"
+              >
+            {label}
+              </a>
+            </li>
+          ))}
+            </ul>
+          </div>
+        )}
+        </>
+      )}
+
       {/* AI 解析區 */}
       {showAnswer && (
         <div className="ai-section">
@@ -236,7 +298,7 @@ export function QuestionCard({
               disabled={isLoadingAI}
             >
               <span className="material-icons">smart_toy</span>
-              AI 解析
+              AI 延伸說明（未經人工審核）
             </button>
           )}
 
@@ -276,30 +338,6 @@ export function QuestionCard({
             </div>
           )}
 
-          <AnswerEvidence evidence={question.evidence} />
-
-          {question.sources && question.sources.length > 0 && (
-            <div className="question-sources" aria-label="參考來源">
-              <div className="question-sources-header">
-                <span className="material-icons sm">menu_book</span>
-                <span>參考來源</span>
-              </div>
-              <ul className="question-sources-list">
-                {sourceLabels.map(({ url, label }) => (
-                  <li key={url}>
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="source-link"
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
       )}
     </article>

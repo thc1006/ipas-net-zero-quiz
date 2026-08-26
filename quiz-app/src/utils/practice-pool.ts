@@ -115,9 +115,8 @@ export function toQuizQuestion(item: PracticePoolItem): QuizQuestion & {
     subject = '考科2';
   }
 
-  // subject 無法映射時加 quality flag — caller 可在 subject 篩選排除
-  // 預設 fallback 為 '考科2' 純為滿足 QuizQuestion strict subject type；
-  // 真正的「未分類」資訊在 qualityFlags 中
+  // subject 無法映射時加 quality flag，並讓 subject 維持 null。
+  // 先前為了滿足 strict type 而 fallback 成 '考科2'，等於把「不知道」寫成「考科二」。
   const qualityFlags = subject === null
     ? [...(item.quality_flags ?? []), 'unmapped_subject' as const]
     : item.quality_flags;
@@ -131,7 +130,10 @@ export function toQuizQuestion(item: PracticePoolItem): QuizQuestion & {
     stem: item.stem,
     options: item.options,
     answer: item.answer,
-    subject: subject ?? '考科2',
+    // 人工審核過的解析先前在這裡被丟掉：154 題練習池全部有解析，卻一則都傳不出去，
+    // 使用者只能改按 AI 重猜一次。
+    explanation: item.explanation ?? null,
+    subject,
     sourceType: 'practice_pool',
     year: null,
     hasAnswer: item.answer != null,

@@ -140,7 +140,14 @@ export interface QuizQuestion {
   stem: string;
   options: QuizOption[];
   answer: string | null;
-  subject: ExamSubject;
+  /**
+   * 未能對應到考科時為 null。
+   *
+   * 這裡刻意允許 null：先前為了滿足 strict type 而 fallback 成 '考科2'，
+   * 結果 154 題練習池裡有 83 題 subject 是 null，全部被靜默算進考科二 ——
+   * 抽題池與備考統計都會被污染。單科篩選用 === 比較，null 自然被排除。
+   */
+  subject: ExamSubject | null;
   sourceType: 'gist' | 'unique' | 'practice_pool';
   year?: number | null;
   hasAnswer: boolean;

@@ -451,3 +451,35 @@
 .option-item.incorrect .option-text__redundant {
   opacity: 0.6;
 }
+
+/* 題庫解析（人工／來源約束）—— 排在 AI 延伸說明之前 */
+.curated-explanation {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--color-success-bg);
+  border-left: 3px solid var(--color-success-fg);
+  border-radius: var(--radius-sm);
+}
+
+.curated-explanation__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-success-fg);
+  margin-bottom: var(--spacing-xs);
+}
+
+.curated-explanation__body {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.8;
+  color: var(--color-text-primary);
+}
+
+/* 未能對應考科的題目 —— 不要冒充任何一科 */
+.subject-unmapped {
+  background: var(--color-surface-variant);
+  color: var(--color-text-secondary);
+}
