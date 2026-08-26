@@ -23,6 +23,7 @@ vi.mock('../data/questions', () => {
     subject: '考科1',
     section: 'fixture',
     explanation: '二氧化碳為主要溫室氣體',
+    evidence: { quote: '固定測試用逐字引文：二氧化碳屬溫室氣體。' },
   } as unknown as QuizQuestion;
 
   const similarFixture: QuizQuestion = {
@@ -435,5 +436,22 @@ describe('ResultPage', () => {
       expect(section).toHaveTextContent('弱題一');
       expect(section).not.toHaveTextContent('unknown-orphan');
     });
+  });
+});
+
+describe('ResultPage 答案依據', () => {
+  it('錯題卡顯示該題的逐字引文', () => {
+    render(
+      <ResultPage
+        result={makeResult({ answers: [makeAnswer()], wrongCount: 1, correctCount: 0, score: 0 })}
+        onGoHome={vi.fn()}
+        onRetry={vi.fn()}
+      />
+    );
+
+    expect(screen.getAllByLabelText('答案依據').length).toBeGreaterThan(0);
+    expect(
+      screen.getByText(/固定測試用逐字引文/)
+    ).toBeInTheDocument();
   });
 });

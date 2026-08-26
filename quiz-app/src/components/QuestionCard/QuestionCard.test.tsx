@@ -329,3 +329,58 @@ describe('QuestionCard 冗餘前綴 dim 化', () => {
     expect(container.querySelectorAll('.option-text__redundant').length).toBe(0);
   });
 });
+
+describe('答案依據（evidence）', () => {
+  const withEvidence: QuizQuestion = {
+    ...mockQuestion,
+    evidence: {
+      quote: 'emissions from mobile machinery for transportation purposes shall be excluded.',
+      url: 'https://eur-lex.europa.eu/legal-content/en/TXT/?uri=CELEX%3A32025R2547',
+    },
+  };
+
+  it('揭曉答案後顯示逐字引文與出處連結', () => {
+    render(
+      <QuestionCard
+        question={withEvidence}
+        questionNumber={1}
+        showAnswer
+        onSelectAnswer={vi.fn()}
+      />
+    );
+
+    expect(screen.getByLabelText('答案依據')).toBeInTheDocument();
+    expect(screen.getByText(/mobile machinery for transportation purposes/)).toBeInTheDocument();
+    // 出處以可讀標籤呈現（prettifySourceUrl），而不是整條 URL
+    const link = screen.getByRole('link', { name: /EU Reg/i });
+    expect(link).toHaveAttribute(
+      'href',
+      'https://eur-lex.europa.eu/legal-content/en/TXT/?uri=CELEX%3A32025R2547'
+    );
+  });
+
+  it('沒有引文的題目不會出現空的「答案依據」區塊', () => {
+    render(
+      <QuestionCard
+        question={mockQuestion}
+        questionNumber={1}
+        showAnswer
+        onSelectAnswer={vi.fn()}
+      />
+    );
+
+    expect(screen.queryByLabelText('答案依據')).not.toBeInTheDocument();
+  });
+
+  it('還沒揭曉答案時不先劇透依據', () => {
+    render(
+      <QuestionCard
+        question={withEvidence}
+        questionNumber={1}
+        onSelectAnswer={vi.fn()}
+      />
+    );
+
+    expect(screen.queryByLabelText('答案依據')).not.toBeInTheDocument();
+  });
+});

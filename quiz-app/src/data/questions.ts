@@ -61,7 +61,7 @@ function collectSources(q: {
  * 會濾掉「只是把題幹抄一遍」的引文 —— 那種引文證明的是這題從哪裡抄來的（provenance），
  * 不是答案為什麼對，掛在「答案依據」下面會誤導人。
  */
-function pickEvidence(q: {
+export function pickEvidence(q: {
   answer?: string | null;
   stem?: string;
   metadata?: { evidence?: { url?: string; quote?: string; supports_option?: string }[] };

@@ -5,7 +5,7 @@
 // 這裡釘住三件事：撐住正解的引文真的被挑出來、只抄題幹的引文不會被當成依據、
 // 以及被回報過的那兩題確實顯示正確的一手原文。
 import { describe, it, expect } from 'vitest';
-import { allQuestions, getQuestionById } from './questions';
+import { allQuestions, getQuestionById, pickEvidence } from './questions';
 
 describe('答案依據（evidence）顯示', () => {
   it('S_VOCUS_03-q004 顯示的是教材列出精密度/完整性/代表性的原文，不是部落格抄來的題幹', () => {
@@ -62,5 +62,58 @@ describe('答案依據（evidence）顯示', () => {
     expect(withEvidence).toBeDefined();
     const again = getQuestionById(withEvidence!.id);
     expect(again?.evidence?.quote).toBe(withEvidence!.evidence!.quote);
+  });
+});
+
+describe('pickEvidence 的挑選規則', () => {
+  const base = { answer: 'B', stem: 'ISO 14067 要求數據品質包含：代表性、完整性與：' };
+
+  it('優先挑「撐住正解」的那一條，而不是排在前面的那一條', () => {
+    const got = pickEvidence({
+      ...base,
+      metadata: {
+        evidence: [
+          { quote: '這段講的是別的選項，長度足夠通過門檻。', supports_option: 'C' },
+          { quote: '精密度：量測每個數據值所表現的變異性。', supports_option: 'B', url: 'https://example.org/a' },
+        ],
+      },
+    });
+    expect(got?.quote).toContain('精密度');
+    expect(got?.url).toBe('https://example.org/a');
+  });
+
+  it('沒有任何 supports_option 對得上時，退而取第一條可用引文', () => {
+    const got = pickEvidence({
+      ...base,
+      metadata: { evidence: [{ quote: '沒有標 supports_option，但內容夠長可用。' }] },
+    });
+    expect(got?.quote).toContain('沒有標 supports_option');
+  });
+
+  it('只把題幹抄一遍的引文會被濾掉', () => {
+    const got = pickEvidence({
+      ...base,
+      metadata: { evidence: [{ quote: 'ISO 14067 要求數據品質包含：代表性、完整' }] },
+    });
+    expect(got).toBeUndefined();
+  });
+
+  it('過短的引文不算依據', () => {
+    const got = pickEvidence({ ...base, metadata: { evidence: [{ quote: '太短' }] } });
+    expect(got).toBeUndefined();
+  });
+
+  it('沒有 evidence 欄位就回 undefined', () => {
+    expect(pickEvidence({ ...base })).toBeUndefined();
+    expect(pickEvidence({ ...base, metadata: { evidence: [] } })).toBeUndefined();
+  });
+
+  it('沒有答案的題目（answer 為 null）仍能取到第一條可用引文', () => {
+    const got = pickEvidence({
+      answer: null,
+      stem: '某個無標準答案的題目',
+      metadata: { evidence: [{ quote: '這是一段夠長的參考原文，可作為依據顯示。' }] },
+    });
+    expect(got?.quote).toContain('夠長的參考原文');
   });
 });
