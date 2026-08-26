@@ -275,6 +275,33 @@ export function QuestionCard({
             </div>
           )}
 
+          {/* 答案依據 —— 撐住正解的那一句逐字原文。
+              先前這些引文只存在資料裡，畫面上只有一排來源連結，
+              於是「教材原文」跟「某篇部落格」在使用者眼中份量相同。 */}
+          {question.evidence && (
+            <div className="question-evidence" aria-label="答案依據">
+              <div className="question-evidence-header">
+                <span className="material-icons sm" aria-hidden="true">
+                  format_quote
+                </span>
+                <span>答案依據</span>
+              </div>
+              <blockquote className="question-evidence-quote">
+                {question.evidence.quote}
+              </blockquote>
+              {question.evidence.url && (
+                <a
+                  className="question-evidence-link source-link"
+                  href={question.evidence.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {prettifySourceUrl(question.evidence.url)}
+                </a>
+              )}
+            </div>
+          )}
+
           {question.sources && question.sources.length > 0 && (
             <div className="question-sources" aria-label="參考來源">
               <div className="question-sources-header">

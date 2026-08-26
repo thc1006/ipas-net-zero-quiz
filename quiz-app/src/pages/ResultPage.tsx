@@ -344,6 +344,21 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                       </span>
                     </div>
 
+                    {/* 答案依據 —— 複習錯題時最需要看到的就是「憑什麼是這個答案」 */}
+                    {question.evidence && (
+                      <div className="wrong-evidence" aria-label="答案依據">
+                        <div className="wrong-evidence-header">
+                          <span className="material-icons sm" aria-hidden="true">
+                            format_quote
+                          </span>
+                          <span>答案依據</span>
+                        </div>
+                        <blockquote className="wrong-evidence-quote">
+                          {question.evidence.quote}
+                        </blockquote>
+                      </div>
+                    )}
+
                     {/* AI 功能區 */}
                     <div className="wrong-ai-section">
                       <div className="ai-buttons">

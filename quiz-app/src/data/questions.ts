@@ -55,6 +55,34 @@ function collectSources(q: {
 }
 
 /**
+ * 挑出「撐住正解」的那一句逐字引文。
+ *
+ * 優先取 supports_option 等於本題答案的那一條；沒有標的話退而取第一條有引文的。
+ * 會濾掉「只是把題幹抄一遍」的引文 —— 那種引文證明的是這題從哪裡抄來的（provenance），
+ * 不是答案為什麼對，掛在「答案依據」下面會誤導人。
+ */
+function pickEvidence(q: {
+  answer?: string | null;
+  stem?: string;
+  metadata?: { evidence?: { url?: string; quote?: string; supports_option?: string }[] };
+}): { quote: string; url?: string } | undefined {
+  const list = q.metadata?.evidence;
+  if (!Array.isArray(list) || list.length === 0) return undefined;
+  const stemHead = (q.stem ?? '').slice(0, 12);
+  const usable = list.filter((e) => {
+    const quote = (e.quote ?? '').trim();
+    if (quote.length < 8) return false;
+    // 引文開頭就跟題幹一樣 = 抄題幹，不是答案依據
+    return !(stemHead.length >= 8 && quote.startsWith(stemHead));
+  });
+  if (usable.length === 0) return undefined;
+  const preferred =
+    (q.answer ? usable.find((e) => e.supports_option === q.answer) : undefined) ?? usable[0];
+  const quote = (preferred.quote ?? '').trim();
+  return quote ? { quote, url: preferred.url } : undefined;
+}
+
+/**
  * 將 Gist 題目轉換為統一格式
  */
 function convertGistQuestion(q: GistQuestion): QuizQuestion {
@@ -68,6 +96,7 @@ function convertGistQuestion(q: GistQuestion): QuizQuestion {
     year: null,
     hasAnswer: q.answer !== null,
     sources: collectSources(q),
+    evidence: pickEvidence(q),
     explanation: q.explanation,
   };
 }
@@ -86,6 +115,7 @@ function convertUniqueQuestion(q: UniqueQuestion): QuizQuestion {
     year: q.year,
     hasAnswer: q.answer !== null,
     sources: collectSources(q),
+    evidence: pickEvidence(q),
     explanation: q.explanation ?? undefined,
   };
 }
