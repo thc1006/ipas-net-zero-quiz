@@ -103,6 +103,46 @@ describe('ensurePuterAuth（明確要求臨時帳號）', () => {
     expect(r.error).toContain('彈出式視窗');
   });
 
+  it('併發點擊只跳一次認證視窗', async () => {
+    // 結果頁每張錯題卡都有自己的 AI 按鈕。連點兩張若各跳一個認證視窗，
+    // 第二個通常還會被瀏覽器當成非使用者觸發而擋掉。
+    let resolveSignIn: (v?: unknown) => void = () => {};
+    const auth = installPuter({
+      signIn: vi.fn(
+        () =>
+          new Promise((res) => {
+            resolveSignIn = res;
+          })
+      ),
+    });
+
+    const a = ensurePuterAuth();
+    const b = ensurePuterAuth();
+    // 等 signIn 真的被呼叫再放行：載 SDK 是 await，太早 resolve 會抓到還沒被指派的 resolver
+    await vi.waitFor(() => expect(auth.signIn).toHaveBeenCalled());
+    resolveSignIn();
+    const [ra, rb] = await Promise.all([a, b]);
+
+    expect(auth.signIn).toHaveBeenCalledTimes(1);
+    expect(ra.ok).toBe(true);
+    expect(rb.ok).toBe(true);
+  });
+
+  it('認證成功但讀不到使用者資訊時，仍讓使用者用得到 AI', async () => {
+    // getUser() 只是拿來記錄身分與判斷是否臨時帳號，它失敗不代表認證失敗
+    installPuter({
+      getUser: vi.fn(async () => {
+        throw new Error('network');
+      }),
+    });
+    const r = await ensurePuterAuth();
+
+    expect(r.ok).toBe(true);
+    expect(r.username).toBeUndefined();
+    // 讀不到就不該亂猜「退回一般登入」
+    expect(r.fellBackToRegularSignIn).toBe(false);
+  });
+
   it('SDK 不可用時安全失敗（不呼叫任何 auth API）', async () => {
     // 先放一個 puter script 標籤，讓 loadPuterSDK 走「等待既有標籤」那條分支，
     // 再用假時鐘直接走完它的 10 秒等待 —— 不必真的等。

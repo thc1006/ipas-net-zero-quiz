@@ -23,7 +23,12 @@ declare global {
         signIn: (options?: {
           attempt_temp_user_creation?: boolean;
         }) => Promise<unknown>;
-        getUser: () => Promise<{ username?: string; is_temp?: boolean } | null>;
+        getUser: () => Promise<{
+          username?: string;
+          is_temp?: boolean;
+          /** 部分版本用的別名，一併容忍 */
+          is_temporary?: boolean;
+        } | null>;
       };
       print: (content: string) => void;
     };
@@ -144,6 +149,7 @@ export interface PuterAuthResult {
 
 /** 把 Puter 丟出來的錯誤轉成使用者看得懂的訊息 */
 function describePuterAuthError(error: unknown): string {
+  if (typeof error === 'string') return error;
   const e = error as { error?: string; code?: string; msg?: string; message?: string } | undefined;
   const code = String(e?.code ?? e?.error ?? '').toLowerCase();
   if (code.includes('cancel') || code.includes('closed') || code.includes('abort')) {
@@ -173,39 +179,65 @@ function describePuterAuthError(error: unknown): string {
  *    此時認證可能照樣成功，只是拿到的不是臨時帳號 —— 見 fellBackToRegularSignIn。
  */
 export async function ensurePuterAuth(): Promise<PuterAuthResult> {
+  // 結果頁每張錯題卡都有自己的 AI 按鈕。連點兩張會同時走到這裡，各自看到「尚未登入」，
+  // 於是彈出兩個認證視窗 —— 第二個通常還會被瀏覽器當成非使用者觸發而擋掉。
+  // 同一時間只跑一次，其餘呼叫共用同一個 promise。
+  if (authInFlight) return authInFlight;
+  authInFlight = runPuterAuth();
+  try {
+    return await authInFlight;
+  } finally {
+    // 用完就清掉：下次點擊要能重新確認狀態（也讓失敗後的重試是真的重試）
+    authInFlight = null;
+  }
+}
+
+let authInFlight: Promise<PuterAuthResult> | null = null;
+
+async function runPuterAuth(): Promise<PuterAuthResult> {
   const loaded = await loadPuterSDK();
   const auth = window.puter?.auth;
   if (!loaded || !auth) {
     return { ok: false, error: 'AI 服務暫時無法使用，請稍後再試' };
   }
 
+  let requestedTempUser = false;
   try {
-    let requestedTempUser = false;
     if (!auth.isSignedIn()) {
       requestedTempUser = true;
       await auth.signIn({ attempt_temp_user_creation: true });
     }
-
-    const user = await auth.getUser();
-    const isTemporary = Boolean(user?.is_temp);
-    const fellBack = requestedTempUser && !isTemporary;
-
-    logger.info('Puter 認證完成', {
-      username: user?.username,
-      temporary: isTemporary,
-      fellBackToRegularSignIn: fellBack,
-    });
-
-    return {
-      ok: true,
-      username: user?.username,
-      isTemporary,
-      fellBackToRegularSignIn: fellBack,
-    };
   } catch (error) {
     logger.error('Puter 認證失敗', error);
     return { ok: false, error: describePuterAuthError(error) };
   }
+
+  // 認證本身已經完成。getUser() 只是要拿身分資訊來記錄與判斷是否為臨時帳號，
+  // 它失敗不該讓使用者用不到 AI —— 只是我們少知道一點事情而已。
+  let user: { username?: string; is_temp?: boolean; is_temporary?: boolean } | null = null;
+  try {
+    user = await auth.getUser();
+  } catch (error) {
+    logger.warn('Puter 已認證，但讀不到使用者資訊', {
+      reason: describePuterAuthError(error),
+    });
+  }
+
+  const isTemporary = Boolean(user?.is_temp ?? user?.is_temporary);
+  const fellBack = requestedTempUser && user !== null && !isTemporary;
+
+  logger.info('Puter 認證完成', {
+    username: user?.username,
+    temporary: isTemporary,
+    fellBackToRegularSignIn: fellBack,
+  });
+
+  return {
+    ok: true,
+    username: user?.username,
+    isTemporary,
+    fellBackToRegularSignIn: fellBack,
+  };
 }
 
 /**
