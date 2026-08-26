@@ -3713,23 +3713,23 @@
     {
       "index": 64,
       "number": 64,
-      "stem": "在歐盟 CBAM 制度中，哪類排放不計入範疇？",
+      "stem": "依歐盟 CBAM 正式期內含排放量計算方法，下列何項排放原則上不納入 CBAM 貨品之生產排放計算？",
       "options": [
         {
           "key": "A",
-          "text": "間接電力排放"
+          "text": "生產過程中產生的直接排放"
         },
         {
           "key": "B",
-          "text": "直接排放"
+          "text": "生產過程中所消耗電力產生的間接排放"
         },
         {
           "key": "C",
-          "text": "移動源排放"
+          "text": "廠內堆高機、卡車等移動機械之排放"
         },
         {
           "key": "D",
-          "text": "製熱排放"
+          "text": "生產所需加熱或冷卻產生的排放"
         }
       ],
       "answer": "C",
@@ -3737,10 +3737,11 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-08-02",
         "sources": [
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
-          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083"
+          "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
+          "https://www.cca.gov.tw/affairs/cbam/resource/faq/35250.html"
         ],
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -3756,6 +3757,17 @@
             "quote": "Emissions from mobile machinery for transportation purposes shall be excluded.",
             "supports_option": "C",
             "label_fixed": "引文「Emissions from mobile machinery for transportation purposes shall be excluded」支持的是「移動源排放」（題庫的 C），原本卻標成 B。**單純標錯。**"
+          },
+          {
+            "url": "https://www.cca.gov.tw/affairs/cbam/resource/faq/35250.html",
+            "quote": "移動機械（卡車、堆高機等）使用產生的排放則予以排除",
+            "supports_option": "C",
+            "note": "環境部氣候變遷署 CBAM 正式期常見問答（4.21 廠區運輸排放納入範圍）。同段並載明「輸送帶運輸、管道運輸以及其他固定設備運輸所產生的排放均包含在內」，故排除的是移動機械，而非廠內運輸一概不計。"
+          },
+          {
+            "url": "https://www.cca.gov.tw/affairs/cbam/resource/faq/35250.html",
+            "quote": "涵蓋CBAM貨品生產過程中產生的排放量，包括加熱與冷卻在生產過程中產生的排放量",
+            "note": "同問答 4.16：加熱與冷卻屬「直接排放」，故不可作為「不納入」的選項；間接排放則「涵蓋CBAM貨品生產過程中消耗的電力所產生之排放量」，且水泥及肥料（以及凝聚鐵礦）於正式期仍須申報直接與間接排放 —— 這正是 #115 回報主張「間接電力排放不在課徵範圍、故答案應為 A」不成立的原因。"
           }
         ],
         "citation_audit": {
@@ -3773,12 +3785,34 @@
           "date": "2026-07-15",
           "anchored_on": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1773",
           "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
-        }
+        },
+        "prior_stem": "在歐盟 CBAM 制度中，哪類排放不計入範疇？",
+        "prior_options": [
+          {
+            "key": "A",
+            "text": "間接電力排放"
+          },
+          {
+            "key": "B",
+            "text": "直接排放"
+          },
+          {
+            "key": "C",
+            "text": "移動源排放"
+          },
+          {
+            "key": "D",
+            "text": "製熱排放"
+          }
+        ],
+        "question_rewritten": true,
+        "question_rewritten_date": "2026-08-02",
+        "question_rewritten_reason": "issue #115 回報「正解應為 A（間接電力排放）」，理由是「移動排放源屬範疇一、間接電力排放屬範疇三」。此主張不成立，且有兩層錯誤：(1) 外購電力是範疇二而非範疇三；(2) 更根本的是，CBAM 的內含排放量系統邊界本來就不是 GHG Protocol 的範疇一/二/三分類，兩套 taxonomy 不能互相代換。依環境部 CBAM 正式期問答，直接排放含生產所需加熱與冷卻、間接排放為生產所耗電力（水泥與肥料等貨品正式期仍須申報），而明文排除的是「移動機械（卡車、堆高機等）」。故答案維持 C。惟原題「移動源排放」四字語意過寬（固定設備運輸仍計入），且題幹未鎖制度期別，確實有歧義 —— 此即本次接受並重寫題幹與四個選項的理由：每個誘答項都能被同一份正式期一手來源在同一 scope 下否證。"
       },
       "quality_flags": [
         "time_sensitive"
       ],
-      "explanation": "引文明言：「Emissions from mobile machinery for transportation purposes shall be excluded.」——為運輸目的而使用之移動機具所產生的排放應予排除。因此在 CBAM 的排放計算範疇中被排除在外的，正是移動源的排放；引文並未把直接排放、間接電力排放或製熱相關排放列為排除項目。"
+      "explanation": "一手來源明示：「移動機械（卡車、堆高機等）使用產生的排放則予以排除」，而「輸送帶運輸、管道運輸以及其他固定設備運輸所產生的排放均包含在內」——被排除的是廠內移動機械，並非廠內運輸一概不計。相對地，直接排放「涵蓋CBAM貨品生產過程中產生的排放量，包括加熱與冷卻在生產過程中產生的排放量」，故生產所需加熱或冷卻屬應計入的直接排放；間接排放「涵蓋CBAM貨品生產過程中消耗的電力所產生之排放量」，且水泥及肥料等貨品於正式期仍須申報，並非一概不納入。"
     },
     {
       "index": 65,
@@ -33815,27 +33849,27 @@
       "level": null,
       "topic_tags": [],
       "question_type": "unknown",
-      "stem": "ISO 14067 要求數據品質包含：代表性、完整性與：",
+      "stem": "依 ISO 14067:2018「數據與數據品質」（參照 6.3.5）所列之數據品質特性，下列何者係指「量測每個數據值所表現的變異性（例：變異數）」？",
       "options": [
         {
           "key": "A",
-          "text": "成本效益"
+          "text": "準確度（accuracy）"
         },
         {
           "key": "B",
-          "text": "精確性"
+          "text": "精密度（precision）"
         },
         {
           "key": "C",
-          "text": "準確性"
+          "text": "完整性（completeness）"
         },
         {
           "key": "D",
-          "text": "可比較性"
+          "text": "代表性（representativeness）"
         }
       ],
       "answer": "B",
-      "explanation": null,
+      "explanation": "公版教材逐字列出的數據品質特性為：「(d) 精密度：量測每個數據值所表現的變異性(例：變異數)。(e) 完整性：量測或估算的總流(total flow)之百分比。(f) 代表性：定性評估其數據組合能反映到利害關係者真實之群體之程度」。題幹描述的「變異性（例：變異數）」對應的正是精密度；完整性講的是總流之比例，代表性講的是數據反映真實群體的程度，均非變異性。至於準確度並不在這份數據品質特性清單內 —— 教材另在原則一節列有「準確度：CFP 與部分 CFP 之量化為正確、可查證、相關及不誤導」，與數據品質特性分屬不同條款，這正是本題最常見的混淆點。",
       "source": {
         "source_id": "S_VOCUS_03",
         "url": "https://vocus.cc/article/68d5d622fd89780001c2392c",
@@ -33868,11 +33902,50 @@
             "quote": "數據品質特性須涵蓋下列項目： • (a) 有關時間涵蓋面：數據的年代與須蒐集數據歷經的最短時段。 • (b) 地理涵蓋面：從單元過程蒐集的地理區域數據須符合CFP研究的目標。 • (c) 技術涵蓋面：特定技術或技術組合。 • (d) 精密度：量測每個數據值所表現的變異性(例：變異數)。 • (e) 完整性：量測或估算的總流(total flow)之百分比。 • (f) 代表性：定性評估其數據組合能反映到利害關係者真實之群體之程度",
             "supports_option": "B",
             "note": "舊引文釘不住答案（引文引錯段落或只抄了題目）。第十一輪由我親自複核：教材列 ISO 14067『數據品質特性須涵蓋』項目為 (d)精密度、(e)完整性、(f)代表性…，其中的『精密度(precision)』即選項 B『精確性』；『準確性/準確度(accuracy)』並非數據品質特性，而是第5節另立的原則『5.10 準確度』。故與代表性、完整性並列的是精確性(B)，不 新引文經機械比對確認（verbatim）。"
+          },
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "(d) 數據與數據品質要求事項(參照6.3.5)。",
+            "note": "錨定題幹所引的條款：ISO 14067:2018 中「數據與數據品質」即 6.3.5，故題幹鎖條款不是憑空加註的條號。"
+          },
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "5.10 準確度 • CFP 與部分 CFP 之量化為正確、可查證、相關及不誤導， 且儘可能在實務上減少偏差與不確 定性。",
+            "note": "「準確度」是標準第 5 節的**原則**，不在 6.3.5 的**數據品質特性**清單內 —— issue #116 主張改成「準確性」正是踩到這個跨條款混淆。"
+          },
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf",
+            "quote": "(4) 精密度：量測每個數據值所表現的變異性(例：變異數) (5) 完整性：量測或估算物質或能量流的百分比 (6) 代表性：數據組反映真正關注母體的程度",
+            "supports_option": "B",
+            "note": "經濟部 iPAS 官方「考前指引」第二章 ISO14067:2018 —— 比原題出處（部落格）權威，且與新竹中華大學公版教材逐字一致。"
           }
         ],
         "sources": [
-          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
-        ]
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/775097586.pdf"
+        ],
+        "prior_stem": "ISO 14067 要求數據品質包含：代表性、完整性與：",
+        "prior_options": [
+          {
+            "key": "A",
+            "text": "成本效益"
+          },
+          {
+            "key": "B",
+            "text": "精確性"
+          },
+          {
+            "key": "C",
+            "text": "準確性"
+          },
+          {
+            "key": "D",
+            "text": "可比較性"
+          }
+        ],
+        "question_rewritten": true,
+        "question_rewritten_date": "2026-08-02",
+        "question_rewritten_reason": "issue #116 回報「應為準確性而非精確性」。此主張不成立：ISO 14067 的「準確度」是第 5 節的原則（5.10），而本題問的「數據品質特性」在 6.3.5，該清單列的是「精密度」，沒有「準確度」。（題庫答案先前已由 C 更正為 B，見 prior_answer 與 _correction_note；本次回報等同要求改回已被推翻的舊答案，故不採納。）惟原題確有兩個真實缺陷：(1) 中文「精確性」與「準確性」極易混淆，官方用語是「精密度（precision）」；(2) 原題幹「代表性、完整性與：」是開放式列舉，而6.3.5 實際有十項特性，日後只要有人把誘答項換成「一致性」或「再現性」就會出現第二個正解。故改為以定義辨識的題型（變異性→精密度），並將四個選項一律中英並列，從根本消除歧義。"
       },
       "_correction_note": "ISO 14067 的「**數據品質**」特性（§6.3.5，摘自 CNS 14044 §4.2.3.6.2）為：時間／地理／技術涵蓋面、**精密度**、完整性、代表性、一致性、再現性、數據來源、不確定性。**「準確度」不在數據品質清單裡。**\n\n我先前駁回這個更正，理由是「iPAS 公版教材裡有 5.10 準確度」——**但那是 ISO 14067 §5 的「原則」，不是 §6.3.5 的「數據品質」。我把兩個條款搞混了。**題目問的是「數據品質」，答案是精密度（precision）→ 選項 B。"
     },
