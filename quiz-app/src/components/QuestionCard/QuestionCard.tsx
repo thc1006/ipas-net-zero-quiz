@@ -266,22 +266,22 @@ export function QuestionCard({
         {question.sources && question.sources.length > 0 && (
           <div className="question-sources" aria-label="參考來源">
             <div className="question-sources-header">
-          <span className="material-icons sm">menu_book</span>
-          <span>參考來源</span>
+              <span className="material-icons sm">menu_book</span>
+              <span>參考來源</span>
             </div>
             <ul className="question-sources-list">
-          {sourceLabels.map(({ url, label }) => (
-            <li key={url}>
-              <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="source-link"
-              >
-            {label}
-              </a>
-            </li>
-          ))}
+              {sourceLabels.map(({ url, label }) => (
+                <li key={url}>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="source-link"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         )}

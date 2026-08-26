@@ -96,3 +96,49 @@ describe('題庫解析必須被看見', () => {
     expect(screen.queryByText('考科二')).not.toBeInTheDocument();
   });
 });
+
+describe('來源與練習池徽章', () => {
+  const withSources: QuizQuestion = {
+    ...base,
+    sources: [
+      'https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098',
+      'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956',
+    ],
+  };
+
+  it('揭曉答案後把來源渲染成可讀標籤連結', () => {
+    render(
+      <QuestionCard question={withSources} questionNumber={1} showAnswer onSelectAnswer={vi.fn()} />
+    );
+    const list = screen.getByLabelText('參考來源');
+    expect(list).toBeInTheDocument();
+    const links = screen.getAllByRole('link');
+    expect(links.length).toBeGreaterThanOrEqual(2);
+    for (const a of links) {
+      expect(a).toHaveAttribute('rel', 'noopener noreferrer');
+      expect(a.getAttribute('href')).toMatch(/^https:\/\//);
+    }
+  });
+
+  it('未揭曉答案前不顯示來源', () => {
+    render(<QuestionCard question={withSources} questionNumber={1} onSelectAnswer={vi.fn()} />);
+    expect(screen.queryByLabelText('參考來源')).not.toBeInTheDocument();
+  });
+
+  it('練習池題目顯示來源徽章', () => {
+    render(
+      <QuestionCard
+        question={{
+          ...base,
+          sourceType: 'practice_pool',
+          provenance: { source_type: 'ai_generated' },
+          qualityFlags: ['low_confidence'],
+        }}
+        questionNumber={1}
+        onSelectAnswer={vi.fn()}
+      />
+    );
+    // 練習池題目應出現來源徽章（AI 產題），主題庫題不顯示
+    expect(document.querySelector('.source-badge')).not.toBeNull();
+  });
+});

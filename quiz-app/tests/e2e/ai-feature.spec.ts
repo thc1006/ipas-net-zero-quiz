@@ -44,7 +44,10 @@ test.describe('AI 解析功能', () => {
     // 應看到 AI 解析按鈕
     const aiButton = page.locator('.ai-explain-btn');
     await expect(aiButton).toBeVisible({ timeout: 5000 });
-    await expect(aiButton).toContainText('AI 解析');
+    // 按鈕文字刻意標明未經人工審核（見 PR #120）：人工解析已直接顯示在題目下方，
+    // AI 只是延伸說明，不該讓使用者以為它跟題庫解析同等份量。
+    await expect(aiButton).toContainText('AI 延伸說明');
+    await expect(aiButton).toContainText('未經人工審核');
   });
 
   test('點擊 AI 解析後應顯示載入狀態', async ({ page }) => {
