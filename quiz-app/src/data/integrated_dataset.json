@@ -7999,7 +7999,8 @@
             "url": "https://webstore.ansi.org/preview-pages/ISO/preview_ISO%2B14068-1-2023.pdf",
             "quote": "Evaluation and revision of the carbon neutrality management plan",
             "supports_option": "A",
-            "note": "ISO 14068-1:2023 中「碳中和管理計畫（carbon neutrality management plan）」設有評估與修訂章節，其標題即為「Evaluation and revision of the carbon neutrality management plan」，對應本題正解。此章節標題為標準全文目次項目，僅見於標準全文與公開預覽；ISO 官方頁（見 sources）確認版本與發布狀態，但頁面本身不含此逐字標題，故 evidence 改指向可逐字重驗的公開預覽（ANSI 轉載，屬二手轉載通路）。"
+            "note": "ISO 14068-1:2023 中「碳中和管理計畫（carbon neutrality management plan）」設有評估與修訂章節，其標題即為「Evaluation and revision of the carbon neutrality management plan」，對應本題正解。此章節標題為標準全文目次項目，僅見於標準全文與公開預覽；ISO 官方頁（見 sources）確認版本與發布狀態，但頁面本身不含此逐字標題，故 evidence 改指向可逐字重驗的公開預覽（ANSI 轉載，屬二手轉載通路）。",
+            "authority": "secondary"
           }
         ],
         "answer_verification": {
@@ -18750,7 +18751,8 @@
             "url": "https://www.smithschool.ox.ac.uk/news/article-6-focus-outcomes-cop28",
             "quote": "Ultimately, the final presidency text presented on December 12th was rejected by Parties.",
             "supports_option": "A",
-            "note": "COP28 未通過巴黎協定第 6.4 條方法學/碳移除標準（遭締約方否決，延至 COP29 方採納）；故「COP28 正式通過並啟用」為錯誤敘述"
+            "note": "COP28 未通過巴黎協定第 6.4 條方法學/碳移除標準（遭締約方否決，延至 COP29 方採納）；故「COP28 正式通過並啟用」為錯誤敘述",
+            "authority": "secondary"
           },
           {
             "url": "https://unfccc.int/sites/default/files/resource/cma5_auv_4_gst.pdf",
@@ -19981,7 +19983,8 @@
             "url": "https://assets.bbhub.io/company/sites/60/2020/10/FINAL-2017-TCFD-Report-11052018.pdf",
             "quote": "investors, lenders, and insurance underwriters need to understand how climate-related risks and opportunities are likely to impact an organization’s future financial position as reflected in its income statement, cash flow statement, and balance sheet",
             "supports_option": "A",
-            "note": "第十五輪：改題幹後，以 TCFD 最終報告「income statement, cash flow statement, and balance sheet」三張報表釘住現金流為第三者（答案 A）。"
+            "note": "第十五輪：改題幹後，以 TCFD 最終報告「income statement, cash flow statement, and balance sheet」三張報表釘住現金流為第三者（答案 A）。",
+            "authority": "secondary"
           }
         ]
       },
@@ -22727,7 +22730,8 @@
             "url": "https://www.ogci.com/news/ogci-cop28-oil-gas-decarbonization-charter-an-important-milestone-for-the-industry/",
             "quote": "The OGDC was launched at COP28 in Dubai to help rally a broad set of national, private and independent oil and gas companies to implement and accelerate climate actions in support of the Paris Agreement ambitions.",
             "supports_option": "C",
-            "note": "選項『油氣脫碳憲章（OGDC）』為 COP28 launch —— 故非本題答案"
+            "note": "選項『油氣脫碳憲章（OGDC）』為 COP28 launch —— 故非本題答案",
+            "authority": "secondary"
           },
           {
             "url": "https://www.irena.org/News/pressreleases/2023/Dec/Global-Power-Utilities-Declare-Joint-Action-Plan-to-Drive-Energy-Transition-at-COP28",

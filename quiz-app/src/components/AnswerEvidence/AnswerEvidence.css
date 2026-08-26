@@ -49,3 +49,10 @@
 .answer-evidence__link {
   font-size: var(--font-size-xs);
 }
+
+.answer-evidence__grade {
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}

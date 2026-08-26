@@ -6,6 +6,7 @@
 // 這裡最重要的一條是「對回原始資料」：第一版寫成「有 evidence 的題數 > 100」，
 // 那不管 selector 挑到哪一條都會綠，等於用測試把選錯的行為釘成預期。
 import { describe, it, expect } from 'vitest';
+import manifest from '../../../evidence-manifest.json';
 import { allQuestions, dataset, getQuestionById, pickEvidence } from './questions';
 
 const NL = String.fromCharCode(10);
@@ -14,6 +15,7 @@ interface RawEvidence {
   url?: string;
   quote?: string;
   supports_option?: string;
+  authority?: string;
 }
 interface RawItem {
   index?: number;
@@ -84,6 +86,34 @@ describe('答案依據（evidence）顯示', () => {
       .filter((q) => q.evidence && !shouldHave.has(q.id))
       .map((q) => q.id);
     expect(wrong, '這些題目沒有撐住正解的引文，卻顯示了答案依據').toEqual([]);
+  });
+
+
+  it('引文的 authority 標記必須與 evidence-manifest 的分級一致（不得漂移）', () => {
+    // manifest 才是分級的真相來源；dataset 上的 authority 只是給 runtime 用的副本。
+    // 兩邊分開存就一定會漂，所以直接對帳。
+    const entries = manifest as unknown as {
+      entries: { url?: string; authority?: string }[];
+    };
+    const secondary = new Set(
+      entries.entries.filter((e) => e.authority !== 'primary').map((e) => e.url)
+    );
+    const bad: string[] = [];
+    for (const it of rawAll) {
+      for (const e of it.metadata?.evidence ?? []) {
+        const isSecondaryInManifest = secondary.has(e.url);
+        const tagged = e.authority === 'secondary';
+        if (isSecondaryInManifest !== tagged) {
+          bad.push(
+            `${it.item_id ?? `gist-${it.index}`}: manifest=${
+              isSecondaryInManifest ? 'secondary' : 'primary'
+            }，dataset=${e.authority ?? 'primary'}（${e.url ?? '(無 URL)'}）`
+          );
+        }
+      }
+    }
+    expect(secondary.size, 'manifest 裡沒有任何非 primary 條目，這道對帳會空轉').toBeGreaterThan(0);
+    expect(bad, '引文分級與 manifest 不一致：' + NL + bad.join(NL)).toEqual([]);
   });
 
   it('S_VOCUS_03-q004 顯示教材列出精密度/完整性/代表性的原文，不是部落格抄來的題幹', () => {

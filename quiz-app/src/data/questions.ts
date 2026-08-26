@@ -79,9 +79,14 @@ function safeEvidenceUrl(raw?: string): string | undefined {
 export function pickEvidence(q: {
   answer?: string | null;
   metadata?: {
-    evidence?: { url?: string; quote?: string; supports_option?: string }[];
+    evidence?: {
+      url?: string;
+      quote?: string;
+      supports_option?: string;
+      authority?: string;
+    }[];
   };
-}): { quote: string; url: string } | undefined {
+}): { quote: string; url: string; authority?: string } | undefined {
   if (!q.answer) return undefined;
   const list = q.metadata?.evidence;
   if (!Array.isArray(list)) return undefined;
@@ -92,7 +97,7 @@ export function pickEvidence(q: {
     if (quote.length < 8) continue;
     const url = safeEvidenceUrl(e.url);
     if (!url) continue;
-    return { quote, url };
+    return e.authority ? { quote, url, authority: e.authority } : { quote, url };
   }
   return undefined;
 }

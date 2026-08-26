@@ -43,6 +43,8 @@ export interface MainBankItemMetadata {
     quote?: string;
     supports_option?: string;
     note?: string;
+    /** 非一手來源時標 'secondary'（與 evidence-manifest.json 的分級同步，有 gate 對帳） */
+    authority?: string;
   }[];
   /** sources 上次 curl 驗 200 OK 的日期（YYYY-MM-DD） */
   sources_verified_date?: string;
@@ -150,7 +152,7 @@ export interface QuizQuestion {
    * 為什麼要顯示：這些引文一直只存在資料裡，畫面上只看得到一排來源連結。
    * 於是「教材原文」與「某篇部落格」在使用者眼中份量相同 —— 而答案其實是前者撐住的。
    */
-  evidence?: { quote: string; url: string };
+  evidence?: { quote: string; url: string; authority?: string };
   /** 解析文字（給 AI helper 與 UI 參考），可能為空 */
   explanation?: string | null;
   /** 練習池題目專屬：UI 用以渲染來源徽章；主題庫題不帶 */
