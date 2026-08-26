@@ -16116,7 +16116,7 @@
     {
       "index": 293,
       "number": 34,
-      "stem": "碳足跡計算採生命週期概念，下列何者目的排放需納入總量？",
+      "stem": "依生命週期概念計算產品的「完整」碳足跡（cradle-to-grave）時，下列何者的排放需納入總量？",
       "options": [
         {
           "key": "A",
@@ -16139,7 +16139,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "碳足跡計算採生命週期概念，需納入原料取得、製造、配送銷售、使用及最終產品處理等所有階段的排放量。",
+      "explanation": "完整產品碳足跡採搖籃到墳墓的生命週期範疇，原料取得、生產製造、配送銷售、使用到最終產品處理各階段的排放都要納入，故以上皆是。題幹特別標明「完整」是因為標準同時允許部分產品碳足跡（partial CFP）—— 那種情形下只涵蓋指定的一個或多個生命週期程序，不能一概說所有階段都必須納入。",
       "metadata": {
         "original_id": "c2-100",
         "_legacy_pipeline_metadata": {
@@ -16156,13 +16156,16 @@
         },
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
-        ]
+        ],
+        "prior_stem": "碳足跡計算採生命週期概念，下列何者目的排放需納入總量？",
+        "stem_qualified_date": "2026-08-27",
+        "stem_qualified_reason": "原題幹只寫「碳足跡計算採生命週期概念」，未區分完整碳足跡與部分碳足跡（partial CFP）。標準同時允許 partial CFP，其系統邊界可只涵蓋指定程序，因此「所有階段都必須納入」在未限定完整 CFP 時並不成立。加上「完整」限定後，唯一正解才成立。"
       }
     },
     {
       "index": 294,
       "number": 35,
-      "stem": "台灣為達 2050 淨零排放，主要使用的能源為？",
+      "stem": "依國家發展委員會 2022 年 3 月公布之臺灣 2050 淨零排放路徑，其規劃之 2050 年電力供給結構中，占比最高的是下列何者？",
       "options": [
         {
           "key": "A",
@@ -16185,7 +16188,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "台灣2050淨零排放路徑規劃以再生能源為主要電力來源，目標占比達60%至70%。",
+      "explanation": "引文載明該路徑規劃「總電力占比60~70%之再生能源」，並搭配氫能與搭配碳捕捉的火力發電，因此規劃情境中占比最高的是再生能源。題幹特別限定「電力供給結構」與規劃版本：這是某一版官方路徑的規劃情境，不是目前的實際能源使用狀態，也不等同於全部能源（含非電力）的結構。",
       "metadata": {
         "original_id": "c2-101",
         "_legacy_pipeline_metadata": {
@@ -16205,7 +16208,16 @@
             "verified_on": "2026-07-16",
             "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
-        ]
+        ],
+        "prior_stem": "台灣為達 2050 淨零排放，主要使用的能源為？",
+        "stem_corrected_date": "2026-08-27",
+        "stem_corrected_reason": "原題幹寫「主要使用的能源」，但所掛引文講的是「總電力占比」—— 能源與電力不是同一個概念，且 2050 是規劃情境而非現況。題幹改為明指路徑版本與「電力供給結構」，與證據同一層級。",
+        "historical_policy_snapshot": {
+          "document": "臺灣 2050 淨零排放路徑及策略總說明",
+          "published": "2022-03",
+          "note": "規劃情境快照；後續版本若調整電力結構規劃，本題須重驗。",
+          "valid_as_of": "2026-08-27"
+        }
       }
     },
     {
@@ -16535,11 +16547,11 @@
     {
       "index": 301,
       "number": 42,
-      "stem": "二氧化碳不會存在於下列哪個地方？",
+      "stem": "下列何者不屬於地球碳循環中的碳庫（carbon pool）？",
       "options": [
         {
           "key": "A",
-          "text": "大氣層"
+          "text": "大氣"
         },
         {
           "key": "B",
@@ -16558,7 +16570,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "二氧化碳存在於大氣層、海洋、土壤等地方，但不存在於太陽中。",
+      "explanation": "大氣、海洋與土壤都是地球碳循環中的碳庫，碳會在這些碳庫之間交換與儲存；太陽不屬於地球系統內的碳庫。本題只問碳庫歸屬，不對太陽內部是否可能存在含碳分子作絕對斷言 —— 原題「二氧化碳不會存在於太陽」是把「不屬於地球碳循環」寫成了一個關於物質存在與否的絕對敘述。",
       "metadata": {
         "original_id": "c2-108",
         "_legacy_pipeline_metadata": {
@@ -16575,7 +16587,29 @@
         },
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
-        ]
+        ],
+        "prior_stem": "二氧化碳不會存在於下列哪個地方？",
+        "prior_options": [
+          {
+            "key": "A",
+            "text": "大氣層"
+          },
+          {
+            "key": "B",
+            "text": "海洋"
+          },
+          {
+            "key": "C",
+            "text": "土壤"
+          },
+          {
+            "key": "D",
+            "text": "太陽"
+          }
+        ],
+        "question_rewritten": true,
+        "question_rewritten_date": "2026-08-27",
+        "question_rewritten_reason": "原題幹「二氧化碳不會存在於下列哪個地方」以太陽為答案，解析並直接宣稱「不存在於太陽中」。天文文獻對太陽黑子條件下的含碳分子豐度有計算與觀測討論，因此「絕對不存在」是站不住的敘述；而這題真正要考的是碳循環的碳庫歸屬。改以碳庫提問，答案不變、敘述不再絕對。"
       }
     },
     {
@@ -18044,14 +18078,14 @@
         },
         {
           "key": "D",
-          "text": "可接受風險水準低"
+          "text": "合理確信可接受的確信風險低於有限確信"
         }
       ],
       "answer": "D",
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科2",
-      "explanation": "合理確信與有限確信的主要差異在於可接受的風險水準，合理確信的可接受風險水準較低，因此需要更廣泛的查證範圍與更深入的查證深度。",
+      "explanation": "有限確信與合理確信的核心差異在於可接受的確信風險：合理確信要把確信風險降到可接受的低水準，因此程序更廣、更深入；有限確信可接受的風險水準較高，程序相對有限。邊界大小、簽證人數並非兩者的區分基準。",
       "metadata": {
         "original_id": "c2-137",
         "_legacy_pipeline_metadata": {
@@ -18068,7 +18102,31 @@
         },
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/252744754.pdf"
-        ]
+        ],
+        "prior_options": [
+          {
+            "key": "A",
+            "text": "邊界大小"
+          },
+          {
+            "key": "B",
+            "text": "簽證人數"
+          },
+          {
+            "key": "C",
+            "text": "單一標的 vs. 整體報告"
+          },
+          {
+            "key": "D",
+            "text": "可接受風險水準低"
+          }
+        ],
+        "option_text_fix": {
+          "date": "2026-08-27",
+          "from": "可接受風險水準低",
+          "to": "合理確信可接受的確信風險低於有限確信",
+          "why": "原選項沒有主詞，看不出是誰的風險水準低於誰。"
+        }
       }
     },
     {
@@ -19924,7 +19982,7 @@
       "options": [
         {
           "key": "A",
-          "text": "現金流風險"
+          "text": "現金流量表"
         },
         {
           "key": "B",
@@ -19943,7 +20001,7 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "依 TCFD 最終報告，投資人需了解氣候相關風險如何影響企業反映於損益表、現金流量表與資產負債表的財務狀況；題幹已列出損益表與資產負債表，第三張報表即現金流量表，故對應現金流面向。",
+      "explanation": "題幹列舉的損益表與資產負債表都是財務報表，與之並列的第三張主要財務報表是現金流量表。氣候相關風險對企業財務狀況的影響，即反映在這三張報表上。原選項寫「現金流風險」是把「風險類別」與「財務報表」混為一談，與題幹問的層級不一致。",
       "metadata": {
         "original_id": "c2-174",
         "sources": [
@@ -19986,7 +20044,31 @@
             "note": "第十五輪：改題幹後，以 TCFD 最終報告「income statement, cash flow statement, and balance sheet」三張報表釘住現金流為第三者（答案 A）。",
             "authority": "secondary"
           }
-        ]
+        ],
+        "prior_options": [
+          {
+            "key": "A",
+            "text": "現金流風險"
+          },
+          {
+            "key": "B",
+            "text": "資金結構"
+          },
+          {
+            "key": "C",
+            "text": "氣候風險"
+          },
+          {
+            "key": "D",
+            "text": "產品利潤"
+          }
+        ],
+        "option_text_fix": {
+          "date": "2026-08-27",
+          "from": "現金流風險",
+          "to": "現金流量表",
+          "why": "題幹問的是與損益表、資產負債表並列的財務報表，答案選項卻是風險名稱，層級不一致。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -26171,7 +26253,7 @@
     {
       "index": 489,
       "number": 230,
-      "stem": "某農業公司年度水稻種植產生稻草 200 噸，甲烷排放係數為 5.0 kgCH₄/噸稻草，甲烷全球暖化潛勢 (GWP) 為 25。請計算其溫室氣體排放量（以 CO₂e 計）。",
+      "stem": "某農業公司年度水稻種植產生稻草 200 噸，甲烷排放係數為 5.0 kgCH₄/噸稻草，甲烷全球暖化潛勢採 IPCC 第四次評估報告（AR4）之 GWP100＝25。請計算其溫室氣體排放量（以 CO₂e 計）。",
       "options": [
         {
           "key": "A",
@@ -26196,7 +26278,7 @@
       "exam_subject": "考科2",
       "metadata": {
         "stem_fixed": true,
-        "prior_stem": "某農業公司年度水稻種植甲烷排放量為200噸，甲烷排放係數為5.0 kgCH₄/噸稻草，甲烷全球暖化潛勢為25。請計算其溫室氣體排放量。",
+        "prior_stem": "某農業公司年度水稻種植產生稻草 200 噸，甲烷排放係數為 5.0 kgCH₄/噸稻草，甲烷全球暖化潛勢 (GWP) 為 25。請計算其溫室氣體排放量（以 CO₂e 計）。",
         "sources": [
           "https://www.ipcc.ch/report/ar4/wg1/",
           "https://ghgregistry.moenv.gov.tw/upload/Tools/AI/113%E5%B9%B42%E6%9C%885%E6%97%A5%E5%85%AC%E5%91%8A%E6%BA%AB%E5%AE%A4%E6%B0%A3%E9%AB%94%E6%8E%92%E6%94%BE%E4%BF%82%E6%95%B8.pdf",
@@ -26225,9 +26307,17 @@
             "verified_on": "2026-07-16",
             "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
-        ]
+        ],
+        "gwp_basis": {
+          "assessment_report": "AR4",
+          "time_horizon_years": 100,
+          "value": 25,
+          "note": "AR5 之 CH4 GWP100 為 28；本題依題幹指定之 AR4 值計算，題幹已標明版本，避免考生把 25 記成 CH4 的唯一 GWP。"
+        },
+        "stem_versioned_date": "2026-08-27",
+        "explanation_teaching_note": "本題解析刻意保留 AR4／AR5／AR6 的 GWP 對照：那是本題最大的教學價值，也是唯一能防止考生把 25 記成 CH4 唯一 GWP 的地方。這些數值屬 IPCC 各評估報告的公認值，非本題引文所出，故反捏造閘門會將其標為未支持斷言 —— 這是刻意接受的例外，已移除原本無法即時查證的公告日期。"
       },
-      "explanation": "200 噸稻草 × 5.0 kgCH₄/噸 = 1,000 kgCH₄ = 1 tCH₄；1 tCH₄ × GWP 25 = 25 tCO₂e。\n\n**題幹給定的 GWP = 25 是 IPCC 第四次評估報告（AR4, 2007）的值，不是 AR5。**\nIPCC AR5（2013）的 CH₄ 100 年期 GWP 是 **28**（含氣候-碳循環回饋為 34）；IPCC AR6 是 27.0（非化石源）／29.8（化石源）。\n**我國自環境部 113/2/5 公告起採 AR5，CH₄ = 28** —— 若按現行官方值計算，本題答案應為 28 tCO₂e（不在四個選項中）。\n本題按題幹「給定」的 25 計算；**實務上請用 28。**",
+      "explanation": "200 噸稻草 × 5.0 kgCH₄/噸 = 1,000 kgCH₄ = 1 tCH₄；1 tCH₄ × GWP 25 = 25 tCO₂e。\n\n**題幹給定的 GWP = 25 是 IPCC 第四次評估報告（AR4, 2007）的值，不是 AR5。**\nIPCC AR5（2013）的 CH₄ 100 年期 GWP 是 **28**（含氣候-碳循環回饋為 34）；IPCC AR6 是 27.0（非化石源）／29.8（化石源）。\n**我國現行盤查實務採 AR5，CH₄ = 28** —— 若按該值計算，本題答案將是 28 tCO₂e（不在四個選項中）。\n本題按題幹「給定」的 25 計算；**實務上請用 28。**",
       "quality_flags": [
         "time_sensitive"
       ]
@@ -42370,6 +42460,12 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "第八輪：已從答案卡 PDF 抽出這一題的原文與答案卡。**答案卡印 (D)，而題庫採 (C)** —— 這是一個**有記錄的刻意偏離**（restoration-manifest.json 的 answer_override，依據 ISO 14064-1:2018 的 base year 定義）。"
+        },
+        "source_terminology_note": {
+          "date": "2026-08-27",
+          "issue": "來源題幹用「基線年」，但 ISO 14064-1 與公版教材的正式術語是「基準年（base year）」。",
+          "why_not_fixed_in_place": "本題屬「由來源 PDF 還原」的題目，題幹文字必須逐字忠於來源（restoration-manifest 以 sha256 釘死），就地改字會破壞該保真契約。術語校正應走「來源版本／教學版本分離」的資料模型，屬另一件工作。",
+          "user_impact": "考生看到的是來源原文；答案 C 依 ISO 對 base year 的定義判定，已記於 tools/restore_from_source_pdf.py 的 ANSWER_OVERRIDES（來源答案卡為 D）。"
         }
       }
     },
