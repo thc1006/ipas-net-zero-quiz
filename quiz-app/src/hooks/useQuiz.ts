@@ -329,6 +329,13 @@ export function useQuiz() {
    * 只補顯示用欄位（解析／考科／來源／出處徽章），不動 answer / options / stem ——
    * 那三者一動就會與 answers 裡已記錄的 correctAnswer 分裂（見上方 #106 對帳說明）；
    * 顯示欄位沒有這個風險。池是 dynamic import，這裡不會把它拉進主 bundle。
+   *
+   * **已知限制**：qualityFlags 也不補。若某題在存檔後被標成爭議類旗標，這一場續作仍會
+   * 沿用舊旗標而照常計分。理由是本函式在 setState 之後才非同步完成，此時 resumeQuiz 的
+   * 可計分過濾與 currentIndex 重錨定都已經跑完；只換旗標而不重跑那兩步，會做出
+   * 「畫面說不計分、finishQuiz 仍計分」的分裂狀態，比沿用舊旗標更糟。
+   * 主題庫題不受影響（它們存的是 id，續作時本來就用現行題庫重建，旗標是新的）。
+   * 真正要修得靠「續作時重跑一次過濾」，那會動到 resumeQuiz 的重錨定邏輯，另案處理。
    */
   const rehydratePoolQuestions = useCallback((questions: QuizQuestion[]): void => {
     if (!questions.some((q) => q.sourceType === 'practice_pool')) return;
