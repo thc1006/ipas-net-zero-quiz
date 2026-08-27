@@ -482,12 +482,6 @@
   font-weight: 400;
 }
 
-.confidence-warning {
-  margin-left: auto;
-  font-size: var(--font-size-xs);
-  color: var(--color-warning-fg);
-}
-
 /* AI 生成題目專用樣式 */
 .ai-response-inline.generated {
   border-color: var(--color-warning-fg);

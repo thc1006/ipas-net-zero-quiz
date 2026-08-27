@@ -473,9 +473,12 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                           <div className="ai-response-header-inline">
                             <span className="material-icons sm">auto_awesome</span>
                             <span>AI 生成的相似題</span>
-                            {generatedQ.confidence > 0 && generatedQ.confidence < 0.7 && (
-                              <span className="confidence-warning">低信心度</span>
-                            )}
+                            {/* 先前這裡用 confidence < 0.7 條件式顯示「低信心度」。
+                                那個分數是 estimateConfidence() 依回覆長度與關鍵詞加減出來的，
+                                與答案對不對無關（ai-helper 的 AIResponse 註解已寫明不對使用者
+                                呈現）。條件式顯示更糟：沒出現徽章等於暗示「這題信心高」，
+                                而我們沒有任何依據講這句話。改為與 AI 解析路徑一致的無條件揭露。 */}
+                            <span className="confidence-inline">未經人工審核</span>
                           </div>
                           {generatedQ.success ? (
                             <div className="ai-content generated-content">

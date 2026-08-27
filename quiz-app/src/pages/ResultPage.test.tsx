@@ -299,11 +299,15 @@ describe('ResultPage', () => {
       );
     }
 
-    it('success response → 渲染題目內容；低信心度顯示警示徽章', async () => {
+    // 這兩條原本釘的是「低信心度時顯示警示、高信心度時不顯示」。那個分數是
+    // estimateConfidence() 依回覆長度與關鍵詞加減出來的啟發式值，ai-helper 的註解
+    // 已寫明不對使用者呈現。條件式顯示比顯示數值更糟：沒有徽章等於暗示「這題信心高」，
+    // 而我們沒有任何依據講這句話。改為無條件揭露「未經人工審核」，與 AI 解析路徑一致。
+    it('success response → 渲染題目內容，並無條件標示未經人工審核', async () => {
       const fakeResponse: AIResponse = {
         success: true,
         content: '新題目：下列何者屬於範疇一直接排放？\nA. 公務車柴油燃燒\nB. 外購電力',
-        confidence: 0.5, // 介於 0 和 0.7 之間 → 觸發 低信心度 branch
+        confidence: 0.5,
         error: '',
       };
       vi.mocked(generateSimilarQuestionStream).mockResolvedValueOnce(fakeResponse);
@@ -316,10 +320,11 @@ describe('ResultPage', () => {
       });
       expect(screen.getByText(/新題目：下列何者屬於範疇一直接排放？/)).toBeInTheDocument();
       expect(screen.getByText(/A\. 公務車柴油燃燒/)).toBeInTheDocument();
-      expect(screen.getByText(/低信心度/)).toBeInTheDocument();
+      expect(screen.getAllByText('未經人工審核').length).toBeGreaterThan(0);
+      expect(screen.queryByText(/低信心度/)).not.toBeInTheDocument();
     });
 
-    it('success response 高信心度 → 不顯示警示徽章', async () => {
+    it('啟發式分數高時同樣標示未經人工審核（不會因分數高就默默背書）', async () => {
       vi.mocked(generateSimilarQuestionStream).mockResolvedValueOnce({
         success: true,
         content: '高信心題目內容',
@@ -334,6 +339,7 @@ describe('ResultPage', () => {
         expect(screen.getByText(/AI 生成的相似題/)).toBeInTheDocument();
       });
       expect(screen.queryByText(/低信心度/)).not.toBeInTheDocument();
+      expect(screen.getAllByText('未經人工審核').length).toBeGreaterThan(0);
     });
 
     it('failure response → 渲染 ai-error 區塊與錯誤訊息', async () => {
