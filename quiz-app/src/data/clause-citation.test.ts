@@ -88,7 +88,7 @@ function clauseKeys(stem: string): string[] {
 
 /** 比對用正規化：去掉標點與空白（法規頁的換行與全形標點會隨版面變動） */
 const norm = (t: string): string =>
-  (t ?? '').normalize('NFKC').replace(/[\s　，。、：；「」（）()【】[\]\-–—/.]+/g, '');
+  (t ?? '').normalize('NFKC').replace(/[\s\u3000，。、：；「」（）()【】[\]\-–—/.]+/g, '');
 
 const evidence = (it: Item): Evidence[] => [
   ...(it.metadata?.evidence ?? []),
