@@ -8,6 +8,8 @@
 // 所以這支現在的行為與 `q.hasAnswer` 完全相同。它存在是為了讓**下一次**有題目被判爭議時，
 // 標上旗標就自動離開計分池，而不必依賴某個人記得同時把答案撤掉。
 
+import { BLOCKING_QUALITY_FLAGS } from '../types/practicePool';
+
 /**
  * 帶這些旗標的題目一律不計分。
  *
@@ -15,14 +17,7 @@
  * `time_sensitive`（內容會過期，但現在是對的）與 `low_confidence`
  * （練習池的品質提示，UI 已有徽章）**不在此列** —— 它們是提醒，不是失效。
  */
-export const SCORE_BLOCKING_FLAGS = [
-  'ambiguous',
-  'disputed',
-  'disputed_answer',
-  'multiple_correct',
-  'unverifiable_evidence',
-  'retired',
-] as const;
+export const SCORE_BLOCKING_FLAGS = BLOCKING_QUALITY_FLAGS;
 
 export type ScoreBlockingFlag = (typeof SCORE_BLOCKING_FLAGS)[number];
 

@@ -3,6 +3,11 @@ import { describe, it, expect } from 'vitest';
 import { isQuestionScorable, whyNotScorable, SCORE_BLOCKING_FLAGS } from './scorable';
 import dataset from '../data/integrated_dataset.json';
 import pool from '../data/practice_pool.json';
+import type { QuizQuestion } from '../types/quiz';
+import type { PracticePoolQualityFlag } from '../types/practicePool';
+import { ADVISORY_QUALITY_FLAGS } from '../types/practicePool';
+import { validatePracticePool } from './practice-pool-schema';
+import { toQuizQuestion } from './practice-pool';
 
 describe('isQuestionScorable', () => {
   it('有答案且無阻斷旗標 → 可計分', () => {
@@ -102,7 +107,8 @@ describe('抽題 helper 必須真的排除不可計分的題（行為測試）',
   // 一題 answer='A' + ambiguous 仍可能進考卷，而分母把它排除 → 分數可能超過 100。
   it('getRandomQuestionsFromPool 不會回傳「有答案但帶阻斷旗標」的題', async () => {
     const { getRandomQuestionsFromPool } = await import('../data/questions');
-    const mk = (id: string, flags: string[] = []) => ({
+    // 標註成 QuizQuestion：fixture 自己就受真型別檢查，避免造出一個現實中不存在的形狀
+    const mk = (id: string, flags: PracticePoolQualityFlag[] = []): QuizQuestion => ({
       id,
       stem: `題幹 ${id}`,
       options: [
@@ -149,5 +155,40 @@ describe('抽題 helper 必須真的排除不可計分的題（行為測試）',
     expect(questionsWithAnswer.every((q) => isQuestionScorable(q))).toBe(true);
     expect(questionsWithAnswer.length).toBeLessThanOrEqual(allQuestions.length);
     expect(questionsWithAnswer.length).toBeGreaterThan(700);
+  });
+});
+
+// 這一組是本檔最重要的守門：阻斷旗標必須「標得下去」，而且「標了真的會離開計分池」。
+//
+// 為什麼：SCORE_BLOCKING_FLAGS 原本是在 scorable.ts 手寫的第二份清單，而資料檔的合法值
+// 由 practice-pool-schema 的另一份白名單決定 —— 兩份的交集只有 ambiguous。
+// 也就是說，照本模組宣稱的用法把一題標成 disputed，schema 會判該題非法、CI 直接紅：
+// 這個承諾對 6 個旗標中的 5 個根本不成立。單測 isQuestionScorable() 永遠驗不到這件事，
+// 因為它只吃自己造的物件、繞過了資料層。
+describe('阻斷旗標必須在資料層可用（不是只有 predicate 認得）', () => {
+  const sample = (pool as { items: unknown[] }).items[0] as Record<string, unknown>;
+
+  it.each([...SCORE_BLOCKING_FLAGS])('practice_pool schema 接受阻斷旗標 %s', (flag) => {
+    const doc = { ...(pool as object), items: [{ ...sample, quality_flags: [flag] }] };
+    const flagErrors = validatePracticePool(doc).filter((e) =>
+      e.path.includes('quality_flags')
+    );
+    expect(
+      flagErrors,
+      `schema 不接受 ${flag} —— 標上它會讓該題被判非法，而不是離開計分池`
+    ).toEqual([]);
+  });
+
+  it.each([...SCORE_BLOCKING_FLAGS])(
+    '帶 %s 的池題經 toQuizQuestion 後不可計分',
+    (flag) => {
+      const item = { ...sample, quality_flags: [flag] } as Parameters<typeof toQuizQuestion>[0];
+      expect(isQuestionScorable(toQuizQuestion(item))).toBe(false);
+    }
+  );
+
+  it.each([...ADVISORY_QUALITY_FLAGS])('帶 %s 的池題仍可計分（提示型旗標不阻斷）', (flag) => {
+    const item = { ...sample, quality_flags: [flag] } as Parameters<typeof toQuizQuestion>[0];
+    expect(isQuestionScorable(toQuizQuestion(item))).toBe(true);
   });
 });

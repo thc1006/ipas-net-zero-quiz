@@ -8,8 +8,9 @@ import type {
   PracticePoolSourceType,
   PracticePoolDifficulty,
   PracticePoolVerdict,
-  PracticePoolQualityFlag,
+  DataQualityFlag,
 } from '../types/practicePool';
+import { DATA_QUALITY_FLAGS } from '../types/practicePool';
 // 與主題庫共用的完整性規則（四選一 A–D、答案存在且在選項內、無換行/PDF 頁首頁尾、
 // time_sensitive 必須有可驗證來源）。抽出來共用，兩個題庫才是同一把尺。
 import { checkQuestion } from './question-integrity';
@@ -25,12 +26,9 @@ const VERDICTS: ReadonlyArray<PracticePoolVerdict> = [
   'REFUTED',
   'DUPLICATE',
 ];
-const QUALITY_FLAGS: ReadonlyArray<PracticePoolQualityFlag> = [
-  'time_sensitive',
-  'ambiguous',
-  'low_confidence',
-  'duplicate_topic',
-];
+// 不再手抄一份 —— 白名單就是資料層詞彙本身（types/practicePool.ts）。
+// 手抄的那份漏了失效型旗標，等於資料檔不准標 disputed / retired 等。
+const QUALITY_FLAGS: ReadonlyArray<DataQualityFlag> = DATA_QUALITY_FLAGS;
 
 export interface ValidationError {
   path: string;
