@@ -1,5 +1,6 @@
 // 測驗邏輯 Hook
 import { useState, useCallback, useMemo, useEffect } from 'react';
+import { isQuestionScorable } from '../utils/scorable';
 import type {
   QuizQuestion,
   QuizConfig,
@@ -83,7 +84,7 @@ export function useQuiz() {
       // 順序取題（同樣依內容去重：跨科重複在 'all' 模式下會同時落進池子）
       // 同樣濾掉無答案題。
       const pool = dedupeByContent(getQuestionsBySubject(config.subject)).filter(
-        (q) => q.hasAnswer
+        (q) => isQuestionScorable(q)
       );
       questions = pool.slice(0, config.questionCount);
     }
@@ -131,7 +132,7 @@ export function useQuiz() {
               config.subject === 'all'
                 ? combined
                 : combined.filter((q) => q.subject === config.subject);
-            const answerFiltered = subjectFiltered.filter((q) => q.hasAnswer);
+            const answerFiltered = subjectFiltered.filter((q) => isQuestionScorable(q));
             return answerFiltered.slice(0, config.questionCount);
           })();
     } else {
@@ -145,7 +146,7 @@ export function useQuiz() {
       } else {
         const subjectFiltered = dedupeByContent(
           getQuestionsBySubject(config.subject)
-        ).filter((q) => q.hasAnswer);
+        ).filter((q) => isQuestionScorable(q));
         questions = subjectFiltered.slice(0, config.questionCount);
       }
     }
@@ -267,7 +268,7 @@ export function useQuiz() {
     const wrongCount = answeredWithCorrectAnswer.filter(
       (a) => a.isCorrect === false
     ).length;
-    const totalAnswerable = questions.filter((q) => q.hasAnswer).length;
+    const totalAnswerable = questions.filter((q) => isQuestionScorable(q)).length;
 
     const result: QuizResult = {
       config,
@@ -330,7 +331,7 @@ export function useQuiz() {
     // 本次修正前存下的進度可能含無答案題（answer=null，排除計分），而進度永不過期，
     // 之後任何時間續作都會遇到。續作時一併濾掉，讓「使用者不遇到無答案題」的保證
     // 對舊進度也成立（Refs #93/#94/#95）。
-    const answerable = s.questions.filter((q) => q.hasAnswer);
+    const answerable = s.questions.filter((q) => isQuestionScorable(q));
     if (answerable.length === 0) {
       // 整份都是無答案題（極端）→ 沒有可續的題目，清掉舊進度、不續作。
       clearProgress();
