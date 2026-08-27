@@ -8,8 +8,8 @@
   "summary": {
     "main_tier1_questions": 764,
     "pool_tier1_questions": 140,
-    "total_evidence_records": 946,
-    "primary_evidence_records": 937,
+    "total_evidence_records": 948,
+    "primary_evidence_records": 939,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -7944,6 +7944,15 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-tw_regs_24-v2",
+      "bank": "pool",
+      "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=J0130032&flno=12-1",
+      "host": "law.moj.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-tw_regs_27-v2",
       "bank": "pool",
       "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=10",
@@ -8002,6 +8011,15 @@
       "bank": "pool",
       "url": "https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284",
       "host": "enews.moenv.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-tw_regs_35-v2",
+      "bank": "pool",
+      "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=11",
+      "host": "law.moj.gov.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
