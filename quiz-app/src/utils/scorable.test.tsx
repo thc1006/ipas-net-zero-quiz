@@ -192,3 +192,32 @@ describe('阻斷旗標必須在資料層可用（不是只有 predicate 認得�
     expect(isQuestionScorable(toQuizQuestion(item))).toBe(true);
   });
 });
+
+// 「離開計分池」如果使用者看不見，那只做完一半。
+//
+// 標了 disputed 的題目答案會被撤下（見上面的資料層不變量），於是畫面上會出現
+// 一題沒有標準答案的題目。若徽章與提示都不提它，使用者只會覺得「這題壞了」。
+// 兩張說明表都對資料層詞彙窮舉（Record 而非 Partial<Record>），tsc 會強制新旗標補說明；
+// 這裡再從**渲染結果**確認一次 —— 型別窮舉保證鍵存在，不保證它真的被畫出來。
+describe('失效型旗標必須在畫面上說得出來', () => {
+  it.each([...SCORE_BLOCKING_FLAGS])('SourceBadge 會顯示 %s 的徽章', async (flag) => {
+    const { render, screen, cleanup } = await import('@testing-library/react');
+    const { SourceBadge } = await import('../components/SourceBadge/SourceBadge');
+    cleanup();
+    render(
+      <SourceBadge sourceType="ai_generated" qualityFlags={[flag]} />
+    );
+    const chip = document.querySelector(`.flag-${flag}`);
+    expect(chip, `${flag} 沒有渲染出徽章 —— 題目離開計分池了，使用者卻看不到原因`).not.toBeNull();
+    expect(chip?.textContent?.trim().length ?? 0).toBeGreaterThan(0);
+    expect(screen).toBeTruthy();
+  });
+
+  it.each([...SCORE_BLOCKING_FLAGS])('SourceBanner 的 %s 提示會說明不列入計分', async (flag) => {
+    const { render, screen, cleanup } = await import('@testing-library/react');
+    const { SourceBanner } = await import('../components/SourceBanner/SourceBanner');
+    cleanup();
+    render(<SourceBanner sourceType="ai_generated" qualityFlags={[flag]} sourceCount={1} />);
+    expect(screen.getByText(/不列入計分/)).toBeInTheDocument();
+  });
+});
