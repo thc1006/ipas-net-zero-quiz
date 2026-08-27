@@ -6,10 +6,10 @@
     "tier1_rule": "authority == primary 且 has_quote —— 二手 evidence（維基／新聞／標準轉載預覽）不計入"
   },
   "summary": {
-    "main_tier1_questions": 762,
-    "pool_tier1_questions": 138,
-    "total_evidence_records": 927,
-    "primary_evidence_records": 918,
+    "main_tier1_questions": 764,
+    "pool_tier1_questions": 140,
+    "total_evidence_records": 949,
+    "primary_evidence_records": 940,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -2413,6 +2413,15 @@
       "bank": "main",
       "url": "https://oaout.moenv.gov.tw/laW/LawContent.aspx?id=GL007914",
       "host": "oaout.moenv.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[126]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+      "host": "usr.chu.edu.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -4884,6 +4893,15 @@
       "tier1": true
     },
     {
+      "qid": "gist[383]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+      "host": "usr.chu.edu.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "gist[384]",
       "bank": "main",
       "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
@@ -7107,6 +7125,24 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-ifrs2026-005",
+      "bank": "pool",
+      "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html",
+      "host": "www.ifrs.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-ifrs2026-006",
+      "bank": "pool",
+      "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs1.html",
+      "host": "www.ifrs.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-ifrs2026-006",
       "bank": "pool",
       "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs1.html",
@@ -7152,6 +7188,15 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-ind-004",
+      "bank": "pool",
+      "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0%2C2&mcustomize=news_view.jsp&dataserno=202505130005&dtable=News",
+      "host": "www.fsc.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-ind-005",
       "bank": "pool",
       "url": "https://www.cna.com.tw/news/afe/202410210205.aspx",
@@ -7174,6 +7219,15 @@
       "bank": "pool",
       "url": "https://enews.moenv.gov.tw/Page/3B3C62C78849F32F/3a0a408a-33e5-4a0d-9939-23e8222c5284",
       "host": "enews.moenv.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-ind-007",
+      "bank": "pool",
+      "url": "https://service.moenv.gov.tw/File/get/6943C3413F827873",
+      "host": "service.moenv.gov.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -7377,6 +7431,15 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-ind-034",
+      "bank": "pool",
+      "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202203030001&dtable=News",
+      "host": "www.fsc.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-ind-035",
       "bank": "pool",
       "url": "https://www.iso.org/standard/38131.html",
@@ -7566,6 +7629,15 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-intl-022",
+      "bank": "pool",
+      "url": "https://unfccc.int/sites/default/files/resource/A6.4-SBM014-A06.pdf",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-intl-023",
       "bank": "pool",
       "url": "https://unfccc.int/sites/default/files/resource/cma3_auv_12a_PA_6.2.pdf",
@@ -7579,6 +7651,24 @@
       "bank": "pool",
       "url": "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf",
       "host": "sciencebasedtargets.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-025",
+      "bank": "pool",
+      "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/article-64-mechanism/faqs-on-transitioning-cdm-activities-to-the-A6.4mechanism",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-027",
+      "bank": "pool",
+      "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html",
+      "host": "www.ifrs.org",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -7629,6 +7719,15 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-intl-032",
+      "bank": "pool",
+      "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01E.pdf",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-intl_round1_rescued-intl-013",
       "bank": "pool",
       "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html",
@@ -7665,6 +7764,15 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-intl_round1_rescued-intl-031",
+      "bank": "pool",
+      "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
+      "host": "files.sciencebasedtargets.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-tw_regs_00-v2",
       "bank": "pool",
       "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=3",
@@ -7683,10 +7791,37 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-tw_regs_01-v2",
+      "bank": "pool",
+      "url": "https://service.moenv.gov.tw/File/get/6943C3413F827873",
+      "host": "service.moenv.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-tw_regs_02-v2",
+      "bank": "pool",
+      "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=11",
+      "host": "law.moj.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-tw_regs_02-v2",
       "bank": "pool",
       "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007916",
       "host": "oaout.moenv.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-tw_regs_02-v2",
+      "bank": "pool",
+      "url": "https://service.moenv.gov.tw/File/get/6943C3413F827873",
+      "host": "service.moenv.gov.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -7818,6 +7953,15 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-tw_regs_24-v2",
+      "bank": "pool",
+      "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=J0130032&flno=12-1",
+      "host": "law.moj.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-tw_regs_27-v2",
       "bank": "pool",
       "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&flno=10",
@@ -7839,6 +7983,15 @@
       "qid": "pool-aig-tw_regs_29-v2",
       "bank": "pool",
       "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=21",
+      "host": "law.moj.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-tw_regs_29-v2",
+      "bank": "pool",
+      "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=22",
       "host": "law.moj.gov.tw",
       "authority": "primary",
       "has_quote": true,
@@ -7872,6 +8025,24 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-tw_regs_35-v2",
+      "bank": "pool",
+      "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020140&flno=11",
+      "host": "law.moj.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-tw_regs_35-v2",
+      "bank": "pool",
+      "url": "https://service.moenv.gov.tw/File/get/6943C3413F827873",
+      "host": "service.moenv.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-tw_regs_36-v2",
       "bank": "pool",
       "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=12",
@@ -7894,6 +8065,33 @@
       "bank": "pool",
       "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=35",
       "host": "law.moj.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-tw_regs_44-v2",
+      "bank": "pool",
+      "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=37",
+      "host": "law.moj.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-tw_regs_44-v2",
+      "bank": "pool",
+      "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
+      "host": "oaout.moenv.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-tw_regs_44-v2",
+      "bank": "pool",
+      "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
+      "host": "oaout.moenv.gov.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
