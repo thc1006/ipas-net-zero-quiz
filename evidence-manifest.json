@@ -6,10 +6,10 @@
     "tier1_rule": "authority == primary 且 has_quote —— 二手 evidence（維基／新聞／標準轉載預覽）不計入"
   },
   "summary": {
-    "main_tier1_questions": 762,
+    "main_tier1_questions": 764,
     "pool_tier1_questions": 139,
-    "total_evidence_records": 934,
-    "primary_evidence_records": 925,
+    "total_evidence_records": 936,
+    "primary_evidence_records": 927,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -2413,6 +2413,15 @@
       "bank": "main",
       "url": "https://oaout.moenv.gov.tw/laW/LawContent.aspx?id=GL007914",
       "host": "oaout.moenv.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[126]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+      "host": "usr.chu.edu.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -4878,6 +4887,15 @@
       "qid": "gist[382]",
       "bank": "main",
       "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/583537684.pdf",
+      "host": "usr.chu.edu.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[383]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
       "host": "usr.chu.edu.tw",
       "authority": "primary",
       "has_quote": true,

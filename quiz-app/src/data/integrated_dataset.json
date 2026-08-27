@@ -7388,7 +7388,8 @@
       "metadata": {
         "valid_as_of": "2026-07-13",
         "sources": [
-          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
+          "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html",
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf"
         ],
         "source_correction_2026_07_13": "來源與題目無關，移除。原引用 O0020102（溫室氣體排放量盤查登錄及查驗管理辦法）—— 那是規範「盤查登錄與查驗」的辦法，與碳費無關。碳費由《碳費收費辦法》(O0020139) 規範。該連結是活的（HTTP 200），所以季排程的連結檢查永遠不會發現它指錯法規 ——連結檢查只驗「通不通」，驗不出「指到錯的地方」。",
         "_legacy_pipeline_metadata": {
@@ -7404,7 +7405,17 @@
           "verdict": "CORRECT",
           "note": "外顯碳價（explicit）＝碳稅/碳費/排放交易（ETS）；電力躉購價（FIT）屬內含碳價（implicit）。此為 OECD explicit/implicit 分類之概念題，無台灣官方單一逐字原文，故不硬補引文；答案 C 依概念成立。",
           "method": "第十五輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "外顯碳價（ExplicitCarbonPricing）：指碳定價政策工具價格為直接量測溫室氣體排放相關的碳價，如碳稅費與排放交易價格。◼內顯碳價（ImplicitCarbonPricing）：指政策工具價格包含其他成本價格者，如電力躉購價格併入整體電力供應價格之中",
+            "supports_option": "C",
+            "verified_on": "2026-08-27",
+            "method": "本輪把整個調研歸檔（52 個檔、490 萬字，含公版教材與答案卡）建成離線語料庫後，以逐字比對命中；引文取自語料庫原文，非手 key 轉述。",
+            "note": "公版教材逐字區分外顯／內顯碳價：碳稅費與排放交易價格屬外顯，而電力躉購價格被明列為「內顯碳價」的例子 —— 正是本題答案。"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
@@ -20881,7 +20892,8 @@
           "https://www.smartmachinery.tw/upload/doc/202309130959490.pdf",
           "https://github.com/thc1006/ipas-net-zero-quiz/discussions/1#discussioncomment-16697053",
           "https://cfp.moenv.gov.tw/WebPage/Index.aspx",
-          "https://data.moenv.gov.tw/dataset/detail/CFP_P_03"
+          "https://data.moenv.gov.tw/dataset/detail/CFP_P_03",
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf"
         ],
         "sources_verified_date": "2026-04-25",
         "valid_as_of": "2026-07-13",
@@ -20905,7 +20917,17 @@
         },
         "prior_stem": "環境部指引：一級數據佔上游排放至少多少 %？",
         "stem_conditioned_date": "2026-08-27",
-        "stem_conditioned_reason": "原題幹「一級數據佔上游排放至少多少 %？」把一條**條件式**規則寫成孤立數字：沒有交代分母、適用階段，也沒說明未達門檻時要做什麼。本題解析原本就完整寫著那條規則（製造階段自有製程排放未達總排放量 10% 貢獻率時，須向原料取得階段蒐集一級數據直到達 10%），題幹改為敘述該條件，考的才是規則本身而不是背一個數字。"
+        "stem_conditioned_reason": "原題幹「一級數據佔上游排放至少多少 %？」把一條**條件式**規則寫成孤立數字：沒有交代分母、適用階段，也沒說明未達門檻時要做什麼。本題解析原本就完整寫著那條規則（製造階段自有製程排放未達總排放量 10% 貢獻率時，須向原料取得階段蒐集一級數據直到達 10%），題幹改為敘述該條件，考的才是規則本身而不是背一個數字。",
+        "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/739592715.pdf",
+            "quote": "未達到原料取得及製造階段之溫室氣體總排放量10%以上的貢獻率，則原料取得階段就必須納入一級活動數據蒐集，直到蒐集的溫室氣體排放量大於原料取得及製造階段溫室氣體總排放量之貢獻率10%以上",
+            "supports_option": "B",
+            "verified_on": "2026-08-27",
+            "method": "本輪把整個調研歸檔（52 個檔、490 萬字，含公版教材與答案卡）建成離線語料庫後，以逐字比對命中；引文取自語料庫原文，非手 key 轉述。",
+            "note": "公版教材逐字寫出該條件式規則：未達 10% 貢獻率時須向原料取得階段蒐集一級數據，直到累計超過 10% 為止 —— 與本題改寫後的題幹同一層級。"
+          }
+        ]
       },
       "quality_flags": [
         "time_sensitive"
