@@ -7234,7 +7234,13 @@
         "https://unfccc.int/process-and-meetings/the-paris-agreement/article-64-mechanism/transition-of-activities-and-credits-from-the-clean-development-mechanism-cdm",
         "https://unfccc.int/sites/default/files/resource/cma2021_10_add1_advance.pdf"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ],
+      "_rule_version_note": {
+        "valid_as_of": "2026-08-27",
+        "why": "CDM 專案轉換至 Article 6.4（PACM）的期限、核准與轉換條件由 UNFCCC 持續更新，答案敘述含具體日期與條件，屬會隨規則版本變動的內容。原本未標 time_sensitive，季排程看不到這題。"
+      }
     },
     {
       "id": "pool-aig-intl-027",
@@ -10108,7 +10114,12 @@
       ],
       "quality_flags": [
         "time_sensitive"
-      ]
+      ],
+      "_roster_snapshot": {
+        "valid_as_of": "2026-08-27",
+        "why": "RE100 會員名單是**動態負面名單**：今天「不是會員」的公司，明天加入就會讓本題答案失效。本題已標 time_sensitive；此處補記查核時點，重新查核時須以 RE100 官方名單為準，若名單變動即應改題或退休，不可只更新日期。"
+      },
+      "_stem_scope_note": "題幹的「公開資料」應理解為查核時點之官方會員名單，而非任何時點皆成立。"
     },
     {
       "id": "pool-em-ipas_vocus_mock_rescued-050",
