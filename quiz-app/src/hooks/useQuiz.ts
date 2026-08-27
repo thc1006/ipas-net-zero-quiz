@@ -275,6 +275,7 @@ export function useQuiz() {
       endTime,
       totalTime: endTime - startTime,
       answers,
+      questions,
       score:
         totalAnswerable > 0
           ? Math.round((correctCount / totalAnswerable) * 100)

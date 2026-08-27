@@ -241,6 +241,15 @@ export interface QuizResult {
   endTime: number;
   totalTime: number;
   answers: AnswerRecord[];
+  /**
+   * 當次測驗實際出過的題目快照。
+   *
+   * 為什麼要帶：結果頁原本用 getQuestionById() 反查，而那個索引只由**主題庫**組成 ——
+   * 練習池題查不到就整張錯題卡 `return null`，題幹、正解、解析、來源、回報連結全部消失，
+   * 匯出的 stem 也會是空字串。帶快照同時解決另一個問題：部署後題庫內容若變動，
+   * 結果頁顯示的仍是作答當下那一版。
+   */
+  questions: QuizQuestion[];
   score: number;
   totalAnswerable: number;
   correctCount: number;

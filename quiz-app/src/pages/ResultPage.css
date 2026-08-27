@@ -676,3 +676,33 @@
     width: 100%;
   }
 }
+
+/* 錯題卡上的題庫解析 —— 考試模式下，這是使用者唯一看得到解析的地方 */
+.wrong-explanation {
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: var(--color-success-bg);
+  border-left: 3px solid var(--color-success-fg);
+  border-radius: var(--radius-sm);
+}
+
+.wrong-explanation__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-success-fg);
+  margin-bottom: 2px;
+}
+
+.wrong-explanation__body {
+  margin: 0 0 var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  line-height: 1.7;
+  color: var(--color-text-primary);
+}
+
+.wrong-explanation__body:last-child {
+  margin-bottom: 0;
+}

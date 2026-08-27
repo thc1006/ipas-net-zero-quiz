@@ -25,6 +25,10 @@ interface ResultPageProps {
   onRetry: () => void;
 }
 
+// 解析可能含多段（#121 新增了不少帶條文引文的長解析）。用常數避免每次 render 重建 RegExp，
+// 也避免在 JSX 內寫逸出序列。
+const PARAGRAPH_BREAK = new RegExp(String.fromCharCode(10) + '{2,}');
+
 export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
   const { score, correctCount, wrongCount, totalAnswerable, skippedCount, answers, totalTime } =
     result;
@@ -65,6 +69,17 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
     [answers]
   );
 
+  // 先查當次快照，再退回靜態題庫。前者才涵蓋練習池題 ——
+  // getQuestionById() 的索引只由主題庫組成。
+  const sessionQuestions = useMemo(
+    () => new Map((result.questions ?? []).map((q) => [q.id, q])),
+    [result.questions]
+  );
+  const lookupQuestion = useCallback(
+    (id: string) => sessionQuestions.get(id) ?? getQuestionById(id),
+    [sessionQuestions]
+  );
+
   // 累積最常答錯（Refs #64）— pure 篩選/排序在 selectWeakQuestions，
   // 此處只負責 id → 題幹查找（沒查到的就過濾掉，多為已被刪除題或 pool 題未載入）
   // 透過 useAllQuestionStats 訂閱跨 tab 變更：別的分頁清除統計時，本頁也即時更新
@@ -77,7 +92,7 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
     });
     return weak
       .map((w) => {
-        const q = getQuestionById(w.id);
+        const q = lookupQuestion(w.id);
         return q ? { ...w, stem: q.stem } : null;
       })
       .filter((x): x is NonNullable<typeof x> => x !== null);
@@ -167,7 +182,7 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
       totalQuestions: answers.length,
       totalTime,
       wrongQuestions: wrongAnswers.map((a) => {
-        const q = getQuestionById(a.questionId);
+        const q = lookupQuestion(a.questionId);
         return {
           questionId: a.questionId,
           stem: q?.stem ?? '',
@@ -299,7 +314,7 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
 
           <div className="wrong-list">
             {wrongAnswers.map((answer, index) => {
-              const question = getQuestionById(answer.questionId);
+              const question = lookupQuestion(answer.questionId);
               if (!question) return null;
 
               const qid = question.id;
@@ -344,6 +359,25 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                         <strong className="text-success">{answer.correctAnswer}</strong>
                       </span>
                     </div>
+
+                    {question.explanation && (
+                      <section className="wrong-explanation" aria-label="題庫解析">
+                        <div className="wrong-explanation__header">
+                          <span className="material-icons sm" aria-hidden="true">
+                            menu_book
+                          </span>
+                          <span>題庫解析</span>
+                        </div>
+                        {question.explanation
+                          .split(PARAGRAPH_BREAK)
+                          .filter((para) => para.trim())
+                          .map((para, i) => (
+                            <p key={i} className="wrong-explanation__body">
+                              {para}
+                            </p>
+                          ))}
+                      </section>
+                    )}
 
                     <AnswerEvidence evidence={question.evidence} compact />
 

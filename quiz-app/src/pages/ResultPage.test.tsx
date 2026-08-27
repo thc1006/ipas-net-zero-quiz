@@ -120,6 +120,7 @@ function makeResult(overrides: Partial<QuizResult> = {}): QuizResult {
     endTime: 1_700_000_065_000,
     totalTime: 65_000,
     answers: [],
+    questions: [],
     score: 100,
     totalAnswerable: 1,
     correctCount: 1,
@@ -456,5 +457,62 @@ describe('ResultPage 答案依據', () => {
     expect(
       screen.getByText(/固定測試用逐字引文/)
     ).toBeInTheDocument();
+  });
+});
+
+describe('考試模式的錯題檢討', () => {
+  const poolQuestion = {
+    id: 'pool-only-1',
+    stem: '這是一題練習池題目，主題庫索引查不到',
+    options: [
+      { key: 'A', text: '甲' },
+      { key: 'B', text: '乙' },
+    ],
+    answer: 'B',
+    subject: '考科2',
+    sourceType: 'practice_pool',
+    year: null,
+    hasAnswer: true,
+    explanation: '第一段解析。\n\n第二段解析。',
+  } as unknown as QuizQuestion;
+
+  it('練習池錯題不會整張消失（結果頁改用當次題目快照）', () => {
+    // 先前結果頁用 getQuestionById() 反查，而那個索引只由主題庫組成：
+    // 練習池題查不到就 return null，題幹／正解／解析／來源／回報連結全部不見。
+    render(
+      <ResultPage
+        result={makeResult({
+          answers: [makeAnswer({ questionId: 'pool-only-1', correctAnswer: 'B' })],
+          questions: [poolQuestion],
+          wrongCount: 1,
+          correctCount: 0,
+          score: 0,
+        })}
+        onGoHome={vi.fn()}
+        onRetry={vi.fn()}
+      />
+    );
+    expect(screen.getByText(/這是一題練習池題目/)).toBeInTheDocument();
+  });
+
+  it('考試模式看得到題庫解析，且多段解析不會被壓成一段', () => {
+    // 練習模式靠 showAnswer 在題目頁顯示解析；考試模式 showAnswerImmediately=false，
+    // 題目頁不顯示，因此結果頁是使用者唯一看得到解析的地方。
+    render(
+      <ResultPage
+        result={makeResult({
+          answers: [makeAnswer({ questionId: 'pool-only-1', correctAnswer: 'B' })],
+          questions: [poolQuestion],
+          wrongCount: 1,
+          correctCount: 0,
+          score: 0,
+        })}
+        onGoHome={vi.fn()}
+        onRetry={vi.fn()}
+      />
+    );
+    expect(screen.getByLabelText('題庫解析')).toBeInTheDocument();
+    expect(screen.getByText('第一段解析。')).toBeInTheDocument();
+    expect(screen.getByText('第二段解析。')).toBeInTheDocument();
   });
 });
