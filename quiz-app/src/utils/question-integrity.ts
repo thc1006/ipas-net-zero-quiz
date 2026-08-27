@@ -11,12 +11,14 @@
 // 這些規則對現有資料是零破壞的（主題庫 783 題 + 練習池 157 題全數通過），
 // 所以可以當成硬性 gate 而非警告。
 
+import { BLOCKING_QUALITY_FLAGS } from '../types/practicePool';
+
 /** 兩個題庫都能映射到的最小共同形狀 */
 export interface IntegrityQuestion {
   id: string;
   stem: string;
   options: { key: string; text: string }[];
-  /** null 代表刻意不給答案（必須同時標 'ambiguous'，見下方規則） */
+  /** null 代表刻意不給答案（必須同時標任一失效型旗標，見下方規則） */
   answer: string | null | undefined;
   qualityFlags: string[];
   /** 所有可驗證的來源 URL（主題庫取 source.url + metadata.sources；練習池取 sources） */
@@ -76,15 +78,25 @@ export function checkQuestion(q: IntegrityQuestion): Violation[] {
     push('options_shape', `期望 A,B,C,D，實際 [${keys.join(',')}]`);
   }
 
-  // 2) 答案必須落在選項裡。唯一例外：明確標 'ambiguous' 的題目「必須」沒有答案
+  // 2) 答案必須落在選項裡。唯一例外：標了失效型旗標的題目「必須」沒有答案
   //    —— 題庫不能對互斥命題同時給出確定答案；標了瑕疵卻照常計分是最糟的組合。
-  const ambiguous = q.qualityFlags.includes('ambiguous');
+  //
+  //    先前這裡只認 'ambiguous' 一個字面值，而失效型旗標有六個。後果是：
+  //    把一題標成 disputed 並撤下答案（完全正確的做法），會被判 missing_answer，
+  //    逼人再補標一個 ambiguous 才過關 —— 又一次「規則只守了一半」。
+  //    規則 id 維持不變（測試與文件引用它），只是把條件擴到整個失效型家族。
+  const blocking = q.qualityFlags.some((f) =>
+    (BLOCKING_QUALITY_FLAGS as readonly string[]).includes(f)
+  );
   const hasAnswer = q.answer !== null && q.answer !== undefined && q.answer !== '';
-  if (ambiguous && hasAnswer) {
-    push('ambiguous_must_have_no_answer', `標了 ambiguous 卻仍有答案 ${q.answer}`);
+  if (blocking && hasAnswer) {
+    push(
+      'ambiguous_must_have_no_answer',
+      `標了失效型旗標（${q.qualityFlags.join('、')}）卻仍有答案 ${q.answer}`
+    );
   }
-  if (!ambiguous && !hasAnswer) {
-    push('missing_answer', '沒有答案，且未標 ambiguous');
+  if (!blocking && !hasAnswer) {
+    push('missing_answer', '沒有答案，且未標任何失效型旗標');
   }
   if (hasAnswer && !keys.includes(q.answer as string)) {
     push('answer_not_in_options', `answer=${q.answer}，選項只有 [${keys.join(',')}]`);

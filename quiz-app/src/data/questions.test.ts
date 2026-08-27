@@ -1,5 +1,6 @@
 // 題庫資料模組測試
 import { describe, it, expect } from 'vitest';
+import { isQuestionScorable } from '../utils/scorable';
 import {
   stats,
   allQuestions,
@@ -119,8 +120,22 @@ describe('題庫資料模組', () => {
   });
 
   describe('questionsWithAnswer', () => {
-    it('有答案題目數應等於 stats.withAnswer', () => {
-      expect(questionsWithAnswer.length).toBe(stats.withAnswer);
+    // meta.with_answer 的定義是「有答案」（tools/sync_derived_counts.py 只看 answer 真值），
+    // 而 questionsWithAnswer 現在的定義是「可計分」＝有答案且不帶阻斷旗標。
+    // 今天兩者相等（主題庫無阻斷旗標），但直接斷言相等，會在有人第一次把某題標成
+    // disputed 時炸出一條看不懂的失敗 —— 而且他重跑 sync_derived_counts.py 也修不好，
+    // 因為那支工具算的是另一個量。所以把兩者的關係寫明白。
+    it('可計分題數 = 有答案題數 − 帶阻斷旗標的題數', () => {
+      // 刻意跟「實算」對，不跟 meta.with_answer 對：meta 是由 sync_derived_counts.py
+      // 產生的，資料剛改完但還沒重跑時它是舊的 —— 拿它當基準會讓這條測試在
+      // 「你只是還沒 sync」的時候紅，訊息卻在講可計分數，把人指向錯的地方。
+      // meta 與資料的對帳由 dataset-integrity 的 meta.with_answer 那條負責。
+      const answered = allQuestions.filter((q) => q.answer).length;
+      const blockedButAnswered = allQuestions.filter(
+        (q) => q.answer && !isQuestionScorable(q)
+      );
+      expect(questionsWithAnswer.length).toBe(answered - blockedButAnswered.length);
+      expect(questionsWithAnswer.length).toBeLessThanOrEqual(answered);
     });
 
     it('所有有答案的題目 hasAnswer 應為 true', () => {
