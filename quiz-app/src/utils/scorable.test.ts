@@ -94,3 +94,60 @@ describe('計分路徑必須走同一支判斷', () => {
     expect(src).toContain('isQuestionScorable');
   });
 });
+
+describe('抽題 helper 必須真的排除不可計分的題（行為測試）', () => {
+  // 先前只有一條掃 useQuiz.ts 原始碼的 static gate —— 它剛好漏掉真正做過濾的
+  // questions.ts helpers（#96 把 hasAnswer 邏輯集中到那裡）。
+  // 結果是 gate 全綠，但預設的隨機抽題路徑仍走舊判斷：
+  // 一題 answer='A' + ambiguous 仍可能進考卷，而分母把它排除 → 分數可能超過 100。
+  it('getRandomQuestionsFromPool 不會回傳「有答案但帶阻斷旗標」的題', async () => {
+    const { getRandomQuestionsFromPool } = await import('../data/questions');
+    const mk = (id: string, flags: string[] = []) => ({
+      id,
+      stem: `題幹 ${id}`,
+      options: [
+        { key: 'A', text: '甲' },
+        { key: 'B', text: '乙' },
+      ],
+      answer: 'A',
+      subject: '考科1' as const,
+      sourceType: 'gist' as const,
+      year: null,
+      hasAnswer: true,
+      qualityFlags: flags,
+    });
+    const pool = [
+      mk('ok-1'),
+      mk('ok-2'),
+      mk('blocked-1', ['ambiguous']),
+      mk('blocked-2', ['retired']),
+      mk('advisory', ['time_sensitive']),
+    ];
+    const picked = getRandomQuestionsFromPool(pool, 10, 'all', true);
+    const ids = picked.map((q) => q.id);
+    expect(ids).not.toContain('blocked-1');
+    expect(ids).not.toContain('blocked-2');
+    // time_sensitive 只是提醒，不該被排除
+    expect(ids).toContain('advisory');
+    expect(ids.length).toBe(3);
+  });
+
+  it('主題庫的 quality_flags 一路帶到 runtime（converter 先前把它丟掉）', async () => {
+    const { allQuestions } = await import('../data/questions');
+    const flagged = allQuestions.filter(
+      (q) => (q.qualityFlags ?? []).length > 0
+    );
+    expect(
+      flagged.length,
+      '主題庫 raw data 有 quality_flags，但 runtime 一題都沒有 —— converter 又把它丟了'
+    ).toBeGreaterThan(100);
+    expect(flagged.some((q) => (q.qualityFlags ?? []).includes('time_sensitive'))).toBe(true);
+  });
+
+  it('全庫的可計分題都通過 predicate（分母與抽題同一口徑）', async () => {
+    const { questionsWithAnswer, allQuestions } = await import('../data/questions');
+    expect(questionsWithAnswer.every((q) => isQuestionScorable(q))).toBe(true);
+    expect(questionsWithAnswer.length).toBeLessThanOrEqual(allQuestions.length);
+    expect(questionsWithAnswer.length).toBeGreaterThan(700);
+  });
+});

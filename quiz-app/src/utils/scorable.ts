@@ -36,18 +36,28 @@ export interface ScorableQuestion {
 
 /** 這題是否可以進入計分（抽題、分母、對錯判定都用這一支）。 */
 export function isQuestionScorable(question: ScorableQuestion): boolean {
-  const hasAnswer =
-    question.hasAnswer ?? (question.answer !== null && question.answer !== undefined);
-  if (!hasAnswer) return false;
-  return !(question.qualityFlags ?? []).some((flag) => BLOCKING.has(flag));
+  // 兩個方向的矛盾狀態都要擋掉：先前只擋 hasAnswer:false + answer:'A'，
+  // 卻放行 hasAnswer:true + answer:null —— 那種資料在舊 localStorage 很容易出現。
+  const hasUsableAnswer =
+    question.answer !== null &&
+    question.answer !== undefined &&
+    question.hasAnswer !== false;
+  if (!hasUsableAnswer) return false;
+  // 壞掉的儲存資料可能讓 qualityFlags 不是陣列（例如舊格式存成字串），
+  // 直接 .some() 會在 resume 時 throw。
+  const flags = Array.isArray(question.qualityFlags) ? question.qualityFlags : [];
+  return !flags.some((flag) => BLOCKING.has(flag));
 }
 
 /** 這題為什麼不能計分（給 gate 與除錯用的可讀理由）。 */
 export function whyNotScorable(question: ScorableQuestion): string | null {
   if (isQuestionScorable(question)) return null;
-  const hasAnswer =
-    question.hasAnswer ?? (question.answer !== null && question.answer !== undefined);
-  if (!hasAnswer) return '沒有標準答案';
-  const hit = (question.qualityFlags ?? []).filter((flag) => BLOCKING.has(flag));
+  const hasUsableAnswer =
+    question.answer !== null &&
+    question.answer !== undefined &&
+    question.hasAnswer !== false;
+  if (!hasUsableAnswer) return '沒有標準答案';
+  const flags = Array.isArray(question.qualityFlags) ? question.qualityFlags : [];
+  const hit = flags.filter((flag) => BLOCKING.has(flag));
   return `帶有不可計分旗標：${hit.join('、')}`;
 }
