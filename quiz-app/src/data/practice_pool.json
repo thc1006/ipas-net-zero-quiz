@@ -7016,6 +7016,13 @@
             "verified_on": "2026-07-15",
             "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
             "url": "https://unfccc.int/sites/default/files/resource/A6.4-SBM014-A06.pdf"
+          },
+          {
+            "url": "https://unfccc.int/sites/default/files/resource/A6.4-SBM014-A06.pdf",
+            "quote": "recommendations on activities involving removals, including appropriate monitoring, reporting, accounting for removals and crediting periods, addressing reversals, avoidance of leakage, and avoidance of other negative environmental and social impacts",
+            "supports_option": "B",
+            "verified_on": "2026-08-27",
+            "method": "第十六輪查證所取得的一手引文，本次以該輪一併歸檔的來源全文（removals.txt）**逐字比對**確認後才寫回題庫 —— 不是照抄代理的轉述。"
           }
         ],
         "citation_fixed_on": "2026-07-15"
@@ -7228,7 +7235,16 @@
           "verdict": "CORRECT",
           "note": "CDM 與巴黎協定第 6.4 條機制之差異：CDM 對 2020/12/31 後之減量登錄／簽發已不受理，並有條件過渡至 6.4 機制。代理於 unfccc.int CDM 過渡 FAQ 查得，惟該官方頁本輪對我方 fetcher 限流回空、無法即時重驗逐字，故誠實標記。",
           "method": "第十六輪：代理蒐證；官方頁限流無法重抓。"
-        }
+        },
+        "evidence": [
+          {
+            "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/article-64-mechanism/faqs-on-transitioning-cdm-activities-to-the-A6.4mechanism",
+            "quote": "The CMP decided that requests for registration, renewal of crediting period and issuance relating to emission reductions occurring after 31 December 2020 may not be submitted under the CDM, acknowledging such requests may be submitted under the Article 6.4 mechanism.",
+            "supports_option": "A",
+            "verified_on": "2026-08-27",
+            "method": "第十六輪查證所取得的一手引文，本次以該輪一併歸檔的來源全文（cdmfaq.txt）**逐字比對**確認後才寫回題庫 —— 不是照抄代理的轉述。"
+          }
+        ]
       },
       "sources": [
         "https://unfccc.int/process-and-meetings/the-paris-agreement/article-64-mechanism/transition-of-activities-and-credits-from-the-clean-development-mechanism-cdm",
@@ -7304,6 +7320,13 @@
             "verified_on": "2026-07-15",
             "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
             "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html"
+          },
+          {
+            "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html",
+            "quote": "measure its greenhouse gas emissions in accordance with the Greenhouse Gas Protocol: A Corporate Accounting and Reporting Standard (2004) unless the entity is required, in whole or in part, by a jurisdictional authority or an exchange on which it is listed to use a different method",
+            "supports_option": "B",
+            "verified_on": "2026-08-27",
+            "method": "第十六輪查證所取得的一手引文，本次以該輪一併歸檔的來源全文（s2.txt）**逐字比對**確認後才寫回題庫 —— 不是照抄代理的轉述。"
           }
         ],
         "citation_fixed_on": "2026-07-15"
@@ -7606,6 +7629,13 @@
             "verified_on": "2026-07-15",
             "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
             "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01E.pdf"
+          },
+          {
+            "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01E.pdf",
+            "quote": "The purpose of the Fund is to assist developing countries that are particularly vulnerable to the adverse effects of climate change in responding to economic and non-economic loss and damage associated with the adverse effects of climate change, including extreme weather events and slow onset events.",
+            "supports_option": "B",
+            "verified_on": "2026-08-27",
+            "method": "第十六輪查證所取得的一手引文，本次以該輪一併歸檔的來源全文（frld_a01.txt）**逐字比對**確認後才寫回題庫 —— 不是照抄代理的轉述。"
           }
         ],
         "citation_fixed_on": "2026-07-15"
@@ -10071,6 +10101,13 @@
             "verified_on": "2026-07-15",
             "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
             "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf"
+          },
+          {
+            "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
+            "quote": "long-term science-based targets will be equivalent to at least a 90% absolute reduction across scopes for many companies, regardless of whether the cross-sector pathway or sector-specific pathways are used.",
+            "supports_option": "A",
+            "verified_on": "2026-08-27",
+            "method": "第十六輪查證所取得的一手引文，本次以該輪一併歸檔的來源全文（sbti_v1.txt）**逐字比對**確認後才寫回題庫 —— 不是照抄代理的轉述。"
           }
         ],
         "citation_fixed_on": "2026-07-15"
@@ -10596,6 +10633,13 @@
             "verified_on": "2026-07-15",
             "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
             "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html"
+          },
+          {
+            "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html",
+            "quote": "An entity shall disclose information that enables users of general purpose financial reports to understand: (a) the effects of climate-related risks and opportunities on the entity’s financial position, financial performance and cash flows for the reporting period (current financial effects); and (b) the anticipated effects of climate-related risks and opportunities on the entity’s financial position, financial performance and cash flows over the short, medium and long term",
+            "supports_option": "A",
+            "verified_on": "2026-08-27",
+            "method": "第十六輪查證所取得的一手引文，本次以該輪一併歸檔的來源全文（s2.txt）**逐字比對**確認後才寫回題庫 —— 不是照抄代理的轉述。"
           }
         ],
         "citation_fixed_on": "2026-07-15"
@@ -10684,6 +10728,13 @@
             "verified_on": "2026-07-15",
             "method": "第十六輪：代理蒐證＋我重抓機械逐字比對確認。",
             "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs1.html"
+          },
+          {
+            "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs1.html",
+            "quote": "identify the amounts that it has disclosed that are subject to a high level of measurement uncertainty; and (b) in relation to each amount identified in paragraph 78(a), disclose information about: (i) the sources of measurement uncertainty—for example, the dependence of the amount on the outcome of a future event, on a measurement technique or on the availability and quality of data from the entity’s value chain; and (ii) the assumptions, approximations and judgements the entity has made in measuring the amount.",
+            "supports_option": "D",
+            "verified_on": "2026-08-27",
+            "method": "第十六輪查證所取得的一手引文，本次以該輪一併歸檔的來源全文（s1.txt）**逐字比對**確認後才寫回題庫 —— 不是照抄代理的轉述。"
           }
         ],
         "citation_fixed_on": "2026-07-15"

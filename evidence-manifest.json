@@ -7,9 +7,9 @@
   },
   "summary": {
     "main_tier1_questions": 762,
-    "pool_tier1_questions": 138,
-    "total_evidence_records": 927,
-    "primary_evidence_records": 918,
+    "pool_tier1_questions": 139,
+    "total_evidence_records": 934,
+    "primary_evidence_records": 925,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -7107,6 +7107,24 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-ifrs2026-005",
+      "bank": "pool",
+      "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html",
+      "host": "www.ifrs.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-ifrs2026-006",
+      "bank": "pool",
+      "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs1.html",
+      "host": "www.ifrs.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-ifrs2026-006",
       "bank": "pool",
       "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs1.html",
@@ -7566,6 +7584,15 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-intl-022",
+      "bank": "pool",
+      "url": "https://unfccc.int/sites/default/files/resource/A6.4-SBM014-A06.pdf",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-intl-023",
       "bank": "pool",
       "url": "https://unfccc.int/sites/default/files/resource/cma3_auv_12a_PA_6.2.pdf",
@@ -7579,6 +7606,24 @@
       "bank": "pool",
       "url": "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf",
       "host": "sciencebasedtargets.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-025",
+      "bank": "pool",
+      "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/article-64-mechanism/faqs-on-transitioning-cdm-activities-to-the-A6.4mechanism",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-027",
+      "bank": "pool",
+      "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html",
+      "host": "www.ifrs.org",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -7629,6 +7674,15 @@
       "tier1": true
     },
     {
+      "qid": "pool-aig-intl-032",
+      "bank": "pool",
+      "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01E.pdf",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "pool-aig-intl_round1_rescued-intl-013",
       "bank": "pool",
       "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards-issb/english/2025/issued/issbs2.html",
@@ -7651,6 +7705,15 @@
       "bank": "pool",
       "url": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj",
       "host": "eur-lex.europa.eu",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl_round1_rescued-intl-031",
+      "bank": "pool",
+      "url": "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
+      "host": "files.sciencebasedtargets.org",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
