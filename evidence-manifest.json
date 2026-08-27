@@ -7,9 +7,9 @@
   },
   "summary": {
     "main_tier1_questions": 764,
-    "pool_tier1_questions": 139,
-    "total_evidence_records": 945,
-    "primary_evidence_records": 936,
+    "pool_tier1_questions": 140,
+    "total_evidence_records": 946,
+    "primary_evidence_records": 937,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -7417,6 +7417,15 @@
       "bank": "pool",
       "url": "https://www.ey.gov.tw/File/D2A731DDD7EC55EC?A=C",
       "host": "www.ey.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-ind-034",
+      "bank": "pool",
+      "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202203030001&dtable=News",
+      "host": "www.fsc.gov.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true

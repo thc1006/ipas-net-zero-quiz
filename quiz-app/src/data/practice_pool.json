@@ -5449,27 +5449,27 @@
     },
     {
       "id": "pool-aig-ind-034",
-      "stem": "依國際確信實務（ISAE 3000／3410）與我國上市櫃公司永續資訊確信之推動方向，我國「溫室氣體盤查資訊外部確信」之級別演進，下列敘述何者最為合理？",
+      "stem": "依金管會 2022 年發布之「上市櫃公司永續發展路徑圖」，全體上市櫃公司完成溫室氣體盤查、以及完成該盤查之查證，其時程目標分別為何？",
       "options": [
         {
           "key": "A",
-          "text": "首階段即要求合理確信，後續可降為有限確信"
+          "text": "2025 年前完成盤查，2027 年前完成查證"
         },
         {
           "key": "B",
-          "text": "全程僅要求企業自我聲明"
+          "text": "2027 年前完成盤查，2030 年前完成查證"
         },
         {
           "key": "C",
-          "text": "確信僅針對範疇 3，範疇 1+2 不要求"
+          "text": "2030 年前完成盤查，2035 年前完成查證"
         },
         {
           "key": "D",
-          "text": "首階段為有限確信（limited assurance），長期朝合理確信（reasonable assurance）方向發展"
+          "text": "2027 年前完成盤查，2029 年前完成查證"
         }
       ],
       "answer": "D",
-      "explanation": "ISAE 3410 / 3000 與我國規範均以「先有限確信、後合理確信」為國際慣例；金管會路徑圖規劃 2027 全體上市櫃完成盤查、2029 年完成外部確信。",
+      "explanation": "路徑圖分階段推動，最終要求全體上市櫃公司於 2027 年前完成溫室氣體盤查、2029 年前完成該盤查之查證。\n\n依據——金管會「上市櫃公司永續發展路徑圖」新聞稿：「要求全體上市櫃公司於2027年前完成溫室氣體盤查，2029年前完成溫室氣體盤查之查證」",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -5519,10 +5519,29 @@
           "verdict": "CORRECT",
           "note": "外部確信級別循序演進（有限確信→合理確信）符合金管會永續發展路徑圖與 ISAE 3000/3410；cgc.twse 頁為 JS 動態、時程表無法乾淨抽取逐字，誠實標記。",
           "method": "第十六輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
+        },
+        "evidence": [
+          {
+            "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202203030001&dtable=News",
+            "quote": "要求全體上市櫃公司於2027年前完成溫室氣體盤查，2029年前完成溫室氣體盤查之查證",
+            "supports_option": "D",
+            "verified_on": "2026-08-27"
+          }
+        ],
+        "question_replaced": {
+          "date": "2026-08-27",
+          "was_stem": "依國際確信實務（ISAE 3000／3410）與我國上市櫃公司永續資訊確信之推動方向，我國「溫室氣體盤查資訊外部確信」之級別演進，下列敘述何者最為合理？",
+          "was_options": [
+            "首階段即要求合理確信，後續可降為有限確信",
+            "全程僅要求企業自我聲明",
+            "確信僅針對範疇 3，範疇 1+2 不要求",
+            "首階段為有限確信（limited assurance），長期朝合理確信（reasonable assurance）方向發展"
+          ],
+          "why": "原題問「我國溫室氣體盤查資訊外部確信之級別演進」，答案為「首階段有限確信、長期朝合理確信發展」，但本題完全沒有引文，且釘住的《溫室氣體排放量盤查登錄及查驗管理辦法》第 8 條寫明「查驗結果應為合理保證等級」——我國強制軌道從一開始就是合理保證，不是有限。查遍金管會路徑圖、其問答集與證交所確信機構管理要點，找不到任何一手文字說我國採「先有限、後合理」的級別演進。也就是說原答案不只是沒來源，方向很可能是相反的。主題庫已有 gist[19]、gist[413] 兩題在考保證等級，再寫一題會重複；改考同一份路徑圖裡查得到逐字原文的時程，答案鍵維持 D、不影響選項分布。"
         }
       },
       "sources": [
-        "https://www.iaasb.org/publications/glance-international-standard-assurance-engagements-isae-3410-assurance-engagements-greenhouse-gas"
+        "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2&mcustomize=news_view.jsp&dataserno=202203030001&dtable=News"
       ],
       "quality_flags": [
         "time_sensitive"
