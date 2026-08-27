@@ -157,6 +157,29 @@ describe('解析的標籤必須誠實反映來源', () => {
     expect(screen.queryByText('未經人工逐題審核')).not.toBeInTheDocument();
   });
 
+  // 練習池有 54 題來自第三方模擬題（vocus 講師），解析是隨題匯入的原作者文字 ——
+  // 那些從來沒有過 tools/explanation_guard.py。掛「題庫解析」等於把它們掛上本題庫的名義。
+  it('外部模擬題的解析標「外部模擬題解析」，並標示第三方撰寫', () => {
+    render(
+      <QuestionCard
+        question={{
+          ...base,
+          sourceType: 'practice_pool',
+          provenance: { source_type: 'external_mock' },
+          explanation: 'vocus 講師寫的解析',
+        }}
+        questionNumber={1}
+        showAnswer
+        onSelectAnswer={vi.fn()}
+      />
+    );
+    expect(screen.getByLabelText('外部模擬題解析')).toBeInTheDocument();
+    expect(screen.getByText('第三方撰寫，非本題庫')).toBeInTheDocument();
+    expect(screen.queryByLabelText('題庫解析')).not.toBeInTheDocument();
+    // 也不該被誤標成 AI 產出 —— 它是人寫的，只是作者不是我們
+    expect(screen.queryByText('未經人工逐題審核')).not.toBeInTheDocument();
+  });
+
   it('練習池 AI 產題的解析改標「AI 產題解析」，並標示未經人工逐題審核', () => {
     // 練習池有 100 題 AI 產題也帶解析。那是模型寫的，不能和通過反捏造閘門的
     // 題庫解析共用同一個標籤 —— 標題本身就是一種背書。
@@ -178,20 +201,21 @@ describe('解析的標籤必須誠實反映來源', () => {
     expect(screen.queryByLabelText('題庫解析')).not.toBeInTheDocument();
   });
 
-  it('練習池的模擬題（非 AI 產題）仍標「題庫解析」', () => {
+  // 這條原本寫成「練習池的模擬題仍標『題庫解析』」—— 那是我第一版的判斷，錯了：
+  // 它把只分「AI／非 AI」的二分法固化成測試，等於用綠燈背書一個超額宣稱。
+  // 現在改成三分（本題庫／外部／AI），由上面那條外部模擬題的測試涵蓋。
+  // 這裡保留的是另一件事：主題庫題（沒有 provenance）不得被誤標成外部或 AI。
+  it('沒有 provenance 的主題庫題不會被誤標成外部或 AI', () => {
     render(
       <QuestionCard
-        question={{
-          ...base,
-          sourceType: 'practice_pool',
-          provenance: { source_type: 'external_mock' },
-          explanation: '人工整理的解析',
-        }}
+        question={{ ...base, explanation: '人工整理的解析' }}
         questionNumber={1}
         showAnswer
         onSelectAnswer={vi.fn()}
       />
     );
     expect(screen.getByLabelText('題庫解析')).toBeInTheDocument();
+    expect(screen.queryByText('第三方撰寫，非本題庫')).not.toBeInTheDocument();
+    expect(screen.queryByText('未經人工逐題審核')).not.toBeInTheDocument();
   });
 });

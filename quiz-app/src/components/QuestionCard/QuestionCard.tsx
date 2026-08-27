@@ -93,10 +93,30 @@ export function QuestionCard({
   );
   const [isLoadingAI, setIsLoadingAI] = useState(false);
 
-  // 練習池的 AI 產題也帶解析（100 題）。那些解析是模型寫的，不能和通過反捏造閘門的
-  // 題庫解析共用同一個標籤 —— 標題本身就是一種背書。
-  const isAiAuthoredExplanation = question.provenance?.source_type === 'ai_generated';
-  const explanationLabel = isAiAuthoredExplanation ? 'AI 產題解析' : '題庫解析';
+  // 解析的標題本身就是一種背書，所以它要說出**這段字是誰寫的**。
+  //
+  //   ai_generated（100 題）  模型寫的
+  //   external_mock（54 題）  第三方模擬題作者寫的，隨題一起匯入
+  //   主題庫                  本題庫撰寫，逐則過 tools/explanation_guard.py
+  //                           （只准用該題已機械驗證的逐字引文，不得引入引文以外的
+  //                            條號／標準編號／百分比／年份／數量）
+  //
+  // 先前只分「AI」與「題庫解析」兩種，等於把外部模擬題的解析也掛上本題庫的名義 ——
+  // 那 54 則從來沒有過我們的閘門。SourceBadge 標的是**題目**來源，這裡標的是**解析**
+  // 作者，兩者不同：題目是模擬題、解析卻可能是我們寫的（反之亦然）。
+  const explanationSource = question.provenance?.source_type;
+  const isAiAuthoredExplanation = explanationSource === 'ai_generated';
+  const isExternalExplanation = explanationSource === 'external_mock';
+  const explanationLabel = isAiAuthoredExplanation
+    ? 'AI 產題解析'
+    : isExternalExplanation
+      ? '外部模擬題解析'
+      : '題庫解析';
+  const explanationCaveat = isAiAuthoredExplanation
+    ? '未經人工逐題審核'
+    : isExternalExplanation
+      ? '第三方撰寫，非本題庫'
+      : null;
 
   const getOptionStatus = useCallback(
     (optionKey: string): 'default' | 'selected' | 'correct' | 'incorrect' => {
@@ -255,7 +275,7 @@ export function QuestionCard({
         <section
           className={`curated-explanation${
             isAiAuthoredExplanation ? ' curated-explanation--ai' : ''
-          }`}
+          }${isExternalExplanation ? ' curated-explanation--external' : ''}`}
           aria-label={explanationLabel}
         >
           <div className="curated-explanation__header">
@@ -263,8 +283,8 @@ export function QuestionCard({
               menu_book
             </span>
             <span>{explanationLabel}</span>
-            {isAiAuthoredExplanation && (
-              <span className="curated-explanation__grade">未經人工逐題審核</span>
+            {explanationCaveat && (
+              <span className="curated-explanation__grade">{explanationCaveat}</span>
             )}
           </div>
           <p className="curated-explanation__body">{question.explanation}</p>

@@ -494,6 +494,18 @@
   color: var(--color-warning-fg);
 }
 
+/* 外部模擬題的解析：第三方撰寫、未過本題庫的反捏造閘門。
+   用中性底色與 AI 版一致的「這不是我們寫的」視覺語彙，但不借用警示色 ——
+   它不是機器生成，只是作者不是我們。 */
+.curated-explanation--external {
+  background: var(--color-surface-variant);
+  border-left-color: var(--color-text-secondary);
+}
+
+.curated-explanation--external .curated-explanation__header {
+  color: var(--color-text-secondary);
+}
+
 .curated-explanation__grade {
   margin-left: auto;
   font-size: var(--font-size-xs);

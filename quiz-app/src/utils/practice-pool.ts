@@ -101,6 +101,27 @@ export function randomSample<T>(items: T[], n: number, rng?: () => number): T[] 
   return shuffle(items, rng).slice(0, n);
 }
 
+/**
+ * 從自由字串解析考科。只認「考科」後面緊跟的那一個字，不掃整串。
+ *
+ * 先前是 `raw.includes('1')`：只要字串裡任何位置出現 1 就判考科一。
+ * 這個題庫滿是 ISO 14064-1 / 14068-1，而現有的 subject 值本來就長成
+ * 「考科二：淨零碳盤查規範與程序概要」這種「考科X：<主題敘述>」的形狀 ——
+ * 於是「考科二：ISO 14064-1 盤查」會被判成考科一。今天的資料剛好沒有這種值，
+ * 但寫成這樣等於在等它發生，而且錯了不會有人發現（分類錯的題照樣出得來）。
+ *
+ * 認不出來時回 null（呼叫端會標 unmapped_subject），不猜 —— 明說「不知道」
+ * 比猜錯好，這也是先前拿掉 `?? '考科2'` fallback 的同一個判準。
+ */
+function parseSubject(raw: string): QuizQuestion['subject'] | null {
+  // 後面不接數字：擋掉「考科10」被前綴比對吃成考科一
+  const zh = raw.match(/考科\s*[:：]?\s*([12一二])(?![0-9])/);
+  if (zh) return /[1一]/.test(zh[1]) ? '考科1' : '考科2';
+  const en = raw.toLowerCase().match(/subject\s*([12])(?![0-9])/);
+  if (en) return en[1] === '1' ? '考科1' : '考科2';
+  return null;
+}
+
 /** 把 PracticePoolItem 轉成 QuizQuestion 形狀 */
 export function toQuizQuestion(item: PracticePoolItem): QuizQuestion & {
   provenance: PracticePoolItem['provenance'];
@@ -108,12 +129,7 @@ export function toQuizQuestion(item: PracticePoolItem): QuizQuestion & {
   sources: string[];
 } {
   const raw = typeof item.subject === 'string' ? item.subject : '';
-  let subject: QuizQuestion['subject'] | null = null;
-  if (raw.includes('1') || raw.includes('一') || raw.toLowerCase().includes('subject 1')) {
-    subject = '考科1';
-  } else if (raw.includes('2') || raw.includes('二') || raw.toLowerCase().includes('subject 2')) {
-    subject = '考科2';
-  }
+  const subject = parseSubject(raw);
 
   // subject 無法映射時加 quality flag，並讓 subject 維持 null。
   // 先前為了滿足 strict type 而 fallback 成 '考科2'，等於把「不知道」寫成「考科二」。

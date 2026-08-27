@@ -319,6 +319,51 @@ export function useQuiz() {
   }, []);
 
   /**
+   * 續作時把練習池題重新水合。
+   *
+   * 主題庫題在 localStorage 裡存的是 id，續作時本來就會用**現行題庫**重建；
+   * 練習池題存的是整包物件，而那些物件是**存檔當下那版 adapter** 的產物 ——
+   * 解析被丟掉、subject 被 fallback 成考科二。不補的話，這次修好的東西
+   * 對「跨版本續作的那一場」永遠不成立，而使用者不會知道自己看的是舊資料。
+   *
+   * 只補顯示用欄位（解析／考科／來源／出處徽章），不動 answer / options / stem ——
+   * 那三者一動就會與 answers 裡已記錄的 correctAnswer 分裂（見上方 #106 對帳說明）；
+   * 顯示欄位沒有這個風險。池是 dynamic import，這裡不會把它拉進主 bundle。
+   */
+  const rehydratePoolQuestions = useCallback((questions: QuizQuestion[]): void => {
+    if (!questions.some((q) => q.sourceType === 'practice_pool')) return;
+    void loadPracticePool()
+      .then((pool) => {
+        const byId = new Map(pool.items.map((it) => [it.id, it]));
+        setState((prev) => {
+          if (!prev.isActive) return prev;
+          let changed = false;
+          const next = prev.questions.map((q) => {
+            if (q.sourceType !== 'practice_pool') return q;
+            const item = byId.get(q.id);
+            if (!item) return q;
+            const fresh = toQuizQuestion(item);
+            if (q.explanation === fresh.explanation && q.subject === fresh.subject) {
+              return q;
+            }
+            changed = true;
+            return {
+              ...q,
+              explanation: fresh.explanation,
+              subject: fresh.subject,
+              sources: fresh.sources,
+              provenance: fresh.provenance,
+            };
+          });
+          return changed ? { ...prev, questions: next } : prev;
+        });
+      })
+      .catch(() => {
+        // 池載不進來只影響「解析顯示得比較舊」，續作本身照常 —— 不打斷使用者。
+      });
+  }, []);
+
+  /**
    * 從 localStorage 還原中斷的測驗（Refs #71）。
    * 找到合法 saved progress 時 restore 並回 true；否則回 false。
    * 由 App.tsx 在使用者點「繼續測驗」時呼叫。
@@ -371,9 +416,10 @@ export function useQuiz() {
         answers: reconciledAnswers,
       });
     }
+    rehydratePoolQuestions(answerable);
     setQuestionStartTime(Date.now());
     return true;
-  }, []);
+  }, [rehydratePoolQuestions]);
 
   // 衍生狀態
   const currentQuestion = useMemo(
