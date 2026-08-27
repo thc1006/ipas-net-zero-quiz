@@ -110,15 +110,15 @@ const pp = pool as unknown as { items: Item[] };
 const ALL: Item[] = [...ds.gist_items, ...ds.our_unique_items, ...pp.items];
 const who = (it: Item): string => it.item_id ?? it.id ?? `gist-${it.index}`;
 
-/** 這一題指名的條號，有沒有任何一條真的被逐字依據綁住 */
-function boundClause(it: Item): boolean {
-  const keys = clauseKeys(it.stem);
+/** 這一題在 `text` 裡指名的條號，有沒有任何一條真的被逐字依據綁住 */
+function boundIn(it: Item, text: string): boolean {
+  const keys = clauseKeys(text);
   if (keys.length === 0) return true;
   const evs = evidence(it);
   const quotes = evs.map((e) => norm(e.quote ?? '')).filter((q) => q.length >= 8);
   const urls = evs.map((e) => e.url ?? '');
-  const text = `${it.stem} ${it.explanation ?? ''}`;
-  const laws = ALIASES.filter(([name]) => text.includes(name)).map(([, code]) => code);
+  const whole = `${it.stem} ${it.explanation ?? ''}`;
+  const laws = ALIASES.filter(([name]) => whole.includes(name)).map(([, code]) => code);
   const explQuotes = [...(it.explanation ?? '').matchAll(/「([^」]{12,})」/g)].map((m) => norm(m[1]));
 
   return keys.some((key) => {
@@ -136,11 +136,69 @@ function boundClause(it: Item): boolean {
     if (quotes.some((q) => forms.some((f) => q.includes(norm(f))))) return true;
     // 4) 引文 URL 的路徑本身就指名該條（unfccc 的 .../article-6/article-62、
     //    .../article-64-mechanism）—— 路徑是站方自己的編排，不是我們推定的
-    const slug = `article${key.replace(/[^0-9]/g, '')}`;
-    if (urls.some((u) => u.toLowerCase().replace(/[^a-z0-9]/g, '').includes(slug))) return true;
+    const slug = new RegExp(`article${key.replace(/[^0-9]/g, '')}(?![0-9])`);
+    if (urls.some((u) => slug.test(u.toLowerCase().replace(/[^a-z0-9]/g, '')))) return true;
     return false;
   });
 }
+
+/**
+ * 綁不住、但**已明確登記**的條號引用。
+ *
+ * 為什麼要有這份清冊，而不是把條號刪掉了事 —— 這是我自己踩過的坑：
+ * 我一度把 `ifrs2026-003`、`ind-004`、`intl-025` 的條號從**題幹**拿掉讓這道 gate 轉綠，
+ * 但**解析裡原封不動留著同樣的條號**。可驗證性一點沒變，只是 gate 看不到 ——
+ * 那是在鑽自己設的洞。回頭查證後，`ind-004` 的三個條號其實逐字寫在金管會預告新聞稿的標題裡
+ * （該補的是引文，不是刪題幹），`intl-025` 的 UNFCCC 網址路徑本來就綁得住。
+ * 真正綁不住的只剩下面這些，明列出來、只准變少。
+ */
+const STEM_UNBOUND: ReadonlyArray<{ id: string; why: string }> = [
+  {
+    id: 'pool-aig-ifrs2026-003',
+    why: 'IFRS S1 全文 PDF 在 ifrs.org 需登入（實測 302 轉向 b2clogin），段號無法由免費一手來源逐字釘住。解析本身是一則有價值的更正註記（說明該英文原文出自第 3 段而非第 17 段），不刪。',
+  },
+];
+
+/**
+ * 解析裡指名、但綁不住的條號。
+ *
+ * 這一群比題幹那一群更大 —— gate 第一版只看題幹，等於盲區比守備範圍還大。
+ * 目前 29 題，多數是外部模擬題（vocus）隨題匯入的原作者解析，
+ * 以及付費標準（ISO／IFRS）的段號。**這份清冊只准變少**：
+ * 新出現而不在清冊裡的，一律轉紅。
+ */
+const EXPLANATION_UNBOUND: ReadonlySet<string> = new Set([
+  'S_VOCUS_02-q010',
+  'gist-29',
+  'gist-46',
+  'gist-83',
+  'gist-179',
+  'gist-255',
+  'gist-312',
+  'gist-314',
+  'gist-408',
+  // 題幹也綁不住（見 STEM_UNBOUND）：IFRS 段號無免費一手來源
+  'pool-aig-ifrs2026-003',
+  'pool-aig-ind-010',
+  'pool-aig-intl-007',
+  'pool-aig-intl-019',
+  'pool-aig-tw_regs_01-v2',
+  'pool-em-ipas_vocus_mock-001',
+  'pool-em-ipas_vocus_mock-002',
+  'pool-em-ipas_vocus_mock-011',
+  'pool-em-ipas_vocus_mock-014',
+  'pool-em-ipas_vocus_mock-015',
+  'pool-em-ipas_vocus_mock-025',
+  'pool-em-ipas_vocus_mock-026',
+  'pool-em-ipas_vocus_mock-028',
+  'pool-em-ipas_vocus_mock-044',
+  'pool-em-ipas_vocus_mock-046',
+  'pool-em-ipas_vocus_mock-047',
+  'pool-em-ipas_vocus_mock-049',
+  'pool-em-ipas_vocus_mock-054',
+  'pool-em-ipas_vocus_mock-055',
+  'pool-em-ipas_vocus_mock_rescued-050',
+]);
 
 describe('題幹指名條號者，必須綁得住那一條的逐字依據', () => {
   const cited = ALL.filter((it) => CLAUSE.test(it.stem));
@@ -149,17 +207,54 @@ describe('題幹指名條號者，必須綁得住那一條的逐字依據', () =
     expect(cited.length).toBeGreaterThan(20);
   });
 
-  it('每一題指名的條號，都要能綁到該條的逐字依據', () => {
+  it('每一題指名的條號，都要能綁到該條的逐字依據（除已登記者）', () => {
+    const ledger = new Set(STEM_UNBOUND.map((x) => x.id));
     const unbound = cited
-      .filter((it) => !boundClause(it))
+      .filter((it) => !boundIn(it, it.stem))
+      .filter((it) => !ledger.has(who(it)))
       .map((it) => `${who(it)}〔${clauseKeys(it.stem).join('、')}〕: ${it.stem.slice(0, 40)}`);
     expect(
       unbound,
       '這些題目在題幹指名了條號，卻沒有任何逐字依據綁得住那一條。' +
-        '請補該條的一手引文，或把條號改成敘述性引述（概念不變、不必背一個沒人查證過的條號）'
+        '請補該條的一手引文，或（若真的無法逐字釘住）登記進 STEM_UNBOUND 並寫明理由'
     ).toEqual([]);
   });
 
+  it('登記在清冊裡的，必須真的還綁不住（修好了就要從清冊移除）', () => {
+    const stale = STEM_UNBOUND.filter((x) => {
+      const it = ALL.find((q) => who(q) === x.id);
+      return it && boundIn(it, it.stem);
+    }).map((x) => x.id);
+    expect(stale, '這些已經綁得住了，請把它們從 STEM_UNBOUND 拿掉').toEqual([]);
+  });
+});
+
+describe('解析裡指名的條號，同樣要綁得住', () => {
+  // 只看「題幹沒指名、但解析指名」的那一群 —— 題幹那一群由上面那組守。
+  const cited = ALL.filter((it) => CLAUSE.test(it.explanation ?? ''));
+
+  it('這條 gate 不能空轉：確實有解析在指名條號', () => {
+    expect(cited.length).toBeGreaterThan(30);
+  });
+
+  it('解析指名的條號綁不住時，必須已登記在清冊裡', () => {
+    const unbound = cited
+      .filter((it) => !boundIn(it, it.explanation ?? ''))
+      .map(who)
+      .filter((id) => !EXPLANATION_UNBOUND.has(id));
+    expect(
+      unbound,
+      '這些題目的**解析**指名了條號卻綁不住。' +
+        '把條號從題幹搬到解析不算修好 —— 補一手引文，或登記進 EXPLANATION_UNBOUND'
+    ).toEqual([]);
+  });
+
+  it('清冊只准變少（現況 29 題）', () => {
+    expect(EXPLANATION_UNBOUND.size).toBeLessThanOrEqual(29);
+  });
+});
+
+describe('gate 的資料來源本身', () => {
   it('練習池的引文放在 provenance.evidence —— 這條 gate 必須真的讀得到', () => {
     const poolWithEvidence = pp.items.filter((it) => (it.provenance?.evidence ?? []).length > 0);
     expect(

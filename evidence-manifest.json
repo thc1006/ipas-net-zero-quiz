@@ -8,8 +8,8 @@
   "summary": {
     "main_tier1_questions": 764,
     "pool_tier1_questions": 140,
-    "total_evidence_records": 948,
-    "primary_evidence_records": 939,
+    "total_evidence_records": 949,
+    "primary_evidence_records": 940,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -7174,6 +7174,15 @@
       "bank": "pool",
       "url": "https://dsp.tpex.org.tw/storage/education_event/IFRS%E6%B0%B8%E7%BA%8C%E6%BA%96%E5%89%87%E5%95%8F%E7%AD%94%E9%9B%86.pdf",
       "host": "dsp.tpex.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-ind-004",
+      "bank": "pool",
+      "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0%2C2&mcustomize=news_view.jsp&dataserno=202505130005&dtable=News",
+      "host": "www.fsc.gov.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
