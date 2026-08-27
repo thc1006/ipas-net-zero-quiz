@@ -451,3 +451,64 @@
 .option-item.incorrect .option-text__redundant {
   opacity: 0.6;
 }
+
+/* 題庫解析（人工／來源約束）—— 排在 AI 延伸說明之前 */
+.curated-explanation {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--color-success-bg);
+  border-left: 3px solid var(--color-success-fg);
+  border-radius: var(--radius-sm);
+}
+
+.curated-explanation__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-success-fg);
+  margin-bottom: var(--spacing-xs);
+}
+
+.curated-explanation__body {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.8;
+  color: var(--color-text-primary);
+}
+
+/* 未能對應考科的題目 —— 不要冒充任何一科 */
+.subject-unmapped {
+  background: var(--color-surface-variant);
+  color: var(--color-text-secondary);
+}
+
+/* AI 產題的解析：改用中性底色，並在標頭標明未經人工逐題審核 */
+.curated-explanation--ai {
+  background: var(--color-surface-variant);
+  border-left-color: var(--color-warning-fg);
+}
+
+.curated-explanation--ai .curated-explanation__header {
+  color: var(--color-warning-fg);
+}
+
+/* 外部模擬題的解析：第三方撰寫、未過本題庫的反捏造閘門。
+   用中性底色與 AI 版一致的「這不是我們寫的」視覺語彙，但不借用警示色 ——
+   它不是機器生成，只是作者不是我們。 */
+.curated-explanation--external {
+  background: var(--color-surface-variant);
+  border-left-color: var(--color-text-secondary);
+}
+
+.curated-explanation--external .curated-explanation__header {
+  color: var(--color-text-secondary);
+}
+
+.curated-explanation__grade {
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}

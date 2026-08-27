@@ -7,18 +7,34 @@ import { SourceBadge } from '../SourceBadge/SourceBadge';
 import { SourceBanner } from '../SourceBanner/SourceBanner';
 import { prettifySourceUrl } from '../../utils/source-label';
 import { findRedundantPrefix } from '../../utils/option-prefix';
+import { subjectClass, subjectLabel } from '../../utils/subject-label';
 import { buildFeedbackUrl } from '../../utils/question-feedback-url';
 import { useAllQuestionStats } from '../../hooks/useQuestionStats';
 import './QuestionCard.css';
 
+/** HTML 實體逸出 —— 這是 renderMarkdown 唯一的安全基礎。 */
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 /**
  * 簡易 Markdown 轉 HTML
  * 支援：**粗體**、*斜體*、`程式碼`、標題、清單
+ *
+ * **輸出會被丟進 dangerouslySetInnerHTML，而輸入來自第三方 AI 服務。**
+ * 因此第一步一定是把原始 HTML 逸出掉：先前沒有這一步，模型只要回
+ * `<img src=x onerror=...>`，那段 HTML 就會被瀏覽器當成標籤執行。
+ * 逸出之後，唯一會出現在輸出裡的標籤是本函式自己插入的 strong / em / code。
  */
-function renderMarkdown(text: string): string {
+export function renderMarkdown(text: string): string {
   if (!text) return '';
 
-  let result = text
+  let result = escapeHtml(text)
     // 標題 ### text 或 ## text
     .replace(/^###\s+(.+)$/gm, '<strong>$1</strong>')
     .replace(/^##\s+(.+)$/gm, '<strong>$1</strong>')
@@ -76,6 +92,31 @@ export function QuestionCard({
     [question.id, question.hasAnswer, allStats]
   );
   const [isLoadingAI, setIsLoadingAI] = useState(false);
+
+  // 解析的標題本身就是一種背書，所以它要說出**這段字是誰寫的**。
+  //
+  //   ai_generated（100 題）  模型寫的
+  //   external_mock（54 題）  第三方模擬題作者寫的，隨題一起匯入
+  //   主題庫                  本題庫撰寫，逐則過 tools/explanation_guard.py
+  //                           （只准用該題已機械驗證的逐字引文，不得引入引文以外的
+  //                            條號／標準編號／百分比／年份／數量）
+  //
+  // 先前只分「AI」與「題庫解析」兩種，等於把外部模擬題的解析也掛上本題庫的名義 ——
+  // 那 54 則從來沒有過我們的閘門。SourceBadge 標的是**題目**來源，這裡標的是**解析**
+  // 作者，兩者不同：題目是模擬題、解析卻可能是我們寫的（反之亦然）。
+  const explanationSource = question.provenance?.source_type;
+  const isAiAuthoredExplanation = explanationSource === 'ai_generated';
+  const isExternalExplanation = explanationSource === 'external_mock';
+  const explanationLabel = isAiAuthoredExplanation
+    ? 'AI 產題解析'
+    : isExternalExplanation
+      ? '外部模擬題解析'
+      : '題庫解析';
+  const explanationCaveat = isAiAuthoredExplanation
+    ? '未經人工逐題審核'
+    : isExternalExplanation
+      ? '第三方撰寫，非本題庫'
+      : null;
 
   const getOptionStatus = useCallback(
     (optionKey: string): 'default' | 'selected' | 'correct' | 'incorrect' => {
@@ -141,8 +182,8 @@ export function QuestionCard({
       {/* 題目標頭 */}
       <header className="question-header">
         <span className="question-number">第 {questionNumber} 題</span>
-        <span className={`badge badge-info subject-tag subject-${question.subject === '考科1' ? '1' : '2'}`}>
-          {question.subject === '考科1' ? '考科一' : '考科二'}
+        <span className={`badge badge-info subject-tag ${subjectClass(question.subject)}`}>
+          {subjectLabel(question.subject)}
         </span>
         {question.provenance && (
           <SourceBadge
@@ -226,6 +267,60 @@ export function QuestionCard({
         </div>
       )}
 
+      {/* 題庫解析 —— 人工／來源約束寫成，且通過反捏造閘門。
+          先前完全沒有渲染：918 則解析躺在資料裡，畫面上卻只有一顆「AI 解析」按鈕，
+          等於讓未經審核的生成內容取代已審核的內容。順序固定為
+          答案 → 題庫解析 → 答案依據 → 參考來源 → AI 延伸。 */}
+      {showAnswer && question.explanation && (
+        <section
+          className={`curated-explanation${
+            isAiAuthoredExplanation ? ' curated-explanation--ai' : ''
+          }${isExternalExplanation ? ' curated-explanation--external' : ''}`}
+          aria-label={explanationLabel}
+        >
+          <div className="curated-explanation__header">
+            <span className="material-icons sm" aria-hidden="true">
+              menu_book
+            </span>
+            <span>{explanationLabel}</span>
+            {explanationCaveat && (
+              <span className="curated-explanation__grade">{explanationCaveat}</span>
+            )}
+          </div>
+          <p className="curated-explanation__body">{question.explanation}</p>
+        </section>
+      )}
+
+      {/* 答案揭曉後才顯示依據與來源；順序：題庫解析 → 答案依據 → 參考來源 → AI 延伸 */}
+      {showAnswer && (
+        <>
+        <AnswerEvidence evidence={question.evidence} />
+
+        {question.sources && question.sources.length > 0 && (
+          <div className="question-sources" aria-label="參考來源">
+            <div className="question-sources-header">
+              <span className="material-icons sm">menu_book</span>
+              <span>參考來源</span>
+            </div>
+            <ul className="question-sources-list">
+              {sourceLabels.map(({ url, label }) => (
+                <li key={url}>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="source-link"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        </>
+      )}
+
       {/* AI 解析區 */}
       {showAnswer && (
         <div className="ai-section">
@@ -236,7 +331,7 @@ export function QuestionCard({
               disabled={isLoadingAI}
             >
               <span className="material-icons">smart_toy</span>
-              AI 解析
+              AI 延伸說明（未經人工審核）
             </button>
           )}
 
@@ -252,11 +347,10 @@ export function QuestionCard({
               <div className="ai-response-header">
                 <span className="material-icons">smart_toy</span>
                 <span>AI 解析</span>
-                {aiResponse.confidence > 0 && (
-                  <span className="confidence-badge">
-                    信心度 {Math.round(aiResponse.confidence * 100)}%
-                  </span>
-                )}
+                {/* 先前這裡渲染「信心度 85%」。那個數字來自回覆長度與關鍵詞加總，
+                    與答案正確與否無關 —— 一個憑空生成卻看起來精確的百分比，
+                    比不顯示更糟。改為據實說明這段內容的性質。 */}
+                <span className="confidence-badge">未經人工審核</span>
               </div>
               {aiResponse.success ? (
                 <div className="ai-response-content">
@@ -276,30 +370,6 @@ export function QuestionCard({
             </div>
           )}
 
-          <AnswerEvidence evidence={question.evidence} />
-
-          {question.sources && question.sources.length > 0 && (
-            <div className="question-sources" aria-label="參考來源">
-              <div className="question-sources-header">
-                <span className="material-icons sm">menu_book</span>
-                <span>參考來源</span>
-              </div>
-              <ul className="question-sources-list">
-                {sourceLabels.map(({ url, label }) => (
-                  <li key={url}>
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="source-link"
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
       )}
     </article>

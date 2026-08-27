@@ -3,6 +3,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useQuiz, defaultConfig } from './useQuiz';
 import type { QuizConfig } from '../types/quiz';
+import { __setPracticePoolForTesting } from '../utils/practice-pool';
+import { buildFixturePool } from '../utils/__fixtures__/practice-pool-fixture';
 
 describe('useQuiz Hook', () => {
   beforeEach(() => {
@@ -456,6 +458,63 @@ describe('useQuiz Hook', () => {
       expect(fresh.result.current.isActive).toBe(true);
       expect(fresh.result.current.currentIndex).toBe(expectedIndex);
       expect(fresh.result.current.questions.length).toBe(expectedQuestionCount);
+    });
+
+    // 主題庫題在 localStorage 裡存的是 id，續作時會用現行題庫重建；練習池題存的是
+    // 整包物件 —— 而那些物件是**存檔當下那版 adapter** 的產物。修好 adapter 之後，
+    // 跨版本續作的那一場仍然帶著舊資料：解析是空的、subject 被冒充成考科二。
+    it('續作時練習池題會用現行池資料補回解析與考科（舊快照不會一直帶著舊 bug）', async () => {
+      __setPracticePoolForTesting(buildFixturePool());
+      const staleQuestion = {
+        id: 'fixture-1',
+        stem: 'Fixture 題目 1：請選擇正確答案',
+        options: [
+          { key: 'A', text: '選 A' },
+          { key: 'B', text: '選 B' },
+          { key: 'C', text: '選 C' },
+          { key: 'D', text: '選 D' },
+        ],
+        answer: 'A',
+        // 存檔當下 adapter 的產物：解析被丟掉，subject 被 fallback 成考科二
+        explanation: null,
+        subject: '考科2',
+        sourceType: 'practice_pool',
+        hasAnswer: true,
+      };
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 2,
+          savedAt: 1,
+          state: {
+            questions: [staleQuestion],
+            currentIndex: 0,
+            answers: [],
+            isActive: true,
+            startTime: 1,
+            config: defaultConfig,
+          },
+        })
+      );
+
+      const { result } = renderHook(() => useQuiz());
+      act(() => {
+        expect(result.current.resumeQuiz()).toBe(true);
+      });
+      // 續作本身是同步的：先照舊快照顯示，不讓載入池阻擋使用者
+      expect(result.current.questions[0].explanation).toBeNull();
+
+      // 池載入完成後補上顯示欄位
+      await act(async () => {
+        await Promise.resolve();
+        await Promise.resolve();
+      });
+      expect(result.current.questions[0].explanation).toBe('fixture explanation');
+      expect(result.current.questions[0].subject).toBe('考科1');
+      // 計分相關欄位不得被動到（動了會與 answers 記錄的 correctAnswer 分裂）
+      expect(result.current.questions[0].answer).toBe('A');
+      expect(result.current.questions[0].stem).toBe(staleQuestion.stem);
+      __setPracticePoolForTesting(null);
     });
 
     it('localStorage 有壞掉資料時 resumeQuiz 回 false', () => {
