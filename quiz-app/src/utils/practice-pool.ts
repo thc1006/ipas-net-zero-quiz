@@ -6,6 +6,7 @@ import type {
   PracticePoolItem,
   PracticePoolSourceType,
   PracticePoolDifficulty,
+  PracticePoolQualityFlag,
 } from '../types/practicePool';
 import type { QuizQuestion } from '../types/quiz';
 
@@ -104,7 +105,8 @@ export function randomSample<T>(items: T[], n: number, rng?: () => number): T[] 
 /** 把 PracticePoolItem 轉成 QuizQuestion 形狀 */
 export function toQuizQuestion(item: PracticePoolItem): QuizQuestion & {
   provenance: PracticePoolItem['provenance'];
-  qualityFlags: PracticePoolItem['quality_flags'];
+  // runtime 形狀：除了資料檔旗標，還可能被注入 unmapped_subject
+  qualityFlags: PracticePoolQualityFlag[];
   sources: string[];
 } {
   const raw = typeof item.subject === 'string' ? item.subject : '';

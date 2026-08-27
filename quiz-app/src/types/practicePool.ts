@@ -57,14 +57,46 @@ export type PracticePoolProvenance =
       ai_metadata: AIMetadata;
     });
 
-/** UI 渲染徽章用的 quality flags */
-export type PracticePoolQualityFlag =
-  | 'time_sensitive'
-  | 'ambiguous'
-  | 'low_confidence'
-  | 'duplicate_topic'
-  /** subject 無法明確映射時設此 flag；filter 時可排除 */
-  | 'unmapped_subject';
+/**
+ * 提示型旗標：內容有需要留意之處，但答案仍站得住 —— **照常計分**，UI 出徽章提醒。
+ */
+export const ADVISORY_QUALITY_FLAGS = [
+  'time_sensitive',
+  'low_confidence',
+  'duplicate_topic',
+] as const;
+
+/**
+ * 失效型旗標：這題目前給不出唯一且站得住的答案 —— **一律不計分**（見 utils/scorable.ts）。
+ *
+ * 這份清單同時是資料檔的合法值與計分的阻斷條件，兩者必須是同一份 ——
+ * 先前 schema 白名單只認 4 個旗標，而 scorable 阻斷 6 個，交集只有 ambiguous。
+ * 結果是：照著「標上旗標就自動離開計分池」去標 disputed，schema 會判該題非法、CI 直接紅。
+ */
+export const BLOCKING_QUALITY_FLAGS = [
+  'ambiguous',
+  'disputed',
+  'disputed_answer',
+  'multiple_correct',
+  'unverifiable_evidence',
+  'retired',
+] as const;
+
+/** 資料檔（practice_pool.json / integrated_dataset.json）裡可以出現的旗標 */
+export const DATA_QUALITY_FLAGS = [
+  ...ADVISORY_QUALITY_FLAGS,
+  ...BLOCKING_QUALITY_FLAGS,
+] as const;
+export type DataQualityFlag = (typeof DATA_QUALITY_FLAGS)[number];
+
+/**
+ * 只在 runtime 產生、資料檔不會有的旗標。
+ * subject 無法明確映射時由 toQuizQuestion 注入；filter 時可排除。
+ */
+export type RuntimeOnlyQualityFlag = 'unmapped_subject';
+
+/** UI 渲染徽章用的 quality flags（資料檔的 + runtime 才有的） */
+export type PracticePoolQualityFlag = DataQualityFlag | RuntimeOnlyQualityFlag;
 
 /** 練習池 subject 可能值：official ExamSubject、自由字串（如 vocus 講師原文「考科一：…」）、或 null（無分類） */
 export type PracticePoolSubject = ExamSubject | string | null;
@@ -83,7 +115,8 @@ export interface PracticePoolItem {
   provenance: PracticePoolProvenance;
   /** Curl 實測通過的引用 URL */
   sources: string[];
-  quality_flags: PracticePoolQualityFlag[];
+  /** 資料檔旗標；runtime-only 的 unmapped_subject 不會出現在這裡 */
+  quality_flags: DataQualityFlag[];
 }
 
 /** 練習池檔案頂層 */
