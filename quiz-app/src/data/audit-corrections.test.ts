@@ -237,7 +237,7 @@ describe('audit corrections regression', () => {
   });
 
   // 內容時效性修正（2026-07-13）。Reg (EU) 2025/2083 修正 Reg (EU) 2023/956。
-  // 背景與未解事項見 CONTENT-CURRENCY.md。
+  // 背景與未解事項見 docs/CONTENT-CURRENCY.md。
   //
   // 這一組刻意「不只鎖答案字母」。上一版只驗「答案含 50、不含 80、explanation 有法規編號」，
   // 結果把一段法律上不精確的敘述永久鎖死：題幹寫「每季提前購買比例」，但第 22(2) 條課予的

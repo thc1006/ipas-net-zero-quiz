@@ -26,7 +26,7 @@ CHECK = '--check' in sys.argv
 DS_PATH = 'quiz-app/src/data/integrated_dataset.json'
 POOL_PATH = 'quiz-app/src/data/practice_pool.json'
 README = 'README.md'
-CURRENCY = 'CONTENT-CURRENCY.md'
+CURRENCY = 'docs/CONTENT-CURRENCY.md'
 
 # PRIMARY 一律從 source-authority.ts 讀 —— 手抄過一次，漏了 re100.org.tw。
 src = open('quiz-app/src/utils/source-authority.ts', encoding='utf-8').read()
@@ -216,9 +216,9 @@ set_meta('answer_key_check.confirmed', N['akc_confirmed'])
 
 INDEX_HTML = 'quiz-app/index.html'
 LLMS = 'quiz-app/public/llms.txt'
-# 2026-09-27：README 從 543 行縮到 140 行，「逐輪稽核的量化結果」整節搬到 DATA-PROVENANCE.md。
+# 2026-09-27：README 從 543 行縮到 140 行，「逐輪稽核的量化結果」整節搬到 docs/DATA-PROVENANCE.md。
 # 錨點跟著搬，不是刪掉 —— 數字換了地方仍然要被對帳。
-PROV = 'DATA-PROVENANCE.md'
+PROV = 'docs/DATA-PROVENANCE.md'
 docs = {
     README: open(README, encoding='utf-8').read(),
     CURRENCY: open(CURRENCY, encoding='utf-8').read(),

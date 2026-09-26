@@ -1,4 +1,4 @@
-# 重新生成 VERIFICATION-GAPS.md 與 UNVERIFIABLE.md。
+# 重新生成 docs/VERIFICATION-GAPS.md 與 docs/UNVERIFIABLE.md。
 #
 # 這兩份文件是「我們還不知道什麼」的清單。手寫會漂 —— 資料一改，清單就不準，
 # 而一份不準的「缺口清單」比沒有清單更糟：它會讓人以為缺口已經被盤點過了。
@@ -199,6 +199,6 @@ L.append('</details>')
 out = '\n'.join(L) + '\n'
 out = re.sub(r'[ \t]+\n', '\n', out)      # 行尾空白（MD009）
 out = re.sub(r'\n{3,}', '\n\n', out)      # 連續空行（MD012）
-open('VERIFICATION-GAPS.md', 'w', encoding='utf-8').write(out)
-print(f'VERIFICATION-GAPS.md：完全沒來源 {len(no_source)}（算術 {len(calc)}／引文被擋 {len(fab)}／其他 {len(rest)}）'
+open('docs/VERIFICATION-GAPS.md', 'w', encoding='utf-8').write(out)
+print(f'docs/VERIFICATION-GAPS.md：完全沒來源 {len(no_source)}（算術 {len(calc)}／引文被擋 {len(fab)}／其他 {len(rest)}）'
       f'、有來源無引文 {len(no_quote)}')

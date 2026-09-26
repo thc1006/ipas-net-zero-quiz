@@ -55,10 +55,10 @@ CBAM、ISO 14068-1 屬**科目一**；**科目二只涵蓋 ISO 14064-1 與 ISO 1
 
 | 文件 | 內容 |
 | --- | --- |
-| [`DATA-PROVENANCE.md`](DATA-PROVENANCE.md) | 資料從哪來、憑什麼相信，以及逐輪稽核的數字 |
-| [`CONTENT-CURRENCY.md`](CONTENT-CURRENCY.md) | 查證到哪一天、還有什麼沒確定、下一個到期日 |
-| [`VERIFICATION-GAPS.md`](VERIFICATION-GAPS.md) | 還沒釘住依據的題目（自動產生，不要手改） |
-| [`NEEDS-SOURCING.md`](NEEDS-SOURCING.md) | 缺來源的題目 |
+| [`docs/DATA-PROVENANCE.md`](docs/DATA-PROVENANCE.md) | 資料從哪來、憑什麼相信，以及逐輪稽核的數字 |
+| [`docs/CONTENT-CURRENCY.md`](docs/CONTENT-CURRENCY.md) | 查證到哪一天、還有什麼沒確定、下一個到期日 |
+| [`docs/VERIFICATION-GAPS.md`](docs/VERIFICATION-GAPS.md) | 還沒釘住依據的題目（自動產生，不要手改） |
+| [`docs/NEEDS-SOURCING.md`](docs/NEEDS-SOURCING.md) | 缺來源的題目 |
 
 ## 換成你自己的題庫
 
@@ -84,7 +84,7 @@ CBAM、ISO 14068-1 屬**科目一**；**科目二只涵蓋 ISO 14064-1 與 ISO 1
 ## 內容時效性
 
 題庫中有 **132 題**的答案會隨法規變動（CBAM、碳費、NDC、碳中和標準）。
-[`CONTENT-CURRENCY.md`](CONTENT-CURRENCY.md) 記錄已查證到哪一天、**還有什麼沒確定**、
+[`docs/CONTENT-CURRENCY.md`](docs/CONTENT-CURRENCY.md) 記錄已查證到哪一天、**還有什麼沒確定**、
 以及下一個到期日（最近的是 **2026-12-15：ISAE 3410 撤回，由 ISSA 5000 取代**）。
 
 `meta.content_review.last_review_date` **不代表整份題庫都查證到那一天** ——
@@ -136,6 +136,8 @@ GitHub Actions（lint · tsc · test · build · e2e · CodeQL · Codecov）／G
 
 > **AGPL §13**：若您修改本專案後**以網路服務形式提供**（SaaS／公開網頁／API），
 > 必須讓所有使用者能取得**對應修改版的完整原始碼**，授權同樣為 AGPL-3.0-or-later。
+
+若您是權利人，認為本專案的引用超出合理使用範圍，請開 issue 或聯絡維護者，該筆內容會儘速複審處理。
 
 ## 回報問題
 

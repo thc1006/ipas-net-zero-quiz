@@ -1,7 +1,7 @@
 // 文件裡的題數不得與資料漂移。
 //
 // 起因：資料已經是 783 題（799 → 782 去重 → 783 拆題），但 README 頂部仍寫「799 題主題庫」，
-// CONTENT-CURRENCY.md 仍寫「119 題 time_sensitive」（實際 115）。
+// docs/CONTENT-CURRENCY.md 仍寫「119 題 time_sensitive」（實際 115）。
 // 這種漂移不是打錯字 —— 它會讓讀者對題庫規模與查證範圍產生錯誤認知，
 // 而且每次改資料都要記得手動同步 N 個地方，遲早會忘。
 //
@@ -51,7 +51,7 @@ const SOURCE_TOTAL = MAN._meta.source_question_total; // 170
 const root = resolve(__dirname, '..', '..', '..');
 const read = (f: string) => readFileSync(resolve(root, f), 'utf8');
 const README = read('README.md');
-const CURRENCY = read('CONTENT-CURRENCY.md');
+const CURRENCY = read('docs/CONTENT-CURRENCY.md');
 // 這兩個是「對外」的門面：index.html 是搜尋引擎與社群分享卡看的，
 // llms.txt 是 AI 爬蟲看的。它們同樣寫著題數，卻一直沒有任何測試在看 ——
 // 於是兩邊都停在「719 題官方考古題 + 151 題加強練習」，跟資料（783 + 157）
@@ -74,10 +74,10 @@ const resolvePlaceholders = (html: string): string =>
 const INDEX_HTML_TEMPLATE = read('quiz-app/index.html');
 const INDEX_HTML = resolvePlaceholders(INDEX_HTML_TEMPLATE);
 const LLMS_TXT = read('quiz-app/public/llms.txt');
-// README 精簡後，證據鏈的細節搬到 DATA-PROVENANCE.md —— 那裡也寫著題數（159 還原、
+// README 精簡後，證據鏈的細節搬到 docs/DATA-PROVENANCE.md —— 那裡也寫著題數（159 還原、
 // 170 來源題）。**任何寫著數字的檔案都必須進這道 gate**，否則就只是把漂移搬到一個
 // 沒人看守的地方，重蹈這整輪在修的覆轍。
-const PROVENANCE = read('DATA-PROVENANCE.md');
+const PROVENANCE = read('docs/DATA-PROVENANCE.md');
 
 describe('文件的題數必須與資料一致', () => {
   it('README 的主題庫題數（表格）必須等於 meta.total_questions', () => {
@@ -105,7 +105,7 @@ describe('文件的題數必須與資料一致', () => {
     expect(Number(m![2])).toBe(TOTAL);
   });
 
-  // README 精簡時，「159 題重建」這個數字從 README 移到了 DATA-PROVENANCE.md。
+  // README 精簡時，「159 題重建」這個數字從 README 移到了 docs/DATA-PROVENANCE.md。
   // 它同時出現在兩個地方（README 的信任摘要 + DATA-PROVENANCE 的細節），兩邊都要對。
   it('README 與 DATA-PROVENANCE 宣稱的「N 題由來源 PDF 重建」必須一致且等於 manifest', () => {
     const inReadme = README.match(/(\d+)\s*題由來源 PDF/);
@@ -201,12 +201,12 @@ describe('對外門面（index.html / llms.txt）的題數必須與資料一致'
   });
 });
 
-// DATA-PROVENANCE.md 是「證據鏈」的說明文件 —— 它自己就寫著 159（還原）與 170（來源總題數）。
+// docs/DATA-PROVENANCE.md 是「證據鏈」的說明文件 —— 它自己就寫著 159（還原）與 170（來源總題數）。
 // 這些數字如果跟 manifest 漂掉，那份文件就變成在為一條不存在的證據鏈背書。
 //
 // 這正是 README 精簡時最容易踩的坑：把數字搬到一個新檔案，卻忘了把 gate 一起搬過去 ——
 // 於是「文件不能對資料說謊」這個保證，在新檔案上直接失效。
-describe('DATA-PROVENANCE.md 的數字必須與 manifest 一致', () => {
+describe('docs/DATA-PROVENANCE.md 的數字必須與 manifest 一致', () => {
   it('「159 題」還原數必須等於 manifest 的 restored_count', () => {
     const hits = [...PROVENANCE.matchAll(/(\d+)\s*題(?:是從|由)來源 PDF 重建/g)].map((m) => Number(m[1]));
     expect(hits.length, 'DATA-PROVENANCE 找不到「N 題（是從|由）來源 PDF 重建」').toBeGreaterThan(0);
@@ -234,8 +234,8 @@ describe('DATA-PROVENANCE.md 的數字必須與 manifest 一致', () => {
   });
 
   it('README 必須連到 CONTENT-CURRENCY 與 DATA-PROVENANCE（否則細節等於被藏起來）', () => {
-    expect(README).toMatch(/\(CONTENT-CURRENCY\.md\)/);
-    expect(README).toMatch(/\(DATA-PROVENANCE\.md\)/);
+    expect(README).toMatch(/\(docs\/CONTENT-CURRENCY\.md\)/);
+    expect(README).toMatch(/\(docs\/DATA-PROVENANCE\.md\)/);
   });
 });
 
@@ -412,16 +412,16 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
   });
 
   // requirement #3：committed 題庫的全量 evidence 盤點（tools/build_evidence_manifest.py 生成
-  // evidence-manifest.json）。這裡離線重算並比對 —— 確保那份 manifest 可重現、不漂，
+  // docs/evidence-manifest.json）。這裡離線重算並比對 —— 確保那份 manifest 可重現、不漂，
   // 且它記的 tier ① 數字與 README 表格一致。CI 因此驗證的是「一份已生成的 manifest」，
   // 不是「evidence 欄位存不存在」。
-  it('evidence-manifest.json 必須與資料逐筆一致（可重現、tier ① 與 README 相符）', () => {
+  it('docs/evidence-manifest.json 必須與資料逐筆一致（可重現、tier ① 與 README 相符）', () => {
     type Entry = {
       qid: string; bank: string; url: string; host: string;
       authority: string; has_quote: boolean; tier1: boolean;
     };
     const manifest = JSON.parse(
-      readFileSync(resolve(__dirname, '../../../evidence-manifest.json'), 'utf8')
+      readFileSync(resolve(__dirname, '../../../docs/evidence-manifest.json'), 'utf8')
     ) as {
       summary: {
         main_tier1_questions: number;
@@ -755,7 +755,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     expect(inReadme, 'README 找不到下一個到期日').not.toBeNull();
     expect(
       CURRENCY.includes(inReadme![1]),
-      `README 宣稱的到期日 ${inReadme![1]} 在 CONTENT-CURRENCY.md 裡找不到 —— 可能是捏造的`
+      `README 宣稱的到期日 ${inReadme![1]} 在 docs/CONTENT-CURRENCY.md 裡找不到 —— 可能是捏造的`
     ).toBe(true);
   });
 
@@ -834,14 +834,14 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     expect(stillPending, '還有 evidence_review 未解決 —— README 卻宣稱已追完').toEqual([]);
   });
 
-  // NEEDS-SOURCING.md：「真正還需要人工補來源」的題目清單。
+  // docs/NEEDS-SOURCING.md：「真正還需要人工補來源」的題目清單。
   //
   // 判準比第一版精確：一題若已被**撤答案（answer=null，排除計分）**、
   //    或**已修正題幹／答案（有 _correction_note / stem_corrections）**，就是**已處置**，
   //    不再算「待補來源」—— 撤掉的題目沒有正確答案可補，改過題幹的答案靠排除法成立。
   //    （14 題經人工兩輪調研後全部處置：9 補來源、3 改題幹、2 撤答案 → 待補歸零。）
-  it('NEEDS-SOURCING.md「待補來源」清單，必須等於資料裡「真正還需補來源」的題數', () => {
-    const needs = read('NEEDS-SOURCING.md');
+  it('docs/NEEDS-SOURCING.md「待補來源」清單，必須等於資料裡「真正還需補來源」的題數', () => {
+    const needs = read('docs/NEEDS-SOURCING.md');
     const trulyNeeds = ALL.filter((it) => {
       const md = it.metadata as unknown as {
         evidence?: unknown; source_review?: unknown; sources?: string[];
@@ -862,8 +862,8 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     const listed = [...needs.matchAll(/^### (gist\[\d+\]|S_[A-Za-z0-9_-]+)/gm)].map((m) => m[1]);
     const missing = trulyNeeds.filter((id) => !listed.includes(id));
     const extra = listed.filter((id) => !trulyNeeds.includes(id));
-    expect(missing, 'NEEDS-SOURCING.md 漏了這些真正待補的題').toEqual([]);
-    expect(extra, 'NEEDS-SOURCING.md 的「待補」列有已處置的題').toEqual([]);
+    expect(missing, 'docs/NEEDS-SOURCING.md 漏了這些真正待補的題').toEqual([]);
+    expect(extra, 'docs/NEEDS-SOURCING.md 的「待補」列有已處置的題').toEqual([]);
   });
 });
 

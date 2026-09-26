@@ -6,7 +6,7 @@
 // 這裡最重要的一條是「對回原始資料」：第一版寫成「有 evidence 的題數 > 100」，
 // 那不管 selector 挑到哪一條都會綠，等於用測試把選錯的行為釘成預期。
 import { describe, it, expect } from 'vitest';
-import manifest from '../../../evidence-manifest.json';
+import manifest from '../../../docs/evidence-manifest.json';
 import { allQuestions, dataset, getQuestionById, pickEvidence } from './questions';
 
 const NL = String.fromCharCode(10);

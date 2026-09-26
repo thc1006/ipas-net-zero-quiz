@@ -16,7 +16,7 @@ iPAS 淨零碳規劃管理師的考古題練習站。與一般題庫站的差別
 - 題庫：`quiz-app/src/data/integrated_dataset.json`（主題庫）、`practice_pool.json`（加強練習池）
 - 資料契約：`schemas/`（JSON Schema draft 2020-12）
 - 維運工具：`tools/*.py`
-- 證據與時效文件：`DATA-PROVENANCE.md`、`CONTENT-CURRENCY.md`、`VERIFICATION-GAPS.md`
+- 證據與時效文件：`docs/DATA-PROVENANCE.md`、`docs/CONTENT-CURRENCY.md`、`docs/VERIFICATION-GAPS.md`
 
 ## 2. 指令
 
@@ -28,7 +28,7 @@ pnpm build                             # tsc + vite build（tsc 會檢查測試�
 pnpm lint && pnpm type-check
 python tools/sync_derived_counts.py    # 改動資料後必跑：同步文件裡的數字
 python tools/build_evidence_manifest.py
-python tools/gen_gap_reports.py        # 產生 VERIFICATION-GAPS.md（不要手改那個檔）
+python tools/gen_gap_reports.py        # 產生 docs/VERIFICATION-GAPS.md（不要手改那個檔）
 ```
 
 改完資料的標準收尾是這三步：`build_evidence_manifest` → `sync_derived_counts` → `pnpm test:run`。
@@ -83,7 +83,7 @@ gate 紅的時候，先問「它抓到的是真的嗎」。
 
 ### 4.6 文件裡的數字：gate 守幾個，工具就要同步幾個
 
-`docs-counts.test.ts` 釘住 README / `index.html` / `llms.txt` / `DATA-PROVENANCE.md` 裡的數字，
+`docs-counts.test.ts` 釘住 README / `index.html` / `llms.txt` / `docs/DATA-PROVENANCE.md` 裡的數字，
 `tools/sync_derived_counts.py` 負責把它們寫對。**兩邊的涵蓋範圍必須一致。**
 
 實測過：在主題庫加一題 → 同步工具 exit 0 印出「所有衍生數字都已一致」，而 CI 紅了五條。

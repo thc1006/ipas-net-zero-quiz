@@ -30,3 +30,7 @@ scratchpad_answer_key.json
 verify_copy.txt
 *.backup.*.json
 *.backup.v*.json
+
+# 工具快取與臨時檔（曾經被誤丟在根目錄）
+.ruff_cache/
+scratchpad_*.json

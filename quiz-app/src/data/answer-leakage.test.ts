@@ -13,10 +13,10 @@ import datasetRaw from './integrated_dataset.json';
 import poolRaw from './practice_pool.json';
 import { blatantLengthTells, longestOptionScore, type LeakItem } from '../utils/answer-leakage';
 
-// 這張表原本在 README，2026-09-27 隨「逐輪稽核的量化結果」整節搬到 DATA-PROVENANCE.md
+// 這張表原本在 README，2026-09-27 隨「逐輪稽核的量化結果」整節搬到 ../../../docs/DATA-PROVENANCE.md
 // （README 從 543 行縮到 140 行 —— 一個沒人讀完的 README 等於沒有 README）。
 // 錨點跟著搬，不是刪掉：數字換了地方仍然要被對帳。
-const PROVENANCE = readFileSync(join(__dirname, '../../../DATA-PROVENANCE.md'), 'utf8');
+const PROVENANCE = readFileSync(join(__dirname, '../../../docs/DATA-PROVENANCE.md'), 'utf8');
 
 const DS = datasetRaw as unknown as { gist_items: LeakItem[]; our_unique_items: LeakItem[] };
 const POOL = poolRaw as unknown as {

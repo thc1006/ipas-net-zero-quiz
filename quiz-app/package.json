@@ -19,7 +19,9 @@
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "type-check": "tsc --noEmit",
-    "prepare": "corepack enable && husky"
+    "prepare": "corepack enable && husky",
+    "sync:data": "cd .. && python tools/build_evidence_manifest.py && python tools/sync_derived_counts.py",
+    "preflight": "pnpm sync:data && pnpm lint && pnpm test:run && pnpm build"
   },
   "dependencies": {
     "react": "^18.3.1",
