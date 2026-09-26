@@ -36,7 +36,7 @@ python tools/gen_gap_reports.py        # 產生 VERIFICATION-GAPS.md（不要手
 ## 3. 絕對規則
 
 - **未經專案所有者明確同意，不得合併 PR。** 合併會自動部署到 GitHub Pages。
-- **commit 訊息不得有 AI 署名**（無 Co-Authored-By AI、無「Generated with」、無 🤖）。
+- **commit 訊息不得有 AI 署名**（無 Co-Authored-By AI、無「Generated with」、無機器人圖示）。
 - **全 repo 不使用 emoji**，包含文件、註解、資料。
 - **不要主動在 GitHub 上留言**。被要求「處理 PR 上的問題」是指修掉問題，不是去回覆。
 - **回報宣稱前先自己驗證**。外部複審常常針對舊的 commit；量化的宣稱要自己重算一次。
