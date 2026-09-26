@@ -48,4 +48,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://thc1006.github.io/ipas-net-zero-quiz/sitemap.xml
+Sitemap: %PLATFORM_SITE_URL%sitemap.xml

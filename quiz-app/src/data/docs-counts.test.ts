@@ -884,6 +884,29 @@ describe('平台識別必須集中在 platform.config.json', () => {
     expect(vite, 'base 又被寫死了').not.toMatch(/base:\s*['"]\//);
   });
 
+  // 「改名稱只要改一個檔」必須是真的。這條就是讓它保持為真的東西。
+  //
+  // 自我複審時抓到：我先在 PR 描述寫下那句話，而 public/robots.txt、sitemap.xml、llms.txt
+  // 都硬編著部署網址 —— `public/` 是 Vite 原樣複製的。換平台的人會漏掉那三個，
+  // 而且爬蟲吃到舊網址不會有任何東西報錯。
+  it('index.html 與 public/ 的文字資產不得硬編部署網址（必須用佔位符）', () => {
+    const files = ['quiz-app/index.html', 'quiz-app/public/llms.txt', 'quiz-app/public/robots.txt', 'quiz-app/public/sitemap.xml'];
+    const bad = files.filter((f) => read(f).includes(PLATFORM.siteUrl));
+    expect(
+      bad,
+      `這些檔案硬編了 platform.config.json 的 siteUrl —— 請改用 %PLATFORM_SITE_URL%，` +
+        `否則換平台時會漏改（vite 插件會在 build 時注入）`
+    ).toEqual([]);
+
+    // 上面那條單獨存在會空轉：把 siteUrl 改成任何「哪裡都不出現的字串」，它就自動通過。
+    // 所以同時要求這些檔案**確實有用佔位符** —— 兩條合起來才等於「網址只有一份來源」。
+    const notTemplated = files.filter((f) => !read(f).includes('%PLATFORM_SITE_URL%'));
+    expect(
+      notTemplated,
+      '這些檔案沒有使用 %PLATFORM_SITE_URL% —— 不是硬編就是把網址整個刪了，兩種都不對'
+    ).toEqual([]);
+  });
+
   it('platform.config.json 的 basePath 與 siteUrl 必須一致（部署後路徑才不會裂）', () => {
     expect(PLATFORM.siteUrl.endsWith(PLATFORM.basePath)).toBe(true);
   });
