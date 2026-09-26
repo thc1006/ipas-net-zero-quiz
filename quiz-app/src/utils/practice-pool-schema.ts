@@ -15,9 +15,9 @@ import { DATA_QUALITY_FLAGS } from '../types/practicePool';
 // time_sensitive 必須有可驗證來源）。抽出來共用，兩個題庫才是同一把尺。
 import { checkQuestion } from './question-integrity';
 
-const SOURCE_TYPES: ReadonlyArray<PracticePoolSourceType> = ['external_mock', 'ai_generated'];
-const DIFFICULTIES: ReadonlyArray<PracticePoolDifficulty> = ['easy', 'medium', 'hard'];
-const VERDICTS: ReadonlyArray<PracticePoolVerdict> = [
+export const SOURCE_TYPES: ReadonlyArray<PracticePoolSourceType> = ['external_mock', 'ai_generated'];
+export const DIFFICULTIES: ReadonlyArray<PracticePoolDifficulty> = ['easy', 'medium', 'hard'];
+export const VERDICTS: ReadonlyArray<PracticePoolVerdict> = [
   'CONFIRMED',
   'AMBIGUOUS',
   'TIME_SENSITIVE',

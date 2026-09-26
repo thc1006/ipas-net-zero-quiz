@@ -57,7 +57,22 @@ const CURRENCY = read('CONTENT-CURRENCY.md');
 // 於是兩邊都停在「719 題官方考古題 + 151 題加強練習」，跟資料（783 + 157）
 // 差了 64 題與 6 題，而且跟 README、跟 GitHub About 各說各話。
 // 同一個數字散在五個地方、沒有一個地方在對帳，漂移是遲早的事。
-const INDEX_HTML = read('quiz-app/index.html');
+/**
+ * index.html 現在只寫 `%PLATFORM_*%` 佔位符，實際值由 platform.config.json 於 build 時注入
+ * （見 vite.config.ts 的 platformHtml 插件）。這道 gate 要守的是**使用者與爬蟲看到的東西**，
+ * 所以它必須驗「解析後的結果」，不是驗模板原文 —— 驗模板會讓 og:image 那條看到
+ * `%PLATFORM_OG_IMAGE%` 而誤判成相對路徑。
+ */
+const PLATFORM = JSON.parse(read('platform.config.json')) as Record<string, string>;
+const resolvePlaceholders = (html: string): string =>
+  html.replace(/%PLATFORM_([A-Z_]+)%/g, (whole, key: string) => {
+    const camel = key.toLowerCase().replace(/_([a-z])/g, (_m, c: string) => c.toUpperCase());
+    const v = PLATFORM[camel];
+    if (v === undefined) throw new Error(`index.html 的 ${whole} 在 platform.config.json 找不到對應欄位`);
+    return v;
+  });
+const INDEX_HTML_TEMPLATE = read('quiz-app/index.html');
+const INDEX_HTML = resolvePlaceholders(INDEX_HTML_TEMPLATE);
 const LLMS_TXT = read('quiz-app/public/llms.txt');
 // README 精簡後，證據鏈的細節搬到 DATA-PROVENANCE.md —— 那裡也寫著題數（159 還原、
 // 170 來源題）。**任何寫著數字的檔案都必須進這道 gate**，否則就只是把漂移搬到一個
@@ -849,5 +864,27 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     const extra = listed.filter((id) => !trulyNeeds.includes(id));
     expect(missing, 'NEEDS-SOURCING.md 漏了這些真正待補的題').toEqual([]);
     expect(extra, 'NEEDS-SOURCING.md 的「待補」列有已處置的題').toEqual([]);
+  });
+});
+
+// 平台識別只有一份（platform.config.json）—— 這是「換個名稱就變成另一個考古題平台」的前提。
+describe('平台識別必須集中在 platform.config.json', () => {
+  it('index.html 的每一個 %PLATFORM_*% 佔位符都要有對應欄位', () => {
+    const used = [...INDEX_HTML_TEMPLATE.matchAll(/%PLATFORM_([A-Z_]+)%/g)].map((m) => m[1]);
+    expect(used.length, 'index.html 一個佔位符都沒有 —— 平台識別又被硬編回去了').toBeGreaterThan(5);
+    const missing = used
+      .map((k) => k.toLowerCase().replace(/_([a-z])/g, (_m, c: string) => c.toUpperCase()))
+      .filter((camel) => PLATFORM[camel] === undefined);
+    expect([...new Set(missing)], 'platform.config.json 缺這些欄位').toEqual([]);
+  });
+
+  it('vite 的 base 不得硬編（要從 platform.config.json 讀）', () => {
+    const vite = read('quiz-app/vite.config.ts');
+    expect(vite).toMatch(/base:\s*platform\.basePath/);
+    expect(vite, 'base 又被寫死了').not.toMatch(/base:\s*['"]\//);
+  });
+
+  it('platform.config.json 的 basePath 與 siteUrl 必須一致（部署後路徑才不會裂）', () => {
+    expect(PLATFORM.siteUrl.endsWith(PLATFORM.basePath)).toBe(true);
   });
 });

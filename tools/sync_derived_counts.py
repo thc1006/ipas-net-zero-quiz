@@ -172,6 +172,9 @@ N['carried_over'] = sum(
 # 本輪未重查題數 = 總題數 - 已重查。原本這個欄位沒人算 —— 於是它凍在舊快照 680，
 # 而正確值是 781 - reverified（多批次查證後 reverified 會變，這欄若不由公式算就必漂）。
 N['not_reviewed'] = N['total'] - N['reverified']
+# 考科題數：README 寫著它、docs-counts 有 gate 守它，但先前沒有任何同步規則。
+N['subject1'] = sum(1 for q in ALL if q.get('exam_subject') == '考科1')
+N['subject2'] = sum(1 for q in ALL if q.get('exam_subject') == '考科2')
 
 changed = []
 
@@ -211,7 +214,14 @@ set_meta('answer_key_check.confirmed', N['akc_confirmed'])
 #   「錨點對不上就 print 一行然後 return」的行為。死碼帶著已知的 bug，
 #   等著下一個人把它接回去用。刪掉。）
 
-docs = {README: open(README, encoding='utf-8').read(), CURRENCY: open(CURRENCY, encoding='utf-8').read()}
+INDEX_HTML = 'quiz-app/index.html'
+LLMS = 'quiz-app/public/llms.txt'
+docs = {
+    README: open(README, encoding='utf-8').read(),
+    CURRENCY: open(CURRENCY, encoding='utf-8').read(),
+    INDEX_HTML: open(INDEX_HTML, encoding='utf-8').read(),
+    LLMS: open(LLMS, encoding='utf-8').read(),
+}
 
 # **這份清單漏一條，就等於在說謊。**
 #
@@ -221,9 +231,16 @@ docs = {README: open(README, encoding='utf-8').read(), CURRENCY: open(CURRENCY, 
 #
 # 這裡涵蓋的是**會隨資料改動而變**的數字。
 # 不涵蓋（因為它們不隨我的修改而變，且各自有 gate 守著）：
-#   - 考科一/考科二題數、練習池 54+100 的組成
+#   - 練習池 54+100 的組成
 #   - restoration-manifest 的 159 題重建
 #   - llms.txt 的 external_mock / ai_generated 題數
+#
+# 2026-09-27 補：上面這份「不涵蓋」清單曾經漏報。實測「在主題庫加一題」——
+# 這支工具 exit 0、印出「所有衍生數字都已一致」，而 docs-counts 紅了 **5 條**：
+#   README 的主題庫題數（表格）、README 與 CONTENT-CURRENCY 的「本輪只實查 X / Y」的分母 Y、
+#   index.html 與 llms.txt 的「N 題主題庫」、README 的「考科一 N + 考科二 M」。
+# 也就是說：**在這個 repo 加一題，CI 會紅，而工具會告訴你沒事。**
+# 那正是這支檔案開頭在罵的那件事，只是換成它自己犯。五條都已補進 RULES。
 #
 # **錨點要綁在結構上，不要綁在散文上。**
 #   「主題庫一手來源」那條原本錨在 `連結（季排程每季檢查是否還通） | (\d+) / 775`，
@@ -258,11 +275,40 @@ RULES = [
     (README, r'\*\*(\d+) 題\*\*[^\n]*`citation_audit\.verdict = citation_disputed`',
      N['ca_disputed'], 'README 仍存疑'),
     (README, r'\*\*(\d+) 題的答案已與官方答案卡逐題對過', N['akc_confirmed'], 'README 答案卡確認'),
+    # 以下五條是 2026-09-27 補的（詳見上方註解）：gate 在守、工具卻沒同步。
+    (README, r'\| \*\*主題庫\*\* \| \*\*(\d+) 題\*\*', N['total'], 'README 主題庫題數（表格）'),
+    (README, r'本輪只實查\s*\*\*\d+\s*/\s*(\d+)', N['total'], 'README 本輪實查分母'),
+    (CURRENCY, r'本輪只實查了\s*\*\*\d+\s*/\s*(\d+)', N['total'], 'CURRENCY 本輪實查分母'),
+    (INDEX_HTML, r'(\d+) 題主題庫', N['total'], 'index.html 主題庫題數', 'all'),
+    (LLMS, r'(\d+) 題主題庫', N['total'], 'llms.txt 主題庫題數', 'all'),
+    (INDEX_HTML, r'(\d+) 題加強練習', N['pool_total'], 'index.html 加強練習題數', 'all'),
+    (LLMS, r'(\d+) 題加強練習', N['pool_total'], 'llms.txt 加強練習題數', 'all'),
+    # 錨點與 docs-counts 那道 gate 用同一個形狀（考科一 N + 考科二 M），一次抓兩個 capture
+    (README, r'考科一\s*(\d+)\s*\+\s*考科二\s*(\d+)', (N['subject1'], N['subject2']), 'README 考科一/二題數'),
 ]
 
 dead_rules = []
-for path, pat, val, label in RULES:
+for rule in RULES:
+    # 規則可以是 4 元素（只改第一個 match）或 5 元素（第五個為 'all'：改全部 match）。
+    # 為什麼需要 'all'：index.html 的題數出現 4 次（meta description／og／twitter／JSON-LD），
+    # llms.txt 出現 2 次，而 docs-counts 那道 gate 要求**每一次**都等於資料。
+    # 只改第一個，等於同步了一處、留下三處舊值 —— 工具說「已一致」，CI 照樣紅。
+    path, pat, val, label = rule[0], rule[1], rule[2], rule[3]
+    mode = rule[4] if len(rule) > 4 else 'first'
     text = docs[path]
+    if mode == 'all':
+        def _rep(m, v=val):
+            s0, e0 = m.span(1)
+            return m.group(0)[: s0 - m.start()] + str(v) + m.group(0)[e0 - m.start() :]
+        new_text, n = re.subn(pat, _rep, text)
+        if n == 0:
+            dead_rules.append(f'  {path} 找不到錨點：{label}' + chr(10) + f'       pattern: {pat}')
+            continue
+        if new_text != text:
+            olds = sorted({m.group(1) for m in re.finditer(pat, text)})
+            changed.append(f'  {path} [{label}]: {"/".join(olds)} -> {val}（{n} 處）')
+            docs[path] = new_text
+        continue
     m = re.search(pat, text)
     if not m:
         # **這裡以前是 `continue`。** 對不上錨點的規則就這樣靜靜跳過，
