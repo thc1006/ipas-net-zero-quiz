@@ -8009,11 +8009,6 @@
         "https://www.cca.gov.tw/affairs/carbon-fee-fund/2301.html"
       ],
       "quality_flags": [],
-      "_law_anchor": {
-        "pcode": "O0020140",
-        "article": "11",
-        "why": "題幹引了條號卻沒有任何逐字依據；此條文原文已釘在 law-articles.pinned.json（有 sha256 監控），引入解析後由 law-quote-integrity 逐字把關。"
-      },
       "_stem_fix_note": "",
       "_date_fix_note": "原題幹寫「2024/10/07 公告」。10/07 是碳費費率審議會完成審議／召開說明會的日期；環境部正式公告「碳費徵收費率」是 113 年 10 月 21 日，並訂於 114/1/1 生效 —— 兩個法律狀態不能混用。已依 moenv.gov.tw 官方文件更正。"
     },
@@ -8649,12 +8644,7 @@
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=7",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=4"
       ],
-      "quality_flags": [],
-      "_law_anchor": {
-        "pcode": "O0020137",
-        "article": "7",
-        "why": "題幹引了條號卻沒有任何逐字依據；此條文原文已釘在 law-articles.pinned.json（有 sha256 監控），引入解析後由 law-quote-integrity 逐字把關。"
-      }
+      "quality_flags": []
     },
     {
       "id": "pool-aig-tw_regs_14-v2",
@@ -9261,12 +9251,7 @@
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=21",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=23"
       ],
-      "quality_flags": [],
-      "_law_anchor": {
-        "pcode": "O0020098",
-        "article": "22",
-        "why": "題幹引了條號卻沒有任何逐字依據；此條文原文已釘在 law-articles.pinned.json（有 sha256 監控），引入解析後由 law-quote-integrity 逐字把關。"
-      }
+      "quality_flags": []
     },
     {
       "id": "pool-aig-tw_regs_32-v2",
@@ -9653,6 +9638,14 @@
             "verified_on": "2026-07-15",
             "method": "第十五輪：代理蒐證＋我親自機械逐字比對（重抓 URL 確認逐字出現）",
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=7"
+          },
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=21",
+            "quote": "事業具有經中央主管機關公告之排放源，應進行排放量盤查，並於規定期限前登錄於中央主管機關指定資訊平台；其經中央主管機關公告指定應查驗者，盤查相關資料並應經查驗機構查驗。前項之排放量盤查、登錄之頻率、紀錄、應登錄事項與期限、查驗方式、管理及其他應遵行事項之辦法，由中央主管機關定之。",
+            "supports_option": "A",
+            "clause": "第21條",
+            "verified_on": "2026-09-27",
+            "added_why": "題幹指名氣候法 §21，原本只靠解析裡的「」引文。拔掉 _law_anchor（無消費者的死欄位）之前，先把它記的歸屬換成有 gate 在核對的 evidence[].clause。"
           }
         ],
         "citation_audit": {
@@ -9674,12 +9667,7 @@
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=6",
         "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020102"
       ],
-      "quality_flags": [],
-      "_law_anchor": {
-        "pcode": "O0020098",
-        "article": "21",
-        "why": "題幹引了條號卻沒有任何逐字依據；此條文原文已釘在 law-articles.pinned.json（有 sha256 監控），引入解析後由 law-quote-integrity 逐字把關。"
-      }
+      "quality_flags": []
     },
     {
       "id": "pool-aig-tw_regs_38-v2",
@@ -9853,12 +9841,7 @@
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=54",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=31"
       ],
-      "quality_flags": [],
-      "_law_anchor": {
-        "pcode": "O0020098",
-        "article": "37",
-        "why": "題幹引了條號卻沒有任何逐字依據；此條文原文已釘在 law-articles.pinned.json（有 sha256 監控），引入解析後由 law-quote-integrity 逐字把關。"
-      }
+      "quality_flags": []
     },
     {
       "id": "pool-aig-tw_regs_45-v2",
@@ -10002,12 +9985,7 @@
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=8",
         "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020137&flno=11"
       ],
-      "quality_flags": [],
-      "_law_anchor": {
-        "pcode": "O0020137",
-        "article": "8",
-        "why": "題幹引了條號卻沒有任何逐字依據；此條文原文已釘在 law-articles.pinned.json（有 sha256 監控），引入解析後由 law-quote-integrity 逐字把關。"
-      }
+      "quality_flags": []
     },
     {
       "id": "pool-aig-intl_round1_rescued-intl-013",

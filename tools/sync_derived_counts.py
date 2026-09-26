@@ -269,6 +269,11 @@ RULES = [
     (README, r'\*\*(\d+) 題\*\*[^\n]*`citation_audit\.verdict = citation_disputed`',
      N['ca_disputed'], 'README 仍存疑'),
     (README, r'\*\*(\d+) 題的答案已與官方答案卡逐題對過', N['akc_confirmed'], 'README 答案卡確認'),
+    # 引用複驗表下方那句手算註記（「319＋29＋17＋4＝369」）。
+    # 複審抓到它與表格不一致 —— 表格是工具維護的、註記是手寫的，結果就漂了。
+    # 這是同一個教訓的第 N 次：**gate 守幾個數字、文件寫幾個數字，這裡就要涵蓋幾個。**
+    (README, r'(\d+)＋(\d+)＋(\d+)＋(\d+)＝\d+',
+     (N['ca_supported'], N['ca_wrong'], N['ca_no_quote'], N['ca_dead']), 'README 引用複驗手算註記'),
     # 引用複驗那張表的**百分比**。
     #
     # 這是第五次犯同一個錯：docs-counts.test.ts 有一條 gate 要求
