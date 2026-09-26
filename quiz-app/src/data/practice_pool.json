@@ -2874,7 +2874,10 @@
         "https://vocus.cc/article/6903fd65fd89780001a80f8b",
         "https://www.iso.org/standard/43279.html"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ],
+      "_standard_replacement_watch": "ISO/FDIS 14068 已進入 approval 階段、將取代 ISO 14068-1:2023；新版發布時需重驗本題。現行有效版本仍是 2023 版，答案未改動。"
     },
     {
       "id": "pool-em-ipas_vocus_mock-048",
@@ -6809,7 +6812,10 @@
         "https://www.iso.org/standard/43279.html",
         "https://committee.iso.org/sites/tc207sc7/home/projects/published/iso-14068-1.html"
       ],
-      "quality_flags": []
+      "quality_flags": [
+        "time_sensitive"
+      ],
+      "_standard_replacement_watch": "ISO/FDIS 14068 已進入 approval 階段、將取代 ISO 14068-1:2023；新版發布時需重驗本題。現行有效版本仍是 2023 版，答案未改動。"
     },
     {
       "id": "pool-aig-intl-020",

@@ -26,10 +26,10 @@
         "carbon_neutrality",
         "ISSB_IFRS_TCFD"
       ],
-      "reverified_count": 132,
+      "reverified_count": 133,
       "total_questions": 781,
-      "time_sensitive_count": 132,
-      "not_reviewed_this_round_count": 649,
+      "time_sensitive_count": 133,
+      "not_reviewed_this_round_count": 648,
       "carried_over_count": 0,
       "known_unresolved": [
         {
@@ -24349,8 +24349,14 @@
             "verified_on": "2026-07-16",
             "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
-        ]
-      }
+        ],
+        "standard_replacement_watch": "ISO/FDIS 14068（Climate change management — Carbon neutrality）已進入 approval 階段，將取代 ISO 14068-1:2023。新版發布時，本題涉及的要求與條號需重新確認。註：現行有效版本仍是 ISO 14068-1:2023，本題答案未因此改動。",
+        "valid_as_of": "2026-07-16",
+        "valid_as_of_basis": "採用本題 evidence 的 verified_on（第十八輪語意複核）作為內容查證日，而不是補標旗標的今天 —— 今天只查證了 ISO 標準的改版狀態，並未重驗本題內容。"
+      },
+      "quality_flags": [
+        "time_sensitive"
+      ]
     },
     {
       "index": 453,
