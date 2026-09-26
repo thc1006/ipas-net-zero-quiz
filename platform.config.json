@@ -1,0 +1,14 @@
+{
+  "$comment": "換一個考科／換一個平台時，這是唯一需要改名稱的檔案。vite.config.ts 讀它、在 build 時替換 index.html 的 %PLATFORM_*% 佔位符；src/config/platform.ts 供 app 端讀取。有 gate 釘住「index.html 不得再出現硬編的平台名稱」。",
+  "id": "ipas-net-zero-quiz",
+  "name": "淨零碳規劃管理師備考神器",
+  "tagline": "iPAS 初級考古題（IFRS S1/S2、ISSB、TCFD、CBAM）",
+  "description": "iPAS 淨零碳規劃管理師「初級」考古題線上測驗：主題庫 + 加強練習，涵蓋 IFRS S1/S2、ISSB 整合 TCFD、永續揭露準則、ISO 14064、CBAM、SBTi、GRI、ESRS、碳足跡與情境分析。每題附 primary-source URL，AI 解析符合 EU AI Act Art.50 揭露。",
+  "keywords": "iPAS 淨零碳,淨零碳規劃管理師,淨零碳規劃管理師 初級,iPAS 初級,考古題,線上測驗,IFRS S1,IFRS S2,ISSB,永續揭露準則,TCFD,SBTi,GRI,ESRS,ISO 14064,CBAM,溫室氣體盤查,碳足跡,碳定價,碳中和,情境分析,排放源界定,組織邊界,內部查證,Net Zero,氣候變遷,ESG",
+  "basePath": "/ipas-net-zero-quiz/",
+  "siteUrl": "https://thc1006.github.io/ipas-net-zero-quiz/",
+  "locale": "zh-Hant-TW",
+  "ogLocale": "zh_TW",
+  "ogImage": "https://thc1006.github.io/ipas-net-zero-quiz/og-cover.jpg",
+  "ogImageAlt": "淨零碳規劃管理師備考神器 —— iPAS 初級考古題線上測驗"
+}

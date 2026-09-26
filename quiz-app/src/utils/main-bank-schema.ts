@@ -8,7 +8,12 @@ import type {
   ExamSubject,
 } from '../types/quiz';
 
-const EXAM_SUBJECTS: ReadonlyArray<ExamSubject> = ['考科1', '考科2'];
+/**
+ * 考科代碼。**匯出**是刻意的：schemas/main-bank.schema.json 的 $defs/examSubject 必須與它
+ * 完全相同，由 schema-contract.test.ts 釘住 —— 否則就是「同一個詞彙表兩份、其中一份會漂」，
+ * 這個 repo 已經被同一種錯咬過四次。
+ */
+export const EXAM_SUBJECTS: ReadonlyArray<ExamSubject> = ['考科1', '考科2'];
 
 export interface MainBankValidationError {
   path: string;

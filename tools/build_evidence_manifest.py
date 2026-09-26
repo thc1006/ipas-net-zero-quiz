@@ -1,4 +1,4 @@
-# 產生 evidence-manifest.json —— committed 題庫裡每一筆 evidence 的可重現盤點。
+# 產生 docs/evidence-manifest.json —— committed 題庫裡每一筆 evidence 的可重現盤點。
 #
 # 為什麼要有這支：
 #   README 的「① 逐字引文」等級，過去是用「evidence 欄位存不存在」算的，
@@ -126,10 +126,10 @@ manifest = {
 }
 
 out = json.dumps(manifest, ensure_ascii=False, indent=2) + '\n'
-open('evidence-manifest.json', 'w', encoding='utf-8').write(out)
+open('docs/evidence-manifest.json', 'w', encoding='utf-8').write(out)
 s = manifest['summary']
 print(
-    f"evidence-manifest.json: main_tier1={s['main_tier1_questions']} pool_tier1={s['pool_tier1_questions']} "
+    f"docs/evidence-manifest.json: main_tier1={s['main_tier1_questions']} pool_tier1={s['pool_tier1_questions']} "
     f"total_urls={s['total_evidence_records']} primary={s['primary_evidence_records']} "
     f"secondary={s['secondary_evidence_records']} unknown={s['unknown_evidence_records']}"
 )

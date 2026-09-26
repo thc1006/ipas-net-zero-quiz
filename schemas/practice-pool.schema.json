@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thc1006.github.io/ipas-net-zero-quiz/schemas/practice-pool.schema.json",
+  "title": "加強練習池（practice_pool.json）",
+  "description": "第三方模擬題與 AI 產題的題庫。與主題庫分開，因為它的來源權威性與審核狀態不同，UI 會據此出不同標籤。換考科時要改的詞彙集中在 $defs 的 examSubjectHint／qualityFlag／sourceType／difficulty。",
+  "type": "object",
+  "required": ["items"],
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "description": "衍生統計。由 tools/sync_derived_counts.py 維護，不要手改。"
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/poolItem" }
+    }
+  },
+  "$defs": {
+    "difficulty": {
+      "description": "難度等級。換考科時可改，但要同步 src/types/practicePool.ts 的 PracticePoolDifficulty。",
+      "enum": ["easy", "medium", "hard"]
+    },
+    "sourceType": {
+      "description": "題目來源類型。external_mock = 第三方公開模擬題；ai_generated = 語言模型產生。兩者在 UI 上有不同揭露文字（EU AI Act Art.50）。",
+      "enum": ["external_mock", "ai_generated"]
+    },
+    "verdict": {
+      "description": "當初驗證的結論。注意：CONFIRMED 沒有保證力 —— 本專案實測過 13 個缺陷全部被判 CONFIRMED，見 ../docs/DATA-PROVENANCE.md。",
+      "enum": [
+        "CONFIRMED",
+        "AMBIGUOUS",
+        "TIME_SENSITIVE",
+        "OUTDATED_SOURCE",
+        "HALLUCINATED",
+        "REFUTED",
+        "DUPLICATE"
+      ]
+    },
+    "qualityFlag": {
+      "description": "品質旗標。分兩類：提示型（照常計分）與失效型（一律不計分，見 src/utils/scorable.ts）。此列舉必須與 src/types/practicePool.ts 的 DATA_QUALITY_FLAGS 完全相同，由 schema-contract.test.ts 釘住。",
+      "enum": [
+        "time_sensitive",
+        "low_confidence",
+        "duplicate_topic",
+        "ambiguous",
+        "disputed",
+        "disputed_answer",
+        "multiple_correct",
+        "unverifiable_evidence",
+        "retired"
+      ]
+    },
+    "option": {
+      "type": "object",
+      "required": ["key", "text"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "text": { "type": "string" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "description": "撐住正解的逐字原文。UI 渲染為「答案依據」。",
+      "properties": {
+        "url": { "type": "string", "format": "uri", "pattern": "^https?://" },
+        "quote": { "type": "string", "minLength": 8 },
+        "supports_option": {
+          "type": "string",
+          "description": "這則引文支持哪一個選項。必須等於該題 answer，否則 UI 不會顯示（fail-closed，見 questions.ts 的 pickEvidence）。"
+        },
+        "clause": {
+          "type": "string",
+          "description": "這則引文出自的條／段（如 '第11條'、'§3'、'12-1'）。**這是人工宣告的溯源資訊，不是證明**：clause-citation.test.ts 刻意不把它當成綁定條件（自我宣告不能當成它自己的證據）。屬釘住法規者會被機器交叉核對。"
+        },
+        "authority": {
+          "type": "string",
+          "description": "來源權威分級。secondary 會讓 UI 從「答案依據」降級為「參考引文」。"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "source_type",
+        "source_origin",
+        "verified_date",
+        "verifier",
+        "verify_verdict",
+        "original_id"
+      ],
+      "properties": {
+        "source_type": { "$ref": "#/$defs/sourceType" },
+        "source_origin": { "type": "string", "minLength": 1 },
+        "verified_date": { "type": "string", "minLength": 1 },
+        "verifier": { "type": "string", "minLength": 1 },
+        "verify_verdict": { "$ref": "#/$defs/verdict" },
+        "prior_verify_verdict": { "$ref": "#/$defs/verdict" },
+        "original_id": { "type": "string", "minLength": 1 },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+        "ai_metadata": {
+          "type": "object",
+          "required": ["model_family", "generation_date"],
+          "properties": {
+            "model_family": { "type": "string" },
+            "generation_date": { "type": "string" }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "source_type": { "const": "ai_generated" } }, "required": ["source_type"] },
+          "then": { "required": ["ai_metadata"] }
+        }
+      ]
+    },
+    "poolItem": {
+      "type": "object",
+      "required": [
+        "id",
+        "stem",
+        "options",
+        "answer",
+        "explanation",
+        "subject",
+        "topic_tags",
+        "difficulty",
+        "provenance",
+        "sources",
+        "quality_flags"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "stem": { "type": "string", "minLength": 1 },
+        "options": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/option" },
+          "description": "選項的 key 不得重複（見 additional gate；JSON Schema 無法直接表達『物件陣列中某欄位唯一』）。"
+        },
+        "answer": {
+          "type": ["string", "null"],
+          "description": "null = 刻意不給答案。依 question-integrity 的規則，answer 為 null 時必須同時標任一失效型旗標。"
+        },
+        "explanation": { "type": "string" },
+        "subject": {
+          "type": ["string", "null"],
+          "description": "考科。允許自由字串（來源原文可能寫成「考科一：…」），null = 未分類。runtime 由 toQuizQuestion 解析，解析不出來會注入 unmapped_subject 旗標而不是猜。"
+        },
+        "topic_tags": { "type": "array", "items": { "type": "string" } },
+        "difficulty": { "$ref": "#/$defs/difficulty" },
+        "provenance": { "$ref": "#/$defs/provenance" },
+        "sources": { "type": "array", "items": { "type": "string" } },
+        "quality_flags": { "type": "array", "items": { "$ref": "#/$defs/qualityFlag" } }
+      }
+    }
+  }
+}

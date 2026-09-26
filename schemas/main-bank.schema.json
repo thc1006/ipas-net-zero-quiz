@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thc1006.github.io/ipas-net-zero-quiz/schemas/main-bank.schema.json",
+  "title": "主題庫（integrated_dataset.json）",
+  "description": "真正拿來考試的那一份。兩種來源並存：gist_items（社群整理的考古題，以 index 定位）與 our_unique_items（由來源 PDF 還原，以 item_id 定位）。換考科時要改的詞彙只有 $defs/examSubject。",
+  "type": "object",
+  "required": ["meta", "gist_items", "our_unique_items"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "衍生統計。由 tools/sync_derived_counts.py 維護，不要手改 —— 有 gate 釘住它必須等於資料實算。",
+      "required": ["total_questions"],
+      "properties": {
+        "total_questions": { "type": "integer", "minimum": 1 },
+        "with_answer": { "type": "integer", "minimum": 0 },
+        "by_subject": { "type": "object" }
+      }
+    },
+    "gist_items": { "type": "array", "items": { "$ref": "#/$defs/gistItem" } },
+    "our_unique_items": { "type": "array", "items": { "$ref": "#/$defs/uniqueItem" } }
+  },
+  "$defs": {
+    "examSubject": {
+      "description": "考科代碼。**換考科平台時主要就是改這裡**，並同步 src/utils/main-bank-schema.ts 的 EXAM_SUBJECTS 與 src/types/quiz.ts 的 ExamSubject。目前是二科制；改成三科以上需要一併處理 UI 的 subject 篩選。",
+      "enum": ["考科1", "考科2"]
+    },
+    "option": {
+      "type": "object",
+      "required": ["key", "text"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "text": { "type": "string" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "description": "撐住正解的逐字原文。與練習池同構，但存放位置不同（主題庫在 metadata.evidence，練習池在 provenance.evidence）—— 這個不對稱已經害過兩道 gate 只守一半。",
+      "properties": {
+        "url": { "type": "string", "pattern": "^https?://" },
+        "quote": { "type": "string" },
+        "supports_option": { "type": "string" },
+        "clause": { "type": "string" },
+        "note": { "type": "string" },
+        "authority": { "type": "string" }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "來源、引文與稽核軌跡。刻意允許額外欄位：每一輪複核都會加新的紀錄鍵（citation_audit、blind_review、question_replaced 等），把它們列成封閉集合只會讓 schema 每輪都要改。",
+      "properties": {
+        "sources": { "type": "array", "items": { "type": "string" } },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+        "valid_as_of": {
+          "type": "string",
+          "description": "內容查證到哪一天。有 gate 要求：填了這個就必須同時標 time_sensitive，否則季排程不會來檢查它。"
+        },
+        "prior_answer": { "type": "string", "description": "答案曾被更正時的舊答案。README 的「N 題答案曾被更正」由它實算。" }
+      }
+    },
+    "commonQuestionFields": {
+      "type": "object",
+      "properties": {
+        "stem": { "type": "string", "minLength": 1 },
+        "options": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/option" } },
+        "answer": { "type": ["string", "null"] },
+        "exam_subject": { "$ref": "#/$defs/examSubject" },
+        "explanation": { "type": ["string", "null"] },
+        "quality_flags": {
+          "type": "array",
+          "items": { "$ref": "practice-pool.schema.json#/$defs/qualityFlag" },
+          "description": "與練習池共用同一套詞彙（utils/quality-flags.ts 兩庫共套同一組規則）。"
+        },
+        "metadata": { "$ref": "#/$defs/metadata" }
+      }
+    },
+    "gistItem": {
+      "allOf": [{ "$ref": "#/$defs/commonQuestionFields" }],
+      "type": "object",
+      "required": ["index", "stem", "options", "answer", "exam_subject"],
+      "properties": {
+        "index": { "type": "integer", "description": "gist 題的識別方式。沒有 item_id —— 這是它與還原題的結構差異。" },
+        "number": { "type": "integer" },
+        "source": { "type": "string" },
+        "original_section": { "type": "string" }
+      }
+    },
+    "uniqueItem": {
+      "allOf": [{ "$ref": "#/$defs/commonQuestionFields" }],
+      "type": "object",
+      "required": ["item_id", "stem", "options", "answer", "exam_subject"],
+      "properties": {
+        "item_id": { "type": "string", "minLength": 1 },
+        "year": { "type": ["integer", "null"] },
+        "topic_tags": { "type": "array", "items": { "type": "string" } },
+        "source": {
+          "type": "object",
+          "description": "由來源 PDF 還原的題目帶結構化 source（含 url）。UI 先前只讀 metadata.sources，導致這批題的來源連結永遠不顯示。",
+          "properties": { "url": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

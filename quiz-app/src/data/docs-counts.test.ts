@@ -1,7 +1,7 @@
 // 文件裡的題數不得與資料漂移。
 //
 // 起因：資料已經是 783 題（799 → 782 去重 → 783 拆題），但 README 頂部仍寫「799 題主題庫」，
-// CONTENT-CURRENCY.md 仍寫「119 題 time_sensitive」（實際 115）。
+// docs/CONTENT-CURRENCY.md 仍寫「119 題 time_sensitive」（實際 115）。
 // 這種漂移不是打錯字 —— 它會讓讀者對題庫規模與查證範圍產生錯誤認知，
 // 而且每次改資料都要記得手動同步 N 個地方，遲早會忘。
 //
@@ -51,18 +51,33 @@ const SOURCE_TOTAL = MAN._meta.source_question_total; // 170
 const root = resolve(__dirname, '..', '..', '..');
 const read = (f: string) => readFileSync(resolve(root, f), 'utf8');
 const README = read('README.md');
-const CURRENCY = read('CONTENT-CURRENCY.md');
+const CURRENCY = read('docs/CONTENT-CURRENCY.md');
 // 這兩個是「對外」的門面：index.html 是搜尋引擎與社群分享卡看的，
 // llms.txt 是 AI 爬蟲看的。它們同樣寫著題數，卻一直沒有任何測試在看 ——
 // 於是兩邊都停在「719 題官方考古題 + 151 題加強練習」，跟資料（783 + 157）
 // 差了 64 題與 6 題，而且跟 README、跟 GitHub About 各說各話。
 // 同一個數字散在五個地方、沒有一個地方在對帳，漂移是遲早的事。
-const INDEX_HTML = read('quiz-app/index.html');
+/**
+ * index.html 現在只寫 `%PLATFORM_*%` 佔位符，實際值由 platform.config.json 於 build 時注入
+ * （見 vite.config.ts 的 platformHtml 插件）。這道 gate 要守的是**使用者與爬蟲看到的東西**，
+ * 所以它必須驗「解析後的結果」，不是驗模板原文 —— 驗模板會讓 og:image 那條看到
+ * `%PLATFORM_OG_IMAGE%` 而誤判成相對路徑。
+ */
+const PLATFORM = JSON.parse(read('platform.config.json')) as Record<string, string>;
+const resolvePlaceholders = (html: string): string =>
+  html.replace(/%PLATFORM_([A-Z_]+)%/g, (whole, key: string) => {
+    const camel = key.toLowerCase().replace(/_([a-z])/g, (_m, c: string) => c.toUpperCase());
+    const v = PLATFORM[camel];
+    if (v === undefined) throw new Error(`index.html 的 ${whole} 在 platform.config.json 找不到對應欄位`);
+    return v;
+  });
+const INDEX_HTML_TEMPLATE = read('quiz-app/index.html');
+const INDEX_HTML = resolvePlaceholders(INDEX_HTML_TEMPLATE);
 const LLMS_TXT = read('quiz-app/public/llms.txt');
-// README 精簡後，證據鏈的細節搬到 DATA-PROVENANCE.md —— 那裡也寫著題數（159 還原、
+// README 精簡後，證據鏈的細節搬到 docs/DATA-PROVENANCE.md —— 那裡也寫著題數（159 還原、
 // 170 來源題）。**任何寫著數字的檔案都必須進這道 gate**，否則就只是把漂移搬到一個
 // 沒人看守的地方，重蹈這整輪在修的覆轍。
-const PROVENANCE = read('DATA-PROVENANCE.md');
+const PROVENANCE = read('docs/DATA-PROVENANCE.md');
 
 describe('文件的題數必須與資料一致', () => {
   it('README 的主題庫題數（表格）必須等於 meta.total_questions', () => {
@@ -90,7 +105,7 @@ describe('文件的題數必須與資料一致', () => {
     expect(Number(m![2])).toBe(TOTAL);
   });
 
-  // README 精簡時，「159 題重建」這個數字從 README 移到了 DATA-PROVENANCE.md。
+  // README 精簡時，「159 題重建」這個數字從 README 移到了 docs/DATA-PROVENANCE.md。
   // 它同時出現在兩個地方（README 的信任摘要 + DATA-PROVENANCE 的細節），兩邊都要對。
   it('README 與 DATA-PROVENANCE 宣稱的「N 題由來源 PDF 重建」必須一致且等於 manifest', () => {
     const inReadme = README.match(/(\d+)\s*題由來源 PDF/);
@@ -186,12 +201,12 @@ describe('對外門面（index.html / llms.txt）的題數必須與資料一致'
   });
 });
 
-// DATA-PROVENANCE.md 是「證據鏈」的說明文件 —— 它自己就寫著 159（還原）與 170（來源總題數）。
+// docs/DATA-PROVENANCE.md 是「證據鏈」的說明文件 —— 它自己就寫著 159（還原）與 170（來源總題數）。
 // 這些數字如果跟 manifest 漂掉，那份文件就變成在為一條不存在的證據鏈背書。
 //
 // 這正是 README 精簡時最容易踩的坑：把數字搬到一個新檔案，卻忘了把 gate 一起搬過去 ——
 // 於是「文件不能對資料說謊」這個保證，在新檔案上直接失效。
-describe('DATA-PROVENANCE.md 的數字必須與 manifest 一致', () => {
+describe('docs/DATA-PROVENANCE.md 的數字必須與 manifest 一致', () => {
   it('「159 題」還原數必須等於 manifest 的 restored_count', () => {
     const hits = [...PROVENANCE.matchAll(/(\d+)\s*題(?:是從|由)來源 PDF 重建/g)].map((m) => Number(m[1]));
     expect(hits.length, 'DATA-PROVENANCE 找不到「N 題（是從|由）來源 PDF 重建」').toBeGreaterThan(0);
@@ -219,8 +234,8 @@ describe('DATA-PROVENANCE.md 的數字必須與 manifest 一致', () => {
   });
 
   it('README 必須連到 CONTENT-CURRENCY 與 DATA-PROVENANCE（否則細節等於被藏起來）', () => {
-    expect(README).toMatch(/\(CONTENT-CURRENCY\.md\)/);
-    expect(README).toMatch(/\(DATA-PROVENANCE\.md\)/);
+    expect(README).toMatch(/\(docs\/CONTENT-CURRENCY\.md\)/);
+    expect(README).toMatch(/\(docs\/DATA-PROVENANCE\.md\)/);
   });
 });
 
@@ -348,7 +363,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
 
     // README 的表格：| **① …** | … | **100 / 773** | **29 / 154** |
     const row = (label: string) =>
-      README.match(new RegExp(`\\|[^|\\n]*${label}[^|\\n]*\\|[^|\\n]*\\|\\s*\\*?\\*?(\\d+)\\s*/\\s*(\\d+)\\s*\\*?\\*?\\s*\\|\\s*\\*?\\*?(\\d+)\\s*/\\s*(\\d+)`));
+      PROVENANCE.match(new RegExp(`\\|[^|\\n]*${label}[^|\\n]*\\|[^|\\n]*\\|\\s*\\*?\\*?(\\d+)\\s*/\\s*(\\d+)\\s*\\*?\\*?\\s*\\|\\s*\\*?\\*?(\\d+)\\s*/\\s*(\\d+)`));
 
     const e = row('逐字引文');
     expect(e, 'README 找不到「有逐字引文」那一列').not.toBeNull();
@@ -397,16 +412,16 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
   });
 
   // requirement #3：committed 題庫的全量 evidence 盤點（tools/build_evidence_manifest.py 生成
-  // evidence-manifest.json）。這裡離線重算並比對 —— 確保那份 manifest 可重現、不漂，
+  // docs/evidence-manifest.json）。這裡離線重算並比對 —— 確保那份 manifest 可重現、不漂，
   // 且它記的 tier ① 數字與 README 表格一致。CI 因此驗證的是「一份已生成的 manifest」，
   // 不是「evidence 欄位存不存在」。
-  it('evidence-manifest.json 必須與資料逐筆一致（可重現、tier ① 與 README 相符）', () => {
+  it('docs/evidence-manifest.json 必須與資料逐筆一致（可重現、tier ① 與 README 相符）', () => {
     type Entry = {
       qid: string; bank: string; url: string; host: string;
       authority: string; has_quote: boolean; tier1: boolean;
     };
     const manifest = JSON.parse(
-      readFileSync(resolve(__dirname, '../../../evidence-manifest.json'), 'utf8')
+      readFileSync(resolve(__dirname, '../../../docs/evidence-manifest.json'), 'utf8')
     ) as {
       summary: {
         main_tier1_questions: number;
@@ -490,7 +505,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     expect(manifest.summary.main_tier1_questions, 'manifest main tier1 漂了').toBe(mainT1);
     expect(manifest.summary.pool_tier1_questions, 'manifest pool tier1 漂了').toBe(poolT1);
     expect(manifest.summary.unknown_evidence_records, 'manifest 仍有未分級 evidence 網域').toBe(0);
-    const m = README.match(/\|[^|\n]*逐字引文[^|\n]*\|[^|\n]*\|\s*\*?\*?(\d+)\s*\//);
+    const m = PROVENANCE.match(/\|[^|\n]*逐字引文[^|\n]*\|[^|\n]*\|\s*\*?\*?(\d+)\s*\//);
     expect(m, 'README 找不到「逐字引文」列').not.toBeNull();
     expect(Number(m![1]), 'README tier ① 與 manifest／資料不符').toBe(mainT1);
   });
@@ -539,12 +554,12 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
   // 工具已補上同步規則，這裡補上守門 —— 這個 repo 的慣例是「工具＋gate 成對」，
   // 只有工具沒有 gate 的話，有人手改就沒人發現。
   it('引用複驗表下方的手算註記必須等於表格四列', () => {
-    const note = README.match(/(\d+)＋(\d+)＋(\d+)＋(\d+)＝(\d+)/);
-    expect(note, 'README 找不到「a＋b＋c＋d＝e」那句手算註記').not.toBeNull();
+    const note = PROVENANCE.match(/(\d+)＋(\d+)＋(\d+)＋(\d+)＝(\d+)/);
+    expect(note, 'DATA-PROVENANCE 找不到「a＋b＋c＋d＝e」那句手算註記').not.toBeNull();
     const [a, b, c, d, total] = note!.slice(1).map(Number);
     // 用 regex 字面值，不用模板字串組 —— 前者不會被 escape 處理吃掉（我剛好踩了一次）
     const cnt = (re: RegExp): number | null => {
-      const m = README.match(re);
+      const m = PROVENANCE.match(re);
       return m ? Number(m[1]) : null;
     };
     const rows = [
@@ -553,7 +568,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
       cnt(/\| 主題相關[^|]*\| (\d+)/),
       cnt(/\| 連結已死[^|]*\| (\d+)/),
     ];
-    expect(rows, `README 找不到其中一列：${rows.join('/')}`).not.toContain(null);
+    expect(rows, `DATA-PROVENANCE 找不到其中一列：${rows.join('/')}`).not.toContain(null);
     expect([a, b, c, d], '註記的四個數字與表格四列不符').toEqual(rows);
     expect(a + b + c + d, '註記自己的加總算錯了').toBe(total);
   });
@@ -563,7 +578,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
       ?.population;
     expect(typeof pop, 'meta.citation_audit.population 缺失').toBe('number');
     const rowPct = (label: string) => {
-      const m = README.match(
+      const m = PROVENANCE.match(
         new RegExp(`${label}[^|\\n]*\\|\\s*\\*{0,2}(\\d+)\\*{0,2}\\s*\\|\\s*([\\d.]+)%`)
       );
       return m ? { count: Number(m[1]), pct: Number(m[2]) } : null;
@@ -583,7 +598,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     const corrected = ALL.filter(
       (i) => (i.metadata as unknown as { prior_answer?: string })?.prior_answer != null
     ).length;
-    const m = README.match(/(\d+)\s*題答案曾被更正/);
+    const m = PROVENANCE.match(/(\d+)\s*題答案曾被更正/);
     expect(m, 'README 找不到「N 題答案曾被更正」').not.toBeNull();
     expect(Number(m![1])).toBe(corrected);
   });
@@ -634,15 +649,15 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     }
 
     // ③ README 上的數字要對得上
-    const sup = README.match(/\| 引用正確[^|]*\| \*\*(\d+)\*\*/);
+    const sup = PROVENANCE.match(/\| 引用正確[^|]*\| \*\*(\d+)\*\*/);
     expect(sup, 'README 找不到「引用正確」那一列').not.toBeNull();
     expect(Number(sup![1])).toBe(a.supported);
 
-    const wr = README.match(/\| \*\*引錯地方[^|]*\| \*\*(\d+)\*\*/);
+    const wr = PROVENANCE.match(/\| \*\*引錯地方[^|]*\| \*\*(\d+)\*\*/);
     expect(wr, 'README 找不到「引錯地方」那一列').not.toBeNull();
     expect(Number(wr![1]), 'README 的「引錯地方」題數與 meta 不符').toBe(a.wrong_source);
 
-    const rep = README.match(/\*\*(\d+)\s*題\*\*已換成經機械驗證的一手來源/);
+    const rep = PROVENANCE.match(/\*\*(\d+)\s*題\*\*已換成經機械驗證的一手來源/);
     expect(rep, 'README 找不到「N 題已換成經機械驗證的一手來源」').not.toBeNull();
     expect(Number(rep![1])).toBe(a.replaced);
 
@@ -653,7 +668,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     //
     // 改錨在 `citation_audit.verdict = citation_disputed` —— 那是**欄位名**，
     // 它跟著資料格式走，不會因為有人潤稿就消失。
-    const dis = README.match(/\*\*(\d+)\s*題\*\*[^\n]*`citation_audit\.verdict = citation_disputed`/);
+    const dis = PROVENANCE.match(/\*\*(\d+)\s*題\*\*[^\n]*`citation_audit\.verdict = citation_disputed`/);
     expect(dis, 'README 找不到「N 題仍標記 citation_disputed」').not.toBeNull();
     expect(Number(dis![1])).toBe(a.disputed);
   });
@@ -705,19 +720,19 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     expect(audit.error_rate_pct, 'error_rate_pct 與 defects/verifiable 對不上').toBe(rate);
 
     // ④ README 上的每一個數字都要對得上
-    const m = README.match(/把\s*(\d+)\s*題全部查一遍/);
+    const m = PROVENANCE.match(/把\s*(\d+)\s*題全部查一遍/);
     expect(m, 'README 找不到「把 N 題全部查一遍」').not.toBeNull();
     expect(Number(m![1]), 'README 的母體題數與 meta 不符').toBe(audit.population);
 
-    const v = README.match(/可判斷的\s*\*\*(\d+)\s*題\*\*/);
+    const v = PROVENANCE.match(/可判斷的\s*\*\*(\d+)\s*題\*\*/);
     expect(v, 'README 找不到「可判斷的 N 題」').not.toBeNull();
     expect(Number(v![1]), 'README 的可判斷題數與 meta 不符').toBe(audit.verifiable);
 
-    const dfx = README.match(/\*\*(\d+)\s*題答案是錯的\*\*/);
+    const dfx = PROVENANCE.match(/\*\*(\d+)\s*題答案是錯的\*\*/);
     expect(dfx, 'README 找不到「N 題答案是錯的」').not.toBeNull();
     expect(Number(dfx![1]), 'README 的缺陷題數與 meta 不符').toBe(audit.defects);
 
-    const r = README.match(/實測錯誤率\s*=\s*(\d+)\s*\/\s*(\d+)\s*=\s*([\d.]+)\s*%/);
+    const r = PROVENANCE.match(/實測錯誤率\s*=\s*(\d+)\s*\/\s*(\d+)\s*=\s*([\d.]+)\s*%/);
     expect(r, 'README 找不到「實測錯誤率 = a / b = c%」').not.toBeNull();
     expect(Number(r![1])).toBe(audit.defects);
     expect(Number(r![2])).toBe(audit.verifiable);
@@ -747,11 +762,11 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     ).length;
     const withoutUrl = corrected.length - withUrl;
 
-    const a = README.match(/其中\s*(\d+)\s*題附一手來源 URL/);
+    const a = PROVENANCE.match(/其中\s*(\d+)\s*題附一手來源 URL/);
     expect(a, 'README 找不到「其中 N 題附一手來源 URL」').not.toBeNull();
     expect(Number(a![1]), '「附一手來源 URL」的更正題數與資料不符').toBe(withUrl);
 
-    const b = README.match(/另外\s*(\d+)\s*題的依據是標準條文/);
+    const b = PROVENANCE.match(/另外\s*(\d+)\s*題的依據是標準條文/);
     expect(b, 'README 找不到「另外 N 題的依據是標準條文」').not.toBeNull();
     expect(Number(b![1]), '「依標準條文」的更正題數與資料不符').toBe(withoutUrl);
 
@@ -764,7 +779,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     expect(inReadme, 'README 找不到下一個到期日').not.toBeNull();
     expect(
       CURRENCY.includes(inReadme![1]),
-      `README 宣稱的到期日 ${inReadme![1]} 在 CONTENT-CURRENCY.md 裡找不到 —— 可能是捏造的`
+      `README 宣稱的到期日 ${inReadme![1]} 在 docs/CONTENT-CURRENCY.md 裡找不到 —— 可能是捏造的`
     ).toBe(true);
   });
 
@@ -819,7 +834,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
   // 一個「答案全對、但一半題目沒有解析」的題庫，對備考的人來說仍然是半殘的。
   it('README 的「沒有解析的題目 420 → N」必須等於資料實算', () => {
     const noExp = ALL.filter((i) => !((i as unknown as { explanation?: string }).explanation ?? '').trim()).length;
-    const m = README.match(/沒有解析的題目從 420 降到 (\d+)/);
+    const m = PROVENANCE.match(/沒有解析的題目從 420 降到 (\d+)/);
     expect(m, 'README 找不到「沒有解析的題目從 420 降到 N」').not.toBeNull();
     expect(Number(m![1]), 'README 的「沒有解析題數」與資料不符').toBe(noExp);
     expect(noExp, '這條測試在空轉 —— 全庫都有解析了？').toBeGreaterThan(0);
@@ -832,7 +847,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
   //    但 41 筆全部解決後標記數歸零，那個等式就沒意義了。
   //    改成守**這件事的結論**：README 說 41 筆、資料裡 evidence_review 已清空（全部解決）。
   it('README 說的「41 題引文撐不住答案」是已知的歷史數字，且資料裡的指控已全部解決', () => {
-    const m = README.match(/另外 41 題 —— 它們的「已驗證引文」其實什麼也沒證明/);
+    const m = PROVENANCE.match(/另外 41 題 —— 它們的「已驗證引文」其實什麼也沒證明/);
     expect(m, 'README 找不到「另外 41 題 …」').not.toBeNull();
     // 全部逐筆追完 → 不該再有任何「待驗證」的 evidence_review 掛在資料上
     const stillPending = ALL.filter((i) => {
@@ -843,14 +858,14 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     expect(stillPending, '還有 evidence_review 未解決 —— README 卻宣稱已追完').toEqual([]);
   });
 
-  // NEEDS-SOURCING.md：「真正還需要人工補來源」的題目清單。
+  // docs/NEEDS-SOURCING.md：「真正還需要人工補來源」的題目清單。
   //
   // 判準比第一版精確：一題若已被**撤答案（answer=null，排除計分）**、
   //    或**已修正題幹／答案（有 _correction_note / stem_corrections）**，就是**已處置**，
   //    不再算「待補來源」—— 撤掉的題目沒有正確答案可補，改過題幹的答案靠排除法成立。
   //    （14 題經人工兩輪調研後全部處置：9 補來源、3 改題幹、2 撤答案 → 待補歸零。）
-  it('NEEDS-SOURCING.md「待補來源」清單，必須等於資料裡「真正還需補來源」的題數', () => {
-    const needs = read('NEEDS-SOURCING.md');
+  it('docs/NEEDS-SOURCING.md「待補來源」清單，必須等於資料裡「真正還需補來源」的題數', () => {
+    const needs = read('docs/NEEDS-SOURCING.md');
     const trulyNeeds = ALL.filter((it) => {
       const md = it.metadata as unknown as {
         evidence?: unknown; source_review?: unknown; sources?: string[];
@@ -871,7 +886,52 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     const listed = [...needs.matchAll(/^### (gist\[\d+\]|S_[A-Za-z0-9_-]+)/gm)].map((m) => m[1]);
     const missing = trulyNeeds.filter((id) => !listed.includes(id));
     const extra = listed.filter((id) => !trulyNeeds.includes(id));
-    expect(missing, 'NEEDS-SOURCING.md 漏了這些真正待補的題').toEqual([]);
-    expect(extra, 'NEEDS-SOURCING.md 的「待補」列有已處置的題').toEqual([]);
+    expect(missing, 'docs/NEEDS-SOURCING.md 漏了這些真正待補的題').toEqual([]);
+    expect(extra, 'docs/NEEDS-SOURCING.md 的「待補」列有已處置的題').toEqual([]);
+  });
+});
+
+// 平台識別只有一份（platform.config.json）—— 這是「換個名稱就變成另一個考古題平台」的前提。
+describe('平台識別必須集中在 platform.config.json', () => {
+  it('index.html 的每一個 %PLATFORM_*% 佔位符都要有對應欄位', () => {
+    const used = [...INDEX_HTML_TEMPLATE.matchAll(/%PLATFORM_([A-Z_]+)%/g)].map((m) => m[1]);
+    expect(used.length, 'index.html 一個佔位符都沒有 —— 平台識別又被硬編回去了').toBeGreaterThan(5);
+    const missing = used
+      .map((k) => k.toLowerCase().replace(/_([a-z])/g, (_m, c: string) => c.toUpperCase()))
+      .filter((camel) => PLATFORM[camel] === undefined);
+    expect([...new Set(missing)], 'platform.config.json 缺這些欄位').toEqual([]);
+  });
+
+  it('vite 的 base 不得硬編（要從 platform.config.json 讀）', () => {
+    const vite = read('quiz-app/vite.config.ts');
+    expect(vite).toMatch(/base:\s*platform\.basePath/);
+    expect(vite, 'base 又被寫死了').not.toMatch(/base:\s*['"]\//);
+  });
+
+  // 「改名稱只要改一個檔」必須是真的。這條就是讓它保持為真的東西。
+  //
+  // 自我複審時抓到：我先在 PR 描述寫下那句話，而 public/robots.txt、sitemap.xml、llms.txt
+  // 都硬編著部署網址 —— `public/` 是 Vite 原樣複製的。換平台的人會漏掉那三個，
+  // 而且爬蟲吃到舊網址不會有任何東西報錯。
+  it('index.html 與 public/ 的文字資產不得硬編部署網址（必須用佔位符）', () => {
+    const files = ['quiz-app/index.html', 'quiz-app/public/llms.txt', 'quiz-app/public/robots.txt', 'quiz-app/public/sitemap.xml'];
+    const bad = files.filter((f) => read(f).includes(PLATFORM.siteUrl));
+    expect(
+      bad,
+      `這些檔案硬編了 platform.config.json 的 siteUrl —— 請改用 %PLATFORM_SITE_URL%，` +
+        `否則換平台時會漏改（vite 插件會在 build 時注入）`
+    ).toEqual([]);
+
+    // 上面那條單獨存在會空轉：把 siteUrl 改成任何「哪裡都不出現的字串」，它就自動通過。
+    // 所以同時要求這些檔案**確實有用佔位符** —— 兩條合起來才等於「網址只有一份來源」。
+    const notTemplated = files.filter((f) => !read(f).includes('%PLATFORM_SITE_URL%'));
+    expect(
+      notTemplated,
+      '這些檔案沒有使用 %PLATFORM_SITE_URL% —— 不是硬編就是把網址整個刪了，兩種都不對'
+    ).toEqual([]);
+  });
+
+  it('platform.config.json 的 basePath 與 siteUrl 必須一致（部署後路徑才不會裂）', () => {
+    expect(PLATFORM.siteUrl.endsWith(PLATFORM.basePath)).toBe(true);
   });
 });

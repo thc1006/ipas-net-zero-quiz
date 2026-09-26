@@ -26,7 +26,7 @@ CHECK = '--check' in sys.argv
 DS_PATH = 'quiz-app/src/data/integrated_dataset.json'
 POOL_PATH = 'quiz-app/src/data/practice_pool.json'
 README = 'README.md'
-CURRENCY = 'CONTENT-CURRENCY.md'
+CURRENCY = 'docs/CONTENT-CURRENCY.md'
 
 # PRIMARY 一律從 source-authority.ts 讀 —— 手抄過一次，漏了 re100.org.tw。
 src = open('quiz-app/src/utils/source-authority.ts', encoding='utf-8').read()
@@ -172,6 +172,9 @@ N['carried_over'] = sum(
 # 本輪未重查題數 = 總題數 - 已重查。原本這個欄位沒人算 —— 於是它凍在舊快照 680，
 # 而正確值是 781 - reverified（多批次查證後 reverified 會變，這欄若不由公式算就必漂）。
 N['not_reviewed'] = N['total'] - N['reverified']
+# 考科題數：README 寫著它、docs-counts 有 gate 守它，但先前沒有任何同步規則。
+N['subject1'] = sum(1 for q in ALL if q.get('exam_subject') == '考科1')
+N['subject2'] = sum(1 for q in ALL if q.get('exam_subject') == '考科2')
 
 changed = []
 
@@ -211,7 +214,18 @@ set_meta('answer_key_check.confirmed', N['akc_confirmed'])
 #   「錨點對不上就 print 一行然後 return」的行為。死碼帶著已知的 bug，
 #   等著下一個人把它接回去用。刪掉。）
 
-docs = {README: open(README, encoding='utf-8').read(), CURRENCY: open(CURRENCY, encoding='utf-8').read()}
+INDEX_HTML = 'quiz-app/index.html'
+LLMS = 'quiz-app/public/llms.txt'
+# 2026-09-27：README 從 543 行縮到 140 行，「逐輪稽核的量化結果」整節搬到 docs/DATA-PROVENANCE.md。
+# 錨點跟著搬，不是刪掉 —— 數字換了地方仍然要被對帳。
+PROV = 'docs/DATA-PROVENANCE.md'
+docs = {
+    README: open(README, encoding='utf-8').read(),
+    CURRENCY: open(CURRENCY, encoding='utf-8').read(),
+    INDEX_HTML: open(INDEX_HTML, encoding='utf-8').read(),
+    LLMS: open(LLMS, encoding='utf-8').read(),
+    PROV: open(PROV, encoding='utf-8').read(),
+}
 
 # **這份清單漏一條，就等於在說謊。**
 #
@@ -221,9 +235,16 @@ docs = {README: open(README, encoding='utf-8').read(), CURRENCY: open(CURRENCY, 
 #
 # 這裡涵蓋的是**會隨資料改動而變**的數字。
 # 不涵蓋（因為它們不隨我的修改而變，且各自有 gate 守著）：
-#   - 考科一/考科二題數、練習池 54+100 的組成
+#   - 練習池 54+100 的組成
 #   - restoration-manifest 的 159 題重建
 #   - llms.txt 的 external_mock / ai_generated 題數
+#
+# 2026-09-27 補：上面這份「不涵蓋」清單曾經漏報。實測「在主題庫加一題」——
+# 這支工具 exit 0、印出「所有衍生數字都已一致」，而 docs-counts 紅了 **5 條**：
+#   README 的主題庫題數（表格）、README 與 CONTENT-CURRENCY 的「本輪只實查 X / Y」的分母 Y、
+#   index.html 與 llms.txt 的「N 題主題庫」、README 的「考科一 N + 考科二 M」。
+# 也就是說：**在這個 repo 加一題，CI 會紅，而工具會告訴你沒事。**
+# 那正是這支檔案開頭在罵的那件事，只是換成它自己犯。五條都已補進 RULES。
 #
 # **錨點要綁在結構上，不要綁在散文上。**
 #   「主題庫一手來源」那條原本錨在 `連結（季排程每季檢查是否還通） | (\d+) / 775`，
@@ -247,47 +268,76 @@ RULES = [
     # 主題庫三級來源那三列：分子＝各級題數、分母＝總題數。**兩者都 capture、都由公式更新**
     # （分母綁 N['total']），錨點綁在列首標籤①②③ 上，散文與題數怎麼變都不會讓規則死掉，
     # 也不必在下次加題時手改這支工具的 781。
-    (README, r'① 逐字引文[^|]*\|[^|]*\| \*\*(\d+) / (\d+)\*\*', (N['main_quote'], N['total']), '主題庫逐字引文'),
-    (README, r'② 有一手來源 URL[^|]*\|[^|]*\| (\d+) / (\d+)', (N['main_primary'], N['total']), '主題庫一手來源'),
-    (README, r'③ 完全沒有來源[^|]*\|[^|]*\| (\d+) / (\d+)', (N['main_nosource'], N['total']), '主題庫無來源'),
-    (README, r'\*\*(\d+) / 154\*\*', N['pool_quote'], '練習池逐字引文'),
-    (README, rf'\| (\d+) / {N["pool_total"]} \|\n', N['pool_primary'], '練習池一手來源'),
-    (README, r'(\d+) 題答案曾被更正', N['corrections'], 'README 更正題數'),
-    (README, r'其中 (\d+) 題附一手來源 URL', N['corr_with_url'], 'README 更正題有 URL'),
-    (README, r'另外 (\d+) 題的依據是標準條文', N['corr_no_url'], 'README 更正題無 URL'),
+    (PROV, r'① 逐字引文[^|]*\|[^|]*\| \*\*(\d+) / (\d+)\*\*', (N['main_quote'], N['total']), '主題庫逐字引文'),
+    (PROV, r'② 有一手來源 URL[^|]*\|[^|]*\| (\d+) / (\d+)', (N['main_primary'], N['total']), '主題庫一手來源'),
+    (PROV, r'③ 完全沒有來源[^|]*\|[^|]*\| (\d+) / (\d+)', (N['main_nosource'], N['total']), '主題庫無來源'),
+    (PROV, r'\*\*(\d+) / 154\*\*', N['pool_quote'], '練習池逐字引文'),
+    (PROV, rf'\| (\d+) / {N["pool_total"]} \|\n', N['pool_primary'], '練習池一手來源'),
+    (PROV, r'(\d+) 題答案曾被更正', N['corrections'], 'README 更正題數'),
+    (PROV, r'其中 (\d+) 題附一手來源 URL', N['corr_with_url'], 'README 更正題有 URL'),
+    (PROV, r'另外 (\d+) 題的依據是標準條文', N['corr_no_url'], 'README 更正題無 URL'),
     (README, r'題庫中有 \*\*(\d+) 題\*\*的答案會隨法規變動', N['time_sensitive'], 'README time_sensitive'),
     (CURRENCY, r'\*\*(\d+) 題\*\*標記 `time_sensitive`', N['time_sensitive'], 'CURRENCY time_sensitive'),
     # 引用複驗那張表 —— 這四個數字過去**完全沒人同步**
-    (README, r'\| 引用正確[^|]*\| \*\*(\d+)\*\*', N['ca_supported'], 'README 引用正確'),
-    (README, r'\| \*\*引錯地方[^|]*\| \*\*(\d+)\*\*', N['ca_wrong'], 'README 引錯地方'),
-    (README, r'\| 主題相關[^|]*\| (\d+)', N['ca_no_quote'], 'README 主題相關無引文'),
-    (README, r'\| 連結已死[^|]*\| (\d+)', N['ca_dead'], 'README 連結已死'),
+    (PROV, r'\| 引用正確[^|]*\| \*\*(\d+)\*\*', N['ca_supported'], 'README 引用正確'),
+    (PROV, r'\| \*\*引錯地方[^|]*\| \*\*(\d+)\*\*', N['ca_wrong'], 'README 引錯地方'),
+    (PROV, r'\| 主題相關[^|]*\| (\d+)', N['ca_no_quote'], 'README 主題相關無引文'),
+    (PROV, r'\| 連結已死[^|]*\| (\d+)', N['ca_dead'], 'README 連結已死'),
     # 這兩條**第一版漏掉了**（第四次犯同一個錯）。docs-counts.test.ts 有守它們，
     #    但這支沒有 —— 於是 README 的「已換成…」凍在 27，而資料走到 29，CI 紅。
     #    **gate 守幾個數字，這裡就要涵蓋幾個。**
-    (README, r'\*\*(\d+) 題\*\*已換成經機械驗證的一手來源', N['ca_replaced'], 'README 已換來源'),
-    (README, r'\*\*(\d+) 題\*\*[^\n]*`citation_audit\.verdict = citation_disputed`',
+    (PROV, r'\*\*(\d+) 題\*\*已換成經機械驗證的一手來源', N['ca_replaced'], 'README 已換來源'),
+    (PROV, r'\*\*(\d+) 題\*\*[^\n]*`citation_audit\.verdict = citation_disputed`',
      N['ca_disputed'], 'README 仍存疑'),
-    (README, r'\*\*(\d+) 題的答案已與官方答案卡逐題對過', N['akc_confirmed'], 'README 答案卡確認'),
+    (PROV, r'\*\*(\d+) 題的答案已與官方答案卡逐題對過', N['akc_confirmed'], 'README 答案卡確認'),
+    # 以下五條是 2026-09-27 補的（詳見上方註解）：gate 在守、工具卻沒同步。
+    (README, r'\| \*\*主題庫\*\* \| \*\*(\d+) 題\*\*', N['total'], 'README 主題庫題數（表格）'),
+    (README, r'本輪只實查\s*\*\*\d+\s*/\s*(\d+)', N['total'], 'README 本輪實查分母'),
+    (CURRENCY, r'本輪只實查了\s*\*\*\d+\s*/\s*(\d+)', N['total'], 'CURRENCY 本輪實查分母'),
+    (INDEX_HTML, r'(\d+) 題主題庫', N['total'], 'index.html 主題庫題數', 'all'),
+    (LLMS, r'(\d+) 題主題庫', N['total'], 'llms.txt 主題庫題數', 'all'),
+    (INDEX_HTML, r'(\d+) 題加強練習', N['pool_total'], 'index.html 加強練習題數', 'all'),
+    (LLMS, r'(\d+) 題加強練習', N['pool_total'], 'llms.txt 加強練習題數', 'all'),
+    # 錨點與 docs-counts 那道 gate 用同一個形狀（考科一 N + 考科二 M），一次抓兩個 capture
+    (README, r'考科一\s*(\d+)\s*\+\s*考科二\s*(\d+)', (N['subject1'], N['subject2']), 'README 考科一/二題數'),
     # 引用複驗表下方那句手算註記（「319＋29＋17＋4＝369」）。
     # 複審抓到它與表格不一致 —— 表格是工具維護的、註記是手寫的，結果就漂了。
     # 這是同一個教訓的第 N 次：**gate 守幾個數字、文件寫幾個數字，這裡就要涵蓋幾個。**
-    (README, r'(\d+)＋(\d+)＋(\d+)＋(\d+)＝\d+',
-     (N['ca_supported'], N['ca_wrong'], N['ca_no_quote'], N['ca_dead']), 'README 引用複驗手算註記'),
+    (PROV, r'(\d+)＋(\d+)＋(\d+)＋(\d+)＝\d+',
+     (N['ca_supported'], N['ca_wrong'], N['ca_no_quote'], N['ca_dead']), 'DATA-PROVENANCE 引用複驗手算註記'),
     # 引用複驗那張表的**百分比**。
     #
     # 這是第五次犯同一個錯：docs-counts.test.ts 有一條 gate 要求
     # 「百分比必須等於 round(count / population * 100, 1)，不得手填」，
     # 而這支工具只同步 count、不同步百分比 —— 於是 count 一動，百分比就漂，CI 紅。
     # 這支工具自己的註解就寫著「gate 守幾個數字，這裡就要涵蓋幾個」。
-    (README, r'\| 引用正確[^|]*\| \*\*\d+\*\* \| ([\d.]+)%', _pct(N['ca_supported']), 'README 引用正確 %'),
-    (README, r'\| \*\*引錯地方[^|]*\| \*\*\d+\*\* \| ([\d.]+)%', _pct(N['ca_wrong']), 'README 引錯地方 %'),
-    (README, r'\| 主題相關[^|]*\| \d+ \| ([\d.]+)%', _pct(N['ca_no_quote']), 'README 主題相關 %'),
+    (PROV, r'\| 引用正確[^|]*\| \*\*\d+\*\* \| ([\d.]+)%', _pct(N['ca_supported']), 'DATA-PROVENANCE 引用正確 %'),
+    (PROV, r'\| \*\*引錯地方[^|]*\| \*\*\d+\*\* \| ([\d.]+)%', _pct(N['ca_wrong']), 'DATA-PROVENANCE 引錯地方 %'),
+    (PROV, r'\| 主題相關[^|]*\| \d+ \| ([\d.]+)%', _pct(N['ca_no_quote']), 'DATA-PROVENANCE 主題相關 %'),
 ]
 
 dead_rules = []
-for path, pat, val, label in RULES:
+for rule in RULES:
+    # 規則可以是 4 元素（只改第一個 match）或 5 元素（第五個為 'all'：改全部 match）。
+    # 為什麼需要 'all'：index.html 的題數出現 4 次（meta description／og／twitter／JSON-LD），
+    # llms.txt 出現 2 次，而 docs-counts 那道 gate 要求**每一次**都等於資料。
+    # 只改第一個，等於同步了一處、留下三處舊值 —— 工具說「已一致」，CI 照樣紅。
+    path, pat, val, label = rule[0], rule[1], rule[2], rule[3]
+    mode = rule[4] if len(rule) > 4 else 'first'
     text = docs[path]
+    if mode == 'all':
+        def _rep(m, v=val):
+            s0, e0 = m.span(1)
+            return m.group(0)[: s0 - m.start()] + str(v) + m.group(0)[e0 - m.start() :]
+        new_text, n = re.subn(pat, _rep, text)
+        if n == 0:
+            dead_rules.append(f'  {path} 找不到錨點：{label}' + chr(10) + f'       pattern: {pat}')
+            continue
+        if new_text != text:
+            olds = sorted({m.group(1) for m in re.finditer(pat, text)})
+            changed.append(f'  {path} [{label}]: {"/".join(olds)} -> {val}（{n} 處）')
+            docs[path] = new_text
+        continue
     m = re.search(pat, text)
     if not m:
         # **這裡以前是 `continue`。** 對不上錨點的規則就這樣靜靜跳過，

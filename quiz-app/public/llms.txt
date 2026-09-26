@@ -6,7 +6,7 @@
 
 ## 主要資源
 
-- [線上測驗 SPA](https://thc1006.github.io/ipas-net-zero-quiz/)：React + TypeScript 單頁應用，提供考古題練習、考試模擬、AI 輔助解析、來源追溯
+- [線上測驗 SPA](%PLATFORM_SITE_URL%)：React + TypeScript 單頁應用，提供考古題練習、考試模擬、AI 輔助解析、來源追溯
 - [GitHub Repo](https://github.com/thc1006/ipas-net-zero-quiz)：AGPL-3.0-or-later 授權（原始碼）+ CC BY-SA 4.0（自製內容），開源、含完整題庫 JSON 與 schema 驗證
 
 ## 適用對象

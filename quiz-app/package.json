@@ -19,7 +19,9 @@
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "type-check": "tsc --noEmit",
-    "prepare": "corepack enable && husky"
+    "prepare": "corepack enable && husky",
+    "sync:data": "cd .. && python tools/build_evidence_manifest.py && python tools/sync_derived_counts.py",
+    "preflight": "pnpm sync:data && pnpm lint && pnpm test:run && pnpm build"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -36,6 +38,7 @@
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/coverage-v8": "^2.0.0",
+    "ajv": "8",
     "eslint": "^9.18.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "globals": "^15.14.0",
