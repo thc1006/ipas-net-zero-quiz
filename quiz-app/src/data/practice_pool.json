@@ -3551,7 +3551,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "金管會允許之過渡豁免包括首年僅揭露氣候議題、範疇 3 延後一年、免比較期間，但產業特定揭露（IFRS S2 附錄 B）仍應依規定揭露，並無永久豁免。",
+      "explanation": "我國允許之過渡豁免包括首年僅揭露氣候相關資訊、範疇 3 排放延後一年揭露、首次適用年度免揭露比較期間資訊。國際財務報導準則第 S2 號的過渡規定列於附錄 C（生效日及過渡規定），其中並沒有「永久免除產業別揭露」這一項；附錄 B 是應用指引，產業別揭露要求另見該準則的產業別指引。",
       "subject": "考科二：淨零碳盤查規範與程序概要",
       "topic_tags": [],
       "difficulty": "medium",
@@ -3578,6 +3578,30 @@
             "url": "https://dsp.tpex.org.tw/storage/education_event/IFRS%E6%B0%B8%E7%BA%8C%E6%BA%96%E5%89%87%E5%95%8F%E7%AD%94%E9%9B%86.pdf",
             "quote": "範疇3 溫室氣體排放延後一年揭露及首次適用年度無須揭露比較期間資訊",
             "supports_option": "D"
+          },
+          {
+            "url": "https://www.ardf.org.tw/tifrssustainable/IFRS%20S2%20Climate-Related%20Disclosures.pdf",
+            "quote": "附錄 B\n\n應用指引\n\n本附錄係國際財務報導準則第S2 號整體之一部分，且與本準則之其他部分具相同效力。",
+            "supports_option": "D",
+            "verified_on": "2026-09-27",
+            "added_why": "釘住「附錄 B 是應用指引」。原解析寫「產業特定揭露（IFRS S2 附錄 B）」—— 那是 2022 年徵求意見稿（ED/2022/S2）的結構（該份 Appendix B 確為 industry-based，且 ifrs.org 該頁面標著 [draft]）；正式發布版的附錄 B 是應用指引。",
+            "clause": "附錄B"
+          },
+          {
+            "url": "https://www.ardf.org.tw/tifrssustainable/IFRS%20S2%20Climate-Related%20Disclosures.pdf",
+            "quote": "附錄 C\n\n生效日及過渡規定\n\n本附錄係國際財務報導準則第S2 號整體之一部分，且與本準則之其他部分具相同效力。",
+            "supports_option": "D",
+            "verified_on": "2026-09-27",
+            "added_why": "釘住「過渡規定在附錄 C」。",
+            "clause": "附錄C"
+          },
+          {
+            "url": "https://www.ardf.org.tw/tifrssustainable/IFRS%20S2%20Climate-Related%20Disclosures.pdf",
+            "quote": "個體無須就初次適用日前之任何期間，依本準則規定揭露相關資訊。據此，個體無須於適用本準則之第一個年度報導期間揭露比較資訊。",
+            "supports_option": "D",
+            "verified_on": "2026-09-27",
+            "added_why": "國際財務報導準則第 S2 號第 C3 段 —— 免揭露比較期間這項豁免的條文依據。",
+            "clause": "C3"
           }
         ],
         "citation_audit": {
@@ -3596,6 +3620,12 @@
           "verdict": "CORRECT",
           "note": "IFRS S1/S2 之過渡豁免（首年僅揭露氣候、範疇三首年免揭露、免比較期資訊）皆為真豁免；選項 D「永久免除產業別揭露」並非任何一項既有過渡豁免，故為「不屬於」之正解。來源 IFRS 教育素材為 binary PDF、我的 fetcher 無法乾淨抽取逐字，故標記為答案已驗證、無單一機械逐字釘句。",
           "method": "第十五輪：代理蒐證＋我複核；無單一機械逐字釘句，誠實標記。"
+        },
+        "citation_fix": {
+          "date": "2026-09-27",
+          "was": "金管會允許之過渡豁免包括首年僅揭露氣候議題、範疇 3 延後一年、免比較期間，但產業特定揭露（IFRS S2 附錄 B）仍應依規定揭露，並無永久豁免。",
+          "what_was_wrong": "解析把產業特定揭露掛在「IFRS S2 附錄 B」。正式發布版的附錄依序為：附錄 A 用語定義、附錄 B 應用指引、附錄 C 生效日及過渡規定；產業別揭露要求不在附錄裡，而在另一冊產業別指引。「附錄 B＝產業別揭露」是徵求意見稿的結構。",
+          "how_verified": "以會計研究發展基金會（FSC 指定之 IFRS 正體中文版翻譯機構）發布之正體中文版 PDF 逐段核對；用版面座標配對段號與本文（段號在左欄 x=71、本文在右欄 x=119、同一 y），不靠閱讀順序推測。註：該檔頁首標示「A 部分正體中文版草案」—— 翻譯本身為草案階段，但段號編排與英文正式版一致，且附錄 B 第 B1 段自身即寫明「見第 3 段」並重述同一句，可作獨立佐證。"
         }
       },
       "sources": [
@@ -6807,7 +6837,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "ISO 14068-1:2023 §5–§7 確立碳中和階層：(1) 量化主體碳足跡（依 ISO 14064-1 / 14067）；(2) 訂定符合 1.5°C 路徑之減量目標與計畫並落實；(3) 殘餘排放方得以「高品質碳權（含碳移除）」抵銷，並具透明、可驗證之公開揭露。Scope 3 應原則納入，碳權品質須符合附錄 D 要求，過期或低公信力單位不符要求。",
+      "explanation": "ISO 14068-1:2023 以「碳中和管理階層」（carbon neutrality management hierarchy）為核心原則：先量化主體的碳足跡，再以減量與移除增量為優先，殘餘排放才以碳權抵換，並要求透明、可驗證之公開揭露。Scope 3 原則上應納入；用於抵換的碳權必須符合該標準對碳權與碳權計畫所訂的判準，過期或低公信力的單位不符要求。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "ISO 14068-1",
@@ -6846,6 +6876,17 @@
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "citation_fix": {
+          "date": "2026-09-27",
+          "was": "ISO 14068-1:2023 §5–§7 確立碳中和階層：(1) 量化主體碳足跡（依 ISO 14064-1 / 14067）；(2) 訂定符合 1.5°C 路徑之減量目標與計畫並落實；(3) 殘餘排放方得以「高品質碳權（含碳移除）」抵銷，並具透明、可驗證之公開揭露。Scope 3 應原則納入，碳權品質須符合附錄 D 要求，過期或低公信力單位不符要求。",
+          "what_was_wrong": [
+            "原文寫「§5–§7 確立碳中和階層」：階層規定在第 5.2 節（Carbon neutrality management hierarchy）；第 6 節是 Commitment to carbon neutrality、第 7 節是 Selection of the subject and its boundary。解析描述的量化／減量／抵換三步，實際分別在第 8、10、11 節。",
+            "原文寫「碳權品質須符合附錄 D 要求」：Annex D 是**資訊性**的 Ambition，不是碳權要求，也不是規範性條文。碳權判準在第 11.2 節 Criteria for carbon credits、第 11.3 節 Criteria for carbon crediting programmes。"
+          ],
+          "how_verified": "以 ISO/FDIS 14068:2023(E) 官方預覽本的目次逐條核對（Annex A 資訊性 Carbon neutrality pathway／Annex B 規範性 Specific requirements／Annex C 資訊性 Comparison…／Annex D 資訊性 Ambition；第 11 節 Offsetting the carbon footprint 下含 11.1 General、11.2 Criteria for carbon credits、11.3 Criteria for carbon crediting programmes、11.4 Documented information）。",
+          "why_no_clause_numbers_in_explanation": "ISO 全文為付費文件，節號無法由免費一手來源逐字釘住給讀者查證。既然原本的節號是錯的，正確做法是把敘述寫對、不再指名節號，而不是換一組同樣無法查證的號碼。",
+          "note_on_date": "本筆查證於 2026-09-27 進行；本 PR 其餘變更為 2026-08-27，相隔一個月是因為工作中斷。"
         }
       },
       "sources": [
@@ -7903,7 +7944,8 @@
             "quote": "事業依核定之自主減量計畫執行，經中央主管機關查核達年度指定目標者，依下列規定適用優惠費率：",
             "supports_option": "B",
             "verified_on": "2026-08-27",
-            "added_why": "題幹指名第十一條，原本卻沒有第十一條的引文。這一句才是「適用優惠費率的前提」本身。"
+            "added_why": "題幹指名第十一條，原本卻沒有第十一條的引文。這一句才是「適用優惠費率的前提」本身。",
+            "clause": "第11條"
           },
           {
             "quote": "依附表一或附表二之指定削減率規定，推估目標年溫室氣體年排放量，納入自主減量計畫，報請中央主管機關核定據以執行之目標。",
@@ -8578,7 +8620,8 @@
             "verified_on": "2026-07-16",
             "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案",
             "requoted_on": "2026-08-27",
-            "requote_why": "原引文截在「二、減少或避免排放類型專案：」，看不到後面還有沒有第三類 —— 而本題問的正是「共幾類」。補完整條後，第七條全文只列出兩類、沒有三，答案才真的被釘住。"
+            "requote_why": "原引文截在「二、減少或避免排放類型專案：」，看不到後面還有沒有第三類 —— 而本題問的正是「共幾類」。補完整條後，第七條全文只列出兩類、沒有三，答案才真的被釘住。",
+            "clause": "第7條"
           }
         ],
         "citation_audit": {
@@ -8946,7 +8989,8 @@
             "quote": "建築物之新建、增建或改建達一定規模者，除有受光條件不足或其他可免除情形外，起造人應設置一定裝置容量以上之太陽光電發電設備。",
             "supports_option": "C",
             "verified_on": "2026-08-27",
-            "added_why": "題幹指名《再生能源發展條例》§12-1，原本只有子法（設置標準）的引文。母法授權句與子法的一千平方公尺各釘一半。"
+            "added_why": "題幹指名《再生能源發展條例》§12-1，原本只有子法（設置標準）的引文。母法授權句與子法的一千平方公尺各釘一半。",
+            "clause": "第12條之1"
           },
           {
             "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0070319",
@@ -9172,14 +9216,16 @@
             "supports_option": "A",
             "verified_on": "2026-07-15",
             "method": "第十五輪：代理蒐證＋我親自機械逐字比對（重抓 URL 確認逐字出現）",
-            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=21"
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=21",
+            "clause": "第21條"
           },
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=22",
             "quote": "查驗機構應先向中央主管機關或其委託（任）之認證機關（構）申請認證後，並取得中央主管機關許可，始得辦理本法所定查驗事宜。",
             "supports_option": "A",
             "verified_on": "2026-08-27",
-            "added_why": "原本只釘了第二十一條（誰應受查驗），題幹問的「認證及許可」出自第二十二條卻沒有引文。兩條各釘一半，缺一不可。"
+            "added_why": "原本只釘了第二十一條（誰應受查驗），題幹問的「認證及許可」出自第二十二條卻沒有引文。兩條各釘一半，缺一不可。",
+            "clause": "第22條"
           }
         ],
         "citation_audit": {
@@ -9422,7 +9468,8 @@
             "quote": "事業依核定之自主減量計畫執行，經中央主管機關查核達年度指定目標者，依下列規定適用優惠費率：",
             "supports_option": "B",
             "verified_on": "2026-08-27",
-            "added_why": "題幹指名《自主減量計畫管理辦法》§11，原本兩則引文都是費率公告，沒有 §11 本身。條號在 sources 有連結、但連結不是逐字依據。"
+            "added_why": "題幹指名《自主減量計畫管理辦法》§11，原本兩則引文都是費率公告，沒有 §11 本身。條號在 sources 有連結、但連結不是逐字依據。",
+            "clause": "第11條"
           },
           {
             "quote": "優惠費率A （符合「徵收對象溫室氣體減量指定目標」公告附表一行業別指定削減率規定）：新臺幣 50元/公噸 二氧化碳當量",
@@ -9736,28 +9783,32 @@
             "supports_option": "C",
             "verified_on": "2026-07-15",
             "method": "第十五輪：代理蒐證＋我親自機械逐字比對（重抓 URL 確認逐字出現）",
-            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934"
+            "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
+            "clause": "第5條"
           },
           {
             "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
             "quote": "前條第一項第六款產品碳足跡之盤查，應符合下列規定：\n一、國際標準化組織最新發行之ISO 14067產品碳足跡標準。\n二、經中央主管機關公開之碳足跡產品類別規則。",
             "supports_option": "C",
             "verified_on": "2026-08-27",
-            "added_why": "原本只有查驗那一句。選項的「依產品類別規則計算」出自第四條，沒有引文就是沒釘住。"
+            "added_why": "原本只有查驗那一句。選項的「依產品類別規則計算」出自第四條，沒有引文就是沒釘住。",
+            "clause": "第4條"
           },
           {
             "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007934",
             "quote": "產品碳足跡標籤之標示，應依下列規定辦理：\n一、產品碳足跡標籤顏色應以綠色及藍色標準色（Pantone 368C、348C及Pantone Process Blue C）印刷。但已於申請核定產品碳足跡時，另行提出標示方式者，不在此限。\n二、圖示之心型內應依第四條第三項規定標示產品碳足跡數值及計量單位，不得變形或加註字樣。",
             "supports_option": "C",
             "verified_on": "2026-08-27",
-            "added_why": "釘住「依規定式樣標示」。刻意連但書一起引 —— 那句是對「一律依規定式樣」的限縮，只引前半會是選擇性引用。"
+            "added_why": "釘住「依規定式樣標示」。刻意連但書一起引 —— 那句是對「一律依規定式樣」的限縮，只引前半會是選擇性引用。",
+            "clause": "第10條"
           },
           {
             "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=37",
             "quote": "非屬前項公告之產品，其製造、輸入或販賣業者，得向中央主管機關申請核定碳足跡，經中央主管機關審查、查驗及核算後核定之，並依核定內容使用及分級標示。",
             "supports_option": "C",
             "verified_on": "2026-08-27",
-            "added_why": "解析原本引的是第三十七條第一項（主管機關公告強制那條），但本題問的是自願性核定標示，適用的是第二項。引錯項等於引錯制度。"
+            "added_why": "解析原本引的是第三十七條第一項（主管機關公告強制那條），但本題問的是自願性核定標示，適用的是第二項。引錯項等於引錯制度。",
+            "clause": "第37條"
           }
         ],
         "citation_audit": {
@@ -10616,6 +10667,30 @@
             "supports_option": "A",
             "verified_on": "2026-07-16",
             "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
+          },
+          {
+            "url": "https://www.ardf.org.tw/tifrssustainable/IFRS%20S1%20General%20Requirements%20for%20Disclosure%20of%20Sustainability-related%20Financial%20Information.pdf",
+            "quote": "本準則規定個體揭露所有可合理預期將於短期、中期或長期影響個體之現金流量、其對籌資之可得性或資金成本之永續相關風險與機會之資訊。為本準則之目的，這些風險與機會統稱為「可合理預期將影響個體展望之永續相關風險與機會」。",
+            "supports_option": "A",
+            "verified_on": "2026-09-27",
+            "added_why": "IFRS S1 第 3 段。這一句逐字就是本題正解的內容，也是本題解析所說「該英文原文出自第 3 段」的依據。",
+            "clause": "§3"
+          },
+          {
+            "url": "https://www.ardf.org.tw/tifrssustainable/IFRS%20S1%20General%20Requirements%20for%20Disclosure%20of%20Sustainability-related%20Financial%20Information.pdf",
+            "quote": "個體應揭露可合理預期將影響個體展望之永續相關風險與機會之重大資訊。",
+            "supports_option": "A",
+            "verified_on": "2026-09-27",
+            "added_why": "IFRS S1 第 17 段。它用的是「展望」這個定義用詞，並未逐字出現現金流量那句 —— 解析的更正註記成立。",
+            "clause": "§17"
+          },
+          {
+            "url": "https://www.ardf.org.tw/tifrssustainable/IFRS%20S1%20General%20Requirements%20for%20Disclosure%20of%20Sustainability-related%20Financial%20Information.pdf",
+            "quote": "就永續相關財務揭露而言，若資訊之遺漏、誤述或模糊，可合理預期將影響一般用途財務報告之主要使用者以該等報告（其包括財務報表與永續相關財務揭露，以提供有關特定報導個體之資訊）為基礎所作之決策，則該資訊係屬重大。",
+            "supports_option": "A",
+            "verified_on": "2026-09-27",
+            "added_why": "IFRS S1 第 18 段 —— 重大性的定義本身。",
+            "clause": "§18"
           }
         ],
         "citation_audit": {
@@ -10631,14 +10706,19 @@
           ],
           "what": "解析裡的主張被一手來源反駁。已移除該敘述並附上逐字更正依據。**每一筆更正的引文都經機械逐字比對確認存在於所引頁面上。**"
         },
-        "clause_unbound": {
-          "date": "2026-08-27",
-          "clauses": [
-            "IFRS S1 §3",
-            "IFRS S1 §17",
-            "IFRS S1 §18"
-          ],
-          "why": "IFRS S1 全文 PDF 在 ifrs.org 需登入（實測 302 轉向 b2clogin），段號無法由免費一手來源逐字釘住。我一度把段號從題幹拿掉讓 gate 轉綠 —— 那是錯的：解析裡原封不動留著同樣的段號，可驗證性一點沒變，只是 gate 看不到。已還原題幹，改為明確登記在 clause-citation 的未綁定清冊裡。本題解析本身是一則更正註記（說明該英文原文出自第 3 段而非第 17 段），內容有價值，不刪。"
+        "clause_unbound_withdrawn": {
+          "date": "2026-09-27",
+          "was": {
+            "date": "2026-08-27",
+            "clauses": [
+              "IFRS S1 §3",
+              "IFRS S1 §17",
+              "IFRS S1 §18"
+            ],
+            "why": "IFRS S1 全文 PDF 在 ifrs.org 需登入（實測 302 轉向 b2clogin），段號無法由免費一手來源逐字釘住。我一度把段號從題幹拿掉讓 gate 轉綠 —— 那是錯的：解析裡原封不動留著同樣的段號，可驗證性一點沒變，只是 gate 看不到。已還原題幹，改為明確登記在 clause-citation 的未綁定清冊裡。本題解析本身是一則更正註記（說明該英文原文出自第 3 段而非第 17 段），內容有價值，不刪。"
+          },
+          "why": "先前登記「IFRS 段號無法由免費一手來源逐字釘住」，理由是 ifrs.org 的全文 PDF 需登入。那個結論下得太快：會計研究發展基金會（FSC 指定之翻譯機構）就公開了 IFRS S1／S2 的正體中文版全文，段號與英文版一致，免費可取。第 3、17、18 段都已逐字存為引文，本題不再屬於綁不住的情形。",
+          "how_verified": "以會計研究發展基金會（FSC 指定之 IFRS 正體中文版翻譯機構）發布之正體中文版 PDF 逐段核對；用版面座標配對段號與本文（段號在左欄 x=71、本文在右欄 x=119、同一 y），不靠閱讀順序推測。註：該檔頁首標示「A 部分正體中文版草案」—— 翻譯本身為草案階段，但段號編排與英文正式版一致，且附錄 B 第 B1 段自身即寫明「見第 3 段」並重述同一句，可作獨立佐證。"
         }
       },
       "sources": [

@@ -64,6 +64,14 @@ LAWS: dict[str, str] = {
     'J0130032': '再生能源發展條例',
 }
 
+# 題目裡可能出現的簡稱。放在這裡（而不是放在某個測試檔裡）有兩個理由：
+#   1. 重新產生釘選檔時不會被沖掉 —— build() 是整份重建的；
+#   2. 換題庫的人只要改這支工具，TS 那邊的 gate 會從釘選檔讀，不必動測試碼。
+ALIASES: dict[str, list[str]] = {
+    'O0020098': ['氣候法'],
+    'O0020102': ['溫管辦法'],
+}
+
 URL = 'https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode={}'
 
 
@@ -120,6 +128,7 @@ def build() -> dict:
             'url': URL.format(pcode),
             'article_count': len(arts),
             'sha256': hashlib.sha256(canon.encode('utf-8')).hexdigest(),
+            'aliases': ALIASES.get(pcode, []),
             'articles': arts,
         }
         print(f'  {pcode}  {name}  {len(arts)} 條  sha256={laws[pcode]["sha256"][:16]}…')

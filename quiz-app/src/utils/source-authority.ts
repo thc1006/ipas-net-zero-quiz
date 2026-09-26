@@ -78,7 +78,8 @@ export const PRIMARY: readonly HostRule[] = [
   // ── 國際標準與規範的制定者 ──────────────────────────────────────
   { host: 'iso.org', who: 'ISO（含 committee.iso.org）—— ISO 14064／14067／14068' },
   { host: 'bsigroup.com', who: 'BSI —— PAS 2060 的發布與撤回' },
-  { host: 'ifrs.org', who: 'IFRS 基金會／ISSB —— IFRS S1・S2' },
+  { host: 'ifrs.org', who: 'IFRS 基金會／ISSB —— IFRS S1・S2（全文 PDF 需登入，僅說明頁免費）' },
+  { host: 'ardf.org.tw', who: '會計研究發展基金會 —— 金管會指定之 IFRS 正體中文版翻譯機構；IFRS S1／S2 全文中文版免費公開' },
   { host: 'ghgprotocol.org', who: 'GHG Protocol —— Scope 1/2/3 的定義來源' },
   { host: 'iaasb.org', who: 'IAASB —— ISAE 3410／ISSA 5000 確信準則' },
   { host: 'efrag.org', who: 'EFRAG —— ESRS 的技術建議機構' },

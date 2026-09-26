@@ -8,8 +8,8 @@
   "summary": {
     "main_tier1_questions": 764,
     "pool_tier1_questions": 140,
-    "total_evidence_records": 949,
-    "primary_evidence_records": 940,
+    "total_evidence_records": 955,
+    "primary_evidence_records": 946,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -7100,6 +7100,33 @@
     {
       "qid": "pool-aig-ifrs2026-003",
       "bank": "pool",
+      "url": "https://www.ardf.org.tw/tifrssustainable/IFRS%20S1%20General%20Requirements%20for%20Disclosure%20of%20Sustainability-related%20Financial%20Information.pdf",
+      "host": "www.ardf.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-ifrs2026-003",
+      "bank": "pool",
+      "url": "https://www.ardf.org.tw/tifrssustainable/IFRS%20S1%20General%20Requirements%20for%20Disclosure%20of%20Sustainability-related%20Financial%20Information.pdf",
+      "host": "www.ardf.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-ifrs2026-003",
+      "bank": "pool",
+      "url": "https://www.ardf.org.tw/tifrssustainable/IFRS%20S1%20General%20Requirements%20for%20Disclosure%20of%20Sustainability-related%20Financial%20Information.pdf",
+      "host": "www.ardf.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-ifrs2026-003",
+      "bank": "pool",
       "url": "https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s1-general-requirements/",
       "host": "www.ifrs.org",
       "authority": "primary",
@@ -7174,6 +7201,33 @@
       "bank": "pool",
       "url": "https://dsp.tpex.org.tw/storage/education_event/IFRS%E6%B0%B8%E7%BA%8C%E6%BA%96%E5%89%87%E5%95%8F%E7%AD%94%E9%9B%86.pdf",
       "host": "dsp.tpex.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-ind-003",
+      "bank": "pool",
+      "url": "https://www.ardf.org.tw/tifrssustainable/IFRS%20S2%20Climate-Related%20Disclosures.pdf",
+      "host": "www.ardf.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-ind-003",
+      "bank": "pool",
+      "url": "https://www.ardf.org.tw/tifrssustainable/IFRS%20S2%20Climate-Related%20Disclosures.pdf",
+      "host": "www.ardf.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-ind-003",
+      "bank": "pool",
+      "url": "https://www.ardf.org.tw/tifrssustainable/IFRS%20S2%20Climate-Related%20Disclosures.pdf",
+      "host": "www.ardf.org.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true

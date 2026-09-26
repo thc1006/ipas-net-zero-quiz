@@ -4,6 +4,7 @@
 // **只 import integrated_dataset.json** —— 練習池 157 題一題都沒守到。
 // 規則現在抽到 utils/quality-flags.ts，兩邊一起套。
 import { describe, it, expect } from 'vitest';
+import { findLetterRefs, type LetterRef } from '../utils/explanation-hygiene';
 import poolRaw from './practice_pool.json';
 import { checkFlags, formatFlagViolations, type FlaggedItem } from '../utils/quality-flags';
 import { classifyHost, hostOf } from '../utils/source-authority';
@@ -184,22 +185,25 @@ describe('練習池：解析不得指名選項字母', () => {
   // 我的 pattern 只認「答案為 / 故選 / 選項」，**漏了「正解」**。
   // 主題庫的同一道 gate 有認「正解」—— 兩道守同一件事的 gate 寬窄不一，
   // 窄的那道就是個洞。判準要一致。
-  const NAMES_A_LETTER =
-    /(?:選項|答案|正解|正確答案|標準答案|應選|故選|本題答案|此題答案)\s*(?:為|是|應為|即|：|:)?\s*[（(]?\s*([ABCD])\s*[）)]?(?![\w])/u;
-
-  it('這道 gate 不是空轉：pattern 抓得到「正解為 C」這種寫法', () => {
-    expect(NAMES_A_LETTER.test('本題以現行法為準，正解為 C。')).toBe(true);
-    expect(NAMES_A_LETTER.test('選項 A 描述的是…')).toBe(true);
-    expect(NAMES_A_LETTER.test('故選 B。')).toBe(true);
+  // pattern 不再在這裡重寫一份 —— 改用 utils/explanation-hygiene 的 findLetterRefs。
+  // 原本這裡自己寫一份的唯一理由是要抽出字母去跟 answer 對比；那個能力已經移進共用函式
+  // （LetterRef.letter），所以兩道 gate 現在共用同一組 pattern，不會再一寬一窄。
+  it('這道 gate 不是空轉：抓得到「正解為 C」這種寫法，且不誤殺附錄代號', () => {
+    const hit = (t: string): LetterRef[] => findLetterRefs([{ id: 'x', explanation: t }]);
+    expect(hit('本題以現行法為準，正解為 C。')[0]?.letter).toBe('C');
+    expect(hit('選項 A 描述的是…')[0]?.letter).toBe('A');
+    expect(hit('故選 B。')[0]?.letter).toBe('B');
     // 不可誤殺：正常提到 ISO 14064-1 的 A 部分、附錄 B 等
-    expect(NAMES_A_LETTER.test('依 ISO 14064-1 附錄 B 之規定')).toBe(false);
+    expect(hit('依 ISO 14064-1 附錄 B 之規定')).toEqual([]);
   });
 
   it('沒有任何解析在指名 A/B/C/D', () => {
-    const bad = POOL.filter((q) => NAMES_A_LETTER.test(q.explanation)).map((q) => {
-      const m = q.explanation.match(NAMES_A_LETTER)!;
-      const mismatch = m[1] !== q.answer ? `  **與 answer=${q.answer} 不符**` : '';
-      return `${q.id}: 解析寫「${m[0]}」${mismatch}`;
+    const byId = new Map(POOL.map((q) => [q.id, q]));
+    const bad = findLetterRefs(POOL).map((r) => {
+      const answer = byId.get(r.id)?.answer;
+      const mismatch =
+        r.letter && answer && r.letter !== answer ? `  **與 answer=${answer} 不符**` : '';
+      return `${r.id}: 解析寫「${r.matched}」${mismatch}`;
     });
     expect(
       bad,

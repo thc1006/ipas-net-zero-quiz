@@ -23,30 +23,21 @@
 // 一個假陽性比資料還多的檢查器沒有價值 —— 所以只驗「這句話在不在這部法裡」，
 // 不驗「在第幾條」。條號歸屬的錯誤靠人工審核與 DATA-PROVENANCE 的紀錄處理。
 import { describe, it, expect } from 'vitest';
-import pinnedRaw from './law-articles.pinned.json';
+import { PINNED_LAWS, LAW_NAME_TO_CODE } from '../utils/pinned-laws';
 import datasetRaw from './integrated_dataset.json';
 import poolRaw from './practice_pool.json';
 
-interface PinnedLaw {
-  name: string;
-  url: string;
-  article_count: number;
-  sha256: string;
-  articles: Record<string, string>;
-}
-const PINNED = (pinnedRaw as { laws: Record<string, PinnedLaw> }).laws;
+const PINNED = PINNED_LAWS;
 
-/** 法規別名 -> pcode。題目裡怎麼稱呼它，都要能對到同一部法。 */
-const ALIASES: ReadonlyArray<readonly [string, string]> = [
-  ['氣候變遷因應法', 'O0020098'],
-  ['氣候法', 'O0020098'],
-  ['溫室氣體排放量盤查登錄及查驗管理辦法', 'O0020102'],
-  ['溫管辦法', 'O0020102'],
-  ['碳費收費辦法', 'O0020139'],
-  ['溫室氣體自願減量專案管理辦法', 'O0020137'],
-  ['自主減量計畫管理辦法', 'O0020140'],
-  ['再生能源發展條例', 'J0130032'],
-];
+/**
+ * 法規別名 -> pcode。
+ *
+ * 不在這裡抄清單 —— 由 utils/pinned-laws 從 law-articles.pinned.json 衍生
+ * （別名本身放在 tools/pin_law_articles.py 的 ALIASES）。
+ * 這個檔案原本的註解就寫著「兩份清單一定會漂，在這個 repo 已經應驗過三次」，
+ * 然後 clause-citation 又抄了一份，成了第四次。
+ */
+const ALIASES = LAW_NAME_TO_CODE;
 
 /**
  * 「這句話宣稱自己是法條原文」的判準：**長度 >= 16 字，且含全形逗號或分號。**

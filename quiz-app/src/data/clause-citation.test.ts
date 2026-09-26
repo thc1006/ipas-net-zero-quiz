@@ -23,11 +23,33 @@
 import { describe, it, expect } from 'vitest';
 import dataset from './integrated_dataset.json';
 import pool from './practice_pool.json';
-import pinnedRaw from './law-articles.pinned.json';
+import {
+  PINNED_LAWS,
+  resolveLaws,
+  pcodeFromUrl,
+  normalizeClauseKey,
+  clauseKeys,
+  clauseChineseForms,
+  normalizeForCompare as norm,
+  articleText,
+  CLAUSE_PATTERN as CLAUSE,
+} from '../utils/pinned-laws';
 
 interface Evidence {
   quote?: string;
   url?: string;
+  /**
+   * 這則引文出自哪一條／段（例如 '第11條'、'§3'、'12-1'、'附錄C'）。
+   *
+   * 為什麼需要這個欄位：ISO／IFRS 這類付費或需登入的標準，網址裡沒有 `flno=` 之類
+   * 可機器判讀的錨點，條文本身也不會寫自己的段號 —— 光有逐字引文，gate 無從得知
+   * 「這則引文就是第 3 段」。唯一誠實的做法是把歸屬寫成資料，讓它可被審閱，
+   * 而不是讓 gate 去猜（猜法已試過：用「引號前最近的條號」會被否定式引用騙）。
+   *
+   * 屬於釘住的法規時（網址帶 pcode），下方有一道 gate 會把宣告與釘選原文機器核對，
+   * 所以宣告不可能在那個範圍內說謊。
+   */
+  clause?: string;
 }
 interface Item {
   index?: number;
@@ -39,76 +61,16 @@ interface Item {
   /** 練習池的引文放這裡，不是 metadata —— 第一版漏了這個 */
   provenance?: { evidence?: Evidence[] };
 }
-interface PinnedLaw {
-  articles: Record<string, string>;
-}
-
-const PINNED = (pinnedRaw as { laws: Record<string, PinnedLaw> }).laws;
-
-/** 題目裡怎麼稱呼這部法，都要能對到同一個 pcode（與 law-quote-integrity 同一份對照） */
-const ALIASES: ReadonlyArray<readonly [string, string]> = [
-  ['氣候變遷因應法', 'O0020098'],
-  ['氣候法', 'O0020098'],
-  ['溫室氣體排放量盤查登錄及查驗管理辦法', 'O0020102'],
-  ['溫管辦法', 'O0020102'],
-  ['碳費收費辦法', 'O0020139'],
-  ['溫室氣體自願減量專案管理辦法', 'O0020137'],
-  ['自主減量計畫管理辦法', 'O0020140'],
-  ['再生能源發展條例', 'J0130032'],
-];
-
-// §6.4 / 第 7 條 / 第十二條之一 / ¶17 / Article 6 / Annex III
-const CLAUSE =
-  /§\s*\d[\d.-]*|第\s*(?:[0-9]+|[一二三四五六七八九十]+)\s*條(?:\s*之\s*(?:[0-9]+|[一二三四五六七八九十]+))?|¶\s*\d|Article\s*\d+(?:\.\d+)*|Annex\s+[IVX]/;
-const CLAUSE_G = new RegExp(CLAUSE.source, 'g');
-
-const CN = '零一二三四五六七八九';
-function cnToArabic(t: string): string {
-  if (/^[0-9]+$/.test(t)) return String(Number(t));
-  const m = /^([一二三四五六七八九]?)十([一二三四五六七八九]?)$/.exec(t);
-  if (m) return String((m[1] ? CN.indexOf(m[1]) * 10 : 10) + (m[2] ? CN.indexOf(m[2]) : 0));
-  const i = CN.indexOf(t);
-  return i >= 0 ? String(i) : t;
-}
-
-/** 把題幹裡的條號整理成可比對的 key：'21'、'12-1'、'6.4'（ISO 等） */
-function clauseKeys(stem: string): string[] {
-  const out: string[] = [];
-  for (const raw of stem.match(CLAUSE_G) ?? []) {
-    const zh = /第\s*([0-9]+|[一二三四五六七八九十]+)\s*條(?:\s*之\s*([0-9]+|[一二三四五六七八九十]+))?/.exec(raw);
-    if (zh) {
-      out.push(cnToArabic(zh[1]) + (zh[2] ? `-${cnToArabic(zh[2])}` : ''));
-      continue;
-    }
-    const num = /([0-9][0-9.-]*)/.exec(raw);
-    if (num) out.push(num[1].replace(/[.-]+$/, ''));
-  }
-  return [...new Set(out)];
-}
-
-/** 比對用正規化：去掉標點與空白（法規頁的換行與全形標點會隨版面變動） */
-const norm = (t: string): string =>
-  (t ?? '').normalize('NFKC').replace(/[\s\u3000，。、：；「」（）()【】[\]\-–—/.]+/g, '');
-
-const evidence = (it: Item): Evidence[] => [
-  ...(it.metadata?.evidence ?? []),
-  ...(it.provenance?.evidence ?? []),
-];
-
-/** 條號的中文寫法（給路徑 3 用：引文可能寫「第二條」而題幹寫「第 2 條」） */
-function cnForms(key: string): string[] {
-  const n = Number(key);
-  if (!Number.isInteger(n) || n < 1 || n > 99) return [];
-  const d = (x: number): string => CN[x];
-  const zh =
-    n < 10 ? d(n) : n === 10 ? '十' : n < 20 ? `十${d(n % 10)}` : `${d(Math.floor(n / 10))}十${n % 10 ? d(n % 10) : ''}`;
-  return [`第${zh}條`, `第${n}條`];
-}
 
 const ds = dataset as unknown as { gist_items: Item[]; our_unique_items: Item[] };
 const pp = pool as unknown as { items: Item[] };
 const ALL: Item[] = [...ds.gist_items, ...ds.our_unique_items, ...pp.items];
 const who = (it: Item): string => it.item_id ?? it.id ?? `gist-${it.index}`;
+
+const evidence = (it: Item): Evidence[] => [
+  ...(it.metadata?.evidence ?? []),
+  ...(it.provenance?.evidence ?? []),
+];
 
 /** 這一題在 `text` 裡指名的條號，有沒有任何一條真的被逐字依據綁住 */
 function boundIn(it: Item, text: string): boolean {
@@ -117,14 +79,15 @@ function boundIn(it: Item, text: string): boolean {
   const evs = evidence(it);
   const quotes = evs.map((e) => norm(e.quote ?? '')).filter((q) => q.length >= 8);
   const urls = evs.map((e) => e.url ?? '');
-  const whole = `${it.stem} ${it.explanation ?? ''}`;
-  const laws = ALIASES.filter(([name]) => whole.includes(name)).map(([, code]) => code);
-  const explQuotes = [...(it.explanation ?? '').matchAll(/「([^」]{12,})」/g)].map((m) => norm(m[1]));
+  const laws = resolveLaws(`${it.stem} ${it.explanation ?? ''}`);
+  const explQuotes = [...(it.explanation ?? '').matchAll(/「([^」]{12,})」/g)].map((m) =>
+    norm(m[1])
+  );
 
   return keys.some((key) => {
     // 1) 引文逐字落在釘住的那一條裡
     for (const code of laws) {
-      const article = norm(PINNED[code]?.articles?.[key] ?? '');
+      const article = norm(articleText(code, key));
       if (!article) continue;
       if (quotes.some((q) => article.includes(q) || q.includes(article))) return true;
       if (explQuotes.some((q) => article.includes(q))) return true;
@@ -132,12 +95,13 @@ function boundIn(it: Item, text: string): boolean {
     // 2) 引文 URL 直接指向該條
     if (urls.some((u) => new RegExp(`flno=${key}(?![0-9-])`).test(u))) return true;
     // 3) 條號本身出現在引文裡（阿拉伯數字、中文數字、或英文 Article N.N）
-    const forms = [`§${key}`, `Article ${key}`, ...cnForms(key)];
+    const forms = [`§${key}`, `Article ${key}`, ...clauseChineseForms(key)];
     if (quotes.some((q) => forms.some((f) => q.includes(norm(f))))) return true;
-    // 4) 引文 URL 的路徑本身就指名該條（unfccc 的 .../article-6/article-62、
-    //    .../article-64-mechanism）—— 路徑是站方自己的編排，不是我們推定的
+    // 4) 引文 URL 的路徑本身就指名該條（unfccc 的 .../article-6/article-62）
     const slug = new RegExp(`article${key.replace(/[^0-9]/g, '')}(?![0-9])`);
     if (urls.some((u) => slug.test(u.toLowerCase().replace(/[^a-z0-9]/g, '')))) return true;
+    // 5) 引文自己宣告它出自哪一條（見 Evidence.clause）
+    if (evs.some((e) => e.clause && normalizeClauseKey(e.clause) === key)) return true;
     return false;
   });
 }
@@ -153,17 +117,16 @@ function boundIn(it: Item, text: string): boolean {
  * 真正綁不住的只剩下面這些，明列出來、只准變少。
  */
 const STEM_UNBOUND: ReadonlyArray<{ id: string; why: string }> = [
-  {
-    id: 'pool-aig-ifrs2026-003',
-    why: 'IFRS S1 全文 PDF 在 ifrs.org 需登入（實測 302 轉向 b2clogin），段號無法由免費一手來源逐字釘住。解析本身是一則有價值的更正註記（說明該英文原文出自第 3 段而非第 17 段），不刪。',
-  },
+  // 目前為空。`pool-aig-ifrs2026-003` 原本登記在此（理由：IFRS 全文 PDF 需登入），
+  // 2026-09-27 撤回 —— 會計研究發展基金會公開了 IFRS S1／S2 正體中文版全文，
+  // 段號與英文版一致，第 3、17、18 段都已逐字存為引文。結論下太快的一筆。
 ];
 
 /**
  * 解析裡指名、但綁不住的條號。
  *
  * 這一群比題幹那一群更大 —— gate 第一版只看題幹，等於盲區比守備範圍還大。
- * 目前 29 題，多數是外部模擬題（vocus）隨題匯入的原作者解析，
+ * 目前 28 題，多數是外部模擬題（vocus）隨題匯入的原作者解析，
  * 以及付費標準（ISO／IFRS）的段號。**這份清冊只准變少**：
  * 新出現而不在清冊裡的，一律轉紅。
  */
@@ -177,8 +140,6 @@ const EXPLANATION_UNBOUND: ReadonlySet<string> = new Set([
   'gist-312',
   'gist-314',
   'gist-408',
-  // 題幹也綁不住（見 STEM_UNBOUND）：IFRS 段號無免費一手來源
-  'pool-aig-ifrs2026-003',
   'pool-aig-ind-010',
   'pool-aig-intl-007',
   'pool-aig-intl-019',
@@ -220,6 +181,8 @@ describe('題幹指名條號者，必須綁得住那一條的逐字依據', () =
     ).toEqual([]);
   });
 
+  // 清冊現在是空的，這條目前必然通過；留著是為了下一次有人往清冊加東西時，
+  // 修好之後不會忘記把它拿掉。
   it('登記在清冊裡的，必須真的還綁不住（修好了就要從清冊移除）', () => {
     const stale = STEM_UNBOUND.filter((x) => {
       const it = ALL.find((q) => who(q) === x.id);
@@ -249,8 +212,64 @@ describe('解析裡指名的條號，同樣要綁得住', () => {
     ).toEqual([]);
   });
 
-  it('清冊只准變少（現況 29 題）', () => {
-    expect(EXPLANATION_UNBOUND.size).toBeLessThanOrEqual(29);
+  it('清冊只准變少（現況 28 題）', () => {
+    expect(EXPLANATION_UNBOUND.size).toBeLessThanOrEqual(28);
+  });
+});
+
+describe('evidence[].clause 的宣告必須站得住', () => {
+  const declared = ALL.flatMap((it) =>
+    evidence(it)
+      .filter((e) => e.clause)
+      .map((e) => ({ id: who(it), e }))
+  );
+
+  it('這條 gate 不能空轉：確實有引文宣告了 clause', () => {
+    expect(declared.length).toBeGreaterThan(5);
+  });
+
+  // 宣告是人寫的，所以凡是**機器查得到原文**的（釘住的法規，網址帶 pcode），
+  // 就一定要核。ISO／IFRS 那類拿不到全文的只能靠人工審閱 —— 但那是因為真的驗不了，
+  // 不是因為我們沒驗。
+  it('宣告出自釘住法規某一條的引文，必須真的落在該條原文裡', () => {
+    const bad: string[] = [];
+    for (const { id, e } of declared) {
+      const code = pcodeFromUrl(e.url);
+      if (!code || !PINNED_LAWS[code]) continue;
+      const key = normalizeClauseKey(e.clause as string);
+      const article = key ? norm(articleText(code, key)) : '';
+      if (!article) {
+        bad.push(`${id}: 宣告 clause=${e.clause}，但 ${code} 查無此條`);
+        continue;
+      }
+      const q = norm(e.quote ?? '');
+      if (q.length < 8) {
+        bad.push(`${id}: 宣告 clause=${e.clause}，卻沒有足夠長度的引文`);
+        continue;
+      }
+      if (!article.includes(q)) {
+        bad.push(`${id}: 宣告出自 ${code} ${e.clause}，但引文不在該條原文裡`);
+      }
+    }
+    expect(
+      bad,
+      'clause 宣告與釘選原文不符。宣告錯條號比沒有宣告更糟 —— 它會讓 gate 誤判為已綁住'
+    ).toEqual([]);
+  });
+
+  // 這裡原本寫的是「宣告的 clause 必須真的被題幹或解析引用到」。它一跑就抓到四則，
+  // 我看了輸出才發現**是規則錯、不是資料錯**：`tw_regs_44` 的 §4／§5／§10 引文是用來
+  // 撐住答案的三個並列要件，題幹只指名 §37 —— 那些宣告是有用的溯源資訊，而且不會讓任何
+  // 條號誤綁（沒被引用到的 key 根本不參與 boundIn 的比對）。規則保護不到任何東西，
+  // 只是在阻止人寫下有用的註記，所以換掉。
+  it('宣告 clause 的引文必須是完整可追溯的一則（有夠長的引文與 https 來源）', () => {
+    const bad = declared
+      .filter(({ e }) => norm(e.quote ?? '').length < 8 || !/^https:\/\//.test(e.url ?? ''))
+      .map(({ id, e }) => `${id}: clause=${e.clause} 的引文或來源不完整`);
+    expect(
+      bad,
+      'clause 是人工宣告的歸屬，唯一能自動守住的就是「它得掛在一則真的引文上」'
+    ).toEqual([]);
   });
 });
 
