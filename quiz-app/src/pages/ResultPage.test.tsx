@@ -120,6 +120,7 @@ function makeResult(overrides: Partial<QuizResult> = {}): QuizResult {
     endTime: 1_700_000_065_000,
     totalTime: 65_000,
     answers: [],
+    questions: [],
     score: 100,
     totalAnswerable: 1,
     correctCount: 1,
@@ -298,11 +299,15 @@ describe('ResultPage', () => {
       );
     }
 
-    it('success response → 渲染題目內容；低信心度顯示警示徽章', async () => {
+    // 這兩條原本釘的是「低信心度時顯示警示、高信心度時不顯示」。那個分數是
+    // estimateConfidence() 依回覆長度與關鍵詞加減出來的啟發式值，ai-helper 的註解
+    // 已寫明不對使用者呈現。條件式顯示比顯示數值更糟：沒有徽章等於暗示「這題信心高」，
+    // 而我們沒有任何依據講這句話。改為無條件揭露「未經人工審核」，與 AI 解析路徑一致。
+    it('success response → 渲染題目內容，並無條件標示未經人工審核', async () => {
       const fakeResponse: AIResponse = {
         success: true,
         content: '新題目：下列何者屬於範疇一直接排放？\nA. 公務車柴油燃燒\nB. 外購電力',
-        confidence: 0.5, // 介於 0 和 0.7 之間 → 觸發 低信心度 branch
+        confidence: 0.5,
         error: '',
       };
       vi.mocked(generateSimilarQuestionStream).mockResolvedValueOnce(fakeResponse);
@@ -315,10 +320,11 @@ describe('ResultPage', () => {
       });
       expect(screen.getByText(/新題目：下列何者屬於範疇一直接排放？/)).toBeInTheDocument();
       expect(screen.getByText(/A\. 公務車柴油燃燒/)).toBeInTheDocument();
-      expect(screen.getByText(/低信心度/)).toBeInTheDocument();
+      expect(screen.getAllByText('未經人工審核').length).toBeGreaterThan(0);
+      expect(screen.queryByText(/低信心度/)).not.toBeInTheDocument();
     });
 
-    it('success response 高信心度 → 不顯示警示徽章', async () => {
+    it('啟發式分數高時同樣標示未經人工審核（不會因分數高就默默背書）', async () => {
       vi.mocked(generateSimilarQuestionStream).mockResolvedValueOnce({
         success: true,
         content: '高信心題目內容',
@@ -333,6 +339,7 @@ describe('ResultPage', () => {
         expect(screen.getByText(/AI 生成的相似題/)).toBeInTheDocument();
       });
       expect(screen.queryByText(/低信心度/)).not.toBeInTheDocument();
+      expect(screen.getAllByText('未經人工審核').length).toBeGreaterThan(0);
     });
 
     it('failure response → 渲染 ai-error 區塊與錯誤訊息', async () => {
@@ -456,5 +463,62 @@ describe('ResultPage 答案依據', () => {
     expect(
       screen.getByText(/固定測試用逐字引文/)
     ).toBeInTheDocument();
+  });
+});
+
+describe('考試模式的錯題檢討', () => {
+  const poolQuestion = {
+    id: 'pool-only-1',
+    stem: '這是一題練習池題目，主題庫索引查不到',
+    options: [
+      { key: 'A', text: '甲' },
+      { key: 'B', text: '乙' },
+    ],
+    answer: 'B',
+    subject: '考科2',
+    sourceType: 'practice_pool',
+    year: null,
+    hasAnswer: true,
+    explanation: '第一段解析。\n\n第二段解析。',
+  } as unknown as QuizQuestion;
+
+  it('練習池錯題不會整張消失（結果頁改用當次題目快照）', () => {
+    // 先前結果頁用 getQuestionById() 反查，而那個索引只由主題庫組成：
+    // 練習池題查不到就 return null，題幹／正解／解析／來源／回報連結全部不見。
+    render(
+      <ResultPage
+        result={makeResult({
+          answers: [makeAnswer({ questionId: 'pool-only-1', correctAnswer: 'B' })],
+          questions: [poolQuestion],
+          wrongCount: 1,
+          correctCount: 0,
+          score: 0,
+        })}
+        onGoHome={vi.fn()}
+        onRetry={vi.fn()}
+      />
+    );
+    expect(screen.getByText(/這是一題練習池題目/)).toBeInTheDocument();
+  });
+
+  it('考試模式看得到題庫解析，且多段解析不會被壓成一段', () => {
+    // 練習模式靠 showAnswer 在題目頁顯示解析；考試模式 showAnswerImmediately=false，
+    // 題目頁不顯示，因此結果頁是使用者唯一看得到解析的地方。
+    render(
+      <ResultPage
+        result={makeResult({
+          answers: [makeAnswer({ questionId: 'pool-only-1', correctAnswer: 'B' })],
+          questions: [poolQuestion],
+          wrongCount: 1,
+          correctCount: 0,
+          score: 0,
+        })}
+        onGoHome={vi.fn()}
+        onRetry={vi.fn()}
+      />
+    );
+    expect(screen.getByLabelText('題庫解析')).toBeInTheDocument();
+    expect(screen.getByText('第一段解析。')).toBeInTheDocument();
+    expect(screen.getByText('第二段解析。')).toBeInTheDocument();
   });
 });

@@ -140,7 +140,14 @@ export interface QuizQuestion {
   stem: string;
   options: QuizOption[];
   answer: string | null;
-  subject: ExamSubject;
+  /**
+   * 未能對應到考科時為 null。
+   *
+   * 這裡刻意允許 null：先前為了滿足 strict type 而 fallback 成 '考科2'，
+   * 結果 154 題練習池裡有 83 題 subject 是 null，全部被靜默算進考科二 ——
+   * 抽題池與備考統計都會被污染。單科篩選用 === 比較，null 自然被排除。
+   */
+  subject: ExamSubject | null;
   sourceType: 'gist' | 'unique' | 'practice_pool';
   year?: number | null;
   hasAnswer: boolean;
@@ -234,6 +241,15 @@ export interface QuizResult {
   endTime: number;
   totalTime: number;
   answers: AnswerRecord[];
+  /**
+   * 當次測驗實際出過的題目快照。
+   *
+   * 為什麼要帶：結果頁原本用 getQuestionById() 反查，而那個索引只由**主題庫**組成 ——
+   * 練習池題查不到就整張錯題卡 `return null`，題幹、正解、解析、來源、回報連結全部消失，
+   * 匯出的 stem 也會是空字串。帶快照同時解決另一個問題：部署後題庫內容若變動，
+   * 結果頁顯示的仍是作答當下那一版。
+   */
+  questions: QuizQuestion[];
   score: number;
   totalAnswerable: number;
   correctCount: number;
