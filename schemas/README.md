@@ -45,3 +45,26 @@ schema 刻意把「領域專有的詞彙」集中在 `$defs` 裡的幾個位置�
 第 3 點是關鍵：這個 repo 已經被「同一條規則寫兩份、其中一份較寬」咬過四次
 （字母引用規則、法規別名表各一次，詳見那兩支檔案的註解）。
 schema 是第三份對「什麼叫合法題目」的描述，所以一開始就把它和既有 validator 綁在一起。
+
+## 換題庫的完整步驟
+
+1. 讓你的資料通過這裡的兩份 schema；
+2. 改 [`../platform.config.json`](../platform.config.json)（名稱、網址、SEO 文案）；
+3. 改本目錄 `main-bank.schema.json` 的 `$defs/examSubject`，並同步
+   `src/utils/main-bank-schema.ts` 的 `EXAM_SUBJECTS`、`src/types/quiz.ts` 的 `ExamSubject`；
+4. `pnpm test:run -u` 重新產生語料輪廓 snapshot；
+5. 依 `src/data/content-profile.test.ts` 列出的清單，重設那幾個棘輪／反空轉門檻。
+
+## 已知不足（誠實列出）
+
+- **schema 與手寫 validator 是兩份**。目前靠 `schema-contract.test.ts` 釘住兩者一致
+  （包含 13 種刻意做壞的資料必須被雙方拒收）。但那是用測試警察一個設計缺陷 ——
+  正規做法是**只留一份來源**：TypeBox 的 schema 本身就是 JSON Schema（型別由它靜態推導），
+  或 Zod v4 原生輸出 JSON Schema（`zod-to-json-schema` 已於 2025-11 停止維護）。
+  改過去會**刪掉** `practice-pool-schema.ts` 與 `main-bank-schema.ts` 共約 400 行，
+  而不是再多一個測試。這是下一步該做的事。
+- **沒有提供匯出**。最接近的前例 `rosstimo/quizbank` 是「一份 JSON bank → 產出 PDF／Markdown／
+  Canvas QTI」。本專案目前只有自己的格式；要與 LMS 互通，缺的是一支匯出器
+  （從這份 JSON 轉出去比反過來容易），而不是改用別人的格式當主格式。
+- **`ExamSubject` 仍寫在型別層**（`'考科1' | '考科2'`），牽動 11 個非測試引擎檔。
+  改成資料驅動是比較大的重構，尚未進行。

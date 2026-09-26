@@ -216,11 +216,15 @@ set_meta('answer_key_check.confirmed', N['akc_confirmed'])
 
 INDEX_HTML = 'quiz-app/index.html'
 LLMS = 'quiz-app/public/llms.txt'
+# 2026-09-27：README 從 543 行縮到 140 行，「逐輪稽核的量化結果」整節搬到 DATA-PROVENANCE.md。
+# 錨點跟著搬，不是刪掉 —— 數字換了地方仍然要被對帳。
+PROV = 'DATA-PROVENANCE.md'
 docs = {
     README: open(README, encoding='utf-8').read(),
     CURRENCY: open(CURRENCY, encoding='utf-8').read(),
     INDEX_HTML: open(INDEX_HTML, encoding='utf-8').read(),
     LLMS: open(LLMS, encoding='utf-8').read(),
+    PROV: open(PROV, encoding='utf-8').read(),
 }
 
 # **這份清單漏一條，就等於在說謊。**
@@ -253,28 +257,28 @@ RULES = [
     # 主題庫三級來源那三列：分子＝各級題數、分母＝總題數。**兩者都 capture、都由公式更新**
     # （分母綁 N['total']），錨點綁在列首標籤①②③ 上，散文與題數怎麼變都不會讓規則死掉，
     # 也不必在下次加題時手改這支工具的 781。
-    (README, r'① 逐字引文[^|]*\|[^|]*\| \*\*(\d+) / (\d+)\*\*', (N['main_quote'], N['total']), '主題庫逐字引文'),
-    (README, r'② 有一手來源 URL[^|]*\|[^|]*\| (\d+) / (\d+)', (N['main_primary'], N['total']), '主題庫一手來源'),
-    (README, r'③ 完全沒有來源[^|]*\|[^|]*\| (\d+) / (\d+)', (N['main_nosource'], N['total']), '主題庫無來源'),
-    (README, r'\*\*(\d+) / 154\*\*', N['pool_quote'], '練習池逐字引文'),
-    (README, rf'\| (\d+) / {N["pool_total"]} \|\n', N['pool_primary'], '練習池一手來源'),
-    (README, r'(\d+) 題答案曾被更正', N['corrections'], 'README 更正題數'),
-    (README, r'其中 (\d+) 題附一手來源 URL', N['corr_with_url'], 'README 更正題有 URL'),
-    (README, r'另外 (\d+) 題的依據是標準條文', N['corr_no_url'], 'README 更正題無 URL'),
+    (PROV, r'① 逐字引文[^|]*\|[^|]*\| \*\*(\d+) / (\d+)\*\*', (N['main_quote'], N['total']), '主題庫逐字引文'),
+    (PROV, r'② 有一手來源 URL[^|]*\|[^|]*\| (\d+) / (\d+)', (N['main_primary'], N['total']), '主題庫一手來源'),
+    (PROV, r'③ 完全沒有來源[^|]*\|[^|]*\| (\d+) / (\d+)', (N['main_nosource'], N['total']), '主題庫無來源'),
+    (PROV, r'\*\*(\d+) / 154\*\*', N['pool_quote'], '練習池逐字引文'),
+    (PROV, rf'\| (\d+) / {N["pool_total"]} \|\n', N['pool_primary'], '練習池一手來源'),
+    (PROV, r'(\d+) 題答案曾被更正', N['corrections'], 'README 更正題數'),
+    (PROV, r'其中 (\d+) 題附一手來源 URL', N['corr_with_url'], 'README 更正題有 URL'),
+    (PROV, r'另外 (\d+) 題的依據是標準條文', N['corr_no_url'], 'README 更正題無 URL'),
     (README, r'題庫中有 \*\*(\d+) 題\*\*的答案會隨法規變動', N['time_sensitive'], 'README time_sensitive'),
     (CURRENCY, r'\*\*(\d+) 題\*\*標記 `time_sensitive`', N['time_sensitive'], 'CURRENCY time_sensitive'),
     # 引用複驗那張表 —— 這四個數字過去**完全沒人同步**
-    (README, r'\| 引用正確[^|]*\| \*\*(\d+)\*\*', N['ca_supported'], 'README 引用正確'),
-    (README, r'\| \*\*引錯地方[^|]*\| \*\*(\d+)\*\*', N['ca_wrong'], 'README 引錯地方'),
-    (README, r'\| 主題相關[^|]*\| (\d+)', N['ca_no_quote'], 'README 主題相關無引文'),
-    (README, r'\| 連結已死[^|]*\| (\d+)', N['ca_dead'], 'README 連結已死'),
+    (PROV, r'\| 引用正確[^|]*\| \*\*(\d+)\*\*', N['ca_supported'], 'README 引用正確'),
+    (PROV, r'\| \*\*引錯地方[^|]*\| \*\*(\d+)\*\*', N['ca_wrong'], 'README 引錯地方'),
+    (PROV, r'\| 主題相關[^|]*\| (\d+)', N['ca_no_quote'], 'README 主題相關無引文'),
+    (PROV, r'\| 連結已死[^|]*\| (\d+)', N['ca_dead'], 'README 連結已死'),
     # 這兩條**第一版漏掉了**（第四次犯同一個錯）。docs-counts.test.ts 有守它們，
     #    但這支沒有 —— 於是 README 的「已換成…」凍在 27，而資料走到 29，CI 紅。
     #    **gate 守幾個數字，這裡就要涵蓋幾個。**
-    (README, r'\*\*(\d+) 題\*\*已換成經機械驗證的一手來源', N['ca_replaced'], 'README 已換來源'),
-    (README, r'\*\*(\d+) 題\*\*[^\n]*`citation_audit\.verdict = citation_disputed`',
+    (PROV, r'\*\*(\d+) 題\*\*已換成經機械驗證的一手來源', N['ca_replaced'], 'README 已換來源'),
+    (PROV, r'\*\*(\d+) 題\*\*[^\n]*`citation_audit\.verdict = citation_disputed`',
      N['ca_disputed'], 'README 仍存疑'),
-    (README, r'\*\*(\d+) 題的答案已與官方答案卡逐題對過', N['akc_confirmed'], 'README 答案卡確認'),
+    (PROV, r'\*\*(\d+) 題的答案已與官方答案卡逐題對過', N['akc_confirmed'], 'README 答案卡確認'),
     # 以下五條是 2026-09-27 補的（詳見上方註解）：gate 在守、工具卻沒同步。
     (README, r'\| \*\*主題庫\*\* \| \*\*(\d+) 題\*\*', N['total'], 'README 主題庫題數（表格）'),
     (README, r'本輪只實查\s*\*\*\d+\s*/\s*(\d+)', N['total'], 'README 本輪實查分母'),

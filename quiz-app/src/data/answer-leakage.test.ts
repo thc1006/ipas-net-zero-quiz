@@ -13,7 +13,10 @@ import datasetRaw from './integrated_dataset.json';
 import poolRaw from './practice_pool.json';
 import { blatantLengthTells, longestOptionScore, type LeakItem } from '../utils/answer-leakage';
 
-const README = readFileSync(join(__dirname, '../../../README.md'), 'utf8');
+// 這張表原本在 README，2026-09-27 隨「逐輪稽核的量化結果」整節搬到 DATA-PROVENANCE.md
+// （README 從 543 行縮到 140 行 —— 一個沒人讀完的 README 等於沒有 README）。
+// 錨點跟著搬，不是刪掉：數字換了地方仍然要被對帳。
+const PROVENANCE = readFileSync(join(__dirname, '../../../DATA-PROVENANCE.md'), 'utf8');
 
 const DS = datasetRaw as unknown as { gist_items: LeakItem[]; our_unique_items: LeakItem[] };
 const POOL = poolRaw as unknown as {
@@ -35,10 +38,10 @@ describe('答案洩漏：「無腦選最長」能考幾分', () => {
   // 所以這裡做的是：**把它釘住，不准它變得更爛，而且不准 README 少說。**
   // 錨點綁在**表格列首的標籤**上，不要綁在散文上 ——
   //    這個 repo 已經被「有人潤稿，規則就靜靜死掉」咬過兩次。
-  it('README 必須誠實揭露 AI 產題的「選最長」得分率，且與資料一致', () => {
-    const m = README.match(/\|\s*\*\*練習池 AI 產題\*\*\s*\|\s*\*\*([\d.]+)%\*\*/);
-    expect(m, 'README 找不到「練習池 AI 產題」那一列的得分率').not.toBeNull();
-    expect(Number(m![1]), 'README 的數字與資料實算不符').toBe(pct(longestOptionScore(AI)));
+  it('文件必須誠實揭露 AI 產題的「選最長」得分率，且與資料一致', () => {
+    const m = PROVENANCE.match(/\|\s*\*\*練習池 AI 產題\*\*\s*\|\s*\*\*([\d.]+)%\*\*/);
+    expect(m, 'DATA-PROVENANCE 找不到「練習池 AI 產題」那一列的得分率').not.toBeNull();
+    expect(Number(m![1]), 'DATA-PROVENANCE 的數字與資料實算不符').toBe(pct(longestOptionScore(AI)));
   });
 
   it('AI 產題的洩漏程度不准再惡化（釘在現況、比原始比率不比四捨五入值）', () => {

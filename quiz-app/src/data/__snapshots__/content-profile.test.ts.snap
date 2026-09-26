@@ -1,0 +1,98 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`語料輪廓（換題庫時用 -u 重新產生） > 棘輪與反空轉門檻的清單（換題庫時需人工重設） 1`] = `
+[
+  {
+    "semantics": "只准下降",
+    "what": "AI 產題「選最長」得分率上限",
+    "where": "answer-leakage.test.ts",
+  },
+  {
+    "semantics": "只准變少",
+    "what": "STEM_UNBOUND / EXPLANATION_UNBOUND 清冊與其上限",
+    "where": "clause-citation.test.ts",
+  },
+  {
+    "semantics": "依語料重設",
+    "what": "題幹／解析引用條號的最少題數（反空轉）",
+    "where": "clause-citation.test.ts",
+  },
+  {
+    "semantics": "依語料重設",
+    "what": "全庫母體下限（反空轉）",
+    "where": "scorable.test.tsx",
+  },
+  {
+    "semantics": "依語料重設",
+    "what": "主題庫／練習池題數下限（反空轉）",
+    "where": "bank-integrity.test.ts",
+  },
+  {
+    "semantics": "換題庫時清空重建",
+    "what": "CORRECTED_BUT_STABLE 等題號登記簿",
+    "where": "dataset-integrity.test.ts",
+  },
+  {
+    "semantics": "依語料重設",
+    "what": "帶答案依據的題數下限（反空轉）",
+    "where": "evidence-display.test.ts",
+  },
+  {
+    "semantics": "執行工具即可",
+    "what": "文件數字對帳（由 tools/sync_derived_counts.py 維護）",
+    "where": "docs-counts.test.ts",
+  },
+]
+`;
+
+exports[`語料輪廓（換題庫時用 -u 重新產生） > 答案洩漏指標 1`] = `
+{
+  "無腦選最長得分率": {
+    "AI 產題": "65.0%（65/100）",
+    "gist": "45.3%（247/545）",
+    "公開模擬題": "42.6%（23/54）",
+    "還原題": "57.6%（136/236）",
+  },
+  "露骨長度洩漏題數": {
+    "AI 產題": 30,
+    "gist": 1,
+    "還原題": 3,
+  },
+}
+`;
+
+exports[`語料輪廓（換題庫時用 -u 重新產生） > 題庫規模與分布 1`] = `
+{
+  "主題庫": {
+    "gist": 545,
+    "依考科": {
+      "考科1": 439,
+      "考科2": 342,
+    },
+    "有引文": 764,
+    "有答案": 781,
+    "有解析": 764,
+    "總題數": 781,
+    "還原題": 236,
+  },
+  "品質旗標": {
+    "主題庫使用次數": {
+      "time_sensitive": 132,
+    },
+    "練習池使用次數": {
+      "low_confidence": 3,
+      "time_sensitive": 64,
+    },
+    "詞彙量": 9,
+  },
+  "練習池": {
+    "依來源": {
+      "ai_generated": 100,
+      "external_mock": 54,
+    },
+    "有引文": 143,
+    "有答案": 154,
+    "總題數": 154,
+  },
+}
+`;
