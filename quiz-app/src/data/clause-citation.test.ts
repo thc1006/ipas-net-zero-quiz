@@ -224,8 +224,22 @@ describe('evidence[].clause 的宣告必須站得住', () => {
       .map((e) => ({ id: who(it), e }))
   );
 
+  const crossCheckable = declared.filter(({ e }) => {
+    const code = pcodeFromUrl(e.url);
+    return code !== null && PINNED_LAWS[code] !== undefined;
+  });
+
   it('這條 gate 不能空轉：確實有引文宣告了 clause', () => {
     expect(declared.length).toBeGreaterThan(5);
+  });
+
+  // 下面那條交叉核對只對「網址帶 pcode 且屬釘住法規」的宣告生效。若有一天一則都不符，
+  // 它會安靜地變成永遠通過 —— 那正是我在這個 repo 寫過的空轉 gate 的形狀。
+  it('交叉核對本身不能空轉：至少要有數則宣告落在釘住的法規上', () => {
+    expect(
+      crossCheckable.length,
+      '沒有任何 clause 宣告指向釘住的法規 —— 下面那條核對等於沒在跑'
+    ).toBeGreaterThanOrEqual(5);
   });
 
   // 宣告是人寫的，所以凡是**機器查得到原文**的（釘住的法規，網址帶 pcode），
@@ -233,9 +247,8 @@ describe('evidence[].clause 的宣告必須站得住', () => {
   // 不是因為我們沒驗。
   it('宣告出自釘住法規某一條的引文，必須真的落在該條原文裡', () => {
     const bad: string[] = [];
-    for (const { id, e } of declared) {
-      const code = pcodeFromUrl(e.url);
-      if (!code || !PINNED_LAWS[code]) continue;
+    for (const { id, e } of crossCheckable) {
+      const code = pcodeFromUrl(e.url) as string;
       const key = normalizeClauseKey(e.clause as string);
       const article = key ? norm(articleText(code, key)) : '';
       if (!article) {
