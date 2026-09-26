@@ -15,6 +15,26 @@
 
 要匯出成 QTI／GIFT 的話，從這份 JSON 轉出去比反過來容易 —— 但那是需要時才做的事，不是前提。
 
+## 為什麼刪掉了原本的 dataset.schema.json / item.schema.json
+
+這個目錄從 2026-01-22（`c860e25`）就存在，裡面有 `dataset.schema.json` 與 `item.schema.json`，
+**八個月沒有人動過，也沒有任何程式碼、工具、CI 或文件引用它們**。
+
+它們描述的是一個**已經不存在的格式**：頂層要求 `meta` / `sources` / `items`，
+而現行 `integrated_dataset.json` 是 `meta` / `gist_items` / `our_unique_items`；
+`item.schema.json` 要求 `item_id` / `stem` / `credential` / `source` 四個必填，
+而主題庫的 gist 題根本沒有 `item_id`（它用 `index`）。用 ajv 實測：
+
+```
+現行 integrated_dataset.json 通過那份 schema 嗎？ false
+  (root) must have required property 'sources'
+  (root) must have required property 'items'
+```
+
+一份**描述著不存在格式、又沒有任何東西在驗**的 schema，比沒有 schema 更糟：
+它看起來像契約，實際上是誤導。所以刪除，而不是留著並存 ——
+否則這個目錄會有四份 schema、其中兩份是假的，正是這個 repo 反覆在修的「多份會漂」。
+
 ## 檔案
 
 | 檔案 | 驗證對象 |
