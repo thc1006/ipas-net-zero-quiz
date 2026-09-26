@@ -13,7 +13,7 @@
 - 每題 → `metadata.valid_as_of` + `metadata.sources[]`（一手來源，quarterly workflow 會 curl）
 
 > **`meta.content_review.last_review_date`（本輪窗口起點 `2026-07-13`）不代表「整份題庫已查證到那一天」。**
-> 本輪只實查了 **132 / 781** 題（含 **2026-07-20** 補查的 IFRS/ISSB/TCFD 那批；已查主題見 `meta.content_review.scope`），
+> 本輪只實查了 **133 / 781** 題（含 **2026-07-20** 補查的 IFRS/ISSB/TCFD 那批；已查主題見 `meta.content_review.scope`），
 > 未查題數記於 `not_reviewed_this_round_count`。這些數字皆由 `tools/sync_derived_counts.py` 依公式算、由 gate 釘死在資料上；
 > **這裡不再內嵌會漂的快照（原本的「12 題沿用 2026-01-23」「668 題未標」已刪）。**
 >
@@ -42,7 +42,7 @@
 | 碳費 | — | 2026-05 首徵；一般 300 元，優惠 A 50 / B 100；高碳洩漏係數 0.2 | 環境部 |
 
 一手來源已掛進 `metadata.sources[]`（EUR-Lex 合併版 `02023R0956-20251020`、Omnibus `32025R2083`、
-環境部氣候變遷署、全國法規資料庫、ISO）。**132 題**標記 `time_sensitive`，其中 **112 題**有 source URL
+環境部氣候變遷署、全國法規資料庫、ISO）。**133 題**標記 `time_sensitive`，其中 **112 題**有 source URL
 —— 這點很重要：quarterly workflow **只看得到有 URL 的題目**，修正前 569 題中有 535 題（94 %）對它完全隱形。
 
 ---
@@ -230,3 +230,26 @@ Art 22(1) 原文：
 
 舊版用 `*)` catch-all 把 400/401/408/451/5xx/TLS/逾時全寫成 DEAD，而 issue 文案卻宣稱「只有 404/410/DNS 才算失效」—— 程式與說明不一致，就是在製造下一輪的喊狼來了。
 但**「內容再驗證」仍然只能靠人**（或一輪像這次的 LLM + 一手來源查證）。**排進行事曆，別等 workflow 提醒你。**
+
+## 標準改版監控：ISO/FDIS 14068 將取代 ISO 14068-1:2023
+
+**查核日：2026-08-27。現行有效版本仍是 ISO 14068-1:2023，題庫答案未因此改動。**
+
+ISO 目錄顯示 **ISO/FDIS 14068《Climate change management — Carbon neutrality》** 已進入
+approval 階段（FDIS＝最終國際標準草案），並載明將取代 ISO 14068-1:2023。
+
+這與「連結還通」是兩件事：季排程只 curl URL 看是否 200，**偵測不到標準改版**。
+新版發布時，下列各題涉及的要求、條號與用語都需要重新確認（共 15 題，皆已標 `time_sensitive`）：
+
+- 主題庫：`gist[24]`、`gist[72]`、`gist[78]`、`gist[109]`、`gist[137]`、`gist[147]`、
+  `gist[302]`、`gist[421]`、`gist[422]`、`gist[452]`、`gist[463]`
+- 練習池：`mock-007`、`mock-047`、`intl-019`、`intl_round1_rescued-intl-018`
+
+其中 `gist[452]`、`mock-047`、`intl-019` 先前**沒有標時效**，本次補標。
+
+**觸發條件**：ISO/FDIS 14068 正式發布（狀態由 FDIS 轉為 published）。屆時應逐題重驗，
+而不是只更新日期 —— 條號與用語若變動，題幹與解析都要跟著改。
+
+**刻意不做的事**：沒有把 `valid_as_of` 設成今天。今天只查證了「標準改版狀態」，
+並沒有逐題重驗這 15 題的內容；把日期改成今天等於宣稱已重驗，那是假的。
+

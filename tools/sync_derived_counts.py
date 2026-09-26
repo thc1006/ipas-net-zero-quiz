@@ -251,6 +251,17 @@ docs = {
 #   後來有人在那一格加了一句「連結還通不代表指對地方」—— 正則就對不上了。
 #   **那條規則從此死掉**，而 README 的 740 凍在原地、資料早就走到 746。
 #   現在改成錨在列首的「② 有一手來源 URL」，散文怎麼改都不影響。
+# 引用複驗百分比的分母＝meta.citation_audit.population（docs-counts 那道 gate 也是用它）。
+# 回傳字串而非數字：百分比要保留一位小數，str(83.3) 正好是 '83.3'，但 str(83.0) 是 '83.0' 也對。
+_CA_POP = (ds.get('meta', {}).get('citation_audit') or {}).get('population')
+
+
+def _pct(count: int) -> str:
+    if not _CA_POP:
+        raise RuntimeError('meta.citation_audit.population 缺失，無法計算引用複驗百分比')
+    return f'{round(count / _CA_POP * 100, 1)}'
+
+
 RULES = [
     (README, r'本輪只實查\s*\*\*(\d+)\s*/', N['reverified'], 'README 本輪實查題數'),
     (CURRENCY, r'本輪只實查了\s*\*\*(\d+)\s*/', N['reverified'], 'CURRENCY 本輪實查題數'),
@@ -289,6 +300,20 @@ RULES = [
     (LLMS, r'(\d+) 題加強練習', N['pool_total'], 'llms.txt 加強練習題數', 'all'),
     # 錨點與 docs-counts 那道 gate 用同一個形狀（考科一 N + 考科二 M），一次抓兩個 capture
     (README, r'考科一\s*(\d+)\s*\+\s*考科二\s*(\d+)', (N['subject1'], N['subject2']), 'README 考科一/二題數'),
+    # 引用複驗表下方那句手算註記（「319＋29＋17＋4＝369」）。
+    # 複審抓到它與表格不一致 —— 表格是工具維護的、註記是手寫的，結果就漂了。
+    # 這是同一個教訓的第 N 次：**gate 守幾個數字、文件寫幾個數字，這裡就要涵蓋幾個。**
+    (PROV, r'(\d+)＋(\d+)＋(\d+)＋(\d+)＝\d+',
+     (N['ca_supported'], N['ca_wrong'], N['ca_no_quote'], N['ca_dead']), 'DATA-PROVENANCE 引用複驗手算註記'),
+    # 引用複驗那張表的**百分比**。
+    #
+    # 這是第五次犯同一個錯：docs-counts.test.ts 有一條 gate 要求
+    # 「百分比必須等於 round(count / population * 100, 1)，不得手填」，
+    # 而這支工具只同步 count、不同步百分比 —— 於是 count 一動，百分比就漂，CI 紅。
+    # 這支工具自己的註解就寫著「gate 守幾個數字，這裡就要涵蓋幾個」。
+    (PROV, r'\| 引用正確[^|]*\| \*\*\d+\*\* \| ([\d.]+)%', _pct(N['ca_supported']), 'DATA-PROVENANCE 引用正確 %'),
+    (PROV, r'\| \*\*引錯地方[^|]*\| \*\*\d+\*\* \| ([\d.]+)%', _pct(N['ca_wrong']), 'DATA-PROVENANCE 引錯地方 %'),
+    (PROV, r'\| 主題相關[^|]*\| \d+ \| ([\d.]+)%', _pct(N['ca_no_quote']), 'DATA-PROVENANCE 主題相關 %'),
 ]
 
 dead_rules = []

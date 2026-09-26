@@ -549,6 +549,30 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
 
   // 引用稽核的百分比不得手填 —— 必須等於 round(count / population * 100, 1)。
   // 先前 README 寫 79%／9.1%，而實算是 82.8%／4.7%：數字漂了、沒人守。
+  // 表格下方那句手算註記（「319＋29＋17＋4＝369」）。複審抓到它與表格不一致：
+  // 表格是 sync_derived_counts.py 維護的、註記是手寫的，於是漂了。
+  // 工具已補上同步規則，這裡補上守門 —— 這個 repo 的慣例是「工具＋gate 成對」，
+  // 只有工具沒有 gate 的話，有人手改就沒人發現。
+  it('引用複驗表下方的手算註記必須等於表格四列', () => {
+    const note = PROVENANCE.match(/(\d+)＋(\d+)＋(\d+)＋(\d+)＝(\d+)/);
+    expect(note, 'DATA-PROVENANCE 找不到「a＋b＋c＋d＝e」那句手算註記').not.toBeNull();
+    const [a, b, c, d, total] = note!.slice(1).map(Number);
+    // 用 regex 字面值，不用模板字串組 —— 前者不會被 escape 處理吃掉（我剛好踩了一次）
+    const cnt = (re: RegExp): number | null => {
+      const m = PROVENANCE.match(re);
+      return m ? Number(m[1]) : null;
+    };
+    const rows = [
+      cnt(/\| 引用正確[^|]*\| \*\*(\d+)\*\*/),
+      cnt(/\| \*\*引錯地方[^|]*\| \*\*(\d+)\*\*/),
+      cnt(/\| 主題相關[^|]*\| (\d+)/),
+      cnt(/\| 連結已死[^|]*\| (\d+)/),
+    ];
+    expect(rows, `DATA-PROVENANCE 找不到其中一列：${rows.join('/')}`).not.toContain(null);
+    expect([a, b, c, d], '註記的四個數字與表格四列不符').toEqual(rows);
+    expect(a + b + c + d, '註記自己的加總算錯了').toBe(total);
+  });
+
   it('引用稽核百分比必須等於 count / population（不得手填、不得漂）', () => {
     const pop = (DS.meta as { citation_audit?: { population?: number } }).citation_audit
       ?.population;

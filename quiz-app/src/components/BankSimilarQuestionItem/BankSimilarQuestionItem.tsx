@@ -7,6 +7,7 @@ import {
   type KeyboardEvent,
 } from 'react';
 import type { QuizQuestion, QuizOption } from '../../types/quiz';
+import { subjectLabel } from '../../utils/subject-label';
 import { findRedundantPrefix } from '../../utils/option-prefix';
 import '../QuestionCard/QuestionCard.css';
 import './BankSimilarQuestionItem.css';
@@ -140,7 +141,7 @@ export function BankSimilarQuestionItem({
           <p className="bank-similar-no-options">此題無選項資料</p>
           <div className="similar-meta">
             <span className="similar-subject">
-              {question.subject === '考科1' ? '考科一' : '考科二'}
+              {subjectLabel(question.subject)}
             </span>
           </div>
         </div>
@@ -157,7 +158,7 @@ export function BankSimilarQuestionItem({
         </p>
         <div className="similar-meta similar-meta--top">
           <span className="similar-subject">
-            {question.subject === '考科1' ? '考科一' : '考科二'}
+            {subjectLabel(question.subject)}
           </span>
         </div>
 

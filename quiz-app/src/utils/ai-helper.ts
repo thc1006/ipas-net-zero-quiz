@@ -292,6 +292,14 @@ async function runPuterAuth(): Promise<PuterAuthResult> {
 export interface AIResponse {
   success: boolean;
   content: string;
+  /**
+   * **這不是校準過的信心度，不要顯示成百分比。**
+   *
+   * 它是 estimateConfidence() 依「回覆長度、有沒有出現 A/B、命中幾個關鍵詞」加減出來的
+   * 啟發式分數 —— 與答案是否正確、是否符合一手來源、有沒有捏造條號，全都沒有關係。
+   * 先前 UI 把它渲染成「信心度 85%」，那是一個看起來精確、實際上憑空生成的數字。
+   * 現在只保留作為內部門檻（低於門檻時在內容尾端附上提醒），不對使用者呈現數值。
+   */
   confidence: number;
   error?: string;
 }
