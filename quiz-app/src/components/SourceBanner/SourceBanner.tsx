@@ -11,7 +11,11 @@
 //    2026-07 拿法條逐字比對，找到 13 個實質缺陷，**13 個當初全都被判 CONFIRMED**。
 //    一句假的保證比沒有保證更糟。詳見 SourceBadge.tsx 開頭。
 // - 帶 quality_flag：紅邊警示
-import type { PracticePoolSourceType, PracticePoolQualityFlag } from '../../types/practicePool';
+import type {
+  PracticePoolSourceType,
+  PracticePoolQualityFlag,
+  DataQualityFlag,
+} from '../../types/practicePool';
 import './SourceBanner.css';
 
 interface SourceBannerProps {
@@ -42,10 +46,19 @@ const SOURCE_META: Record<
   },
 };
 
-const FLAG_HINT: Partial<Record<PracticePoolQualityFlag, string>> = {
+// 同 SourceBadge：對資料層詞彙窮舉，漏掉一個就編不過。
+// 失效型旗標一律說明「已不列入計分」—— 使用者看到一題沒有標準答案時，
+// 至少知道那是我們刻意撤下的，而不是壞掉。
+const FLAG_HINT: Record<DataQualityFlag, string> = {
   time_sensitive: '時效性 — 答案會隨時間變動（如 RE100 名單），建議查最新官方資料',
-  ambiguous: '爭議 — 不同教材可能給出不同答案，請參考多方來源',
   low_confidence: '低信心 — 產題當下自評信心較低，務必自行查證',
+  duplicate_topic: '主題重複 — 與其他題目考點重疊，僅供多練一次',
+  ambiguous: '爭議 — 不同教材可能給出不同答案，本題已不列入計分',
+  disputed: '題目有爭議 — 題目本身的成立性有疑義，本題已不列入計分',
+  disputed_answer: '答案有爭議 — 各來源對正解不一致，本題已不列入計分',
+  multiple_correct: '多重正解 — 不只一個選項成立，本題已不列入計分',
+  unverifiable_evidence: '依據待查證 — 目前找不到站得住的一手依據，本題已不列入計分',
+  retired: '已退場 — 題目已過時或被取代，本題已不列入計分',
 };
 
 export function SourceBanner({

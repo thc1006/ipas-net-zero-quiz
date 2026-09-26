@@ -104,10 +104,11 @@ export function buildFixturePool(): PracticePool {
         ai_metadata: aiMeta,
       },
     }),
-    // unmapped subject → 取得 unmapped_subject flag
+    // unmapped subject → toQuizQuestion 注入 unmapped_subject flag。
+    // 這裡刻意不預先寫進 quality_flags：那個旗標是 runtime 推導出來的，
+    // 資料檔不存（practice-pool-counts.ts 的註解亦如此聲明），預寫等於在測一個不存在的輸入。
     item(5, {
       subject: null,
-      quality_flags: ['unmapped_subject'],
     }),
     // 無答案題 —— 模擬真實資料中「來源互相矛盾、刻意排除計分」的題目
     // （例：PAS 2060 撤回日期）。answer=null 必須同時標 ambiguous，

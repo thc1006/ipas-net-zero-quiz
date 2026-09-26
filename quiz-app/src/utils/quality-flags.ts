@@ -13,13 +13,11 @@
 // 「安靜地少報」。
 
 import { hasPrimarySource, hostOf } from './source-authority';
+import { DATA_QUALITY_FLAGS } from '../types/practicePool';
 
-export const KNOWN_FLAGS: ReadonlySet<string> = new Set([
-  'time_sensitive',
-  'ambiguous',
-  'low_confidence',
-  'duplicate_topic',
-]);
+// 詞彙不再手抄第四份 —— 這份原本漏了所有失效型旗標（disputed / retired 等），
+// 於是把某題標成 disputed 會被判「未知的 flag」，而不是離開計分池。
+export const KNOWN_FLAGS: ReadonlySet<string> = new Set(DATA_QUALITY_FLAGS);
 
 /** 兩個題庫都能映射到的最小形狀。 */
 export interface FlaggedItem {

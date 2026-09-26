@@ -9,6 +9,7 @@ import type {
   UniqueQuestion,
   ExamSubject,
 } from '../types/quiz';
+import { isQuestionScorable } from '../utils/scorable';
 
 // 載入原始資料（build 時會被 Vite 處理）
 import rawData from './integrated_dataset.json';
@@ -115,6 +116,9 @@ function convertGistQuestion(q: GistQuestion): QuizQuestion {
     sourceType: 'gist',
     year: null,
     hasAnswer: q.answer !== null,
+    // 主題庫 raw data 有 quality_flags，先前沒帶進 runtime ——
+    // 於是題目標了 ambiguous 也永遠到不了 isQuestionScorable()。
+    qualityFlags: q.quality_flags ?? [],
     sources: collectSources(q),
     evidence: pickEvidence(q),
     explanation: q.explanation,
@@ -134,6 +138,9 @@ function convertUniqueQuestion(q: UniqueQuestion): QuizQuestion {
     sourceType: 'unique',
     year: q.year,
     hasAnswer: q.answer !== null,
+    // 主題庫 raw data 有 quality_flags，先前沒帶進 runtime ——
+    // 於是題目標了 ambiguous 也永遠到不了 isQuestionScorable()。
+    qualityFlags: q.quality_flags ?? [],
     sources: collectSources(q),
     evidence: pickEvidence(q),
     explanation: q.explanation ?? undefined,
@@ -157,7 +164,7 @@ export const subject2Questions = allQuestions.filter(
 );
 
 /** 有答案的題目 */
-export const questionsWithAnswer = allQuestions.filter((q) => q.hasAnswer);
+export const questionsWithAnswer = allQuestions.filter((q) => isQuestionScorable(q));
 
 /**
  * 依據考科取得題目
@@ -199,7 +206,7 @@ export function getRandomQuestions(
 ): QuizQuestion[] {
   let pool = dedupeByContent(getQuestionsBySubject(subject));
   if (onlyWithAnswer) {
-    pool = pool.filter((q) => q.hasAnswer);
+    pool = pool.filter((q) => isQuestionScorable(q));
   }
 
   // Fisher-Yates 洗牌演算法
@@ -223,7 +230,7 @@ export function getRandomQuestionsFromPool(
   let filtered = dedupeByContent(
     subject === 'all' ? pool : pool.filter((q) => q.subject === subject)
   );
-  if (onlyWithAnswer) filtered = filtered.filter((q) => q.hasAnswer);
+  if (onlyWithAnswer) filtered = filtered.filter((q) => isQuestionScorable(q));
   const shuffled = [...filtered];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -279,7 +286,7 @@ export function getSimilarQuestions(
   // 排除無標準答案的題（answer=null，已排除計分）—— 相似題是給使用者對照作答用的，
   // 出一題「沒有正解可對」的相似題只會困惑（同 useQuiz 抽題層的處理，Refs #93/#94/#95）。
   const scored = allQuestions
-    .filter((q) => q.id !== questionId && q.hasAnswer)
+    .filter((q) => q.id !== questionId && isQuestionScorable(q))
     .map((q) => {
       let score = 0;
       // 同考科加分

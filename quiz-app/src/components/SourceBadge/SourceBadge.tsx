@@ -18,7 +18,11 @@
 // 而 EU AI Act Art.50 的立法目的正好相反。
 // 文案改成：說清楚「哪些是機器可驗證的」「哪些不是」。
 import './SourceBadge.css';
-import type { PracticePoolSourceType, PracticePoolQualityFlag } from '../../types/practicePool';
+import type {
+  PracticePoolSourceType,
+  PracticePoolQualityFlag,
+  DataQualityFlag,
+} from '../../types/practicePool';
 
 interface SourceBadgeProps {
   sourceType: PracticePoolSourceType;
@@ -32,10 +36,22 @@ const SOURCE_LABEL: Record<PracticePoolSourceType, { text: string; icon: string;
   ai_generated: { text: 'AI 產題', icon: 'auto_awesome', tone: 'ai' },
 };
 
-const FLAG_LABEL: Partial<Record<PracticePoolQualityFlag, string>> = {
+// 對**資料層詞彙**窮舉（Record 而非 Partial<Record>）—— 這是刻意的：
+// 詞彙新增一個旗標卻忘了給說明，tsc 會當場擋下，而不是讓它在畫面上安靜消失。
+// 先前是 Partial 且只寫了三個，於是 duplicate_topic 與所有失效型旗標
+// （disputed / retired 等）標了等於沒標：題目離開計分池，使用者卻看不到任何說明。
+// runtime-only 的 unmapped_subject 刻意不在這裡 —— 它是內部推導的分類狀態，
+// 不是題目品質問題，不該對使用者出徽章。
+const FLAG_LABEL: Record<DataQualityFlag, string> = {
   time_sensitive: '時效',
-  ambiguous: '爭議',
   low_confidence: '低信心',
+  duplicate_topic: '主題重複',
+  ambiguous: '爭議',
+  disputed: '題目有爭議',
+  disputed_answer: '答案有爭議',
+  multiple_correct: '多重正解',
+  unverifiable_evidence: '依據待查證',
+  retired: '已退場',
 };
 
 export function SourceBadge({ sourceType, qualityFlags = [], compact = false }: SourceBadgeProps) {
