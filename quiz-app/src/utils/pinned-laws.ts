@@ -58,19 +58,30 @@ export function cnToArabic(t: string): string {
 }
 
 /** 條號的中文與阿拉伯寫法（給「引文裡是否出現該條號」用） */
-export function clauseChineseForms(key: string): string[] {
-  const n = Number(key);
-  if (!Number.isInteger(n) || n < 1 || n > 99) return [];
+function cnNumeral(n: number): string | null {
+  if (!Number.isInteger(n) || n < 1 || n > 99) return null;
   const d = (x: number): string => CN[x];
-  const zh =
-    n < 10
-      ? d(n)
-      : n === 10
-        ? '十'
-        : n < 20
-          ? `十${d(n % 10)}`
-          : `${d(Math.floor(n / 10))}十${n % 10 ? d(n % 10) : ''}`;
-  return [`第${zh}條`, `第${n}條`];
+  return n < 10
+    ? d(n)
+    : n === 10
+      ? '十'
+      : n < 20
+        ? `十${d(n % 10)}`
+        : `${d(Math.floor(n / 10))}十${n % 10 ? d(n % 10) : ''}`;
+}
+
+export function clauseChineseForms(key: string): string[] {
+  // 「之N」型條號（12-1 → 第十二條之一）。原本只處理純整數，於是 `ind-004` 的
+  // 「第十條之一」明明逐字寫在引文裡卻綁不上 —— 是這支 helper 漏了，不是資料缺依據。
+  const sub = /^([0-9]+)-([0-9]+)$/.exec(key);
+  if (sub) {
+    const a = cnNumeral(Number(sub[1]));
+    const b = cnNumeral(Number(sub[2]));
+    if (!a || !b) return [];
+    return [`第${a}條之${b}`, `第${sub[1]}條之${sub[2]}`, `第${a}條之${sub[2]}`];
+  }
+  const zh = cnNumeral(Number(key));
+  return zh ? [`第${zh}條`, `第${Number(key)}條`] : [];
 }
 
 /** 條號樣式：§6.4 / 第 7 條 / 第十二條之一 / ¶17 / Article 6.2 / Annex III */

@@ -84,7 +84,9 @@ function boundIn(it: Item, text: string): boolean {
     norm(m[1])
   );
 
-  return keys.some((key) => {
+  // every 而非 some：複審指出用 some 時，題幹寫「§3、§17、§18」只要綁住其中一條就過關，
+  // 於是「新增一個綁不住的條號」永遠不會讓 gate 轉紅 —— 那正是這道 gate 該抓的事。
+  return keys.every((key) => {
     // 1) 引文逐字落在釘住的那一條裡
     for (const code of laws) {
       const article = norm(articleText(code, key));
@@ -100,8 +102,14 @@ function boundIn(it: Item, text: string): boolean {
     // 4) 引文 URL 的路徑本身就指名該條（unfccc 的 .../article-6/article-62）
     const slug = new RegExp(`article${key.replace(/[^0-9]/g, '')}(?![0-9])`);
     if (urls.some((u) => slug.test(u.toLowerCase().replace(/[^a-z0-9]/g, '')))) return true;
-    // 5) 引文自己宣告它出自哪一條（見 Evidence.clause）
-    if (evs.some((e) => e.clause && normalizeClauseKey(e.clause) === key)) return true;
+    // 刻意**沒有**第 5 條路徑「引文自己宣告它出自哪一條」。
+    //
+    // 我一度把 evidence[].clause 當成綁定條件，複審指出那等於讓任何 IFRS／ISO 引文
+    // 自填一個段號就能讓 gate 轉綠 —— 而這道 gate 的全部意義就是證明引用指向該條。
+    // 想通之後我做得比建議更徹底：宣告完全不參與綁定。**自我宣告不能當成它自己的證據。**
+    // clause 仍然有價值（它讓下方「屬釘住法規者一律機器核對」那道 gate 成立，也讓審閱者
+    // 看得到這則引文被主張出自哪裡），但拿不到全文的標準就是拿不到 —— 那種情形要進清冊，
+    // 讓它一直被看見，而不是用一個欄位把它藏起來。
     return false;
   });
 }
@@ -117,9 +125,15 @@ function boundIn(it: Item, text: string): boolean {
  * 真正綁不住的只剩下面這些，明列出來、只准變少。
  */
 const STEM_UNBOUND: ReadonlyArray<{ id: string; why: string }> = [
-  // 目前為空。`pool-aig-ifrs2026-003` 原本登記在此（理由：IFRS 全文 PDF 需登入），
-  // 2026-09-27 撤回 —— 會計研究發展基金會公開了 IFRS S1／S2 正體中文版全文，
-  // 段號與英文版一致，第 3、17、18 段都已逐字存為引文。結論下太快的一筆。
+  {
+    id: 'pool-aig-ifrs2026-003',
+    why:
+      'IFRS S1 的段號目前無法機器核對。全文有免費一手來源（會計研究發展基金會的正體中文版，' +
+      '第 3／17／18 段已逐字存為引文，並以 evidence[].clause 宣告出處），但那份 PDF 不在釘選語料裡，' +
+      '機器只看得到「有一則引文自稱出自第 3 段」—— 自我宣告不能當成它自己的證據。' +
+      '要移除這一筆，正途是把那兩份 PDF 比照 law-articles.pinned.json 釘起來（工具鏈已有 fitz），' +
+      '之後第 1 條綁定路徑會自動生效。',
+  },
 ];
 
 /**
@@ -130,32 +144,67 @@ const STEM_UNBOUND: ReadonlyArray<{ id: string; why: string }> = [
  * 以及付費標準（ISO／IFRS）的段號。**這份清冊只准變少**：
  * 新出現而不在清冊裡的，一律轉紅。
  */
+/**
+ * 解析裡指名、但綁不住的條號。
+ *
+ * 從 28 筆增為 50 筆 —— 不是變差，是把 `some` 改成 `every` 之後，原本被
+ * 「同一題只要有一條綁得住就算過」遮住的那些現形了。複審正是點出這件事：
+ * 用 some 時「新增一個綁不住的條號」永遠不會讓 gate 轉紅，而那是這道 gate 該抓的。
+ *
+ * 綁不住的三類原因：
+ *   1. 外部模擬題（vocus）隨題匯入的原作者解析，引的是付費標準（ISO 14064／50001 等）節號；
+ *   2. 引的是**沒有釘選**的法規（年報準則 G0400022、太陽光電設置標準 D0070319 等）；
+ *   3. 引的是「本法第 N 條」，而那部本法未釘選。
+ * **這份清冊只准變少**：新出現而不在清冊裡的一律轉紅。
+ */
 const EXPLANATION_UNBOUND: ReadonlySet<string> = new Set([
   'S_VOCUS_02-q010',
   'gist-29',
   'gist-46',
   'gist-83',
+  'gist-89',
   'gist-179',
   'gist-255',
   'gist-312',
   'gist-314',
   'gist-408',
+  'pool-aig-ifrs2026-003',
   'pool-aig-ind-010',
   'pool-aig-intl-007',
-  'pool-aig-intl-019',
+  'pool-aig-tw_regs_00-v2',
   'pool-aig-tw_regs_01-v2',
+  'pool-aig-tw_regs_05-v2',
+  'pool-aig-tw_regs_07-v2',
+  'pool-aig-tw_regs_09-v2',
+  'pool-aig-tw_regs_10-v2',
+  'pool-aig-tw_regs_12-v2',
+  'pool-aig-tw_regs_15-v2',
+  'pool-aig-tw_regs_16-v2',
+  'pool-aig-tw_regs_19-v2',
+  'pool-aig-tw_regs_27-v2',
+  'pool-aig-tw_regs_28-v2',
+  'pool-aig-tw_regs_32-v2',
+  'pool-aig-tw_regs_36-v2',
+  'pool-aig-tw_regs_38-v2',
+  'pool-aig-tw_regs_45-v2',
   'pool-em-ipas_vocus_mock-001',
   'pool-em-ipas_vocus_mock-002',
+  'pool-em-ipas_vocus_mock-008',
   'pool-em-ipas_vocus_mock-011',
   'pool-em-ipas_vocus_mock-014',
   'pool-em-ipas_vocus_mock-015',
+  'pool-em-ipas_vocus_mock-016',
+  'pool-em-ipas_vocus_mock-020',
   'pool-em-ipas_vocus_mock-025',
   'pool-em-ipas_vocus_mock-026',
   'pool-em-ipas_vocus_mock-028',
+  'pool-em-ipas_vocus_mock-040',
   'pool-em-ipas_vocus_mock-044',
   'pool-em-ipas_vocus_mock-046',
   'pool-em-ipas_vocus_mock-047',
   'pool-em-ipas_vocus_mock-049',
+  'pool-em-ipas_vocus_mock-052',
+  'pool-em-ipas_vocus_mock-053',
   'pool-em-ipas_vocus_mock-054',
   'pool-em-ipas_vocus_mock-055',
   'pool-em-ipas_vocus_mock_rescued-050',
@@ -212,8 +261,8 @@ describe('解析裡指名的條號，同樣要綁得住', () => {
     ).toEqual([]);
   });
 
-  it('清冊只准變少（現況 28 題）', () => {
-    expect(EXPLANATION_UNBOUND.size).toBeLessThanOrEqual(28);
+  it('清冊只准變少（現況 50 題）', () => {
+    expect(EXPLANATION_UNBOUND.size).toBeLessThanOrEqual(50);
   });
 });
 
