@@ -155,9 +155,12 @@ def test_assemble_does_not_modify_its_input(snapshot, dataset):
 
 def test_a_declared_fix_that_changes_nothing_is_refused(snapshot, dataset, monkeypatch):
     # raw ≠ canonical ⟺ 有列明的修正。表上多一筆「改了等於沒改」的修正，就是紀錄與事實不符
+    # （用錯位區段以外的第 20 題：區段內的題目都被別列的 printed_from 指著，加上去會先撞到那條自洽檢查；
+    #   所以這裡把區段放寬到第 20 題，讓它只剩「改了等於沒改」這一個問題）
     fixes = copy.deepcopy(R.OPTION_FIXES)
-    same = _pdf_option(snapshot, 'S_CHU_07', 39, 'C')
-    fixes['S_CHU_07']['questions'][39] = {'key': 'C', 'pdf': same, 'fixed': same}
+    same = _pdf_option(snapshot, 'S_CHU_07', 20, 'C')
+    fixes['S_CHU_07']['misaligned'] = (20, 40)
+    fixes['S_CHU_07']['questions'][20] = {'key': 'C', 'printed_from': 37, 'pdf': same, 'fixed': same}
     monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
     with pytest.raises(SystemExit, match='raw≠canonical=False'):
         R.assemble(snapshot, dataset)
@@ -177,9 +180,12 @@ def test_a_change_that_nobody_declared_is_refused(snapshot, dataset, monkeypatch
 
 def test_a_fix_on_a_question_that_is_not_in_the_bank_is_refused(snapshot, dataset, monkeypatch):
     # S_CHU_07 第 32 題沒有進題庫；修正只記在進題庫的題目上，修它就不會留下任何紀錄
+    # 這一列本身是對的（第 32 題印的「ISO9001」是第 33 題的 (C)，本題的 (C) 是第 31 題印出來的那個），
+    # 所以表是自洽的；錯的只有「修了一題不在題庫裡的題目」
     fixes = copy.deepcopy(R.OPTION_FIXES)
     printed = _pdf_option(snapshot, 'S_CHU_07', 32, 'C')
-    fixes['S_CHU_07']['questions'][32] = {'key': 'C', 'pdf': printed, 'fixed': printed + '（更正）'}
+    fixes['S_CHU_07']['questions'][32] = {'key': 'C', 'printed_from': 33, 'pdf': printed,
+                                          'fixed': fixes['S_CHU_07']['questions'][31]['pdf']}
     monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
     with pytest.raises(SystemExit, match='OPTION_FIXES 修了一題沒有進題庫的題目'):
         R.assemble(snapshot, dataset)
@@ -710,13 +716,41 @@ def test_rewording_the_stem_or_a_distractor_of_a_bank_twin_is_not_an_answer_conf
     assert man['_meta']['answer_conflicts'] == []
 
 
+def test_the_evidence_says_how_alike_the_two_stems_are(snapshot, dataset):
+    # 不計空白與標點完全相同的說「題幹相同」，其餘 0.8 以上的說「題幹幾乎相同」（以前 1.0 也寫幾乎相同）
+    man = R.assemble(snapshot, dataset)
+    said = {n: _disposition(man, 'S_CHU_07', n)['evidence'].split('。')[0] for n in (13, 23, 32)}
+    assert said == {13: '題幹幾乎相同', 23: '題幹幾乎相同', 32: '題幹相同（不計空白與標點）'}
+
+
+@pytest.mark.parametrize(('source', 'twin', 'similarity', 'said'), [
+    ('甲乙丙', '甲乙丙', 1.0, '題幹相同（不計空白與標點）'),
+    ('甲' * 200, '甲' * 199 + '乙', 0.995, '題幹幾乎相同'),  # 相似度四捨五入之後近 1，題幹卻不相同
+    ('甲' * 2000, '甲' * 1999 + '乙', 1.0, '題幹幾乎相同'),  # 四捨五入到三位就是 1.0，題幹還是不相同
+    ('甲乙丙丁', '甲乙丙戊', 0.8, '題幹幾乎相同'),
+    ('甲乙丙丁', '戊己庚辛', 0.79, '主庫那一題的題幹已改寫'),
+], ids=['equal', 'one-character-apart', 'rounded-to-one', 'at-the-threshold', 'below-the-threshold'])
+def test_the_evidence_wording_follows_the_stems_not_the_rounded_similarity(source, twin, similarity, said):
+    assert R._how_alike(source, twin, similarity) == said
+
+
+def test_stems_equal_except_for_spaces_and_punctuation_are_the_same(snapshot, dataset):
+    # 「題幹相同」比的是正規化之後（不計空白與標點）：主庫那一題多了空白與標點，仍寫「題幹相同」
+    ref = _disposition(R.assemble(snapshot, dataset), 'S_CHU_07', 32)['duplicate_of']['dataset_item']
+    reworded = copy.deepcopy(dataset)
+    twin = next(it for it in reworded['gist_items'] + reworded['our_unique_items'] if R._dataset_ref(it) == ref)
+    twin['stem'] = ' ' + twin['stem'] + ' 。'  # 原文不同，正規化之後相同
+    d = _disposition(R.assemble(snapshot, reworded), 'S_CHU_07', 32)
+    assert d['evidence'].startswith('題幹相同（不計空白與標點）。')
+
+
 def test_a_bank_twin_whose_stem_was_rewritten_says_so(snapshot, dataset):
     # 題幹改寫到不像了，配對仍由登記表決定；說明文字不再宣稱「題幹幾乎相同」
     reworded = copy.deepcopy(dataset)
     _gist(reworded, 'gist_items[408]')['stem'] = '下列哪一個選項，組織可以不必在報告裡交代？'
     d = _disposition(R.assemble(snapshot, reworded), 'S_CHU_07', 13)
     assert d['status'] == 'duplicate_in_dataset' and d['stem_similarity'] < 0.8
-    assert d['evidence'].startswith('主庫那一題的題幹已改寫；配對與答案一致由 DATASET_DUPLICATES 登記')
+    assert d['evidence'].startswith('主庫那一題的題幹已改寫。兩邊是同一題、答案一致，由人登記（DATASET_DUPLICATES')
 
 
 def _swap_texts(twin, a, b):
@@ -915,6 +949,92 @@ def test_option_fix_refuses_a_question_without_the_listed_option():
         R.apply_option_fixes(qs, src_id)
 
 
+def test_option_fix_names_a_row_missing_a_template_field(monkeypatch):
+    src_id = next(iter(R.OPTION_FIXES))
+    fixes = copy.deepcopy(R.OPTION_FIXES)
+    first = next(iter(fixes[src_id]['questions']))
+    del fixes[src_id]['questions'][first]['printed_from']
+    monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
+    with pytest.raises(SystemExit, match=f'第 {first} 題：OPTION_FIXES 這一列沒有 printed_from'):
+        R.apply_option_fixes(_source_questions(src_id), src_id)
+
+
+def test_option_fix_templates_fill_only_the_row_fields(monkeypatch):
+    # 說明文字裡其他的大括號（「{GWP}」、單獨一個「}」）原樣保留，不被當成模板欄位
+    src_id = next(iter(R.OPTION_FIXES))
+    fixes = copy.deepcopy(R.OPTION_FIXES)
+    fixes[src_id]['why'] = '印的是「{pdf}」，第 {printed_from} 題的 ({key})；{GWP} 與 } 原樣保留'
+    fixes[src_id]['evidence'] = '更正為「{fixed}」{ 與 {CO2}、{CO2_EQ}、{1, 2} 原樣保留'
+    monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
+    applied = R.apply_option_fixes(_source_questions(src_id), src_id)
+    for n, f in fixes[src_id]['questions'].items():
+        [t] = applied[n]
+        assert t['why'] == f'印的是「{f["pdf"]}」，第 {f["printed_from"]} 題的 ({f["key"]})；{{GWP}} 與 }} 原樣保留'
+        assert t['evidence'] == f'更正為「{f["fixed"]}」{{ 與 {{CO2}}、{{CO2_EQ}}、{{1, 2}} 原樣保留'
+
+
+@pytest.mark.parametrize('typo', ['printed_frm', 'printedFrom', 'Key', 'PDF', 'PRINTED_FROM', 'PRINTED_FRM',
+                                  'printed-from', ' key ', 'pdf1'])
+def test_option_fix_templates_refuse_a_misspelt_field(monkeypatch, typo):
+    # 「{printed_frm}」以前會原樣寫進 manifest 的每一筆 transformation，沒有任何錯誤；
+    # 大小寫打錯的也一樣（全大寫的欄位名也算）。全大寫、又不是欄位名的「{GWP}」不是模板欄位（見上一條）。
+    src_id = next(iter(R.OPTION_FIXES))
+    fixes = copy.deepcopy(R.OPTION_FIXES)
+    fixes[src_id]['why'] = f'本題印的是第 {{{typo}}} 題的 (C)'
+    monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
+    with pytest.raises(SystemExit, match=rf"模板用到不認得的欄位 \['{typo}'\]"):
+        R.apply_option_fixes(_source_questions(src_id), src_id)
+
+
+@pytest.mark.parametrize('field', ['key', 'pdf', 'fixed'])
+def test_option_fix_names_a_row_missing_a_field(monkeypatch, field):
+    # 以前表的自洽檢查先讀了這些欄位：缺了就是一個沒有指名來源與題號的 KeyError
+    questions = _source_questions('S_CHU_07')
+    fixes = copy.deepcopy(R.OPTION_FIXES)
+    del fixes['S_CHU_07']['questions'][33][field]
+    monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
+    with pytest.raises(SystemExit, match=rf"S_CHU_07 第 33 題：OPTION_FIXES 這一列缺少 \['{field}'\]"):
+        R.apply_option_fixes(questions, 'S_CHU_07')
+
+
+@pytest.mark.parametrize('value', [30, [30], [30, 40, 50], ['30', 40], [40, 30], None, [True, 40]],
+                         ids=['a-number', 'one', 'three', 'text', 'reversed', 'none', 'bool'])
+def test_option_fix_misaligned_must_be_two_question_numbers(monkeypatch, value):
+    # 以前格式不對就是 TypeError（沒有指名是哪一份來源、哪一欄）
+    fixes = copy.deepcopy(R.OPTION_FIXES)
+    fixes['S_CHU_07']['misaligned'] = value
+    monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
+    with pytest.raises(SystemExit, match=r'S_CHU_07：OPTION_FIXES 的 misaligned 是 .+，應是錯位區段的頭尾兩個題號'):
+        R.apply_option_fixes(_source_questions('S_CHU_07'), 'S_CHU_07')
+
+
+@pytest.mark.parametrize('missing', ['why', 'evidence', 'decided_on', 'misaligned'])
+def test_option_fix_table_missing_a_key_is_refused(monkeypatch, missing):
+    src_id = next(iter(R.OPTION_FIXES))
+    fixes = copy.deepcopy(R.OPTION_FIXES)
+    del fixes[src_id][missing]
+    monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
+    with pytest.raises(SystemExit, match=f"OPTION_FIXES 的表缺少 \\['{missing}'\\]"):
+        R.apply_option_fixes(_source_questions(src_id), src_id)
+
+
+# printed_from 記的是「本題印的選項其實是哪一題的」。S_CHU_07 第 30 題印的 (C) 是第 31 題的 (C)，
+# 而第 31 題也在表上 —— 所以表內就能自證：第 30 題的 pdf 必須等於第 31 題的 fixed。
+@pytest.mark.parametrize('printed_from, message', [
+    (29, 'printed_from=29，應是第 30–40 題中的另一題'),
+    (41, 'printed_from=41，應是第 30–40 題中的另一題'),
+    (30, 'printed_from=30，應是第 30–40 題中的另一題'),
+    (33, 'printed_from=33，但本題印的「功能單位或宣告單位」不是第 33 題更正後的'),
+], ids=['before-the-block', 'after-the-block', 'itself', 'another-row-that-does-not-match'])
+def test_option_fix_printed_from_must_agree_with_the_table(monkeypatch, printed_from, message):
+    fixes = copy.deepcopy(R.OPTION_FIXES)
+    assert fixes['S_CHU_07']['questions'][30]['printed_from'] == 31  # 案例建立在這一列上
+    fixes['S_CHU_07']['questions'][30]['printed_from'] = printed_from
+    monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
+    with pytest.raises(SystemExit, match=f'S_CHU_07 第 30 題：{message}'):
+        R.apply_option_fixes(_source_questions('S_CHU_07'), 'S_CHU_07')
+
+
 def test_option_fix_refuses_unused_table_entries():
     src_id = next(iter(R.OPTION_FIXES))
     with pytest.raises(SystemExit, match='沒用到的題號'):
@@ -925,3 +1045,80 @@ def test_option_fix_does_not_touch_sources_without_a_table():
     q = _question(30, 'C', '任意')
     assert R.apply_option_fixes([q], 'S_OTHER') == {}
     assert q['options'][2]['text'] == '任意'
+
+
+# 反方向：第 33 題印的「場址特定數據」正是第 34 題更正後的 (C)，所以 printed_from 只能是 34。
+# 以前只要指向區段內、但不在表上的題目（32、37、39），任何一列都改得動，而所有測試照樣全綠。
+@pytest.mark.parametrize('row, wrong', [(33, 37), (34, 39), (35, 37), (40, 39)])
+def test_option_fix_printed_from_must_point_at_the_row_whose_fix_it_printed(monkeypatch, row, wrong):
+    fixes = copy.deepcopy(R.OPTION_FIXES)
+    fixes['S_CHU_07']['questions'][row]['printed_from'] = wrong
+    monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
+    with pytest.raises(SystemExit, match=rf'S_CHU_07 第 {row} 題：本題印的「.+」正是第 \d+ 題更正後的 \(C\)，printed_from 卻是 {wrong}'):
+        R.apply_option_fixes(_source_questions('S_CHU_07'), 'S_CHU_07')
+
+
+def test_option_fix_rows_that_point_outside_the_table_are_pinned():
+    # 這三列印的 (C) 來自不在表上的題目，表內無從自證：依據是乾淨版本 190841777.pdf
+    # （第 31 題印的「內外部議題」是第 32 題的 (C)；第 36、38 題印的是第 37、39 題的 (C)）。
+    # 改了這三個數字，就要重新對照乾淨版本 —— 這裡把它們釘住，改了就轉紅。
+    rows = R.OPTION_FIXES['S_CHU_07']['questions']
+    assert {n: rows[n]['printed_from'] for n in (31, 36, 38)} == {31: 32, 36: 37, 38: 39}
+
+
+def test_option_fix_rows_must_lie_in_the_misaligned_block(monkeypatch):
+    fixes = copy.deepcopy(R.OPTION_FIXES)
+    fixes['S_CHU_07']['questions'][20] = {'key': 'C', 'printed_from': 37, 'pdf': 'x', 'fixed': 'y'}
+    monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
+    with pytest.raises(SystemExit, match=r'第 \[20\] 題不在錯位的區段第 30–40 題裡'):
+        R.apply_option_fixes(_source_questions('S_CHU_07'), 'S_CHU_07')
+
+
+@pytest.mark.parametrize('value', [None, '31', 31.0, True], ids=['none', 'string', 'float', 'bool'])
+def test_printed_from_must_be_a_question_number(monkeypatch, value):
+    # 寫成 None 會同時跳過兩個方向的檢查、manifest 寫出「第 None 題」；寫成字串會丟出沒有指名的 TypeError
+    fixes = copy.deepcopy(R.OPTION_FIXES)
+    fixes['S_CHU_07']['questions'][30]['printed_from'] = value
+    monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
+    with pytest.raises(SystemExit, match=f'S_CHU_07 第 30 題：printed_from 是 {value!r}，應是題號'):
+        R.apply_option_fixes(_source_questions('S_CHU_07'), 'S_CHU_07')
+
+
+def test_a_duplicate_in_the_bank_carries_the_registered_reason(snapshot, dataset):
+    # 配對由人登記（DATASET_DUPLICATES）：manifest 上的證據要寫出登記的日期與理由，
+    # 不是一句「比對的是選項文字」—— 工具早就不再自己比對
+    man = R.assemble(snapshot, dataset)
+    dups = [d for d in man['dispositions'] if d['status'] == 'duplicate_in_dataset']
+    assert dups, '沒有 duplicate_in_dataset —— 這條測試在空轉'
+    for d in dups:
+        pin = R.DATASET_DUPLICATES[(d['source_id'], d['source_question_number'])]
+        assert pin['decided_on'] in d['evidence'] and pin['why'] in d['evidence'], d['evidence']
+        assert '比對的是選項文字' not in d['evidence']
+
+
+def _fix_table(rows):
+    return {'why': 'w', 'evidence': 'e', 'decided_on': '2026-09-28', 'misaligned': (1, 9), 'questions': rows}
+
+
+def test_option_fix_rows_about_different_options_do_not_vouch_for_each_other():
+    # 表內自證只在同一個選項之間成立：第 2 題修的是 (B)，它更正後的文字與第 1 題印的 (C) 無關
+    R._check_option_fix_table(_fix_table({
+        1: {'key': 'C', 'printed_from': 2, 'pdf': '甲', 'fixed': '乙'},
+        2: {'key': 'B', 'printed_from': 3, 'pdf': '丙', 'fixed': '丁'},
+    }), 'S_TEST')
+
+
+def test_the_reverse_check_only_looks_at_rows_about_the_same_option():
+    # 第 3 題更正後的 (B) 碰巧就是第 1 題印在 (C) 的文字：選項不同，不算「本題印的就是它」
+    R._check_option_fix_table(_fix_table({
+        1: {'key': 'C', 'printed_from': 2, 'pdf': '甲', 'fixed': '乙'},
+        3: {'key': 'B', 'printed_from': 4, 'pdf': '丙', 'fixed': '甲'},
+    }), 'S_TEST')
+
+
+def test_an_empty_option_fix_table_is_refused(monkeypatch):
+    fixes = copy.deepcopy(R.OPTION_FIXES)
+    fixes['S_CHU_07']['questions'] = {}
+    monkeypatch.setattr(R, 'OPTION_FIXES', fixes)
+    with pytest.raises(SystemExit, match='OPTION_FIXES 的表沒有任何一題'):
+        R.apply_option_fixes([], 'S_CHU_07')

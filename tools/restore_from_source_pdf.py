@@ -100,10 +100,15 @@ SOURCE_REVIEWS = {
     'S_CHU_07': {
         'status': 'DEFECTIVE',
         'defect': (
-            '**選項 (C) 欄整欄位移一題** —— 每一題的 (C) 都是「下一題的 (C)」。'
+            '**選項 (C) 欄在第 30–40 題錯位** —— 第 30–36、38 題印的 (C) 是下一題的 (C)；'
+            '第 40 題印的是第 31 題的 (C)「功能單位或宣告單位」（第 30 題印的也是這個）；'
+            '第 37、39 題印的是本題自己的 (C)，但各差一個詞（「與」／「和」、「應用」／「使用」）。'
+            '其餘各題的 (C) 沒有錯位。'
             'Q33「生命週期評估依據哪份 **ISO 標準**文件？」的 (C) 竟然是「場址特定數據」；'
             'Q34「在組織邊界外所獲得的數據」的 (C) 是「確保量化結果的全面性和準確性」，'
-            '而且**答案卡跟著錯**（印 (A) 初級數據，正解是 (B) 次級數據）。'
+            '而且**答案卡也錯**（印 (A) 初級數據，正解是 (B) 次級數據）。'
+            '第 32 題也錯位（印「ISO9001」，應為「內外部議題」）；它與 S_YAMOL_018-q002 重複、'
+            '沒有收進題庫，所以不在修正表上。'
         ),
         'how_found': (
             '2026-07-14。'
@@ -112,13 +117,22 @@ SOURCE_REVIEWS = {
         ),
         'resolution': (
             '8 題已依同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 修正（該版本把答案印在每題正右方欄位）。'
-            '67/67 題已用**題幹**（不是題號）與乾淨版本逐選項比對過 ——'
-            ' 只有 (C) 欄壞掉，A/B/D 是乾淨的。'
+            '收進題庫的 67 題中，65 題以**題幹**（不是題號）對到乾淨版本的唯一一題：'
+            '63 題去掉空白與標點後逐字相同（字形相同、碼位不同的字視為相同），'
+            '第 25、63 題的題幹有字差（見 warning），以相似度對到（0.945、0.985，次高者都不到 0.4）；'
+            '第 39、59 題改以選項對應 —— 乾淨版本第 59 題誤印了第 39 題的題幹。'
+            '逐選項比對（不計空白、標點與字形相同的異碼字，例如乾淨版本文字層的「㇐」）：'
+            'A/B/D 與乾淨版本相同，唯一例外是第 14 題的 (B)(D)，那是乾淨版本印壞'
+            '（來源的文字與乾淨版本第 15 題的 (B)(D) 相同）；(C) 除了修正的 8 題，第 37、39 題各差一個詞'
+            '（兩版答案都是 (C)，題庫保留來源用字），第 63 題是乾淨版本把題幹的「該」印到了 (C) 前面。'
         ),
         'warning': (
             '題庫**忠實地複製了這份壞掉的 PDF**，'
             '所以 `matches_source: true` 一直是綠的。'
             '**一個「忠實複製一份壞掉的來源」的檢查，永遠是綠的。**'
+            '乾淨版本也不是全對：第 14 題 (B)(D)、第 59 題題幹印錯，第 63 題把題幹的「該」印到 (C) 前面'
+            '（題幹「應選擇」、(C)「該GWP-200年」；來源是「應該選擇」、「GWP-200年」），'
+            '第 25 題題幹多了「稱之為？」，第 18 題答案欄印的文字是第 19 題的 (C)（字母 (C) 沒錯）。這些題以來源為準。'
         ),
     },
     'S_CHU_06': {
@@ -298,11 +312,11 @@ ANSWER_OVERRIDES = {
         'revisited_on': '2026-07-14',
         'revisit_note': '2026-07-14：新寫的 tools/answer_key_crosscheck.py 把這題報成「錯答案」，因為**那支工具不知道 answer_override 這套機制存在**，我還差點照著改下去。兩個互不知道的系統一定會漂 —— 已讓該工具讀這份 manifest。這筆偏離**維持不變**：「我覺得應該是 D」不是推翻一個有依據的記錄的理由。',
     },
-    # S_CHU_07 的 (C) 欄位移，答案卡跟著錯；依乾淨版本的答案卡更正（見 OPTION_FIXES）。
+    # S_CHU_07 兩題的答案卡印錯；依同一份模擬卷乾淨版本右欄的答案更正。
     ('S_CHU_07', 30): {
         'source_answer_key': 'A',
         'corrected_answer': 'C',
-        'reason': '來源 PDF 的答案卡 (A) 與其被證實位移的 (C) 欄一致地錯。',
+        'reason': '來源 PDF 的答案卡印 (A)；乾淨版本右欄的答案是 (C)，正是本題被錯位掉的那個 (C)。',
         'evidence': (
             '乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 右欄答案卡：(C) 直接監測法通過監測排氣濃度和流率來量測，'
             '而質量平衡法通過計算物質的進出和轉換來估算。'
@@ -312,7 +326,7 @@ ANSWER_OVERRIDES = {
     ('S_CHU_07', 34): {
         'source_answer_key': 'A',
         'corrected_answer': 'B',
-        'reason': '來源 PDF 的答案卡 (A) 與其被證實位移的 (C) 欄一致地錯。',
+        'reason': '來源 PDF 的答案卡印 (A)；乾淨版本右欄的答案是 (B)。本題的 (C) 也錯位，但正解 (B) 的文字兩版相同。',
         'evidence': '乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 右欄答案卡：(B) 次級數據。',
         'decided_on': '2026-07-14',
     },
@@ -394,38 +408,113 @@ def patch_pdf_typos(qs, src_id):
 # 每個來源一張表，自帶出處；表上記「PDF 印的」與「更正後」的文字。套用前先確認 PDF 原文正是前者
 # —— 對不上就中止，不猜。表上每一題都必須剛好用到一次。
 OPTION_FIXES = {
-    # 214245506.pdf 的 (C) 欄位移，答案卡跟著錯（見 ANSWER_OVERRIDES）。同一份模擬卷另有乾淨版本，
-    # 以題幹（不是題號）配對、逐選項比對後，只有 (C) 欄壞掉。
+    # 214245506.pdf 第 30–40 題的 (C) 錯位（見 SOURCE_REVIEWS）。同一份模擬卷另有乾淨版本，
+    # 以題幹（不是題號）配對、逐選項比對。printed_from：本題印的 (C) 其實是哪一題的 (C)。
+    # why／evidence 是模板：{key}、{pdf}、{fixed}、{printed_from} 換成這一列的值，其餘文字（含大括號）原樣保留。
     'S_CHU_07': {
-        'why': (
-            '來源 PDF 214245506.pdf 的 (C) 欄**整欄位移一題** ——'
-            ' 每一題的 (C) 都是下一題的 (C)。'
-        ),
+        'why': '來源 PDF 214245506.pdf 第 30–40 題的 (C) 錯位：本題印的「{pdf}」是第 {printed_from} 題的 (C)。',
         'evidence': (
             '同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 上，'
-            '本題的 ({key}) 為「{fixed}」；其餘三個選項與題幹皆逐字相符（以題幹配對，非題號）。'
+            '本題的 ({key}) 為「{fixed}」；其餘三個選項與題幹皆相符（不計空白、標點與字形相同的異碼字；'
+            '以題幹配對，非題號）。'
         ),
         'decided_on': '2026-07-14',
+        # 錯位發生的區段（SOURCE_REVIEWS 的 defect）：printed_from 只能是這一段裡的另一題
+        'misaligned': (30, 40),
         'questions': {
-            30: {'key': 'C', 'pdf': '功能單位或宣告單位',
+            30: {'key': 'C', 'printed_from': 31, 'pdf': '功能單位或宣告單位',
                  'fixed': '直接監測法通過監測排氣濃度和流率來量測，而質量平衡法通過計算物質的進出和轉換來估算'},
-            31: {'key': 'C', 'pdf': '內外部議題',
+            31: {'key': 'C', 'printed_from': 32, 'pdf': '內外部議題',
                  'fixed': '功能單位或宣告單位'},
-            33: {'key': 'C', 'pdf': '場址特定數據',
+            33: {'key': 'C', 'printed_from': 34, 'pdf': '場址特定數據',
                  'fixed': 'ISO9001'},
-            34: {'key': 'C', 'pdf': '確保量化結果的全面性和準確性',
+            34: {'key': 'C', 'printed_from': 35, 'pdf': '確保量化結果的全面性和準確性',
                  'fixed': '場址特定數據'},
-            35: {'key': 'C', 'pdf': '增加報告的複雜度',
+            35: {'key': 'C', 'printed_from': 36, 'pdf': '增加報告的複雜度',
                  'fixed': '確保量化結果的全面性和準確性'},
-            36: {'key': 'C', 'pdf': '保證結果的客觀性和可靠性',
+            36: {'key': 'C', 'printed_from': 37, 'pdf': '保證結果的客觀性和可靠性',
                  'fixed': '增加報告的複雜度'},
-            38: {'key': 'C', 'pdf': '適當揭露假設、方法及數據的使用',
+            38: {'key': 'C', 'printed_from': 39, 'pdf': '適當揭露假設、方法及數據的使用',
                  'fixed': '納入所有重大GHG排放與移除量'},
-            40: {'key': 'C', 'pdf': '功能單位或宣告單位',
+            40: {'key': 'C', 'printed_from': 31, 'pdf': '功能單位或宣告單位',
                  'fixed': '重複計算所有排放源'},
         },
     },
 }
+
+
+_TEMPLATE_FIELDS = ('key', 'pdf', 'fixed', 'printed_from')
+_TEMPLATE_FIELD = re.compile(r'\{(key|pdf|fixed|printed_from)\}')
+_TEMPLATE_LIKE = re.compile(r'\{([^{}]*)\}')  # 大括號裡的東西；是不是打錯的模板欄位由 _template_typo 判斷
+
+
+def _template_typo(inner: str) -> bool:
+    """大括號裡的東西是不是打錯的模板欄位（原樣印出去就會寫進 manifest）。
+    全大寫的名字（{GWP}、{CO2_EQ}）是一般文字，除非它就是某個欄位（{PDF}）或只差一兩個字（{PRINTED_FRM}）；
+    其餘長得像名字的都算：{printed_frm}、{printedFrom}、{printed-from}、{ key }、{pdf1}。"""
+    if inner in _TEMPLATE_FIELDS:
+        return False
+    if re.fullmatch(r'[A-Z0-9_]+', inner):
+        return bool(difflib.get_close_matches(inner.lower(), _TEMPLATE_FIELDS, n=1, cutoff=0.8))
+    return bool(re.fullmatch(r'\s*[A-Za-z0-9_-]+\s*', inner))
+
+
+def _fill(template: str, row: dict, where: str) -> str:
+    """模板裡的 {key}、{pdf}、{fixed}、{printed_from} 換成這一列的值；其餘文字（含「{GWP}」這種大括號）原樣保留。
+
+    長得像模板欄位、卻不在清單上的（「{printed_frm}」「{printedFrom}」，見 _template_typo）是打錯字：
+    原樣印出去就會寫進 manifest，所以擋下。
+    """
+    typos = sorted(inner for inner in {m.group(1) for m in _TEMPLATE_LIKE.finditer(template)} if _template_typo(inner))
+    if typos:
+        sys.exit(f'✗ {where}：OPTION_FIXES 的模板用到不認得的欄位 {typos}（可用的是 {list(_TEMPLATE_FIELDS)}）。')
+
+    def value(m):
+        if m.group(1) not in row:
+            sys.exit(f'✗ {where}：OPTION_FIXES 這一列沒有 {m.group(1)}，模板卻用到 {m.group(0)}。')
+        return str(row[m.group(1)])
+    return _TEMPLATE_FIELD.sub(value, template)
+
+
+def _check_option_fix_table(table: dict, src_id: str) -> None:
+    """表本身要自洽：缺鍵、或 printed_from 與表上的別列對不起來，就中止 —— 不等寫進 manifest 才被人讀到。"""
+    missing = [k for k in ('why', 'evidence', 'decided_on', 'misaligned', 'questions') if k not in table]
+    if missing:
+        sys.exit(f'✗ {src_id}：OPTION_FIXES 的表缺少 {missing}。')
+    rows = table['questions']
+    if not rows:
+        sys.exit(f'✗ {src_id}：OPTION_FIXES 的表沒有任何一題 —— 不需要修正就把整張表拿掉。')
+    span = table['misaligned']
+    if not (isinstance(span, (list, tuple)) and len(span) == 2 and all(type(n) is int for n in span)
+            and span[0] < span[1]):
+        sys.exit(f'✗ {src_id}：OPTION_FIXES 的 misaligned 是 {span!r}，應是錯位區段的頭尾兩個題號（整數，頭小於尾）。')
+    lo, hi = span
+    for n, f in rows.items():  # 下面的自洽檢查會讀這幾欄：先確定都在，缺了才說得出是哪一題
+        missing = [k for k in ('key', 'pdf', 'fixed') if k not in f]
+        if missing:
+            sys.exit(f'✗ {src_id} 第 {n} 題：OPTION_FIXES 這一列缺少 {missing}。')
+    outside = sorted(n for n in rows if not lo <= n <= hi)
+    if outside:
+        sys.exit(f'✗ {src_id}：OPTION_FIXES 的第 {outside} 題不在錯位的區段第 {lo}–{hi} 題裡。')
+    for n, f in rows.items():
+        if 'printed_from' not in f:
+            continue  # 模板用到卻缺少時，_fill 會指名這一列
+        p = f['printed_from']
+        if type(p) is not int:  # None 會讓兩個方向的檢查都跳過、manifest 寫出「第 None 題」；bool 也不是題號
+            sys.exit(f'✗ {src_id} 第 {n} 題：printed_from 是 {p!r}，應是題號（整數）。')
+        # 錯位發生在這一段題目之間：本題印的選項來自同一段裡的另一題
+        if p == n or not lo <= p <= hi:
+            sys.exit(f'✗ {src_id} 第 {n} 題：printed_from={p}，應是第 {lo}–{hi} 題中的另一題。')
+        # 兩個方向都要對得上（表內能自證的部分；指向表外的題目要對照乾淨版本 PDF 才驗得了）：
+        #   那一題在表上 → 本題印的文字必須正是那一題更正後的文字；
+        #   表上有哪一題更正後的文字正是本題印的 → printed_from 必須指向那一題。
+        if p in rows and rows[p]['key'] == f['key'] and rows[p]['fixed'] != f['pdf']:
+            sys.exit(f'✗ {src_id} 第 {n} 題：printed_from={p}，但本題印的「{f["pdf"]}」'
+                     f'不是第 {p} 題更正後的 ({f["key"]})「{rows[p]["fixed"]}」。')
+        owners = [m for m, g in rows.items() if m != n and g['key'] == f['key'] and g['fixed'] == f['pdf']]
+        if owners and p not in owners:
+            sys.exit(f'✗ {src_id} 第 {n} 題：本題印的「{f["pdf"]}」正是第 {owners[0]} 題更正後的 ({f["key"]})，'
+                     f'printed_from 卻是 {p}。')
 
 
 def apply_option_fixes(qs, src_id):
@@ -433,6 +522,7 @@ def apply_option_fixes(qs, src_id):
     table = OPTION_FIXES.get(src_id)
     if table is None:
         return {}
+    _check_option_fix_table(table, src_id)
     applied = {}
     for q in qs:
         f = table['questions'].get(q['number'])
@@ -443,10 +533,11 @@ def apply_option_fixes(qs, src_id):
             sys.exit(f'✗ {src_id} 第 {q["number"]} 題：OPTION_FIXES 記的 PDF 原文是「{f["pdf"]}」，'
                      f'實際擷取到 {opt["text"] if opt else None!r} —— 來源或擷取器已變動，必須人工重新確認。')
         opt['text'] = f['fixed']
+        where = f'{src_id} 第 {q["number"]} 題'
         applied[q['number']] = [{
             'fix': f'option ({f["key"]}) text: 「{f["pdf"]}」 -> 「{f["fixed"]}」',
-            'why': table['why'],
-            'evidence': table['evidence'].format(key=f['key'], fixed=f['fixed']),
+            'why': _fill(table['why'], f, where),
+            'evidence': _fill(table['evidence'], f, where),
             'decided_on': table['decided_on'],
         }]
     unused = sorted(set(table['questions']) - set(applied))
@@ -490,6 +581,14 @@ def load_pdf(src_id: str, cache: Path) -> bytes:
 def _norm_for_compare(s: str) -> str:
     """比對用的正規化：剝空白、剝標點。'數據來源' 與 '數據來源；' 是同一件事。"""
     return re.sub(r'[\s，,。.；;、：:（）()「」【】]', '', s)
+
+
+def _how_alike(source: str, twin: str, similarity: float) -> str:
+    """duplicate_in_dataset 證據的開頭：兩邊的題幹有多像。source、twin 是 _norm_for_compare 之後的題幹；
+    「相同」看的是字串本身，不是四捨五入過的相似度（長題幹只差一個字，相似度也近 1）。"""
+    if source == twin:
+        return '題幹相同（不計空白與標點）'
+    return '題幹幾乎相同' if similarity >= 0.80 else '主庫那一題的題幹已改寫'
 
 
 def _answer_text(item: dict) -> str | None:
@@ -606,11 +705,11 @@ def _disposition_for_dropped(q: dict, src_id: str, same_pdf: dict, ds_items: lis
             d['evidence'] = (f'DATASET_DUPLICATES 登記的配對（主庫 {pin["dataset_item"]} 的 ({pin["dataset_answer"]})'
                              f'「{pin["dataset_answer_text"]}」＝ 來源答案卡 ({pin["source_answer_key"]})）與現況不同：'
                              f'{"、".join(changed)}變了 —— 要重新裁決。')
-        elif similarity >= 0.80:
-            d['evidence'] = '題幹幾乎相同且答案文字一致（比對的是選項文字，不是字母）'
         else:
-            d['evidence'] = ('主庫那一題的題幹已改寫；配對與答案一致由 DATASET_DUPLICATES 登記'
-                             '（比對的是選項文字，不是字母）')
+            # 配對與答案一致是人裁決的（工具不再自己比對）：證據就是那筆登記的日期與理由
+            stem = _how_alike(qnorm, _norm_for_compare(twin_item['stem']), similarity)
+            d['evidence'] = (f'{stem}。兩邊是同一題、答案一致，由人登記（DATASET_DUPLICATES，{pin["decided_on"]}）：'
+                             f'{pin["why"]}')
         return d
 
     # 3) 沒有任何證據 —— 這題就是掉了。絕不可以安靜跳過。最接近的主庫題目只是給人查的線索。
@@ -904,8 +1003,8 @@ def assemble(extracted: dict, ds: dict) -> dict:
                 'dataset_text_sha256': 'repo 裡「現在」的文字。',
                 'transformations':
                     '這一題做過哪些修正、憑什麼做。空陣列＝原文照抄。'
-                    '若 raw != canonical 卻沒有列明 transformations，--emit 直接失敗 —— '
-                    '不允許存在「沒被記錄的轉換」。',
+                    'raw ≠ canonical 與「有列明 transformations」不一致時（有差異卻沒列明，或列明了卻沒差異），'
+                    '產生 manifest 時直接失敗 —— 不允許存在「沒被記錄的轉換」。',
                 'why':
                     '舊版只存一個 pdf_text_sha256，名字宣稱是「PDF 裡的文字」，實際卻是'
                     '「套用修正之後」的文字（S_CHU_06 第 37 題的選項標號原文是 (A)(B)(B)(C)，'
@@ -930,7 +1029,9 @@ def assemble(extracted: dict, ds: dict) -> dict:
                 'uv sync --locked --project tools',
                 'uv run --locked --project tools python tools/restore_from_source_pdf.py --verify',
             ],
-            'ci_note': 'CI 不下載 PDF。restoration-manifest.test.ts 只驗 manifest ↔ dataset 一致。',
+            'ci_note': 'CI 不下載 PDF：restoration-manifest.test.ts 驗 manifest ↔ dataset 一致；'
+                       'tools/tests/test_restore_reproducibility.py 用 committed 的擷取快照重組整份 manifest、逐字比對。'
+                       '快照與來源 PDF 是否一致，由 --verify 驗。',
             'source_documents': {
                 SOURCES[s]['url']: {'items': restored_per_source[s], 'subject': s, **review}
                 for s, review in SOURCE_REVIEWS.items()
