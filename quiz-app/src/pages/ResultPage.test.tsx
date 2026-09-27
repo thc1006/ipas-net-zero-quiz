@@ -466,6 +466,46 @@ describe('ResultPage 答案依據', () => {
   });
 });
 
+describe('官方公告試題的錯題卡', () => {
+  it('答錯的官方公告試題，錯題卡的答案依據寫出官方公告的參考答案', () => {
+    const officialQuestion = {
+      id: 'S_IPAS_115_01_L11-q001',
+      stem: '官方公告試題的題幹？',
+      options: [
+        { key: 'A', text: '甲' },
+        { key: 'B', text: '乙' },
+        { key: 'C', text: '丙' },
+        { key: 'D', text: '丁' },
+      ],
+      answer: 'C',
+      subject: '考科1',
+      sourceType: 'unique',
+      year: 2026,
+      hasAnswer: true,
+      officialExam: { session: '115-01', exam_date: '2026-05-16', subject: 'L11', question_number: 1 },
+      evidence: {
+        quote: '官方公告試題的題幹？\n(A)甲；(B)乙；(C)丙；(D)丁',
+        url: 'https://www.ipas.org.tw/official.pdf',
+        official: { answer: 'C', reference: '115 年第一次公告試題第一科第 1 題' },
+      },
+    } as unknown as QuizQuestion;
+    render(
+      <ResultPage
+        result={makeResult({
+          answers: [makeAnswer({ questionId: officialQuestion.id, selectedAnswer: 'A', correctAnswer: 'C' })],
+          questions: [officialQuestion],
+          wrongCount: 1,
+          correctCount: 0,
+          score: 0,
+        })}
+        onGoHome={vi.fn()}
+        onRetry={vi.fn()}
+      />
+    );
+    expect(screen.getByText('官方公告的參考答案：(C)（115 年第一次公告試題第一科第 1 題）')).toBeInTheDocument();
+  });
+});
+
 describe('考試模式的錯題檢討', () => {
   const poolQuestion = {
     id: 'pool-only-1',

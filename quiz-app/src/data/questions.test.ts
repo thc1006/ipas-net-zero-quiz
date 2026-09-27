@@ -13,6 +13,7 @@ import {
   searchQuestions,
   getSimilarQuestions,
   dataset,
+  withOfficialAnswer,
 } from './questions';
 
 describe('題庫資料模組', () => {
@@ -335,5 +336,73 @@ describe('官方公告試題帶進執行期', () => {
     expect(expected.length, '題庫裡沒有官方公告試題 —— 這條測試在空轉').toBeGreaterThan(0);
     expect(official.map((q) => q.id).sort()).toEqual([...expected].sort());
     for (const q of official) expect(q.officialExam).toEqual(raw.get(q.id)!.official_exam);
+  });
+});
+
+describe('官方公告試題的答案依據帶出官方答案', () => {
+  const raw = new Map(dataset.our_unique_items.map((q) => [q.item_id, q]));
+  const official = allQuestions.filter((q) => q.officialExam);
+
+  // 預期值直接從原始資料算：pickEvidence 挑中的那一則（第一則支持正解、夠長的引文），
+  // 它的**原始**網址是不是就是這一題的**原始** source.url —— 不經過任何網址正規化，與實作各自獨立。
+  // 出處的預期值直接從原始欄位組，不經過 utils/official-exam.ts：「115 年第一次公告試題第一科第 5 題」
+  const expectedReference = (o: { session: string; subject: string; question_number: number }): string => {
+    const [year, round] = o.session.split('-');
+    return `${year} 年第${'一二三四'[Number(round) - 1]}次公告試題第${o.subject === 'L11' ? '一' : '二'}科第 ${o.question_number} 題`;
+  };
+  const pickedIsItsOwnSource = (q: (typeof dataset.our_unique_items)[number]): boolean => {
+    const picked = (q.metadata?.evidence ?? []).find(
+      (e) => e.supports_option === q.answer && (e.quote ?? '').trim().length >= 8
+    );
+    return picked !== undefined && picked.url === q.source?.url;
+  };
+
+  it('依據就是官方 PDF 那一題時，帶出答案欄的選項與題目位置；依據不是那一題（法條、《巴黎協定》）時不帶', () => {
+    for (const q of official) {
+      const expected = pickedIsItsOwnSource(raw.get(q.id)!)
+        ? { answer: q.answer, reference: expectedReference(q.officialExam!) }
+        : undefined;
+      expect(q.evidence?.official, q.id).toEqual(expected);
+    }
+  });
+
+  it('每一份官方來源都至少有一題帶出官方答案（不讓一整場安靜地消失）', () => {
+    const sessions = new Set(official.map((q) => `${q.officialExam!.session} ${q.officialExam!.subject}`));
+    expect(sessions.size, '題庫裡沒有官方公告試題 —— 這條測試在空轉').toBeGreaterThan(0);
+    for (const s of sessions) {
+      const withAnswer = official.filter(
+        (q) => `${q.officialExam!.session} ${q.officialExam!.subject}` === s && q.evidence?.official
+      );
+      expect(withAnswer.length, `${s} 沒有任何一題帶出官方答案`).toBeGreaterThan(0);
+    }
+  });
+
+  it('其他題目的答案依據不帶官方答案', () => {
+    // 這一條擋得住「拿掉 official_exam 的判斷」，靠的是有非官方題的依據就出自它自己的出處（例如樣題 PDF 上
+    // 的那一題）—— 沒有這種題目，拿掉判斷也一樣綠。
+    const ownSource = dataset.our_unique_items.filter((q) => !q.official_exam && pickedIsItsOwnSource(q));
+    expect(ownSource.length, '沒有依據出自自己出處的非官方題 —— 這條測試在空轉').toBeGreaterThan(0);
+    const bad = allQuestions.filter((q) => !q.officialExam && q.evidence?.official).map((q) => q.id);
+    expect(bad).toEqual([]);
+  });
+
+  it('同一個上傳資料夾裡的其他文件（教材、另一科的公告試題）不算這一題的官方 PDF', () => {
+    // 官網把教材、參考樣題、各科的公告試題放在同一個上傳資料夾：只比網站或資料夾，教材引文底下就會
+    // 冒出「官方公告的參考答案」。
+    const q = raw.get(official[0].id)!;
+    const own = q.source!.url!;
+    const folder = own.slice(0, own.lastIndexOf('/') + 1);
+    for (const url of [`${folder}%E8%80%83%E7%A7%911%E6%95%99%E6%9D%90.pdf`, `${folder}115-01-L12.pdf`]) {
+      expect(withOfficialAnswer(q, { quote: '同一個資料夾裡的另一份文件', url })?.official, url).toBeUndefined();
+    }
+  });
+
+  it('網址寫法不同（中文未編碼、主機名大寫）也認得出是同一份官方 PDF', () => {
+    const q = raw.get(official[0].id)!;
+    const evidence = { quote: '官方公告試題的題幹與選項', url: 'https://www.ipas.org.tw/%E5%85%AC%E5%91%8A.pdf' };
+    const asWritten = { ...q, source: { ...q.source, url: 'https://WWW.ipas.org.tw/公告.pdf' } };
+    expect(withOfficialAnswer(asWritten, evidence)?.official?.answer).toBe(q.answer);
+    expect(withOfficialAnswer({ ...asWritten, official_exam: undefined }, evidence)?.official).toBeUndefined();
+    expect(withOfficialAnswer(asWritten, { ...evidence, url: 'https://law.moj.gov.tw/x' })?.official).toBeUndefined();
   });
 });

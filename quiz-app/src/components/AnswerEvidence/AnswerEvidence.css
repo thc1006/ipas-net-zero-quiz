@@ -56,3 +56,16 @@
   font-weight: 500;
   color: var(--color-text-secondary);
 }
+
+/* 官方公告試題：引文只印得出題目本身，答案欄印的選項另外寫成一行 */
+.answer-evidence__official-answer {
+  margin: 0 0 var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* 結果頁的精簡框：與引文同一級字，不讓這一行成了錯題卡上最搶眼的字 */
+.answer-evidence--compact .answer-evidence__official-answer {
+  font-size: var(--font-size-xs);
+}

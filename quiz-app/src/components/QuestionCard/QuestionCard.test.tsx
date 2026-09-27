@@ -414,6 +414,25 @@ describe('官方公告試題的標記', () => {
     expect(tag).not.toHaveAttribute('title');
   });
 
+  // 這個功能最主要的畫面：作答後的題卡。只測 AnswerEvidence 元件時，題卡不把依據（或 official）傳下去也照樣綠
+  it('作答後，題卡的答案依據寫出官方公告的參考答案與出處；作答前不出現', () => {
+    const answered: QuizQuestion = {
+      ...official,
+      evidence: {
+        quote: '官方公告試題的題幹？\n(A)甲；(B)乙；(C)丙；(D)丁',
+        url: 'https://www.ipas.org.tw/official.pdf',
+        official: { answer: 'C', reference: '115 年第一次公告試題第一科第 1 題' },
+      },
+    };
+    const { rerender } = render(
+      <QuestionCard question={answered} questionNumber={1} onSelectAnswer={vi.fn()} />
+    );
+    expect(screen.queryByText(/官方公告的參考答案/)).not.toBeInTheDocument();
+    rerender(<QuestionCard question={answered} questionNumber={1} showAnswer onSelectAnswer={vi.fn()} />);
+    const line = screen.getByText('官方公告的參考答案：(C)（115 年第一次公告試題第一科第 1 題）');
+    expect(isInaccessible(line)).toBe(false);
+  });
+
   it('其他題目不標：共筆題與主題庫裡不是官方公告的題目', () => {
     const plainUnique: QuizQuestion = { ...mockQuestion, id: 'S_CHU_06-q001', sourceType: 'unique' };
     for (const q of [mockQuestion, plainUnique]) {

@@ -175,7 +175,16 @@ export interface QuizQuestion {
    * 為什麼要顯示：這些引文一直只存在資料裡，畫面上只看得到一排來源連結。
    * 於是「教材原文」與「某篇部落格」在使用者眼中份量相同 —— 而答案其實是前者撐住的。
    */
-  evidence?: { quote: string; url: string; authority?: string };
+  evidence?: {
+    quote: string;
+    url: string;
+    authority?: string;
+    /**
+     * 官方公告試題：依據就是官方 PDF 上的這一題時，答案欄印的選項與題目在 PDF 的位置。
+     * 引文只印得出題目本身，UI 另外寫出這一行，框裡才有一句話說出答案。
+     */
+    official?: { answer: string; reference: string };
+  };
   /** 官方公告試題的出處（場次、考試日期、科目、題號）；UI 在題卡上標出來 */
   officialExam?: OfficialExam;
   /** 解析文字（給 AI helper 與 UI 參考），可能為空 */
