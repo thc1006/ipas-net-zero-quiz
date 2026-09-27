@@ -120,6 +120,7 @@ const DS = datasetRaw as unknown as {
 };
 const MAN = manifestRaw as unknown as {
   _meta: {
+    description: string;
     restored_count: number;
     imported_count: number;
     source_question_total: number;
@@ -451,6 +452,15 @@ describe('還原對帳：來源的每一題都要有交代', () => {
   it('各 status 加總必須等於來源的總題數（沒有被重複計數或漏算）', () => {
     const sum = Object.values(MAN._meta.disposition_summary).reduce((a, b) => a + b, 0);
     expect(sum).toBe(MAN._meta.source_question_total);
+  });
+
+  // manifest 的說明文字列舉每一種處置（由工具的 ACCOUNTED 產生）。從資料這一側核對：新增一種處置，說明文字
+  // 沒跟上就轉紅（not_imported_figure 第一次寫進資料時，說明文字就漏了它）。
+  it('_meta.description 列出 manifest 裡出現的每一種處置', () => {
+    const missing = Object.keys(MAN._meta.disposition_summary).filter(
+      (status) => !MAN._meta.description.includes(`${status}（`)
+    );
+    expect(missing).toEqual([]);
   });
 
   // 這是本輪真正抓到的那個錯：來源答案卡與主庫教的答案不一致

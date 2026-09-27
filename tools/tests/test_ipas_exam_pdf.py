@@ -1092,6 +1092,41 @@ def test_a_shading_inside_a_question_is_a_figure(tmp_path):
         extract(_two_page_exam(tmp_path, page_options=_in_q1(shading)))
 
 
+# ── 圖表題：人工確認過、題目要讀圖的題號（figure_questions）─────────────────────────────
+#
+# 115 年第二次 L12 第 9、15 題的題目欄裡是點陣圖（校園配置圖、排放係數表）：專案所有者決定這種題目先不收錄，
+# 在憑證裡記下理由。擷取時登記過的題號不算錯，但有圖的題目必須正好是登記的那幾題。
+
+FIGURE_ROWS = [_q(1, 'A', '依下圖？', *_four_options(1), figures=1), _q(2, 'B', '題幹？', *_four_options(2)),
+               _q(3, 'C', '依下表？', *_four_options(3), figures=2)]
+
+
+def test_listed_figure_questions_are_extracted_like_any_other():
+    got = parse_rows(FIGURE_ROWS, frozenset({1, 3}))
+    assert [(q['number'], q['stem']) for q in got] == [(1, '依下圖？'), (2, '題幹？'), (3, '依下表？')]
+
+
+@pytest.mark.parametrize(('listed', 'message'), [
+    ({1}, '^第 3 題的題目欄裡有圖片'),                                   # 有圖卻沒登記
+    ({1, 2, 3}, '^登記為圖表題的第 2 題，題目欄裡沒有圖片或圖形'),         # 登記了卻沒有圖（題號寫錯、登記過期）
+    ({1, 3, 7}, '^登記為圖表題的第 7 題，題目欄裡沒有圖片或圖形'),         # 題號超出範圍
+], ids=['unlisted-figure', 'listed-without-figure', 'listed-out-of-range'])
+def test_the_questions_with_figures_must_be_exactly_the_listed_ones(listed, message):
+    with pytest.raises(ValueError, match=message):
+        parse_rows(FIGURE_ROWS, frozenset(listed))
+
+
+def test_extract_passes_the_listed_figure_questions_through(tmp_path):
+    raster = lambda page: page.insert_image(pymupdf.Rect(300, 180, 470, 226), pixmap=_pixmap(90))  # 字旁邊的空白處
+    exam = _two_page_exam(tmp_path, page_options=_in_q1(raster))
+    # 登記過的圖表題照常擷取，另帶 figure 旗標（還原工具把它記進擷取快照）
+    assert extract(exam, figure_questions=frozenset({1})) == [{**EXPECTED[0], 'figure': True}, *EXPECTED[1:]]
+    with pytest.raises(ValueError, match='^第 1 題的題目欄裡有圖片'):
+        extract(exam)
+    with pytest.raises(ValueError, match='^登記為圖表題的第 2 題，題目欄裡沒有圖片或圖形'):  # 表格以後（EXTRACT_ONLY）
+        extract(exam, figure_questions=frozenset({1, 2}))
+
+
 def test_a_highlight_is_reported_as_a_possible_mark_not_only_a_chart(tmp_path):
     # 螢光筆（文字上的黃色矩形）、儲存格底色也是題目欄裡的向量圖形：照樣報錯，但訊息不能只說是圖表
     highlight = lambda page: _fill(page, 122, TOP + 24 + 7, 300, TOP + 24 + 23, color=(1, 1, 0))
@@ -2580,6 +2615,7 @@ EXTRACT_ONLY = tuple(re.compile(pattern) for pattern in (
     r'第 \d+ 頁第 \d+ 題：答案欄是「',
     r'第 \d+ 題：(選項是 |沒有題幹。|選項 \(.\) 是空的。|同一行有兩個選項標記：)',
     r'第 \d+(、\d+)* 題的題目欄裡有圖片或圖形 ——',
+    r'登記為圖表題的第 \d+(、\d+)* 題，題目欄裡沒有圖片或圖形 ——',
     r'沒有任何題目。$',
     r'整份 PDF 找不到選項標記「\(」',
     # 畫出頁面之後才看得出來的：字級、對比、描邊、浮水印、剪裁、漸層、蓋在字上的圖、擷取不到的字與圖、畫頁面時才重建的 xref

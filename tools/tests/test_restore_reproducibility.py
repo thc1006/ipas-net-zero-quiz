@@ -79,15 +79,21 @@ def test_the_snapshot_has_exactly_the_shape_the_extractor_produces(snapshot):
     # 快照只有 --verify 對照 PDF 才驗得完整；這裡先擋掉離線就看得出來的手改：
     # 多出來的鍵、題目或選項的順序被調過、文字不是擷取器會輸出的樣子
     for src_id, source in snapshot.items():
-        if R.SOURCES[src_id].get('kind') == 'official_exam':  # 官方來源另記 PDF 的頁首（CI 拿它核對 SOURCES）
-            assert list(source) == ['pdf_sha256', 'header', 'questions']
+        # 官方來源另記 PDF 的頁首（CI 拿它核對 SOURCES）；圖表題（擷取器對照 PDF 確認、題目欄裡真的有圖的題號）
+        # 只在有的時候才寫
+        official = R.SOURCES[src_id].get('kind') == 'official_exam'
+        base = ['pdf_sha256', 'header', 'questions'] if official else ['pdf_sha256', 'questions']
+        assert list(source) in (base, base + ['figure_questions'])
+        if official:
             assert list(source['header']) == ['title', 'subject', 'date_line', 'session', 'exam_date', 'subject_code']
             # 場次、考試日期、科目代號是從頁首的三行推出來的：兩邊要對得上（手改其中一邊，離線就看得出來）
             header = source['header']
             derived = R.ipas_exam_pdf._header(header['title'], header['subject'], header['date_line'])
             assert dataclasses.asdict(derived) == header, f'{src_id} 的頁首自相矛盾：快照不可以手改，要跑 --emit'
-        else:
-            assert list(source) == ['pdf_sha256', 'questions']
+        if 'figure_questions' in source:
+            figures = source['figure_questions']
+            assert figures and figures == sorted(set(figures)), f'{src_id} 的圖表題要是遞增、不重複、不是空的'
+            assert set(figures) <= {q['number'] for q in source['questions']}, f'{src_id} 的圖表題不是這份的題號'
         numbers = [q['number'] for q in source['questions']]
         assert all(a < b for a, b in zip(numbers, numbers[1:])), '擷取依閱讀順序，題號必須遞增'
         for q in source['questions']:

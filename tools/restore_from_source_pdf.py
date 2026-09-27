@@ -798,8 +798,42 @@ def check_official_header(src_id: str, meta: dict, header) -> None:
         sys.exit(f'✗ {src_id} 的 PDF 頁首與 SOURCES 不符：' + '；'.join(wrong) + '。')
 
 
+# 來源 PDF 的每一題都要是其中一種（manifest 的說明文字由這張表產生，新增一種就寫在這裡）
+ACCOUNTED = {
+    'restored': '還原進 dataset',
+    'imported': '官方公告試題，匯入 dataset',
+    'duplicate_within_source': 'PDF 自己重印',
+    'duplicate_in_dataset': '主庫已有相同題',
+    'not_imported_figure': '官方公告試題要讀圖、題庫還不支援圖片：登記在 figure_questions，不收錄，寫明理由',
+}
+
+
+def check_figure_questions(src_ids) -> None:
+    """圖表題（SOURCES 的 figure_questions：題號 → 理由）的登記本身要說得通，下載與擷取之前就查：只有官方來源
+    可以登記；是一張不是空的表；題號是 1 到總題數之間的整數（照 manifest 的 JSON 抄回來會變成字串 '9'）；
+    理由是非空白的文字（None 被 str() 變成 'None' 也算數）。--emit／--verify、--reassemble 與匯入工具共用。"""
+    for s in src_ids:
+        registered = SOURCES[s].get('figure_questions')
+        if registered is None:
+            continue
+        if SOURCES[s].get('kind') != 'official_exam':
+            sys.exit(f'✗ {s}：只有官方來源可以登記圖表題（figure_questions）。')
+        if not isinstance(registered, dict) or not registered:
+            sys.exit(f'✗ {s}：figure_questions 應是「題號 → 理由」的表 —— 沒有圖表題就整個拿掉。')
+        total = EXPECTED_QUESTION_COUNT.get(s)
+        if total is None:
+            sys.exit(f'✗ {s}：沒有登記總題數（EXPECTED_QUESTION_COUNT）—— 圖表題的題號無從核對。')
+        for n, why in registered.items():
+            if type(n) is not int or not 1 <= n <= total:
+                sys.exit(f'✗ {s}：圖表題的題號 {n!r} 不是 1 到 {total} 之間的整數。')
+            if not isinstance(why, str) or not why.strip():
+                sys.exit(f'✗ {s}：圖表題第 {n} 題的理由 {why!r} 不是非空白的文字 —— 不收錄的每一題都要寫明為什麼。')
+
+
 def extract_sources(cache: Path) -> dict:
-    """每份來源 PDF 的擷取結果（未套用任何修正）。--emit 把它原樣寫成擷取快照。"""
+    """每份來源 PDF 的擷取結果（未套用任何修正）。--emit 把它原樣寫成擷取快照。
+    有圖表題的來源另記 figure_questions：擷取器對照 PDF 確認過、題目欄裡真的有圖的題號（CI 不讀 PDF，拿它核對登記）。"""
+    check_figure_questions(SOURCES)
     out = {}
     for src_id, meta in SOURCES.items():
         layout = meta.get('layout', 'two_column')
@@ -814,7 +848,8 @@ def extract_sources(cache: Path) -> dict:
             if meta.get('kind') == 'official_exam':  # 先確定是 SOURCES 說的那一場、那一科，再擷取
                 header = HEADER_READERS[layout](path)
                 check_official_header(src_id, meta, header)
-            questions = EXTRACTORS[layout](path)
+            figures = frozenset(meta.get('figure_questions', {}))
+            questions = EXTRACTORS[layout](path, figure_questions=figures) if figures else EXTRACTORS[layout](path)
         except ValueError as e:  # ipas_exam_pdf 遇到不在預期內的版面一律丟 ValueError
             sys.exit(f'✗ {src_id}: {e}')
         out[src_id] = {'pdf_sha256': meta['sha256']}
@@ -822,6 +857,8 @@ def extract_sources(cache: Path) -> dict:
             out[src_id]['header'] = dataclasses.asdict(header)
         out[src_id]['questions'] = [{k: q[k] for k in ('number', 'page', 'column', 'answer', 'stem', 'options')}
                                     for q in questions]
+        if detected := sorted(q['number'] for q in questions if q.get('figure')):  # 只在有的時候寫：快照其餘不變
+            out[src_id]['figure_questions'] = detected
     return out
 
 
@@ -883,6 +920,15 @@ def assemble(extracted: dict, ds: dict) -> dict:
             if recorded is None:
                 sys.exit(f'✗ {s}：擷取快照沒有 PDF 的頁首 —— 官方來源要跑 --emit，把頁首記進快照（CI 拿它核對 SOURCES）。')
             check_official_header(s, meta, ipas_exam_pdf.Header(**recorded))
+    # 圖表題（figure_questions）：題目要讀圖、題庫還不支援圖片的官方題，不收錄，憑證裡記下理由。
+    # 哪幾題有圖是 PDF 的事實，由擷取快照記著：登記必須正好是那幾題（改了登記要跑 --emit，擷取器會對照 PDF）
+    check_figure_questions(SOURCES)
+    for s in SOURCES:
+        registered = sorted(SOURCES[s].get('figure_questions', {}))
+        detected = extracted.get(s, {}).get('figure_questions', [])
+        if registered != detected:
+            sys.exit(f'✗ {s}：SOURCES 登記的圖表題 {registered} 與擷取快照的 {detected} 不同 —— 登記要照 PDF：'
+                     '改了登記就跑 --emit 重新擷取（擷取器會確認哪幾題真的有圖）；快照不可以手改。')
 
     # 先對帳每一份來源的題數：擷取器掉題時，要說「擷取器壞了」，而不是讓後面的檢查報成別的錯
     # （修正表「用不到的題號」、題庫題「對不到來源」）。
@@ -935,6 +981,10 @@ def assemble(extracted: dict, ds: dict) -> dict:
 
         for q in qs:
             item_id = f'{src_id}-q{q["number"]:03d}'
+            figures = SOURCES[src_id].get('figure_questions', {})
+            if q['number'] in figures and item_id in by_item:
+                sys.exit(f'✗ {item_id}: 登記為含圖表、不收錄的題目（figure_questions），卻在題庫裡 —— 只有文字的圖表題是'
+                         '無解的題目；要收錄就先讓題庫支援圖片，再把它從 figure_questions 拿掉。')
             if item_id not in by_item:
                 tables = [name for name, fixed in (('PDF 錯字修正（patch_pdf_typos）', fixes_by_no),
                                                    ('OPTION_FIXES', option_fixes_by_no)) if q['number'] in fixed]
@@ -942,7 +992,11 @@ def assemble(extracted: dict, ds: dict) -> dict:
                     sys.exit(f'✗ {item_id}: {"、".join(tables)} 修了一題沒有進題庫的題目 —— 題目被刪了？誤刪請還原'
                              '（刪還原題會動到 manifest，要先問專案所有者）。修正只記在進題庫題目的 transformations 上，'
                              '套在這一題身上就沒有對應的紀錄。')
-                d = _disposition_for_dropped(q, src_id, same_pdf, ds_items)
+                if q['number'] in figures:  # 專案所有者決定：題庫支援圖片之前不收錄、不手抄
+                    d = {'status': 'not_imported_figure', 'why': figures[q['number']], 'answer_key': q['answer'],
+                         'normalized_text_sha256': normalized_text_sha256(q['stem'], q['options'])}
+                else:
+                    d = _disposition_for_dropped(q, src_id, same_pdf, ds_items)
                 d.update({'source_id': src_id, 'source_question_number': q['number'],
                           'page': q['page'], 'column': q['column']})
                 dispositions.append(d)
@@ -1071,9 +1125,8 @@ def assemble(extracted: dict, ds: dict) -> dict:
     return {
         '_meta': {
             'description': '來源 PDF 逐題的憑證：被刪除後還原的題目，以及匯入的官方公告試題。'
-                           '來源 PDF 的**每一題**都有交代：restored（還原進 dataset）、'
-                           'imported（官方公告試題，匯入 dataset）、duplicate_within_source（PDF 自己重印）、'
-                           'duplicate_in_dataset（主庫已有相同題）。'
+                           '來源 PDF 的**每一題**都有交代：'
+                           + '、'.join(f'{status}（{meaning}）' for status, meaning in ACCOUNTED.items()) + '。'
                            '任何一題交代不出來就是 UNACCOUNTED —— 產生 manifest 時直接失敗，'
                            '不會安靜地當成「重複」放過。',
             'hash_fields': {

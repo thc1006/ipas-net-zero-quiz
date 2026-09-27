@@ -82,7 +82,9 @@ tools/ 頂層新增、移除或改名工具時，同時改 `tools/tests/test_off
    - `SOURCES`：來源代號一律 `S_IPAS_<民國年>_<梯次>_<科目代號>`（例：`S_IPAS_115_02_L12`，官方題的 gate
      依這個格式對帳），欄位 `url`（官網列表頁上的網址，中文要百分比編碼）、`sha256`、`title`、
      `exam_subject`（`考科1`／`考科2`）、`layout: ipas_exam_table`、`kind: official_exam`、`session`（`115-02`）、
-     `exam_date`、`published_on`、`subject`（`L11`／`L12`）。`session`、`exam_date`、`subject`、`title` 必須與
+     `exam_date`、`published_on`、`subject`（`L11`／`L12`），題目要讀圖的另有 `figure_questions`（整數題號 → 理由：
+     題庫還不支援圖片，這幾題不收錄，manifest 記為 `not_imported_figure`；登記要照 PDF，改了就跑 `--emit`，擷取快照
+     記下擷取器確認有圖的題號，CI 拿它核對登記）。`session`、`exam_date`、`subject`、`title` 必須與
      PDF 每一頁的頁首一致，`exam_subject` 由 `subject` 決定（L11 考科1、L12 考科2）：匯入工具與 `--emit`／`--verify`
      拿 PDF 的頁首比，`--emit` 把頁首記進擷取快照、`--reassemble` 與 CI 拿快照比，不符就中止。照頁首抄，
      不要從上一場複製後改；

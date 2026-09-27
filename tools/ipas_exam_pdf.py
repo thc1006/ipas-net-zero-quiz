@@ -56,7 +56,8 @@ Poppler 畫出來的邊緣深一些，也有 10:1）。
         位元組不同；
   圖：  題目欄裡有圖片、漸層或向量圖形（矩形、曲線、線段：圖表題的內容讀不到；螢光筆、儲存格底色也算。
         圖片看 pdfminer 讀到的，向量圖形與漸層看 PyMuPDF 真的畫出來的（見 _log_drawings），範圍含線寬：描 16pt
-        粗邊的細矩形也算；不論粗細，底線也算：一條細條就能把「一」變成閱讀器上的「二」）、
+        粗邊的細矩形也算；不論粗細，底線也算：一條細條就能把「一」變成閱讀器上的「二」。
+        figure_questions 登記過、人工確認題目要讀圖的題號除外：照常擷取文字，但有圖的題目必須正好是那幾題）、
         題目欄裡有穿過文字中段的細線或細矩形（刪除線、遮住字的白色細條：另外報出位置）、
         答案欄裡除了字還畫了任何東西（不論粗細的矩形與線、圖片、漸層：蓋住、塗改、劃掉的答案，字照樣抽得出來；
         表頭的灰底除外）、圖片或漸層畫在它蓋住的字之後（浮水印也一樣）、範圍無法判斷的漸層、
@@ -103,6 +104,9 @@ Poppler 畫出來的邊緣深一些，也有 10:1）。
 真實卷的寫法（_font_problem）：公告試題改用 Word 內嵌成別種寫法的字型（例如 CFF 的 OpenType 字型）時也會報錯。
 Word 以外的程式存的 PDF（Acrobat 的增量更新、根節點帶頁面屬性、別種物件串流的寫法）也一樣（_syntax_problem、
 _page_list_problem）。
+圖裡有字的向量圖表（標籤、座標軸），字級小、旋轉或白色的字會先在字的檢查失敗，訊息不一定提到圖表，登記成圖表題
+也一樣。一般字級、自成一行的標籤則會併進題目文字：登記的圖表題不收錄，只影響它在憑證裡的內容指紋 —— 目前的
+圖表題都是點陣圖。
 """
 from __future__ import annotations
 
@@ -2121,11 +2125,12 @@ def rows_of(pdf_path: Path) -> list[Row]:
         return rows
 
 
-def parse_rows(rows) -> list[dict]:
+def parse_rows(rows, figure_questions: frozenset[int] = frozenset()) -> list[dict]:
     """表格的列 → 題目：{number, page, column, answer, stem, options}。
 
     column 一律是 None：表格版面只有一欄，題目的位置由頁碼與題號決定。
     page 是題目開始的那一頁。題號必須從 1 起連續編號。
+    figure_questions：人工確認過、題目要讀圖的題號。有圖的題目必須正好是這幾題，它們另帶 'figure': True。
     """
     questions = []
     after_header = False  # 上一列是頁首的表頭：續列只能緊接在這裡
@@ -2163,11 +2168,18 @@ def parse_rows(rows) -> list[dict]:
                           'lines': list(row.lines), 'figures': row.figures})
     if not questions:
         raise ValueError('沒有任何題目。')
-    with_figures = [q['number'] for q in questions if q['figures']]
-    if with_figures:
-        raise ValueError(f'第 {"、".join(map(str, with_figures))} 題的題目欄裡有圖片或圖形 —— 可能是圖表（內容讀不到，'
+    # 圖表題（figure_questions）是人工確認過、題目要讀圖的題號：它們的圖不算錯，但有圖的題目必須正好是這幾題
+    with_figures = {q['number'] for q in questions if q['figures']}
+    listed_without = sorted(figure_questions - with_figures)
+    if listed_without:
+        raise ValueError(f'登記為圖表題的第 {"、".join(map(str, listed_without))} 題，題目欄裡沒有圖片或圖形 —— '
+                         '題號寫錯，或登記已經過期（PDF 換過），需要人工確認。')
+    unexpected = sorted(with_figures - figure_questions)
+    if unexpected:
+        raise ValueError(f'第 {"、".join(map(str, unexpected))} 題的題目欄裡有圖片或圖形 —— 可能是圖表（內容讀不到，'
                          '只匯入文字會變成無解的題目），也可能是螢光筆、儲存格底色這類標記（看不出用意），需要人工處理。')
-    return [_question(q) for q in questions]
+    # 圖表題帶 figure 旗標：呼叫端（還原工具）把「擷取器確認過真的有圖的題號」記進擷取快照
+    return [{**_question(q), 'figure': True} if q['figures'] else _question(q) for q in questions]
 
 
 def _question(q: dict) -> dict:
@@ -2196,5 +2208,7 @@ def _question(q: dict) -> dict:
             'stem': stem, 'options': options}
 
 
-def extract(pdf_path: Path) -> list[dict]:
-    return parse_rows(rows_of(pdf_path))
+def extract(pdf_path: Path, *, figure_questions: frozenset[int] = frozenset()) -> list[dict]:
+    """PDF → 題目。figure_questions：人工確認過、題目要讀圖的題號（照常擷取文字；有圖的題目必須正好是這幾題，
+    它們另帶 'figure': True）。"""
+    return parse_rows(rows_of(pdf_path), figure_questions)

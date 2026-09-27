@@ -13,6 +13,8 @@ official_exam）；題目由 ipas_exam_pdf.py 從 PDF 擷取。這支只負責�
     （quality_flags: time_sensitive），查證日期（metadata.valid_as_of）就是考試日期；
   - 答案依據是官方題目本身與它的答案欄；個別題目另有一手依據（例如題幹點名的法條）時，
     登記在 EXTRA_EVIDENCE，排在前面。
+  - 登記為圖表題的（SOURCES 的 figure_questions：題目要讀圖、題庫還不支援圖片）照常擷取、核對，但不寫進題庫；
+    manifest 記為 not_imported_figure 並寫明理由。
 已經在題庫裡的題目（重新匯入時）：
   - 題幹、選項、答案、考科或 official_exam 與這次擷取的結果不同就中止 —— 來源 PDF 變了要先查清楚，
     題庫被改過就要先還原；
@@ -319,6 +321,11 @@ def main(argv: list[str] | None = None) -> int:
             sys.exit(f'✗ {src_id} 不是官方公告試題的來源（SOURCES 裡沒有，或 kind 不是 official_exam）。')
         if src_id not in R.EXPECTED_QUESTION_COUNT:
             sys.exit(f'✗ {src_id} 沒有登記總題數（restore_from_source_pdf.py 的 EXPECTED_QUESTION_COUNT）。')
+    R.check_figure_questions(sources)  # 圖表題的登記說得通，才下載
+    on_figures = sorted(k for k in EXTRA_EVIDENCE
+                        if k[0] in sources and k[1] in R.SOURCES[k[0]].get('figure_questions', {}))
+    if on_figures:
+        sys.exit(f'✗ EXTRA_EVIDENCE 掛在不收錄的圖表題上：{on_figures} —— 那幾題不會進題庫。')
     if problems := law_evidence_problems(load_pinned_laws(), sources):  # 不需要網路：下載之前先核對
         sys.exit('✗ 法條引文核對不過：\n  ' + '\n  '.join(problems))
     items, used = [], set()
@@ -329,14 +336,16 @@ def main(argv: list[str] | None = None) -> int:
         path = cache / f'{src_id}.pdf'
         try:
             R.check_official_header(src_id, meta, ipas_exam_pdf.header(path))  # 是 SOURCES 說的那一場、那一科
-            questions = ipas_exam_pdf.extract(path)
+            figures = meta.get('figure_questions', {})
+            questions = ipas_exam_pdf.extract(path, figure_questions=frozenset(figures))
         except ValueError as e:
             sys.exit(f'✗ {src_id}: {e}')
         expected = R.EXPECTED_QUESTION_COUNT[src_id]
         if len(questions) != expected:
             sys.exit(f'✗ {src_id}: 擷取到 {len(questions)} 題，應為 {expected} 題。')
-        items += [build_item(src_id, meta, q, EXTRA_EVIDENCE.get((src_id, q['number']))) for q in questions]
-        used |= {(src_id, q['number']) for q in questions}
+        kept = [q for q in questions if q['number'] not in figures]  # 圖表題不收錄（憑證裡記下理由）
+        items += [build_item(src_id, meta, q, EXTRA_EVIDENCE.get((src_id, q['number']))) for q in kept]
+        used |= {(src_id, q['number']) for q in kept}
     stale = sorted(k for k in EXTRA_EVIDENCE if k[0] in sources and k not in used)
     if stale:
         sys.exit(f'✗ EXTRA_EVIDENCE 有對不到任何題目的項目：{stale} —— 題號打錯，或那一題不在這份 PDF 裡。')

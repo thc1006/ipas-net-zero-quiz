@@ -277,7 +277,7 @@ def test_main_imports_the_named_official_sources(official_source, monkeypatch, t
     dataset.write_text(json.dumps(_dataset(), ensure_ascii=False, indent=2), encoding='utf-8')
     monkeypatch.setattr(I, 'DATASET', dataset)
     monkeypatch.setattr(I, 'load_pdf', lambda src_id, cache: b'')
-    monkeypatch.setattr(I.ipas_exam_pdf, 'extract', lambda path: copy.deepcopy(official_source))
+    monkeypatch.setattr(I.ipas_exam_pdf, 'extract', lambda path, **_: copy.deepcopy(official_source))
     newlines = []
     real = I.Path.write_text
 
@@ -301,14 +301,14 @@ def test_main_leaves_extra_evidence_of_other_sources_alone(official_source, monk
     monkeypatch.setattr(I, 'DATASET', dataset)
     monkeypatch.setitem(I.EXTRA_EVIDENCE, ('S_IPAS_999_01_L12', 7), [dict(LAW)])
     monkeypatch.setattr(I, 'load_pdf', lambda src_id, cache: b'')
-    monkeypatch.setattr(I.ipas_exam_pdf, 'extract', lambda path: copy.deepcopy(official_source))
+    monkeypatch.setattr(I.ipas_exam_pdf, 'extract', lambda path, **_: copy.deepcopy(official_source))
     assert I.main([SRC, '--cache', str(tmp_path)]) == 0
 
 
 def test_main_refuses_extra_evidence_for_a_question_that_does_not_exist(official_source, monkeypatch, tmp_path):
     monkeypatch.setitem(I.EXTRA_EVIDENCE, (SRC, 99), [{'url': 'https://x', 'quote': 'q', 'supports_option': 'C'}])
     monkeypatch.setattr(I, 'load_pdf', lambda src_id, cache: b'')
-    monkeypatch.setattr(I.ipas_exam_pdf, 'extract', lambda path: copy.deepcopy(official_source))
+    monkeypatch.setattr(I.ipas_exam_pdf, 'extract', lambda path, **_: copy.deepcopy(official_source))
     with pytest.raises(SystemExit, match=r"EXTRA_EVIDENCE 有對不到任何題目的項目：\[\('S_IPAS_999_01_L11', 99\)\]"):
         I.main([SRC, '--cache', str(tmp_path)])
 
@@ -325,7 +325,7 @@ def test_main_refuses_a_source_without_an_expected_question_count_before_downloa
 
 def test_main_refuses_an_extraction_with_the_wrong_number_of_questions(official_source, monkeypatch, tmp_path):
     monkeypatch.setattr(I, 'load_pdf', lambda src_id, cache: b'')
-    monkeypatch.setattr(I.ipas_exam_pdf, 'extract', lambda path: official_source[:1])
+    monkeypatch.setattr(I.ipas_exam_pdf, 'extract', lambda path, **_: official_source[:1])
     with pytest.raises(SystemExit, match='擷取到 1 題，應為 2 題'):
         I.main([SRC, '--cache', str(tmp_path)])
 
@@ -361,6 +361,186 @@ def test_a_source_with_a_layout_nobody_extracts_stops_before_downloading(monkeyp
     with pytest.raises(SystemExit, match=f"{SRC}: 不認得的版面 'three_column'"):
         R.extract_sources(tmp_path)
     assert downloads == []
+
+
+# ── 圖表題：登記在 SOURCES 的 figure_questions，不收錄，在憑證裡記下理由 ─────────────────────
+#
+# 專案所有者的決定（2026-09-28）：題目要讀圖的（115 年第二次 L12 第 9、15 題），題庫還不支援圖，先不收錄、
+# 不手抄，在 manifest 記為 not_imported_figure 並寫明理由；等題庫支援圖片再補。
+
+FIGURE_WHY = '題目要讀圖（校園配置圖），題庫還不支援圖片'
+
+
+@pytest.fixture
+def figure_source(official_source, monkeypatch):
+    monkeypatch.setitem(R.SOURCES, SRC, {**META, 'figure_questions': {2: FIGURE_WHY}})
+    return official_source
+
+
+def _assemble_with(questions, bank_items, detected=()):
+    """detected：擷取快照記下的圖表題（擷取器對照 PDF 確認過、題目欄裡真的有圖的題號）。"""
+    snapshot = copy.deepcopy(R.load_snapshot())
+    snapshot[SRC] = _official_snapshot(questions)
+    if detected:
+        snapshot[SRC]['figure_questions'] = list(detected)
+    dataset = R.load_dataset()
+    dataset['our_unique_items'] += bank_items
+    return R.assemble(snapshot, dataset)
+
+
+def test_a_listed_figure_question_is_recorded_as_not_imported_with_its_reason(figure_source):
+    man = _assemble_with(figure_source, [I.build_item(SRC, META, figure_source[0])], detected=[2])
+    mine = {d['source_question_number']: d for d in man['dispositions'] if d['source_id'] == SRC}
+    assert mine[1]['status'] == 'imported'
+    q2 = figure_source[1]
+    assert {k: mine[2][k] for k in ('status', 'why', 'answer_key', 'normalized_text_sha256')} == {
+        'status': 'not_imported_figure', 'why': FIGURE_WHY, 'answer_key': q2['answer'],
+        'normalized_text_sha256': R.normalized_text_sha256(q2['stem'], q2['options'])}
+    assert man['_meta']['disposition_summary']['not_imported_figure'] == 1
+    assert 'not_imported_figure（' in man['_meta']['description']  # 說明文字列舉的處置跟上
+
+
+def test_a_listed_figure_question_found_in_the_bank_stops(figure_source):
+    with pytest.raises(SystemExit, match=f'{SRC}-q002: 登記為含圖表、不收錄的題目（figure_questions），卻在題庫裡'):
+        _assemble_with(figure_source, [I.build_item(SRC, META, q) for q in figure_source], detected=[2])
+
+
+# 登記本身要說得通：以前只在組 manifest 時查、而且只查了一半 —— 字串題號（照 manifest 的 JSON 抄回來）讓真卷
+# 匯入報成「登記的題目沒有圖」、理由寫成 None 被 str() 變成 'None' 通過、不存在的題號 51 安靜寫進 manifest、
+# 非官方來源在 --emit／--verify 先丟 TypeError。現在三個入口都在下載與擷取之前查，同一個函式。
+BAD_REGISTRIES = [
+    ({**META, 'kind': None, 'figure_questions': {2: FIGURE_WHY}}, '只有官方來源可以登記圖表題'),
+    ({**META, 'figure_questions': {'2': FIGURE_WHY}}, "圖表題的題號 '2' 不是 1 到 2 之間的整數"),
+    ({**META, 'figure_questions': {True: FIGURE_WHY}}, '圖表題的題號 True 不是 1 到 2 之間的整數'),
+    ({**META, 'figure_questions': {3: FIGURE_WHY}}, '圖表題的題號 3 不是 1 到 2 之間的整數'),
+    ({**META, 'figure_questions': {2: None}}, '圖表題第 2 題的理由 None 不是非空白的文字'),
+    ({**META, 'figure_questions': {2: ' '}}, "圖表題第 2 題的理由 ' ' 不是非空白的文字"),
+    ({**META, 'figure_questions': {}}, 'figure_questions 應是「題號 → 理由」的表'),
+    ({**META, 'figure_questions': [2]}, 'figure_questions 應是「題號 → 理由」的表'),
+]
+BAD_IDS = ['not-official', 'text-number', 'bool-number', 'no-such-question', 'reason-none', 'reason-blank', 'empty',
+           'not-a-table']
+
+
+@pytest.mark.parametrize(('meta', 'message'), BAD_REGISTRIES, ids=BAD_IDS)
+def test_a_figure_registry_that_makes_no_sense_stops_the_manifest(official_source, monkeypatch, meta, message):
+    monkeypatch.setitem(R.SOURCES, SRC, meta)
+    with pytest.raises(SystemExit, match=message):
+        _assemble_with(official_source, [I.build_item(SRC, META, official_source[0])], detected=[2])
+
+
+@pytest.mark.parametrize(('meta', 'message'), BAD_REGISTRIES, ids=BAD_IDS)
+def test_a_figure_registry_that_makes_no_sense_stops_extraction_before_downloading(monkeypatch, tmp_path, meta,
+                                                                                    message):
+    downloads = []
+    monkeypatch.setattr(R, 'SOURCES', {SRC: meta})
+    monkeypatch.setitem(R.EXPECTED_QUESTION_COUNT, SRC, 2)
+    monkeypatch.setattr(R, 'load_pdf', lambda src_id, cache: downloads.append(src_id))
+    with pytest.raises(SystemExit, match=message):
+        R.extract_sources(tmp_path)
+    assert downloads == []
+
+
+@pytest.mark.parametrize(('meta', 'message'), BAD_REGISTRIES, ids=BAD_IDS)
+def test_a_figure_registry_that_makes_no_sense_stops_the_import_before_downloading(official_source, monkeypatch,
+                                                                                   tmp_path, meta, message):
+    downloads = []
+    monkeypatch.setitem(R.SOURCES, SRC, {**meta, 'kind': 'official_exam'} if meta.get('kind') else meta)
+    monkeypatch.setattr(I, 'load_pdf', lambda src_id, cache: downloads.append(src_id))
+    expected = message if meta.get('kind') else '不是官方公告試題的來源'  # 匯入工具先擋非官方來源
+    with pytest.raises(SystemExit, match=expected):
+        I.main([SRC, '--cache', str(tmp_path)])
+    assert downloads == []
+
+
+# 哪幾題有圖是 PDF 的事實：擷取時由擷取器對照 PDF 確認，記進擷取快照；CI 不讀 PDF，就拿快照核對登記。
+# 以前快照裡沒有這項：從登記拿掉一題、用工具自己的 build_item 把它建進題庫，CI 全綠（審查實測）。
+@pytest.mark.parametrize(('registered', 'detected'), [({2: FIGURE_WHY}, ()), (None, (2,)), ({1: FIGURE_WHY}, (2,))],
+                         ids=['registered-but-not-in-the-snapshot', 'in-the-snapshot-but-not-registered', 'different'])
+def test_the_figure_registry_must_match_the_snapshot(official_source, monkeypatch, registered, detected):
+    meta = {**META, 'figure_questions': registered} if registered else META
+    monkeypatch.setitem(R.SOURCES, SRC, meta)
+    bank = [I.build_item(SRC, META, q) for q in official_source if q['number'] not in (registered or {})]
+    with pytest.raises(SystemExit, match=f'{SRC}：SOURCES 登記的圖表題 .* 與擷取快照的 .* 不同'):
+        _assemble_with(official_source, bank, detected=detected)
+
+
+def test_extract_sources_records_the_figure_questions_the_extractor_found(monkeypatch, tmp_path):
+    monkeypatch.setitem(R.EXPECTED_QUESTION_COUNT, SRC, 2)
+    monkeypatch.setattr(R, 'SOURCES', {SRC: {**META, 'figure_questions': {2: FIGURE_WHY}}})
+    monkeypatch.setattr(R, 'load_pdf', lambda src_id, cache: b'')
+    monkeypatch.setitem(R.HEADER_READERS, 'ipas_exam_table', lambda path: _header())
+    monkeypatch.setitem(R.EXTRACTORS, 'ipas_exam_table',
+                        lambda path, figure_questions=frozenset(): [_question(1), {**_question(2), 'figure': True}])
+    source = R.extract_sources(tmp_path)[SRC]
+    assert source['figure_questions'] == [2]
+    assert all(list(q) == ['number', 'page', 'column', 'answer', 'stem', 'options'] for q in source['questions'])
+
+
+def test_the_snapshot_records_what_the_extractor_found_not_what_was_registered(monkeypatch, tmp_path):
+    # 快照記的是 PDF 的事實（擷取器確認有圖的題號），不是把登記抄一遍：兩者不同時，組 manifest 才會發現
+    monkeypatch.setitem(R.EXPECTED_QUESTION_COUNT, SRC, 2)
+    monkeypatch.setattr(R, 'SOURCES', {SRC: {**META, 'figure_questions': {2: FIGURE_WHY}}})
+    monkeypatch.setattr(R, 'load_pdf', lambda src_id, cache: b'')
+    monkeypatch.setitem(R.HEADER_READERS, 'ipas_exam_table', lambda path: _header())
+    monkeypatch.setitem(R.EXTRACTORS, 'ipas_exam_table',
+                        lambda path, figure_questions=frozenset(): [{**_question(1), 'figure': True}, _question(2)])
+    assert R.extract_sources(tmp_path)[SRC]['figure_questions'] == [1]
+
+
+def test_extract_sources_writes_no_figure_key_for_a_source_without_figures(monkeypatch, tmp_path):
+    monkeypatch.setitem(R.EXPECTED_QUESTION_COUNT, SRC, 2)
+    # 只在有圖表題時才寫：沒有圖的來源（現有的每一份），快照一個位元組都不變
+    monkeypatch.setattr(R, 'SOURCES', {SRC: META})
+    monkeypatch.setattr(R, 'load_pdf', lambda src_id, cache: b'')
+    monkeypatch.setitem(R.HEADER_READERS, 'ipas_exam_table', lambda path: _header())
+    monkeypatch.setitem(R.EXTRACTORS, 'ipas_exam_table', lambda path: [_question(1), _question(2)])
+    assert list(R.extract_sources(tmp_path)[SRC]) == ['pdf_sha256', 'header', 'questions']
+
+
+def test_extract_sources_passes_the_figure_questions_to_the_extractor(monkeypatch, tmp_path):
+    monkeypatch.setitem(R.EXPECTED_QUESTION_COUNT, SRC, 2)
+    seen = []
+    monkeypatch.setattr(R, 'SOURCES', {SRC: {**META, 'figure_questions': {2: FIGURE_WHY}}})
+    monkeypatch.setattr(R, 'load_pdf', lambda src_id, cache: b'')
+    monkeypatch.setitem(R.HEADER_READERS, 'ipas_exam_table', lambda path: _header())
+    monkeypatch.setitem(R.EXTRACTORS, 'ipas_exam_table',
+                        lambda path, figure_questions=frozenset(): seen.append(figure_questions) or [_question(1)])
+    R.extract_sources(tmp_path)
+    assert seen == [frozenset({2})]
+
+
+def test_main_skips_the_listed_figure_questions(figure_source, monkeypatch, tmp_path):
+    dataset = tmp_path / 'integrated_dataset.json'
+    dataset.write_text(json.dumps(_dataset(), ensure_ascii=False, indent=2), encoding='utf-8')
+    seen = []
+    monkeypatch.setattr(I, 'DATASET', dataset)
+    monkeypatch.setattr(I, 'load_pdf', lambda src_id, cache: b'')
+    monkeypatch.setattr(I.ipas_exam_pdf, 'extract',
+                        lambda path, figure_questions=frozenset(): seen.append(figure_questions) or
+                        copy.deepcopy(figure_source))
+    assert I.main([SRC, '--cache', str(tmp_path)]) == 0
+    written = json.loads(dataset.read_text(encoding='utf-8'))
+    assert [i['item_id'] for i in written['our_unique_items']] == ['OTHER-q001', f'{SRC}-q001']
+    assert seen == [frozenset({2})]
+
+
+def test_main_refuses_extra_evidence_on_a_figure_question_before_downloading(figure_source, monkeypatch, tmp_path):
+    # 只要 SOURCES 與 EXTRA_EVIDENCE 就判斷得出來：不必先下載、擷取
+    monkeypatch.setitem(I.EXTRA_EVIDENCE, (SRC, 2), [{'url': 'https://x', 'quote': 'q', 'supports_option': 'A'}])
+    downloads = []
+    monkeypatch.setattr(I, 'load_pdf', lambda src_id, cache: downloads.append(src_id))
+    with pytest.raises(SystemExit, match=r"EXTRA_EVIDENCE 掛在不收錄的圖表題上：\[\('S_IPAS_999_01_L11', 2\)\]"):
+        I.main([SRC, '--cache', str(tmp_path)])
+    assert downloads == []
+
+
+def test_a_figure_registry_without_a_question_count_says_so(monkeypatch, tmp_path):
+    # 以前報成「題號 9 不是 1 到 None 之間的整數」：真正的原因是總題數還沒登記
+    monkeypatch.setattr(R, 'SOURCES', {SRC: {**META, 'figure_questions': {2: FIGURE_WHY}}})
+    monkeypatch.delitem(R.EXPECTED_QUESTION_COUNT, SRC, raising=False)
+    with pytest.raises(SystemExit, match=f'{SRC}：沒有登記總題數（EXPECTED_QUESTION_COUNT）'):
+        R.extract_sources(tmp_path)
 
 
 # ── 題庫裡的官方公告試題，必須正好是匯入工具從擷取快照建出來的樣子 ──────────────────────────
@@ -608,9 +788,10 @@ def test_main_still_needs_sources_to_import(tmp_path):
         I.main(['--cache', str(tmp_path)])
 
 
-def test_every_extra_evidence_entry_belongs_to_an_official_question():
+def test_every_extra_evidence_entry_belongs_to_an_imported_official_question():
+    # 登記過的圖表題不收錄：掛在它上面的引文沒有題目可去（匯入工具在下載之前也擋）
     official = {(s, q['number']) for s, meta in R.SOURCES.items() if meta.get('kind') == 'official_exam'
-                for q in R.load_snapshot()[s]['questions']}
+                for q in R.load_snapshot()[s]['questions'] if q['number'] not in meta.get('figure_questions', {})}
     assert sorted(set(I.EXTRA_EVIDENCE) - official) == []
 
 
@@ -740,7 +921,7 @@ def test_main_stops_on_a_header_that_disagrees_before_writing(official_source, m
     monkeypatch.setattr(I.ipas_exam_pdf, 'header', lambda path: _header(exam_date='2110-05-17'))
     extracted = []
     monkeypatch.setattr(I.ipas_exam_pdf, 'extract',
-                        lambda path: extracted.append(path) or copy.deepcopy(official_source))
+                        lambda path, **_: extracted.append(path) or copy.deepcopy(official_source))
     with pytest.raises(SystemExit, match='頁首與 SOURCES 不符：考試日期'):
         I.main([SRC, '--cache', str(tmp_path)])
     assert extracted == []
@@ -774,8 +955,8 @@ def test_main_stops_on_a_header_that_disagrees_before_writing(official_source, m
 # hook —— 這幾條測試看不到，交給 code review，與 header() 那條釘選測試的邊界相同。
 
 TOOL_SOURCES = {  # 審查過的原始碼的 sha256（換行統一成 LF）：兩個工具讀頁首的函式，與比對用的 check_official_header
-    'extract_sources': '23485c8539a7d7807f63346c3423804b667750e46de7eca844ff3131996fedda',
-    'main': 'ad76872b1dac53730e31193770d58d87bb717d8c185266e822519a00fbb2823a',
+    'extract_sources': '73e659961a7909f76780f765a4cfa69528c239af2c76e7db6d3009ef065a8e6a',
+    'main': 'e204e4f0ebb4c60497903ad3f77b62f792ddda1f71b3e604d5e5b92063cfe7a8',
     'check_official_header': 'ecb53c82afd1e6d049c5f2b3bfeee30f219c9b781c0151682058e8b088b29dcd',
 }
 DEFAULTS = {'extract_sources': (None, None), 'main': ((None,), None), 'check_official_header': (None, None)}  # 預設值

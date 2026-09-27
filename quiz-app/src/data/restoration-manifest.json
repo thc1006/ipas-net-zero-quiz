@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "description": "來源 PDF 逐題的憑證：被刪除後還原的題目，以及匯入的官方公告試題。來源 PDF 的**每一題**都有交代：restored（還原進 dataset）、imported（官方公告試題，匯入 dataset）、duplicate_within_source（PDF 自己重印）、duplicate_in_dataset（主庫已有相同題）。任何一題交代不出來就是 UNACCOUNTED —— 產生 manifest 時直接失敗，不會安靜地當成「重複」放過。",
+    "description": "來源 PDF 逐題的憑證：被刪除後還原的題目，以及匯入的官方公告試題。來源 PDF 的**每一題**都有交代：restored（還原進 dataset）、imported（官方公告試題，匯入 dataset）、duplicate_within_source（PDF 自己重印）、duplicate_in_dataset（主庫已有相同題）、not_imported_figure（官方公告試題要讀圖、題庫還不支援圖片：登記在 figure_questions，不收錄，寫明理由）。任何一題交代不出來就是 UNACCOUNTED —— 產生 manifest 時直接失敗，不會安靜地當成「重複」放過。",
     "hash_fields": {
       "raw_pdf_text_sha256": "PDF 原文（擷取後、未套用任何修正：雙欄的模擬卷分欄擷取，官方公告試題逐列擷取表格）。拿原始 PDF 重跑就該得到這個值。",
       "canonical_source_text_sha256": "套用 transformations 所列的修正之後的來源文字。dataset 應該等於這個。",
