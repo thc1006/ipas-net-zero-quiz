@@ -10,8 +10,10 @@ version = "0.0.0"
 description = "題庫維運工具（tools/*.py）的相依與測試環境"
 requires-python = ">=3.13"
 dependencies = [
-    "pdfplumber>=0.11.10",  # restore_from_source_pdf.py 的分欄擷取
-    "pymupdf>=1.28.2",      # fetch_text.py 讀 PDF 來源（AGPL-3.0，與本 repo 相同）
+    "pdfplumber>=0.11.10",  # 還原工具與 ipas_exam_pdf.py 的 PDF 擷取
+    "pdfminer.six>=20260107",  # pdfplumber 底下的解析器；ipas_exam_pdf.py 直接用它認出 xref 表是它自己重建的
+    "pymupdf>=1.28.2",      # fetch_text.py 讀 PDF 來源、ipas_exam_pdf.py 核對字有沒有真的畫出來、
+                            # 測試畫合成 PDF（AGPL-3.0，與本 repo 相同）
 ]
 
 [dependency-groups]

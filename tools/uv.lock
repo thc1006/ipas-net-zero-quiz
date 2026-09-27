@@ -267,6 +267,7 @@ name = "ipas-quiz-tools"
 version = "0.0.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "pdfminer-six" },
     { name = "pdfplumber" },
     { name = "pymupdf" },
 ]
@@ -278,6 +279,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "pdfminer-six", specifier = ">=20260107" },
     { name = "pdfplumber", specifier = ">=0.11.10" },
     { name = "pymupdf", specifier = ">=1.28.2" },
 ]
