@@ -27,9 +27,9 @@ CI 不碰 PDF
 CI 只驗「manifest ↔ dataset 一致」（每題的正規化文字 hash 對得上），離線、秒級，
 足以防竄改。要做「manifest ↔ PDF」的完整重現，手動跑這支腳本：
 
-    pip install pdfplumber
-    python tools/restore_from_source_pdf.py --verify      # 重新下載 PDF 並比對 manifest
-    python tools/restore_from_source_pdf.py --emit        # 重新產生 manifest
+    uv sync --locked --project tools
+    uv run --locked --project tools python tools/restore_from_source_pdf.py --verify   # 重新下載 PDF 並比對 manifest
+    uv run --locked --project tools python tools/restore_from_source_pdf.py --emit     # 重新產生 manifest
 
 PDF 版面
 ────────
@@ -118,7 +118,7 @@ def extract(pdf_path: Path):
     閱讀順序：每一頁「先左欄由上到下，再右欄由上到下」。
     這正是當初出錯的地方 —— 純文字擷取會把兩欄交錯，把鄰題的字插進題幹。
     """
-    import pdfplumber  # 延後 import：CI 不需要這個相依
+    import pdfplumber  # 延後 import：只 import 這個模組、不讀 PDF 的用法（測試）用不到它
 
     out = []
     with pdfplumber.open(pdf_path) as pdf:
@@ -554,8 +554,8 @@ def build(cache: Path):
             'sources': {k: {kk: vv for kk, vv in v.items()} for k, v in SOURCES.items()},
             'source_pdf_typos': pdf_typos,
             'how_to_reproduce': [
-                'pip install pdfplumber',
-                'python tools/restore_from_source_pdf.py --verify',
+                'uv sync --locked --project tools',
+                'uv run --locked --project tools python tools/restore_from_source_pdf.py --verify',
             ],
             'ci_note': 'CI 不下載 PDF。restoration-manifest.test.ts 只驗 manifest ↔ dataset 一致。',
         },

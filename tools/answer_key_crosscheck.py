@@ -18,6 +18,9 @@
 #
 # **這支只產出候選，不產出判決。** 每一筆 MISMATCH 都要人去讀 PDF 確認。
 #   「代理/工具說它錯」不等於「它錯」—— 這個 repo 已經被這件事咬過很多次。
+#
+# 用法（repo 根目錄；讀 PDF 需要 uv.lock 裡的 PyMuPDF）：
+#   uv run --locked --project tools python tools/answer_key_crosscheck.py
 
 import io
 import json

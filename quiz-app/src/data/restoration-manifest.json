@@ -43,8 +43,8 @@
       "S_CHU_07": []
     },
     "how_to_reproduce": [
-      "pip install pdfplumber",
-      "python tools/restore_from_source_pdf.py --verify"
+      "uv sync --locked --project tools",
+      "uv run --locked --project tools python tools/restore_from_source_pdf.py --verify"
     ],
     "ci_note": "CI 不下載 PDF。restoration-manifest.test.ts 只驗 manifest ↔ dataset 一致。",
     "source_documents": {

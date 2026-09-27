@@ -39,12 +39,12 @@
 來自哪一份 PDF（含 **sha256**）的**哪一頁、哪一欄、第幾題**，以及 PDF 自己印的 **answer key**。
 
 ```bash
-# CI 不下載 PDF：只驗 manifest ↔ 題庫一致（防竄改），離線、秒級
+# CI 不下載 PDF：只驗 manifest ↔ 題庫一致（防竄改），離線、秒級（在 quiz-app/ 裡）
 pnpm vitest run src/data/restoration-manifest.test.ts
 
-# 完整重現（人工）：重新下載 PDF、比對 sha256、重跑分欄擷取、逐題核對
-pip install pdfplumber
-python tools/restore_from_source_pdf.py --verify
+# 完整重現（人工）：重新下載 PDF、比對 sha256、重跑分欄擷取、逐題核對（在 repo 根目錄）
+uv sync --locked --project tools
+uv run --locked --project tools python tools/restore_from_source_pdf.py --verify
 ```
 
 實測 **159/159** 相符。
@@ -795,7 +795,7 @@ gh workflow run quarterly-time-sensitive-verify.yml
   §40(a) 逐字要求的是 "mitigation actions ... and emission reductions achieved"，那是選項 **A**。
   那道測試看起來像是有人驗證過，其實沒有。
 - **重建的題目有證據鏈** —— 159 題逐題記錄來自哪一份 PDF（含 sha256）的哪一頁、哪一欄、
-  第幾題，以及 PDF 自己印的 answer key。跑 `python tools/restore_from_source_pdf.py --verify`
+  第幾題，以及 PDF 自己印的 answer key。跑 `uv run --locked --project tools python tools/restore_from_source_pdf.py --verify`
   可完整重現（實測 **159/159** 相符）
 - **改過的答案留得下痕跡** —— 41 題答案曾被更正，每題都保留 `metadata.prior_answer`
   與 `_correction_note`（改了什麼、憑什麼改）。其中 41 題附一手來源 URL，

@@ -52,7 +52,7 @@
 // 分工：
 //   CI（這支測試）    不下載 PDF。只驗 manifest ↔ dataset 一致 —— 有人偷改還原題的文字，
 //                     dataset_text_sha256 就對不上，當場被抓。離線、秒級。
-//   人工（可重現）    `python tools/restore_from_source_pdf.py --verify`
+//   人工（可重現）    `uv run --locked --project tools python tools/restore_from_source_pdf.py --verify`
 //                     會重新下載 PDF、比對 sha256、重跑分欄擷取，逐題核對頁碼／欄位／
 //                     題號／answer key／文字。實測 159/159 相符。
 import { describe, it, expect } from 'vitest';
@@ -158,7 +158,7 @@ describe('restoration manifest', () => {
     expect(
       bad,
       `這些還原題的文字已被改動，但 manifest 沒有同步更新。\n` +
-        `若是刻意修改，請重跑：python tools/restore_from_source_pdf.py --emit\n` +
+        `若是刻意修改，請在 repo 根目錄重跑：uv run --locked --project tools python tools/restore_from_source_pdf.py --emit\n` +
         `（該指令會重新下載 PDF 並比對，確保修改是有憑據的）\n${bad.join('\n')}`
     ).toEqual([]);
   });
