@@ -76,7 +76,10 @@ Poppler 畫出來的邊緣深一些，也有 10:1）。
         抽出來是空的；圖片 XObject 把 /Width /Height 寫成縮寫的 /W /H：MuPDF 與 Poppler 照畫，pdfminer 整張跳過）。
         字以同一個字、同一個起點（ORIGIN）與字級配對，圖一對一（兩張圖不能共用一張抽到的圖）；
   表格外（含表格兩側的頁邊）：允許清單以外的文字（科目只認 SUBJECTS）、頁碼與頁序不符、「共 M 頁」與實際頁數不符、
-        「《以下空白》」不在最後一頁、最後一頁既沒有「共 M 頁」也沒有「《以下空白》」（看不出 PDF 是否被截斷）。
+        「《以下空白》」不在最後一頁、最後一頁既沒有「共 M 頁」也沒有「《以下空白》」（看不出 PDF 是否被截斷）、
+        某一頁表格外（通常在頁首，位置不限）不是考試名稱、科目、考試日期各一行，或與第 1 頁不同（混進別場、別科的頁面）、
+        考試名稱的次序或考試日期不成立（「第十十次」「02 月 30 日」）。
+頁首由 header() 讀出（場次、西元考試日期、科目代號），匯入時拿它對 SOURCES 登記的值。
 
 已知擋不住、要靠人工讀一遍的（在目前的公告試題裡都沒有出現）：
   - 換頁表頭之後、兩格版面的題組說明列（會被當成續列併進上一題）；與 (D) 同一格、接在它後面的註記段落
@@ -103,6 +106,7 @@ _page_list_problem）。
 """
 from __future__ import annotations
 
+import datetime
 import hashlib
 import re
 import unicodedata
@@ -155,13 +159,17 @@ BLANKS = 2
 
 # 表格外的每一行都要完全符合其中一個，或是頁碼、末頁的「《以下空白》」。場次、日期、頁數會變；
 # 考試名稱只認淨零碳規劃管理師初級，科目只認 SUBJECTS 裡的：新的要人工確認過版面再加進來。
-SUBJECTS = frozenset({'第一科：淨零碳規劃管理基礎概論', '第二科：淨零碳盤查規範與程序概要'})
-OUTSIDE_TABLE = tuple(re.compile(p) for p in (
-    r'\d{3} 年第[一二三四五六七八九十]+次淨零碳規劃管理師-初級能力鑑定【公告試題】',
-    r'考試日期：\d{3} 年 \d{2} 月 \d{2} 日',
+# 每一頁的頁首是考試名稱、科目、考試日期各一行，而且每一頁都相同（見 Header）。
+SUBJECT_CODES = {'第一科：淨零碳規劃管理基礎概論': 'L11', '第二科：淨零碳盤查規範與程序概要': 'L12'}  # iPAS 的科目代號
+SUBJECTS = frozenset(SUBJECT_CODES)
+TITLE = re.compile(r'(\d{3}) 年第([一二三四五六七八九十]+)次淨零碳規劃管理師-初級能力鑑定【公告試題】')
+EXAM_DATE = re.compile(r'考試日期：(\d{3}) 年 (\d{2}) 月 (\d{2}) 日')
+OUTSIDE_TABLE = (TITLE, EXAM_DATE, *(re.compile(p) for p in (
     r'※相關法規可能修訂，試題參考答案以該次考試公告時之法規內容為準。',
     r'一、單選題',
-))
+)))
+ZH_DIGITS = '一二三四五六七八九'
+ZH_ORDINAL = re.compile(f'([{ZH_DIGITS}])?十([{ZH_DIGITS}])?|([{ZH_DIGITS}])')  # 一 … 九十九
 SUBJECT_LINE = re.compile(r'第[一二三四五六七八九十]+科：.*')
 END_MARK = '《以下空白》'
 PAGE_NUMBER = re.compile(r'第 (\d+) 頁，共 (\d+) 頁|(\d+)')  # 115 年第一次印「第 N 頁，共 M 頁」，第二次只印 N
@@ -277,6 +285,52 @@ ASCII_DIGITS = frozenset(b'0123456789')
 LINE_END = re.compile(rb'[\r\n]')
 DEPTH = 4     # 陣列、字典最多疊幾層：8 份真實卷最多 2 層（BDC 的 <</Attached [/Top]>>）
 ITEMS = 1024  # 一個陣列或字典最多幾項：8 份真實卷最多 43 項（一個 TJ）
+
+
+@dataclass(frozen=True)
+class Header:
+    """頁首：這份 PDF 自己說它是哪一場、哪一科。每一頁都要有這三行，而且每一頁都相同。"""
+    title: str      # 115 年第一次淨零碳規劃管理師-初級能力鑑定【公告試題】
+    subject: str    # 第一科：淨零碳規劃管理基礎概論
+    date_line: str  # 考試日期：115 年 05 月 16 日
+    session: str    # 民國年-梯次：115-01
+    exam_date: str  # 西元：2026-05-16
+    subject_code: str  # L11
+
+
+def _zh_ordinal(text: str) -> int:
+    """「一」…「九十九」（「十」「十一」「二十」「二十一」）；「十十」「一一」這種寫法 ValueError。"""
+    m = ZH_ORDINAL.fullmatch(text)
+    if not m:
+        raise ValueError(f'考試名稱裡的「{text}」不是有效的次序 —— 需要人工確認。')
+    if m[3]:
+        return ZH_DIGITS.index(m[3]) + 1
+    return (ZH_DIGITS.index(m[1]) + 1 if m[1] else 1) * 10 + (ZH_DIGITS.index(m[2]) + 1 if m[2] else 0)
+
+
+def _header(title: str, subject: str, date_line: str) -> Header:
+    year, ordinal = TITLE.fullmatch(title).groups()
+    y, mo, d = EXAM_DATE.fullmatch(date_line).groups()
+    try:
+        exam_date = datetime.date(int(y) + 1911, int(mo), int(d)).isoformat()  # 民國年 + 1911
+    except ValueError:
+        raise ValueError(f'考試日期「{y} 年 {mo} 月 {d} 日」不是有效的日期 —— 需要人工確認。') from None
+    return Header(title=title, subject=subject, date_line=date_line, session=f'{year}-{_zh_ordinal(ordinal):02d}',
+                  exam_date=exam_date, subject_code=SUBJECT_CODES[subject])
+
+
+def _page_header(pno: int, titles: list[str], subjects: list[str], dates: list[str]) -> Header:
+    """一頁的頁首：考試名稱、科目、考試日期各恰好一行。"""
+    for what, found in (('考試名稱', titles), ('科目', subjects), ('考試日期', dates)):
+        if not found:
+            raise ValueError(f'第 {pno} 頁的頁首少了{what}（每一頁都要有考試名稱、科目、考試日期各一行）'
+                             '—— 看不出這一頁屬於哪一場、哪一科，需要人工確認。')
+        if len(found) > 1:
+            raise ValueError(f'第 {pno} 頁的頁首有 {len(found)} 行{what} —— 需要人工確認。')
+    try:
+        return _header(titles[0], subjects[0], dates[0])
+    except ValueError as e:  # 次序或日期不成立：說出是哪一頁
+        raise ValueError(f'第 {pno} 頁：{e}') from None
 
 
 @dataclass(frozen=True)
@@ -1859,56 +1913,94 @@ def _on_watermark(trace, marks):
     return None
 
 
+def _pages(pdf, rendered) -> list[tuple]:
+    """每一頁：(頁碼, pdfplumber 的頁, 那一頁唯一的一張表)。rendered 是同一份 PDF 的 PyMuPDF 文件。
+    xref、頁面樹、註解與資源、圖層與表單物件、內容串流、表格數量在這裡擋（先看兩套程式讀的是不是同一份：xref 與
+    頁面樹（讀到的頁面清單），再看完每一頁的註解與資源（Word 不會寫的圖形狀態與字型、Type 3 字型、頁面自己沒有的 /Resources
+    字典），再看整份的圖層、表單、/Subtype 不是直接名稱的物件與任何地方的 Type 3 字型，再看每一頁的內容串流是不是
+    兩邊讀法一致的寫法，最後才數表格）。"""
+    if _rebuilt_xref(pdf, rendered):
+        raise ValueError(REBUILT)
+    if problem := _page_list_problem(pdf, rendered):
+        raise ValueError(problem)
+    for pno, page in enumerate(pdf.pages, start=1):
+        # 註解（文字方塊、印章、便利貼、螢光筆、表單欄位）不在頁面內容裡，pdfminer 抽不到。
+        # Link 除外（帶外觀串流的不算）：Word 的網址會變成 Link，它本身不畫任何東西。
+        if odd := _annotations(page):
+            raise ValueError(f'第 {pno} 頁有 PDF 註解（{"、".join(odd)}）—— 註解不在頁面內容裡，擷取不到，'
+                             '可能是勘誤或補充說明，需要人工確認。')
+        if odd := _resources(page):
+            raise ValueError(f'第 {pno} 頁有 Word 不會寫的{"、".join(odd)} —— 各家算繪器畫法不同（轉換函數、混色、'
+                             '遮罩、字型的對照表），或字形程序畫什麼都可以，抽出來的字不一定是閱讀器上看到的，'
+                             '需要人工確認。')
+    if problem := _layers_or_forms(rendered):
+        raise ValueError(problem)
+    pages = []
+    for pno, page in enumerate(pdf.pages, start=1):
+        if problem := _content_problem(page, rendered[pno - 1]):
+            raise ValueError(f'第 {pno} 頁的{problem} —— 兩套 PDF 程式可能讀成不同的內容（審查實測：運算子後面接 NUL、'
+                             '多給的運算元，閱讀器把字壓成一條線，擷取照樣是原字），需要人工確認。')
+        tables = page.find_tables()
+        if len(tables) != 1:
+            raise ValueError(_table_count_error(pno, page, len(tables)))
+        pages.append((pno, page, tables[0]))
+    return pages
+
+
+def _outside_table(pages) -> Header:
+    """表格外（含表格兩側的頁邊）的字：沒有特殊碼位、每一行都在允許清單上；頁碼與頁序、末頁的「《以下空白》」；
+    每一頁的頁首（考試名稱、科目、考試日期各一行）都相同。回傳頁首。"""
+    numbers, ends, first = {}, [], None
+    for pno, page, table in pages:
+        titles, subjects, dates = [], [], []
+        outside = [c for c in page.chars if not _inside(c, table.bbox)]
+        for c in outside:  # 行尾的控制字元、不斷行空白會被 strip 掉，整行照樣符合允許清單
+            if odd := _odd_character(c['text']):
+                raise ValueError(f'第 {pno} 頁表格外有特殊字元 {odd}（x={c["x0"]:.1f}, top={c["top"]:.1f}）'
+                                 '—— 看得見的字可能被對到空白或控制字元，需要人工確認。')
+        for line in _page_lines(outside):
+            if TITLE.fullmatch(line):
+                titles.append(line)
+            elif EXAM_DATE.fullmatch(line):
+                dates.append(line)
+            elif line in SUBJECTS:
+                subjects.append(line)
+            elif _allowed(line):
+                continue
+            elif line == END_MARK:
+                ends.append(pno)
+            elif m := PAGE_NUMBER.fullmatch(line):
+                numbers.setdefault(pno, []).append((int(m[1] or m[3]), int(m[2]) if m[2] else None))
+            elif SUBJECT_LINE.fullmatch(line):
+                raise ValueError(f'第 {pno} 頁的科目「{line}」不在已知的科目（SUBJECTS）裡 —— 新科目要人工確認版面後'
+                                 '再加進清單；也可能是黏在科目後面的勘誤。')
+            else:
+                raise ValueError(f'第 {pno} 頁表格外有預期之外的文字：「{line}」—— 可能是勘誤或補充說明，'
+                                 '需要人工確認。')
+        here = _page_header(pno, titles, subjects, dates)
+        if first is None:
+            first = here
+        elif here != first:
+            diff = '、'.join(f'{what}「{b}」，第 1 頁是「{a}」' for what, a, b in (
+                ('考試名稱', first.title, here.title), ('科目', first.subject, here.subject),
+                ('考試日期', first.date_line, here.date_line)) if a != b)
+            raise ValueError(f'第 {pno} 頁的頁首與第 1 頁不同（{diff}）—— 可能混進了別場或別科的頁面，需要人工確認。')
+    _check_page_numbers(numbers, ends, len(pages))
+    return first
+
+
+def header(pdf_path: Path) -> Header:
+    """PDF 的頁首（每一頁都相同才回傳）：它自己說是哪一場、哪一科、哪一天考的。
+    只看表格外的字，不做題目層級的檢查；匯入前拿它對 SOURCES 登記的場次、考試日期、科目。"""
+    with _unreadable(), _opened(pdf_path) as (pdf, rendered):
+        return _outside_table(_pages(pdf, rendered))
+
+
 def rows_of(pdf_path: Path) -> list[Row]:
     """PDF → 表格的列（閱讀順序）。版面的檢查都在這裡做；題目層級的檢查在 parse_rows()。"""
     with _unreadable(), _opened(pdf_path) as (pdf, rendered):
-        if _rebuilt_xref(pdf, rendered):
-            raise ValueError(REBUILT)
-        if problem := _page_list_problem(pdf, rendered):
-            raise ValueError(problem)
-        for pno, page in enumerate(pdf.pages, start=1):
-            # 註解（文字方塊、印章、便利貼、螢光筆、表單欄位）不在頁面內容裡，pdfminer 抽不到。
-            # Link 除外（帶外觀串流的不算）：Word 的網址會變成 Link，它本身不畫任何東西。
-            if odd := _annotations(page):
-                raise ValueError(f'第 {pno} 頁有 PDF 註解（{"、".join(odd)}）—— 註解不在頁面內容裡，擷取不到，'
-                                 '可能是勘誤或補充說明，需要人工確認。')
-            if odd := _resources(page):
-                raise ValueError(f'第 {pno} 頁有 Word 不會寫的{"、".join(odd)} —— 各家算繪器畫法不同（轉換函數、混色、'
-                                 '遮罩、字型的對照表），或字形程序畫什麼都可以，抽出來的字不一定是閱讀器上看到的，'
-                                 '需要人工確認。')
-        if problem := _layers_or_forms(rendered):
-            raise ValueError(problem)
-        pages = []
-        for pno, page in enumerate(pdf.pages, start=1):
-            if problem := _content_problem(page, rendered[pno - 1]):
-                raise ValueError(f'第 {pno} 頁的{problem} —— 兩套 PDF 程式可能讀成不同的內容（審查實測：運算子後面接 NUL、'
-                                 '多給的運算元，閱讀器把字壓成一條線，擷取照樣是原字），需要人工確認。')
-            tables = page.find_tables()
-            if len(tables) != 1:
-                raise ValueError(_table_count_error(pno, page, len(tables)))
-            pages.append((pno, page, tables[0]))
-
-        numbers, ends = {}, []
-        for pno, page, table in pages:
-            outside = [c for c in page.chars if not _inside(c, table.bbox)]
-            for c in outside:  # 行尾的控制字元、不斷行空白會被 strip 掉，整行照樣符合允許清單
-                if odd := _odd_character(c['text']):
-                    raise ValueError(f'第 {pno} 頁表格外有特殊字元 {odd}（x={c["x0"]:.1f}, top={c["top"]:.1f}）'
-                                     '—— 看得見的字可能被對到空白或控制字元，需要人工確認。')
-            for line in _page_lines(outside):
-                if _allowed(line):
-                    continue
-                if line == END_MARK:
-                    ends.append(pno)
-                elif m := PAGE_NUMBER.fullmatch(line):
-                    numbers.setdefault(pno, []).append((int(m[1] or m[3]), int(m[2]) if m[2] else None))
-                elif SUBJECT_LINE.fullmatch(line):
-                    raise ValueError(f'第 {pno} 頁的科目「{line}」不在已知的科目（SUBJECTS）裡 —— 新科目要人工確認版面後'
-                                     '再加進清單；也可能是黏在科目後面的勘誤。')
-                else:
-                    raise ValueError(f'第 {pno} 頁表格外有預期之外的文字：「{line}」—— 可能是勘誤或補充說明，'
-                                     '需要人工確認。')
-        _check_page_numbers(numbers, ends, len(pages))
+        pages = _pages(pdf, rendered)
+        _outside_table(pages)
 
         # 浮水印 = 每一頁都在同一位置出現、內容相同的圖。只有一頁時無從判斷，一律當成內容。
         per_page = [{_image_key(im) for im in page.images} for _, page, _ in pages]

@@ -52,6 +52,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import dataclasses
 from collections import Counter
 import difflib
 import hashlib
@@ -772,6 +773,29 @@ def _disposition_for_dropped(q: dict, src_id: str, same_pdf: dict, ds_items: lis
 
 
 EXTRACTORS = {'two_column': extract, 'ipas_exam_table': ipas_exam_pdf.extract}
+HEADER_READERS = {'ipas_exam_table': ipas_exam_pdf.header}  # 讀得到頁首（哪一場、哪一科）的版面
+
+
+EXAM_SUBJECT = {'L11': '考科1', 'L12': '考科2'}  # iPAS 的科目代號 → 題庫的考科
+
+
+def check_official_header(src_id: str, meta: dict, header) -> None:
+    """官方來源：PDF 頁首的場次、考試日期、科目（與它決定的考科）、標題，必須與 SOURCES 登記的一致。
+
+    sha256 釘住了 PDF 的位元組，但 SOURCES 的這幾欄是人抄的：新增一場時從上一場複製一份、漏改場次，
+    整份的題目就會安靜地標成錯的場次（題卡標籤、官方引文的 note、valid_as_of 都跟著錯）。
+    讀 PDF 時（--emit、--verify、匯入）拿 PDF 的頁首比；--emit 把頁首記進擷取快照，不讀 PDF 的 --reassemble
+    與 CI 拿快照裡的頁首比（改了 SOURCES 卻對不上 PDF，CI 就轉紅）。
+    """
+    wrong = [f'{what}：SOURCES 寫「{mine}」，PDF 頁首是「{theirs}」' for what, mine, theirs in (
+        ('場次', meta['session'], header.session),
+        ('考試日期', meta['exam_date'], header.exam_date),
+        ('科目', meta['subject'], header.subject_code),
+        ('考科', meta['exam_subject'], EXAM_SUBJECT.get(header.subject_code)),
+        ('標題', meta['title'], header.title + header.subject),
+    ) if mine != theirs]
+    if wrong:
+        sys.exit(f'✗ {src_id} 的 PDF 頁首與 SOURCES 不符：' + '；'.join(wrong) + '。')
 
 
 def extract_sources(cache: Path) -> dict:
@@ -781,16 +805,23 @@ def extract_sources(cache: Path) -> dict:
         layout = meta.get('layout', 'two_column')
         if layout not in EXTRACTORS:
             sys.exit(f'✗ {src_id}: 不認得的版面 {layout!r}')
+        if meta.get('kind') == 'official_exam' and layout not in HEADER_READERS:
+            sys.exit(f'✗ {src_id}: 官方來源的版面 {layout!r} 讀不到頁首，無法確認它是哪一場、哪一科。')
         load_pdf(src_id, cache)
+        path = cache / f'{src_id}.pdf'
+        header = None
         try:
-            questions = EXTRACTORS[layout](cache / f'{src_id}.pdf')
+            if meta.get('kind') == 'official_exam':  # 先確定是 SOURCES 說的那一場、那一科，再擷取
+                header = HEADER_READERS[layout](path)
+                check_official_header(src_id, meta, header)
+            questions = EXTRACTORS[layout](path)
         except ValueError as e:  # ipas_exam_pdf 遇到不在預期內的版面一律丟 ValueError
             sys.exit(f'✗ {src_id}: {e}')
-        out[src_id] = {
-            'pdf_sha256': meta['sha256'],
-            'questions': [{k: q[k] for k in ('number', 'page', 'column', 'answer', 'stem', 'options')}
-                          for q in questions],
-        }
+        out[src_id] = {'pdf_sha256': meta['sha256']}
+        if header is not None:  # 官方來源：PDF 自己說的場次、日期、科目、標題（CI 拿它核對 SOURCES，見 assemble）
+            out[src_id]['header'] = dataclasses.asdict(header)
+        out[src_id]['questions'] = [{k: q[k] for k in ('number', 'page', 'column', 'answer', 'stem', 'options')}
+                                    for q in questions]
     return out
 
 
@@ -845,6 +876,13 @@ def assemble(extracted: dict, ds: dict) -> dict:
     ds_items = ds['gist_items'] + ds['our_unique_items']
 
     check_counts_registered()
+    # 官方來源：SOURCES 的場次、考試日期、科目、考科、標題要對得上 --emit 記下的 PDF 頁首（CI 不讀 PDF，也看得到）
+    for s, meta in SOURCES.items():
+        if meta.get('kind') == 'official_exam':
+            recorded = extracted.get(s, {}).get('header')
+            if recorded is None:
+                sys.exit(f'✗ {s}：擷取快照沒有 PDF 的頁首 —— 官方來源要跑 --emit，把頁首記進快照（CI 拿它核對 SOURCES）。')
+            check_official_header(s, meta, ipas_exam_pdf.Header(**recorded))
 
     # 先對帳每一份來源的題數：擷取器掉題時，要說「擷取器壞了」，而不是讓後面的檢查報成別的錯
     # （修正表「用不到的題號」、題庫題「對不到來源」）。

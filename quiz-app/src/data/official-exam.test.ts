@@ -69,6 +69,17 @@ describe('官方公告試題的標記必須對得回 PDF', () => {
     expect(bad).toEqual([]);
   });
 
+  // 考科（exam_subject）決定題目出現在哪一個考科的練習裡，由科目代號決定：第一科是考科1，第二科是考科2。
+  // 匯入時由 SOURCES 抄進來 —— 從上一場的 L11 複製給 L12，第二科的題目就會跑進考科1（審查實測過）。
+  it('考科與官方的科目代號一致（L11 考科1、L12 考科2）', () => {
+    const bad = OFFICIAL.filter(
+      (it) =>
+        it.exam_subject !==
+        ({ L11: '考科1', L12: '考科2' } as Record<string, string>)[it.official_exam!.subject]
+    ).map((it) => `${it.item_id}：${it.exam_subject}／${it.official_exam!.subject}`);
+    expect(bad).toEqual([]);
+  });
+
   it('出處是 iPAS 官方，年份是考試那一年', () => {
     const bad = OFFICIAL.filter(
       (it) =>

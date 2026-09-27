@@ -4261,6 +4261,14 @@
   },
   "S_IPAS_115_01_L11": {
     "pdf_sha256": "bef4f1e9a78a83fa4e635ebf522ea8a6088c771611cc9b7fd3709d3c38e567a4",
+    "header": {
+      "title": "115 年第一次淨零碳規劃管理師-初級能力鑑定【公告試題】",
+      "subject": "第一科：淨零碳規劃管理基礎概論",
+      "date_line": "考試日期：115 年 05 月 16 日",
+      "session": "115-01",
+      "exam_date": "2026-05-16",
+      "subject_code": "L11"
+    },
     "questions": [
       {
         "number": 1,
@@ -5516,6 +5524,14 @@
   },
   "S_IPAS_115_01_L12": {
     "pdf_sha256": "1c4e08cf48110aa0e229f691c6b1ca16a543cd64adfefc2a7dbe834823fec36d",
+    "header": {
+      "title": "115 年第一次淨零碳規劃管理師-初級能力鑑定【公告試題】",
+      "subject": "第二科：淨零碳盤查規範與程序概要",
+      "date_line": "考試日期：115 年 05 月 16 日",
+      "session": "115-01",
+      "exam_date": "2026-05-16",
+      "subject_code": "L12"
+    },
     "questions": [
       {
         "number": 1,

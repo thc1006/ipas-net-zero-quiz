@@ -326,8 +326,10 @@ def main(argv: list[str] | None = None) -> int:
         meta = R.SOURCES[src_id]
         cache.mkdir(parents=True, exist_ok=True)
         load_pdf(src_id, cache)
+        path = cache / f'{src_id}.pdf'
         try:
-            questions = ipas_exam_pdf.extract(cache / f'{src_id}.pdf')
+            R.check_official_header(src_id, meta, ipas_exam_pdf.header(path))  # 是 SOURCES 說的那一場、那一科
+            questions = ipas_exam_pdf.extract(path)
         except ValueError as e:
             sys.exit(f'✗ {src_id}: {e}')
         expected = R.EXPECTED_QUESTION_COUNT[src_id]

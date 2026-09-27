@@ -37,6 +37,7 @@ cd .. && python tools/gen_gap_reports.py    # 產生 docs/VERIFICATION-GAPS.md
 
 `tools/*.py` **必須從 repo 根目錄執行**（它們用根目錄相對路徑）。
 一律先 `export PYTHONIOENCODING=utf-8`。
+tools/ 頂層新增、移除或改名工具時，同時改 `tools/tests/test_official_exam_import.py` 的 `TOOL_MODULES`；其他檔案不要放在 tools/ 頂層（那裡的測試逐項比對）。
 
 ## 絕不可以
 
@@ -81,7 +82,10 @@ cd .. && python tools/gen_gap_reports.py    # 產生 docs/VERIFICATION-GAPS.md
    - `SOURCES`：來源代號一律 `S_IPAS_<民國年>_<梯次>_<科目代號>`（例：`S_IPAS_115_02_L12`，官方題的 gate
      依這個格式對帳），欄位 `url`（官網列表頁上的網址，中文要百分比編碼）、`sha256`、`title`、
      `exam_subject`（`考科1`／`考科2`）、`layout: ipas_exam_table`、`kind: official_exam`、`session`（`115-02`）、
-     `exam_date`、`published_on`、`subject`（`L11`／`L12`）；
+     `exam_date`、`published_on`、`subject`（`L11`／`L12`）。`session`、`exam_date`、`subject`、`title` 必須與
+     PDF 每一頁的頁首一致，`exam_subject` 由 `subject` 決定（L11 考科1、L12 考科2）：匯入工具與 `--emit`／`--verify`
+     拿 PDF 的頁首比，`--emit` 把頁首記進擷取快照、`--reassemble` 與 CI 拿快照比，不符就中止。照頁首抄，
+     不要從上一場複製後改；
    - `EXPECTED_QUESTION_COUNT`：總題數；
    - `SOURCE_REVIEWS`：人工查核紀錄（沒有就中止）。
 2. 依序跑（repo 根目錄）：

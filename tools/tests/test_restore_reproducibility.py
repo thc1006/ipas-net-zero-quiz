@@ -9,6 +9,7 @@
 # 手改 manifest 的任何一個字、改了工具的表或題庫卻沒有重組，這裡都會轉紅。
 # 守不到的：快照本身（只能由 --verify 對照 PDF），以及把快照與 manifest 一起改的協同修改。
 import copy
+import dataclasses
 import re
 import json
 
@@ -78,7 +79,15 @@ def test_the_snapshot_has_exactly_the_shape_the_extractor_produces(snapshot):
     # 快照只有 --verify 對照 PDF 才驗得完整；這裡先擋掉離線就看得出來的手改：
     # 多出來的鍵、題目或選項的順序被調過、文字不是擷取器會輸出的樣子
     for src_id, source in snapshot.items():
-        assert list(source) == ['pdf_sha256', 'questions']
+        if R.SOURCES[src_id].get('kind') == 'official_exam':  # 官方來源另記 PDF 的頁首（CI 拿它核對 SOURCES）
+            assert list(source) == ['pdf_sha256', 'header', 'questions']
+            assert list(source['header']) == ['title', 'subject', 'date_line', 'session', 'exam_date', 'subject_code']
+            # 場次、考試日期、科目代號是從頁首的三行推出來的：兩邊要對得上（手改其中一邊，離線就看得出來）
+            header = source['header']
+            derived = R.ipas_exam_pdf._header(header['title'], header['subject'], header['date_line'])
+            assert dataclasses.asdict(derived) == header, f'{src_id} 的頁首自相矛盾：快照不可以手改，要跑 --emit'
+        else:
+            assert list(source) == ['pdf_sha256', 'questions']
         numbers = [q['number'] for q in source['questions']]
         assert all(a < b for a, b in zip(numbers, numbers[1:])), '擷取依閱讀順序，題號必須遞增'
         for q in source['questions']:
@@ -667,6 +676,9 @@ def test_extract_sources_keeps_only_the_snapshot_fields(monkeypatch, tmp_path):
                 'options': [{'key': 'A', 'text': '甲'}], 'note': '解析'}
     for layout in R.EXTRACTORS:  # 每一種版面的擷取器都一樣：只留快照的欄位
         monkeypatch.setitem(R.EXTRACTORS, layout, lambda path: [dict(question)])
+    monkeypatch.setattr(R, 'check_official_header', lambda src_id, meta, header: None)  # 頁首另有測試
+    for layout in R.HEADER_READERS:
+        monkeypatch.setitem(R.HEADER_READERS, layout, lambda path: None)
     out = R.extract_sources(tmp_path)
     assert list(out) == list(R.SOURCES)
     for src_id, source in out.items():

@@ -25,6 +25,7 @@ from pdfminer.psparser import END_STRING, ESC_STRING, HEX, LIT, NONSPC, OCT_STRI
 from pdfplumber.utils import extract_text
 from pdfplumber.utils.exceptions import PdfminerException
 
+import ipas_exam_pdf
 from ipas_exam_pdf import (C_SPACE, COMMENT, DEFINITION, FILLER, HEX_STRING, LINE_END, MIN_CONTRAST, NAME_HEX,
                            NOT_ON_TOP, NUMBER_END, OBJECT_HEADER, OBJECT_KEYWORDS, OBJECT_NUMBER, OBJECTS, OPERATORS,
                            PDF_STRING, PDFMINER_WORD, POPPLER_SPACE, SPACE, STRING_ESCAPES, STRING_PART, TOKEN,
@@ -33,9 +34,8 @@ from ipas_exam_pdf import (C_SPACE, COMMENT, DEFINITION, FILLER, HEX_STRING, LIN
                            _contrast, _drawn, _font_problem, _inside, _intersects, _luminance,
                            _odd_character, _on_watermark, _origin, _overlaps, _page_list_problem, _resources,
                            _listed, _poppler_rebuild, _same_glyph, _shades, _skewed, _syntax_problem, _table_trailer,
-                           _text_profile, _unextracted_glyph, _unextracted_image,
-                           _visible_glyphs, _watermark_problem, extract, inline_subscripts, join_lines, parse_rows,
-                           text_lines)
+                           _text_profile, _unextracted_glyph, _unextracted_image, _visible_glyphs, _watermark_problem,
+                           extract, header, inline_subscripts, join_lines, parse_rows, text_lines)
 
 
 def _header(page=1):
@@ -846,7 +846,8 @@ NOTICE, SECTION = FIRST_PAGE
 @pytest.mark.parametrize('subject', ['第一科：淨零碳規劃管理基礎概論', '第二科：淨零碳盤查規範與程序概要'],
                          ids=['subject-1', 'subject-2'])
 def test_both_known_subjects_are_allowed(tmp_path, subject):
-    assert extract(_two_page_exam(tmp_path, page_options={1: {'header': (TITLE, subject, DATE)}})) == EXPECTED
+    both = {n: {'header': (TITLE, subject, DATE)} for n in (1, 2)}
+    assert extract(_two_page_exam(tmp_path, page_options=both)) == EXPECTED
 
 
 @pytest.mark.parametrize(('options', 'message'), [
@@ -875,6 +876,67 @@ def test_both_known_subjects_are_allowed(tmp_path, subject):
 def test_text_outside_the_table_must_be_on_the_allowlist(tmp_path, options, message):
     with pytest.raises(ValueError, match=message):
         extract(_two_page_exam(tmp_path, page_options=options))
+
+
+# ── 頁首：每一頁都有考試名稱、科目、考試日期各一行，而且每一頁都相同 ────────────────────────────
+#
+# 頁首是這份 PDF 自己說「我是哪一場、哪一科」的地方，匯入時拿它對 SOURCES 登記的場次、考試日期、科目。
+# 混進別場、別科的頁面時，那一頁的頁首會不同；少了頁首，就說不出這一頁是哪一場。
+
+def _both_pages(title=TITLE, subject=SUBJECT, date=DATE):
+    return {n: {'header': (title, subject, date)} for n in (1, 2)}
+
+
+def test_the_header_says_which_exam_this_is(tmp_path):
+    h = header(_two_page_exam(tmp_path))
+    assert (h.title, h.subject, h.session, h.exam_date, h.subject_code) == (
+        TITLE, SUBJECT, '115-01', '2026-05-16', 'L11')
+
+
+@pytest.mark.parametrize(('title', 'session'), [
+    (TITLE.replace('第一次', '第二次'), '115-02'),
+    (TITLE.replace('第一次', '第十次'), '115-10'),
+    (TITLE.replace('第一次', '第十一次'), '115-11'),
+    (TITLE.replace('第一次', '第二十次'), '115-20'),
+    (TITLE.replace('115', '116'), '116-01'),
+], ids=['second', 'tenth', 'eleventh', 'twentieth', 'next-year'])
+def test_the_session_is_read_from_the_title(tmp_path, title, session):
+    assert header(_two_page_exam(tmp_path, page_options=_both_pages(title=title))).session == session
+
+
+def test_the_exam_date_is_converted_from_the_roc_calendar(tmp_path):
+    exam = _two_page_exam(tmp_path, page_options=_both_pages(date='考試日期：115 年 08 月 15 日'))
+    assert header(exam).exam_date == '2026-08-15'
+
+
+def test_the_second_subject_has_its_own_code(tmp_path):
+    exam = _two_page_exam(tmp_path, page_options=_both_pages(subject='第二科：淨零碳盤查規範與程序概要'))
+    assert header(exam).subject_code == 'L12'
+
+
+@pytest.mark.parametrize(('options', 'message'), [
+    ({2: {'header': (TITLE, '第二科：淨零碳盤查規範與程序概要', DATE)}}, '^第 2 頁的頁首與第 1 頁不同'),
+    ({2: {'header': (TITLE.replace('第一次', '第二次'), SUBJECT, DATE)}}, '^第 2 頁的頁首與第 1 頁不同'),
+    ({2: {'header': (TITLE, SUBJECT, DATE.replace('16 日', '17 日'))}}, '^第 2 頁的頁首與第 1 頁不同'),
+    ({2: {'header': (SUBJECT, DATE)}}, '^第 2 頁的頁首少了考試名稱'),
+    ({1: {'header': (TITLE, DATE)}}, '^第 1 頁的頁首少了科目'),
+    ({1: {'header': (TITLE, SUBJECT)}}, '^第 1 頁的頁首少了考試日期'),
+    ({1: {'header': (TITLE, SUBJECT, SUBJECT, DATE)}}, '^第 1 頁的頁首有 2 行科目'),
+    ({1: {'header': (TITLE, TITLE, SUBJECT, DATE)}}, '^第 1 頁的頁首有 2 行考試名稱'),
+    ({1: {'header': (TITLE, SUBJECT, DATE, DATE)}}, '^第 1 頁的頁首有 2 行考試日期'),
+    (_both_pages(date='考試日期：115 年 02 月 30 日'), '^第 1 頁：考試日期「115 年 02 月 30 日」不是有效的日期'),
+    ({2: {'header': (TITLE, SUBJECT, '考試日期：115 年 02 月 30 日')}}, '^第 2 頁：考試日期「115 年 02 月 30 日」'),
+    (_both_pages(title=TITLE.replace('第一次', '第十十次')), '^第 1 頁：考試名稱裡的「十十」不是有效的次序'),
+    (_both_pages(title=TITLE.replace('第一次', '第一一次')), '考試名稱裡的「一一」不是有效的次序'),
+], ids=['another-subject', 'another-session', 'another-date', 'no-title', 'no-subject', 'no-date',
+        'two-subjects', 'two-titles', 'two-dates', 'no-such-date', 'no-such-date-on-page-2', 'bad-ordinal',
+        'repeated-digit'])
+def test_every_page_carries_one_and_the_same_header(tmp_path, options, message):
+    exam = _two_page_exam(tmp_path, page_options=options)
+    with pytest.raises(ValueError, match=message):
+        extract(exam)
+    with pytest.raises(ValueError, match=message):
+        header(exam)
 
 
 @pytest.mark.parametrize('x', [26, 559], ids=['left-margin', 'right-margin'])
@@ -1978,18 +2040,21 @@ def test_an_xref_that_pymupdf_repairs_while_drawing_stops_the_extraction(tmp_pat
     assert drawn
 
 
+def _indirect_subtype_last(page):
+    """圖的 /Subtype 寫成間接參照，圖是整份 PDF 的最後一個物件。"""
+    doc = page.parent
+    name = doc.get_new_xref()
+    image = doc.get_new_xref()  # 圖是整份 PDF 的最後一個物件
+    doc.update_object(name, '/Image')
+    doc.update_object(image, f'<</Type/XObject/Subtype {name} 0 R/Width 1/Height 1/ColorSpace/DeviceGray'
+                             '/BitsPerComponent 8>>')
+    doc.update_stream(image, b'\x00', new=True)
+    _add_resource(page, 'XObject', 'Im9', f'{image} 0 R')
+
+
 def test_an_indirect_subtype_on_the_last_object_stops_the_extraction(tmp_path):
-    def last(page):
-        doc = page.parent
-        name = doc.get_new_xref()
-        image = doc.get_new_xref()  # 圖是整份 PDF 的最後一個物件
-        doc.update_object(name, '/Image')
-        doc.update_object(image, f'<</Type/XObject/Subtype {name} 0 R/Width 1/Height 1/ColorSpace/DeviceGray'
-                                 '/BitsPerComponent 8>>')
-        doc.update_stream(image, b'\x00', new=True)
-        _add_resource(page, 'XObject', 'Im9', f'{image} 0 R')
     with pytest.raises(ValueError, match='^PDF 裡有 /Subtype 不是直接名稱的物件'):
-        extract(_two_page_exam(tmp_path, page_options={2: {'extras': [last]}}))
+        extract(_two_page_exam(tmp_path, page_options={2: {'extras': [_indirect_subtype_last]}}))
 
 
 @pytest.mark.parametrize(('origin', 'size', 'same'), [
@@ -2432,6 +2497,311 @@ def test_a_type3_font_anywhere_in_the_pdf_stops_the_extraction(tmp_path):
                                 '/Widths[1000]/Resources<<>>>>')
     with pytest.raises(ValueError, match=r'^PDF 裡有 Type 3 字型（xref \d+）'):
         extract(_two_page_exam(tmp_path, page_options={2: {'extras': [stray_type3]}}))
+
+
+@pytest.mark.parametrize('structure', [_form_xobject(bbox=False), _optional_content(on=False)], ids=['form', 'layer'])
+def test_the_header_is_not_read_from_a_pdf_with_forms_or_layers(tmp_path, structure):
+    # 頁首也是抽出來的字：表單與圖層裡的字，閱讀器上看到的與抽出來的不同，拿它對 SOURCES 之前就擋
+    with pytest.raises(ValueError, match='^PDF (裡有表單物件|有選擇性內容)'):
+        header(_two_page_exam(tmp_path, page_options=_in_q1(structure)))
+
+
+def test_the_header_is_not_read_from_content_the_two_programs_read_differently(tmp_path):
+    # 內容串流的檢查也在讀頁首之前：NUL 後面的字閱讀器照畫、pdfminer 讀不到，頁首一樣可以這樣改
+    with pytest.raises(ValueError, match='^第 1 頁的內容串流'):
+        header(_two_page_exam(tmp_path, page_options=_in_q1(_raw_stream(NUL_TEXT, font=True))))
+
+
+def _resources_not_a_dictionary(tmp_path):
+    """頁面的 /Resources 不是字典（指向一個數字），根節點照 Word 的寫法、不帶 /Resources：擋在頁面自己的 /Resources
+    那一條（_resources），不是頁面樹。"""
+    content = b'BT /F1 24 Tf 1 0 0 1 100 700 Tm (A) Tj ET'
+    path = tmp_path / 'broken-resources.pdf'
+    path.write_bytes(_minimal_pdf([
+        b'<</Type/Catalog/Pages 2 0 R>>',
+        b'<</Type/Pages/Kids[3 0 R]/Count 1>>',
+        b'<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Resources 6 0 R/Contents 4 0 R>>',
+        b'<</Length %d>>\nstream\n' % len(content) + content + b'\nendstream',
+        HELVETICA_FONT, b'42'], root=1))
+    return path
+
+
+def _page_resources_null(tmp_path):
+    """整卷第 1 頁的 /Resources 改寫成同樣長度的 /Resources null，根節點不動（不帶 /Resources）：擋在頁面自己的
+    /Resources 那一條。"""
+    doc = pymupdf.open(_two_page_exam(tmp_path))
+    reference = doc.xref_get_key(doc[0].xref, 'Resources')[1]
+    page = doc[0].xref
+    data = doc.tobytes()
+    old = b'/Resources ' + reference.encode()
+    at = data.index(old, data.index(b'\n%d 0 obj' % page))
+    return _rewritten(tmp_path, data[:at] + b'/Resources null'.ljust(len(old)) + data[at + len(old):])
+
+
+def _stray_type3(page):
+    """一個沒有任何頁面資源參照的 Type 3 字型物件（整份掃描才擋得到）。"""
+    doc = page.parent
+    font = doc.get_new_xref()
+    doc.update_object(font, '<</Type/Font/Subtype/Type3/FontBBox[0 0 1000 1000]/FontMatrix[0.001 0 0 0.001 0 0]'
+                            '/CharProcs<<>>/Encoding<</Type/Encoding/Differences[]>>/FirstChar 97/LastChar 97'
+                            '/Widths[1000]/Resources<<>>>>')
+
+
+def _second_table(page):
+    """表格下方另一張兩格的小表（一頁兩張表）。"""
+    for y in (700, 740):
+        _fill(page, 39, y - 0.25, 556, y + 0.25)
+    for x in (39, 88, 556):
+        _fill(page, x - 0.25, 700, x + 0.25, 740)
+
+
+def _rewritten(tmp_path, data: bytes):
+    path = tmp_path / 'rewritten.pdf'
+    path.write_bytes(data)
+    return path
+
+
+# ── header() 拒絕 extract() 在表格之前拒絕的每一樣東西 ─────────────────────────────────────────────────────────
+
+# extract() 在表格以後才做的檢查（rows_of() 在 _outside_table() 回傳之後的部分、parse_rows()）的訊息，從開頭比：
+# 逐列逐字、要先畫出頁面才看得出來，header() 不做 —— 兩個工具都在 header() 之後跑 extract()。這個檔案裡每一次
+# extract() 拒絕，_extract_and_compare 都看它是在 _outside_table() 回傳之前還是之後：之後的，訊息要在這張清單上；
+# 之前的（共用的檢查：_unreadable、_opened、_pages、_outside_table），訊息不可以在清單上，而且 header() 對同一份
+# PDF 要以同樣的訊息拒絕。所以要讓一項檢查只在 extract() 跑，就要把它的訊息加進這裡，是看得見的決定；清單寫得太寬、
+# 蓋到共用的檢查，也轉紅（第十四輪確認審查實測：把 /Subtype 間接參照、兩套程式解出來的不一樣從 _pages() 搬到
+# rows_of() 表格以後，header() 就不再拒絕，整套測試照樣全綠 —— 共用的檢查拒絕的 128 種訊息，只有 60 種有 header()
+# 的樣本）
+EXTRACT_ONLY = tuple(re.compile(pattern) for pattern in (
+    # 表格的每一列：格數、字（_check_chars、下標、斷行、字距）、答案欄與題目欄裡畫的東西
+    r'第 \d+ 頁第 \d+ 列',
+    # 題目層級（parse_rows）
+    r'第 \d+ 頁：(題號是「|題號 \d+，應為 \d+（|表頭出現在頁中|續列之前沒有任何題目：|題目之間出現沒有答案與題號的列)',
+    r'第 \d+ 頁的表頭不是「答案｜題目」：',
+    r'第 \d+ 頁第 \d+ 題：答案欄是「',
+    r'第 \d+ 題：(選項是 |沒有題幹。|選項 \(.\) 是空的。|同一行有兩個選項標記：)',
+    r'第 \d+(、\d+)* 題的題目欄裡有圖片或圖形 ——',
+    r'沒有任何題目。$',
+    r'整份 PDF 找不到選項標記「\(」',
+    # 畫出頁面之後才看得出來的：字級、對比、描邊、浮水印、剪裁、漸層、蓋在字上的圖、擷取不到的字與圖、畫頁面時才重建的 xref
+    r'第 \d+ 頁有字級 [\d.]+pt 的字「',
+    r'第 \d+ 頁有看不清楚的字「',
+    r'第 \d+ 頁的字「.+」（x=[^）]*）(描了與填色不同顏色的邊|壓在浮水印上)',
+    r'第 \d+ 頁的字「.+」描邊在頁面上寬 ',
+    r'第 \d+ 頁表格外的字「.+」（x=[^）]*）(蓋到表格|在 PyMuPDF 畫出的頁面上找不到)',
+    r'第 \d+ 頁的浮水印不是 Word 的寫法：',
+    r'第 \d+ 頁有範圍無法判斷的漸層（',
+    r'第 \d+ 頁有不是矩形的剪裁路徑（',
+    r'第 \d+ 頁的(填色的圖形|線段|圖片|圖片遮罩|漸層)（x=[^）]*）畫在字「',
+    r'第 \d+ 頁的表格裡有不屬於任何一列的字「',
+    r'第 \d+ 頁有不在任何題目欄裡的圖片（',
+    r'第 \d+ 頁畫出了擷取不到的(字「|圖（)',
+    r'PDF 的 xref 表壞了，PyMuPDF 畫頁面時才自己重建 ——',
+))
+_EXTRACT = extract  # ipas_exam_pdf.extract 本身：測試執行時，這個檔案的 extract 是 _extract_and_compare
+
+
+def _extract_only(message: str) -> bool:
+    return any(pattern.match(message) for pattern in EXTRACT_ONLY)
+
+
+def _check_the_refusal(pdf_path, message: str, after_the_table: bool) -> None:
+    if after_the_table:
+        assert _extract_only(message), f'表格以後的檢查沒有列在 EXTRACT_ONLY：{message}'
+        return
+    assert not _extract_only(message), f'EXTRACT_ONLY 寫得太寬，蓋到表格之前的檢查：{message}'
+    try:
+        header(pdf_path)
+    except ValueError as error:
+        assert str(error) == message, f'header() 拒絕的訊息不同：extract()「{message}」，header()「{error}」'
+    else:
+        raise AssertionError(f'extract() 在表格之前拒絕，header() 卻讀得出頁首：{message}')
+
+
+def _extract_and_compare(pdf_path, *args, **kwargs):
+    """extract()；拒絕時看它是在表格之前還是之後拒絕的（見 EXTRACT_ONLY）。"""
+    passed = []  # rows_of() 呼叫的 _outside_table() 回傳了：表格之前的檢查都過了
+    outside_table = ipas_exam_pdf._outside_table
+
+    def recorded(pages):
+        result = outside_table(pages)
+        passed.append(True)
+        return result
+
+    try:
+        with pytest.MonkeyPatch.context() as patch:
+            patch.setattr(ipas_exam_pdf, '_outside_table', recorded)
+            return _EXTRACT(pdf_path, *args, **kwargs)
+    except ValueError as refused:
+        _check_the_refusal(pdf_path, str(refused), bool(passed))
+        raise
+
+
+@pytest.fixture(autouse=True)
+def _every_refusal_is_checked_against_the_header():
+    # 自己的 MonkeyPatch：測試裡的 monkeypatch.undo() 不會連它一起拿掉
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setitem(globals(), 'extract', _extract_and_compare)
+        yield
+
+
+def test_every_refusal_of_the_extraction_is_checked_against_the_header(tmp_path, monkeypatch):
+    # _extract_and_compare 真的會轉紅：header() 讀得出頁首、拒絕的訊息不同、EXTRACT_ONLY 蓋到表格之前的檢查、
+    # 清單漏了表格以後的檢查
+    (tmp_path / 'before').mkdir()
+    (tmp_path / 'after').mkdir()
+    annotated = _two_page_exam(tmp_path / 'before', page_options=_in_q1(
+        lambda page: page.add_text_annot((300, 160), 'C')))
+    no_marker = _exam(tmp_path / 'after', [[('header',), ('A', '1.', [_line('題幹？'), _line('A.甲')])],
+                                          [('header',)]])
+    with pytest.raises(ValueError, match='^第 1 頁有 PDF 註解'):  # _pages()：header() 以同樣的訊息拒絕
+        extract(annotated)
+    with pytest.raises(ValueError, match='^整份 PDF 找不到選項標記'):  # 表格以後：清單上有
+        extract(no_marker)
+
+    def refuse(path):
+        raise ValueError('另一個訊息')
+
+    for name, value, path, complaint in (
+            ('header', lambda path: None, annotated, '卻讀得出頁首'),
+            ('header', refuse, annotated, '訊息不同'),
+            ('EXTRACT_ONLY', (*EXTRACT_ONLY, re.compile('第 1 頁有 PDF 註解')), annotated, '寫得太寬'),
+            ('EXTRACT_ONLY', tuple(p for p in EXTRACT_ONLY if not p.match('整份 PDF 找不到選項標記「(」')),
+             no_marker, '沒有列在 EXTRACT_ONLY')):
+        monkeypatch.setitem(globals(), name, value)
+        with pytest.raises(AssertionError, match=complaint):
+            extract(path)
+        monkeypatch.undo()
+
+
+# header() 在表格之前拒絕的樣本：每一個階段至少一種（兩個工具的端對端測試也拿它們跑，test_official_exam_import）
+HEADER_REFUSALS = {
+    'rebuilt-xref': lambda tmp_path: _xref_with_two_spaces(_two_page_exam(tmp_path)),
+    'annotation': lambda tmp_path: _two_page_exam(tmp_path, page_options=_in_q1(
+        lambda page: page.add_text_annot((300, 160), 'C'))),
+    'transfer-function': lambda tmp_path: _two_page_exam(tmp_path, page_options=_in_q1(
+        _graphics_state(f'/TR {WHITE_TRANSFER}'))),
+    'type3-in-the-page': lambda tmp_path: _two_page_exam(tmp_path, page_options=_in_q1(_type3_font)),
+    'resources-not-a-dictionary': _resources_not_a_dictionary,
+    'type3-elsewhere': lambda tmp_path: _two_page_exam(tmp_path, page_options={2: {'extras': [_stray_type3]}}),
+    'indirect-subtype': lambda tmp_path: _two_page_exam(tmp_path, page_options={2: {'extras': [
+        _indirect_subtype_last]}}),
+    'font-word-does-not-write': lambda tmp_path: _exam(tmp_path, [_q3_with_a_gap(), PAGE2],
+                                                      {1: {'extras': [_space_as_bu_without_embedding]}}),
+    'own-resources-null': _page_resources_null,
+    'two-tables': lambda tmp_path: _two_page_exam(tmp_path, page_options={2: {'extras': [_second_table]}}),
+    'page-out-of-order': lambda tmp_path: _two_page_exam(tmp_path, page_options={2: {'footer': '第 1 頁，共 {m} 頁'}}),
+    'odd-character-outside-the-table': lambda tmp_path: _two_page_exam(tmp_path, page_options={1: {'extras': [
+        _mapped_glyph(0x001F, at=(60 + 12 * len(SUBJECT) + 1, 30 + 16))]}}),
+    'text-in-the-margin': lambda tmp_path: _two_page_exam(tmp_path, page_options=_in_q1(
+        lambda page: page.insert_text((26, 300), '更', fontname='china-t', fontsize=12))),
+    'unknown-subject': lambda tmp_path: _two_page_exam(tmp_path, page_options=_both_pages(subject='第三科：淨零碳管理實務')),
+    'pages-listed-differently': lambda tmp_path: _rewritten(tmp_path, _hidden_third_page(tmp_path)),
+    'objects-word-does-not-write': lambda tmp_path: _rewritten(tmp_path, _duplicate_font_name(tmp_path)),  # _opened
+}
+
+
+@pytest.mark.parametrize('make', HEADER_REFUSALS.values(), ids=HEADER_REFUSALS.keys())
+def test_the_header_is_refused_by_every_check_extract_runs_first(tmp_path, make):
+    # header() 跑的是 extract() 同一組整份與每一頁的檢查（_pages）與表格外的檢查（_outside_table）：
+    # 拒絕的訊息逐字相同
+    path = make(tmp_path)
+    with pytest.raises(ValueError) as refused:
+        extract(path)
+    with pytest.raises(ValueError, match=f'^{re.escape(str(refused.value))}$'):
+        header(path)
+
+
+def test_the_header_and_the_extraction_run_the_same_checks(tmp_path, monkeypatch):
+    # header() 不另寫一份檢查：與 extract() 走同一個 _unreadable、_opened（開檔之前查物件的寫法）、_pages、
+    # _outside_table（照這個順序），所以 extract() 在這幾個地方拒絕的，header() 一定以同樣的訊息拒絕（確認審查建議的
+    # 結構性測試：逐條補案例補不完）。參數的個數與關鍵字也要相同：header() 多傳一個旗標關掉其中一項檢查，名稱與順序
+    # 照樣對得上（第八輪確認審查實測：17 個這樣的變種有 12 個測試全過）
+    import ipas_exam_pdf
+
+    exam = _two_page_exam(tmp_path)
+    for run in (header, extract):
+        calls = []
+        for name in ('_unreadable', '_opened', '_pages', '_outside_table'):
+            real = getattr(ipas_exam_pdf, name)
+            monkeypatch.setattr(ipas_exam_pdf, name, lambda *args, name=name, real=real, **kwargs: calls.append(
+                (name, len(args), sorted(kwargs))) or real(*args, **kwargs))
+        run(exam)
+        monkeypatch.undo()
+        assert calls == [('_unreadable', 0, []), ('_opened', 1, []), ('_pages', 2, []), ('_outside_table', 1, [])], \
+            run.__name__
+
+
+def test_the_header_is_nothing_but_the_checks_extract_runs_first():
+    # header() 就只是 rows_of() 開頭那一串共用的呼叫。上面的測試只在一份會通過的卷子上看呼叫，看不到：header() 在本體
+    # 裡接住某一種拒絕（try/except）再自己讀頁首（第九輪確認審查實測 8 種）；本體不動、讓那幾個名字指到別處 —— 簽名的
+    # 預設值、包在工廠函式裡、事後換掉 __code__（第十輪確認審查實測 5 種）；裝飾器與事後包一層（functools.wraps 讓
+    # inspect 讀到的仍是原本的原始碼）；偽裝成函式的物件、換掉的命名空間（第十一輪確認審查實測 4 種）；只換掉 code 的
+    # 例外表、連 extract 一起換掉（第十二輪確認審查實測 3 種）；函式自己的 __builtins__、依呼叫者比對的鍵（第十三輪確認
+    # 審查實測 4 種）；換掉模組的類別，只交給兩個工具另一個 header（同一個思路再往下一層，1 種）。所以這條測試守的是：
+    # header() 是一個普通的函式，照一般的名稱解析（這個模組本身的 globals、Python 的 builtins，鍵都是真的 str）執行這段
+    # 原始碼，工具從模組拿到的也就是它 —— 型別與命名空間對照不會一起被換掉的東西（這裡現寫的函式、rows_of 的 globals、
+    # builtins 模組、ModuleType），本體、簽名與實際執行的整個 code 物件也都釘住。要改 header() 就要改這裡，並說明它為
+    # 什麼還是與 extract() 拒絕同樣的東西。這裡釘的是測試執行當下的狀態：header() 以外的程式在別的時候改掉它（import 的
+    # hook、背景執行緒）、執行時從外面插手（sys.settrace、sys.monitoring、audit hook、用 ctypes 改寫記憶體），或讓共用
+    # 的函式依呼叫者改變行為，一樣能讓 extract() 做別的事，這條測試看不到，交給 code review。行為那一側：這個檔案裡
+    # 每一次 extract() 拒絕都拿 header() 比對（EXTRACT_ONLY）
+    import __future__
+    import ast
+    import builtins
+    import inspect
+    import textwrap
+    import types
+
+    import ipas_exam_pdf
+
+    extract = ipas_exam_pdf.extract  # 模組的 extract 本身（這個檔案的 extract 在測試時是 _extract_and_compare）
+    assert type(header) is type(extract) is type(lambda: None)  # 真的函式：isinstance() 與 inspect 照 __class__ 回答
+    assert header.__globals__ is extract.__globals__ is ipas_exam_pdf.rows_of.__globals__  # 與 rows_of 同一個命名空間
+    assert type(header.__globals__) is dict  # dict 的子類別：LOAD_GLOBAL 會走它的 __getitem__，名字就指到別處
+    # globals 找不到的名字，LOAD_GLOBAL 查函式建立當下記下的 __builtins__：只替 header 塞一份就指到別處
+    assert header.__builtins__ is extract.__builtins__ is ipas_exam_pdf.rows_of.__builtins__ is vars(builtins)
+    # str 的子類別當鍵（雜湊相同、比對時依呼叫者回答）：同一個 dict 裡，header 查到的是另一份
+    assert all(type(key) is str for namespace in (header.__globals__, header.__builtins__) for key in namespace)
+    # 兩個工具讀的是 ipas_exam_pdf.header：模組的類別換成自訂的 __getattribute__，就能依呼叫者交出另一個函式
+    assert type(ipas_exam_pdf) is types.ModuleType and ipas_exam_pdf.header is header
+    assert not hasattr(header, '__wrapped__') and header.__qualname__ == 'header' and header.__closure__ is None
+    assert header.__defaults__ is None and header.__kwdefaults__ is None and header.__globals__ is vars(ipas_exam_pdf)
+    source = textwrap.dedent(inspect.getsource(header))
+    function = ast.parse(source).body[0]
+    assert function.name == 'header' and not function.decorator_list and ast.unparse(function.args) == 'pdf_path: Path'
+    body = function.body
+    docstring = [node for node in body[:1] if isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant)]
+    assert [ast.unparse(node) for node in body[len(docstring):]] == [
+        'with _unreadable(), _opened(pdf_path) as (pdf, rendered):\n    return _outside_table(_pages(pdf, rendered))']
+    # 執行的就是這段原始碼：照模組的 future 旗標（ipas_exam_pdf 開頭有 from __future__ import annotations）重新編譯，
+    # 整個 code 物件相同 —— bytecode、常數、名稱、例外表（只換例外表，開檔的錯就繞過 _unreadable）……
+    compiled = next(const for const in compile(source, '<header>', 'exec', dont_inherit=True,
+                                               flags=__future__.annotations.compiler_flag).co_consts
+                    if inspect.iscode(const) and const.co_name == 'header')  # 3.14 起第一個是 __annotate__
+    assert header.__code__ == compiled.replace(co_firstlineno=header.__code__.co_firstlineno)
+    # 測試 import 到的就是 tools/ 裡的那個檔案：pytest 把 tools/tests/ 排在 tools/ 前面，在那裡放一份同名的副本，測試
+    # 驗的就是副本，工具跑的卻是 tools/ 裡改過的那一份；另一個檔案編譯、只在 pytest 底下換上的 header() 也有它自己的
+    # 檔案（第二十四輪確認審查實測；同一個檔案裡再定義一次的是模組層級的程式，交給 code review）。模組自己報的
+    # __file__ 可以偽造，所以也問 import 系統照 sys.path 會找到哪個檔案（第二十五輪確認審查實測）。與兩個工具那一側的
+    # 身分測試同樣的條件。只在測試行程裡改寫 import 機制的（預先放進 sys.modules、path hook、.pth）這裡看不到，由
+    # test_official_exam_import.py 的 test_the_tools_on_disk_stop_where_the_tested_ones_do 在另一個不跑 site 的 Python
+    # 裡跑 tools/ 的檔案（第二十六、二十七輪確認審查實測）
+    import importlib.machinery
+    import sys
+    from pathlib import Path
+    tools = Path(__file__).resolve().parents[1]
+    own = tools / 'ipas_exam_pdf.py'
+    assert Path(ipas_exam_pdf.__file__).resolve() == Path(header.__code__.co_filename).resolve() == own
+    assert Path(importlib.machinery.PathFinder.find_spec('ipas_exam_pdf', sys.path).origin).resolve() == own
+
+
+def test_the_header_turns_what_pdfminer_cannot_read_into_a_value_error(tmp_path, monkeypatch):
+    # header() 與 extract() 一樣只丟 ValueError（_unreadable）
+    exam = _two_page_exam(tmp_path)
+    monkeypatch.setattr(pdfplumber.page.Page, 'find_tables', lambda self, *args, **kwargs: (_ for _ in ()).throw(
+        PdfminerException(TypeError('boom'))))
+    with pytest.raises(ValueError, match='^pdfminer 讀不了這份 PDF'):
+        header(exam)
 
 
 def test_text_beside_a_narrower_row_stops_the_extraction(tmp_path):
@@ -3747,7 +4117,8 @@ def _refused(run, path):
 def _syntax_of(tmp_path, data):
     """_syntax_problem 對 data 的判斷。它不可以改動 MuPDF 的 xref：問 MuPDF 超過 xref 長度的編號，xref 就被撐大
     （第十七輪修正時實測：問第 5000 號，長度從 7 變成 5001），畫頁面與整份掃描用的是同一份。拒絕的樣本也交給
-    extract()：它開檔之前跑同一個檢查（_opened），拒絕的訊息要逐字相同（每一個樣本都走到擷取的入口）。"""
+    extract() 與 header()：兩個都在開檔之前跑同一個檢查（_opened），拒絕的訊息要逐字相同（每一個樣本都實際走過兩個
+    入口，不只靠結構性的測試）。"""
     path = tmp_path / 'syntax.pdf'
     path.write_bytes(data)
 
@@ -3758,7 +4129,8 @@ def _syntax_of(tmp_path, data):
     problem, grown = _within(60, run)
     assert grown == 0
     if problem:
-        assert _within(60, lambda: _refused(extract, path)) == problem
+        for entry in (extract, header):
+            assert _within(60, lambda: _refused(entry, path)) == problem, entry.__name__
     return problem
 
 
