@@ -32,6 +32,8 @@ required-environments = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# 測試直接 import tools/*.py（例如 `from restore_from_source_pdf import ...`）
+pythonpath = ["."]
 # 不留 .pytest_cache：從 repo 根目錄執行時它會落在根目錄，被 repo-layout 的根目錄 gate 擋下
 addopts = "-p no:cacheprovider"
 # 參數化變成零筆時在收集階段就失敗，不是安靜地 skip

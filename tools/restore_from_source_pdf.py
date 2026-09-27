@@ -89,13 +89,22 @@ def sha256_bytes(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
 
 
-def normalized_text_sha256(stem: str, options: list[dict]) -> str:
-    """題目內容的正規化指紋。空白全部剝掉，選項依 key 排序 —— 只認內容，不認排版。"""
-    payload = re.sub(r'\s+', '', stem) + '||' + '|'.join(
+def normalized_text_payload(stem: str, options: list[dict]) -> str:
+    """指紋的原文：題幹去掉所有 Unicode 空白（同 str.isspace()），選項只去掉空格、tab、CR、LF，
+    選項依 key 排序 —— 只認內容，不認排版。
+
+    quiz-app/src/data/restoration-manifest.test.ts 有一份逐位元一致的 TS 鏡像；兩邊共用
+    quiz-app/src/data/__fixtures__/normalized_text_sha256_vectors.json 的測試向量。
+    """
+    return re.sub(r'\s+', '', stem) + '||' + '|'.join(
         f"{o['key']}:{re.sub(r'[ \t\r\n]+', '', o['text'])}"
         for o in sorted(options, key=lambda x: x['key'])
     )
-    return sha256_bytes(payload.encode('utf-8'))
+
+
+def normalized_text_sha256(stem: str, options: list[dict]) -> str:
+    """題目內容的正規化指紋：normalized_text_payload() 的 sha256。"""
+    return sha256_bytes(normalized_text_payload(stem, options).encode('utf-8'))
 
 
 def _join(a: str, b: str) -> str:

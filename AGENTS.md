@@ -13,7 +13,8 @@ cd quiz-app && pnpm preflight
 它依序執行：同步衍生資料 → lint → 單元測試 → `tsc` + build。
 **不要只跑 `pnpm test:run`** —— vitest 只轉譯不檢查型別，測試檔的型別錯誤只有 build 抓得到。
 
-改到 `tools/` 的工作，另外要在 repo 根目錄跑這一條並回傳 0（preflight 不含它）：
+改到 `tools/` 或 `quiz-app/src/data/__fixtures__/normalized_text_sha256_vectors.json`（Python 端也讀這份向量）
+的工作，另外要在 repo 根目錄跑這一條並回傳 0（preflight 不含它）：
 
 ```bash
 uv run --locked --directory tools pytest

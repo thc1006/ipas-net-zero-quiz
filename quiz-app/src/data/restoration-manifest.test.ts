@@ -57,6 +57,9 @@
 //                     題號／answer key／文字。實測 159/159 相符。
 import { describe, it, expect } from 'vitest';
 import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import datasetRaw from './integrated_dataset.json';
 import manifestRaw from './restoration-manifest.json';
 
@@ -122,18 +125,111 @@ const MAN = manifestRaw as unknown as {
 // 來源 PDF 各自的總題數 —— 對帳的分母。
 const EXPECTED_SOURCE_COUNT: Record<string, number> = { S_CHU_06: 100, S_CHU_07: 70 };
 
-// 必須與 tools/restore_from_source_pdf.py 的 normalized_text_sha256() 完全一致：
-// 空白全剝掉，選項依 key 排序 —— 只認內容，不認排版。
-const textHash = (stem: string, options: Opt[]): string => {
-  const payload =
-    stem.replace(/\s+/g, '') +
+// Python 的 \s（= str.isspace()）逐字列出。JS 的 \s 與它不等價：少了 U+001C–U+001F 與 U+0085，
+// 多了 U+FEFF —— 題幹混進一個 BOM，兩邊算出的指紋就不同，竄改檢查會誤判。
+const PY_WHITESPACE =
+  // eslint-disable-next-line no-control-regex -- 刻意比照 Python 的空白定義，含 U+001C–U+001F
+  /[\t\n\v\f\r\x1c-\x1f \x85\xa0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+/g;
+
+// 孤立的代理字元（U+D800–U+DFFF）：Python 編碼成 UTF-8 時直接丟例外，Node 卻默默換成 U+FFFD、
+// 算出另一個指紋。這裡比照 Python 直接失敗。
+const LONE_SURROGATE = /\p{Cs}/u;
+
+// 必須與 tools/restore_from_source_pdf.py 的 normalized_text_payload() 逐位元一致：題幹去掉所有空白、
+// 選項只去掉空格／tab／CR／LF，選項依 key 排序。排序比的是 UTF-16 碼元，key 是 BMP 字元（A–D）時
+// 與 Python sorted() 的碼位順序相同；localeCompare 依語系排序，會把 'a' 排在 'B' 前面。
+const textPayload = (stem: string, options: Opt[]): string => {
+  if ([stem, ...options.flatMap((o) => [o.key, o.text])].some((s) => LONE_SURROGATE.test(s))) {
+    throw new Error('題目含有孤立的代理字元（U+D800–U+DFFF），無法與 Python 端算出相同的指紋');
+  }
+  return (
+    stem.replace(PY_WHITESPACE, '') +
     '||' +
     [...options]
-      .sort((a, b) => a.key.localeCompare(b.key))
+      .sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0))
       .map((o) => `${o.key}:${o.text.replace(/[ \t\r\n]+/g, '')}`)
-      .join('|');
-  return createHash('sha256').update(payload, 'utf8').digest('hex');
+      .join('|')
+  );
 };
+const sha256 = (text: string): string => createHash('sha256').update(text, 'utf8').digest('hex');
+const textHash = (stem: string, options: Opt[]): string => sha256(textPayload(stem, options));
+
+// 與 tools/tests/test_normalized_text_sha256.py 讀同一份向量：payload 依規則手寫、sha256 只由 payload
+// 算出，不是呼叫任一邊的實作得到的。任一邊漂移，該邊的測試就轉紅。
+// 向量放在 quiz-app/ 底下：只改向量的 PR 也會觸發這一半（Tools CI 本來就不設 paths 篩選）。
+const HASH_SPEC = JSON.parse(
+  readFileSync(
+    resolve(
+      dirname(fileURLToPath(import.meta.url)),
+      '__fixtures__/normalized_text_sha256_vectors.json'
+    ),
+    'utf8'
+  )
+) as {
+  python_whitespace: string[];
+  vectors: { what: string; stem: string; options: Opt[]; payload: string; sha256: string }[];
+  every_code_point: { stem_sha256: string; option_sha256: string };
+};
+
+// 全部 Unicode 碼位（代理區除外），依碼位遞增
+const everyCodePoint = (): string => {
+  const parts: string[] = [];
+  for (let cp = 0; cp <= 0x10ffff; cp++) {
+    if (cp < 0xd800 || cp > 0xdfff) parts.push(String.fromCodePoint(cp));
+  }
+  return parts.join('');
+};
+
+describe('textHash 與 Python 的 normalized_text_sha256() 逐位元一致', () => {
+  it('PY_WHITESPACE 剛好比對到 Python 的 \\s（共用清單）', () => {
+    const single = new RegExp(`^(?:${PY_WHITESPACE.source})$`);
+    const matched: string[] = [];
+    for (let cp = 0; cp <= 0x10ffff; cp++) {
+      if (single.test(String.fromCodePoint(cp))) {
+        matched.push(`U+${cp.toString(16).toUpperCase().padStart(4, '0')}`);
+      }
+    }
+    expect(matched).toEqual(HASH_SPEC.python_whitespace);
+  });
+
+  it('共用向量存在（否則下面的 it.each 是零筆而全綠）', () => {
+    expect(HASH_SPEC.vectors.length).toBeGreaterThan(0);
+  });
+
+  it.each(HASH_SPEC.vectors.map((v) => [v.what, v] as const))('%s', (_what, v) => {
+    expect(sha256(v.payload)).toBe(v.sha256);
+    // 先比 payload：失敗時看得到是哪個字元不同，而不是只有兩串 hash
+    expect(textPayload(v.stem, v.options)).toBe(v.payload);
+    expect(textHash(v.stem, v.options)).toBe(v.sha256);
+  });
+
+  it('題幹放進全部碼位：只少掉那 29 個空白（多剝任何一個字都會紅）', () => {
+    expect(textHash(everyCodePoint(), [{ key: 'A', text: 'x' }])).toBe(
+      HASH_SPEC.every_code_point.stem_sha256
+    );
+  });
+
+  it('選項放進全部碼位：只少掉空格、tab、CR、LF', () => {
+    expect(textHash('q', [{ key: 'A', text: everyCodePoint() }])).toBe(
+      HASH_SPEC.every_code_point.option_sha256
+    );
+  });
+
+  it('孤立的代理字元直接失敗（比照 Python），不默默換成 U+FFFD', () => {
+    expect(() => textHash('a' + String.fromCharCode(0xd800), [{ key: 'A', text: 'x' }])).toThrow(
+      /代理字元/
+    );
+    const lone = String.fromCharCode(0xdc00);
+    expect(() => textHash('q', [{ key: 'A', text: lone }])).toThrow(/代理字元/);
+    expect(() => textHash('q', [{ key: lone, text: 'x' }])).toThrow(/代理字元/);
+    // 先查代理字元、再剝空白：夾著空白的一高一低，剝掉空白後會變成一對合法的代理（Python 那邊仍是兩個孤立的）
+    const split = 'q' + String.fromCharCode(0xd800) + ' ' + String.fromCharCode(0xdc00);
+    expect(() => textHash(split, [{ key: 'A', text: 'x' }])).toThrow(/代理字元/);
+    // 成對的代理（一般的 emoji 等）不受影響
+    const emoji = String.fromCodePoint(0x1f600);
+    expect(textHash('a' + emoji, [{ key: 'A', text: 'x' }])).toMatch(/^[0-9a-f]{64}$/);
+  });
+});
 
 const RESTORED = DS.our_unique_items.filter((i) =>
   (i.source?.source_id ?? '').startsWith('S_CHU')
