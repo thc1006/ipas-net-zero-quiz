@@ -13,8 +13,9 @@ cd quiz-app && pnpm preflight
 它依序執行：同步衍生資料 → lint → 單元測試 → `tsc` + build。
 **不要只跑 `pnpm test:run`** —— vitest 只轉譯不檢查型別，測試檔的型別錯誤只有 build 抓得到。
 
-改到 `tools/` 或 `quiz-app/src/data/__fixtures__/normalized_text_sha256_vectors.json`（Python 端也讀這份向量）
-的工作，另外要在 repo 根目錄跑這一條並回傳 0（preflight 不含它）：
+改到 `tools/`、`quiz-app/src/data/integrated_dataset.json` 或 `quiz-app/src/data/__fixtures__/normalized_text_sha256_vectors.json`
+的工作，另外要在 repo 根目錄跑這一條並回傳 0（preflight 不含它；還原憑證會隨題庫重組，改題庫也可能讓它紅；
+Python 端也讀那份向量）：
 
 ```bash
 uv run --locked --directory tools pytest
@@ -48,11 +49,18 @@ cd .. && python tools/gen_gap_reports.py    # 產生 docs/VERIFICATION-GAPS.md
   要記錄術語問題用 `source_terminology_note`。
 - **絕不**手改 `docs/VERIFICATION-GAPS.md`、`docs/NEEDS-SOURCING.md`、`docs/evidence-manifest.json`
   （都是生成物）。
+- **絕不**手改 `restoration-manifest.json` 與 `tools/tests/fixtures/restore_source_extract.json`：
+  兩者由 `tools/restore_from_source_pdf.py` 產生，Tools CI 會重組整份 manifest 逐字比對。
+  改了題庫的其他題目而牽動 manifest 的衍生欄位（例如丟棄題的題幹相似度），一樣是動到 manifest → 先問；
+  核准後用 `--reassemble`（離線，不讀 PDF）同步，並確認 diff 只有那些欄位。答案相關的欄位不是衍生欄位：它們一變，`--reassemble` 就拒寫（還原題的答案與 PDF 不同
+  卻沒有列在 `ANSWER_OVERRIDES`；主庫重複題的答案或來源題與 `DATASET_DUPLICATES` 登記的不同）。
+  拒寫、要改工具裡的修正表或配對表（`DATASET_DUPLICATES`）、或來源 PDF 變了（`--emit`）→ 先問（見下方升級規則）。
 
 ## 升級規則
 
 - 同一道 gate 修三次還是紅 → **停下來報告**，不要改判準。
-- 要動 `restoration-manifest.json` 或 `law-articles.pinned.json` → **先問**。
+- 要動 `restoration-manifest.json`（包括題庫變動牽動的衍生欄位、工具裡的修正表與配對表、說明文字，或來源 PDF
+  換了）或 `law-articles.pinned.json` → **先問**。
 - 資料與文件的數字對不上 → 跑 `pnpm preflight`，不要手改數字。
 
 ## 改資料時

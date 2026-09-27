@@ -52,9 +52,11 @@
 // 分工：
 //   CI（這支測試）    不下載 PDF。只驗 manifest ↔ dataset 一致 —— 有人偷改還原題的文字，
 //                     dataset_text_sha256 就對不上，當場被抓。離線、秒級。
+//   Tools CI          tools/tests/test_restore_reproducibility.py 用 committed 的 PDF 擷取快照重組整份
+//                     manifest、逐字比對 —— manifest 是工具的產物，手改任何一個字都會轉紅。
 //   人工（可重現）    `uv run --locked --project tools python tools/restore_from_source_pdf.py --verify`
-//                     會重新下載 PDF、比對 sha256、重跑分欄擷取，逐題核對頁碼／欄位／
-//                     題號／answer key／文字。實測 159/159 相符。
+//                     以來源 PDF（sha256 釘住）重跑分欄擷取，逐字比對擷取快照與整份 manifest。
+//                     實測 159/159 相符。
 import { describe, it, expect } from 'vitest';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -106,10 +108,15 @@ interface Disposition {
   item_id?: string;
   duplicate_of?: { source_id?: string; source_question_number?: number; dataset_item?: string };
   answers_agree?: boolean;
+  dataset_answer?: string | null;
+  dataset_answer_text?: string | null;
   evidence?: string;
 }
 
-const DS = datasetRaw as unknown as { our_unique_items: DsItem[] };
+const DS = datasetRaw as unknown as {
+  our_unique_items: DsItem[];
+  gist_items: { index: number; options: Opt[]; answer?: string | null }[];
+};
 const MAN = manifestRaw as unknown as {
   _meta: {
     restored_count: number;
@@ -253,14 +260,17 @@ describe('restoration manifest', () => {
     }).map((it) => it.item_id);
     expect(
       bad,
-      `這些還原題的文字已被改動，但 manifest 沒有同步更新。\n` +
-        `若是刻意修改，請在 repo 根目錄重跑：uv run --locked --project tools python tools/restore_from_source_pdf.py --emit\n` +
-        `（該指令會重新下載 PDF 並比對，確保修改是有憑據的）\n${bad.join('\n')}`
+      `這些還原題的文字與 manifest 記的不同。還原題必須等於來源 PDF（加上已列明的修正），\n` +
+        `不可以直接改（AGENTS.md）：誤改請還原。若確定是來源 PDF 本身的錯，先問專案所有者，\n` +
+        `修正要連同憑據寫進 tools/restore_from_source_pdf.py 的修正表，再在 repo 根目錄跑\n` +
+        `uv run --locked --project tools python tools/restore_from_source_pdf.py --reassemble 重組 manifest。\n` +
+        `${bad.join('\n')}`
     ).toEqual([]);
   });
 
   // 這一條是「repo 內容 == 來源 PDF 內容」的宣稱本身。
-  // --emit 時由 tools 腳本實際比對 PDF 後寫入；這裡把它釘住，不允許偷偷改成 false。
+  // 由 tools 腳本算出後寫入（--emit 對照重新擷取的 PDF，--reassemble 對照擷取快照）；
+  // 這裡把它釘住，不允許偷偷改成 false。
   it('每題都必須標記 matches_source=true（repo 文字 == PDF 文字）', () => {
     const bad = MAN.entries.filter((e) => !e.matches_source).map((e) => e.item_id);
     expect(bad).toEqual([]);
@@ -444,8 +454,18 @@ describe('還原對帳：來源的每一題都要有交代', () => {
   // 同一支腳本自己寫的自陳陣列，腳本不寫就是空的。**自己驗自己。**
   //
   // 守一個錯誤的把關，自己卻抓不到錯，是這整輪工作最不該犯的錯。
+  //
+  // 第二個假把關（2026-09-27 第三輪審查抓到）：下面原本只挑 status === 'duplicate_in_dataset'，
+  // 但工具把衝突記成 duplicate_in_dataset_ANSWER_CONFLICT —— **真正的衝突永遠挑不到**。
+  // 手動在 manifest 標一筆未解決的衝突，其餘不動，整個檔照樣全綠。先過濾再檢查，過濾掉的正是要抓的。
   it('不得存在未解決的答案衝突（來源答案卡 vs 主庫答案）', () => {
-    const crossBank = MAN.dispositions.filter((d) => d.status === 'duplicate_in_dataset');
+    const conflicted = MAN.dispositions.filter((d) => d.status.endsWith('_ANSWER_CONFLICT'));
+    expect(
+      conflicted.map((d) => `${d.source_id}#${d.source_question_number}：${d.evidence}`),
+      '有未解決的答案衝突 —— 必須用一手文件裁決，不可放著'
+    ).toEqual([]);
+
+    const crossBank = MAN.dispositions.filter((d) => d.status.startsWith('duplicate_in_dataset'));
 
     // 前提：沒有這種 disposition 的話，下面全都是空轉。
     expect(
@@ -470,6 +490,29 @@ describe('還原對帳：來源的每一題都要有交代', () => {
     ).toEqual([]);
 
     expect(MAN._meta.answer_conflicts).toEqual([]);
+  });
+
+  // manifest 記的是重組當時，丟棄題所對應的那一題主庫題目的正解。主庫那一題之後被改了答案
+  // 或調了選項順序，manifest 卻沒重組，就會在這裡對不上 —— 答案是否仍一致，要重新裁決。
+  it('丟棄題所對應的主庫題目，正解必須還是 manifest 記的那一個', () => {
+    const byRef = new Map<string, { options: Opt[]; answer?: string | null }>([
+      ...DS.gist_items.map((g) => [`gist_items[${g.index}]`, g] as const),
+      ...DS.our_unique_items.map((u) => [u.item_id, u] as const),
+    ]);
+    const crossBank = MAN.dispositions.filter((d) => d.status.startsWith('duplicate_in_dataset'));
+    expect(crossBank.length, '沒有任何 duplicate_in_dataset —— 這條測試在空轉').toBeGreaterThan(0);
+    const bad = crossBank
+      .filter((d) => {
+        const twin = byRef.get(d.duplicate_of?.dataset_item ?? '');
+        const text = twin?.options.find((o) => o.key === twin.answer)?.text ?? null;
+        return !twin || twin.answer !== d.dataset_answer || text !== d.dataset_answer_text;
+      })
+      .map((d) => `${d.source_id}#${d.source_question_number} -> ${d.duplicate_of?.dataset_item}`);
+    expect(
+      bad,
+      '主庫的這些題目與 manifest 記的不同。動 manifest 要先問專案所有者；核准後跑 --reassemble。若它以「答案衝突」' +
+        '拒寫，要用一手依據重新裁決（tools/restore_from_source_pdf.py 的 DATASET_DUPLICATES）'
+    ).toEqual([]);
   });
 });
 

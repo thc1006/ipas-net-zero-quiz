@@ -39,10 +39,14 @@
 來自哪一份 PDF（含 **sha256**）的**哪一頁、哪一欄、第幾題**，以及 PDF 自己印的 **answer key**。
 
 ```bash
-# CI 不下載 PDF：只驗 manifest ↔ 題庫一致（防竄改），離線、秒級（在 quiz-app/ 裡）
-pnpm vitest run src/data/restoration-manifest.test.ts
+# 以下都在 repo 根目錄執行。CI 不下載 PDF，由兩道離線檢查分工：
+# 第一道：manifest ↔ 題庫一致（每題的正規化文字 hash 對得上，防竄改），秒級
+pnpm --dir quiz-app exec vitest run src/data/restoration-manifest.test.ts
 
-# 完整重現（人工）：重新下載 PDF、比對 sha256、重跑分欄擷取、逐題核對（在 repo 根目錄）
+# 第二道：用 committed 的 PDF 擷取快照重組整份 manifest、逐字比對（manifest 是工具的產物，不能手改）
+uv run --locked --directory tools pytest
+
+# 完整重現（人工）：以來源 PDF（sha256 釘住）重跑擷取，逐字比對擷取快照與 manifest
 uv sync --locked --project tools
 uv run --locked --project tools python tools/restore_from_source_pdf.py --verify
 ```
@@ -75,7 +79,7 @@ manifest 不只記「我還原了什麼」，也記「我**沒有**還原什麼�
 | --- | ---: | --- |
 | `restored` | 159 | 已還原進題庫 |
 | `duplicate_within_source` | 8 | PDF 自己重印了同一題（正規化 hash 完全相同，並指出重複於第幾題） |
-| `duplicate_in_dataset` | 3 | 題庫已有內容幾乎相同的題目（附相似度與比對對象） |
+| `duplicate_in_dataset` | 3 | 題庫已有同一題：配對由人登記（工具的 `DATASET_DUPLICATES`），重組時核對兩邊的答案與來源題都沒變（另附題幹相似度） |
 | `UNACCOUNTED` | **0** | 只要有一題落到這裡，`--emit` 直接失敗 |
 
 > 先前的程式是 `if item_id not in by_item: continue  # 一定是重複題` ——

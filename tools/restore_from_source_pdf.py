@@ -22,14 +22,25 @@ manifest 把這條證據鏈固定下來：
 
 有了 PDF 的 sha256 才有錨點 —— 否則 manifest 只是一份自說自話的宣稱。
 
-CI 不碰 PDF
-───────────
-CI 只驗「manifest ↔ dataset 一致」（每題的正規化文字 hash 對得上），離線、秒級，
-足以防竄改。要做「manifest ↔ PDF」的完整重現，手動跑這支腳本：
+manifest 是產物，不是手寫文件
+────────────────────────────
+manifest 由這支工具產生：來源 PDF 的擷取結果 + 下面幾張修正表（每筆都附憑據）+ 題庫。
+要改 manifest 的內容，就改這裡的表；手改的內容重跑不出來，會被下面兩道檢查擋下。
+  - 改了題庫或這裡的表而牽動 manifest → 先問專案所有者（動 manifest 都要先問，見 AGENTS.md 的升級規則）；
+    核准後 --reassemble：用 committed 的擷取快照離線重組 manifest，不必下載 PDF；
+  - 來源 PDF 或擷取器變了 → --emit：重新擷取，改寫快照與 manifest。
+
+CI 不下載 PDF，所以擷取結果以快照（tools/tests/fixtures/restore_source_extract.json）進版控：
+  - restoration-manifest.test.ts 驗 manifest ↔ dataset 一致（每題的正規化文字 hash 對得上）；
+  - tools/tests/test_restore_reproducibility.py 用快照重組整份 manifest，與 committed 的檔案逐字比對。
+快照本身要對照來源 PDF 才驗得了，手動跑：
 
     uv sync --locked --project tools
-    uv run --locked --project tools python tools/restore_from_source_pdf.py --verify   # 重新下載 PDF 並比對 manifest
-    uv run --locked --project tools python tools/restore_from_source_pdf.py --emit     # 重新產生 manifest
+    uv run --locked --project tools python tools/restore_from_source_pdf.py --verify   # 重跑擷取，逐字比對快照與 manifest
+    uv run --locked --project tools python tools/restore_from_source_pdf.py --emit     # 重跑擷取，改寫快照與 manifest
+    uv run --locked --project tools python tools/restore_from_source_pdf.py --reassemble   # 不讀 PDF，只重組 manifest
+
+來源 PDF 快取在 --cache（預設 ~/.cache/ipas-src-pdf），沒有才下載；sha256 與 SOURCES 不符就中止。
 
 PDF 版面
 ────────
@@ -40,6 +51,9 @@ A4 雙欄。左欄 x0 ≈ 40–285、右欄 x0 ≈ 300–560，分界 292。
 from __future__ import annotations
 
 import argparse
+import copy
+from collections import Counter
+import difflib
 import hashlib
 import json
 import re
@@ -58,6 +72,7 @@ if hasattr(sys.stdout, 'reconfigure'):
 REPO = Path(__file__).resolve().parent.parent
 MANIFEST = REPO / 'quiz-app' / 'src' / 'data' / 'restoration-manifest.json'
 DATASET = REPO / 'quiz-app' / 'src' / 'data' / 'integrated_dataset.json'
+SNAPSHOT = REPO / 'tools' / 'tests' / 'fixtures' / 'restore_source_extract.json'
 
 SOURCES = {
     'S_CHU_06': {
@@ -72,6 +87,66 @@ SOURCES = {
         'title': '考科 2 溫室氣體盤查規範與程序概要-模擬試題（商研院 2024.08）',
         'exam_subject': '考科2',
     },
+}
+
+# 每份來源 PDF 的人工查核紀錄，寫進 manifest 的 _meta.source_documents（以 PDF 網址為鍵）。
+# items（還原進題庫的題數）與 subject（來源代號）由 assemble() 從資料算出，不在這裡手寫。
+SOURCE_REVIEWS = {
+    'S_CHU_07': {
+        'status': 'DEFECTIVE',
+        'defect': (
+            '**選項 (C) 欄整欄位移一題** —— 每一題的 (C) 都是「下一題的 (C)」。'
+            'Q33「生命週期評估依據哪份 **ISO 標準**文件？」的 (C) 竟然是「場址特定數據」；'
+            'Q34「在組織邊界外所獲得的數據」的 (C) 是「確保量化結果的全面性和準確性」，'
+            '而且**答案卡跟著錯**（印 (A) 初級數據，正解是 (B) 次級數據）。'
+        ),
+        'how_found': (
+            '2026-07-14。'
+            '把答案卡交叉比對的母體從「有引用指向答案卡 PDF 的題目」改成「**題幹在答案卡 PDF 上找得到的題目**」之後跳出來的。'
+            '判準應該是「這一題驗得了嗎」，不是「有沒有人記得引用它」。'
+        ),
+        'resolution': (
+            '8 題已依同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 修正（該版本把答案印在每題正右方欄位）。'
+            '67/67 題已用**題幹**（不是題號）與乾淨版本逐選項比對過 ——'
+            ' 只有 (C) 欄壞掉，A/B/D 是乾淨的。'
+        ),
+        'warning': (
+            '題庫**忠實地複製了這份壞掉的 PDF**，'
+            '所以 `matches_source: true` 一直是綠的。'
+            '**一個「忠實複製一份壞掉的來源」的檢查，永遠是綠的。**'
+        ),
+    },
+    'S_CHU_06': {
+        'status': 'NO_SECOND_SOURCE',
+        'cross_check': (
+            '**92 題裡有 91 題只存在於這一份 PDF** ——'
+            ' 找遍 usr.chu.edu.tw 上 12 份教材/範例題 PDF，'
+            '都沒有第二份可以交叉比對。所以「來源本身對不對」**無法用機械交叉驗證**。'
+        ),
+        'human_review': (
+            '2026-07-14：改用人工逐題檢視全部 92 題（題幹 + 四個選項 + 答案），'
+            '尋找 214245506.pdf 那種「選項與題目語意不通」的錯位指紋 ——'
+            ' **沒有發現**。每一題的四個選項都是同一主題上的合理替代項。'
+            '旁證：q011「碳關稅(CBAM)」的答案是「防止碳洩漏」，'
+            '與 iPAS 公版教材《淨零碳管理基礎概論》一致。'
+        ),
+        'honest_limit': (
+            '**「我讀過而且沒看到問題」不是「已驗證」。** 這是一個人工的陰性結果，'
+            '沒有第二份來源可以背書。不要把它寫成「已交叉驗證」。'
+        ),
+    },
+}
+
+# 試過、驗證後放棄的做法（寫進 _meta.tried_and_rejected，避免下一個人再試一次）。
+TRIED_AND_REJECTED = {
+    'answer_vs_explanation_detector': (
+        '曾寫過一支「答案的文字對不對得上該題解析」的偵測器，'
+        '想用**單一來源的內部一致性**取代交叉比對。'
+        '**在已知有病的 214245506.pdf 上驗證後放棄**：已知錯位的題目分數是 0.00 / 0.12 / 0.58，'
+        '而**健康的題目也有 0.00 / 0.06 / 0.06** ——分佈完全重疊，'
+        '**沒有鑑別力**；而且 159 題裡只有 21 題抽得出解析。'
+        '**一個分不開陽性與陰性的偵測器，它的綠燈是一句假的保證。** 已刪除，不 ship。'
+    ),
 }
 
 # 來源 PDF 各自的總題數。這是「對帳」的分母 ——
@@ -127,7 +202,7 @@ def extract(pdf_path: Path):
     閱讀順序：每一頁「先左欄由上到下，再右欄由上到下」。
     這正是當初出錯的地方 —— 純文字擷取會把兩欄交錯，把鄰題的字插進題幹。
     """
-    import pdfplumber  # 延後 import：只 import 這個模組、不讀 PDF 的用法（測試）用不到它
+    import pdfplumber  # 延後 import：只有真的讀 PDF 時才需要（離線組裝與測試用不到）
 
     out = []
     with pdfplumber.open(pdf_path) as pdf:
@@ -214,6 +289,80 @@ ANSWER_OVERRIDES = {
             '故正解為 C，而非 D（以上皆非）。'
         ),
         'decided_on': '2026-07-13',
+        'counter_argument': '**反面證據（2026-07-14 補記）：**題目問的是「基**線**年」，而 iPAS 公版教材《溫室氣體盤查方法與解析(ISO 14064-1)》裡「基**準**年」出現 **16 次**（另一冊 11 次），「基**線**年」出現 **0 次**、「基線」也是 **0 次** —— 亦即**盤查用語裡根本沒有「基線年」**。若出題者是刻意設術語陷阱，則答案卡的 (D) 以上皆非才是對的。**我們仍維持 C**，理由是：這份是第三方模擬題（非官方試題），其「基線年」極可能只是「基準年」的口語寫法；而 ISO 14064-1 對 base year 的定義與選項 C 逐字相符，選項 A／B 都不是。**但這個不確定性應該被記錄下來，而不是被藏起來。**',
+        'revisited_on': '2026-07-14',
+        'revisit_note': '2026-07-14：新寫的 tools/answer_key_crosscheck.py 把這題報成「錯答案」，因為**那支工具不知道 answer_override 這套機制存在**，我還差點照著改下去。兩個互不知道的系統一定會漂 —— 已讓該工具讀這份 manifest。這筆偏離**維持不變**：「我覺得應該是 D」不是推翻一個有依據的記錄的理由。',
+    },
+    # S_CHU_07 的 (C) 欄位移，答案卡跟著錯；依乾淨版本的答案卡更正（見 OPTION_FIXES）。
+    ('S_CHU_07', 30): {
+        'source_answer_key': 'A',
+        'corrected_answer': 'C',
+        'reason': '來源 PDF 的答案卡 (A) 與其被證實位移的 (C) 欄一致地錯。',
+        'evidence': (
+            '乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 右欄答案卡：(C) 直接監測法通過監測排氣濃度和流率來量測，'
+            '而質量平衡法通過計算物質的進出和轉換來估算。'
+        ),
+        'decided_on': '2026-07-14',
+    },
+    ('S_CHU_07', 34): {
+        'source_answer_key': 'A',
+        'corrected_answer': 'B',
+        'reason': '來源 PDF 的答案卡 (A) 與其被證實位移的 (C) 欄一致地錯。',
+        'evidence': '乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 右欄答案卡：(B) 次級數據。',
+        'decided_on': '2026-07-14',
+    },
+}
+
+
+# 沒有進題庫、因為主庫已經有同一題的來源題（去重）。配對與答案一致由人裁決、登記在這裡。
+#
+# 以前每次重組都用模糊比對重新猜：題幹相似度 >= 0.80 就當成同一題，再比選項文字的相似度判斷
+# 答案是否一致。主庫那一題被合法地改寫（換個講法、修個錯字）時分數會變，猜出來的配對或
+# 「答案一致」也跟著變 —— CI 會為了一件沒發生的事硬轉紅，錯誤訊息還指向不相干的還原題。
+# 模糊比對留下來只做兩件事：manifest 上記相似度給人看，以及替沒登記的丟棄題找最接近的候選。
+#
+# 每一筆記下裁決當時兩邊的樣子：
+#   dataset_item         主庫那一題：gist_items[<index 欄位>]（**不是**陣列位置）或 item_id
+#   dataset_answer       主庫那一題的正解字母
+#   dataset_answer_text  主庫那一題正解選項的文字
+#   source_answer_key    來源 PDF 印的答案卡
+#   source_text_sha256   來源那一題的內容指紋（normalized_text_sha256）
+#   decided_on、why      誰、何時、憑什麼認定「同一題、答案是同一個選項」
+# 重組時逐項核對：主庫那一題還在，它的正解（字母與文字）、來源那一題（內容與答案卡）都還是登記的樣子。
+# 任何一項變了就是答案衝突：不寫 manifest，要重新裁決 —— 對調選項文字、調了順序、改寫正解的意思、
+# 換掉整題、來源改版印了別的答案卡，都會在這裡被擋下。只改寫主庫那一題的題幹或其他選項不受影響
+# （題幹相似度記在 manifest 上給人看）。
+DATASET_DUPLICATES = {
+    ('S_CHU_07', 13): {
+        'dataset_item': 'gist_items[408]',
+        'dataset_answer': 'D',
+        'dataset_answer_text': '化石與生質碳排放與移除',
+        'source_answer_key': 'D',
+        'source_text_sha256': '4033fe0c60d0e4bdc62cf122bb518cbd62373d7e20889884a326ba521aabc664',
+        'decided_on': '2026-09-28',
+        'why': '同一題（ISO 14064-1:2018 何者非強制揭露）；來源的 (D)「產生自化石與生質碳之GHG排放與移除」'
+               '就是主庫的 (D)「化石與生質碳排放與移除」。主庫原本答 C，2026-07-13 依 ISO 14064-1:2018 '
+               '§9.3.1(g) 與規範性附錄 E 裁決為 D（見 DATA-PROVENANCE.md）。',
+    },
+    ('S_CHU_07', 23): {
+        'dataset_item': 'gist_items[430]',
+        'dataset_answer': 'D',
+        'dataset_answer_text': '國際排放係數',
+        'source_answer_key': 'A',
+        'source_text_sha256': '397063985dc1dc64ff4c44bbd932e3f829e2857260e47168c6374792edb210b2',
+        'decided_on': '2026-09-28',
+        'why': '同一題（哪一種排放係數的不確定性最高），誘答選項與選項順序不同：來源的 (A)「國際排放係數」'
+               '是主庫的 (D)。',
+    },
+    ('S_CHU_07', 32): {
+        'dataset_item': 'S_YAMOL_018-q002',
+        'dataset_answer': 'A',
+        'dataset_answer_text': '數據收集資訊，包括數據來源；',
+        'source_answer_key': 'A',
+        'source_text_sha256': 'e37b74595398db0e4b4f6222bf6517310f1c0fc2c6a2b3e1dcd8a6d079a7e15d',
+        'decided_on': '2026-09-28',
+        'why': '同一題、同一個答案 (A)「數據收集資訊，包括數據來源」。來源這一題的 (C) 印成「ISO9001」，'
+               '主庫的 (C) 是「內外部議題」。',
     },
 }
 
@@ -236,20 +385,99 @@ def patch_pdf_typos(qs, src_id):
     return patched
 
 
+# 來源 PDF 自己印錯的選項文字，依另一份一手來源逐筆更正（記進該題的 transformations）。
+# 每個來源一張表，自帶出處；表上記「PDF 印的」與「更正後」的文字。套用前先確認 PDF 原文正是前者
+# —— 對不上就中止，不猜。表上每一題都必須剛好用到一次。
+OPTION_FIXES = {
+    # 214245506.pdf 的 (C) 欄位移，答案卡跟著錯（見 ANSWER_OVERRIDES）。同一份模擬卷另有乾淨版本，
+    # 以題幹（不是題號）配對、逐選項比對後，只有 (C) 欄壞掉。
+    'S_CHU_07': {
+        'why': (
+            '來源 PDF 214245506.pdf 的 (C) 欄**整欄位移一題** ——'
+            ' 每一題的 (C) 都是下一題的 (C)。'
+        ),
+        'evidence': (
+            '同一份模擬卷的乾淨版本 https://usr.chu.edu.tw/var/file/81/1081/img/1034/190841777.pdf 上，'
+            '本題的 ({key}) 為「{fixed}」；其餘三個選項與題幹皆逐字相符（以題幹配對，非題號）。'
+        ),
+        'decided_on': '2026-07-14',
+        'questions': {
+            30: {'key': 'C', 'pdf': '功能單位或宣告單位',
+                 'fixed': '直接監測法通過監測排氣濃度和流率來量測，而質量平衡法通過計算物質的進出和轉換來估算'},
+            31: {'key': 'C', 'pdf': '內外部議題',
+                 'fixed': '功能單位或宣告單位'},
+            33: {'key': 'C', 'pdf': '場址特定數據',
+                 'fixed': 'ISO9001'},
+            34: {'key': 'C', 'pdf': '確保量化結果的全面性和準確性',
+                 'fixed': '場址特定數據'},
+            35: {'key': 'C', 'pdf': '增加報告的複雜度',
+                 'fixed': '確保量化結果的全面性和準確性'},
+            36: {'key': 'C', 'pdf': '保證結果的客觀性和可靠性',
+                 'fixed': '增加報告的複雜度'},
+            38: {'key': 'C', 'pdf': '適當揭露假設、方法及數據的使用',
+                 'fixed': '納入所有重大GHG排放與移除量'},
+            40: {'key': 'C', 'pdf': '功能單位或宣告單位',
+                 'fixed': '重複計算所有排放源'},
+        },
+    },
+}
+
+
+def apply_option_fixes(qs, src_id):
+    """套用 OPTION_FIXES[src_id]，回傳 {題號: [transformation]}。表上每一題都必須剛好用到一次。"""
+    table = OPTION_FIXES.get(src_id)
+    if table is None:
+        return {}
+    applied = {}
+    for q in qs:
+        f = table['questions'].get(q['number'])
+        if f is None:
+            continue
+        opt = next((o for o in q['options'] if o['key'] == f['key']), None)
+        if opt is None or opt['text'] != f['pdf']:
+            sys.exit(f'✗ {src_id} 第 {q["number"]} 題：OPTION_FIXES 記的 PDF 原文是「{f["pdf"]}」，'
+                     f'實際擷取到 {opt["text"] if opt else None!r} —— 來源或擷取器已變動，必須人工重新確認。')
+        opt['text'] = f['fixed']
+        applied[q['number']] = [{
+            'fix': f'option ({f["key"]}) text: 「{f["pdf"]}」 -> 「{f["fixed"]}」',
+            'why': table['why'],
+            'evidence': table['evidence'].format(key=f['key'], fixed=f['fixed']),
+            'decided_on': table['decided_on'],
+        }]
+    unused = sorted(set(table['questions']) - set(applied))
+    if unused:
+        sys.exit(f'✗ {src_id}：OPTION_FIXES 有沒用到的題號 {unused} —— 表與來源對不上。')
+    return applied
+
+
 def load_pdf(src_id: str, cache: Path) -> bytes:
     meta = SOURCES[src_id]
     local = cache / f'{src_id}.pdf'
-    if local.exists():
+    cached = local.exists()
+    if cached:
         data = local.read_bytes()
     else:
         print(f'  下載 {meta["url"]}')
         with urllib.request.urlopen(meta['url'], timeout=60) as r:
             data = r.read()
-        local.write_bytes(data)
     got = sha256_bytes(data)
+    if got != meta['sha256'] and cached:
+        # 快取檔壞了不等於來源變了（例如舊版工具先寫快取才驗 sha256，壞掉的下載就留在快取裡）
+        sys.exit(f'✗ {src_id} 快取的 {local} sha256 不符！\n  期望 {meta["sha256"]}\n  實得 {got}\n'
+                 '  快取檔可能壞了：刪掉它再重跑，會重新下載；重新下載後仍不符，才是來源檔案變了。')
     if got != meta['sha256']:
-        sys.exit(f'✗ {src_id} PDF sha256 不符！\n  期望 {meta["sha256"]}\n  實得 {got}\n'
-                 '  來源檔案已變動 —— manifest 的錨點失效，必須人工重新確認。')
+        # 不符不一定是來源變了：網站的擋頁（Incapsula）、被截斷的回應也會不符 —— 先看拿到的是不是 PDF
+        if data[:5] != b'%PDF-':
+            what = (f'不是 PDF（開頭 {data[:16]!r}）：多半是網站的擋頁，換個方式（例如瀏覽器）下載、確認是 PDF '
+                    '再放進快取。')
+        elif b'%%EOF' not in data[-2048:]:
+            what = 'PDF 的開頭，但檔尾沒有 %%EOF：多半是下載被截斷，重新下載。'
+        else:
+            what = '是完整的 PDF：來源檔案已變動 —— manifest 的錨點失效，必須人工重新確認。'
+        sys.exit(f'✗ {src_id} 下載的檔案 sha256 不符，沒有放進快取（{len(data)} bytes）！\n'
+                 f'  期望 {meta["sha256"]}\n  實得 {got}\n  {what}')
+    if not cached:
+        local.write_bytes(data)
     print(f'  ✓ {src_id} sha256 相符 ({len(data)} bytes)')
     return data
 
@@ -276,44 +504,29 @@ def _answer_text(item: dict) -> str | None:
 
 
 def _similar(a: str, b: str) -> float:
-    import difflib
     return difflib.SequenceMatcher(None, a, b).ratio()
 
 
-def _answers_agree(src_q: dict, ds_item: dict) -> tuple[bool, float]:
-    """兩個來源對「同一道題」給的答案，是不是同一個選項？
+def _answer_option_alignment(src_q: dict, ds_item: dict) -> float:
+    """來源正解選項的文字，和主庫最像的那一個選項有多像（manifest 的 answer_option_alignment，只給人看）。
 
-    這件事有兩種顯而易見但都會出錯的做法：
+    「答案是否一致」不由這個分數決定，由 DATASET_DUPLICATES 的人工裁決決定（理由見那張表的說明）。
 
-      1. 比字母（'D' == 'D'）—— 不安全。同一道題在不同來源的選項順序常常不同，
-         這邊的 D 可能是那邊的 A。（先前答案回填就踩過這個坑，把字母當答案抄。）
-      2. 比答案的文字是否相等 —— 太脆。同一個選項換個講法就誤報：
-         來源印「產生自化石與生質碳之GHG排放與移除」，主庫寫「化石與生質碳排放與移除」，
-         指的是同一個選項，字面卻不同。
-
-    正確做法：把來源的「正解選項文字」拿去和主庫的**每一個選項**比相似度，
-    看它最像哪一個；那一個是不是主庫的正解。這對「改寫」與「重新排序」同時免疫，
-    而且真正的衝突（C 電力之處理方式 vs D 化石與生質碳…）文字天差地遠，
-    不可能誤判成一致。
+    比的是選項文字、不是字母：同一道題在不同來源的選項順序常常不同，這邊的 D 可能是那邊的 A
+    （先前答案回填就踩過這個坑，把字母當答案抄）。也不比文字是否相等：同一個選項換個講法
+    （來源印「產生自化石與生質碳之GHG排放與移除」，主庫寫「化石與生質碳排放與移除」）字面就不同。
+    所以拿來源的正解選項文字和主庫的每一個選項比相似度，記下最像的那一個的分數。
     """
     src_ans = _answer_text(src_q)
-    ds_ans_key = ds_item.get('answer')
-    if src_ans is None or ds_ans_key is None:
-        return False, 0.0
-
+    if src_ans is None or ds_item.get('answer') is None:
+        return 0.0
     src_norm = _norm_for_compare(src_ans)
-    scored = sorted(
-        ((_similar(src_norm, _norm_for_compare(o['text'])), o['key']) for o in ds_item['options']),
-        reverse=True,
-    )
-    best_r, best_key = scored[0]
-    runner_r = scored[1][0] if len(scored) > 1 else 0.0
+    return round(max(_similar(src_norm, _norm_for_compare(o['text'])) for o in ds_item['options']), 3)
 
-    # 對得夠像、而且明顯比第二名像 —— 否則寧可當成「無法判定」丟出來讓人看。
-    # （沒有這個 margin，四個選項長得都差不多時會隨機挑一個，那種一致只是碰運氣。）
-    if best_r < 0.55 or (best_r - runner_r) < 0.10:
-        return False, round(best_r, 3)
-    return best_key == ds_ans_key, round(best_r, 3)
+
+def _dataset_ref(item: dict) -> str:
+    """主庫題目在 manifest 與 DATASET_DUPLICATES 裡的稱呼：題庫題用 item_id，gist 題用它的 index 欄位。"""
+    return item.get('item_id') or f"gist_items[{item.get('index')}]"
 
 
 def _disposition_for_dropped(q: dict, src_id: str, same_pdf: dict, ds_items: list) -> dict:
@@ -328,75 +541,186 @@ def _disposition_for_dropped(q: dict, src_id: str, same_pdf: dict, ds_items: lis
     真的在還原過程中掉了一題，這行也會安靜地把它說成重複，而且沒有任何人會知道。
     實測結果：170 題裡有 11 題走進這條路，其中 8 題確實是 PDF 自己重印的題目，
     但另外 3 題並不是 —— 而且其中一題的答案還跟主庫**互相矛盾**。
+
+    same_pdf：同一份 PDF 每一題的 {題號: (內容指紋, 答案卡)}。
+    答案衝突（重印的兩題答案卡不同、主庫那一題的正解字母不是登記的那個）記成 *_ANSWER_CONFLICT，
+    assemble() 會把它們列進 answer_conflicts，而 --emit／--reassemble 不寫出有衝突的 manifest。
     """
     qhash = normalized_text_sha256(q['stem'], q['options'])
     qnorm = _norm_for_compare(q['stem'])
 
-    # 1) 同一份 PDF 裡有一模一樣的題目（PDF 自己重印）
-    twin = [n for n, h in same_pdf.items() if h == qhash and n < q['number']]
+    # 1) 同一份 PDF 裡有一模一樣的題目（PDF 自己重印）。兩處印的答案卡也必須相同 ——
+    #    否則是 PDF 自己前後矛盾，丟掉哪一題都等於替另一題的答案背書。
+    twin = [n for n, (h, _) in same_pdf.items() if h == qhash and n < q['number']]
     if twin:
-        return {
+        twin_answer = same_pdf[twin[0]][1]
+        d = {
             'status': 'duplicate_within_source',
             'duplicate_of': {'source_id': src_id, 'source_question_number': twin[0]},
             'evidence': 'normalized_text_sha256 完全相同（同一份 PDF 重印了這一題）',
             'normalized_text_sha256': qhash,
         }
+        if twin_answer != q['answer']:
+            # 目前沒有任何一組重印題的答案卡不同，所以工具沒有登記這種裁決的表（DATASET_DUPLICATES 與
+            # ANSWER_OVERRIDES 都不適用：前者對的是主庫的題目，後者對的是還原進題庫的題目）。
+            d['status'] = 'duplicate_within_source_ANSWER_CONFLICT'
+            d['evidence'] = (f'同一份 PDF 重印了這一題，但答案卡不同：第 {twin[0]} 題印 {twin_answer}、'
+                             f'第 {q["number"]} 題印 {q["answer"]}。工具目前沒有登記這種裁決的地方 —— '
+                             '先問專案所有者：要用一手依據裁決哪一個對，並在工具裡加一張裁決表。')
+        return d
 
-    # 2) 主庫裡已經有內容相同／幾乎相同的題目
+    # 2) 主庫已經有同一題：由 DATASET_DUPLICATES 登記的配對決定，不用相似度猜
+    pin = DATASET_DUPLICATES.get((src_id, q['number']))
+    if pin is not None:
+        found = [it for it in ds_items if _dataset_ref(it) == pin['dataset_item']]
+        if len(found) != 1:
+            sys.exit(f'✗ {src_id}#{q["number"]}：DATASET_DUPLICATES 登記它與 {pin["dataset_item"]} 重複，'
+                     f'主庫卻找到 {len(found)} 題叫這個名字 —— 那一題被刪了或改了 id，要重新裁決。')
+        twin_item = found[0]
+        similarity = round(_similar(qnorm, _norm_for_compare(twin_item['stem'])), 3)
+        changed = [what for what, now, then in (
+            ('主庫那一題的正解字母', twin_item.get('answer'), pin['dataset_answer']),
+            ('主庫那一題正解選項的文字', _answer_text(twin_item), pin['dataset_answer_text']),
+            ('來源 PDF 的答案卡', q['answer'], pin['source_answer_key']),
+            ('來源那一題的內容', qhash, pin['source_text_sha256']),
+        ) if now != then]
+        agree = not changed
+        d = {
+            'status': 'duplicate_in_dataset' if agree else 'duplicate_in_dataset_ANSWER_CONFLICT',
+            'duplicate_of': {'dataset_item': pin['dataset_item']},
+            'stem_similarity': similarity,
+            'source_answer_key': q['answer'],
+            'source_answer_text': _answer_text(q),
+            'dataset_answer': twin_item.get('answer'),
+            'dataset_answer_text': _answer_text(twin_item),
+            'answers_agree': agree,
+            'answer_option_alignment': _answer_option_alignment(q, twin_item),  # 僅供參考
+            'normalized_text_sha256': qhash,
+        }
+        if not agree:
+            d['evidence'] = (f'DATASET_DUPLICATES 登記的配對（主庫 {pin["dataset_item"]} 的 ({pin["dataset_answer"]})'
+                             f'「{pin["dataset_answer_text"]}」＝ 來源答案卡 ({pin["source_answer_key"]})）與現況不同：'
+                             f'{"、".join(changed)}變了 —— 要重新裁決。')
+        elif similarity >= 0.80:
+            d['evidence'] = '題幹幾乎相同且答案文字一致（比對的是選項文字，不是字母）'
+        else:
+            d['evidence'] = ('主庫那一題的題幹已改寫；配對與答案一致由 DATASET_DUPLICATES 登記'
+                             '（比對的是選項文字，不是字母）')
+        return d
+
+    # 3) 沒有任何證據 —— 這題就是掉了。絕不可以安靜跳過。最接近的主庫題目只是給人查的線索。
     best, best_r = None, 0.0
     for it in ds_items:
         r = _similar(qnorm, _norm_for_compare(it['stem']))
         if r > best_r:
             best, best_r = it, r
-
-    if best is not None and best_r >= 0.80:
-        src_ans = _answer_text(q)
-        ds_ans = _answer_text(best)
-        agree, align_r = _answers_agree(q, best)
-        who = best.get('item_id') or f"gist_items[{best.get('index')}]"
-        d = {
-            'status': 'duplicate_in_dataset' if agree else 'duplicate_in_dataset_ANSWER_CONFLICT',
-            'duplicate_of': {'dataset_item': who},
-            'stem_similarity': round(best_r, 3),
-            'source_answer_key': q['answer'],
-            'source_answer_text': src_ans,
-            'dataset_answer': best.get('answer'),
-            'dataset_answer_text': ds_ans,
-            'answers_agree': agree,
-            'answer_option_alignment': align_r,   # 來源正解對到主庫選項的相似度
-            'normalized_text_sha256': qhash,
-        }
-        if not agree:
-            # 這才是重點：來源 PDF 自己印的答案卡與主庫教的答案不同。
-            # 我們把來源題當成「重複」丟掉了，卻留下一個**可能是錯的**答案在教。
-            # 這種情形不可以安靜通過，必須留在 manifest 上讓人看見。
-            d['evidence'] = ('題幹幾乎相同但**答案不一致** —— 丟掉的來源題帶著它自己的答案卡，'
-                             '留下的主庫題可能是錯的。需人工用一手標準文件裁決。')
-        else:
-            d['evidence'] = '題幹幾乎相同且答案文字一致（比對的是選項文字，不是字母）'
-        return d
-
-    # 3) 沒有任何證據 —— 這題就是掉了。絕不可以安靜跳過。
     return {
         'status': 'UNACCOUNTED',
         'evidence': ('在 dataset 裡找不到、在同一份 PDF 裡也沒有重複題 —— '
                      '這題在還原過程中遺失了。'),
         'stem': q['stem'][:80],
-        'closest_in_dataset': (best.get('item_id') or f"gist_items[{best.get('index')}]") if best else None,
+        'closest_in_dataset': _dataset_ref(best) if best else None,
         'closest_similarity': round(best_r, 3),
         'normalized_text_sha256': qhash,
     }
 
 
-def build(cache: Path):
-    ds = json.loads(DATASET.read_text(encoding='utf-8'))
+def extract_sources(cache: Path) -> dict:
+    """每份來源 PDF 的擷取結果（未套用任何修正）。--emit 把它原樣寫成擷取快照。"""
+    out = {}
+    for src_id, meta in SOURCES.items():
+        load_pdf(src_id, cache)
+        out[src_id] = {
+            'pdf_sha256': meta['sha256'],
+            'questions': [{k: q[k] for k in ('number', 'page', 'column', 'answer', 'stem', 'options')}
+                          for q in extract(cache / f'{src_id}.pdf')],
+        }
+    return out
+
+
+def load_snapshot() -> dict:
+    return json.loads(SNAPSHOT.read_text(encoding='utf-8'))
+
+
+def load_dataset() -> dict:
+    return json.loads(DATASET.read_text(encoding='utf-8'))
+
+
+def render(obj: dict) -> str:
+    """--emit 寫檔的格式。committed 的快照與 manifest 必須正好是這個輸出。"""
+    return json.dumps(obj, ensure_ascii=False, indent=2) + '\n'
+
+
+def check_question_numbers(src_id: str, qs: list) -> None:
+    """一份來源擷取到的題號必須正好是 1..總題數：缺號、重號、超出範圍都是擷取器壞了，不是資料的問題。"""
+    expected = EXPECTED_QUESTION_COUNT[src_id]
+    counts = Counter(q['number'] for q in qs)
+    problems = [label for label, numbers in (
+        ('缺題號', sorted(set(range(1, expected + 1)) - set(counts))),
+        ('題號重複', sorted(n for n, c in counts.items() if c > 1)),
+        (f'題號超出 1–{expected}', sorted(n for n in counts if not 1 <= n <= expected)),
+    ) for label in ([f'{label} {numbers}'] if numbers else [])]
+    if problems:
+        sys.exit(f'✗ {src_id}: 擷取結果有 {len(qs)} 題（應為 {expected}）：{"、".join(problems)} '
+                 '—— 擷取器壞了（--emit／--verify 讀 PDF 時），或擷取快照被手改過（--reassemble 與測試讀快照時），'
+                 '不是題庫的問題。')
+
+
+def _source_question(key) -> bool:
+    """(來源代號, 題號) 是不是某一份來源的某一題：來源登記過、題號在 1..總題數。"""
+    src_id, number = key
+    return src_id in SOURCES and 1 <= number <= EXPECTED_QUESTION_COUNT[src_id]
+
+
+def check_counts_registered() -> None:
+    """SOURCES 與 EXPECTED_QUESTION_COUNT 的來源必須一一對應：題數是對帳的分母。"""
+    no_count = [s for s in SOURCES if s not in EXPECTED_QUESTION_COUNT]
+    if no_count:
+        sys.exit(f'✗ {no_count} 沒有登記總題數（EXPECTED_QUESTION_COUNT）—— 沒有分母就證明不了沒有掉題。')
+    stray_count = [s for s in EXPECTED_QUESTION_COUNT if s not in SOURCES]
+    if stray_count:
+        sys.exit(f'✗ EXPECTED_QUESTION_COUNT 有不在 SOURCES 裡的來源 {stray_count} —— 來源代號打錯，或 SOURCES 漏登記；'
+                 '否則來源總題數會把它算進去。')
+
+
+def assemble(extracted: dict, ds: dict) -> dict:
+    """由擷取結果（extract_sources() 或擷取快照）與題庫組出整份 manifest。不讀 PDF、不碰網路。"""
     by_item = {i['item_id']: i for i in ds['our_unique_items']}
     ds_items = ds['gist_items'] + ds['our_unique_items']
 
+    check_counts_registered()
+
+    # 先對帳每一份來源的題數：擷取器掉題時，要說「擷取器壞了」，而不是讓後面的檢查報成別的錯
+    # （修正表「用不到的題號」、題庫題「對不到來源」）。
+    for src_id in SOURCES:
+        check_question_numbers(src_id, extracted[src_id]['questions'])
+
+    # 題庫裡標了這些來源的題目，必須正好對到來源的某一題（item_id = <來源代號>-qNNN）。
+    # item_id 打錯的題目會被當成「沒進題庫」的來源題，後面的檢查會報成別的錯（修正表、題目遺失）。
+    source_ids = {f'{src_id}-q{q["number"]:03d}' for src_id in SOURCES for q in extracted[src_id]['questions']}
+    stray = sorted(i['item_id'] for i in ds['our_unique_items']
+                   if (i.get('source') or {}).get('source_id') in SOURCES and i['item_id'] not in source_ids)
+    if stray:
+        sys.exit(f'✗ 題庫裡這些題目標了 manifest 的來源，卻對不到來源的任何一題：{stray[:10]} '
+                 '—— item_id 必須是「<來源代號>-q<三位數題號>」。')
+    # 修正表與配對表的鍵先對過：鍵打錯時，錯誤要指向打錯的那一筆，
+    # 而不是等迴圈裡報出「答案與來源不同」「題目遺失」這些症狀
+    in_bank = lambda k: f'{k[0]}-q{k[1]:03d}' in by_item  # noqa: E731
+    dead = sorted({k for k in ANSWER_OVERRIDES if not _source_question(k)}
+                  | {(s, None) for s in OPTION_FIXES if s not in SOURCES}, key=str)
+    if dead:
+        sys.exit(f'✗ 修正表有對不到任何來源題的項目：{dead} —— 來源代號或題號打錯。')
+    gone = sorted(f'{k[0]}-q{k[1]:03d}' for k in ANSWER_OVERRIDES if not in_bank(k))
+    if gone:  # 鍵是對的、題目卻不在題庫裡：先說題目，不要叫人去改鍵
+        sys.exit(f'✗ 修正表的這些題目不在題庫裡：{gone} —— 題目被刪了？誤刪請還原（刪還原題會動到 manifest，'
+                 '要先問專案所有者）；若是本來就沒有進題庫的題目（例如重複題），修正不該記在它身上。')
+    misplaced = sorted(k for k in DATASET_DUPLICATES if not _source_question(k) or in_bank(k))
+    if misplaced:
+        sys.exit(f'✗ DATASET_DUPLICATES 有對不到的項目：{misplaced} —— 來源代號或題號打錯，或那一題已經在題庫裡。')
+
     entries, pdf_typos, dispositions = [], {}, []
     for src_id in SOURCES:
-        load_pdf(src_id, cache)
-        qs = extract(cache / f'{src_id}.pdf')
+        qs = copy.deepcopy(extracted[src_id]['questions'])  # 下面的修正會就地改寫題目
 
         # 先把「還沒動過任何一個字」的 hash 存下來，再去套用修正。
         #
@@ -410,20 +734,20 @@ def build(cache: Path):
 
         pdf_typos[src_id] = patch_pdf_typos(qs, src_id)
         fixes_by_no = {t['question_no']: t for t in pdf_typos[src_id]}
+        option_fixes_by_no = apply_option_fixes(qs, src_id)
 
-        # 同一份 PDF 內每題的內容指紋 —— 用來認出「PDF 自己重印的題目」
-        same_pdf = {q['number']: normalized_text_sha256(q['stem'], q['options']) for q in qs}
-
-        expected = EXPECTED_QUESTION_COUNT[src_id]
-        got_numbers = sorted(q['number'] for q in qs)
-        if got_numbers != list(range(1, expected + 1)):
-            missing = sorted(set(range(1, expected + 1)) - set(got_numbers))
-            sys.exit(f'✗ {src_id}: 從 PDF 只抽到 {len(got_numbers)} 題（應為 {expected}）。'
-                     f'缺題號 {missing} —— 擷取器壞了，不是資料的問題。')
+        # 同一份 PDF 內每題的內容指紋與答案卡 —— 用來認出「PDF 自己重印的題目」
+        same_pdf = {q['number']: (normalized_text_sha256(q['stem'], q['options']), q['answer']) for q in qs}
 
         for q in qs:
             item_id = f'{src_id}-q{q["number"]:03d}'
             if item_id not in by_item:
+                tables = [name for name, fixed in (('PDF 錯字修正（patch_pdf_typos）', fixes_by_no),
+                                                   ('OPTION_FIXES', option_fixes_by_no)) if q['number'] in fixed]
+                if tables:
+                    sys.exit(f'✗ {item_id}: {"、".join(tables)} 修了一題沒有進題庫的題目 —— 題目被刪了？誤刪請還原'
+                             '（刪還原題會動到 manifest，要先問專案所有者）。修正只記在進題庫題目的 transformations 上，'
+                             '套在這一題身上就沒有對應的紀錄。')
                 d = _disposition_for_dropped(q, src_id, same_pdf, ds_items)
                 d.update({'source_id': src_id, 'source_question_number': q['number'],
                           'page': q['page'], 'column': q['column']})
@@ -455,13 +779,14 @@ def build(cache: Path):
             canon_h = normalized_text_sha256(q['stem'], q['options'])
             ds_hash = normalized_text_sha256(it['stem'], it['options'])
             fix = fixes_by_no.get(q['number'])
-            transformations = [{'fix': fix['fix'], 'evidence': fix['evidence']}] if fix else []
+            transformations = ([{'fix': fix['fix'], 'evidence': fix['evidence']}] if fix else []) \
+                + option_fixes_by_no.get(q['number'], [])
 
-            # 沒有列明的修正，raw 就必須等於 canonical。不相等代表有「沒被記錄的轉換」，
-            # 那正是這次要根除的東西 —— 直接失敗，不要讓它悄悄進到 manifest。
-            if not transformations and raw_h != canon_h:
-                sys.exit(f'✗ {item_id}: 沒有列明任何修正，raw 與 canonical 卻不同 —— '
-                         '有未被記錄的轉換偷偷改動了來源文字。')
+            # raw ≠ canonical ⟺ 有列明的修正。有差異卻沒列明＝藏起來的手腳；
+            # 列明了卻沒差異＝修正表與事實不符。兩種都直接失敗，不讓它進到 manifest。
+            if bool(transformations) != (raw_h != canon_h):
+                sys.exit(f'✗ {item_id}: raw≠canonical={raw_h != canon_h}，transformations '
+                         f'{"有" if transformations else "沒有"}列明 —— 兩者必須一致。')
 
             # 答案偏離來源 answer key 的，必須在 ANSWER_OVERRIDES 裡列明憑據。
             ov = ANSWER_OVERRIDES.get((src_id, q['number']))
@@ -490,10 +815,8 @@ def build(cache: Path):
                 'column': q['column'],
                 'source_question_number': q['number'],
                 'answer_key': q['answer'],           # PDF 自己印在題號前的答案
-                'answer_override': ({'corrected_answer': ov['corrected_answer'],
-                                     'reason': ov['reason'],
-                                     'evidence': ov['evidence'],
-                                     'decided_on': ov['decided_on']} if ov else None),
+                'answer_override': ({k: v for k, v in ov.items() if k != 'source_answer_key'}
+                                    if ov else None),
                 'raw_pdf_text_sha256': raw_h,
                 'canonical_source_text_sha256': canon_h,
                 'dataset_text_sha256': ds_hash,
@@ -510,22 +833,46 @@ def build(cache: Path):
     # 舊版只報「restored_count: 159」，從來沒說另外 11 題去哪了。
     # 一份只講「我留下了什麼」而不講「我丟掉了什麼、為什麼」的憑證，
     # 沒辦法證明「沒有東西被弄丟」—— 而那正是這份 manifest 唯一要證明的事。
+    # 每一份來源的題號都已對帳成 1..總題數（check_question_numbers），每一題恰好一筆 disposition，
+    # EXPECTED_QUESTION_COUNT 與 SOURCES 的來源也一一對應（上面兩道檢查）—— 所以 disposition 數等於來源總題數。
     total_source = sum(EXPECTED_QUESTION_COUNT.values())
-    if len(dispositions) != total_source:
-        sys.exit(f'✗ disposition 數 {len(dispositions)} != 來源總題數 {total_source}')
 
     by_status = {}
     for d in dispositions:
         by_status.setdefault(d['status'], []).append(
             f"{d['source_id']}#{d['source_question_number']}")
 
-    unaccounted = by_status.get('UNACCOUNTED', [])
-    if unaccounted:
-        sys.exit('✗ 有題目在還原過程中遺失，且找不到任何重複的憑據：\n  '
-                 + '\n  '.join(unaccounted)
-                 + '\n  這不是「重複所以刪掉」—— 是真的掉了。必須人工確認。')
+    pinned = {(d['source_id'], d['source_question_number']) for d in dispositions
+              if d['status'].startswith('duplicate_in_dataset')}
+    dead_pins = sorted(k for k in DATASET_DUPLICATES if k not in pinned)
+    if dead_pins:  # 在「遺失」之前報：登記在錯的那一題上時，錯誤要先指向登記
+        sys.exit(f'✗ DATASET_DUPLICATES 有用不到的項目：{dead_pins} —— 那一題是 PDF 自己重印的（不是與主庫重複），'
+                 '或題號打錯。')
 
-    conflicts = by_status.get('duplicate_in_dataset_ANSWER_CONFLICT', [])
+    unaccounted = [d for d in dispositions if d['status'] == 'UNACCOUNTED']
+    if unaccounted:
+        sys.exit('✗ 這些來源題不在題庫裡，也找不到任何重複的憑據 —— 題庫誤刪了？還原它們（刪還原題會動到 manifest，'
+                 '要先問專案所有者）：\n  '
+                 + '\n  '.join(f"{d['source_id']}#{d['source_question_number']}"
+                               f"（最接近的主庫題目：{d['closest_in_dataset']}，題幹相似度 {d['closest_similarity']}）"
+                               for d in unaccounted)
+                 + '\n  沒有證據就不是「重複所以刪掉」。若確實與那一題是同一題，用一手依據裁決後登記進 '
+                   'DATASET_DUPLICATES（先問專案所有者）；否則是題目真的掉了，必須人工確認。')
+
+    conflicts = sorted(k for status, keys in by_status.items() if status.endswith('_ANSWER_CONFLICT')
+                       for k in keys)
+    for s, review in SOURCE_REVIEWS.items():
+        if s not in SOURCES:
+            sys.exit(f'✗ SOURCE_REVIEWS 有不在 SOURCES 裡的來源 {s!r}。')
+        if {'items', 'subject'} & set(review):
+            sys.exit(f'✗ SOURCE_REVIEWS[{s!r}] 手寫了 items／subject —— 這兩欄由資料算出，不可覆寫。')
+    unreviewed = [s for s in SOURCES if s not in SOURCE_REVIEWS]
+    if unreviewed:
+        # 沒有查核紀錄的來源不會出現在 manifest 的 source_documents 裡 —— 安靜地缺席，而不是被看見
+        sys.exit(f'✗ {unreviewed} 沒有人工查核紀錄（SOURCE_REVIEWS）：每一份來源 PDF 都要寫下查過什麼、'
+                 '有沒有已知的問題。')
+
+    restored_per_source = {s: sum(1 for e in entries if e['source_id'] == s) for s in SOURCES}
 
     return {
         '_meta': {
@@ -555,49 +902,116 @@ def build(cache: Path):
             'restored_count': len(entries),
             'disposition_summary': {k: len(v) for k, v in sorted(by_status.items())},
             'answer_conflicts': conflicts,
+            # 有衝突的 manifest 不會被寫出去（refuse_to_write），所以 committed 的這兩欄永遠是 [] 與 null；
+            # 留著是讓 verify() 與直接呼叫 assemble() 的人看得到衝突是什麼。
             'answer_conflict_note':
-                '這些題的題幹與主庫幾乎相同，但**來源 PDF 自己印的答案卡**與主庫教的答案不一致。'
-                '我們把來源題當重複丟掉了，卻可能留下一個錯的答案在教。'
-                '在拿一手標準文件裁決之前，主庫的那一題已標 ambiguous + answer=null（排除計分）。'
+                '這些丟棄題的答案卡與它所對應的題目不一致（主庫那一題、或同一份 PDF 重印的另一題）。'
+                '要先用一手依據裁決：主庫錯就改主庫；配對或登記的字母過時，就更新 DATASET_DUPLICATES。'
                 if conflicts else None,
-            'sources': {k: {kk: vv for kk, vv in v.items()} for k, v in SOURCES.items()},
+            'sources': {k: dict(v) for k, v in SOURCES.items()},
             'source_pdf_typos': pdf_typos,
             'how_to_reproduce': [
                 'uv sync --locked --project tools',
                 'uv run --locked --project tools python tools/restore_from_source_pdf.py --verify',
             ],
             'ci_note': 'CI 不下載 PDF。restoration-manifest.test.ts 只驗 manifest ↔ dataset 一致。',
+            'source_documents': {
+                SOURCES[s]['url']: {'items': restored_per_source[s], 'subject': s, **review}
+                for s, review in SOURCE_REVIEWS.items()
+            },
+            'tried_and_rejected': TRIED_AND_REJECTED,
         },
         'entries': entries,
         'dispositions': dispositions,
     }
 
 
+def check_snapshot(extracted: dict) -> None:
+    """擷取快照必須正好對應 SOURCES 裡的每一份 PDF（同一組來源、同一個 sha256）。"""
+    have = {s: v.get('pdf_sha256') for s, v in extracted.items()}
+    want = {s: v['sha256'] for s, v in SOURCES.items()}
+    if have != want:
+        sys.exit('✗ 擷取快照與 SOURCES 對不上（來源或 PDF 的 sha256 不同）。來源 PDF 換了或加了來源，'
+                 '要跑 --emit 重新擷取；不可以手改快照。')
+
+
+def refuse_to_write(man: dict) -> None:
+    """repo 內容與來源不一致、或有答案衝突的 manifest 不寫出去：那是要先處理的問題，不是要記錄的結果。"""
+    drift = [e['item_id'] for e in man['entries'] if not e['matches_source']]
+    conflicts = man['_meta']['answer_conflicts']
+    problems = []
+    if drift:
+        problems.append(f'題庫的文字與來源不一致 {drift[:10]}：還原題的文字不可以改（AGENTS.md）；'
+                        '誤改請還原，若確定是來源本身的錯，先問專案所有者。')
+    if conflicts:
+        detail = '；'.join(f"{d['source_id']}#{d['source_question_number']}：{d['evidence']}"
+                          for d in man['dispositions'] if d['status'].endswith('_ANSWER_CONFLICT'))
+        problems.append(f'答案衝突 {conflicts[:10]}（{detail}）要先用一手依據裁決（先問專案所有者）。')
+    if problems:
+        sys.exit('✗ 不寫 manifest：' + '\n  '.join(problems))
+
+
+def build(cache: Path) -> tuple[dict, dict]:
+    """從來源 PDF 重跑：回傳（擷取結果, manifest）。"""
+    extracted = extract_sources(cache)
+    return extracted, assemble(extracted, load_dataset())
+
+
+DIFF_LINES = 60
+
+
+def _rel(path: Path):
+    """顯示用：repo 裡的檔案印相對路徑，其他照原樣。"""
+    try:
+        return path.relative_to(REPO)
+    except ValueError:
+        return path
+
+
+def _same_as_committed(path: Path, fresh_text: str) -> bool:
+    """committed 的檔案必須與重跑結果逐字相同。
+
+    行尾不計：這個專案在 Windows 上以 core.autocrlf=true 開發，工作區的 JSON 會是 CRLF，
+    read_text() 會把它讀回 LF。不同時印出差異，讓人看得到是哪一行、哪個欄位。
+    """
+    rel = _rel(path)
+    try:
+        committed = path.read_text(encoding='utf-8') if path.exists() else ''
+    except UnicodeDecodeError:
+        print(f'  ✗ {rel} 不是 UTF-8（編輯器以其他編碼存檔，例如 cp950）')
+        return False
+    if committed == fresh_text:
+        print(f'  ✓ {rel} 與重跑結果相同')
+        return True
+    print(f'  ✗ {rel} 與重跑結果不同：')
+    if not path.exists():
+        print('      檔案不存在')
+        return False
+    if committed.rstrip('\n') == fresh_text.rstrip('\n'):
+        print('      只差在檔尾換行（手動編輯器存檔常見）')
+        return False
+    if committed.startswith('\ufeff'):
+        print('      檔案開頭有 BOM（手動編輯器存檔常見）')
+        return False
+    diff = list(difflib.unified_diff(committed.splitlines(), fresh_text.splitlines(),
+                                     f'{rel}（committed）', f'{rel}（重跑）', lineterm='', n=1))
+    for line in diff[:DIFF_LINES]:
+        print(f'      {line}')
+    if len(diff) > DIFF_LINES:
+        print(f'      …（還有 {len(diff) - DIFF_LINES} 行；重新產生之後用 git diff 看完整差異）')
+    return False
+
+
 def verify(cache: Path) -> int:
-    if not MANIFEST.exists():
-        sys.exit('✗ 找不到 manifest，請先 --emit')
-    man = json.loads(MANIFEST.read_text(encoding='utf-8'))
-    fresh = build(cache)
+    extracted, fresh = build(cache)
 
-    old = {e['item_id']: e for e in man['entries']}
-    new = {e['item_id']: e for e in fresh['entries']}
+    # 擷取快照與 manifest 都必須正好是重跑的輸出；重跑不出來的內容，就是沒被記錄的手工修改。
     bad = 0
-
-    for iid in sorted(set(old) | set(new)):
-        a, b = old.get(iid), new.get(iid)
-        if a is None:
-            print(f'  ✗ {iid}: manifest 缺這一題'); bad += 1; continue
-        if b is None:
-            print(f'  ✗ {iid}: PDF 重跑後不存在'); bad += 1; continue
-        for f in ('page', 'column', 'source_question_number', 'answer_key',
-                  'raw_pdf_text_sha256', 'canonical_source_text_sha256',
-                  'dataset_text_sha256', 'source_sha256', 'dataset_answer'):
-            if a.get(f) != b.get(f):
-                print(f'  ✗ {iid}.{f}: manifest={a.get(f)!r} 重跑={b.get(f)!r}'); bad += 1
-        # transformations 也要一致 —— 否則「我們動過哪些手腳」可以被偷偷改掉
-        if a.get('transformations') != b.get('transformations'):
-            print(f'  ✗ {iid}.transformations: manifest={a.get("transformations")!r} '
-                  f'重跑={b.get("transformations")!r}'); bad += 1
+    files_differ = 0
+    for path, obj in ((SNAPSHOT, extracted), (MANIFEST, fresh)):
+        if not _same_as_committed(path, render(obj)):
+            files_differ += 1
+    bad += files_differ
 
     # 這才是真正的重現性檢查：repo 裡的文字 == 來源（套用已列明的修正之後）
     drift = [e['item_id'] for e in fresh['entries'] if not e['matches_source']]
@@ -608,29 +1022,15 @@ def verify(cache: Path) -> int:
             print(f'      {iid}')
         bad += len(drift)
 
-    # raw != canonical 的題目，必須剛好就是有列明 transformations 的那些。
-    # 有差異卻沒列明 = 藏起來的手腳；列明了卻沒差異 = 記錄與事實不符。
-    for e in fresh['entries']:
-        differs = e['raw_pdf_text_sha256'] != e['canonical_source_text_sha256']
-        declared = bool(e['transformations'])
-        if differs != declared:
-            print(f'  ✗ {e["item_id"]}: raw≠canonical={differs} 但 transformations '
-                  f'{"有" if declared else "沒有"}列明 —— 兩者必須一致'); bad += 1
+    conflicts = fresh['_meta']['answer_conflicts']
+    if conflicts:
+        print(f'\n  ✗ 有 {len(conflicts)} 題丟棄題的答案卡與它對應的題目不一致：')
+        for d in fresh['dispositions']:
+            if d['status'].endswith('_ANSWER_CONFLICT'):
+                print(f"      {d['source_id']}#{d['source_question_number']}：{d['evidence']}")
+        bad += len(conflicts)
 
-    # 答案要一致：dataset 的 answer 必須等於 PDF 自己印的 answer key ——
-    # **除非**那一題有列明一手依據的 answer_override（來源的答案卡本身是錯的）。
-    #
-    # 預設一律以來源的答案卡為錨點。隨便推翻它，整條證據鏈就沒有意義了。
-    # 但「以來源為準」不等於「明知有錯還照抄」—— 差別在於偏離必須被記錄下來、附上憑據。
-    ans = [e['item_id'] for e in fresh['entries']
-           if e['dataset_answer'] != e['answer_key'] and not e.get('answer_override')]
-    if ans:
-        print(f'\n  ✗ 有 {len(ans)} 題的 answer 與 PDF answer key 不符，且**未列明 override**：')
-        for iid in ans[:10]:
-            print(f'      {iid}')
-        bad += len(ans)
-
-    ov = [e for e in fresh['entries'] if e.get('answer_override')]
+    ov = [e for e in fresh['entries'] if e['answer_override']]
     if ov:
         print(f'\n  ℹ 有 {len(ov)} 題刻意偏離來源的 answer key（已列明一手依據）：')
         for e in ov:
@@ -640,33 +1040,66 @@ def verify(cache: Path) -> int:
 
     print()
     if bad:
-        print(f'✗ {bad} 項不符 —— 還原內容與來源 PDF 對不上')
+        reasons = [label for label, n in (('committed 的檔案與重跑結果不同', files_differ),
+                                          ('題庫的文字與來源不一致', len(drift)),
+                                          ('答案衝突', len(conflicts))) if n]
+        print(f'✗ {bad} 項不符 —— {"、".join(reasons)}')
         return 1
-    print(f'{len(new)} 題全部與來源 PDF 相符')
-    print('   （頁碼／欄位／題號／answer key／PDF 文字 hash／repo 文字 hash 全部一致）')
+    print(f'{len(fresh["entries"])} 題全部與來源 PDF 相符')
+    print('   （擷取快照與 manifest 都與重跑結果逐字相同；repo 文字 == 來源 + 已列明的修正）')
     return 0
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument('--emit', action='store_true', help='重新產生 manifest')
-    ap.add_argument('--verify', action='store_true', help='重新下載 PDF 並比對 manifest')
-    ap.add_argument('--cache', default=str(Path.home() / '.cache' / 'ipas-src-pdf'))
-    a = ap.parse_args()
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description='從來源 PDF 重建還原題的憑證（restoration manifest）。')
+    action = ap.add_mutually_exclusive_group()
+    action.add_argument('--emit', action='store_true', help='從來源 PDF 重跑，改寫擷取快照與 manifest')
+    action.add_argument('--verify', action='store_true', help='從來源 PDF 重跑，逐字比對擷取快照與 manifest（不寫檔）')
+    action.add_argument('--reassemble', action='store_true',
+                        help='不讀 PDF：用 committed 的擷取快照、題庫與修正表重組 manifest（改了題庫或修正表、'
+                             '牽動 manifest 時用；動 manifest 要先問專案所有者）')
+    ap.add_argument('--cache', help='來源 PDF 的快取目錄（預設 ~/.cache/ipas-src-pdf）：沒有才下載，'
+                                    'sha256 與 SOURCES 不符就中止。只對 --emit／--verify 有意義')
+    a = ap.parse_args(argv)
+    if a.cache and not (a.emit or a.verify):
+        ap.error('--cache 只對 --emit／--verify 有意義')
 
-    cache = Path(a.cache)
+    # 寫檔一律用 LF：committed 的檔案必須正好是 render() 的輸出（Windows 的 autocrlf 在 checkout 時才轉 CRLF）
+    if a.reassemble:
+        snapshot = load_snapshot()
+        check_snapshot(snapshot)
+        man = assemble(snapshot, load_dataset())
+        refuse_to_write(man)
+        MANIFEST.write_text(render(man), encoding='utf-8', newline='\n')
+        print(f'已寫入 {_rel(MANIFEST)}（由 {_rel(SNAPSHOT)} 重組，沒有讀 PDF）')
+        return 0
+
+    if not (a.emit or a.verify):
+        ap.print_help()
+        return 1
+    cache = Path(a.cache or Path.home() / '.cache' / 'ipas-src-pdf')
     cache.mkdir(parents=True, exist_ok=True)
 
     if a.emit:
-        man = build(cache)
-        MANIFEST.write_text(
-            json.dumps(man, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-        print(f'\n已寫入 {MANIFEST.relative_to(REPO)}（{man["_meta"]["restored_count"]} 題）')
+        # 快照只記「PDF 上印的是什麼」，與題庫無關：擷取成功就寫。manifest 要等題庫也對得上才寫 ——
+        # 來源改版時，這個中間狀態（新快照、舊 manifest）正是用 git diff 看清改了什麼、再照著改題庫的起點，
+        # CI 會一直紅到 manifest 重組為止。
+        extracted = extract_sources(cache)
+        check_counts_registered()  # 新增來源忘了登記題數：說清楚，不是在下面丟 KeyError
+        for src_id in SOURCES:  # 擷取器壞了（掉題、重號）就什麼都不寫：那份快照本身就是錯的
+            check_question_numbers(src_id, extracted[src_id]['questions'])
+        SNAPSHOT.write_text(render(extracted), encoding='utf-8', newline='\n')
+        try:
+            man = assemble(extracted, load_dataset())
+            refuse_to_write(man)
+        except SystemExit:
+            print(f'（已寫入新的擷取快照 {_rel(SNAPSHOT)}，manifest 沒有寫：用 git diff 看快照變了什麼，'
+                  '處理下面的問題之後跑 --reassemble。）', file=sys.stderr)
+            raise
+        MANIFEST.write_text(render(man), encoding='utf-8', newline='\n')
+        print(f'\n已寫入 {_rel(SNAPSHOT)} 與 {_rel(MANIFEST)}（{man["_meta"]["restored_count"]} 題）')
         return 0
-    if a.verify:
-        return verify(cache)
-    ap.print_help()
-    return 1
+    return verify(cache)
 
 
 if __name__ == '__main__':
