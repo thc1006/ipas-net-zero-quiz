@@ -92,6 +92,32 @@ SOURCES = {
         'title': '考科 2 溫室氣體盤查規範與程序概要-模擬試題（商研院 2024.08）',
         'exam_subject': '考科2',
     },
+    # iPAS 官方公告試題：115 年第一次淨零碳規劃管理師初級能力鑑定（考試日期 2026-05-16），
+    # 官網學習資源頁 2026-07-29 公告（網址裡的時間戳也是這一天）。
+    'S_IPAS_115_01_L11': {
+        'url': 'https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf',
+        'sha256': 'bef4f1e9a78a83fa4e635ebf522ea8a6088c771611cc9b7fd3709d3c38e567a4',
+        'title': '115 年第一次淨零碳規劃管理師-初級能力鑑定【公告試題】第一科：淨零碳規劃管理基礎概論',
+        'exam_subject': '考科1',
+        'layout': 'ipas_exam_table',
+        'kind': 'official_exam',
+        'session': '115-01',
+        'exam_date': '2026-05-16',
+        'published_on': '2026-07-29',
+        'subject': 'L11',
+    },
+    'S_IPAS_115_01_L12': {
+        'url': 'https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf',
+        'sha256': '1c4e08cf48110aa0e229f691c6b1ca16a543cd64adfefc2a7dbe834823fec36d',
+        'title': '115 年第一次淨零碳規劃管理師-初級能力鑑定【公告試題】第二科：淨零碳盤查規範與程序概要',
+        'exam_subject': '考科2',
+        'layout': 'ipas_exam_table',
+        'kind': 'official_exam',
+        'session': '115-01',
+        'exam_date': '2026-05-16',
+        'published_on': '2026-07-29',
+        'subject': 'L12',
+    },
 }
 
 # 每份來源 PDF 的人工查核紀錄，寫進 manifest 的 _meta.source_documents（以 PDF 網址為鍵）。
@@ -154,6 +180,22 @@ SOURCE_REVIEWS = {
             '沒有第二份來源可以背書。不要把它寫成「已交叉驗證」。'
         ),
     },
+    'S_IPAS_115_01_L11': {
+        'status': 'OFFICIAL',
+        'note': (
+            'iPAS 官方公告試題（115 年第一次，考試日期 2026-05-16，官網 2026-07-29 公告），答案取自 PDF 的答案欄。'
+            'PDF 首頁註明「※相關法規可能修訂，試題參考答案以該次考試公告時之法規內容為準。」'
+            '—— 所以每一題都標時效，valid_as_of 為考試日期。'
+        ),
+    },
+    'S_IPAS_115_01_L12': {
+        'status': 'OFFICIAL',
+        'note': (
+            'iPAS 官方公告試題（115 年第一次，考試日期 2026-05-16，官網 2026-07-29 公告），答案取自 PDF 的答案欄。'
+            'PDF 首頁註明「※相關法規可能修訂，試題參考答案以該次考試公告時之法規內容為準。」'
+            '—— 所以每一題都標時效，valid_as_of 為考試日期。'
+        ),
+    },
 }
 
 # 試過、驗證後放棄的做法（寫進 _meta.tried_and_rejected，避免下一個人再試一次）。
@@ -170,7 +212,7 @@ TRIED_AND_REJECTED = {
 
 # 來源 PDF 各自的總題數。這是「對帳」的分母 ——
 # 少了這個，manifest 只能說「我還原了 159 題」，卻證明不了「沒有東西被弄丟」。
-EXPECTED_QUESTION_COUNT = {'S_CHU_06': 100, 'S_CHU_07': 70}
+EXPECTED_QUESTION_COUNT = {'S_CHU_06': 100, 'S_CHU_07': 70, 'S_IPAS_115_01_L11': 50, 'S_IPAS_115_01_L12': 50}
 
 COLUMN_BOUNDARY = 292.0
 CJK = re.compile(r'[⺀-鿿豈-﫿＀-￯]')
@@ -990,14 +1032,16 @@ def assemble(extracted: dict, ds: dict) -> dict:
 
     return {
         '_meta': {
-            'description': '被刪除題目的還原憑證。來源 PDF 的**每一題**都有交代：'
-                           'restored（還原進 dataset）、duplicate_within_source（PDF 自己重印）、'
+            'description': '來源 PDF 逐題的憑證：被刪除後還原的題目，以及匯入的官方公告試題。'
+                           '來源 PDF 的**每一題**都有交代：restored（還原進 dataset）、'
+                           'imported（官方公告試題，匯入 dataset）、duplicate_within_source（PDF 自己重印）、'
                            'duplicate_in_dataset（主庫已有相同題）。'
                            '任何一題交代不出來就是 UNACCOUNTED —— 產生 manifest 時直接失敗，'
                            '不會安靜地當成「重複」放過。',
             'hash_fields': {
                 'raw_pdf_text_sha256':
-                    'PDF 原文（分欄擷取後、未套用任何修正）。拿原始 PDF 重跑就該得到這個值。',
+                    'PDF 原文（擷取後、未套用任何修正：雙欄的模擬卷分欄擷取，官方公告試題逐列擷取表格）。'
+                    '拿原始 PDF 重跑就該得到這個值。',
                 'canonical_source_text_sha256':
                     '套用 transformations 所列的修正之後的來源文字。dataset 應該等於這個。',
                 'dataset_text_sha256': 'repo 裡「現在」的文字。',
@@ -1165,7 +1209,8 @@ def verify(cache: Path) -> int:
                                           ('答案衝突', len(conflicts))) if n]
         print(f'✗ {bad} 項不符 —— {"、".join(reasons)}')
         return 1
-    print(f'{len(fresh["entries"])} 題全部與來源 PDF 相符')
+    print(f'{len(fresh["entries"])} 題全部與來源 PDF 相符（還原 {fresh["_meta"]["restored_count"]} 題、'
+          f'官方公告試題 {fresh["_meta"]["imported_count"]} 題）')
     print('   （擷取快照與 manifest 都與重跑結果逐字相同；repo 文字 == 來源 + 已列明的修正）')
     return 0
 

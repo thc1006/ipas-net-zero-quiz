@@ -78,10 +78,11 @@ describe('useQuiz.startQuizWithPool', () => {
     expect(new Set(sigs).size).toBe(sigs.length);
   });
 
-  it('with includePracticePool can mix in pool items (questionCount 對 + 機率高足以抽到 pool)', async () => {
+  // 這裡原本抽 600 題、再斷言「至少抽到一題練習池」：是機率，不是保證。主題庫從 647 題長到 879 題可計分之後，
+  // 5 題有答案的 fixture 一題都沒抽到的機率約 (284/884)^5 ≈ 0.34%，突變測試跑 96 次就撞到一次。
+  // 拆成兩條確定的斷言：抽幾題就給幾題；題數給到超過總量時全部抽出，練習池題一定都在。
+  it('with includePracticePool gives exactly questionCount questions', async () => {
     const { result } = renderHook(() => useQuiz());
-    // 抽 600 題（接近主題庫總量 647 + fixture pool 6 = 653）→ 接近全抽，
-    // 高機率包含 pool 題（隨機抽樣，機率 = 1 - C(647, 600)/C(653, 600) ≈ 100%）
     await act(async () => {
       await result.current.startQuizWithPool({
         mode: 'practice',
@@ -95,13 +96,30 @@ describe('useQuiz.startQuizWithPool', () => {
     });
     expect(result.current.questions).toHaveLength(600);
     expect(result.current.isActive).toBe(true);
-    // 600 picks 從 653 抽 → 至少 (600+6-653) = ≥0；用 hasAnswer fixture 推估
-    // fixture-1 / fixture-2 / fixture-3 / fixture-4 / fixture-5 都有答案
-    // 600/653 ≈ 91.9% 機率每題被抽，期望 5-6 fixture 入選
-    const poolCount = result.current.questions.filter(
-      (q) => q.sourceType === 'practice_pool',
-    ).length;
-    expect(poolCount).toBeGreaterThan(0);
+  });
+
+  it('with includePracticePool mixes in every answerable pool item when drawing everything', async () => {
+    const { result } = renderHook(() => useQuiz());
+    await act(async () => {
+      await result.current.startQuizWithPool({
+        mode: 'practice',
+        subject: 'all',
+        questionCount: 100_000, // 超過主題庫 + 練習池的總題數：全部抽出，不靠運氣
+        shuffleQuestions: true,
+
+        showAnswerImmediately: true,
+        includePracticePool: true,
+      });
+    });
+    // fixture-1 到 fixture-5 有答案（fixture-6 沒有，無答案題一律不出）
+    const pool = result.current.questions.filter((q) => q.sourceType === 'practice_pool');
+    expect(pool.map((q) => q.id).sort()).toEqual([
+      'fixture-1',
+      'fixture-2',
+      'fixture-3',
+      'fixture-4',
+      'fixture-5',
+    ]);
   });
 
   it('exam mode filters out questions without answer', async () => {

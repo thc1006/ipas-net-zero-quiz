@@ -380,7 +380,9 @@ def offline(monkeypatch, snapshot):
 
 def test_verify_passes_on_the_committed_files(offline, tmp_path, capsys):
     assert R.verify(tmp_path) == 0
-    assert '159 題全部與來源 PDF 相符' in capsys.readouterr().out
+    meta = json.loads(R.MANIFEST.read_text(encoding='utf-8'))['_meta']
+    assert (f'{meta["restored_count"] + meta["imported_count"]} 題全部與來源 PDF 相符（還原 {meta["restored_count"]} 題'
+            in capsys.readouterr().out)
 
 
 def test_verify_accepts_a_crlf_working_tree(offline, tmp_path, monkeypatch):

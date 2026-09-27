@@ -76,7 +76,7 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
         </p>
         <ul>
           <li>
-            <strong>模擬題（{PRACTICE_POOL_COUNTS.externalMock} 題）</strong>：公開模擬題（非官方歷屆，iPAS 不公開歷屆）。
+            <strong>模擬題（{PRACTICE_POOL_COUNTS.externalMock} 題）</strong>：公開模擬題（非官方試題）。
           </li>
           <li>
             <strong>AI 產題（{PRACTICE_POOL_COUNTS.aiGenerated} 題）</strong>：由語言模型依環境部、CBAM、ISO 等

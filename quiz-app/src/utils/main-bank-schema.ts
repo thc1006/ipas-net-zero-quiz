@@ -46,6 +46,32 @@ function validateGist(g: unknown, idx: number, errs: MainBankValidationError[]):
   }
 }
 
+// 官方公告試題的出處。與 schemas/main-bank.schema.json#/$defs/officialExam 同一條規則：
+// 兩份只要有一份較寬，壞資料就會從那一邊溜進來（schema-contract.test.ts 會拿同一批壞資料測兩邊）。
+const OFFICIAL_EXAM_FIELDS = new Set(['session', 'exam_date', 'subject', 'question_number']);
+
+function validateOfficialExam(o: unknown, path: string, errs: MainBankValidationError[]): void {
+  if (!isObj(o)) {
+    errs.push({ path, message: 'must be object' });
+    return;
+  }
+  for (const k of Object.keys(o)) {
+    if (!OFFICIAL_EXAM_FIELDS.has(k)) errs.push({ path: `${path}.${k}`, message: 'unknown field' });
+  }
+  if (typeof o.session !== 'string' || !/^\d{3}-(0[1-9]|[1-9]\d)$/.test(o.session)) {
+    errs.push({ path: `${path}.session`, message: 'must look like 115-01 (round from 01)' });
+  }
+  if (typeof o.exam_date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(o.exam_date)) {
+    errs.push({ path: `${path}.exam_date`, message: 'must be YYYY-MM-DD' });
+  }
+  if (typeof o.subject !== 'string' || !/^L\d{2}$/.test(o.subject)) {
+    errs.push({ path: `${path}.subject`, message: 'must look like L11' });
+  }
+  if (!Number.isInteger(o.question_number) || (o.question_number as number) < 1) {
+    errs.push({ path: `${path}.question_number`, message: 'must be a positive integer' });
+  }
+}
+
 function validateUnique(u: unknown, idx: number, errs: MainBankValidationError[]): void {
   const path = `our_unique_items[${idx}]`;
   if (!isObj(u)) {
@@ -60,6 +86,7 @@ function validateUnique(u: unknown, idx: number, errs: MainBankValidationError[]
   if (!isExamSubject(u.exam_subject)) {
     errs.push({ path: `${path}.exam_subject`, message: `must be one of ${EXAM_SUBJECTS.join('|')}` });
   }
+  if (u.official_exam !== undefined) validateOfficialExam(u.official_exam, `${path}.official_exam`, errs);
 }
 
 export function validateMainBank(ds: unknown): MainBankValidationError[] {

@@ -100,7 +100,20 @@
           "type": "object",
           "description": "由來源 PDF 還原的題目帶結構化 source（含 url）。UI 先前只讀 metadata.sources，導致這批題的來源連結永遠不顯示。",
           "properties": { "url": { "type": "string" } }
-        }
+        },
+        "official_exam": { "$ref": "#/$defs/officialExam" }
+      }
+    },
+    "officialExam": {
+      "type": "object",
+      "description": "官方公告試題的出處（tools/import_official_exam.py 寫入）。有這個欄位的題目，題幹、選項、答案都取自 iPAS 官網公告的 PDF。與 quiz-app/src/utils/main-bank-schema.ts 的 validateOfficialExam 同一條規則。",
+      "required": ["session", "exam_date", "subject", "question_number"],
+      "additionalProperties": false,
+      "properties": {
+        "session": { "type": "string", "pattern": "^\\d{3}-(0[1-9]|[1-9]\\d)$", "description": "民國年-梯次，例如 115-01；梯次從 01 起算" },
+        "exam_date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "subject": { "type": "string", "pattern": "^L\\d{2}$", "description": "L11 第一科、L12 第二科" },
+        "question_number": { "type": "integer", "minimum": 1 }
       }
     }
   }

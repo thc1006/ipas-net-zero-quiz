@@ -399,11 +399,24 @@ describe('題庫結構完整性', () => {
     //
     // 同一條規則在 tools/sync_derived_counts.py 有第二份實作 —— 兩邊要一起改。
     // （ISO 日期字串的字典序 == 時序。）
+    //
+    // 官方公告試題例外：它們的 valid_as_of 是考試日期（專案所有者的決定），不是我們重查的日期 ——
+    // 永遠不算「本輪已重查」。否則匯入考試日期在本輪之後的一場（115 年第二次是 2026-08-15），
+    // 「本輪只實查」就會被灌水，而每一道 gate 都是綠的（第二輪審查實測過）。
+    const reverified = (it: Item) =>
+      !('official_exam' in it) && (it.metadata?.valid_as_of ?? '') >= cr.last_review_date;
+
     it('reverified_count 必須等於資料裡實際重查過的題數', () => {
-      const actual = ALL.filter(
-        (it) => (it.metadata?.valid_as_of ?? '') >= cr.last_review_date
-      ).length;
-      expect(cr.reverified_count).toBe(actual);
+      expect(cr.reverified_count).toBe(ALL.filter(reverified).length);
+    });
+
+    it('官方公告試題不算本輪重查：考試日期在本輪之後也一樣', () => {
+      const official = {
+        stem: '', options: [], official_exam: {}, metadata: { valid_as_of: '2999-01-01' },
+      } as unknown as Item;
+      const ours = { stem: '', options: [], metadata: { valid_as_of: '2999-01-01' } } as unknown as Item;
+      expect(reverified(official)).toBe(false);
+      expect(reverified(ours)).toBe(true);
     });
 
     it('time_sensitive_count / total_questions 必須與資料一致', () => {
@@ -417,9 +430,7 @@ describe('題庫結構完整性', () => {
     // 缺 valid_as_of 的一律算積欠（`'' < last`），與 sync_derived_counts.py 逐字對齊。
     it('carried_over_count 必須等於「標了 time_sensitive 但本輪沒重查」的題數', () => {
       const actual = ALL.filter(
-        (it) =>
-          (it.quality_flags ?? []).includes('time_sensitive') &&
-          (it.metadata?.valid_as_of ?? '') < cr.last_review_date
+        (it) => (it.quality_flags ?? []).includes('time_sensitive') && !reverified(it)
       ).length;
       expect(cr.carried_over_count).toBe(actual);
     });

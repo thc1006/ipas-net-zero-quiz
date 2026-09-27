@@ -59,7 +59,7 @@ describe('PracticeOptInDialog', () => {
   it('does NOT call onDecline when clicking inside the dialog', () => {
     const onDecline = vi.fn();
     render(<PracticeOptInDialog open onAccept={() => {}} onDecline={onDecline} />);
-    fireEvent.click(screen.getByText(/iPAS 不公開歷屆/));
+    fireEvent.click(screen.getByText(/公開模擬題（非官方試題）/));
     expect(onDecline).not.toHaveBeenCalled();
   });
 

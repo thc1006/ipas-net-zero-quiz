@@ -136,6 +136,54 @@ describe('同一批壞資料，schema 與手寫 validator 必須都拒收', () =
     expect(validateMainBank(doc).length, '手寫 validator 放行了').toBeGreaterThan(0);
   });
 
+  const officialBreakages: ReadonlyArray<readonly [string, (o: Record<string, unknown>) => void]> = [
+    ['session 不是「115-01」這種格式', (o) => { o.session = '115/1'; }],
+    ['session 的梯次是 00（梯次從 01 起算）', (o) => { o.session = '115-00'; }],
+    ['exam_date 不是 YYYY-MM-DD', (o) => { o.exam_date = '115 年 5 月 16 日'; }],
+    ['subject 不是「L11」這種格式', (o) => { o.subject = '第一科'; }],
+    ['question_number 是 0', (o) => { o.question_number = 0; }],
+    ['question_number 是字串', (o) => { o.question_number = '1'; }],
+    ['缺 question_number', (o) => { delete o.question_number; }],
+    ['缺 session', (o) => { delete o.session; }],
+    ['缺 exam_date', (o) => { delete o.exam_date; }],
+    ['缺 subject', (o) => { delete o.subject; }],
+    ['question_number 是小數', (o) => { o.question_number = 1.5; }],
+    ['subject 是三位數', (o) => { o.subject = 'L111'; }],
+    ['多出不認得的欄位', (o) => { o.answer = 'C'; }],
+  ];
+
+  it.each(officialBreakages)('主題庫：official_exam 的%s —— 兩邊都要擋', (what, mutate) => {
+    const doc = clone(dataset) as unknown as { our_unique_items: Record<string, unknown>[] };
+    const item = doc.our_unique_items.find((i) => i.official_exam);
+    expect(item, '題庫裡沒有任何官方公告試題 —— 這組案例在空轉').toBeDefined();
+    mutate(item!.official_exam as Record<string, unknown>);
+    expect(validateMainSchema(doc), `${what}：JSON Schema 放行了`).toBe(false);
+    expect(validateMainBank(doc).length, `${what}：手寫 validator 放行了`).toBeGreaterThan(0);
+  });
+
+  // official_exam 整個不是物件：上面的案例都是改物件裡的欄位，走不到 validator「不是物件」那一條。null 以外的四種，
+  // 拿掉那一條照樣會被擋（缺 session 等四個欄位；字串與陣列另外還會被當成不認得的欄位），所以比的是那一條自己的訊息。
+  // 數字與布林：schema 放寬成也收它們，只有前三種的時候照樣全綠（第十九輪確認審查實測）
+  const officialNotObjects: ReadonlyArray<readonly [string, unknown]> = [
+    ['null', null],
+    ['字串', '115-01'],
+    ['陣列', ['115-01', '2026-05-16', 'L11', 1]],
+    ['數字', 1],
+    ['布林', true],
+  ];
+
+  it.each(officialNotObjects)('主題庫：official_exam 是%s（不是物件）—— 兩邊都要擋', (what, value) => {
+    const doc = clone(dataset) as unknown as { our_unique_items: Record<string, unknown>[] };
+    const index = doc.our_unique_items.findIndex((i) => i.official_exam);
+    expect(index, '題庫裡沒有任何官方公告試題 —— 這組案例在空轉').toBeGreaterThanOrEqual(0);
+    doc.our_unique_items[index].official_exam = value;
+    expect(validateMainSchema(doc), `${what}：JSON Schema 放行了`).toBe(false);
+    expect(validateMainBank(doc), `${what}：手寫 validator 沒有說它不是物件`).toContainEqual({
+      path: `our_unique_items[${index}].official_exam`,
+      message: 'must be object',
+    });
+  });
+
   it('沒有做壞的原始資料，兩邊都要放行（確認上面不是「什麼都擋」）', () => {
     expect(validatePoolSchema(clone(pool))).toBe(true);
     expect(validatePracticePool(clone(pool))).toEqual([]);

@@ -3,6 +3,7 @@
 # 這裡用一份合成的官方來源測兩邊的行為；真正的 115-01 資料由它自己的 CL 匯入與把關。
 import copy
 import json
+import re
 
 import pytest
 
@@ -303,13 +304,14 @@ def test_official_questions_are_recorded_as_imported(official_source, monkeypatc
     snapshot[SRC] = {'pdf_sha256': META['sha256'], 'questions': official_source}
     dataset = R.load_dataset()
     dataset['our_unique_items'] += [I.build_item(SRC, META, q) for q in official_source]
+    before = json.loads(R.MANIFEST.read_text(encoding='utf-8'))['_meta']
     man = R.assemble(snapshot, dataset)
     mine = [d for d in man['dispositions'] if d['source_id'] == SRC]
     assert [(d['status'], d['item_id'], d['column']) for d in mine] == [
         ('imported', f'{SRC}-q001', None), ('imported', f'{SRC}-q002', None)]
-    assert man['_meta']['restored_count'] == 159
-    assert man['_meta']['imported_count'] == 2
-    assert man['_meta']['disposition_summary']['imported'] == 2
+    assert man['_meta']['restored_count'] == before['restored_count']  # 還原題的數目不受影響
+    assert man['_meta']['imported_count'] == before['imported_count'] + 2
+    assert man['_meta']['disposition_summary']['imported'] == before['imported_count'] + 2
     assert all(e['matches_source'] and not e['transformations'] for e in man['entries'] if e['source_id'] == SRC)
 
 
@@ -320,6 +322,257 @@ def test_a_source_with_a_layout_nobody_extracts_stops_before_downloading(monkeyp
     with pytest.raises(SystemExit, match=f"{SRC}: 不認得的版面 'three_column'"):
         R.extract_sources(tmp_path)
     assert downloads == []
+
+
+# ── 題庫裡的官方公告試題，必須正好是匯入工具從擷取快照建出來的樣子 ──────────────────────────
+#
+# 題幹、選項、答案有 restoration-manifest 的指紋守著；出處欄位沒有指紋。official-exam.test.ts 守住其中幾項
+# （出處是 iPAS、年份、官方引文的格式），其餘 —— 層級、source 的頁碼與引文、EXTRA_EVIDENCE 的法條引文內容、
+# 引文與來源的順序 —— 只有這條測試守（審查時實測過：沒有它，改掉這些其他 gate 都是綠的）。
+# 這裡用 committed 的擷取快照 + SOURCES + EXTRA_EVIDENCE 重建每一題，逐欄比對工具負責的部分；
+# 解析、標籤、notes、另外補的引文是題庫自己的欄位，不在比對範圍。
+
+BUILT_FIELDS = ('item_id', 'year', 'year_confidence', 'credential', 'level', 'question_type', 'stem', 'options',
+                'answer', 'source', 'exam_subject', 'subject_confidence', 'official_exam')
+
+
+def _built_official_items():
+    snapshot = R.load_snapshot()
+    for src_id, meta in R.SOURCES.items():
+        if meta.get('kind') == 'official_exam':
+            for q in snapshot[src_id]['questions']:
+                yield I.build_item(src_id, meta, q, I.EXTRA_EVIDENCE.get((src_id, q['number'])))
+
+
+def test_the_bank_holds_what_the_importer_builds():
+    bank = {i['item_id']: i for i in R.load_dataset()['our_unique_items']}
+    built_items = list(_built_official_items())
+    assert built_items, '擷取快照裡沒有官方公告試題 —— 這條測試在空轉'
+    bad = []
+    for built in built_items:
+        item = bank.get(built['item_id'])
+        if item is None:
+            bad.append(f'{built["item_id"]}: 不在題庫裡')
+            continue
+        diff = [f for f in BUILT_FIELDS if item.get(f) != built[f]]
+        meta, built_meta = item.get('metadata', {}), built['metadata']
+        if meta.get('valid_as_of') != built_meta['valid_as_of']:
+            diff.append('metadata.valid_as_of')
+        if not set(built['quality_flags']) <= set(item.get('quality_flags', [])):
+            diff.append('quality_flags')
+        if (meta.get('sources') or [])[:len(built_meta['sources'])] != built_meta['sources']:
+            diff.append('metadata.sources（必須以工具建出的來源開頭）')
+        # 帶工具標記的引文必須正是工具建出的那幾則：多一則（複製一則改過內容附在後面）也不行，
+        # 下次重新匯入會把它安靜地刪掉
+        if [e for e in meta.get('evidence') or [] if e.get('generated_by') == I.GENERATED_BY] != built_meta['evidence']:
+            diff.append('metadata.evidence（帶工具標記的引文必須正是工具建出的那幾則）')
+        # 而且排在最前面、順序相同：畫面的「答案依據」取第一則，在前面插一則別的引文（或調換順序），
+        # 使用者看到的就不是工具核對過的那一則
+        if (meta.get('evidence') or [])[:len(built_meta['evidence'])] != built_meta['evidence']:
+            diff.append('metadata.evidence（必須以工具建出的引文開頭，順序相同）')
+        if diff:
+            bad.append(f'{built["item_id"]}: {diff}')
+    assert bad == [], ('題庫裡的官方公告試題與匯入工具建出來的不同。工具負責的欄位不可手改；要改引文，'
+                       '改 EXTRA_EVIDENCE 再重新匯入（見 AGENTS.md）。\n' + '\n'.join(bad[:20]))
+
+
+# ── 非法條的額外引文：CI 拿不到原文，由 --verify-extra 對照登記過 sha256 的來源 PDF 逐字核對 ────────────
+#
+# 審查實測：把工具常數與題庫裡的《巴黎協定》引文一起改掉，所有 gate 照樣全綠（重建測試只比對題庫與工具常數）。
+# 法條引文由 law_evidence_problems 拿釘選的條文核對（見下）；這裡管的是其他來源。
+
+def test_every_non_law_extra_evidence_url_is_pinned_to_a_pdf():
+    bad = [(key, e['url']) for key, entries in I.EXTRA_EVIDENCE.items() for e in entries
+           if I.law_query(e['url']) is None and not re.fullmatch(r'[0-9a-f]{64}', I.EXTRA_SOURCES.get(e['url'], ''))]
+    assert bad == []
+    assert any(I.law_query(e['url']) is None for entries in I.EXTRA_EVIDENCE.values() for e in entries), \
+        '沒有非法條的引文 —— 空轉'
+
+
+def _source_pdf(text):
+    import pymupdf
+    doc = pymupdf.open()
+    page = doc.new_page()
+    page.insert_textbox(pymupdf.Rect(72, 72, 520, 760), text)
+    return doc.tobytes()
+
+
+URL = 'https://example.org/treaty.pdf'
+TREATY = 'Article 6 1. Parties recognize that some Parties choose to pursue voluntary cooperation in the implementation.'
+
+
+@pytest.fixture
+def pinned_treaty(monkeypatch, tmp_path):
+    data = _source_pdf(TREATY)
+    sha = R.sha256_bytes(data)
+    (tmp_path / f'{sha}.pdf').write_bytes(data)
+    monkeypatch.setattr(I, 'EXTRA_SOURCES', {URL: sha})
+    return tmp_path
+
+
+def _with_quote(monkeypatch, quote, url=URL):
+    monkeypatch.setattr(I, 'EXTRA_EVIDENCE', {(SRC, 1): [{'url': url, 'quote': quote, 'supports_option': 'C'}]})
+
+
+def test_a_verbatim_quote_passes(pinned_treaty, monkeypatch):
+    _with_quote(monkeypatch, 'Parties recognize that some Parties choose to pursue voluntary cooperation')
+    assert I.verify_extra_evidence(pinned_treaty) == []
+
+
+@pytest.mark.parametrize(('setup', 'message'), [
+    (lambda mp, cache: _with_quote(mp, 'Parties recognize that some Parties choose to pursue mandatory cooperation'),
+     '引文不在'),
+    (lambda mp, cache: (_with_quote(mp, 'Parties recognize'), (cache / next(cache.glob('*.pdf')).name).unlink()),
+     '快取裡沒有'),
+    (lambda mp, cache: (_with_quote(mp, 'Parties recognize'),
+                        next(cache.glob('*.pdf')).write_bytes(_source_pdf(TREATY + ' Changed.'))), 'sha256 不符'),
+    (lambda mp, cache: _with_quote(mp, 'Parties recognize', url='https://example.org/unpinned.pdf'),
+     '沒有登記在 EXTRA_SOURCES'),
+], ids=['tampered-quote', 'missing-file', 'different-pdf', 'unpinned-url'])
+def test_verify_extra_evidence_reports_what_it_cannot_confirm(pinned_treaty, monkeypatch, setup, message):
+    setup(monkeypatch, pinned_treaty)
+    problems = I.verify_extra_evidence(pinned_treaty)
+    assert len(problems) == 1 and message in problems[0], problems
+
+
+def test_law_quotes_are_left_to_the_pinned_articles(pinned_treaty, monkeypatch):
+    # 法條引文由 law_evidence_problems 對照釘選的條文（見下），不在這裡找快取
+    _with_quote(monkeypatch, '不在任何快取裡的條文', url='https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=X&flno=4')
+    assert I.verify_extra_evidence(pinned_treaty) == []
+
+
+@pytest.mark.parametrize('url', ['https://law.moj.gov.tw.example.org/x.pdf?pcode=O0020098',
+                                 'https://example.org/law.moj.gov.tw/x.pdf'], ids=['lookalike-host', 'in-the-path'])
+def test_only_the_law_database_itself_counts_as_a_law_source(pinned_treaty, monkeypatch, url):
+    # 以前比對的是子字串：網址裡任何地方出現 law.moj.gov.tw，這則引文就兩邊都不核對
+    _with_quote(monkeypatch, '不在任何快取裡的條文', url=url)
+    problems = I.verify_extra_evidence(pinned_treaty)
+    assert len(problems) == 1 and '沒有登記在 EXTRA_SOURCES' in problems[0], problems
+
+
+def _pinned_source(monkeypatch, cache, lines, font='helv'):
+    """把幾行字畫成一份 PDF（每個元素一行），登記成 URL 的來源。"""
+    import pymupdf
+    doc = pymupdf.open()
+    page = doc.new_page()
+    for i, line in enumerate(lines):
+        page.insert_text((72, 100 + 20 * i), line, fontname=font, fontsize=11)
+    data = doc.tobytes()
+    sha = R.sha256_bytes(data)
+    (cache / f'{sha}.pdf').write_bytes(data)
+    monkeypatch.setattr(I, 'EXTRA_SOURCES', {URL: sha})
+
+
+@pytest.mark.parametrize(('lines', 'font', 'quote'), [
+    (['well below 2 C above pre- industrial levels'], 'helv', 'well below 2 C above pre-industrial levels'),
+    (['締約方選擇在執行其國家', '自定貢獻時進行自願合作'], 'china-t', '執行其國家自定貢獻時'),
+], ids=['hyphen-before-a-line-break', 'chinese-across-two-lines'])
+def test_whitespace_in_the_source_does_not_count(monkeypatch, tmp_path, lines, font, quote):
+    # 文字層在斷行處留下空白（連字號之後、中文換行）：照著閱讀器上看到的逐字引文，以前會被判「引文不在」
+    _pinned_source(monkeypatch, tmp_path, lines, font)
+    _with_quote(monkeypatch, quote)
+    assert I.verify_extra_evidence(tmp_path) == []
+
+
+# ── 法條引文：對照 law-articles.pinned.json 釘選的條文（不需要網路，CI 也跑）──────────
+
+LAW_URL = 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=37'
+PINNED = {'laws': {'O0020098': {'name': '氣候變遷因應法', 'articles': {
+    '36': '事業應於指定期限內向中央主管機關申請排放額度帳戶。',
+    '37': '應於指定期限內向中央主管機關申請核定碳足跡，並於規定期限內依核定內容分級標示。',
+    '12-1': '第十二條之一的條文。'}}}}
+
+
+def _with_law_quote(monkeypatch, quote='向中央主管機關申請核定碳足跡', url=LAW_URL, clause='第37條', src=SRC):
+    entry = {'url': url, 'quote': quote, 'supports_option': 'C'}
+    if clause is not None:
+        entry['clause'] = clause
+    monkeypatch.setattr(I, 'EXTRA_EVIDENCE', {(src, 1): [entry]})
+
+
+@pytest.mark.parametrize('change', [
+    {},
+    {'quote': '向中央主管機關\n申請 核定碳足跡'},
+    {'url': LAW_URL.replace('pcode=', 'PCode=')},
+    {'url': 'https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020098'},
+    {'url': LAW_URL.replace('flno=37', 'flno=12-1'), 'clause': '第12條之1', 'quote': '第十二條之一的條文'},
+], ids=['verbatim', 'whitespace', 'parameter-name-case', 'whole-law-url', 'sub-article'])
+def test_a_law_quote_in_its_pinned_article_passes(monkeypatch, change):
+    _with_law_quote(monkeypatch, **change)
+    assert I.law_evidence_problems(PINNED) == []
+
+
+@pytest.mark.parametrize(('change', 'message'), [
+    ({'url': LAW_URL.replace('O0020098', 'O0020999'), 'quote': '捏造的條文'}, 'O0020999 不在 law-articles.pinned.json'),
+    ({'url': LAW_URL.replace('pcode=', 'PCode='), 'quote': '捏造的條文'}, '引文不在氣候變遷因應法第 37 條裡'),
+    ({'clause': '第36條', 'quote': '申請排放額度帳戶'}, 'flno=37 與 clause「第36條」不是同一條'),
+    ({'quote': '捏造的條文，不在第三十七條裡'}, '引文不在氣候變遷因應法第 37 條裡'),
+    ({'clause': None}, 'clause「None」不是「第N條」'),
+    ({'clause': '第三十七條'}, 'clause「第三十七條」不是「第N條」'),
+    ({'clause': '第37條第2項'}, 'clause「第37條第2項」不是「第N條」'),
+    ({'url': LAW_URL.replace('flno=37', 'flno=99'), 'clause': '第99條'}, '氣候變遷因應法沒有第 99 條'),
+    ({'url': 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?flno=37'}, '看不出是哪一部法規'),
+    ({'url': LAW_URL + '&pcode=O0020102'}, '看不出是哪一部法規'),
+    ({'url': LAW_URL + '&flno=36'}, 'flno=37,36 與 clause「第37條」不是同一條'),  # 兩個 flno：不能只看第一個
+    ({'url': LAW_URL.replace('flno=37', 'flno=36&flno=37')}, 'flno=36,37 與 clause「第37條」不是同一條'),  # 也不能只看最後一個
+], ids=['unpinned-law', 'parameter-name-case', 'flno-disagrees', 'quote-not-there', 'no-clause', 'clause-format',
+        'clause-with-a-paragraph', 'no-such-article', 'no-pcode', 'two-pcodes', 'two-flnos', 'two-flnos-reversed'])
+def test_a_law_quote_that_cannot_be_confirmed_is_reported(monkeypatch, change, message):
+    _with_law_quote(monkeypatch, **change)
+    problems = I.law_evidence_problems(PINNED)
+    assert len(problems) == 1 and message in problems[0], problems
+
+
+def test_the_law_quotes_in_extra_evidence_are_in_their_pinned_articles():
+    # 真正的 EXTRA_EVIDENCE 對真正的釘選檔：以前只要求寫了 clause，未釘選的法規、flno 與 clause 不同條、
+    # pcode 大寫，都沒有人核對（審查實測三種竄改都全綠）
+    laws = [e for entries in I.EXTRA_EVIDENCE.values() for e in entries if I.law_query(e['url']) is not None]
+    assert len(laws) >= 2  # 不能空轉：115-01 有兩則（溫管辦法第 4 條、氣候法第 37 條）
+    assert I.law_evidence_problems(I.load_pinned_laws()) == []
+
+
+def test_main_stops_on_a_law_quote_that_cannot_be_confirmed_before_downloading(official_source, monkeypatch,
+                                                                                tmp_path):
+    monkeypatch.setattr(I, 'load_pinned_laws', lambda: PINNED)
+    _with_law_quote(monkeypatch, quote='捏造的條文')
+    downloads = []
+    monkeypatch.setattr(I, 'load_pdf', lambda src_id, cache: downloads.append(src_id))
+    with pytest.raises(SystemExit, match='引文不在氣候變遷因應法第 37 條裡'):
+        I.main([SRC, '--cache', str(tmp_path)])
+    assert downloads == []
+
+
+def test_verify_extra_also_reports_law_quotes(pinned_treaty, monkeypatch):
+    monkeypatch.setattr(I, 'load_pinned_laws', lambda: PINNED)
+    _with_law_quote(monkeypatch, quote='捏造的條文')
+    with pytest.raises(SystemExit, match='引文不在氣候變遷因應法第 37 條裡'):
+        I.main(['--verify-extra', '--cache', str(pinned_treaty)])
+
+
+def test_every_registered_extra_source_is_used():
+    # 登記了卻沒有任何引文用到的來源：多半是引文換了網址，舊的登記忘了拿掉
+    used = {e['url'] for entries in I.EXTRA_EVIDENCE.values() for e in entries}
+    assert sorted(set(I.EXTRA_SOURCES) - used) == []
+
+
+def test_verify_extra_from_the_command_line(pinned_treaty, monkeypatch, capsys):
+    _with_quote(monkeypatch, 'Parties recognize')
+    assert I.main(['--verify-extra', '--cache', str(pinned_treaty)]) == 0
+    assert '逐字核對過' in capsys.readouterr().out
+    _with_quote(monkeypatch, 'Parties reject')
+    with pytest.raises(SystemExit, match='引文不在'):
+        I.main(['--verify-extra', '--cache', str(pinned_treaty)])
+
+
+def test_main_still_needs_sources_to_import(tmp_path):
+    with pytest.raises(SystemExit):
+        I.main(['--cache', str(tmp_path)])
+
+
+def test_every_extra_evidence_entry_belongs_to_an_official_question():
+    official = {(s, q['number']) for s, meta in R.SOURCES.items() if meta.get('kind') == 'official_exam'
+                for q in R.load_snapshot()[s]['questions']}
+    assert sorted(set(I.EXTRA_EVIDENCE) - official) == []
 
 
 def test_the_official_layout_is_extracted_with_the_table_extractor(monkeypatch, tmp_path):

@@ -75,6 +75,35 @@ cd .. && python tools/gen_gap_reports.py    # 產生 docs/VERIFICATION-GAPS.md
 6. 把「為什麼這樣改」寫進該題的 `provenance`／`metadata`，不是只寫在 commit 訊息裡。
 7. `pnpm preflight`。
 
+匯入 iPAS 官方公告試題（會改 `restoration-manifest.json` 與題庫：新的一份 → **先問**）：
+
+1. `tools/restore_from_source_pdf.py`，照已有的官方來源寫：
+   - `SOURCES`：來源代號一律 `S_IPAS_<民國年>_<梯次>_<科目代號>`（例：`S_IPAS_115_02_L12`，官方題的 gate
+     依這個格式對帳），欄位 `url`（官網列表頁上的網址，中文要百分比編碼）、`sha256`、`title`、
+     `exam_subject`（`考科1`／`考科2`）、`layout: ipas_exam_table`、`kind: official_exam`、`session`（`115-02`）、
+     `exam_date`、`published_on`、`subject`（`L11`／`L12`）；
+   - `EXPECTED_QUESTION_COUNT`：總題數；
+   - `SOURCE_REVIEWS`：人工查核紀錄（沒有就中止）。
+2. 依序跑（repo 根目錄）：
+
+   ```bash
+   uv run --locked --project tools python tools/import_official_exam.py <來源代號> ...
+   uv run --locked --project tools python tools/restore_from_source_pdf.py --emit
+   ```
+
+3. 寫死的預期值跟著改：`restoration-manifest.test.ts` 的 `EXPECTED_SOURCE_COUNT`、`questions.test.ts` 的總題數。
+4. `cd quiz-app && pnpm test:run -u src/data/content-profile.test.ts`（語料輪廓換了），再 `pnpm preflight`；
+   回 repo 根目錄跑 `uv run --locked --directory tools pytest` 與 `python tools/gen_gap_reports.py`。
+5. PR 說明寫明：合併後由專案所有者把 GitHub About 的題數改成新的主題庫題數（`quiz-app-ci.yml` 會比對）。
+
+題幹、選項、答案一律取自官方 PDF，**絕不**手改。要附額外依據，寫進匯入工具的 `EXTRA_EVIDENCE`
+（法條要寫 `clause`），再重新匯入：工具負責的引文會換成新的版本，Tools CI 會逐欄比對題庫與工具的輸出。
+法條引文由匯入工具對照 `law-articles.pinned.json` 的釘選條文核對（匯入時與 Tools CI 都跑）：網址是全國法規資料庫、
+法規已釘選（沒有就**先問**要不要釘選）、`clause` 與網址的 `flno` 是同一條、引文逐字在那一條裡。其他來源（例如
+UNFCCC 的條約出版本）CI 不核對原文：要在 `EXTRA_SOURCES` 登記那一份 PDF 的 sha256，把 PDF 存進快取（檔名是
+sha256），再跑 `uv run --locked --project tools python tools/import_official_exam.py --verify-extra --cache <快取目錄>`
+（空白不計，引文不能跨頁）。
+
 ## 寫 gate 時
 
 - **每一道 gate 都要 mutation 驗證**：故意把資料或程式改壞，它必須轉紅。做不到就是空轉。

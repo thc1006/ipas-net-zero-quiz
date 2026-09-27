@@ -91,7 +91,7 @@ interface Entry {
   source_document: string;
   source_sha256: string;
   page: number;
-  column: 'left' | 'right';
+  column: 'left' | 'right' | null;
   source_question_number: number;
   answer_key: string;
   raw_pdf_text_sha256: string;
@@ -125,14 +125,22 @@ const MAN = manifestRaw as unknown as {
     source_question_total: number;
     disposition_summary: Record<string, number>;
     answer_conflicts: string[];
-    sources: Record<string, { sha256: string; exam_subject: string }>;
+    sources: Record<string, { sha256: string; exam_subject: string; layout?: string; kind?: string }>;
   };
   entries: Entry[];
   dispositions: Disposition[];
 };
 
 // 來源 PDF 各自的總題數 —— 對帳的分母。
-const EXPECTED_SOURCE_COUNT: Record<string, number> = { S_CHU_06: 100, S_CHU_07: 70 };
+const EXPECTED_SOURCE_COUNT: Record<string, number> = {
+  S_CHU_06: 100,
+  S_CHU_07: 70,
+  S_IPAS_115_01_L11: 50,
+  S_IPAS_115_01_L12: 50,
+};
+
+// 表格版面（官方公告試題）只有一欄，題目的位置由頁碼與題號決定，column 記為 null
+const isTable = (sourceId: string) => MAN._meta.sources[sourceId]?.layout === 'ipas_exam_table';
 
 // Python 的 \s（= str.isspace()）逐字列出。JS 的 \s 與它不等價：少了 U+001C–U+001F 與 U+0085，
 // 多了 U+FEFF —— 題幹混進一個 BOM，兩邊算出的指紋就不同，竄改檢查會誤判。
@@ -240,9 +248,9 @@ describe('textHash 與 Python 的 normalized_text_sha256() 逐位元一致', () 
   });
 });
 
-const RESTORED = DS.our_unique_items.filter((i) =>
-  (i.source?.source_id ?? '').startsWith('S_CHU')
-);
+// manifest 登記的每一份來源 PDF（還原的模擬卷與匯入的官方公告試題）所產生的題目
+const MANIFEST_SOURCES = new Set(Object.keys(MAN._meta.sources));
+const RESTORED = DS.our_unique_items.filter((i) => MANIFEST_SOURCES.has(i.source?.source_id ?? ''));
 const BY_ID = new Map(MAN.entries.map((e) => [e.item_id, e]));
 
 describe('restoration manifest', () => {
@@ -331,7 +339,7 @@ describe('restoration manifest', () => {
         !/^https?:\/\//.test(e.source_document) ||
         !Number.isInteger(e.page) ||
         e.page < 1 ||
-        (e.column !== 'left' && e.column !== 'right') ||
+        (isTable(e.source_id) ? e.column !== null : e.column !== 'left' && e.column !== 'right') ||
         !Number.isInteger(e.source_question_number) ||
         e.source_question_number < 1 ||
         !/^[A-D]$/.test(e.answer_key) ||
@@ -368,8 +376,9 @@ describe('restoration manifest', () => {
   });
 
   it('左右欄都有題目 —— 分欄擷取確實有效（否則等於整份只讀了一欄）', () => {
-    const left = MAN.entries.filter((e) => e.column === 'left').length;
-    const right = MAN.entries.filter((e) => e.column === 'right').length;
+    const twoColumn = MAN.entries.filter((e) => !isTable(e.source_id));
+    const left = twoColumn.filter((e) => e.column === 'left').length;
+    const right = twoColumn.filter((e) => e.column === 'right').length;
     expect(left).toBeGreaterThan(0);
     expect(right).toBeGreaterThan(0);
   });
@@ -420,7 +429,7 @@ describe('還原對帳：來源的每一題都要有交代', () => {
   });
 
   it('每一筆非 restored 的 disposition 都必須有證據（不能只是斷言「應該是重複」）', () => {
-    const dropped = MAN.dispositions.filter((d) => d.status !== 'restored');
+    const dropped = MAN.dispositions.filter((d) => d.status !== 'restored' && d.status !== 'imported');
     expect(dropped.length).toBeGreaterThan(0); // 否則這條測試在空轉
     for (const d of dropped) {
       expect(d.evidence, `${d.source_id}#${d.source_question_number} 沒有 evidence`).toBeTruthy();

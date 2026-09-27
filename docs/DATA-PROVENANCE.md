@@ -51,13 +51,13 @@ uv sync --locked --project tools
 uv run --locked --project tools python tools/restore_from_source_pdf.py --verify
 ```
 
-實測 **159/159** 相符。
+實測 **159/159** 相符（`--verify` 也一併驗官方公告試題，所以它印的總題數比這裡多）。
 
 ### 三個 hash，各自回答一個不同的問題
 
 | 欄位 | 它證明什麼 |
 | --- | --- |
-| `raw_pdf_text_sha256` | PDF 原文長什麼樣（分欄擷取後，**一個字都沒動**） |
+| `raw_pdf_text_sha256` | PDF 原文長什麼樣（擷取後，**一個字都沒動**；模擬卷分欄擷取，官方公告試題逐列擷取表格） |
 | `canonical_source_text_sha256` | 套用 `transformations` 所列的修正**之後**長什麼樣 |
 | `dataset_text_sha256` | repo 裡**現在**長什麼樣 |
 | `transformations[]` | 這一題**動了什麼、憑什麼動**。空陣列＝原文照抄 |
@@ -73,11 +73,12 @@ uv run --locked --project tools python tools/restore_from_source_pdf.py --verify
 ### 來源的每一題都要有交代
 
 manifest 不只記「我還原了什麼」，也記「我**沒有**還原什麼、為什麼」。
-來源 PDF 全部 **170 題**逐題都有 disposition：
+來源 PDF 全部 **270 題**逐題都有 disposition（商研院的兩份模擬卷，加上 iPAS 官網公告的初級公告試題）：
 
 | disposition | 數量 | 憑據 |
 | --- | ---: | --- |
 | `restored` | 159 | 已還原進題庫 |
+| `imported` | 100 | 官方公告試題，已匯入題庫（不是被刪除後還原的題目，不計入還原數） |
 | `duplicate_within_source` | 8 | PDF 自己重印了同一題（正規化 hash 完全相同，並指出重複於第幾題） |
 | `duplicate_in_dataset` | 3 | 題庫已有同一題：配對由人登記（工具的 `DATASET_DUPLICATES`），重組時核對兩邊的答案與來源題都沒變（另附題幹相似度） |
 | `UNACCOUNTED` | **0** | 只要有一題落到這裡，`--emit` 直接失敗 |
@@ -458,8 +459,9 @@ gh workflow run quarterly-time-sensitive-verify.yml
   「年報準則 §10-4」（該準則沒有這一條）、「IFRS S2 之 Appendix B」（該附錄沒有這個條款）。
   **大方向對，細節捏造。** 放手讓 AI 寫 387 則解析，就是開 387 個捏造條號的機會。
 
-  結果：**沒有解析的題目從 420 降到 17**（其餘 41 題，要嘛答案是多重正解已排除，
-  要嘛引文釘不住而正在補一手來源）。
+  結果：**沒有解析的題目從 420 降到 117**。其中 17 題是補寫解析之後剩下的（其餘 41 題，
+  要嘛答案是多重正解已排除，要嘛引文釘不住而正在補一手來源）；其餘是之後匯入的官方公告試題 ——
+  官方只公布答案、沒有解析，目前也還沒有寫。
 
   **而最後 14 題，我們誠實地交還給人：** 9 題**完全沒有來源**（社群共筆考古題）、
   5 題的來源是**無效的**（`iso.org/standard/*.html` 是購買頁、`vocus.cc` 是部落格）。
@@ -596,9 +598,9 @@ gh workflow run quarterly-time-sensitive-verify.yml
 
   | 等級 | 意思 | 主題庫 | 練習池 |
   | --- | --- | ---: | ---: |
-  | **① 逐字引文（出自一手出處）** | 引文字串已附上，且其 URL 屬一手發布者（`source-authority.ts` 的 PRIMARY）。逐字比對在**擷取當下**由 `verify_agent_quotes.py` 對代理提交做過（擋掉捏造與非一手引文），**但不是**對 committed 資料的持續重抓。二手 evidence（維基／新聞／標準轉載預覽）**不計入本級** | **764 / 781** | **140 / 154** |
-  | ② 有一手來源 URL | 附了法規資料庫／環境部／IPCC／ISO 等的連結。**「連結還通」不代表「指對地方」** —— 見下方引用複驗 | 777 / 781 | 149 / 154 |
-  | ③ 完全沒有來源 | 來自社群共筆的考古題整理，**無從查證** | 4 / 781 | 0 / 154 |
+  | **① 逐字引文（出自一手出處）** | 引文字串已附上，且其 URL 屬一手發布者（`source-authority.ts` 的 PRIMARY）。逐字比對在**擷取當下**由 `verify_agent_quotes.py` 對代理提交做過（擋掉捏造與非一手引文），**但不是**對 committed 資料的持續重抓。官方公告試題的官方引文不是代理提交的，是 `tools/import_official_exam.py` 從官方 PDF 擷取的題目原文，由 Tools CI 逐欄比對工具的輸出；匯入工具另附的非法條引文（《巴黎協定》）由它的 `--verify-extra` 對照登記過 sha256 的來源 PDF 逐字核對（本機執行，CI 不下載），法條引文由匯入工具對照釘選的條文逐字核對（匯入時與 Tools CI 都跑）。二手 evidence（維基／新聞／標準轉載預覽）**不計入本級** | **864 / 881** | **140 / 154** |
+  | ② 有一手來源 URL | 附了法規資料庫／環境部／IPCC／ISO 等的連結。**「連結還通」不代表「指對地方」** —— 見下方引用複驗 | 877 / 881 | 149 / 154 |
+  | ③ 完全沒有來源 | 來自社群共筆的考古題整理，**無從查證** | 4 / 881 | 0 / 154 |
 
   **本級的判定是「一手 URL＋有引文字串」，不是「該頁被重抓、逐字確認過」。** 兩者不同：
   前者程式可離線驗（`docs-counts.test.ts` 已釘住），後者需要每次重抓網頁——我們沒有對 committed

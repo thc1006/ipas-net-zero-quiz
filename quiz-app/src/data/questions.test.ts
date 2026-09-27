@@ -49,7 +49,10 @@ describe('題庫資料模組', () => {
       //
       // 也就是說，那串殘留一直在**遮住重複** —— 題幹看起來不一樣，去重就抓不到。
       // 而它同時還跟考古題 .md 的墓碑慣例「【已刪除】」撞名。一個垃圾字串，兩個坑。
-      expect(stats.total).toBe(781);
+      //
+      // 781 → 881：匯入 iPAS 官網公告的 115 年第一次公告試題，第一科、第二科各 50 題
+      // （S_IPAS_115_01_L11／L12：題幹、選項、答案取自官方 PDF，每題帶 official_exam）。
+      expect(stats.total).toBe(881);
     });
 
     it('考科一和考科二題數加總應等於總題數', () => {
@@ -296,8 +299,8 @@ describe('題庫資料模組', () => {
 // 更糟的是 README 一度宣稱「每題附一手來源連結」。實際上 UI 只顯示得出 279/780 題，
 // 而「每題」是 780。這個賣點有一半是因為 UI 沒讀而落空的。
 describe('來源連結：UI 必須同時看 metadata.sources 與 source.url', () => {
-  it('有 source.url 的還原題，UI 拿得到它的來源', () => {
-    const restored = allQuestions.filter((q) => q.id.startsWith('S_CHU'));
+  it('有 source.url 的還原題與官方公告試題，UI 拿得到它的來源', () => {
+    const restored = allQuestions.filter((q) => /^S_(CHU|IPAS)_/.test(q.id));
     expect(restored.length, '找不到還原題 —— 這條測試在空轉').toBeGreaterThan(100);
     const withSources = restored.filter((q) => (q.sources ?? []).length > 0);
     expect(

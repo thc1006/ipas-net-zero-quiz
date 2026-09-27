@@ -45,6 +45,8 @@ export interface MainBankItemMetadata {
     note?: string;
     /** 非一手來源時標 'secondary'（與 evidence-manifest.json 的分級同步，有 gate 對帳） */
     authority?: string;
+    /** 匯入工具建出來的引文帶這個標記（'tools/import_official_exam.py'）；重新匯入只換帶標記的 */
+    generated_by?: string;
   }[];
   /** sources 上次 curl 驗 200 OK 的日期（YYYY-MM-DD） */
   sources_verified_date?: string;
@@ -109,6 +111,18 @@ export interface GistQuestion {
   metadata?: MainBankItemMetadata;
 }
 
+/** 官方公告試題的出處。由 tools/import_official_exam.py 寫入；題幹、選項、答案都取自 iPAS 官網公告的 PDF。 */
+export interface OfficialExam {
+  /** 民國年-梯次，例如「115-01」＝115 年第一次 */
+  session: string;
+  /** 考試日期（YYYY-MM-DD） */
+  exam_date: string;
+  /** 科目代碼：L11 第一科、L12 第二科 */
+  subject: string;
+  /** 在該份公告試題裡的題號 */
+  question_number: number;
+}
+
 /** 補充題目格式 */
 export interface UniqueQuestion {
   item_id: string;
@@ -131,6 +145,8 @@ export interface UniqueQuestion {
   _quality_score?: number;
   /** 品質旗標（PR #68 起部分主庫題目寫入 'time_sensitive' 等；Refs #69） */
   quality_flags?: PracticePoolQualityFlag[];
+  /** 官方公告試題才有 */
+  official_exam?: OfficialExam;
   metadata?: MainBankItemMetadata;
 }
 
