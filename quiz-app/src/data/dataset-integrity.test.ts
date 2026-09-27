@@ -19,6 +19,7 @@ import {
   type FlaggedItem,
 } from '../utils/quality-flags';
 import { hasPrimarySource } from '../utils/source-authority';
+import { contentSignature, normalizeText } from '../utils/question-identity';
 
 interface Opt {
   key: string;
@@ -47,6 +48,122 @@ const DS = datasetRaw as unknown as {
 const ALL: Item[] = [...DS.gist_items, ...DS.our_unique_items];
 const who = (it: Item) => it.item_id ?? `gist[${it.index}]`;
 const POOL = poolRaw as unknown as { items: { id: string; answer: string | null }[] };
+
+// 下面三道重複／衝突檢查的比對，一律用 utils/question-identity 的
+// normalizeText()／contentSignature() —— 與執行期的去重是同一個定義（NFKC、剝標點與空白、
+// 保留符號與數字之間的小數點；正反案例在 question-identity.test.ts）。
+// 三道檢查的邏輯寫成函式：gate 拿真實資料跑，底下再拿合成資料正反各測一次。
+
+/** 同一考科內，題幹 + 選項集合相同的題目：每一組回傳它們的 who()。 */
+function duplicateContent(items: Item[]): string[][] {
+  const seen = new Map<string, string[]>();
+  for (const it of items) {
+    // 分隔符不能省：沒有它，'考科1' + sig 理論上可能與 '考科' + '1sig' 撞在一起
+    const k = `${it.exam_subject} ${contentSignature(it)}`;
+    seen.set(k, [...(seen.get(k) ?? []), who(it)]);
+  }
+  return [...seen.values()].filter((v) => v.length > 1);
+}
+
+/** 同一題裡兩個相同的選項（這題就不可作答了）。 */
+function duplicateOptions(items: Item[]): string[] {
+  const bad: string[] = [];
+  for (const it of items) {
+    const seen = new Map<string, string>();
+    for (const o of it.options) {
+      const n = normalizeText(o.text);
+      if (!n) continue;
+      const prev = seen.get(n);
+      if (prev) bad.push(`${who(it)}: ${prev} == ${o.key} 「${o.text.slice(0, 30)}」`);
+      else seen.set(n, o.key);
+    }
+  }
+  return bad;
+}
+
+/** 同一考科、同一個題幹，正解的文字卻不同（allowed 是登記過、看過的組合）。 */
+function unreviewedAnswerConflicts(items: Item[], allowed: ReadonlySet<string>): string[] {
+  const answerText = (it: Item) =>
+    normalizeText(it.options.find((o) => o.key === it.answer)?.text ?? '');
+  // 只看「有答案」的題目：刻意排除計分的（answer=null + ambiguous）不列入
+  const byStem = new Map<string, Item[]>();
+  for (const it of items.filter((i) => i.answer != null)) {
+    const k = `${it.exam_subject}||${normalizeText(it.stem)}`;
+    byStem.set(k, [...(byStem.get(k) ?? []), it]);
+  }
+  const unreviewed: string[] = [];
+  for (const g of byStem.values()) {
+    for (let i = 0; i < g.length; i++) {
+      for (let j = i + 1; j < g.length; j++) {
+        if (answerText(g[i]) === answerText(g[j])) continue; // 答案文字完全相同 -> 沒問題
+        const key = [who(g[i]), who(g[j])].sort().join('||');
+        if (!allowed.has(key)) {
+          unreviewed.push(
+            `${who(g[i])}(${g[i].answer}) vs ${who(g[j])}(${g[j].answer}) :: ${g[i].stem.slice(0, 34)}`
+          );
+        }
+      }
+    }
+  }
+  return unreviewed;
+}
+
+describe('三道重複／衝突檢查本身（合成資料）', () => {
+  const item = (id: string, stem: string, texts: string[], answer = 'A'): Item => ({
+    item_id: id,
+    stem,
+    options: texts.map((text, i) => ({ key: 'ABCD'[i], text })),
+    answer,
+    exam_subject: '考科1',
+  });
+  // 115 年第一次第二科第 9 題的四個選項（只差小數點位置）：四個都不同，這題可以作答
+  const decimals = ['58.8tCO₂e', '0.588tCO₂e', '5.88tCO₂e', '0.0588tCO₂e'];
+
+  it('只差小數點位置的選項不算重複；只差空白與標點的算', () => {
+    expect(duplicateOptions([item('ok', '排放量？', decimals)])).toEqual([]);
+    expect(
+      duplicateOptions([item('bad', '排放量？', ['5.88 tCO₂e；', '5.88tCO₂e', '甲', '乙'])])
+    ).toEqual(['bad: A == B 「5.88tCO₂e」']);
+  });
+
+  it('同一個題幹，正解 58.8 與 5.88 是衝突；5.88 公噸與 5.88公噸 不是', () => {
+    const conflict = [item('p', '排放量？', decimals, 'A'), item('q', '排放量？', decimals, 'C')];
+    expect(unreviewedAnswerConflicts(conflict, new Set())).toHaveLength(1);
+    expect(unreviewedAnswerConflicts(conflict, new Set(['p||q']))).toEqual([]); // 登記過就放行
+    const same = [
+      item('p', '排放量？', ['5.88 公噸', '甲', '乙', '丙']),
+      item('q', '排放量？', ['5.88公噸', '丁', '戊', '己']),
+    ];
+    expect(unreviewedAnswerConflicts(same, new Set())).toEqual([]);
+  });
+
+  it('題幹只差標點就是同一個題幹（衝突要抓得到）；只差小數點位置就不是', () => {
+    const punct = [
+      item('p', '「排放量」為何？', decimals, 'A'),
+      item('q', '“排放量”為何?', decimals, 'C'),
+    ];
+    expect(unreviewedAnswerConflicts(punct, new Set())).toHaveLength(1);
+    const other = [
+      item('p', '排放 58.8 公噸，係數為何？', decimals, 'A'),
+      item('q', '排放 5.88 公噸，係數為何？', decimals, 'C'),
+    ];
+    expect(unreviewedAnswerConflicts(other, new Set())).toEqual([]);
+  });
+
+  it('只差一個選項小數點位置的兩題不是同一題；只差標點的是', () => {
+    // 5.88 → 588：只有這一處不同，而且剝掉小數點後兩者相同（舊的正規化會把兩題算成同一題）
+    const other = ['58.8tCO₂e', '0.588tCO₂e', '588tCO₂e', '0.0588tCO₂e'];
+    expect(
+      duplicateContent([item('p', '排放量？', decimals), item('q', '排放量？', other)])
+    ).toEqual([]);
+    expect(
+      duplicateContent([
+        item('p', '「排放量」？', decimals),
+        item('q', '“排放量”?', [...decimals].reverse()),
+      ])
+    ).toEqual([['p', 'q']]);
+  });
+});
 
 // ── 官方答案卡：把 120 個「已跟官方答案對過」的答案釘死 ────────────────
 //
@@ -427,7 +544,7 @@ describe('題庫結構完整性', () => {
     // 兩組都是同一道題、同一個答案，只因為標點與全形/半形不同就溜過去了。
     //
     // 只要題幹有任何一點雜訊，重複就抓不到 —— 這正是「【已刪除】90.」那串來源殘留
-    // 能一直遮住兩題重複的原因。所以這裡用 NFKC + 剝掉所有非文數字。
+    // 能一直遮住兩題重複的原因。所以這裡用 NFKC + 剝掉標點、分隔與空白（contentSignature）。
     // 不可以用 /[\s\W_]+/：JS 的 \W 是 [^A-Za-z0-9_]，**中文字全部符合 \W**
     //    —— 那會把題幹的中文整段刪光，剩下的空殼互相「重複」，爆出一堆假警報。
     //    （Python 的 \W 是 Unicode-aware，行為完全不同 —— 我就是這樣被騙的。）
@@ -441,18 +558,7 @@ describe('題庫結構完整性', () => {
     //    四個選項的差別**只在運算子**。剝掉 \p{S} 之後它們會塌成同一個字串 ——
     //    於是「公式題的答案差在運算子」這種錯誤，就會被判成「同一個答案」而放行。
     //    我第一版就是這樣寫的：親手做了一個會漏掉公式題錯誤的把關。
-    const norm = (t: string) =>
-      (t ?? '').normalize('NFKC').replace(/[\p{P}\p{Z}\s_]+/gu, '').toLowerCase();
-    const sig = (it: Item) =>
-      norm(it.stem) + '||' + it.options.map((o) => norm(o.text)).sort().join('|');
-    const seen = new Map<string, string[]>();
-    for (const it of ALL) {
-      // 分隔符不能省：沒有它，'考科1' + sig 理論上可能與 '考科' + '1sig' 撞在一起
-      const k = `${it.exam_subject} ${sig(it)}`;
-      seen.set(k, [...(seen.get(k) ?? []), who(it)]);
-    }
-    const dups = [...seen.values()].filter((v) => v.length > 1);
-    expect(dups).toEqual([]);
+    expect(duplicateContent(ALL)).toEqual([]);
   });
 
   // quarterly workflow 只 curl「有 source URL」的題目。沒有 URL 的 time_sensitive 題目
@@ -687,40 +793,12 @@ const KNOWN_ANSWER_VARIANTS: ReadonlyArray<{ pair: [string, string]; why: string
 ];
 
 describe('同一道題不得有兩個不同的正解', () => {
-  // 不能用 \W —— JS 的 \W 是 [^A-Za-z0-9_]，**中文字全部符合 \W**，會把題幹刪光。
-  // （Python 的 \W 是 Unicode-aware，行為完全不同 —— 我就是這樣被騙出 52 組假重複的。）
-  const norm = (t: string) =>
-    (t ?? '').normalize('NFKC').replace(/[\p{P}\p{Z}\s_]+/gu, '').toLowerCase();
-  const answerText = (it: Item) =>
-    norm(it.options.find((o) => o.key === it.answer)?.text ?? '');
-
+  // 題幹的比對用 normalizeText（見上方 unreviewedAnswerConflicts）。它不用 \W 是有原因的：
+  // JS 的 \W 是 [^A-Za-z0-9_]，**中文字全部符合 \W**，會把題幹刪光（我就是這樣被騙出 52 組假重複的）。
   const allowed = new Set(
     KNOWN_ANSWER_VARIANTS.map((v) => [...v.pair].sort().join('||'))
   );
-
-  // 只看「有答案」的題目：刻意排除計分的（answer=null + ambiguous）不列入
-  const answered = ALL.filter((it) => it.answer != null);
-  const byStem = new Map<string, Item[]>();
-  for (const it of answered) {
-    const k = `${it.exam_subject}||${norm(it.stem)}`;
-    byStem.set(k, [...(byStem.get(k) ?? []), it]);
-  }
-
-  const unreviewed: string[] = [];
-  for (const g of byStem.values()) {
-    if (g.length < 2) continue;
-    for (let i = 0; i < g.length; i++) {
-      for (let j = i + 1; j < g.length; j++) {
-        if (answerText(g[i]) === answerText(g[j])) continue; // 答案文字完全相同 -> 沒問題
-        const key = [who(g[i]), who(g[j])].sort().join('||');
-        if (!allowed.has(key)) {
-          unreviewed.push(
-            `${who(g[i])}(${g[i].answer}) vs ${who(g[j])}(${g[j].answer}) :: ${g[i].stem.slice(0, 34)}`
-          );
-        }
-      }
-    }
-  }
+  const unreviewed = unreviewedAnswerConflicts(ALL, allowed);
 
   it('同題幹但答案不同的組合，必須全部被登記過（沒登記＝沒人看過）', () => {
     expect(
@@ -758,22 +836,8 @@ describe('同一道題不得有兩個不同的正解', () => {
 // 於是這條 gate 會誤報「四個選項完全相同」——
 // 我第一版掃描就是這樣，被自己的正規化騙了。
 describe('同一題內不得有兩個完全相同的選項', () => {
-  const norm = (t: string) =>
-    (t ?? '').normalize('NFKC').replace(/[\p{P}\p{Z}\s_]+/gu, '').toLowerCase();
-
   it('選項兩兩不得相同（相同就代表這題不可作答）', () => {
-    const bad: string[] = [];
-    for (const it of ALL) {
-      const seen = new Map<string, string>();
-      for (const o of it.options) {
-        const n = norm(o.text);
-        if (!n) continue;
-        const prev = seen.get(n);
-        if (prev) bad.push(`${who(it)}: ${prev} == ${o.key} 「${o.text.slice(0, 30)}」`);
-        else seen.set(n, o.key);
-      }
-    }
-    expect(bad, '同一題裡有兩個一模一樣的選項 —— 這題根本無法作答').toEqual([]);
+    expect(duplicateOptions(ALL), '同一題裡有兩個一模一樣的選項 —— 這題根本無法作答').toEqual([]);
   });
 });
 

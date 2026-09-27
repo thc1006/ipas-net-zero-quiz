@@ -8,7 +8,20 @@ import { findLetterRefs, type LetterRef } from '../utils/explanation-hygiene';
 import poolRaw from './practice_pool.json';
 import { checkFlags, formatFlagViolations, type FlaggedItem } from '../utils/quality-flags';
 import { classifyHost, hostOf } from '../utils/source-authority';
+import { normalizeText } from '../utils/question-identity';
 import datasetRaw from './integrated_dataset.json';
+
+/** 題幹相同的練習池題目（比對用執行期與 CI 共用的 normalizeText）。 */
+function duplicateStems(items: readonly { id: string; stem: string }[]): string[] {
+  const seen = new Map<string, string>();
+  const dups: string[] = [];
+  for (const q of items) {
+    const k = normalizeText(q.stem);
+    if (seen.has(k)) dups.push(`${q.id} 與 ${seen.get(k)} 題幹相同`);
+    else seen.set(k, q.id);
+  }
+  return dups;
+}
 
 interface PoolItem {
   id: string;
@@ -226,15 +239,14 @@ describe('練習池：_meta.totals 必須與實際題數一致', () => {
   });
 
   it('沒有重複的題幹（rescue 流程曾經「新增」而不是「取代」，留下 2 題重複）', () => {
-    const norm = (t: string) =>
-      t.normalize('NFKC').replace(/[\p{P}\p{Z}\s_]+/gu, '').toLowerCase();
-    const seen = new Map<string, string>();
-    const dups: string[] = [];
-    for (const q of POOL) {
-      const k = norm(q.stem);
-      if (seen.has(k)) dups.push(`${q.id} 與 ${seen.get(k)} 題幹相同`);
-      else seen.set(k, q.id);
-    }
-    expect(dups).toEqual([]);
+    expect(duplicateStems(POOL)).toEqual([]);
+  });
+
+  it('題幹重複的比對：只差標點與全形半形算重複，只差小數點位置不算', () => {
+    const q = (id: string, stem: string) => ({ id, stem });
+    expect(duplicateStems([q('a', '「排放量」為何？'), q('b', '“排放量”為何?')])).toEqual([
+      'b 與 a 題幹相同',
+    ]);
+    expect(duplicateStems([q('a', '排放 58.8 公噸？'), q('b', '排放 5.88 公噸？')])).toEqual([]);
   });
 });
