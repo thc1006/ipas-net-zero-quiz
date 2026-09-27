@@ -132,20 +132,24 @@ describe('官方公告試題的標記必須對得回 PDF', () => {
     expect(bad, '官方公告試題的答案只能是 PDF 答案欄印的那一個').toEqual([]);
   });
 
-  it('官方來源的每一題都在題庫裡，而且都帶著 official_exam（反過來也成立）', () => {
+  // 官方來源的每一題不是匯入（imported），就是含圖表、登記過不收錄（not_imported_figure，
+  // restoration-manifest.test.ts 另外檢查它的理由與登記）—— 沒有第三種。
+  it('官方來源的每一題都在題庫裡，而且都帶著 official_exam（反過來也成立；登記過的圖表題除外）', () => {
     for (const [src] of OFFICIAL_SOURCES) {
-      const expected = MAN.dispositions
-        .filter((d) => d.source_id === src)
-        .map((d) => ({ status: d.status, item_id: d.item_id }));
+      const mine = MAN.dispositions.filter((d) => d.source_id === src);
+      const imported = mine.filter((d) => d.status === 'imported');
+      const other = mine.filter(
+        (d) => d.status !== 'imported' && d.status !== 'not_imported_figure'
+      );
+      expect(
+        other.map((d) => `${d.source_question_number} ${d.status}`),
+        `${src} 有題目沒有匯入`
+      ).toEqual([]);
       const inBank = OFFICIAL.filter((it) => it.source?.source_id === src)
         .map((it) => it.item_id)
         .sort();
-      expect(
-        expected.every((d) => d.status === 'imported'),
-        `${src} 有題目沒有匯入`
-      ).toBe(true);
       expect(inBank, `${src} 的題目在題庫裡少了或多了`).toEqual(
-        expected.map((d) => d.item_id!).sort()
+        imported.map((d) => d.item_id!).sort()
       );
     }
     const unmarked = UNIQUE.filter(

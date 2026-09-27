@@ -83,6 +83,24 @@ EXTRA_EVIDENCE: dict[tuple[str, int], list[dict]] = {
         'note': '《巴黎協定》第 6 條第 1、2 項：締約方以自願合作的方式，使用國際轉讓減緩成果（ITMOs）'
                 '來達成國家自定貢獻。',
     }],
+    ('S_IPAS_115_02_L11', 17): [{
+        'url': 'https://unfccc.int/sites/default/files/resource/parisagreement_publication.pdf',
+        'quote': ('Article 6 1. Parties recognize that some Parties choose to pursue voluntary cooperation in the '
+                  'implementation of their nationally determined contributions to allow for higher ambition in '
+                  'their mitigation and adaptation actions and to promote sustainable development and environmental '
+                  'integrity. 2. Parties shall, where engaging on a voluntary basis in cooperative approaches that '
+                  'involve the use of internationally transferred mitigation outcomes towards nationally determined '
+                  'contributions, promote sustainable development and ensure environmental integrity and '
+                  'transparency, including in governance, and shall apply robust accounting to ensure, inter alia, '
+                  'the avoidance of double counting, consistent with guidance adopted by the Conference of the '
+                  'Parties serving as the meeting of the Parties to this Agreement. 3. The use of internationally '
+                  'transferred mitigation outcomes to achieve nationally determined contributions under this '
+                  'Agreement shall be voluntary and authorized by participating Parties.'),
+        'supports_option': 'B',
+        'clause': 'Article 6',
+        'note': '《巴黎協定》第 6 條第 2 項：以國際轉讓減緩成果達成國家自定貢獻時，要以健全的核算確保避免重複計算；'
+                '第 3 項：這種使用須出於自願，並經參與的締約方授權。',
+    }],
 }
 
 

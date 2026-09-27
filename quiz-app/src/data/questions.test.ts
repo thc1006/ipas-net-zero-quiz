@@ -54,7 +54,10 @@ describe('題庫資料模組', () => {
       //
       // 781 → 881：匯入 iPAS 官網公告的 115 年第一次公告試題，第一科、第二科各 50 題
       // （S_IPAS_115_01_L11／L12：題幹、選項、答案取自官方 PDF，每題帶 official_exam）。
-      expect(stats.total).toBe(881);
+      //
+      // 881 → 979：匯入 115 年第二次公告試題，第一科 50 題、第二科 48 題（第二科第 9、15 題要讀圖，
+      // 題庫還不支援圖片，不收錄，restoration-manifest 記為 not_imported_figure）。
+      expect(stats.total).toBe(979);
     });
 
     it('考科一和考科二題數加總應等於總題數', () => {

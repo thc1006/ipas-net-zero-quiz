@@ -115,6 +115,7 @@ describe('語料輪廓（換題庫時用 -u 重新產生）', () => {
       { where: 'questions.test.ts／utils/official-exam.test.ts', what: '官方公告試題至少一題（反空轉）', semantics: '依語料重設' },
       { where: 'questions.test.ts', what: '每一份官方來源至少一題的答案依據帶出官方答案（反空轉）', semantics: '依語料重設' },
       { where: 'questions.test.ts', what: '依據出自自己出處的非官方題至少一題（反空轉）', semantics: '依語料重設' },
+      { where: 'restoration-manifest.test.ts', what: '含圖表、不收錄的官方題（not_imported_figure）至少一題（反空轉）', semantics: '依語料重設' },
     ];
     expect(ratchets.length).toBeGreaterThan(5);
     expect(ratchets).toMatchSnapshot();

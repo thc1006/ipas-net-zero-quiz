@@ -119,6 +119,38 @@ SOURCES = {
         'published_on': '2026-07-29',
         'subject': 'L12',
     },
+    # iPAS 官方公告試題：115 年第二次淨零碳規劃管理師初級能力鑑定（考試日期 2026-08-15），
+    # 官網學習資源頁 2026-08-31 公告（網址裡的時間戳也是這一天）。
+    'S_IPAS_115_02_L11': {
+        'url': 'https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf',
+        'sha256': 'b107c9dfea013667e87ed63ddbd91c6e64a4bca2c36fb757ae61d7d3ab8b6f9b',
+        'title': '115 年第二次淨零碳規劃管理師-初級能力鑑定【公告試題】第一科：淨零碳規劃管理基礎概論',
+        'exam_subject': '考科1',
+        'layout': 'ipas_exam_table',
+        'kind': 'official_exam',
+        'session': '115-02',
+        'exam_date': '2026-08-15',
+        'published_on': '2026-08-31',
+        'subject': 'L11',
+    },
+    'S_IPAS_115_02_L12': {
+        'url': 'https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf',
+        'sha256': '6c22519ae9a0a5383a7ec863615869fdf423e6efe5ae7fd9bb8001d9ee456e8e',
+        'title': '115 年第二次淨零碳規劃管理師-初級能力鑑定【公告試題】第二科：淨零碳盤查規範與程序概要',
+        'exam_subject': '考科2',
+        'layout': 'ipas_exam_table',
+        'kind': 'official_exam',
+        'session': '115-02',
+        'exam_date': '2026-08-15',
+        'published_on': '2026-08-31',
+        'subject': 'L12',
+        # 專案所有者的決定（2026-09-28）：題庫支援圖片之前不收錄、不手抄
+        'figure_questions': {
+            9: '題幹的「下圖」是校園配置圖：大學（學校代碼）、附設醫院（醫事機構代碼）、便利商店（公司／商業登記）'
+               '各有各的登記，以點陣圖呈現：只有文字無法作答，題庫還不支援圖片。',
+            15: '計算要用的各交通工具排放係數表以點陣圖呈現：只有文字無法作答，題庫還不支援圖片。',
+        },
+    },
 }
 
 # 每份來源 PDF 的人工查核紀錄，寫進 manifest 的 _meta.source_documents（以 PDF 網址為鍵）。
@@ -197,6 +229,24 @@ SOURCE_REVIEWS = {
             '—— 所以每一題都標時效，valid_as_of 為考試日期。'
         ),
     },
+    'S_IPAS_115_02_L11': {
+        'status': 'OFFICIAL',
+        'note': (
+            'iPAS 官方公告試題（115 年第二次，考試日期 2026-08-15，官網 2026-08-31 公告），答案取自 PDF 的答案欄。'
+            'PDF 首頁註明「※相關法規可能修訂，試題參考答案以該次考試公告時之法規內容為準。」'
+            '—— 所以每一題都標時效，valid_as_of 為考試日期。'
+        ),
+    },
+    'S_IPAS_115_02_L12': {
+        'status': 'OFFICIAL',
+        'note': (
+            'iPAS 官方公告試題（115 年第二次，考試日期 2026-08-15，官網 2026-08-31 公告），答案取自 PDF 的答案欄。'
+            'PDF 首頁註明「※相關法規可能修訂，試題參考答案以該次考試公告時之法規內容為準。」'
+            '—— 所以每一題都標時效，valid_as_of 為考試日期。'
+            '第 9、15 題的題目要讀圖（校園配置圖、排放係數表，都是點陣圖），題庫還不支援圖片，不收錄'
+            '（not_imported_figure，理由記在處置裡）。'
+        ),
+    },
 }
 
 # 試過、驗證後放棄的做法（寫進 _meta.tried_and_rejected，避免下一個人再試一次）。
@@ -213,7 +263,8 @@ TRIED_AND_REJECTED = {
 
 # 來源 PDF 各自的總題數。這是「對帳」的分母 ——
 # 少了這個，manifest 只能說「我還原了 159 題」，卻證明不了「沒有東西被弄丟」。
-EXPECTED_QUESTION_COUNT = {'S_CHU_06': 100, 'S_CHU_07': 70, 'S_IPAS_115_01_L11': 50, 'S_IPAS_115_01_L12': 50}
+EXPECTED_QUESTION_COUNT = {'S_CHU_06': 100, 'S_CHU_07': 70, 'S_IPAS_115_01_L11': 50, 'S_IPAS_115_01_L12': 50,
+                           'S_IPAS_115_02_L11': 50, 'S_IPAS_115_02_L12': 50}
 
 COLUMN_BOUNDARY = 292.0
 CJK = re.compile(r'[⺀-鿿豈-﫿＀-￯]')

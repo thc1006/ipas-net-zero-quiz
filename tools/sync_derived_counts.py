@@ -192,6 +192,7 @@ N['restored'] = MAN['_meta']['restored_count']
 N['disp_imported'] = DISP.get('imported', 0)
 N['disp_dup_src'] = DISP.get('duplicate_within_source', 0)
 N['disp_dup_ds'] = DISP.get('duplicate_in_dataset', 0)
+N['disp_figure'] = DISP.get('not_imported_figure', 0)
 # 「沒有解析的題目」：與 docs-counts 那道 gate 同一個算法（解析去空白後是空的）
 N['no_explanation'] = sum(1 for q in ALL if not (q.get('explanation') or '').strip())
 # 其中不是官方公告試題的（官方只公布答案、沒有解析；DATA-PROVENANCE 分開寫）
@@ -342,6 +343,8 @@ RULES = [
     (PROV, r'\|\s*`duplicate_within_source`\s*\|\s*\**(\d+)', N['disp_dup_src'],
      'DATA-PROVENANCE 處置表 duplicate_within_source'),
     (PROV, r'\|\s*`duplicate_in_dataset`\s*\|\s*\**(\d+)', N['disp_dup_ds'], 'DATA-PROVENANCE 處置表 duplicate_in_dataset'),
+    (PROV, r'\|\s*`not_imported_figure`\s*\|\s*\**(\d+)', N['disp_figure'],
+     'DATA-PROVENANCE 處置表 not_imported_figure'),
     (PROV, r'(\d+)\s*題(?:是從|由)來源 PDF 重建', N['restored'], 'DATA-PROVENANCE 還原題數', 'all'),
     (PROV, r'實測\s*\*\*(\d+)\s*/', N['restored'], 'DATA-PROVENANCE 實測相符（分子）', 'all'),
     (PROV, r'實測\s*\*\*\d+\s*/\s*(\d+)\*\*', N['restored'], 'DATA-PROVENANCE 實測相符（分母）', 'all'),

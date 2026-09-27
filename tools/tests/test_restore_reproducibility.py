@@ -681,7 +681,7 @@ def test_extract_sources_keeps_only_the_snapshot_fields(monkeypatch, tmp_path):
     question = {'number': 1, 'page': 1, 'column': 'left', 'answer': 'A', 'stem': '題幹',
                 'options': [{'key': 'A', 'text': '甲'}], 'note': '解析'}
     for layout in R.EXTRACTORS:  # 每一種版面的擷取器都一樣：只留快照的欄位
-        monkeypatch.setitem(R.EXTRACTORS, layout, lambda path: [dict(question)])
+        monkeypatch.setitem(R.EXTRACTORS, layout, lambda path, **_: [dict(question)])
     monkeypatch.setattr(R, 'check_official_header', lambda src_id, meta, header: None)  # 頁首另有測試
     for layout in R.HEADER_READERS:
         monkeypatch.setitem(R.HEADER_READERS, layout, lambda path: None)

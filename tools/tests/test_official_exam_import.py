@@ -389,6 +389,7 @@ def _assemble_with(questions, bank_items, detected=()):
 
 
 def test_a_listed_figure_question_is_recorded_as_not_imported_with_its_reason(figure_source):
+    before = json.loads(R.MANIFEST.read_text(encoding='utf-8'))['_meta']['disposition_summary']
     man = _assemble_with(figure_source, [I.build_item(SRC, META, figure_source[0])], detected=[2])
     mine = {d['source_question_number']: d for d in man['dispositions'] if d['source_id'] == SRC}
     assert mine[1]['status'] == 'imported'
@@ -396,7 +397,7 @@ def test_a_listed_figure_question_is_recorded_as_not_imported_with_its_reason(fi
     assert {k: mine[2][k] for k in ('status', 'why', 'answer_key', 'normalized_text_sha256')} == {
         'status': 'not_imported_figure', 'why': FIGURE_WHY, 'answer_key': q2['answer'],
         'normalized_text_sha256': R.normalized_text_sha256(q2['stem'], q2['options'])}
-    assert man['_meta']['disposition_summary']['not_imported_figure'] == 1
+    assert man['_meta']['disposition_summary']['not_imported_figure'] == before.get('not_imported_figure', 0) + 1
     assert 'not_imported_figure（' in man['_meta']['description']  # 說明文字列舉的處置跟上
 
 
@@ -560,7 +561,8 @@ def _built_official_items():
     for src_id, meta in R.SOURCES.items():
         if meta.get('kind') == 'official_exam':
             for q in snapshot[src_id]['questions']:
-                yield I.build_item(src_id, meta, q, I.EXTRA_EVIDENCE.get((src_id, q['number'])))
+                if q['number'] not in meta.get('figure_questions', {}):  # 圖表題不收錄
+                    yield I.build_item(src_id, meta, q, I.EXTRA_EVIDENCE.get((src_id, q['number'])))
 
 
 def test_the_bank_holds_what_the_importer_builds():

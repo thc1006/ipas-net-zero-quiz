@@ -789,6 +789,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
       imported: PROVENANCE.match(/\|\s*`imported`\s*\|\s*\**(\d+)\**/),
       duplicate_within_source: PROVENANCE.match(/\|\s*`duplicate_within_source`\s*\|\s*\**(\d+)\**/),
       duplicate_in_dataset: PROVENANCE.match(/\|\s*`duplicate_in_dataset`\s*\|\s*\**(\d+)\**/),
+      not_imported_figure: PROVENANCE.match(/\|\s*`not_imported_figure`\s*\|\s*\**(\d+)\**/),
       UNACCOUNTED: PROVENANCE.match(/\|\s*`UNACCOUNTED`\s*\|\s*\**(\d+)\**/),
     };
     const num = (name: keyof typeof rows) => {
@@ -800,6 +801,7 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     const imported = num('imported');
     const dupSrc = num('duplicate_within_source');
     const dupDs = num('duplicate_in_dataset');
+    const figures = num('not_imported_figure');
     const unacc = num('UNACCOUNTED');
 
     // 跟 manifest 的實際 disposition 逐項比對
@@ -810,11 +812,12 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     expect(imported).toBe(summary['imported'] ?? 0);
     expect(dupSrc).toBe(summary['duplicate_within_source'] ?? 0);
     expect(dupDs).toBe(summary['duplicate_in_dataset'] ?? 0);
+    expect(figures).toBe(summary['not_imported_figure'] ?? 0);
     expect(unacc).toBe(0);
 
     // **加總** —— 那張表賣的就是「每一題都有交代」，加總本身必須成立
     expect(
-      restored + imported + dupSrc + dupDs + unacc,
+      restored + imported + dupSrc + dupDs + figures + unacc,
       '文件裡的 disposition 加總不等於來源總題數 —— 「每一題都有交代」這個宣稱就不成立'
     ).toBe(SOURCE_TOTAL);
   });

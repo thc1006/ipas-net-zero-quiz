@@ -112,6 +112,9 @@ interface Disposition {
   dataset_answer?: string | null;
   dataset_answer_text?: string | null;
   evidence?: string;
+  why?: string;
+  answer_key?: string;
+  normalized_text_sha256?: string;
 }
 
 const DS = datasetRaw as unknown as {
@@ -126,7 +129,10 @@ const MAN = manifestRaw as unknown as {
     source_question_total: number;
     disposition_summary: Record<string, number>;
     answer_conflicts: string[];
-    sources: Record<string, { sha256: string; exam_subject: string; layout?: string; kind?: string }>;
+    sources: Record<
+      string,
+      { sha256: string; exam_subject: string; layout?: string; kind?: string; figure_questions?: Record<string, string> }
+    >;
   };
   entries: Entry[];
   dispositions: Disposition[];
@@ -138,6 +144,8 @@ const EXPECTED_SOURCE_COUNT: Record<string, number> = {
   S_CHU_07: 70,
   S_IPAS_115_01_L11: 50,
   S_IPAS_115_01_L12: 50,
+  S_IPAS_115_02_L11: 50,
+  S_IPAS_115_02_L12: 50,
 };
 
 // 表格版面（官方公告試題）只有一欄，題目的位置由頁碼與題號決定，column 記為 null
@@ -430,12 +438,39 @@ describe('還原對帳：來源的每一題都要有交代', () => {
   });
 
   it('每一筆非 restored 的 disposition 都必須有證據（不能只是斷言「應該是重複」）', () => {
-    const dropped = MAN.dispositions.filter((d) => d.status !== 'restored' && d.status !== 'imported');
+    const dropped = MAN.dispositions.filter(
+      (d) => !['restored', 'imported', 'not_imported_figure'].includes(d.status)
+    );
     expect(dropped.length).toBeGreaterThan(0); // 否則這條測試在空轉
     for (const d of dropped) {
       expect(d.evidence, `${d.source_id}#${d.source_question_number} 沒有 evidence`).toBeTruthy();
       expect(d.duplicate_of, `${d.source_id}#${d.source_question_number} 沒有指出重複對象`).toBeTruthy();
     }
+  });
+
+  // 專案所有者的決定（2026-09-28）：題目要讀圖的官方題，題庫支援圖片之前不收錄、不手抄，記下理由。
+  it('含圖表、不收錄的官方題：寫明理由、記下答案欄與內容指紋，登記在來源的 figure_questions，而且不在題庫裡', () => {
+    const figures = MAN.dispositions.filter((d) => d.status === 'not_imported_figure');
+    expect(figures.length, '沒有 not_imported_figure —— 這條測試在空轉').toBeGreaterThan(0);
+    const inBank = new Set(DS.our_unique_items.map((u) => u.item_id));
+    for (const d of figures) {
+      const where = `${d.source_id}#${d.source_question_number}`;
+      const source = MAN._meta.sources[d.source_id];
+      expect(source?.kind, `${where} 不是官方來源`).toBe('official_exam');
+      expect(source?.figure_questions?.[String(d.source_question_number)], `${where} 沒有登記在 figure_questions`).toBe(
+        d.why
+      );
+      expect(d.why?.trim(), `${where} 沒有寫理由`).toBeTruthy();
+      expect(d.answer_key, `${where} 沒有記答案欄`).toMatch(/^[A-D]$/);
+      expect(d.normalized_text_sha256, `${where} 沒有內容指紋`).toMatch(/^[0-9a-f]{64}$/);
+      const id = `${d.source_id}-q${String(d.source_question_number).padStart(3, '0')}`;
+      expect(inBank.has(id), `${id} 登記為不收錄，卻在題庫裡`).toBe(false);
+    }
+    // 反方向：登記在 figure_questions 的每一題都有這筆處置
+    const listed = Object.entries(MAN._meta.sources).flatMap(([src, s]) =>
+      Object.keys(s.figure_questions ?? {}).map((n) => `${src}#${n}`)
+    );
+    expect(listed.sort()).toEqual(figures.map((d) => `${d.source_id}#${d.source_question_number}`).sort());
   });
 
   it('restored 與 imported 的 disposition 數必須等於 entries 數', () => {
