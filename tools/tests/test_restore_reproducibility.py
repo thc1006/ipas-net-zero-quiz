@@ -86,8 +86,63 @@ def test_the_snapshot_has_exactly_the_shape_the_extractor_produces(snapshot):
             assert [o['key'] for o in q['options']] == sorted(o['key'] for o in q['options'])
             for o in q['options']:
                 assert list(o) == ['key', 'text']
+            if R.SOURCES[src_id].get('layout', 'two_column') != 'two_column':
+                # _tidy() 是雙欄擷取器的正規化；表格版面（ipas_exam_pdf）有自己的形狀（例如硬換行處留一個空格）
+                assert _table_layout_problems(q) == [], f'{src_id} 第 {q["number"]} 題'
+                continue
             for text in [q['stem'], *(o['text'] for o in q['options'])]:
                 assert R._tidy(text) == text, f'第 {q["number"]} 題的文字不是擷取器的輸出：{text!r}'
+
+
+def _table_layout_problems(q: dict) -> list[str]:
+    # 表格版面（ipas_exam_pdf）擷取出來一定是這個樣子：頁碼從 1 起、沒有欄、答案與選項正好 A–D；
+    # 文字是一行、字與字之間最多一個空格、頭尾沒有空白，也沒有擷取器會擋下的特殊字元
+    problems = []
+    if type(q['page']) is not int or q['page'] < 1:
+        problems.append(f'page {q["page"]!r} 不是從 1 起的頁碼')
+    if q['column'] is not None:
+        problems.append(f'column {q["column"]!r}：表格版面沒有欄')
+    if q['answer'] not in ('A', 'B', 'C', 'D'):
+        problems.append(f'答案 {q["answer"]!r} 不是 A–D')
+    if [o['key'] for o in q['options']] != ['A', 'B', 'C', 'D']:
+        problems.append('選項不是正好 A–D')
+    for text in [q['stem'], *(o['text'] for o in q['options'])]:
+        if not re.fullmatch(r'\S+(?: \S+)*', text):
+            problems.append(f'文字的空白或斷行不是擷取器的輸出：{text!r}')
+        elif odd := R.ipas_exam_pdf._odd_character(text):
+            problems.append(f'文字有擷取器會擋下的特殊字元 {odd}：{text!r}')
+    return problems
+
+
+TABLE_QUESTION = {'number': 8, 'page': 2, 'column': None, 'answer': 'C', 'stem': '每公升柴油排放 0.5kgCO₂e，下列何者正確？',
+                  'options': [{'key': k, 'text': f'選項 {k}（ISO 14064-1）'} for k in 'ABCD']}
+
+
+def test_the_table_layout_shape_passes_what_the_extractor_writes():
+    assert _table_layout_problems(TABLE_QUESTION) == []
+
+
+@pytest.mark.parametrize(('change', 'problem'), [
+    ({'page': 0}, 'page'),
+    ({'page': '2'}, 'page'),
+    ({'column': 'left'}, 'column'),
+    ({'answer': 'E'}, '答案'),
+    ({'answer': 'AB'}, '答案'),
+    ({'options': [{'key': k, 'text': '選項'} for k in 'ABC']}, '選項不是正好 A–D'),
+    ({'options': [{'key': k, 'text': '選項'} for k in 'ABDC']}, '選項不是正好 A–D'),
+    ({'stem': '題幹  兩個空白'}, '空白或斷行'),
+    ({'stem': ' 題幹'}, '空白或斷行'),
+    ({'stem': '題幹 '}, '空白或斷行'),
+    ({'stem': '題幹\n第二行'}, '空白或斷行'),
+    ({'stem': '題幹\u3000全形空白'}, '空白或斷行'),
+    ({'stem': ''}, '空白或斷行'),
+    ({'options': [{'key': k, 'text': '選項\u200b'} for k in 'ABCD']}, '特殊字元'),
+], ids=['page-0', 'page-as-text', 'column', 'answer-e', 'two-answers', 'three-options', 'options-out-of-order',
+        'double-space', 'leading-space', 'trailing-space', 'newline', 'ideographic-space', 'empty', 'zero-width'])
+def test_the_table_layout_shape_blocks_hand_edits(change, problem):
+    # 快照只有 --verify 對照 PDF 才驗得完整；離線看得出來的手改在這裡先擋
+    problems = _table_layout_problems({**TABLE_QUESTION, **change})
+    assert any(problem in p for p in problems), problems
 
 
 def test_assemble_does_not_modify_its_input(snapshot, dataset):
@@ -602,7 +657,8 @@ def test_extract_sources_keeps_only_the_snapshot_fields(monkeypatch, tmp_path):
     monkeypatch.setattr(R, 'load_pdf', lambda src_id, cache: b'')
     question = {'number': 1, 'page': 1, 'column': 'left', 'answer': 'A', 'stem': '題幹',
                 'options': [{'key': 'A', 'text': '甲'}], 'note': '解析'}
-    monkeypatch.setattr(R, 'extract', lambda path: [dict(question)])
+    for layout in R.EXTRACTORS:  # 每一種版面的擷取器都一樣：只留快照的欄位
+        monkeypatch.setitem(R.EXTRACTORS, layout, lambda path: [dict(question)])
     out = R.extract_sources(tmp_path)
     assert list(out) == list(R.SOURCES)
     for src_id, source in out.items():

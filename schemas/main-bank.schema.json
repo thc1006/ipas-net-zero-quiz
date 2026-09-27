@@ -41,7 +41,11 @@
         "supports_option": { "type": "string" },
         "clause": { "type": "string" },
         "note": { "type": "string" },
-        "authority": { "type": "string" }
+        "authority": { "type": "string" },
+        "generated_by": {
+          "type": "string",
+          "description": "由哪一支工具產生（例如 tools/import_official_exam.py）。帶這個標記的引文由那支工具負責，重新匯入時整批換成工具的版本；沒有標記的是人工補的，工具不動。"
+        }
       }
     },
     "metadata": {

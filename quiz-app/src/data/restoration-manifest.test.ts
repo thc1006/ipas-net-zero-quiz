@@ -120,6 +120,7 @@ const DS = datasetRaw as unknown as {
 const MAN = manifestRaw as unknown as {
   _meta: {
     restored_count: number;
+    imported_count: number;
     source_question_total: number;
     disposition_summary: Record<string, number>;
     answer_conflicts: string[];
@@ -248,7 +249,8 @@ describe('restoration manifest', () => {
     const dsIds = RESTORED.map((i) => i.item_id).sort();
     const manIds = MAN.entries.map((e) => e.item_id).sort();
     expect(manIds).toEqual(dsIds);
-    expect(MAN._meta.restored_count).toBe(MAN.entries.length);
+    // 還原題（restored）與官方公告試題（imported）各自計數，加起來就是 entries
+    expect(MAN._meta.restored_count + MAN._meta.imported_count).toBe(MAN.entries.length);
     expect(MAN.entries.length).toBeGreaterThan(0);
   });
 
@@ -394,7 +396,7 @@ describe('restoration manifest', () => {
 // 一份只講「我留下了什麼」而不講「我丟掉了什麼、為什麼」的憑證，
 // 沒辦法證明「沒有東西被弄丟」—— 而那正是這份 manifest 唯一要證明的事。
 describe('還原對帳：來源的每一題都要有交代', () => {
-  it('disposition 覆蓋來源全部 170 題，一題不多一題不少', () => {
+  it('disposition 覆蓋來源的每一題，一題不多一題不少', () => {
     const total = Object.values(EXPECTED_SOURCE_COUNT).reduce((a, b) => a + b, 0);
     expect(MAN._meta.source_question_total).toBe(total);
     expect(MAN.dispositions).toHaveLength(total);
@@ -425,13 +427,18 @@ describe('還原對帳：來源的每一題都要有交代', () => {
     }
   });
 
-  it('restored 的 disposition 數必須等於 entries 數', () => {
-    const restored = MAN.dispositions.filter((d) => d.status === 'restored');
+  it('restored 與 imported 的 disposition 數必須等於 entries 數', () => {
+    const restored = MAN.dispositions.filter(
+      (d) => d.status === 'restored' || d.status === 'imported'
+    );
     expect(restored).toHaveLength(MAN.entries.length);
-    expect(MAN._meta.restored_count).toBe(MAN.entries.length);
+    expect(MAN._meta.restored_count + MAN._meta.imported_count).toBe(MAN.entries.length);
+    expect(MAN._meta.restored_count).toBe(
+      MAN.dispositions.filter((d) => d.status === 'restored').length
+    );
   });
 
-  it('各 status 加總必須等於 170（沒有被重複計數或漏算）', () => {
+  it('各 status 加總必須等於來源的總題數（沒有被重複計數或漏算）', () => {
     const sum = Object.values(MAN._meta.disposition_summary).reduce((a, b) => a + b, 0);
     expect(sum).toBe(MAN._meta.source_question_total);
   });

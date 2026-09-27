@@ -11,6 +11,7 @@
     "generated_by": "tools/restore_from_source_pdf.py",
     "source_question_total": 170,
     "restored_count": 159,
+    "imported_count": 0,
     "disposition_summary": {
       "duplicate_in_dataset": 3,
       "duplicate_within_source": 8,
@@ -68,7 +69,8 @@
     },
     "tried_and_rejected": {
       "answer_vs_explanation_detector": "曾寫過一支「答案的文字對不對得上該題解析」的偵測器，想用**單一來源的內部一致性**取代交叉比對。**在已知有病的 214245506.pdf 上驗證後放棄**：已知錯位的題目分數是 0.00 / 0.12 / 0.58，而**健康的題目也有 0.00 / 0.06 / 0.06** ——分佈完全重疊，**沒有鑑別力**；而且 159 題裡只有 21 題抽得出解析。**一個分不開陽性與陰性的偵測器，它的綠燈是一句假的保證。** 已刪除，不 ship。"
-    }
+    },
+    "imported_note": "官方公告試題（SOURCES 的 kind 為 official_exam）不是被刪除後還原的題目：在題庫裡的記為 imported，不計入 restored_count。其餘規則與還原題相同：逐題記錄 PDF 的 sha256、頁碼、題號、PDF 印的答案與三個文字 hash，任何偏離都要列明。"
   },
   "entries": [
     {

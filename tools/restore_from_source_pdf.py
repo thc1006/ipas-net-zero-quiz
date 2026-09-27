@@ -61,6 +61,8 @@ import sys
 import urllib.request
 from pathlib import Path
 
+import ipas_exam_pdf
+
 # 繁體中文 Windows 的預設 codepage 是 cp950 —— 而那正是這個專案的主要讀者。
 # 這支腳本印 ✓ / / 中文，在 cp950 下會直接 UnicodeEncodeError，**一題都還沒驗就死**。
 # docs/DATA-PROVENANCE.md 的整篇論點是「每個宣稱都對應一個任何人都能自己跑一遍的檢查」——
@@ -74,6 +76,9 @@ MANIFEST = REPO / 'quiz-app' / 'src' / 'data' / 'restoration-manifest.json'
 DATASET = REPO / 'quiz-app' / 'src' / 'data' / 'integrated_dataset.json'
 SNAPSHOT = REPO / 'tools' / 'tests' / 'fixtures' / 'restore_source_extract.json'
 
+# 來源 PDF。沒寫 layout 的是商研院模擬卷的雙欄版面；layout 為 ipas_exam_table 的是 iPAS 官方公告試題的
+# 表格版面（擷取器是 tools/ipas_exam_pdf.py）。kind 為 official_exam 的來源不是「被刪除後還原」的題目，
+# 在題庫裡的記為 imported，不計入 restored_count。
 SOURCES = {
     'S_CHU_06': {
         'url': 'https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf',
@@ -625,15 +630,25 @@ def _disposition_for_dropped(q: dict, src_id: str, same_pdf: dict, ds_items: lis
     }
 
 
+EXTRACTORS = {'two_column': extract, 'ipas_exam_table': ipas_exam_pdf.extract}
+
+
 def extract_sources(cache: Path) -> dict:
     """每份來源 PDF 的擷取結果（未套用任何修正）。--emit 把它原樣寫成擷取快照。"""
     out = {}
     for src_id, meta in SOURCES.items():
+        layout = meta.get('layout', 'two_column')
+        if layout not in EXTRACTORS:
+            sys.exit(f'✗ {src_id}: 不認得的版面 {layout!r}')
         load_pdf(src_id, cache)
+        try:
+            questions = EXTRACTORS[layout](cache / f'{src_id}.pdf')
+        except ValueError as e:  # ipas_exam_pdf 遇到不在預期內的版面一律丟 ValueError
+            sys.exit(f'✗ {src_id}: {e}')
         out[src_id] = {
             'pdf_sha256': meta['sha256'],
             'questions': [{k: q[k] for k in ('number', 'page', 'column', 'answer', 'stem', 'options')}
-                          for q in extract(cache / f'{src_id}.pdf')],
+                          for q in questions],
         }
     return out
 
@@ -759,7 +774,7 @@ def assemble(extracted: dict, ds: dict) -> dict:
                 'source_question_number': q['number'],
                 'page': q['page'],
                 'column': q['column'],
-                'status': 'restored',
+                'status': 'imported' if SOURCES[src_id].get('kind') == 'official_exam' else 'restored',
                 'item_id': item_id,
             })
 
@@ -899,7 +914,8 @@ def assemble(extracted: dict, ds: dict) -> dict:
             },
             'generated_by': 'tools/restore_from_source_pdf.py',
             'source_question_total': total_source,
-            'restored_count': len(entries),
+            'restored_count': len(by_status.get('restored', [])),
+            'imported_count': len(by_status.get('imported', [])),
             'disposition_summary': {k: len(v) for k, v in sorted(by_status.items())},
             'answer_conflicts': conflicts,
             # 有衝突的 manifest 不會被寫出去（refuse_to_write），所以 committed 的這兩欄永遠是 [] 與 null；
@@ -920,6 +936,9 @@ def assemble(extracted: dict, ds: dict) -> dict:
                 for s, review in SOURCE_REVIEWS.items()
             },
             'tried_and_rejected': TRIED_AND_REJECTED,
+            'imported_note': '官方公告試題（SOURCES 的 kind 為 official_exam）不是被刪除後還原的題目：'
+                             '在題庫裡的記為 imported，不計入 restored_count。其餘規則與還原題相同：逐題記錄'
+                             ' PDF 的 sha256、頁碼、題號、PDF 印的答案與三個文字 hash，任何偏離都要列明。',
         },
         'entries': entries,
         'dispositions': dispositions,
@@ -1097,7 +1116,8 @@ def main(argv: list[str] | None = None) -> int:
                   '處理下面的問題之後跑 --reassemble。）', file=sys.stderr)
             raise
         MANIFEST.write_text(render(man), encoding='utf-8', newline='\n')
-        print(f'\n已寫入 {_rel(SNAPSHOT)} 與 {_rel(MANIFEST)}（{man["_meta"]["restored_count"]} 題）')
+        print(f'\n已寫入 {_rel(SNAPSHOT)} 與 {_rel(MANIFEST)}（還原 {man["_meta"]["restored_count"]} 題、'
+              f'匯入 {man["_meta"]["imported_count"]} 題）')
         return 0
     return verify(cache)
 
