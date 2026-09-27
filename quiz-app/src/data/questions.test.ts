@@ -12,6 +12,7 @@ import {
   getQuestionById,
   searchQuestions,
   getSimilarQuestions,
+  dataset,
 } from './questions';
 
 describe('題庫資料模組', () => {
@@ -322,5 +323,17 @@ describe('來源連結：UI 必須同時看 metadata.sources 與 source.url', ()
   it('gist 題目的 source 是字串 "gist"，不得被誤當成 URL', () => {
     const bad = allQuestions.filter((q) => (q.sources ?? []).some((u) => u === 'gist'));
     expect(bad.map((q) => q.id)).toEqual([]);
+  });
+});
+
+describe('官方公告試題帶進執行期', () => {
+  const raw = new Map(dataset.our_unique_items.map((q) => [q.item_id, q]));
+  const official = allQuestions.filter((q) => q.officialExam);
+
+  it('題庫裡每一題官方公告試題都帶著標記，其他題目都沒有', () => {
+    const expected = dataset.our_unique_items.filter((q) => q.official_exam).map((q) => q.item_id);
+    expect(expected.length, '題庫裡沒有官方公告試題 —— 這條測試在空轉').toBeGreaterThan(0);
+    expect(official.map((q) => q.id).sort()).toEqual([...expected].sort());
+    for (const q of official) expect(q.officialExam).toEqual(raw.get(q.id)!.official_exam);
   });
 });

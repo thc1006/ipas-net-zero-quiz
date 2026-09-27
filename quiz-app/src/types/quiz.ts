@@ -176,6 +176,8 @@ export interface QuizQuestion {
    * 於是「教材原文」與「某篇部落格」在使用者眼中份量相同 —— 而答案其實是前者撐住的。
    */
   evidence?: { quote: string; url: string; authority?: string };
+  /** 官方公告試題的出處（場次、考試日期、科目、題號）；UI 在題卡上標出來 */
+  officialExam?: OfficialExam;
   /** 解析文字（給 AI helper 與 UI 參考），可能為空 */
   explanation?: string | null;
   /** 練習池題目專屬：UI 用以渲染來源徽章；主題庫題不帶 */

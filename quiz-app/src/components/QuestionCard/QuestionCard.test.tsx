@@ -1,6 +1,6 @@
 // QuestionCard 元件測試（TDD - 先寫測試）
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, isInaccessible } from '@testing-library/react';
 import { QuestionCard } from './QuestionCard';
 import type { QuizQuestion } from '../../types/quiz';
 
@@ -382,5 +382,44 @@ describe('答案依據（evidence）', () => {
     );
 
     expect(screen.queryByLabelText('答案依據')).not.toBeInTheDocument();
+  });
+});
+
+describe('官方公告試題的標記', () => {
+  const official: QuizQuestion = {
+    ...mockQuestion,
+    id: 'S_IPAS_115_01_L11-q001',
+    sourceType: 'unique',
+    officialExam: { session: '115-01', exam_date: '2026-05-16', subject: 'L11', question_number: 1 },
+  };
+
+  it('官方公告試題在題卡上標出是哪一次的官方公告試題', () => {
+    render(<QuestionCard question={official} questionNumber={1} onSelectAnswer={vi.fn()} />);
+    const tag = screen.getByText('115 年第一次官方公告試題');
+    // 圖示只是裝飾：螢幕閱讀器念到的必須只有標籤文字，不能多念出圖示的英文名稱
+    const icon = tag.querySelector('.material-icons');
+    expect(icon).not.toBeNull();
+    expect(icon).toHaveAttribute('aria-hidden', 'true');
+    const spoken = tag.cloneNode(true) as HTMLElement;
+    spoken.querySelectorAll('[aria-hidden="true"]').forEach((n) => n.remove());
+    expect(spoken.textContent?.trim()).toBe('115 年第一次官方公告試題');
+  });
+
+  it('標籤本身讀得到，而且沒有只在滑鼠懸停時才出現的說明', () => {
+    render(<QuestionCard question={official} questionNumber={1} onSelectAnswer={vi.fn()} />);
+    const tag = screen.getByText('115 年第一次官方公告試題');
+    // getByText 找得到被 hidden／aria-hidden 藏起來的元素：這裡改問無障礙樹
+    expect(isInaccessible(tag)).toBe(false);
+    // 懸停說明只有滑鼠看得到（鍵盤、觸控、螢幕閱讀器都拿不到）：要說的話都寫在標籤文字裡
+    expect(tag).not.toHaveAttribute('title');
+  });
+
+  it('其他題目不標：共筆題與主題庫裡不是官方公告的題目', () => {
+    const plainUnique: QuizQuestion = { ...mockQuestion, id: 'S_CHU_06-q001', sourceType: 'unique' };
+    for (const q of [mockQuestion, plainUnique]) {
+      const { unmount } = render(<QuestionCard question={q} questionNumber={1} onSelectAnswer={vi.fn()} />);
+      expect(screen.queryByText(/官方公告試題/), q.id).not.toBeInTheDocument();
+      unmount();
+    }
   });
 });

@@ -144,6 +144,7 @@ function convertUniqueQuestion(q: UniqueQuestion): QuizQuestion {
     sources: collectSources(q),
     evidence: pickEvidence(q),
     explanation: q.explanation ?? undefined,
+    ...(q.official_exam ? { officialExam: q.official_exam } : {}),
   };
 }
 
