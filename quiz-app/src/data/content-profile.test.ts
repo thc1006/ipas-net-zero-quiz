@@ -110,6 +110,12 @@ describe('語料輪廓（換題庫時用 -u 重新產生）', () => {
       { where: 'dataset-integrity.test.ts', what: 'CORRECTED_BUT_STABLE 等題號登記簿', semantics: '換題庫時清空重建' },
       { where: 'evidence-display.test.ts', what: '帶答案依據的題數下限（反空轉）', semantics: '依語料重設' },
       { where: 'docs-counts.test.ts', what: '文件數字對帳（由 tools/sync_derived_counts.py 維護）', semantics: '執行工具即可' },
+      { where: 'data/official-exam.test.ts／schema-contract.test.ts／tools/tests/test_official_exam_import.py', what: '官方公告試題與官方來源至少一份（反空轉）', semantics: '依語料重設' },
+      { where: 'docs-counts.test.ts', what: '「實測 N/M 相符」至少兩處（反空轉）', semantics: '文件改寫時重設' },
+      { where: 'questions.test.ts／utils/official-exam.test.ts', what: '官方公告試題至少一題（反空轉）', semantics: '依語料重設' },
+      { where: 'questions.test.ts', what: '每一份官方來源至少一題的答案依據帶出官方答案（反空轉）', semantics: '依語料重設' },
+      { where: 'questions.test.ts', what: '依據出自自己出處的非官方題至少一題（反空轉）', semantics: '依語料重設' },
+      { where: 'restoration-manifest.test.ts', what: '含圖表、不收錄的官方題（not_imported_figure）至少一題（反空轉）', semantics: '依語料重設' },
     ];
     expect(ratchets.length).toBeGreaterThan(5);
     expect(ratchets).toMatchSnapshot();

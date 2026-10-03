@@ -14,6 +14,7 @@ import { isQuestionScorable } from '../utils/scorable';
 // 載入原始資料（build 時會被 Vite 處理）
 import rawData from './integrated_dataset.json';
 import { dedupeByContent as sharedDedupe } from '../utils/question-identity';
+import { officialExamReference } from '../utils/official-exam';
 
 /** 原始題庫資料 */
 export const dataset: QuizDataset = rawData as QuizDataset;
@@ -126,6 +127,23 @@ function convertGistQuestion(q: GistQuestion): QuizQuestion {
 }
 
 /**
+ * 官方公告試題的答案依據就是官方 PDF 上的這一題時，帶出答案欄印的選項與題目出處（哪一場、哪一科、第幾題）。
+ *
+ * 引文只印得出題目本身（題幹與四個選項），UI 靠這一行才有一句話說出答案。
+ * 網址兩邊都正規化再比：pickEvidence 給的是 `new URL().href`，而 source.url 是資料裡的原樣 ——
+ * 寫著未編碼中文或大寫主機名的網址，直接比會對不上，整場的答案行就安靜地消失。
+ */
+export function withOfficialAnswer(
+  q: UniqueQuestion,
+  evidence: QuizQuestion['evidence']
+): QuizQuestion['evidence'] {
+  if (!q.official_exam || !evidence || !q.answer) return evidence;
+  if (evidence.url !== safeEvidenceUrl(q.source?.url)) return evidence;
+  // 出處寫出場次：115 年第二次匯入之後，結果頁上「第一科第 1 題」就分不出是哪一場
+  return { ...evidence, official: { answer: q.answer, reference: officialExamReference(q.official_exam) } };
+}
+
+/**
  * 將補充題目轉換為統一格式
  */
 function convertUniqueQuestion(q: UniqueQuestion): QuizQuestion {
@@ -142,8 +160,9 @@ function convertUniqueQuestion(q: UniqueQuestion): QuizQuestion {
     // 於是題目標了 ambiguous 也永遠到不了 isQuestionScorable()。
     qualityFlags: q.quality_flags ?? [],
     sources: collectSources(q),
-    evidence: pickEvidence(q),
+    evidence: withOfficialAnswer(q, pickEvidence(q)),
     explanation: q.explanation ?? undefined,
+    ...(q.official_exam ? { officialExam: q.official_exam } : {}),
   };
 }
 

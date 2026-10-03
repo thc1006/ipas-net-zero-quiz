@@ -162,12 +162,18 @@ last = cr.get('last_review_date')
 #
 # 「我今天重查並修好了它」被記成「我沒查它」。日期比較要用 `>=`。
 # （ISO 日期字串的字典序 == 時序，可以直接比。）
-N['reverified'] = sum(1 for q in ALL if (md(q).get('valid_as_of') or '') >= (last or ''))
+#
+# 官方公告試題例外：它們的 valid_as_of 是考試日期（專案所有者的決定：答案以考試當時的法規為準），
+# 不是我們重查的日期 —— 永遠不算「本輪已重查」；標了時效就算積欠。否則匯入一場考試日期在本輪之後的
+# 公告試題（115 年第二次是 2026-08-15），「本輪只實查」就會被灌水。docs-counts 與 dataset-integrity
+# 的 gate 是同一條規則。
+def _reverified(q):
+    return 'official_exam' not in q and (md(q).get('valid_as_of') or '') >= (last or '')
+
+
+N['reverified'] = sum(1 for q in ALL if _reverified(q))
 N['carried_over'] = sum(
-    1
-    for q in ALL
-    if 'time_sensitive' in (q.get('quality_flags') or [])
-    and (md(q).get('valid_as_of') or '') < (last or '')
+    1 for q in ALL if 'time_sensitive' in (q.get('quality_flags') or []) and not _reverified(q)
 )
 # 本輪未重查題數 = 總題數 - 已重查。原本這個欄位沒人算 —— 於是它凍在舊快照 680，
 # 而正確值是 781 - reverified（多批次查證後 reverified 會變，這欄若不由公式算就必漂）。
@@ -175,6 +181,23 @@ N['not_reviewed'] = N['total'] - N['reverified']
 # 考科題數：README 寫著它、docs-counts 有 gate 守它，但先前沒有任何同步規則。
 N['subject1'] = sum(1 for q in ALL if q.get('exam_subject') == '考科1')
 N['subject2'] = sum(1 for q in ALL if q.get('exam_subject') == '考科2')
+
+# restoration-manifest 衍生的數字。manifest 由 tools/restore_from_source_pdf.py 產生，這裡只把它的統計抄進文件。
+# 2026-09-27 匯入 115 年第一次官方公告試題時補的：來源總題數與處置分類都變了，docs-counts 在守這些數字，
+# 這支卻沒有同步規則（下方「不涵蓋」清單原本就列著它）—— 加題就撞紅燈，而工具說沒事。
+MAN = json.load(open('quiz-app/src/data/restoration-manifest.json', encoding='utf-8'))
+DISP = MAN['_meta']['disposition_summary']
+N['src_total'] = MAN['_meta']['source_question_total']
+N['restored'] = MAN['_meta']['restored_count']
+N['disp_imported'] = DISP.get('imported', 0)
+N['disp_dup_src'] = DISP.get('duplicate_within_source', 0)
+N['disp_dup_ds'] = DISP.get('duplicate_in_dataset', 0)
+N['disp_figure'] = DISP.get('not_imported_figure', 0)
+# 「沒有解析的題目」：與 docs-counts 那道 gate 同一個算法（解析去空白後是空的）
+N['no_explanation'] = sum(1 for q in ALL if not (q.get('explanation') or '').strip())
+# 其中不是官方公告試題的（官方只公布答案、沒有解析；DATA-PROVENANCE 分開寫）
+N['no_explanation_not_official'] = sum(1 for q in ALL if not (q.get('explanation') or '').strip()
+                                       and 'official_exam' not in q)
 
 changed = []
 
@@ -236,7 +259,6 @@ docs = {
 # 這裡涵蓋的是**會隨資料改動而變**的數字。
 # 不涵蓋（因為它們不隨我的修改而變，且各自有 gate 守著）：
 #   - 練習池 54+100 的組成
-#   - restoration-manifest 的 159 題重建
 #   - llms.txt 的 external_mock / ai_generated 題數
 #
 # 2026-09-27 補：上面這份「不涵蓋」清單曾經漏報。實測「在主題庫加一題」——
@@ -314,6 +336,22 @@ RULES = [
     (PROV, r'\| 引用正確[^|]*\| \*\*\d+\*\* \| ([\d.]+)%', _pct(N['ca_supported']), 'DATA-PROVENANCE 引用正確 %'),
     (PROV, r'\| \*\*引錯地方[^|]*\| \*\*\d+\*\* \| ([\d.]+)%', _pct(N['ca_wrong']), 'DATA-PROVENANCE 引錯地方 %'),
     (PROV, r'\| 主題相關[^|]*\| \d+ \| ([\d.]+)%', _pct(N['ca_no_quote']), 'DATA-PROVENANCE 主題相關 %'),
+    # restoration-manifest 衍生的數字（錨點與 docs-counts 那幾道 gate 同一個形狀）
+    (PROV, r'全部\s*\*\*(\d+)\s*題\*\*', N['src_total'], 'DATA-PROVENANCE 來源 PDF 總題數'),
+    (PROV, r'\|\s*`restored`\s*\|\s*\**(\d+)', N['restored'], 'DATA-PROVENANCE 處置表 restored'),
+    (PROV, r'\|\s*`imported`\s*\|\s*\**(\d+)', N['disp_imported'], 'DATA-PROVENANCE 處置表 imported'),
+    (PROV, r'\|\s*`duplicate_within_source`\s*\|\s*\**(\d+)', N['disp_dup_src'],
+     'DATA-PROVENANCE 處置表 duplicate_within_source'),
+    (PROV, r'\|\s*`duplicate_in_dataset`\s*\|\s*\**(\d+)', N['disp_dup_ds'], 'DATA-PROVENANCE 處置表 duplicate_in_dataset'),
+    (PROV, r'\|\s*`not_imported_figure`\s*\|\s*\**(\d+)', N['disp_figure'],
+     'DATA-PROVENANCE 處置表 not_imported_figure'),
+    (PROV, r'(\d+)\s*題(?:是從|由)來源 PDF 重建', N['restored'], 'DATA-PROVENANCE 還原題數', 'all'),
+    (PROV, r'實測\s*\*\*(\d+)\s*/', N['restored'], 'DATA-PROVENANCE 實測相符（分子）', 'all'),
+    (PROV, r'實測\s*\*\*\d+\s*/\s*(\d+)\*\*', N['restored'], 'DATA-PROVENANCE 實測相符（分母）', 'all'),
+    (PROV, r'沒有解析的題目從 420 降到 (\d+)', N['no_explanation'], 'DATA-PROVENANCE 沒有解析的題數'),
+    (PROV, r'其中 (\d+) 題是補寫解析之後剩下的', N['no_explanation_not_official'],
+     'DATA-PROVENANCE 沒有解析、不是官方公告試題的題數'),
+    (README, r'(\d+)\s*題由來源 PDF', N['restored'], 'README 還原題數'),
 ]
 
 dead_rules = []

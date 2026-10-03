@@ -3,7 +3,7 @@
   "id": "ipas-net-zero-quiz",
   "name": "淨零碳規劃管理師備考神器",
   "tagline": "iPAS 初級考古題（IFRS S1/S2、ISSB、TCFD、CBAM）",
-  "description": "iPAS 淨零碳規劃管理師「初級」考古題線上測驗：主題庫 + 加強練習，涵蓋 IFRS S1/S2、ISSB 整合 TCFD、永續揭露準則、ISO 14064、CBAM、SBTi、GRI、ESRS、碳足跡與情境分析。每題附 primary-source URL，AI 解析符合 EU AI Act Art.50 揭露。",
+  "description": "iPAS 淨零碳規劃管理師「初級」考古題線上測驗：主題庫 + 加強練習，涵蓋 IFRS S1/S2、ISSB 整合 TCFD、永續揭露準則、ISO 14064、CBAM、SBTi、GRI、ESRS、碳足跡與情境分析。題目附一手出處（primary-source URL），AI 解析符合 EU AI Act Art.50 揭露。",
   "keywords": "iPAS 淨零碳,淨零碳規劃管理師,淨零碳規劃管理師 初級,iPAS 初級,考古題,線上測驗,IFRS S1,IFRS S2,ISSB,永續揭露準則,TCFD,SBTi,GRI,ESRS,ISO 14064,CBAM,溫室氣體盤查,碳足跡,碳定價,碳中和,情境分析,排放源界定,組織邊界,內部查證,Net Zero,氣候變遷,ESG",
   "basePath": "/ipas-net-zero-quiz/",
   "siteUrl": "https://thc1006.github.io/ipas-net-zero-quiz/",

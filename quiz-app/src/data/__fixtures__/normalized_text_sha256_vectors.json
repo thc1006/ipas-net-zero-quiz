@@ -1,0 +1,147 @@
+{
+  "$comment": "normalized_text_sha256() 的共用測試向量：quiz-app/src/data/restoration-manifest.test.ts（TS 鏡像）與 tools/tests/test_normalized_text_sha256.py（Python）都讀這份。payload 依規則手寫，sha256 只由 payload 算出，不是呼叫任一邊的實作得到的。python_whitespace 是 Python 的 \\s（= str.isspace()）完整清單，兩邊都拿它比對自己的定義。",
+  "python_whitespace": [
+    "U+0009",
+    "U+000A",
+    "U+000B",
+    "U+000C",
+    "U+000D",
+    "U+001C",
+    "U+001D",
+    "U+001E",
+    "U+001F",
+    "U+0020",
+    "U+0085",
+    "U+00A0",
+    "U+1680",
+    "U+2000",
+    "U+2001",
+    "U+2002",
+    "U+2003",
+    "U+2004",
+    "U+2005",
+    "U+2006",
+    "U+2007",
+    "U+2008",
+    "U+2009",
+    "U+200A",
+    "U+2028",
+    "U+2029",
+    "U+202F",
+    "U+205F",
+    "U+3000"
+  ],
+  "vectors": [
+    {
+      "what": "題幹去掉所有空白；選項依 key 排序",
+      "stem": "下列 何者\n正確？",
+      "options": [
+        {
+          "key": "B",
+          "text": "乙 選項"
+        },
+        {
+          "key": "A",
+          "text": "甲\t選項"
+        }
+      ],
+      "payload": "下列何者正確？||A:甲選項|B:乙選項",
+      "sha256": "41170dc01ab37ecc0e1346a346f974bc79a3e91d0110c065e8690fa32438f228"
+    },
+    {
+      "what": "題幹的空白是 Python 的 \\s：含 U+001C、U+0085、U+3000",
+      "stem": "a\u001cb\u0085c\u3000d",
+      "options": [
+        {
+          "key": "A",
+          "text": "x"
+        }
+      ],
+      "payload": "abcd||A:x",
+      "sha256": "f58a477b5c652fd1c819e736c819f42df9c6fa4d4838dc7c8bdf1bda1cc43004"
+    },
+    {
+      "what": "BOM（U+FEFF）不是空白，保留",
+      "stem": "\ufeffabc",
+      "options": [
+        {
+          "key": "A",
+          "text": "x"
+        }
+      ],
+      "payload": "\ufeffabc||A:x",
+      "sha256": "75fb290ae332c8453dabd05b45dee6e5d572d9a64abd384240d10ee63a5be082"
+    },
+    {
+      "what": "選項只去掉空格、tab、CR、LF；全形空格與 VT 保留",
+      "stem": "q",
+      "options": [
+        {
+          "key": "B",
+          "text": "p\u000bq"
+        },
+        {
+          "key": "A",
+          "text": "x\u3000y z"
+        }
+      ],
+      "payload": "q||A:x\u3000yz|B:p\u000bq",
+      "sha256": "cea4b0e4b269cab9f1959d35200bdf384b9390e7836cc293bdbd6e1c79527e20"
+    },
+    {
+      "what": "key 依碼位排序：B（0x42）在 a（0x61）之前",
+      "stem": "q",
+      "options": [
+        {
+          "key": "a",
+          "text": "1"
+        },
+        {
+          "key": "B",
+          "text": "2"
+        }
+      ],
+      "payload": "q||B:2|a:1",
+      "sha256": "e2267145b138de310d76bc27d14603307693f7ab5132698e8d5a78a57e1e85fc"
+    },
+    {
+      "what": "題幹剝掉 Python 的全部 29 個空白字元；外觀相近但不是空白的 7 個保留；選項的 CRLF 剝掉",
+      "stem": "a\t\n\u000b\f\r\u001c\u001d\u001e\u001f \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000b\u001b\u0084\u0086\u180e\u200b\u2060\ufeffc",
+      "options": [
+        {
+          "key": "A",
+          "text": "x\r\ny"
+        }
+      ],
+      "payload": "ab\u001b\u0084\u0086\u180e\u200b\u2060\ufeffc||A:xy",
+      "sha256": "d1531c90de5235e9097ae06cd9e4aff5ac456cc20bd712ae41eed8b7eec94be9"
+    },
+    {
+      "what": "選項只剝空格、tab、CR、LF：其他 25 個空白與 7 個外觀相近的字元都保留",
+      "stem": "q",
+      "options": [
+        {
+          "key": "A",
+          "text": "x\t\n\u000b\f\r\u001c\u001d\u001e\u001f \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000y\u001b\u0084\u0086\u180e\u200b\u2060\ufeffz"
+        }
+      ],
+      "payload": "q||A:x\u000b\f\u001c\u001d\u001e\u001f\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000y\u001b\u0084\u0086\u180e\u200b\u2060\ufeffz",
+      "sha256": "6cca0adf72fa437009b30eca006f9e1b8e554b8febce25757f422524021436d9"
+    },
+    {
+      "what": "選項 key 原樣進指紋：前導空白、全形字母都不剝也不轉換（選項依 key 的碼位排序）",
+      "stem": "q",
+      "options": [
+        { "key": "Ａ", "text": "x" },
+        { "key": " B", "text": "y" }
+      ],
+      "payload": "q|| B:y|Ａ:x",
+      "sha256": "d614272f790c6bf099eb6540eab03be7b876fb25e16bdfc61ebb1dbc6da178e9"
+    }
+  ],
+  "every_code_point": {
+    "$comment": "題幹與選項各放一次「全部 Unicode 碼位（U+0000–U+10FFFF，代理區除外），依碼位遞增」：題幹配選項 A:x，只該少掉 python_whitespace 那 29 個；題幹 q 配這個選項 A，只該少掉空格、tab、CR、LF。",
+    "stem_sha256": "eb1932eb2b418646c26c09eb17cbf9d508419e0e79d29bccbccb20a70c9f7f04",
+    "option_sha256": "6597c2e4598a56c591953c395ea233c93d21fb4f38455dd2a79c879b5a3e050a"
+  }
+}

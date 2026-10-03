@@ -44,8 +44,8 @@ const REVERIFIED = DS.meta.content_review.reverified_count;
 const MAN = manifestRaw as unknown as {
   _meta: { restored_count: number; source_question_total: number };
 };
-const RESTORED_COUNT = MAN._meta.restored_count;      // 159
-const SOURCE_TOTAL = MAN._meta.source_question_total; // 170
+const RESTORED_COUNT = MAN._meta.restored_count; // 還原進題庫的題數
+const SOURCE_TOTAL = MAN._meta.source_question_total; // 來源 PDF 的總題數（還原與官方公告試題的來源都算）
 
 // repo root = quiz-app/src/data -> ../../..
 const root = resolve(__dirname, '..', '..', '..');
@@ -74,8 +74,8 @@ const resolvePlaceholders = (html: string): string =>
 const INDEX_HTML_TEMPLATE = read('quiz-app/index.html');
 const INDEX_HTML = resolvePlaceholders(INDEX_HTML_TEMPLATE);
 const LLMS_TXT = read('quiz-app/public/llms.txt');
-// README 精簡後，證據鏈的細節搬到 docs/DATA-PROVENANCE.md —— 那裡也寫著題數（159 還原、
-// 170 來源題）。**任何寫著數字的檔案都必須進這道 gate**，否則就只是把漂移搬到一個
+// README 精簡後，證據鏈的細節搬到 docs/DATA-PROVENANCE.md —— 那裡也寫著題數（還原題數、
+// 來源總題數）。**任何寫著數字的檔案都必須進這道 gate**，否則就只是把漂移搬到一個
 // 沒人看守的地方，重蹈這整輪在修的覆轍。
 const PROVENANCE = read('docs/DATA-PROVENANCE.md');
 
@@ -201,7 +201,7 @@ describe('對外門面（index.html / llms.txt）的題數必須與資料一致'
   });
 });
 
-// docs/DATA-PROVENANCE.md 是「證據鏈」的說明文件 —— 它自己就寫著 159（還原）與 170（來源總題數）。
+// docs/DATA-PROVENANCE.md 是「證據鏈」的說明文件 —— 它自己就寫著還原題數與來源總題數。
 // 這些數字如果跟 manifest 漂掉，那份文件就變成在為一條不存在的證據鏈背書。
 //
 // 這正是 README 精簡時最容易踩的坑：把數字搬到一個新檔案，卻忘了把 gate 一起搬過去 ——
@@ -213,7 +213,7 @@ describe('docs/DATA-PROVENANCE.md 的數字必須與 manifest 一致', () => {
     for (const n of hits) expect(n).toBe(RESTORED_COUNT);
   });
 
-  it('「170 題」來源總題數必須等於 manifest 的 source_question_total', () => {
+  it('「N 題」來源總題數必須等於 manifest 的 source_question_total', () => {
     const m = PROVENANCE.match(/全部\s*\*\*(\d+)\s*題\*\*/);
     expect(m, 'DATA-PROVENANCE 找不到「來源 PDF 全部 **N 題**」').not.toBeNull();
     expect(Number(m![1])).toBe(SOURCE_TOTAL);
@@ -783,11 +783,13 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     ).toBe(true);
   });
 
-  it('DATA-PROVENANCE 的 disposition 三個分類必須真的加總為 170', () => {
+  it('DATA-PROVENANCE 的 disposition 各分類必須真的加總為來源總題數', () => {
     const rows = {
       restored: PROVENANCE.match(/\|\s*`restored`\s*\|\s*\**(\d+)\**/),
+      imported: PROVENANCE.match(/\|\s*`imported`\s*\|\s*\**(\d+)\**/),
       duplicate_within_source: PROVENANCE.match(/\|\s*`duplicate_within_source`\s*\|\s*\**(\d+)\**/),
       duplicate_in_dataset: PROVENANCE.match(/\|\s*`duplicate_in_dataset`\s*\|\s*\**(\d+)\**/),
+      not_imported_figure: PROVENANCE.match(/\|\s*`not_imported_figure`\s*\|\s*\**(\d+)\**/),
       UNACCOUNTED: PROVENANCE.match(/\|\s*`UNACCOUNTED`\s*\|\s*\**(\d+)\**/),
     };
     const num = (name: keyof typeof rows) => {
@@ -796,8 +798,10 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
       return Number(m![1]);
     };
     const restored = num('restored');
+    const imported = num('imported');
     const dupSrc = num('duplicate_within_source');
     const dupDs = num('duplicate_in_dataset');
+    const figures = num('not_imported_figure');
     const unacc = num('UNACCOUNTED');
 
     // 跟 manifest 的實際 disposition 逐項比對
@@ -805,22 +809,27 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
       _meta: { disposition_summary: Record<string, number> };
     })._meta.disposition_summary;
     expect(restored).toBe(summary['restored'] ?? 0);
+    expect(imported).toBe(summary['imported'] ?? 0);
     expect(dupSrc).toBe(summary['duplicate_within_source'] ?? 0);
     expect(dupDs).toBe(summary['duplicate_in_dataset'] ?? 0);
+    expect(figures).toBe(summary['not_imported_figure'] ?? 0);
     expect(unacc).toBe(0);
 
     // **加總** —— 那張表賣的就是「每一題都有交代」，加總本身必須成立
     expect(
-      restored + dupSrc + dupDs + unacc,
+      restored + imported + dupSrc + dupDs + figures + unacc,
       '文件裡的 disposition 加總不等於來源總題數 —— 「每一題都有交代」這個宣稱就不成立'
     ).toBe(SOURCE_TOTAL);
   });
 
-  it('DATA-PROVENANCE 的「實測 N/M 相符」必須等於 restored_count', () => {
-    const m = PROVENANCE.match(/實測\s*\*\*(\d+)\s*\/\s*(\d+)\*\*\s*相符/);
-    expect(m, 'DATA-PROVENANCE 找不到「實測 **N/M** 相符」').not.toBeNull();
-    expect(Number(m![1])).toBe(RESTORED_COUNT);
-    expect(Number(m![2])).toBe(RESTORED_COUNT);
+  it('DATA-PROVENANCE 的「實測 N/M 相符」（每一處）必須等於 restored_count', () => {
+    // 這句出現兩次；只看第一處時，第二處改成什麼都是綠的（審查實測過）
+    const all = [...PROVENANCE.matchAll(/實測\s*\*\*(\d+)\s*\/\s*(\d+)\*\*\s*相符/g)];
+    expect(all.length, 'DATA-PROVENANCE 找不到「實測 **N/M** 相符」').toBeGreaterThan(1);
+    for (const m of all) {
+      expect(Number(m[1])).toBe(RESTORED_COUNT);
+      expect(Number(m[2])).toBe(RESTORED_COUNT);
+    }
   });
 
   it('DATA-PROVENANCE 必須保有「連結健康檢查」這一節（整節被刪也要抓到）', () => {
@@ -838,6 +847,16 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     expect(m, 'README 找不到「沒有解析的題目從 420 降到 N」').not.toBeNull();
     expect(Number(m![1]), 'README 的「沒有解析題數」與資料不符').toBe(noExp);
     expect(noExp, '這條測試在空轉 —— 全庫都有解析了？').toBeGreaterThan(0);
+
+    // 同一段接著拆成兩群：補寫解析之後剩下的，與（官方只公布答案的）官方公告試題
+    const notOfficial = ALL.filter(
+      (i) =>
+        !((i as unknown as { explanation?: string }).explanation ?? '').trim() &&
+        !('official_exam' in (i as object))
+    ).length;
+    const rest = PROVENANCE.match(/其中 (\d+) 題是補寫解析之後剩下的/);
+    expect(rest, 'DATA-PROVENANCE 找不到「其中 N 題是補寫解析之後剩下的」').not.toBeNull();
+    expect(Number(rest![1]), '「其中 N 題」與資料不符').toBe(notOfficial);
   });
 
   // 「引文逐字存在」與「引文釘得住答案」**是兩件事**。

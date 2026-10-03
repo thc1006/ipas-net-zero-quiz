@@ -56,6 +56,7 @@ interface Item {
   item_id?: string;
   id?: string;
   stem: string;
+  source?: { url?: string };
   explanation?: string | null;
   metadata?: { evidence?: Evidence[] };
   /** 練習池的引文放這裡，不是 metadata —— 第一版漏了這個 */
@@ -72,11 +73,22 @@ const evidence = (it: Item): Evidence[] => [
   ...(it.provenance?.evidence ?? []),
 ];
 
+/**
+ * 引文就是這一題本身（官方公告試題的題目原文、樣題 PDF 裡的同一題）：它證明「題目這樣問」，
+ * 證明不了「那一條這樣寫」。題幹指名的條號自然也在它裡面 —— 拿它來綁，等於題目自己證明自己
+ * （2026-09-28 審查抓到：官方公告試題的題幹點名「第六條」，靠官方引文就算綁住，拿掉真正的依據照樣綠）。
+ */
+function quotesTheQuestionItself(it: Item, e: Evidence): boolean {
+  const stem = norm(it.stem);
+  const own = it.source?.url; // 這一題自己的出處（官方 PDF、樣題 PDF）上的引文，一樣只證明「題目這樣問」
+  return (stem.length >= 8 && norm(e.quote ?? '').includes(stem)) || (own !== undefined && e.url === own);
+}
+
 /** 這一題在 `text` 裡指名的條號，有沒有任何一條真的被逐字依據綁住 */
 function boundIn(it: Item, text: string): boolean {
   const keys = clauseKeys(text);
   if (keys.length === 0) return true;
-  const evs = evidence(it);
+  const evs = evidence(it).filter((e) => !quotesTheQuestionItself(it, e));
   const quotes = evs.map((e) => norm(e.quote ?? '')).filter((q) => q.length >= 8);
   const urls = evs.map((e) => e.url ?? '');
   const laws = resolveLaws(`${it.stem} ${it.explanation ?? ''}`);
@@ -210,6 +222,28 @@ const EXPLANATION_UNBOUND: ReadonlySet<string> = new Set([
   'pool-em-ipas_vocus_mock_rescued-050',
 ]);
 
+describe('題目自己的引文不能拿來綁它點名的條號（合成資料）', () => {
+  const stem = '依據《巴黎協定》第六條機制，國際轉讓減緩成果扮演何種角色？';
+  const exam = 'https://example.org/official-exam.pdf';
+  const question = (evidence: Evidence[]): Item => ({ item_id: 'x', stem, source: { url: exam }, metadata: { evidence } });
+  const treaty = {
+    url: 'https://unfccc.int/sites/default/files/resource/parisagreement_publication.pdf',
+    quote: 'Article 6 1. Parties recognize that some Parties choose to pursue voluntary cooperation',
+  };
+
+  it('引文就是題目本身（網址不同也一樣）：綁不住', () => {
+    expect(boundIn(question([{ url: 'https://example.org/copy.pdf', quote: `${stem}\n(A)甲；(B)乙` }]), stem)).toBe(false);
+  });
+
+  it('引文出自題目自己的出處（只抄了半句也一樣）：綁不住', () => {
+    expect(boundIn(question([{ url: exam, quote: '第六條機制，國際轉讓減緩成果' }]), stem)).toBe(false);
+  });
+
+  it('真的條文（條標寫著 Article 6）才綁得住', () => {
+    expect(boundIn(question([{ url: exam, quote: `${stem}\n(A)甲` }, treaty]), stem)).toBe(true);
+  });
+});
+
 describe('題幹指名條號者，必須綁得住那一條的逐字依據', () => {
   const cited = ALL.filter((it) => CLAUSE.test(it.stem));
 
@@ -230,8 +264,7 @@ describe('題幹指名條號者，必須綁得住那一條的逐字依據', () =
     ).toEqual([]);
   });
 
-  // 清冊現在是空的，這條目前必然通過；留著是為了下一次有人往清冊加東西時，
-  // 修好之後不會忘記把它拿掉。
+  // 清冊裡的題目修好之後（補上綁得住的依據），要記得從清冊拿掉 —— 這一條就是在提醒這件事。
   it('登記在清冊裡的，必須真的還綁不住（修好了就要從清冊移除）', () => {
     const stale = STEM_UNBOUND.filter((x) => {
       const it = ALL.find((q) => who(q) === x.id);

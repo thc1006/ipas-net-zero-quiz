@@ -6,20 +6,21 @@
 // 它**證明不了那份 PDF 是對的**。
 //
 // 而 2026-07-14 我們發現：**來源 PDF `214245506.pdf` 本身就是壞的。**
-// 它的選項 **(C) 整欄位移了一題** —— 每一題的 (C) 都是「下一題的 (C)」：
+// 它的選項 **(C) 在第 30–40 題錯位** —— 第 30–36、38 題印的 (C) 是下一題的 (C)，
+// 第 40 題印的是第 31 題的 (C)：
 //
 //   Q33「產品碳足跡計算的生命週期評估依據哪份 **ISO 標準**文件？」
 //       的 (C) 竟然是「**場址特定數據**」——「場址特定數據」不是一份 ISO 標準。
 //   Q34「在組織邊界外所獲得的數據稱之為？」
-//       的 (C) 是「確保量化結果的全面性和準確性」，而且答案卡跟著錯（印 (A) 初級數據，
+//       的 (C) 是「確保量化結果的全面性和準確性」，而且答案卡也錯（印 (A) 初級數據，
 //       正解是 (B) 次級數據 —— LCA 最基本的定義）。
 //
 // 題庫**忠實地複製了它**，所以這道 gate 一直是綠的。
 //
 // > **一個「忠實複製一份壞掉的來源」的檢查，永遠是綠的。**
 //
-// 最惡劣的是 q035 / q038：**答案就是 (C)，而 (C) 的文字是從別題偷來的誘答選項** ——
-// 使用者看到的「正解」，是另一題的錯誤答案。**答案字母對，內容全錯。**
+// 最惡劣的是答案正好是 (C) 的 q035 / q038：**使用者看到的「正解」是別題的選項** ——
+// q035 印的是第 36 題的誘答選項，q038 印的是第 39 題的正解。**答案字母對，內容全錯。**
 //
 // 8 題已依同一份模擬卷的**乾淨版本**（190841777.pdf，答案印在每題正右方欄位）修正，
 // 每一筆都登記在 `transformations[]`，兩題答案改動登記在 `answer_override`。
@@ -52,11 +53,16 @@
 // 分工：
 //   CI（這支測試）    不下載 PDF。只驗 manifest ↔ dataset 一致 —— 有人偷改還原題的文字，
 //                     dataset_text_sha256 就對不上，當場被抓。離線、秒級。
-//   人工（可重現）    `python tools/restore_from_source_pdf.py --verify`
-//                     會重新下載 PDF、比對 sha256、重跑分欄擷取，逐題核對頁碼／欄位／
-//                     題號／answer key／文字。實測 159/159 相符。
+//   Tools CI          tools/tests/test_restore_reproducibility.py 用 committed 的 PDF 擷取快照重組整份
+//                     manifest、逐字比對 —— manifest 是工具的產物，手改任何一個字都會轉紅。
+//   人工（可重現）    `uv run --locked --project tools python tools/restore_from_source_pdf.py --verify`
+//                     以來源 PDF（sha256 釘住）重跑分欄擷取，逐字比對擷取快照與整份 manifest。
+//                     實測 159/159 相符。
 import { describe, it, expect } from 'vitest';
 import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import datasetRaw from './integrated_dataset.json';
 import manifestRaw from './restoration-manifest.json';
 
@@ -85,7 +91,7 @@ interface Entry {
   source_document: string;
   source_sha256: string;
   page: number;
-  column: 'left' | 'right';
+  column: 'left' | 'right' | null;
   source_question_number: number;
   answer_key: string;
   raw_pdf_text_sha256: string;
@@ -103,41 +109,157 @@ interface Disposition {
   item_id?: string;
   duplicate_of?: { source_id?: string; source_question_number?: number; dataset_item?: string };
   answers_agree?: boolean;
+  dataset_answer?: string | null;
+  dataset_answer_text?: string | null;
   evidence?: string;
+  why?: string;
+  answer_key?: string;
+  normalized_text_sha256?: string;
 }
 
-const DS = datasetRaw as unknown as { our_unique_items: DsItem[] };
+const DS = datasetRaw as unknown as {
+  our_unique_items: DsItem[];
+  gist_items: { index: number; options: Opt[]; answer?: string | null }[];
+};
 const MAN = manifestRaw as unknown as {
   _meta: {
+    description: string;
     restored_count: number;
+    imported_count: number;
     source_question_total: number;
     disposition_summary: Record<string, number>;
     answer_conflicts: string[];
-    sources: Record<string, { sha256: string; exam_subject: string }>;
+    sources: Record<
+      string,
+      { sha256: string; exam_subject: string; layout?: string; kind?: string; figure_questions?: Record<string, string> }
+    >;
   };
   entries: Entry[];
   dispositions: Disposition[];
 };
 
 // 來源 PDF 各自的總題數 —— 對帳的分母。
-const EXPECTED_SOURCE_COUNT: Record<string, number> = { S_CHU_06: 100, S_CHU_07: 70 };
-
-// 必須與 tools/restore_from_source_pdf.py 的 normalized_text_sha256() 完全一致：
-// 空白全剝掉，選項依 key 排序 —— 只認內容，不認排版。
-const textHash = (stem: string, options: Opt[]): string => {
-  const payload =
-    stem.replace(/\s+/g, '') +
-    '||' +
-    [...options]
-      .sort((a, b) => a.key.localeCompare(b.key))
-      .map((o) => `${o.key}:${o.text.replace(/[ \t\r\n]+/g, '')}`)
-      .join('|');
-  return createHash('sha256').update(payload, 'utf8').digest('hex');
+const EXPECTED_SOURCE_COUNT: Record<string, number> = {
+  S_CHU_06: 100,
+  S_CHU_07: 70,
+  S_IPAS_115_01_L11: 50,
+  S_IPAS_115_01_L12: 50,
+  S_IPAS_115_02_L11: 50,
+  S_IPAS_115_02_L12: 50,
 };
 
-const RESTORED = DS.our_unique_items.filter((i) =>
-  (i.source?.source_id ?? '').startsWith('S_CHU')
-);
+// 表格版面（官方公告試題）只有一欄，題目的位置由頁碼與題號決定，column 記為 null
+const isTable = (sourceId: string) => MAN._meta.sources[sourceId]?.layout === 'ipas_exam_table';
+
+// Python 的 \s（= str.isspace()）逐字列出。JS 的 \s 與它不等價：少了 U+001C–U+001F 與 U+0085，
+// 多了 U+FEFF —— 題幹混進一個 BOM，兩邊算出的指紋就不同，竄改檢查會誤判。
+const PY_WHITESPACE =
+  // eslint-disable-next-line no-control-regex -- 刻意比照 Python 的空白定義，含 U+001C–U+001F
+  /[\t\n\v\f\r\x1c-\x1f \x85\xa0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+/g;
+
+// 孤立的代理字元（U+D800–U+DFFF）：Python 編碼成 UTF-8 時直接丟例外，Node 卻默默換成 U+FFFD、
+// 算出另一個指紋。這裡比照 Python 直接失敗。
+const LONE_SURROGATE = /\p{Cs}/u;
+
+// 必須與 tools/restore_from_source_pdf.py 的 normalized_text_payload() 逐位元一致：題幹去掉所有空白、
+// 選項只去掉空格／tab／CR／LF，選項依 key 排序。排序比的是 UTF-16 碼元，key 是 BMP 字元（A–D）時
+// 與 Python sorted() 的碼位順序相同；localeCompare 依語系排序，會把 'a' 排在 'B' 前面。
+const textPayload = (stem: string, options: Opt[]): string => {
+  if ([stem, ...options.flatMap((o) => [o.key, o.text])].some((s) => LONE_SURROGATE.test(s))) {
+    throw new Error('題目含有孤立的代理字元（U+D800–U+DFFF），無法與 Python 端算出相同的指紋');
+  }
+  return (
+    stem.replace(PY_WHITESPACE, '') +
+    '||' +
+    [...options]
+      .sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0))
+      .map((o) => `${o.key}:${o.text.replace(/[ \t\r\n]+/g, '')}`)
+      .join('|')
+  );
+};
+const sha256 = (text: string): string => createHash('sha256').update(text, 'utf8').digest('hex');
+const textHash = (stem: string, options: Opt[]): string => sha256(textPayload(stem, options));
+
+// 與 tools/tests/test_normalized_text_sha256.py 讀同一份向量：payload 依規則手寫、sha256 只由 payload
+// 算出，不是呼叫任一邊的實作得到的。任一邊漂移，該邊的測試就轉紅。
+// 向量放在 quiz-app/ 底下：只改向量的 PR 也會觸發這一半（Tools CI 本來就不設 paths 篩選）。
+const HASH_SPEC = JSON.parse(
+  readFileSync(
+    resolve(
+      dirname(fileURLToPath(import.meta.url)),
+      '__fixtures__/normalized_text_sha256_vectors.json'
+    ),
+    'utf8'
+  )
+) as {
+  python_whitespace: string[];
+  vectors: { what: string; stem: string; options: Opt[]; payload: string; sha256: string }[];
+  every_code_point: { stem_sha256: string; option_sha256: string };
+};
+
+// 全部 Unicode 碼位（代理區除外），依碼位遞增
+const everyCodePoint = (): string => {
+  const parts: string[] = [];
+  for (let cp = 0; cp <= 0x10ffff; cp++) {
+    if (cp < 0xd800 || cp > 0xdfff) parts.push(String.fromCodePoint(cp));
+  }
+  return parts.join('');
+};
+
+describe('textHash 與 Python 的 normalized_text_sha256() 逐位元一致', () => {
+  it('PY_WHITESPACE 剛好比對到 Python 的 \\s（共用清單）', () => {
+    const single = new RegExp(`^(?:${PY_WHITESPACE.source})$`);
+    const matched: string[] = [];
+    for (let cp = 0; cp <= 0x10ffff; cp++) {
+      if (single.test(String.fromCodePoint(cp))) {
+        matched.push(`U+${cp.toString(16).toUpperCase().padStart(4, '0')}`);
+      }
+    }
+    expect(matched).toEqual(HASH_SPEC.python_whitespace);
+  });
+
+  it('共用向量存在（否則下面的 it.each 是零筆而全綠）', () => {
+    expect(HASH_SPEC.vectors.length).toBeGreaterThan(0);
+  });
+
+  it.each(HASH_SPEC.vectors.map((v) => [v.what, v] as const))('%s', (_what, v) => {
+    expect(sha256(v.payload)).toBe(v.sha256);
+    // 先比 payload：失敗時看得到是哪個字元不同，而不是只有兩串 hash
+    expect(textPayload(v.stem, v.options)).toBe(v.payload);
+    expect(textHash(v.stem, v.options)).toBe(v.sha256);
+  });
+
+  it('題幹放進全部碼位：只少掉那 29 個空白（多剝任何一個字都會紅）', () => {
+    expect(textHash(everyCodePoint(), [{ key: 'A', text: 'x' }])).toBe(
+      HASH_SPEC.every_code_point.stem_sha256
+    );
+  });
+
+  it('選項放進全部碼位：只少掉空格、tab、CR、LF', () => {
+    expect(textHash('q', [{ key: 'A', text: everyCodePoint() }])).toBe(
+      HASH_SPEC.every_code_point.option_sha256
+    );
+  });
+
+  it('孤立的代理字元直接失敗（比照 Python），不默默換成 U+FFFD', () => {
+    expect(() => textHash('a' + String.fromCharCode(0xd800), [{ key: 'A', text: 'x' }])).toThrow(
+      /代理字元/
+    );
+    const lone = String.fromCharCode(0xdc00);
+    expect(() => textHash('q', [{ key: 'A', text: lone }])).toThrow(/代理字元/);
+    expect(() => textHash('q', [{ key: lone, text: 'x' }])).toThrow(/代理字元/);
+    // 先查代理字元、再剝空白：夾著空白的一高一低，剝掉空白後會變成一對合法的代理（Python 那邊仍是兩個孤立的）
+    const split = 'q' + String.fromCharCode(0xd800) + ' ' + String.fromCharCode(0xdc00);
+    expect(() => textHash(split, [{ key: 'A', text: 'x' }])).toThrow(/代理字元/);
+    // 成對的代理（一般的 emoji 等）不受影響
+    const emoji = String.fromCodePoint(0x1f600);
+    expect(textHash('a' + emoji, [{ key: 'A', text: 'x' }])).toMatch(/^[0-9a-f]{64}$/);
+  });
+});
+
+// manifest 登記的每一份來源 PDF（還原的模擬卷與匯入的官方公告試題）所產生的題目
+const MANIFEST_SOURCES = new Set(Object.keys(MAN._meta.sources));
+const RESTORED = DS.our_unique_items.filter((i) => MANIFEST_SOURCES.has(i.source?.source_id ?? ''));
 const BY_ID = new Map(MAN.entries.map((e) => [e.item_id, e]));
 
 describe('restoration manifest', () => {
@@ -145,7 +267,8 @@ describe('restoration manifest', () => {
     const dsIds = RESTORED.map((i) => i.item_id).sort();
     const manIds = MAN.entries.map((e) => e.item_id).sort();
     expect(manIds).toEqual(dsIds);
-    expect(MAN._meta.restored_count).toBe(MAN.entries.length);
+    // 還原題（restored）與官方公告試題（imported）各自計數，加起來就是 entries
+    expect(MAN._meta.restored_count + MAN._meta.imported_count).toBe(MAN.entries.length);
     expect(MAN.entries.length).toBeGreaterThan(0);
   });
 
@@ -157,14 +280,17 @@ describe('restoration manifest', () => {
     }).map((it) => it.item_id);
     expect(
       bad,
-      `這些還原題的文字已被改動，但 manifest 沒有同步更新。\n` +
-        `若是刻意修改，請重跑：python tools/restore_from_source_pdf.py --emit\n` +
-        `（該指令會重新下載 PDF 並比對，確保修改是有憑據的）\n${bad.join('\n')}`
+      `這些還原題的文字與 manifest 記的不同。還原題必須等於來源 PDF（加上已列明的修正），\n` +
+        `不可以直接改（AGENTS.md）：誤改請還原。若確定是來源 PDF 本身的錯，先問專案所有者，\n` +
+        `修正要連同憑據寫進 tools/restore_from_source_pdf.py 的修正表，再在 repo 根目錄跑\n` +
+        `uv run --locked --project tools python tools/restore_from_source_pdf.py --reassemble 重組 manifest。\n` +
+        `${bad.join('\n')}`
     ).toEqual([]);
   });
 
   // 這一條是「repo 內容 == 來源 PDF 內容」的宣稱本身。
-  // --emit 時由 tools 腳本實際比對 PDF 後寫入；這裡把它釘住，不允許偷偷改成 false。
+  // 由 tools 腳本算出後寫入（--emit 對照重新擷取的 PDF，--reassemble 對照擷取快照）；
+  // 這裡把它釘住，不允許偷偷改成 false。
   it('每題都必須標記 matches_source=true（repo 文字 == PDF 文字）', () => {
     const bad = MAN.entries.filter((e) => !e.matches_source).map((e) => e.item_id);
     expect(bad).toEqual([]);
@@ -222,7 +348,7 @@ describe('restoration manifest', () => {
         !/^https?:\/\//.test(e.source_document) ||
         !Number.isInteger(e.page) ||
         e.page < 1 ||
-        (e.column !== 'left' && e.column !== 'right') ||
+        (isTable(e.source_id) ? e.column !== null : e.column !== 'left' && e.column !== 'right') ||
         !Number.isInteger(e.source_question_number) ||
         e.source_question_number < 1 ||
         !/^[A-D]$/.test(e.answer_key) ||
@@ -259,8 +385,9 @@ describe('restoration manifest', () => {
   });
 
   it('左右欄都有題目 —— 分欄擷取確實有效（否則等於整份只讀了一欄）', () => {
-    const left = MAN.entries.filter((e) => e.column === 'left').length;
-    const right = MAN.entries.filter((e) => e.column === 'right').length;
+    const twoColumn = MAN.entries.filter((e) => !isTable(e.source_id));
+    const left = twoColumn.filter((e) => e.column === 'left').length;
+    const right = twoColumn.filter((e) => e.column === 'right').length;
     expect(left).toBeGreaterThan(0);
     expect(right).toBeGreaterThan(0);
   });
@@ -280,7 +407,7 @@ describe('restoration manifest', () => {
 //
 // 實際稽核 170 題的結果：
 //   8 題  確實是 PDF 自己重印的（normalized hash 完全相同）
-//   3 題  是主庫已有的題目（題幹幾乎相同）
+//   3 題  是主庫已有的題目（題幹相同或幾乎相同）
 //   其中 1 題（S_CHU_07#13）的**答案與主庫互相矛盾** —— 我們把來源題當重複丟掉，
 //         卻留下了一個錯的答案在教（主庫答 C，來源答案卡是 D；D 才是對的）。
 //         這正是「靜默去重」會造成的實質傷害，而不只是紀錄不完整。
@@ -288,7 +415,7 @@ describe('restoration manifest', () => {
 // 一份只講「我留下了什麼」而不講「我丟掉了什麼、為什麼」的憑證，
 // 沒辦法證明「沒有東西被弄丟」—— 而那正是這份 manifest 唯一要證明的事。
 describe('還原對帳：來源的每一題都要有交代', () => {
-  it('disposition 覆蓋來源全部 170 題，一題不多一題不少', () => {
+  it('disposition 覆蓋來源的每一題，一題不多一題不少', () => {
     const total = Object.values(EXPECTED_SOURCE_COUNT).reduce((a, b) => a + b, 0);
     expect(MAN._meta.source_question_total).toBe(total);
     expect(MAN.dispositions).toHaveLength(total);
@@ -311,7 +438,9 @@ describe('還原對帳：來源的每一題都要有交代', () => {
   });
 
   it('每一筆非 restored 的 disposition 都必須有證據（不能只是斷言「應該是重複」）', () => {
-    const dropped = MAN.dispositions.filter((d) => d.status !== 'restored');
+    const dropped = MAN.dispositions.filter(
+      (d) => !['restored', 'imported', 'not_imported_figure'].includes(d.status)
+    );
     expect(dropped.length).toBeGreaterThan(0); // 否則這條測試在空轉
     for (const d of dropped) {
       expect(d.evidence, `${d.source_id}#${d.source_question_number} 沒有 evidence`).toBeTruthy();
@@ -319,15 +448,54 @@ describe('還原對帳：來源的每一題都要有交代', () => {
     }
   });
 
-  it('restored 的 disposition 數必須等於 entries 數', () => {
-    const restored = MAN.dispositions.filter((d) => d.status === 'restored');
-    expect(restored).toHaveLength(MAN.entries.length);
-    expect(MAN._meta.restored_count).toBe(MAN.entries.length);
+  // 專案所有者的決定（2026-09-28）：題目要讀圖的官方題，題庫支援圖片之前不收錄、不手抄，記下理由。
+  it('含圖表、不收錄的官方題：寫明理由、記下答案欄與內容指紋，登記在來源的 figure_questions，而且不在題庫裡', () => {
+    const figures = MAN.dispositions.filter((d) => d.status === 'not_imported_figure');
+    expect(figures.length, '沒有 not_imported_figure —— 這條測試在空轉').toBeGreaterThan(0);
+    const inBank = new Set(DS.our_unique_items.map((u) => u.item_id));
+    for (const d of figures) {
+      const where = `${d.source_id}#${d.source_question_number}`;
+      const source = MAN._meta.sources[d.source_id];
+      expect(source?.kind, `${where} 不是官方來源`).toBe('official_exam');
+      expect(source?.figure_questions?.[String(d.source_question_number)], `${where} 沒有登記在 figure_questions`).toBe(
+        d.why
+      );
+      expect(d.why?.trim(), `${where} 沒有寫理由`).toBeTruthy();
+      expect(d.answer_key, `${where} 沒有記答案欄`).toMatch(/^[A-D]$/);
+      expect(d.normalized_text_sha256, `${where} 沒有內容指紋`).toMatch(/^[0-9a-f]{64}$/);
+      const id = `${d.source_id}-q${String(d.source_question_number).padStart(3, '0')}`;
+      expect(inBank.has(id), `${id} 登記為不收錄，卻在題庫裡`).toBe(false);
+    }
+    // 反方向：登記在 figure_questions 的每一題都有這筆處置
+    const listed = Object.entries(MAN._meta.sources).flatMap(([src, s]) =>
+      Object.keys(s.figure_questions ?? {}).map((n) => `${src}#${n}`)
+    );
+    expect(listed.sort()).toEqual(figures.map((d) => `${d.source_id}#${d.source_question_number}`).sort());
   });
 
-  it('各 status 加總必須等於 170（沒有被重複計數或漏算）', () => {
+  it('restored 與 imported 的 disposition 數必須等於 entries 數', () => {
+    const restored = MAN.dispositions.filter(
+      (d) => d.status === 'restored' || d.status === 'imported'
+    );
+    expect(restored).toHaveLength(MAN.entries.length);
+    expect(MAN._meta.restored_count + MAN._meta.imported_count).toBe(MAN.entries.length);
+    expect(MAN._meta.restored_count).toBe(
+      MAN.dispositions.filter((d) => d.status === 'restored').length
+    );
+  });
+
+  it('各 status 加總必須等於來源的總題數（沒有被重複計數或漏算）', () => {
     const sum = Object.values(MAN._meta.disposition_summary).reduce((a, b) => a + b, 0);
     expect(sum).toBe(MAN._meta.source_question_total);
+  });
+
+  // manifest 的說明文字列舉每一種處置（由工具的 ACCOUNTED 產生）。從資料這一側核對：新增一種處置，說明文字
+  // 沒跟上就轉紅（not_imported_figure 第一次寫進資料時，說明文字就漏了它）。
+  it('_meta.description 列出 manifest 裡出現的每一種處置', () => {
+    const missing = Object.keys(MAN._meta.disposition_summary).filter(
+      (status) => !MAN._meta.description.includes(`${status}（`)
+    );
+    expect(missing).toEqual([]);
   });
 
   // 這是本輪真正抓到的那個錯：來源答案卡與主庫教的答案不一致
@@ -348,8 +516,18 @@ describe('還原對帳：來源的每一題都要有交代', () => {
   // 同一支腳本自己寫的自陳陣列，腳本不寫就是空的。**自己驗自己。**
   //
   // 守一個錯誤的把關，自己卻抓不到錯，是這整輪工作最不該犯的錯。
+  //
+  // 第二個假把關（2026-09-27 第三輪審查抓到）：下面原本只挑 status === 'duplicate_in_dataset'，
+  // 但工具把衝突記成 duplicate_in_dataset_ANSWER_CONFLICT —— **真正的衝突永遠挑不到**。
+  // 手動在 manifest 標一筆未解決的衝突，其餘不動，整個檔照樣全綠。先過濾再檢查，過濾掉的正是要抓的。
   it('不得存在未解決的答案衝突（來源答案卡 vs 主庫答案）', () => {
-    const crossBank = MAN.dispositions.filter((d) => d.status === 'duplicate_in_dataset');
+    const conflicted = MAN.dispositions.filter((d) => d.status.endsWith('_ANSWER_CONFLICT'));
+    expect(
+      conflicted.map((d) => `${d.source_id}#${d.source_question_number}：${d.evidence}`),
+      '有未解決的答案衝突 —— 必須用一手文件裁決，不可放著'
+    ).toEqual([]);
+
+    const crossBank = MAN.dispositions.filter((d) => d.status.startsWith('duplicate_in_dataset'));
 
     // 前提：沒有這種 disposition 的話，下面全都是空轉。
     expect(
@@ -374,6 +552,29 @@ describe('還原對帳：來源的每一題都要有交代', () => {
     ).toEqual([]);
 
     expect(MAN._meta.answer_conflicts).toEqual([]);
+  });
+
+  // manifest 記的是重組當時，丟棄題所對應的那一題主庫題目的正解。主庫那一題之後被改了答案
+  // 或調了選項順序，manifest 卻沒重組，就會在這裡對不上 —— 答案是否仍一致，要重新裁決。
+  it('丟棄題所對應的主庫題目，正解必須還是 manifest 記的那一個', () => {
+    const byRef = new Map<string, { options: Opt[]; answer?: string | null }>([
+      ...DS.gist_items.map((g) => [`gist_items[${g.index}]`, g] as const),
+      ...DS.our_unique_items.map((u) => [u.item_id, u] as const),
+    ]);
+    const crossBank = MAN.dispositions.filter((d) => d.status.startsWith('duplicate_in_dataset'));
+    expect(crossBank.length, '沒有任何 duplicate_in_dataset —— 這條測試在空轉').toBeGreaterThan(0);
+    const bad = crossBank
+      .filter((d) => {
+        const twin = byRef.get(d.duplicate_of?.dataset_item ?? '');
+        const text = twin?.options.find((o) => o.key === twin.answer)?.text ?? null;
+        return !twin || twin.answer !== d.dataset_answer || text !== d.dataset_answer_text;
+      })
+      .map((d) => `${d.source_id}#${d.source_question_number} -> ${d.duplicate_of?.dataset_item}`);
+    expect(
+      bad,
+      '主庫的這些題目與 manifest 記的不同。動 manifest 要先問專案所有者；核准後跑 --reassemble。若它以「答案衝突」' +
+        '拒寫，要用一手依據重新裁決（tools/restore_from_source_pdf.py 的 DATASET_DUPLICATES）'
+    ).toEqual([]);
   });
 });
 

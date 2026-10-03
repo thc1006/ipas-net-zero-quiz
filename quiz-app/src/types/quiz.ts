@@ -45,6 +45,8 @@ export interface MainBankItemMetadata {
     note?: string;
     /** 非一手來源時標 'secondary'（與 evidence-manifest.json 的分級同步，有 gate 對帳） */
     authority?: string;
+    /** 匯入工具建出來的引文帶這個標記（'tools/import_official_exam.py'）；重新匯入只換帶標記的 */
+    generated_by?: string;
   }[];
   /** sources 上次 curl 驗 200 OK 的日期（YYYY-MM-DD） */
   sources_verified_date?: string;
@@ -109,6 +111,18 @@ export interface GistQuestion {
   metadata?: MainBankItemMetadata;
 }
 
+/** 官方公告試題的出處。由 tools/import_official_exam.py 寫入；題幹、選項、答案都取自 iPAS 官網公告的 PDF。 */
+export interface OfficialExam {
+  /** 民國年-梯次，例如「115-01」＝115 年第一次 */
+  session: string;
+  /** 考試日期（YYYY-MM-DD） */
+  exam_date: string;
+  /** 科目代碼：L11 第一科、L12 第二科 */
+  subject: string;
+  /** 在該份公告試題裡的題號 */
+  question_number: number;
+}
+
 /** 補充題目格式 */
 export interface UniqueQuestion {
   item_id: string;
@@ -131,6 +145,8 @@ export interface UniqueQuestion {
   _quality_score?: number;
   /** 品質旗標（PR #68 起部分主庫題目寫入 'time_sensitive' 等；Refs #69） */
   quality_flags?: PracticePoolQualityFlag[];
+  /** 官方公告試題才有 */
+  official_exam?: OfficialExam;
   metadata?: MainBankItemMetadata;
 }
 
@@ -159,7 +175,18 @@ export interface QuizQuestion {
    * 為什麼要顯示：這些引文一直只存在資料裡，畫面上只看得到一排來源連結。
    * 於是「教材原文」與「某篇部落格」在使用者眼中份量相同 —— 而答案其實是前者撐住的。
    */
-  evidence?: { quote: string; url: string; authority?: string };
+  evidence?: {
+    quote: string;
+    url: string;
+    authority?: string;
+    /**
+     * 官方公告試題：依據就是官方 PDF 上的這一題時，答案欄印的選項與題目在 PDF 的位置。
+     * 引文只印得出題目本身，UI 另外寫出這一行，框裡才有一句話說出答案。
+     */
+    official?: { answer: string; reference: string };
+  };
+  /** 官方公告試題的出處（場次、考試日期、科目、題號）；UI 在題卡上標出來 */
+  officialExam?: OfficialExam;
   /** 解析文字（給 AI helper 與 UI 參考），可能為空 */
   explanation?: string | null;
   /** 練習池題目專屬：UI 用以渲染來源徽章；主題庫題不帶 */

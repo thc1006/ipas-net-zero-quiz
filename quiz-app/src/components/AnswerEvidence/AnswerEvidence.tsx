@@ -7,7 +7,13 @@ import { prettifySourceUrl } from '../../utils/source-label';
 import './AnswerEvidence.css';
 
 export interface AnswerEvidenceProps {
-  evidence?: { quote: string; url: string; authority?: string };
+  evidence?: {
+    quote: string;
+    url: string;
+    authority?: string;
+    /** 官方公告試題：依據就是官方 PDF 上的這一題時，答案欄印的選項與題目出處（哪一場、哪一科、第幾題） */
+    official?: { answer: string; reference: string };
+  };
   /** 結果頁的錯題卡空間較窄，用較小的樣式 */
   compact?: boolean;
 }
@@ -33,6 +39,11 @@ export function AnswerEvidence({ evidence, compact = false }: AnswerEvidenceProp
         {!isPrimary && <span className="answer-evidence__grade">次級來源</span>}
       </div>
       <blockquote className="answer-evidence__quote">{evidence.quote}</blockquote>
+      {evidence.official && (
+        <p className="answer-evidence__official-answer">
+          官方公告的參考答案：({evidence.official.answer})（{evidence.official.reference}）
+        </p>
+      )}
       <a
         className="answer-evidence__link source-link"
         href={evidence.url}

@@ -13,6 +13,14 @@ cd quiz-app && pnpm preflight
 它依序執行：同步衍生資料 → lint → 單元測試 → `tsc` + build。
 **不要只跑 `pnpm test:run`** —— vitest 只轉譯不檢查型別，測試檔的型別錯誤只有 build 抓得到。
 
+改到 `tools/`、`quiz-app/src/data/integrated_dataset.json` 或 `quiz-app/src/data/__fixtures__/normalized_text_sha256_vectors.json`
+的工作，另外要在 repo 根目錄跑這一條並回傳 0（preflight 不含它；還原憑證會隨題庫重組，改題庫也可能讓它紅；
+Python 端也讀那份向量）：
+
+```bash
+uv run --locked --directory tools pytest
+```
+
 ## 命令
 
 ```bash
@@ -29,6 +37,7 @@ cd .. && python tools/gen_gap_reports.py    # 產生 docs/VERIFICATION-GAPS.md
 
 `tools/*.py` **必須從 repo 根目錄執行**（它們用根目錄相對路徑）。
 一律先 `export PYTHONIOENCODING=utf-8`。
+tools/ 頂層新增、移除或改名工具時，同時改 `tools/tests/test_official_exam_import.py` 的 `TOOL_MODULES`；其他檔案不要放在 tools/ 頂層（那裡的測試逐項比對）。
 
 ## 絕不可以
 
@@ -41,11 +50,18 @@ cd .. && python tools/gen_gap_reports.py    # 產生 docs/VERIFICATION-GAPS.md
   要記錄術語問題用 `source_terminology_note`。
 - **絕不**手改 `docs/VERIFICATION-GAPS.md`、`docs/NEEDS-SOURCING.md`、`docs/evidence-manifest.json`
   （都是生成物）。
+- **絕不**手改 `restoration-manifest.json` 與 `tools/tests/fixtures/restore_source_extract.json`：
+  兩者由 `tools/restore_from_source_pdf.py` 產生，Tools CI 會重組整份 manifest 逐字比對。
+  改了題庫的其他題目而牽動 manifest 的衍生欄位（例如丟棄題的題幹相似度），一樣是動到 manifest → 先問；
+  核准後用 `--reassemble`（離線，不讀 PDF）同步，並確認 diff 只有那些欄位。答案相關的欄位不是衍生欄位：它們一變，`--reassemble` 就拒寫（還原題的答案與 PDF 不同
+  卻沒有列在 `ANSWER_OVERRIDES`；主庫重複題的答案或來源題與 `DATASET_DUPLICATES` 登記的不同）。
+  拒寫、要改工具裡的修正表或配對表（`DATASET_DUPLICATES`）、或來源 PDF 變了（`--emit`）→ 先問（見下方升級規則）。
 
 ## 升級規則
 
 - 同一道 gate 修三次還是紅 → **停下來報告**，不要改判準。
-- 要動 `restoration-manifest.json` 或 `law-articles.pinned.json` → **先問**。
+- 要動 `restoration-manifest.json`（包括題庫變動牽動的衍生欄位、工具裡的修正表與配對表、說明文字，或來源 PDF
+  換了）或 `law-articles.pinned.json` → **先問**。
 - 資料與文件的數字對不上 → 跑 `pnpm preflight`，不要手改數字。
 
 ## 改資料時
@@ -59,6 +75,40 @@ cd .. && python tools/gen_gap_reports.py    # 產生 docs/VERIFICATION-GAPS.md
 5. 解析裡用「」括起來又提到法規的句子會被逐字比對釘選條文。是意譯就**不要加引號**。
 6. 把「為什麼這樣改」寫進該題的 `provenance`／`metadata`，不是只寫在 commit 訊息裡。
 7. `pnpm preflight`。
+
+匯入 iPAS 官方公告試題（會改 `restoration-manifest.json` 與題庫：新的一份 → **先問**）：
+
+1. `tools/restore_from_source_pdf.py`，照已有的官方來源寫：
+   - `SOURCES`：來源代號一律 `S_IPAS_<民國年>_<梯次>_<科目代號>`（例：`S_IPAS_115_02_L12`，官方題的 gate
+     依這個格式對帳），欄位 `url`（官網列表頁上的網址，中文要百分比編碼）、`sha256`、`title`、
+     `exam_subject`（`考科1`／`考科2`）、`layout: ipas_exam_table`、`kind: official_exam`、`session`（`115-02`）、
+     `exam_date`、`published_on`、`subject`（`L11`／`L12`），題目要讀圖的另有 `figure_questions`（整數題號 → 理由：
+     題庫還不支援圖片，這幾題不收錄，manifest 記為 `not_imported_figure`；登記要照 PDF，改了就跑 `--emit`，擷取快照
+     記下擷取器確認有圖的題號，CI 拿它核對登記）。`session`、`exam_date`、`subject`、`title` 必須與
+     PDF 每一頁的頁首一致，`exam_subject` 由 `subject` 決定（L11 考科1、L12 考科2）：匯入工具與 `--emit`／`--verify`
+     拿 PDF 的頁首比，`--emit` 把頁首記進擷取快照、`--reassemble` 與 CI 拿快照比，不符就中止。照頁首抄，
+     不要從上一場複製後改；
+   - `EXPECTED_QUESTION_COUNT`：總題數；
+   - `SOURCE_REVIEWS`：人工查核紀錄（沒有就中止）。
+2. 依序跑（repo 根目錄）：
+
+   ```bash
+   uv run --locked --project tools python tools/import_official_exam.py <來源代號> ...
+   uv run --locked --project tools python tools/restore_from_source_pdf.py --emit
+   ```
+
+3. 寫死的預期值跟著改：`restoration-manifest.test.ts` 的 `EXPECTED_SOURCE_COUNT`、`questions.test.ts` 的總題數。
+4. `cd quiz-app && pnpm test:run -u src/data/content-profile.test.ts`（語料輪廓換了），再 `pnpm preflight`；
+   回 repo 根目錄跑 `uv run --locked --directory tools pytest` 與 `python tools/gen_gap_reports.py`。
+5. PR 說明寫明：合併後由專案所有者把 GitHub About 的題數改成新的主題庫題數（`quiz-app-ci.yml` 會比對）。
+
+題幹、選項、答案一律取自官方 PDF，**絕不**手改。要附額外依據，寫進匯入工具的 `EXTRA_EVIDENCE`
+（法條要寫 `clause`），再重新匯入：工具負責的引文會換成新的版本，Tools CI 會逐欄比對題庫與工具的輸出。
+法條引文由匯入工具對照 `law-articles.pinned.json` 的釘選條文核對（匯入時與 Tools CI 都跑）：網址是全國法規資料庫、
+法規已釘選（沒有就**先問**要不要釘選）、`clause` 與網址的 `flno` 是同一條、引文逐字在那一條裡。其他來源（例如
+UNFCCC 的條約出版本）CI 不核對原文：要在 `EXTRA_SOURCES` 登記那一份 PDF 的 sha256，把 PDF 存進快取（檔名是
+sha256），再跑 `uv run --locked --project tools python tools/import_official_exam.py --verify-extra --cache <快取目錄>`
+（空白不計，引文不能跨頁）。
 
 ## 寫 gate 時
 

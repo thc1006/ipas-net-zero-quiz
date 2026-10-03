@@ -1,0 +1,44 @@
+# tools/*.py 的可重現執行環境。相依的確切版本由 uv.lock 鎖定：
+#   uv sync --locked --project tools                          # 安裝；lock 過期就失敗，不會改寫 lock
+#   uv run --locked --project tools python tools/<工具>.py     # 從 repo 根目錄執行（工具用根目錄相對路徑）
+#   uv run --locked --directory tools pytest                   # 工具的單元測試（在 tools/ 裡跑，才會套用下面的 pytest 設定）
+# 升級相依請另開 PR，並附上 uv.lock 的完整 diff：
+#   uv lock --project tools --upgrade-package <套件>           # 升級單一套件，間接相依（如 cryptography）也適用
+[project]
+name = "ipas-quiz-tools"
+version = "0.0.0"
+description = "題庫維運工具（tools/*.py）的相依與測試環境"
+requires-python = ">=3.13"
+dependencies = [
+    "pdfplumber>=0.11.10",  # 還原工具與 ipas_exam_pdf.py 的 PDF 擷取
+    "pdfminer.six>=20260107",  # pdfplumber 底下的解析器；ipas_exam_pdf.py 直接用它認出 xref 表是它自己重建的
+    "pymupdf>=1.28.2",      # fetch_text.py 讀 PDF 來源、ipas_exam_pdf.py 核對字有沒有真的畫出來、
+                            # 測試畫合成 PDF（AGPL-3.0，與本 repo 相同）
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.uv]
+package = false
+# 只安裝 wheel：安裝時不執行任何套件的建置程式。某個平台缺 wheel 時直接報錯，不會改從原始碼編譯。
+no-build = true
+# CI 只跑 Linux，專案在 Windows 上開發。required-environments 只對沒有 sdist 的套件生效（uv 的行為）：
+# 有 sdist、缺某個平台 wheel 的版本照樣鎖得進來。兩個平台都有 wheel，由 tests/test_lock_wheels.py 讀 uv.lock 檢查。
+required-environments = [
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "sys_platform == 'win32' and platform_machine == 'AMD64'",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# 測試直接 import tools/*.py（例如 `from restore_from_source_pdf import ...`）
+pythonpath = ["."]
+# 不留 .pytest_cache：從 repo 根目錄執行時它會落在根目錄，被 repo-layout 的根目錄 gate 擋下
+addopts = "-p no:cacheprovider"
+# 參數化變成零筆時在收集階段就失敗，不是安靜地 skip
+empty_parameter_set_mark = "fail_at_collect"
+# 未知的設定鍵、未註冊的 marker、意外通過的 xfail、重複的參數化 id 一律是錯誤
+strict = true

@@ -42,6 +42,36 @@ exports[`語料輪廓（換題庫時用 -u 重新產生） > 棘輪與反空轉�
     "what": "文件數字對帳（由 tools/sync_derived_counts.py 維護）",
     "where": "docs-counts.test.ts",
   },
+  {
+    "semantics": "依語料重設",
+    "what": "官方公告試題與官方來源至少一份（反空轉）",
+    "where": "data/official-exam.test.ts／schema-contract.test.ts／tools/tests/test_official_exam_import.py",
+  },
+  {
+    "semantics": "文件改寫時重設",
+    "what": "「實測 N/M 相符」至少兩處（反空轉）",
+    "where": "docs-counts.test.ts",
+  },
+  {
+    "semantics": "依語料重設",
+    "what": "官方公告試題至少一題（反空轉）",
+    "where": "questions.test.ts／utils/official-exam.test.ts",
+  },
+  {
+    "semantics": "依語料重設",
+    "what": "每一份官方來源至少一題的答案依據帶出官方答案（反空轉）",
+    "where": "questions.test.ts",
+  },
+  {
+    "semantics": "依語料重設",
+    "what": "依據出自自己出處的非官方題至少一題（反空轉）",
+    "where": "questions.test.ts",
+  },
+  {
+    "semantics": "依語料重設",
+    "what": "含圖表、不收錄的官方題（not_imported_figure）至少一題（反空轉）",
+    "where": "restoration-manifest.test.ts",
+  },
 ]
 `;
 
@@ -51,7 +81,7 @@ exports[`語料輪廓（換題庫時用 -u 重新產生） > 答案洩漏指標 
     "AI 產題": "64.0%（64/100）",
     "gist": "45.5%（248/545）",
     "公開模擬題": "42.6%（23/54）",
-    "還原題": "57.6%（136/236）",
+    "還原題": "50.0%（217/434）",
   },
   "露骨長度洩漏題數": {
     "AI 產題": 28,
@@ -66,18 +96,18 @@ exports[`語料輪廓（換題庫時用 -u 重新產生） > 題庫規模與分�
   "主題庫": {
     "gist": 545,
     "依考科": {
-      "考科1": 439,
-      "考科2": 342,
+      "考科1": 539,
+      "考科2": 440,
     },
-    "有引文": 766,
-    "有答案": 781,
+    "有引文": 964,
+    "有答案": 979,
     "有解析": 764,
-    "總題數": 781,
-    "還原題": 236,
+    "總題數": 979,
+    "還原題": 434,
   },
   "品質旗標": {
     "主題庫使用次數": {
-      "time_sensitive": 133,
+      "time_sensitive": 331,
     },
     "練習池使用次數": {
       "low_confidence": 3,

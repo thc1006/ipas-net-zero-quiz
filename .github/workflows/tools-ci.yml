@@ -1,0 +1,51 @@
+# tools/*.py 的相依鎖定與單元測試。
+#
+# uv.lock 是相依版本的唯一來源：這裡只檢查、只照它安裝，絕不改寫它。
+# 升級相依請另開 PR，在本機跑 `uv lock --project tools --upgrade-package <套件>`，並附上 uv.lock 的完整 diff。
+#
+# 不設 paths 篩選：漏列路徑不會報錯，只會讓「只改那些檔」的 PR 安靜地略過檢查。
+name: Tools CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  tools:
+    name: Tools (uv --locked + pytest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup uv
+        # setup-uv 自 v8.0.0 起不發布 @v10 這種浮動 tag（寫了會找不到），改用不可變更的 release tag
+        uses: astral-sh/setup-uv@v10.2.0
+        with:
+          version: '0.12.12'
+
+      - name: pyproject.toml 改了就必須同步更新 uv.lock
+        run: uv lock --check --project tools
+
+      - name: 依 uv.lock 安裝（--locked：lock 過期就失敗，不會改寫 lock）
+        run: uv sync --locked --project tools
+
+      - name: 已安裝的套件相依完整
+        # uv lock --check 不驗 lock 本身是否完整：手改 uv.lock 刪掉一個間接相依時，前兩步照樣通過
+        run: uv pip check --directory tools
+
+      - name: 工具的單元測試
+        # --directory：在 tools/ 裡執行，pytest 才會讀到 tools/pyproject.toml 的設定
+        run: uv run --locked --directory tools pytest

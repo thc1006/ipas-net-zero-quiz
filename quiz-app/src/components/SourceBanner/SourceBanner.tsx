@@ -33,7 +33,7 @@ const SOURCE_META: Record<
     tone: 'mock',
     icon: 'menu_book',
     label: '模擬題',
-    hint: '公開模擬題（非官方歷屆，iPAS 不公開歷屆）。來源的答案卡本身也可能有誤。',
+    hint: '公開模擬題（非官方試題）。來源的答案卡本身也可能有誤。',
   },
   ai_generated: {
     tone: 'ai',

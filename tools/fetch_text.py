@@ -13,6 +13,10 @@ import ssl
 import unicodedata
 import urllib.request
 
+# 在模組載入時就 import：它原本寫在 _to_text() 裡，而 fetch() 會吞掉所有例外 ——
+# 沒裝 PyMuPDF 時，每一份 PDF 來源都安靜地變成「抓不到文字」，交叉比對少驗一批題目卻沒有紅燈。
+import pymupdf
+
 _UA = 'Mozilla/5.0 (compatible; ipas-quiz-quote-verifier/1.0)'
 
 
@@ -121,8 +125,7 @@ def _to_text(raw, ctype):
     副檔名是網址作者的宣告，不是伺服器實際給了什麼。
     """
     if raw[:5] == b'%PDF-':
-        import fitz
-        doc = fitz.open(stream=raw, filetype='pdf')
+        doc = pymupdf.open(stream=raw, filetype='pdf')
         return chr(10).join(p.get_text() for p in doc)
 
     txt = raw.decode('utf-8', errors='replace')

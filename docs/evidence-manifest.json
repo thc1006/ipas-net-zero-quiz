@@ -6,10 +6,10 @@
     "tier1_rule": "authority == primary 且 has_quote —— 二手 evidence（維基／新聞／標準轉載預覽）不計入"
   },
   "summary": {
-    "main_tier1_questions": 764,
+    "main_tier1_questions": 962,
     "pool_tier1_questions": 140,
-    "total_evidence_records": 957,
-    "primary_evidence_records": 948,
+    "total_evidence_records": 1159,
+    "primary_evidence_records": 1150,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -1558,6 +1558,1824 @@
       "bank": "main",
       "url": "https://unfccc.int/sites/default/files/resource/cma2023_16a01_adv.pdf",
       "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q001",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q002",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q003",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q004",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q005",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q006",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q007",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q008",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q009",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q010",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q011",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q012",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q013",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q014",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q015",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q016",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q017",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q018",
+      "bank": "main",
+      "url": "https://unfccc.int/sites/default/files/resource/parisagreement_publication.pdf",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q018",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q019",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q020",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q021",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q022",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q023",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q024",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q025",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q026",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q027",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q028",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q029",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q030",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q031",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q032",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q033",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q034",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q035",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q036",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q037",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q038",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q039",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q040",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q041",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q042",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q043",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q044",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q045",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q046",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q047",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q048",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q049",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L11-q050",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L11_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142039.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q001",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q002",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q003",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q004",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q005",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q006",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q007",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q008",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q009",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q010",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q011",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q012",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q013",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q014",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q015",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q016",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q017",
+      "bank": "main",
+      "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=4",
+      "host": "law.moj.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q017",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q018",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q019",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q020",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q021",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q022",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q023",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q024",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q025",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q026",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q027",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q028",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q029",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q030",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q031",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q032",
+      "bank": "main",
+      "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020098&flno=37",
+      "host": "law.moj.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q032",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q033",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q034",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q035",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q036",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q037",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q038",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q039",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q040",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q041",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q042",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q043",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q044",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q045",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q046",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q047",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q048",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q049",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q050",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q001",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q002",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q003",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q004",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q005",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q006",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q007",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q008",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q009",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q010",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q011",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q012",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q013",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q014",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q015",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q016",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q017",
+      "bank": "main",
+      "url": "https://unfccc.int/sites/default/files/resource/parisagreement_publication.pdf",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q017",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q018",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q019",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q020",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q021",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q022",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q023",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q024",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q025",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q026",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q027",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q028",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q029",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q030",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q031",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q032",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q033",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q034",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q035",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q036",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q037",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q038",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q039",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q040",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q041",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q042",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q043",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q044",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q045",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q046",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q047",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q048",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q049",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L11-q050",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%B8%80%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152902.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q001",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q002",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q003",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q004",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q005",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q006",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q007",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q008",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q010",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q011",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q012",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q013",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q014",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q016",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q017",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q018",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q019",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q020",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q021",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q022",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q023",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q024",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q025",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q026",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q027",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q028",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q029",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q030",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q031",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q032",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q033",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q034",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q035",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q036",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q037",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q038",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q039",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q040",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q041",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q042",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q043",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q044",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q045",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q046",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q047",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q048",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q049",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_02_L12-q050",
+      "bank": "main",
+      "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115%E5%B9%B4%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_%E7%AC%AC%E4%BA%8C%E7%A7%91_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260831152909.pdf",
+      "host": "www.ipas.org.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
