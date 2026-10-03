@@ -38,10 +38,6 @@ jobs:
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
-      # 修 nodejs/corepack#612 — Node 20.18 內建 Corepack 簽名公鑰過期
-      - name: Upgrade Corepack to latest
-        run: npm install -g corepack@latest
-
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
