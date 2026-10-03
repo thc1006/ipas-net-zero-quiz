@@ -177,8 +177,9 @@ jobs:
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
+      # pnpm 12 要 v6.1.0 起才支援；浮動的 v6 tag 還停在 v6.0.10，所以寫死版本
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6.1.0
         with:
           package_json_file: quiz-app/package.json
           run_install: false
@@ -217,8 +218,9 @@ jobs:
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
+      # pnpm 12 要 v6.1.0 起才支援；浮動的 v6 tag 還停在 v6.0.10，所以寫死版本
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6.1.0
         with:
           package_json_file: quiz-app/package.json
           run_install: false
@@ -272,8 +274,9 @@ jobs:
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
+      # pnpm 12 要 v6.1.0 起才支援；浮動的 v6 tag 還停在 v6.0.10，所以寫死版本
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6.1.0
         with:
           package_json_file: quiz-app/package.json
           run_install: false
@@ -354,8 +357,9 @@ jobs:
         with:
           node-version-file: 'quiz-app/.nvmrc'
 
+      # pnpm 12 要 v6.1.0 起才支援；浮動的 v6 tag 還停在 v6.0.10，所以寫死版本
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6.1.0
         with:
           package_json_file: quiz-app/package.json
           run_install: false
