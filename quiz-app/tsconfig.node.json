@@ -1,3 +1,6 @@
+// 工具的設定檔（Vite、Vitest、Playwright）也做型別檢查，build 與 type-check 都會跑。
+// 這些工具遇到打錯或已移除的設定鍵只會安靜忽略；型別檢查會把它們當成錯誤擋下來。
+// 用 files 而不是 include：列出的檔案不存在（例如被改名）時 tsc 直接報錯，不會悄悄少檢查一個。
 {
   "compilerOptions": {
     "composite": true,
@@ -5,7 +8,8 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
-    "strict": true
+    "strict": true,
+    "types": ["node"]
   },
-  "include": ["vite.config.ts"]
+  "files": ["vite.config.ts", "vitest.config.ts", "playwright.config.ts"]
 }
