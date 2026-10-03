@@ -19,7 +19,7 @@ interface ProviderResult {
 
 /**
  * 模組級別：同一 app 生命週期內已 bump 或正在 bump 的 key。
- * 用於防 React 18 strict mode useEffect 雙觸發導致遠端計數 +2；
+ * 用於防 React strict mode（18 起，19 照舊）useEffect 雙觸發導致遠端計數 +2；
  * 並補充 sessionStorage（跨頁面 reload 生效）的 in-memory 快速查驗。
  */
 const inflightOrBumpedKeys = new Set<string>();

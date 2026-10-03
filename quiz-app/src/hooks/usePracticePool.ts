@@ -29,7 +29,7 @@ function stableKey(opts: PoolFilterOptions): string {
   });
 }
 
-/** 從 stableKey 還原 opts（避免 render-time mutate ref 違反 React 18 純粹原則） */
+/** 從 stableKey 還原 opts（避免 render-time mutate ref 違反 React 的 render 純粹原則） */
 function parseStableKey(key: string): PoolFilterOptions {
   try {
     const o = JSON.parse(key) as PoolFilterOptions & {
