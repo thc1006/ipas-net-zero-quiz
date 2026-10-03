@@ -20,7 +20,9 @@ function installRealLocalStorage() {
   });
 }
 
-// vi.restoreAllMocks 會清掉 test-setup 的 matchMedia mock，每個 test beforeEach 重新確保
+// 每個 test 前重設 matchMedia，讓每個測試都從同一個起點跑，不依賴前一個測試留下什麼。
+// （Vitest 2 的 vi.restoreAllMocks 會把 test-setup 的 matchMedia mock 連實作一起清掉；
+//   Vitest 4 起它只還原 vi.spyOn 建的 spy，不再動 vi.fn。）
 function ensureMatchMedia() {
   Object.defineProperty(window, 'matchMedia', {
     writable: true,

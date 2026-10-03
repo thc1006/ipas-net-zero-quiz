@@ -12,10 +12,12 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],
-      // 注意：自訂 exclude 會「取代」vitest 預設的 exclude（不是 merge），
-      // 所以必須把 build/lint config、E2E spec、type-only 宣告等明確列出，
-      // 否則它們會被 v8 provider 偵測為 0% 拉低分母。
-      // 此清單與 codecov.yml 的 ignore 同步維護。
+      // 分母是 src 底下所有 .ts/.tsx，連測試從沒載入過的檔也算。
+      // Vitest 4 拿掉了 coverage.all：不寫 include 就只報「測試期間載入過的檔」，
+      // 沒被測到的新檔悄悄不進分母，還會混進被 import 的 .css 與 package.json。
+      include: ['src/**/*.{ts,tsx}'],
+      // 再從 include 裡剔除不該算的檔。此清單與 codecov.yml 的 ignore 同步維護；
+      // 落在 include 之外的項目（config、tests/、dist/ 等）是為了與 codecov.yml 對齊才留著。
       exclude: [
         'node_modules/',
         'dist/',
