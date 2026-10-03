@@ -1,10 +1,11 @@
-// ESLint flat config (ESLint 9+)
+// ESLint flat config（ESLint 10）
+import { defineConfig } from 'eslint/config';
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 
-export default tseslint.config(
+export default defineConfig(
   // 忽略檔案
   {
     ignores: ['dist/**', 'node_modules/**', 'coverage/**', 'playwright-report/**'],
@@ -12,7 +13,7 @@ export default tseslint.config(
   // 基本 JS 規則
   js.configs.recommended,
   // TypeScript 規則
-  ...tseslint.configs.recommended,
+  tseslint.configs.recommended,
   // React 專案設定
   {
     files: ['**/*.{ts,tsx}'],
