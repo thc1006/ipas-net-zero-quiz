@@ -1,7 +1,8 @@
 // 執行期的程式碼不可以用 Safari 14 不支援的 regex 語法。
 //
-// build target 是 Vite 6 的預設（'modules'：es2020、safari14 等）。esbuild 會把 lookbehind（「(?<=」「(?<!」）
-// 與 d、v 旗標的字面值降級成執行期的 new RegExp(...)，在不支援的瀏覽器一執行就丟 SyntaxError；
+// build target 是 vite.config.ts 明寫的 es2020、safari14 等（Vite 6 'modules' 的預設；Vite 8 的預設改成
+// safari16.4，所以要明寫）。轉譯器（Vite 8 的 Oxc，與先前的 esbuild 一樣，2026-10 實測）會把 lookbehind
+// （「(?<=」「(?<!」）與 d、v 旗標的字面值降級成執行期的 new RegExp(...)，在不支援的瀏覽器一執行就丟 SyntaxError；
 // modifiers（「(?i:」）與重複的具名群組不降級，原樣留在 bundle 裡，Safari 14 連整份 bundle 都解析不了。
 // 2026-09 修小數點時，normalizeText 的第一版用了 lookbehind（審查時擋下，沒有合併）—— 每一條開始測驗的路徑
 // 都經過它，iOS 16.4 以前的 iPhone 上會連測驗都開不起來；vitest 跑在 Node、Playwright 的 WebKit 是新版，

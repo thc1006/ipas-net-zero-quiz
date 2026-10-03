@@ -117,7 +117,7 @@ pnpm test:e2e       # E2E（playwright）
 pnpm lint && pnpm type-check
 ```
 
-**技術棧**：React 18 + TypeScript（strict）／Vite 6／Vitest + Testing Library + Playwright／
+**技術棧**：React 18 + TypeScript（strict）／Vite 8／Vitest + Testing Library + Playwright／
 GitHub Actions（lint · tsc · test · build · e2e · CodeQL · Codecov）／GitHub Pages 自動部署。
 
 ## 授權

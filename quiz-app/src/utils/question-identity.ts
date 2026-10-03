@@ -35,7 +35,8 @@ const DIGIT = /[0-9]/;
  * 保留 CJK、符號(\p{S})與數字之間的小數點；NFKC 在前，所以全形數字的小數點一樣受保護。
  *
  * 小數點的判斷寫在 replacer 裡，不用 regex 的 lookbehind：build target 含 Safari 14，
- * esbuild 會把 lookbehind 降級成執行期的 new RegExp(...)，Safari／iOS 16.4 以前一執行就丟 SyntaxError
+ * build 的轉譯器（Vite 8 是 Oxc，先前是 esbuild）會把 lookbehind 降級成執行期的 new RegExp(...)，
+ * Safari／iOS 16.4 以前一執行就丟 SyntaxError
  * —— 而每一條開始測驗的路徑都會經過這裡（browser-compat.test.ts 守著執行期的程式碼不再出現 lookbehind）。
  * 要保留的小數點前後都是數字，所以它一定自成一段、恰好是單獨一個「.」。
  */

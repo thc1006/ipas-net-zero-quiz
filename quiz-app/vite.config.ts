@@ -1,5 +1,6 @@
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
+import { parse } from 'acorn'
 import { resolve } from 'path'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 
@@ -13,7 +14,7 @@ import { readFileSync, writeFileSync, existsSync } from 'fs'
  * 並有 gate 釘住「index.html 不得再出現硬編的平台名稱」。
  */
 const platform = JSON.parse(
-  readFileSync(resolve(__dirname, '..', 'platform.config.json'), 'utf-8')
+  readFileSync(resolve(import.meta.dirname, '..', 'platform.config.json'), 'utf-8')
 ) as Record<string, string>
 
 /** 把 %PLATFORM_X% 換成 platform.config.json 的值；打錯字硬失敗，不留在產出裡 */
@@ -46,7 +47,7 @@ function platformHtml(): Plugin {
     },
     // public/ 的複製發生在 bundle 寫出之後，所以在這裡就地改寫
     closeBundle() {
-      const outDir = resolve(__dirname, 'dist')
+      const outDir = resolve(import.meta.dirname, 'dist')
       for (const name of PUBLIC_TEXT_ASSETS) {
         const p = resolve(outDir, name)
         if (!existsSync(p)) continue
@@ -58,32 +59,76 @@ function platformHtml(): Plugin {
   }
 }
 
+/**
+ * 產物的語法不得超過支援底線 ES2020（Safari 14）。
+ *
+ * build.target 只是請轉譯器降級：刪掉它、或日後 Vite 再改預設，產物就會悄悄帶上新語法，
+ * 不會有任何東西報錯。Vite 6 升 8 時預設從 Safari 14 改成 16.4，就是這樣。
+ * 這裡在檔案寫出之後，用 acorn 以 ES2020 重新解析每一個 JS chunk（解析的是會部署出去的那份，
+ * 壓縮器帶進來的語法也算在內）；解析不了就讓 build 失敗。
+ */
+function syntaxFloor(): Plugin {
+  return {
+    name: 'syntax-floor-es2020',
+    apply: 'build',
+    writeBundle(options, bundle) {
+      const dir = options.dir ?? resolve(import.meta.dirname, 'dist')
+      let parsed = 0
+      let entryParsed = false
+      for (const file of Object.values(bundle)) {
+        if (file.type !== 'chunk') continue
+        const code = readFileSync(resolve(dir, file.fileName), 'utf-8')
+        try {
+          parse(code, { ecmaVersion: 2020, sourceType: 'module' })
+        } catch (e) {
+          this.error(`${file.fileName} 超出支援底線 ES2020（見 build.target）：${(e as Error).message}`)
+        }
+        parsed++
+        if (file.isEntry) entryParsed = true
+      }
+      // 不能空轉：一個 chunk 都沒解析、或漏掉入口 chunk，等於什麼都沒檢查
+      if (parsed === 0 || !entryParsed) {
+        this.error(`syntax-floor 沒有解析到入口 chunk（解析了 ${parsed} 個 chunk）`)
+      }
+    },
+  }
+}
+
 // GitHub Pages 部署配置
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), platformHtml()],
+  plugins: [react(), platformHtml(), syntaxFloor()],
   base: platform.basePath,
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
-      '@components': resolve(__dirname, 'src/components'),
-      '@data': resolve(__dirname, 'src/data'),
-      '@hooks': resolve(__dirname, 'src/hooks'),
-      '@types': resolve(__dirname, 'src/types'),
-      '@utils': resolve(__dirname, 'src/utils'),
+      '@': resolve(import.meta.dirname, 'src'),
+      '@components': resolve(import.meta.dirname, 'src/components'),
+      '@data': resolve(import.meta.dirname, 'src/data'),
+      '@hooks': resolve(import.meta.dirname, 'src/hooks'),
+      '@types': resolve(import.meta.dirname, 'src/types'),
+      '@utils': resolve(import.meta.dirname, 'src/utils'),
     },
   },
   build: {
     outDir: 'dist',
     sourcemap: true,
+    // 支援底線是 Safari 14（iOS 16.4 以前的 iPhone 也要開得起來；見 src/browser-compat.test.ts）。
+    // 這一組是 Vite 6 的預設（'modules'）。Vite 8 的預設改成 Safari 16.4／Chrome 111，
+    // 不寫出來就會在升級時悄悄放棄這些瀏覽器：產物會帶 ES2022 語法（||=、class fields）。
+    target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
     // 提高 warning threshold；practice_pool.json 已 dynamic split，main bundle
     // 仍含 React + 主題庫 (integrated_dataset.json) ~640KB。
     chunkSizeWarningLimit: 700,
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        manualChunks: {
-          // React 生態獨立 chunk — 變動少，瀏覽器可長期 cache
-          'react-vendor': ['react', 'react-dom', 'react-dom/client'],
+        codeSplitting: {
+          groups: [
+            // React 生態獨立 chunk：變動少，瀏覽器可長期 cache
+            {
+              name: 'react-vendor',
+              test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+            },
+          ],
         },
       },
     },

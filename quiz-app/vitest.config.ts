@@ -46,12 +46,12 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
-      '@components': resolve(__dirname, 'src/components'),
-      '@data': resolve(__dirname, 'src/data'),
-      '@hooks': resolve(__dirname, 'src/hooks'),
-      '@types': resolve(__dirname, 'src/types'),
-      '@utils': resolve(__dirname, 'src/utils'),
+      '@': resolve(import.meta.dirname, 'src'),
+      '@components': resolve(import.meta.dirname, 'src/components'),
+      '@data': resolve(import.meta.dirname, 'src/data'),
+      '@hooks': resolve(import.meta.dirname, 'src/hooks'),
+      '@types': resolve(import.meta.dirname, 'src/types'),
+      '@utils': resolve(import.meta.dirname, 'src/utils'),
     },
   },
 });
