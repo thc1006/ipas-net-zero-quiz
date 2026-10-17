@@ -16,7 +16,7 @@ import { sourceCandidates } from '../utils/question-source';
 // 載入原始資料（build 時會被 Vite 處理）
 import rawData from './integrated_dataset.json';
 import { dedupeByContent as sharedDedupe } from '../utils/question-identity';
-import { officialExamReference } from '../utils/official-exam';
+import { officialExamReference, officialSampleReference } from '../utils/official-exam';
 
 /** 原始題庫資料 */
 export const dataset: QuizDataset = rawData as QuizDataset;
@@ -123,26 +123,45 @@ function convertGistQuestion(q: GistQuestion): QuizQuestion {
     // 於是題目標了 ambiguous 也永遠到不了 isQuestionScorable()。
     qualityFlags: q.quality_flags ?? [],
     sources: collectSources(q),
-    evidence: pickEvidence(q),
+    evidence: withOfficialAnswer(q, pickEvidence(q)),
     explanation: q.explanation,
+    ...(q.official_sample ? { officialSample: q.official_sample } : {}),
   };
 }
 
 /**
- * 官方公告試題的答案依據就是官方 PDF 上的這一題時，帶出答案欄印的選項與題目出處（哪一場、哪一科、第幾題）。
+ * 這一題的官方 PDF。題庫題寫在出處（source.url）；主庫配對的那一題（gist，restore_from_source_pdf.py 的
+ * DATASET_DUPLICATES）出處只寫 'gist'，PDF 是參考樣題匯入工具寫的那一則引文的網址
+ * （data/official-sample.test.ts 拿 manifest 核對過：那一則恰好一則、網址就是樣題 PDF）。
+ */
+function officialPdfUrl(q: UniqueQuestion | GistQuestion): string | undefined {
+  if (typeof q.source !== 'string') return safeEvidenceUrl(q.source?.url);
+  const own = q.metadata?.evidence?.find(
+    (e) => e.generated_by === 'tools/import_official_sample.py'
+  );
+  return safeEvidenceUrl(own?.url);
+}
+
+/**
+ * 官方題目的答案依據就是官方 PDF 上的這一題時，帶出 PDF 印的答案（公告試題的答案欄、參考樣題的「解答」）
+ * 與題目出處（哪一場或哪一版、哪一科、第幾題）。
  *
  * 引文只印得出題目本身（題幹與四個選項），UI 靠這一行才有一句話說出答案。
  * 網址兩邊都正規化再比：pickEvidence 給的是 `new URL().href`，而 source.url 是資料裡的原樣 ——
  * 寫著未編碼中文或大寫主機名的網址，直接比會對不上，整場的答案行就安靜地消失。
  */
 export function withOfficialAnswer(
-  q: UniqueQuestion,
+  q: UniqueQuestion | GistQuestion,
   evidence: QuizQuestion['evidence']
 ): QuizQuestion['evidence'] {
-  if (!q.official_exam || !evidence || !q.answer) return evidence;
-  if (evidence.url !== safeEvidenceUrl(q.source?.url)) return evidence;
-  // 出處寫出場次：115 年第二次匯入之後，結果頁上「第一科第 1 題」就分不出是哪一場
-  return { ...evidence, official: { answer: q.answer, reference: officialExamReference(q.official_exam) } };
+  const exam = 'official_exam' in q ? q.official_exam : undefined;
+  if ((!exam && !q.official_sample) || !evidence || !q.answer) return evidence;
+  if (evidence.url !== officialPdfUrl(q)) return evidence;
+  // 出處寫出場次或版次：115 年第二次匯入之後，結果頁上「第一科第 1 題」就分不出是哪一場
+  const official = exam
+    ? { kind: 'exam' as const, answer: q.answer, reference: officialExamReference(exam) }
+    : { kind: 'sample' as const, answer: q.answer, reference: officialSampleReference(q.official_sample!) };
+  return { ...evidence, official };
 }
 
 /**
@@ -165,6 +184,7 @@ function convertUniqueQuestion(q: UniqueQuestion): QuizQuestion {
     evidence: withOfficialAnswer(q, pickEvidence(q)),
     explanation: q.explanation ?? undefined,
     ...(q.official_exam ? { officialExam: q.official_exam } : {}),
+    ...(q.official_sample ? { officialSample: q.official_sample } : {}),
   };
 }
 

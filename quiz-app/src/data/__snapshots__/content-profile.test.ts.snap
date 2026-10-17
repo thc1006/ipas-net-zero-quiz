@@ -97,6 +97,26 @@ exports[`語料輪廓（換題庫時用 -u 重新產生） > 棘輪與反空轉�
     "what": "只出官方題目：'all' 與沒有 questionSource 逐題比對時，主題庫全部、考科一、考科二各至少 40 題可計分（各取 40 題）",
     "where": "hooks/officialSource.test.tsx",
   },
+  {
+    "semantics": "依語料重設",
+    "what": "參考樣題、它的來源與主庫配對的那一題至少各一（反空轉）",
+    "where": "data/official-sample.test.ts／questions.test.ts／schema-contract.test.ts／utils/official-exam.test.ts／utils/question-source.test.ts／tools/tests/test_official_sample_import.py",
+  },
+  {
+    "semantics": "依語料重設",
+    "what": "只出官方題目：每一版參考樣題的考科一、考科二都有題目（反空轉）",
+    "where": "questions.test.ts／hooks/officialSource.test.tsx",
+  },
+  {
+    "semantics": "依語料重設",
+    "what": "--verify 印出的題數：官方公告試題與參考樣題各至少一題（反空轉）",
+    "where": "tools/tests/test_restore_reproducibility.py",
+  },
+  {
+    "semantics": "依語料重設",
+    "what": "只出官方題目：參考樣題只有 114 年版、共 10 題，原卷順序的第一題是它（寫死版次與題數）",
+    "where": "pages/HomePage.test.tsx／hooks/officialSource.test.tsx／App.test.tsx／tests/e2e/official-mode.spec.ts",
+  },
 ]
 `;
 
@@ -106,7 +126,7 @@ exports[`語料輪廓（換題庫時用 -u 重新產生） > 答案洩漏指標 
     "AI 產題": "64.0%（64/100）",
     "gist": "45.5%（248/545）",
     "公開模擬題": "42.6%（23/54）",
-    "還原題": "50.0%（217/434）",
+    "還原題": "50.0%（219/438）",
   },
   "露骨長度洩漏題數": {
     "AI 產題": 28,
@@ -121,14 +141,14 @@ exports[`語料輪廓（換題庫時用 -u 重新產生） > 題庫規模與分�
   "主題庫": {
     "gist": 545,
     "依考科": {
-      "考科1": 539,
-      "考科2": 440,
+      "考科1": 542,
+      "考科2": 441,
     },
-    "有引文": 964,
-    "有答案": 979,
+    "有引文": 968,
+    "有答案": 983,
     "有解析": 764,
-    "總題數": 979,
-    "還原題": 434,
+    "總題數": 983,
+    "還原題": 438,
   },
   "品質旗標": {
     "主題庫使用次數": {

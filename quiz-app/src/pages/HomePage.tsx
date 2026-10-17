@@ -8,7 +8,13 @@ import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeO
 import { PracticePoolHistogram } from '../components/PracticePoolHistogram/PracticePoolHistogram';
 import { readBool, writeBool } from '../utils/local-storage';
 import { loadProgress, formatRelativeTime } from '../utils/quiz-progress-storage';
-import { officialSessions, questionSourceLabel } from '../utils/question-source';
+import {
+  officialSessions,
+  questionSourceLabel,
+  questionSourceNoun,
+  questionSourceScope,
+  sampleEditions,
+} from '../utils/question-source';
 import type { QuizConfig, ExamSubject, QuestionSource } from '../types/quiz';
 import './HomePage.css';
 
@@ -25,11 +31,15 @@ const DISCLOSURE_SEEN_KEY = 'practice-pool-disclosure-seen';
 /** 題數上限 */
 const QUESTION_COUNT_MAX = 100;
 
-/** 題目來源選單（#128）：全部題目、官方公告試題（全部場次）、各場公告試題（新到舊，由資料算出） */
+/**
+ * 題目來源選單（#128）：全部題目、全部官方題目（公告試題與參考樣題都算）、各場公告試題、各版參考樣題
+ * （場次與版次都是新到舊，由資料算出）
+ */
 const SOURCE_OPTIONS: QuestionSource[] = [
   'all',
   'official',
   ...officialSessions(allQuestions).map((s): QuestionSource => `exam:${s}`),
+  ...sampleEditions(allQuestions).map((e): QuestionSource => `sample:${e}`),
 ];
 
 /**
@@ -250,7 +260,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           desc =
             source === 'all'
               ? `下一場測驗會額外混入 ${PRACTICE_POOL_COUNTS.total} 題（${PRACTICE_POOL_COUNTS.externalMock} 模擬 + ${PRACTICE_POOL_COUNTS.aiGenerated} AI 產題；每題附來源徽章）。`
-              : `目前的題目來源只出官方公告試題，這一場不會混入練習池；題目來源選「全部題目」時，才會額外混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
+              : `目前的題目來源只出${questionSourceNoun(source)}，這一場不會混入練習池；題目來源選「全部題目」時，才會額外混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
           ctaLabel = '停用加強練習';
           ctaIcon = 'remove_circle_outline';
           modifierClass = 'practice-pool-tip--enabled';
@@ -259,7 +269,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           desc =
             source === 'all'
               ? `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章），啟用後下一場練習會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`
-              : `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章）。目前的題目來源只出官方公告試題，啟用後這一場也不會混入；題目來源選「全部題目」時才會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
+              : `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章）。目前的題目來源只出${questionSourceNoun(source)}，啟用後這一場也不會混入；題目來源選「全部題目」時才會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
           ctaLabel = `啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習`;
           ctaIcon = 'add_circle_outline';
           modifierClass = '';
@@ -344,7 +354,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
             </select>
           </div>
 
-          {/* 題目來源（#128）：只出官方公告試題；放在既有的測驗設定裡，不另加按鈕 */}
+          {/* 題目來源（#128）：只出官方題目；放在既有的測驗設定裡，不另加按鈕 */}
           <div className="config-item">
             <label htmlFor="source">題目來源</label>
             <select
@@ -368,14 +378,17 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
               aria-atomic="true"
             >
               {sourceAvailable === null ? null : sourceAvailable === 0 ? (
-                <span>這個範圍沒有官方公告試題，無法開始。</span>
+                <span>這個範圍沒有{questionSourceNoun(source)}，無法開始。</span>
               ) : (
                 <>
-                  <span>可出 {sourceAvailable} 題官方公告試題，不會混入其他來源的題目。</span>
+                  <span>
+                    可出 {sourceAvailable} 題{questionSourceNoun(source)}
+                    {questionSourceScope(source)}，不會混入其他來源的題目。
+                  </span>
                   {parsedQuestionCount !== null && parsedQuestionCount > sourceAvailable && (
                     <span className="config-item__hint--notice">
-                      題數設定是 {parsedQuestionCount} 題，但只有 {sourceAvailable} 題官方公告試題，本次會出{' '}
-                      {sourceAvailable} 題。
+                      題數設定是 {parsedQuestionCount} 題，但只有 {sourceAvailable} 題
+                      {questionSourceNoun(source)}，本次會出 {sourceAvailable} 題。
                     </span>
                   )}
                   {practiceMode.enabled && <span>加強練習池在這個模式不會混入。</span>}

@@ -11,8 +11,11 @@ export interface AnswerEvidenceProps {
     quote: string;
     url: string;
     authority?: string;
-    /** 官方公告試題：依據就是官方 PDF 上的這一題時，答案欄印的選項與題目出處（哪一場、哪一科、第幾題） */
-    official?: { answer: string; reference: string };
+    /**
+     * 官方題目：依據就是官方 PDF 上的這一題時，PDF 印的答案（公告試題的答案欄、參考樣題的「解答」）與題目出處
+     * （哪一場或哪一版、哪一科、第幾題）
+     */
+    official?: { kind: 'exam' | 'sample'; answer: string; reference: string };
   };
   /** 結果頁的錯題卡空間較窄，用較小的樣式 */
   compact?: boolean;
@@ -41,7 +44,8 @@ export function AnswerEvidence({ evidence, compact = false }: AnswerEvidenceProp
       <blockquote className="answer-evidence__quote">{evidence.quote}</blockquote>
       {evidence.official && (
         <p className="answer-evidence__official-answer">
-          官方公告的參考答案：({evidence.official.answer})（{evidence.official.reference}）
+          {evidence.official.kind === 'sample' ? '參考樣題的解答' : '官方公告的參考答案'}
+          ：({evidence.official.answer})（{evidence.official.reference}）
         </p>
       )}
       <a

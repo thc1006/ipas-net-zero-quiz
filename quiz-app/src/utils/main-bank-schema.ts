@@ -44,6 +44,7 @@ function validateGist(g: unknown, idx: number, errs: MainBankValidationError[]):
   if (!isExamSubject(g.exam_subject)) {
     errs.push({ path: `${path}.exam_subject`, message: `must be one of ${EXAM_SUBJECTS.join('|')}` });
   }
+  if (g.official_sample !== undefined) validateOfficialSample(g.official_sample, `${path}.official_sample`, errs);
 }
 
 // 官方公告試題的出處。與 schemas/main-bank.schema.json#/$defs/officialExam 同一條規則：
@@ -72,6 +73,29 @@ function validateOfficialExam(o: unknown, path: string, errs: MainBankValidation
   }
 }
 
+// 參考樣題的出處。與 schemas/main-bank.schema.json#/$defs/officialSample 同一條規則（理由同上）。
+// gist 題也可能帶：主庫那一題就是參考樣題的某一題時（DATASET_DUPLICATES），標記在它身上。
+const OFFICIAL_SAMPLE_FIELDS = new Set(['edition', 'subject', 'question_number']);
+
+function validateOfficialSample(o: unknown, path: string, errs: MainBankValidationError[]): void {
+  if (!isObj(o)) {
+    errs.push({ path, message: 'must be object' });
+    return;
+  }
+  for (const k of Object.keys(o)) {
+    if (!OFFICIAL_SAMPLE_FIELDS.has(k)) errs.push({ path: `${path}.${k}`, message: 'unknown field' });
+  }
+  if (typeof o.edition !== 'string' || !/^\d{3}$/.test(o.edition)) {
+    errs.push({ path: `${path}.edition`, message: 'must look like 114' });
+  }
+  if (typeof o.subject !== 'string' || !/^L\d{2}$/.test(o.subject)) {
+    errs.push({ path: `${path}.subject`, message: 'must look like L11' });
+  }
+  if (!Number.isInteger(o.question_number) || (o.question_number as number) < 1) {
+    errs.push({ path: `${path}.question_number`, message: 'must be a positive integer' });
+  }
+}
+
 function validateUnique(u: unknown, idx: number, errs: MainBankValidationError[]): void {
   const path = `our_unique_items[${idx}]`;
   if (!isObj(u)) {
@@ -87,6 +111,7 @@ function validateUnique(u: unknown, idx: number, errs: MainBankValidationError[]
     errs.push({ path: `${path}.exam_subject`, message: `must be one of ${EXAM_SUBJECTS.join('|')}` });
   }
   if (u.official_exam !== undefined) validateOfficialExam(u.official_exam, `${path}.official_exam`, errs);
+  if (u.official_sample !== undefined) validateOfficialSample(u.official_sample, `${path}.official_sample`, errs);
 }
 
 export function validateMainBank(ds: unknown): MainBankValidationError[] {

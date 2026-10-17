@@ -81,14 +81,20 @@ def test_the_snapshot_has_exactly_the_shape_the_extractor_produces(snapshot):
     for src_id, source in snapshot.items():
         # 官方來源另記 PDF 的頁首（CI 拿它核對 SOURCES）；圖表題（擷取器對照 PDF 確認、題目欄裡真的有圖的題號）
         # 只在有的時候才寫
-        official = R.SOURCES[src_id].get('kind') == 'official_exam'
-        base = ['pdf_sha256', 'header', 'questions'] if official else ['pdf_sha256', 'questions']
+        kind = R.SOURCES[src_id].get('kind')
+        base = ['pdf_sha256', 'header', 'questions'] if kind in R.OFFICIAL_KINDS else ['pdf_sha256', 'questions']
         assert list(source) in (base, base + ['figure_questions'])
-        if official:
+        if kind == 'official_exam':
             assert list(source['header']) == ['title', 'subject', 'date_line', 'session', 'exam_date', 'subject_code']
             # 場次、考試日期、科目代號是從頁首的三行推出來的：兩邊要對得上（手改其中一邊，離線就看得出來）
             header = source['header']
             derived = R.ipas_exam_pdf._header(header['title'], header['subject'], header['date_line'])
+            assert dataclasses.asdict(derived) == header, f'{src_id} 的頁首自相矛盾：快照不可以手改，要跑 --emit'
+        elif kind == 'official_sample':
+            assert list(source['header']) == ['title', 'subject', 'subject_code', 'edition']
+            # 版次、科目代號是從標題與科目那一行推出來的（同上）
+            header = source['header']
+            derived = R.ipas_sample_pdf._header(header['title'], header['subject'])
             assert dataclasses.asdict(derived) == header, f'{src_id} 的頁首自相矛盾：快照不可以手改，要跑 --emit'
         if 'figure_questions' in source:
             figures = source['figure_questions']
@@ -395,9 +401,15 @@ def offline(monkeypatch, snapshot):
 
 def test_verify_passes_on_the_committed_files(offline, tmp_path, capsys):
     assert R.verify(tmp_path) == 0
-    meta = json.loads(R.MANIFEST.read_text(encoding='utf-8'))['_meta']
-    assert (f'{meta["restored_count"] + meta["imported_count"]} 題全部與來源 PDF 相符（還原 {meta["restored_count"]} 題'
-            in capsys.readouterr().out)
+    man = json.loads(R.MANIFEST.read_text(encoding='utf-8'))
+    meta = man['_meta']
+    # 匯入的題目分成公告試題與參考樣題兩種來源，各自報題數：參考樣題不是公告試題
+    kinds = [meta['sources'][e['source_id']].get('kind') for e in man['entries']]
+    exams, samples = kinds.count('official_exam'), kinds.count('official_sample')
+    assert exams > 0 and samples > 0
+    assert exams + samples == meta['imported_count']
+    assert (f'{meta["restored_count"] + meta["imported_count"]} 題全部與來源 PDF 相符（還原 {meta["restored_count"]} 題、'
+            f'官方公告試題 {exams} 題、參考樣題 {samples} 題）' in capsys.readouterr().out)
 
 
 def test_verify_accepts_a_crlf_working_tree(offline, tmp_path, monkeypatch):
@@ -680,11 +692,14 @@ def test_extract_sources_keeps_only_the_snapshot_fields(monkeypatch, tmp_path):
     monkeypatch.setattr(R, 'load_pdf', lambda src_id, cache: b'')
     question = {'number': 1, 'page': 1, 'column': 'left', 'answer': 'A', 'stem': '題幹',
                 'options': [{'key': 'A', 'text': '甲'}], 'note': '解析'}
-    for layout in R.EXTRACTORS:  # 每一種版面的擷取器都一樣：只留快照的欄位
-        monkeypatch.setitem(R.EXTRACTORS, layout, lambda path, **_: [dict(question)])
+    for layout in R.EXTRACTORS:  # 每一種版面的擷取器都一樣：只留快照的欄位（參考樣題另外傳科目）
+        monkeypatch.setitem(R.EXTRACTORS, layout, lambda path, *subject, **_: [dict(question)])
     monkeypatch.setattr(R, 'check_official_header', lambda src_id, meta, header: None)  # 頁首另有測試
+    monkeypatch.setattr(R, 'check_sample_header', lambda src_id, meta, header: None)
     for layout in R.HEADER_READERS:
         monkeypatch.setitem(R.HEADER_READERS, layout, lambda path: None)
+    for layout in R.SAMPLE_HEADER_READERS:
+        monkeypatch.setitem(R.SAMPLE_HEADER_READERS, layout, lambda path, subject: None)
     out = R.extract_sources(tmp_path)
     assert list(out) == list(R.SOURCES)
     for src_id, source in out.items():

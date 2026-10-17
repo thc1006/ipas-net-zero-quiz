@@ -146,10 +146,13 @@ const EXPECTED_SOURCE_COUNT: Record<string, number> = {
   S_IPAS_115_01_L12: 50,
   S_IPAS_115_02_L11: 50,
   S_IPAS_115_02_L12: 50,
+  S_IPAS_SAMPLE_114_L11: 5,
+  S_IPAS_SAMPLE_114_L12: 5,
 };
 
-// 表格版面（官方公告試題）只有一欄，題目的位置由頁碼與題號決定，column 記為 null
-const isTable = (sourceId: string) => MAN._meta.sources[sourceId]?.layout === 'ipas_exam_table';
+// 表格版面（官方公告試題）與參考樣題的版面都只有一欄，題目的位置由頁碼與題號決定，column 記為 null
+const isTable = (sourceId: string) =>
+  ['ipas_exam_table', 'ipas_sample'].includes(MAN._meta.sources[sourceId]?.layout ?? '');
 
 // Python 的 \s（= str.isspace()）逐字列出。JS 的 \s 與它不等價：少了 U+001C–U+001F 與 U+0085，
 // 多了 U+FEFF —— 題幹混進一個 BOM，兩邊算出的指紋就不同，竄改檢查會誤判。

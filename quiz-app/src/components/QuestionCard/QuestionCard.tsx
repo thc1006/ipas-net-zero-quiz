@@ -6,7 +6,7 @@ import { AnswerEvidence } from '../AnswerEvidence/AnswerEvidence';
 import { SourceBadge } from '../SourceBadge/SourceBadge';
 import { SourceBanner } from '../SourceBanner/SourceBanner';
 import { prettifySourceUrl } from '../../utils/source-label';
-import { officialExamLabel } from '../../utils/official-exam';
+import { officialExamLabel, officialSampleLabel } from '../../utils/official-exam';
 import { findRedundantPrefix } from '../../utils/option-prefix';
 import { subjectClass, subjectLabel } from '../../utils/subject-label';
 import { buildFeedbackUrl } from '../../utils/question-feedback-url';
@@ -186,7 +186,7 @@ export function QuestionCard({
         <span className={`badge badge-info subject-tag ${subjectClass(question.subject)}`}>
           {subjectLabel(question.subject)}
         </span>
-        {/* 官方公告試題（#128 的官方題模式之前，先在題卡上標出來）。圖示用中性的機構圖示：
+        {/* 官方公告試題與參考樣題（#128 的官方題模式之前，先在題卡上標出來）。圖示用中性的機構圖示：
             verified 在題庫相似題裡代表「正確答案」，而且官方答案本身也標了時效，不該暗示「已驗證」 */}
         {question.officialExam && (
           <span className="badge badge-success official-exam-tag">
@@ -194,6 +194,14 @@ export function QuestionCard({
               account_balance
             </span>
             {officialExamLabel(question.officialExam)}
+          </span>
+        )}
+        {question.officialSample && (
+          <span className="badge badge-success official-exam-tag">
+            <span className="material-icons sm" aria-hidden="true">
+              account_balance
+            </span>
+            {officialSampleLabel(question.officialSample)}
           </span>
         )}
         {question.provenance && (

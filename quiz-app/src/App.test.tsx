@@ -3,7 +3,7 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vite
 import { render, screen, fireEvent, cleanup, waitFor, act } from '@testing-library/react';
 import App from './App';
 import { getSourceCandidates } from './data/questions';
-import { officialExamLabel } from './utils/official-exam';
+import { officialExamLabel, officialSampleLabel } from './utils/official-exam';
 
 // #128：按下開始那一刻抽不到題目時，App 要留在原頁。首頁在可出題數是 0 時會停用開始按鈕，
 // 正常操作走不到這裡；要驗 App 有照 startQuiz 的回傳值決定切不切頁，只能讓首頁算題數時照常、
@@ -105,8 +105,13 @@ describe('App', () => {
   });
 
   // #128：只出官方題目時，練習池啟用也不混入；「再測一次」沿用同一個題目來源
-  it('只出官方題目：練習池啟用時也只出官方公告試題，再測一次也一樣', async () => {
-    const firstLabel = officialExamLabel(getSourceCandidates('all', 'official')[0].officialExam!);
+  it('只出官方題目：練習池啟用時也只出官方題目，再測一次也一樣', async () => {
+    // 原卷順序的第一題是最早那一份（114 年版參考樣題）的第一題：題卡上標的是它的版次
+    const first = getSourceCandidates('all', 'official')[0];
+    const firstLabel = first.officialExam
+      ? officialExamLabel(first.officialExam)
+      : officialSampleLabel(first.officialSample!);
+    expect(firstLabel).toBe('官方參考樣題（114 年版）');
     localStorage.setItem('practice-pool-enabled', '1');
     localStorage.setItem('practice-pool-ai-opt-in', '1');
     render(<App />);

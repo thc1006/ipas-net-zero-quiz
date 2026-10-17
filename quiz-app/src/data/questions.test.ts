@@ -16,8 +16,9 @@ import {
   withOfficialAnswer,
   getSourceCandidates,
 } from './questions';
-import { byPaperOrder, officialSessions } from '../utils/question-source';
+import { byPaperOrder, officialSessions, sampleEditions } from '../utils/question-source';
 import { contentSignature } from '../utils/question-identity';
+import manifestRaw from './restoration-manifest.json';
 
 describe('題庫資料模組', () => {
   describe('stats 統計資料', () => {
@@ -60,7 +61,11 @@ describe('題庫資料模組', () => {
       //
       // 881 → 979：匯入 115 年第二次公告試題，第一科 50 題、第二科 48 題（第二科第 9、15 題要讀圖，
       // 題庫還不支援圖片，不收錄，restoration-manifest 記為 not_imported_figure）。
-      expect(stats.total).toBe(979);
+      //
+      // 979 → 983：補齊 iPAS 參考樣題（114 年版）的 10 題（#128）。題庫原本有其中 5 題（S1-p01-q004 等，改名為
+      // S_IPAS_SAMPLE_114_L11／L12 加題號），另收 4 題；第一科第 2 題就是主庫的 gist[287]，不重複收錄，在它身上標
+      // official_sample。
+      expect(stats.total).toBe(983);
     });
 
     it('考科一和考科二題數加總應等於總題數', () => {
@@ -348,9 +353,32 @@ describe('官方公告試題帶進執行期', () => {
   });
 });
 
-describe('官方公告試題的答案依據帶出官方答案', () => {
+describe('參考樣題帶進執行期', () => {
+  it('題庫裡每一題參考樣題（含主庫配對的那一題）都帶著標記，其他題目都沒有', () => {
+    const raw = new Map<string, unknown>([
+      ...dataset.gist_items.map((g) => [`gist-${g.index}`, g.official_sample] as const),
+      ...dataset.our_unique_items.map((q) => [q.item_id, q.official_sample] as const),
+    ]);
+    const expected = [...raw].filter(([, marker]) => marker).map(([id]) => id);
+    expect(expected.length, '題庫裡沒有參考樣題：這條測試在空轉').toBeGreaterThan(0);
+    expect(expected.some((id) => id.startsWith('gist-')), '沒有主庫配對的參考樣題：這條測試的 gist 那一半在空轉').toBe(
+      true
+    );
+    const runtime = allQuestions.filter((q) => q.officialSample);
+    expect(runtime.map((q) => q.id).sort()).toEqual([...expected].sort());
+    for (const q of runtime) expect(q.officialSample).toEqual(raw.get(q.id));
+  });
+});
+
+describe('官方題目的答案依據帶出官方答案', () => {
   const raw = new Map(dataset.our_unique_items.map((q) => [q.item_id, q]));
+  const rawGist = new Map(dataset.gist_items.map((g) => [`gist-${g.index}`, g]));
   const official = allQuestions.filter((q) => q.officialExam);
+  // 參考樣題包含主庫配對的那一題（gist）：它的出處只寫 'gist'，官方 PDF 的網址要從 manifest 拿
+  const samples = allQuestions.filter((q) => q.officialSample);
+  const SAMPLE_PDF = (
+    manifestRaw as unknown as { _meta: { sources: Record<string, { url: string }> } }
+  )._meta.sources;
 
   // 預期值直接從原始資料算：pickEvidence 挑中的那一則（第一則支持正解、夠長的引文），
   // 它的**原始**網址是不是就是這一題的**原始** source.url —— 不經過任何網址正規化，與實作各自獨立。
@@ -359,20 +387,80 @@ describe('官方公告試題的答案依據帶出官方答案', () => {
     const [year, round] = o.session.split('-');
     return `${year} 年第${'一二三四'[Number(round) - 1]}次公告試題第${o.subject === 'L11' ? '一' : '二'}科第 ${o.question_number} 題`;
   };
-  const pickedIsItsOwnSource = (q: (typeof dataset.our_unique_items)[number]): boolean => {
+  const pickedIsFrom = (
+    q: { answer: string | null; metadata?: (typeof dataset.our_unique_items)[number]['metadata'] },
+    url: string | undefined
+  ): boolean => {
     const picked = (q.metadata?.evidence ?? []).find(
       (e) => e.supports_option === q.answer && (e.quote ?? '').trim().length >= 8
     );
-    return picked !== undefined && picked.url === q.source?.url;
+    return picked !== undefined && url !== undefined && picked.url === url;
   };
+  const pickedIsItsOwnSource = (q: (typeof dataset.our_unique_items)[number]): boolean =>
+    pickedIsFrom(q, q.source?.url);
 
   it('依據就是官方 PDF 那一題時，帶出答案欄的選項與題目位置；依據不是那一題（法條、《巴黎協定》）時不帶', () => {
     for (const q of official) {
       const expected = pickedIsItsOwnSource(raw.get(q.id)!)
-        ? { answer: q.answer, reference: expectedReference(q.officialExam!) }
+        ? { kind: 'exam', answer: q.answer, reference: expectedReference(q.officialExam!) }
         : undefined;
       expect(q.evidence?.official, q.id).toEqual(expected);
     }
+  });
+
+  it('參考樣題也一樣：依據就是樣題 PDF 那一題時，帶出「解答」印的選項與題目位置；主庫配對的那一題也帶', () => {
+    expect(samples.length, '題庫裡沒有參考樣題：這條測試在空轉').toBeGreaterThan(0);
+    const twins = samples.filter((q) => rawGist.has(q.id));
+    expect(twins.length, '沒有主庫配對的參考樣題：這條測試的 gist 那一半在空轉').toBeGreaterThan(0);
+    for (const q of samples) {
+      const o = q.officialSample!;
+      const pdf = SAMPLE_PDF[`S_IPAS_SAMPLE_${o.edition}_${o.subject}`]?.url;
+      const expected = pickedIsFrom(raw.get(q.id) ?? rawGist.get(q.id)!, pdf)
+        ? {
+            kind: 'sample',
+            answer: q.answer,
+            reference: `參考樣題（${o.edition} 年版）第${o.subject === 'L11' ? '一' : '二'}科第 ${o.question_number} 題`,
+          }
+        : undefined;
+      expect(q.evidence?.official, q.id).toEqual(expected);
+    }
+    expect(samples.filter((q) => q.evidence?.official).length).toBeGreaterThan(0);
+    expect(
+      twins.filter((q) => q.evidence?.official).map((q) => q.id),
+      '主庫配對的那一題沒有帶出答案'
+    ).toEqual(twins.map((q) => q.id));
+  });
+
+  // 主庫配對的那一題（gist）沒有 source.url 可比，認的是參考樣題匯入工具寫的那一則引文（generated_by）：
+  // data/official-sample.test.ts 拿 manifest 核對過它的網址就是樣題 PDF
+  it('主庫配對的那一題：依據是匯入工具寫的那一則才帶；依據是別的引文、引文沒有標記、標記是別的工具，都不帶', () => {
+    const g = dataset.gist_items.find((x) => x.official_sample)!;
+    const own = g.metadata!.evidence!.find(
+      (e) => e.generated_by === 'tools/import_official_sample.py'
+    )!;
+    const evidence = { quote: own.quote!, url: own.url! };
+    expect(withOfficialAnswer(g, evidence)?.official).toEqual({
+      kind: 'sample',
+      answer: g.answer,
+      reference: `參考樣題（114 年版）第一科第 ${g.official_sample!.question_number} 題`,
+    });
+    expect(
+      withOfficialAnswer(g, { ...evidence, url: 'https://law.moj.gov.tw/x' })?.official
+    ).toBeUndefined();
+    const relabel = (generated_by: string | undefined) => ({
+      ...g,
+      metadata: {
+        ...g.metadata,
+        evidence: g.metadata!.evidence!.map((e) => (e.generated_by ? { ...e, generated_by } : e)),
+      },
+    });
+    expect(withOfficialAnswer(relabel(undefined), evidence)?.official).toBeUndefined();
+    expect(
+      withOfficialAnswer(relabel('tools/import_official_exam.py'), evidence)?.official
+    ).toBeUndefined();
+    expect(
+      withOfficialAnswer({ ...g, official_sample: undefined }, evidence)?.official
+    ).toBeUndefined();
   });
 
   it('每一份官方來源都至少有一題帶出官方答案（不讓一整場安靜地消失）', () => {
@@ -389,9 +477,13 @@ describe('官方公告試題的答案依據帶出官方答案', () => {
   it('其他題目的答案依據不帶官方答案', () => {
     // 這一條擋得住「拿掉 official_exam 的判斷」，靠的是有非官方題的依據就出自它自己的出處（例如樣題 PDF 上
     // 的那一題）—— 沒有這種題目，拿掉判斷也一樣綠。
-    const ownSource = dataset.our_unique_items.filter((q) => !q.official_exam && pickedIsItsOwnSource(q));
+    const ownSource = dataset.our_unique_items.filter(
+      (q) => !q.official_exam && !q.official_sample && pickedIsItsOwnSource(q)
+    );
     expect(ownSource.length, '沒有依據出自自己出處的非官方題 —— 這條測試在空轉').toBeGreaterThan(0);
-    const bad = allQuestions.filter((q) => !q.officialExam && q.evidence?.official).map((q) => q.id);
+    const bad = allQuestions
+      .filter((q) => !q.officialExam && !q.officialSample && q.evidence?.official)
+      .map((q) => q.id);
     expect(bad).toEqual([]);
   });
 
@@ -414,18 +506,34 @@ describe('官方公告試題的答案依據帶出官方答案', () => {
     expect(withOfficialAnswer({ ...asWritten, official_exam: undefined }, evidence)?.official).toBeUndefined();
     expect(withOfficialAnswer(asWritten, { ...evidence, url: 'https://law.moj.gov.tw/x' })?.official).toBeUndefined();
   });
+
+  it('參考樣題的標記換成公告試題的標記，帶出的就是公告試題的說法（兩種不會混用）', () => {
+    const q = raw.get(samples.find((x) => raw.has(x.id))!.id)!;
+    const evidence = { quote: '參考樣題的題幹與選項', url: q.source!.url! };
+    expect(withOfficialAnswer(q, evidence)?.official?.kind).toBe('sample');
+    const exam = { session: '115-01', exam_date: '2026-05-16', subject: 'L11', question_number: 3 };
+    expect(withOfficialAnswer({ ...q, official_sample: undefined, official_exam: exam }, evidence)?.official).toEqual({
+      kind: 'exam',
+      answer: q.answer,
+      reference: '115 年第一次公告試題第一科第 3 題',
+    });
+    expect(withOfficialAnswer({ ...q, official_sample: undefined }, evidence)?.official).toBeUndefined();
+  });
 });
 
 // #128 只出官方題目：抽題範圍只含帶官方標記、考科相符、有標準答案的題目，照原卷順序。
 describe('getSourceCandidates（只出官方題目時的抽題範圍）', () => {
-  const official = allQuestions.filter((q) => q.officialExam && isQuestionScorable(q));
-  const keyOf = (q: (typeof allQuestions)[number]) =>
-    `${q.officialExam!.session}|${q.officialExam!.subject}|${q.officialExam!.question_number}`;
+  const official = allQuestions.filter((q) => (q.officialExam || q.officialSample) && isQuestionScorable(q));
+  const keyOf = (q: (typeof allQuestions)[number]) => {
+    const o = q.officialExam ?? q.officialSample!;
+    return `${q.officialExam?.session ?? `sample ${q.officialSample!.edition}`}|${o.subject}|${o.question_number}`;
+  };
 
   it('全部考科：每一題都帶官方標記、有標準答案、不重複，照原卷順序，一題不漏', () => {
     const got = getSourceCandidates('all', 'official');
     expect(got.length).toBeGreaterThan(0);
-    expect(got.filter((q) => !q.officialExam || !isQuestionScorable(q))).toEqual([]);
+    expect(got.filter((q) => (!q.officialExam && !q.officialSample) || !isQuestionScorable(q))).toEqual([]);
+    expect(got.filter((q) => q.officialSample).length, '參考樣題沒有進官方題目的範圍').toBeGreaterThan(0);
     expect(new Set(got.map(contentSignature)).size).toBe(got.length);
     expect(got.map(keyOf)).toEqual([...got].sort(byPaperOrder).map(keyOf));
     expect(new Set(got.map((q) => q.id))).toEqual(new Set(official.map((q) => q.id)));
@@ -434,7 +542,9 @@ describe('getSourceCandidates（只出官方題目時的抽題範圍）', () => 
   it('可與考科組合：只出考科一的官方題', () => {
     const got = getSourceCandidates('考科1', 'official');
     expect(got.length).toBeGreaterThan(0);
-    expect(got.filter((q) => q.subject !== '考科1' || q.officialExam?.subject !== 'L11')).toEqual([]);
+    expect(
+      got.filter((q) => q.subject !== '考科1' || (q.officialExam ?? q.officialSample)?.subject !== 'L11')
+    ).toEqual([]);
     expect(got.length).toBe(official.filter((q) => q.subject === '考科1').length);
   });
 
@@ -442,14 +552,27 @@ describe('getSourceCandidates（只出官方題目時的抽題範圍）', () => 
     for (const session of officialSessions(allQuestions)) {
       for (const subject of ['考科1', '考科2'] as const) {
         const got = getSourceCandidates(subject, `exam:${session}`);
-        const want = official.filter((q) => q.officialExam!.session === session && q.subject === subject);
+        const want = official.filter((q) => q.officialExam?.session === session && q.subject === subject);
         expect(got.length).toBeGreaterThan(0);
         expect(got.map((q) => q.id)).toEqual([...want].sort(byPaperOrder).map((q) => q.id));
       }
     }
   });
 
-  it('認不得的場次一題都不出（不退回全部題目）', () => {
+  it('只出某一版參考樣題、某一科', () => {
+    expect(sampleEditions(allQuestions).length).toBeGreaterThan(0);
+    for (const edition of sampleEditions(allQuestions)) {
+      for (const subject of ['考科1', '考科2'] as const) {
+        const got = getSourceCandidates(subject, `sample:${edition}`);
+        const want = official.filter((q) => q.officialSample?.edition === edition && q.subject === subject);
+        expect(got.length).toBeGreaterThan(0);
+        expect(got.map((q) => q.id)).toEqual([...want].sort(byPaperOrder).map((q) => q.id));
+      }
+    }
+  });
+
+  it('認不得的場次或版次一題都不出（不退回全部題目）', () => {
     expect(getSourceCandidates('all', 'exam:999-01')).toEqual([]);
+    expect(getSourceCandidates('all', 'sample:999')).toEqual([]);
   });
 });

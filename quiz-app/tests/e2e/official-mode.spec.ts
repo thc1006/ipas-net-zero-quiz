@@ -17,7 +17,7 @@ async function gotoHome(page: Page, fontSize?: 'normal' | 'xlarge'): Promise<voi
 }
 
 test.describe('只出官方題目', () => {
-  test('鍵盤：Tab 到題目來源、方向鍵選官方公告試題、Enter 開始，題卡帶官方標籤', async ({ page }) => {
+  test('鍵盤：Tab 到題目來源、方向鍵選全部官方題目、Enter 開始，題卡帶官方標籤', async ({ page }) => {
     await gotoHome(page);
     const source = page.getByLabel('題目來源');
     let reached = false;
@@ -27,9 +27,11 @@ test.describe('只出官方題目', () => {
     }
     expect(reached, 'Tab 序列應在 30 次內到達題目來源選單').toBe(true);
 
-    await page.keyboard.press('ArrowDown'); // 全部題目 → 官方公告試題（全部場次）
+    await page.keyboard.press('ArrowDown'); // 全部題目 → 全部官方題目
     await expect(source).toHaveValue('official');
-    await expect(page.getByText(/^可出 \d+ 題官方公告試題，不會混入其他來源的題目。$/)).toBeVisible();
+    await expect(
+      page.getByText(/^可出 \d+ 題官方題目（公告試題與參考樣題），不會混入其他來源的題目。$/)
+    ).toBeVisible();
 
     // 隨機出題順序也要能用鍵盤切換
     const shuffle = page.getByLabel('隨機出題順序');
@@ -40,14 +42,15 @@ test.describe('只出官方題目', () => {
     await page.getByRole('button', { name: /開始測驗/ }).focus();
     await page.keyboard.press('Enter');
     await expect(page.locator('.question-card')).toBeVisible();
-    // 標籤前面有 material-icons 圖示的文字（account_balance），不能錨定開頭
-    await expect(page.getByText(/\d{3} 年第.+次官方公告試題/)).toBeVisible();
+    // 不隨機：第一題是原卷順序最早的那一份（114 年版參考樣題）。標籤前面有 material-icons 圖示的文字
+    // （account_balance），不能錨定開頭
+    await expect(page.locator('.question-card').getByText(/官方參考樣題（114 年版）/)).toBeVisible();
   });
 
   // 選單寬度跟著最長的選項與字級走：最大字級最容易把頁面撐寬
   for (const fontSize of ['normal', 'xlarge'] as const) {
     for (const width of [320, 360, 390]) {
-      test(`手機 ${width}px、字級 ${fontSize}：題目來源選單完整落在設定區內，整頁不會橫向捲動`, async ({ page }) => {
+      test(`手機 ${width}px、字級 ${fontSize}：題目來源選單完整落在設定區內，每個選項都完整顯示，整頁不會橫向捲動`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
         await gotoHome(page, fontSize);
         const source = page.getByLabel('題目來源');
@@ -77,8 +80,36 @@ test.describe('只出官方題目', () => {
         );
         expect(Math.abs(sourceItem - subjectItem), '空的題目來源說明多出了一段間距').toBeLessThanOrEqual(0.5);
 
+        // 選單跟著欄寬縮（min-width: 0），選中的選項太長就被截掉一段，上面的斷言照樣通過：原本的
+        // 「全部官方題目（公告試題與參考樣題）」在 320px 與最大字級、「115 年第二次官方公告試題」在 320px 的最大字級
+        // 都被截掉。完整顯示一個選項要多寬交給瀏覽器量：複製一個只有這個選項的選單、寬度設成 max-content，
+        // 量出來的就是選項文字加上下拉箭頭、padding 與框線
+        const cut = await source.evaluate((select: HTMLSelectElement) => {
+          const width = select.getBoundingClientRect().width;
+          return [...select.options].flatMap((option) => {
+            const probe = select.cloneNode(false) as HTMLSelectElement;
+            probe.removeAttribute('id');
+            probe.appendChild(option.cloneNode(true));
+            Object.assign(probe.style, {
+              position: 'absolute',
+              visibility: 'hidden',
+              width: 'max-content',
+              minWidth: '0',
+              maxWidth: 'none',
+            });
+            select.parentElement!.appendChild(probe);
+            const need = probe.getBoundingClientRect().width;
+            probe.remove();
+            return need > width + 0.5
+              ? [`${option.text}：要 ${need.toFixed(1)}px，選單只有 ${width.toFixed(1)}px`]
+              : [];
+          });
+        });
+        expect(cut, '題目來源的選項選中時會被截掉一段').toEqual([]);
+
+        // 選了全部官方題目之後，說明出現也不能把頁面撐寬
         await source.selectOption('official');
-        await expect(page.getByText(/^可出 \d+ 題官方公告試題/)).toBeVisible();
+        await expect(page.getByText(/^可出 \d+ 題官方題目/)).toBeVisible();
         const after = await page.evaluate(
           () => document.documentElement.scrollWidth - document.documentElement.clientWidth
         );

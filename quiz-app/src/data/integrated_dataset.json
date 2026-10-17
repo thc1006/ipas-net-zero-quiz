@@ -7,15 +7,15 @@
       "爬蟲題庫: dataset_verified.json",
       "CHU 商研院模擬試題 PDF（考科1 100題 / 考科2 70題，含答案key）"
     ],
-    "total_questions": 979,
+    "total_questions": 983,
     "gist_questions": 545,
-    "our_unique_questions": 434,
+    "our_unique_questions": 438,
     "corrections_applied": 41,
     "by_subject": {
-      "考科1": 539,
-      "考科2": 440
+      "考科1": 542,
+      "考科2": 441
     },
-    "with_answer": 979,
+    "with_answer": 983,
     "last_updated": "2026-07-20T00:00:00.000000",
     "content_review": {
       "last_review_date": "2026-07-13",
@@ -27,9 +27,9 @@
         "ISSB_IFRS_TCFD"
       ],
       "reverified_count": 133,
-      "total_questions": 979,
+      "total_questions": 983,
       "time_sensitive_count": 331,
-      "not_reviewed_this_round_count": 846,
+      "not_reviewed_this_round_count": 850,
       "carried_over_count": 198,
       "known_unresolved": [
         {
@@ -15849,9 +15849,17 @@
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
         "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
         ],
         "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "quote": "下列何者並非我國 2050 淨零排放路徑之四大轉型？\n(A)能源轉型；(B)產業轉型；(C)生態轉型；(D)社會轉型\n解答：(C)",
+            "supports_option": "C",
+            "note": "參考樣題（114 年版）第一科第 2 題：PDF 印「解答：(C)」。",
+            "generated_by": "tools/import_official_sample.py"
+          },
           {
             "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
             "quote": "Q24 下列何者並非我國2050淨零排放路徑之四大轉型？\n(A)能源轉型; (B)產業轉型; (C)生態轉型; (D)社會轉型\n(C)生態轉型",
@@ -15866,6 +15874,11 @@
           "key_text": "生態轉型;",
           "how": "C:雙欄答案卡"
         }
+      },
+      "official_sample": {
+        "edition": "114",
+        "subject": "L11",
+        "question_number": 2
       }
     },
     {
@@ -30022,13 +30035,13 @@
   ],
   "our_unique_items": [
     {
-      "item_id": "S1-p01-q004",
+      "item_id": "S_IPAS_SAMPLE_114_L11-q004",
       "year": 2025,
-      "year_confidence": "medium",
+      "year_confidence": "high",
       "credential": "iPAS 淨零碳規劃管理師",
       "level": null,
       "topic_tags": [],
-      "question_type": "unknown",
+      "question_type": "single_choice",
       "stem": "下列何者不屬於可再生能源的優點？",
       "options": [
         {
@@ -30051,7 +30064,7 @@
       "answer": "A",
       "explanation": "引文是官方參考樣題中的同一題，其解答指向「可隨意裝置」——也就是這一項不屬於可再生能源的優點。相對地，協助能源供應穩定、減少空氣污染、減少溫室氣體排放這三項，在該題中都被列為可再生能源的優點。",
       "source": {
-        "source_id": "S1",
+        "source_id": "S_IPAS_SAMPLE_114_L11",
         "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
         "publisher": "iPAS",
         "authority": "official",
@@ -30081,6 +30094,13 @@
         ],
         "evidence": [
           {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "quote": "下列何者不屬於可再生能源的優點？\n(A)可隨意裝置；(B)協助能源供應穩定；(C)減少空氣污染；(D)減少溫室氣體排放\n解答：(A)",
+            "supports_option": "A",
+            "note": "參考樣題（114 年版）第一科第 4 題：PDF 印「解答：(A)」。",
+            "generated_by": "tools/import_official_sample.py"
+          },
+          {
             "quote": "下列何者不屬於可再生能源的優點？ \n(A)可隨意裝置；(B)協助能源供應穩定；(C)減少空氣污染；(D)減少溫室氣體排放 \n解答：(A)",
             "supports_option": "A",
             "verified_on": "2026-07-13",
@@ -30093,17 +30113,27 @@
           "date": "2026-07-15",
           "anchored_on": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
           "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        },
+        "renamed_from": {
+          "item_id": "S1-p01-q004",
+          "on": "2026-10-18",
+          "why": "參考樣題登記進 restoration-manifest（#128）：依科目拆成 S_IPAS_SAMPLE_114_L11、S_IPAS_SAMPLE_114_L12 兩個來源，item_id 改成「來源代號-q三位數題號」，題幹與選項改用 tools/ipas_sample_pdf.py 照 PDF 擷取的文字（與公告試題同一套空白規則）；年份、題型、考科的可信度也換成匯入工具建出的值（PDF 印了版次、科目與四個選項）。"
         }
+      },
+      "official_sample": {
+        "edition": "114",
+        "subject": "L11",
+        "question_number": 4
       }
     },
     {
-      "item_id": "S1-p01-q005",
+      "item_id": "S_IPAS_SAMPLE_114_L11-q005",
       "year": 2025,
-      "year_confidence": "medium",
+      "year_confidence": "high",
       "credential": "iPAS 淨零碳規劃管理師",
       "level": null,
       "topic_tags": [],
-      "question_type": "unknown",
+      "question_type": "single_choice",
       "stem": "根據 ISO 14064-1 標準，企業在進行碳排放盤查時，應納入哪一範圍的排放？",
       "options": [
         {
@@ -30126,13 +30156,13 @@
       "answer": "B",
       "explanation": "引文取自官方參考樣題，題目之後直接附上解答，其指向的選項內容是「包括直接和間接排放」。可見依該標準進行盤查時，範圍要同時涵蓋直接排放與間接排放，而不是只取其中一種，也不是只算生產過程的排放。",
       "source": {
-        "source_id": "S1",
+        "source_id": "S_IPAS_SAMPLE_114_L11",
         "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
         "publisher": "iPAS",
         "authority": "official",
         "evidence": {
           "page": 1,
-          "quote": "根據 ISO 14064-1 標準，企業在進行碳排"
+          "quote": "根據 ISO 14064-1 標準，企業在進行碳排放盤查時，應納入哪一範圍的排放？"
         }
       },
       "alt_sources": [
@@ -30140,7 +30170,7 @@
       ],
       "evidence_quote": "根據 ISO 14064-1 標準，企業在進行碳排",
       "notes": "complete extraction",
-      "exam_subject": "考科2",
+      "exam_subject": "考科1",
       "subject_confidence": 1.0,
       "_quality_score": 100,
       "metadata": {
@@ -30156,6 +30186,13 @@
         ],
         "evidence": [
           {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "quote": "根據 ISO 14064-1 標準，企業在進行碳排放盤查時，應納入哪一範圍的排放？\n(A)只包括直接排放；(B)包括直接和間接排放；(C)只包括間接排放；(D)只包括生產過程中的排放\n解答：(B)",
+            "supports_option": "B",
+            "note": "參考樣題（114 年版）第一科第 5 題：PDF 印「解答：(B)」。",
+            "generated_by": "tools/import_official_sample.py"
+          },
+          {
             "quote": "根據 ISO 14064-1 標準，企業在進行碳排放盤查時，應納入哪一範圍的排放？ \n(A)只包括直接排放；(B)包括直接和間接排放；(C)只包括間接排放；(D)只包括生產過\n程中的排放 \n解答：(B)",
             "supports_option": "B",
             "verified_on": "2026-07-13",
@@ -30168,18 +30205,28 @@
           "date": "2026-07-15",
           "anchored_on": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
           "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        },
+        "renamed_from": {
+          "item_id": "S1-p01-q005",
+          "on": "2026-10-18",
+          "why": "參考樣題登記進 restoration-manifest（#128）：依科目拆成 S_IPAS_SAMPLE_114_L11、S_IPAS_SAMPLE_114_L12 兩個來源，item_id 改成「來源代號-q三位數題號」，題幹與選項改用 tools/ipas_sample_pdf.py 照 PDF 擷取的文字（與公告試題同一套空白規則）；年份、題型、考科的可信度也換成匯入工具建出的值（PDF 印了版次、科目與四個選項）。考科由考科2 改為考科1：PDF 把這一題印在第一科（L11 淨零碳規劃管理基礎概論）。"
         }
+      },
+      "official_sample": {
+        "edition": "114",
+        "subject": "L11",
+        "question_number": 5
       }
     },
     {
-      "item_id": "S1-p02-q001",
+      "item_id": "S_IPAS_SAMPLE_114_L12-q001",
       "year": 2025,
-      "year_confidence": "medium",
+      "year_confidence": "high",
       "credential": "iPAS 淨零碳規劃管理師",
       "level": null,
       "topic_tags": [],
-      "question_type": "unknown",
-      "stem": "「A 公司在溫盤報告書提到盤查的範圍包含台灣廠與大陸廠。」請問這段描述內容描 述的是界定何種邊界？",
+      "question_type": "single_choice",
+      "stem": "「A 公司在溫盤報告書提到盤查的範圍包含台灣廠與大陸廠。」請問這段描述內容描述的是界定何種邊界？",
       "options": [
         {
           "key": "A",
@@ -30201,20 +30248,20 @@
       "answer": "B",
       "explanation": "引文是官方參考樣題的原題與解答，解答為「組織邊界」。題目描述的是溫盤報告書中「盤查的範圍包含台灣廠與大陸廠」，講的是把哪些廠、哪些營運據點納入盤查範圍，這正是組織邊界所要界定的事；引文的解答並未指向營運邊界或報告邊界。",
       "source": {
-        "source_id": "S1",
+        "source_id": "S_IPAS_SAMPLE_114_L12",
         "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
         "publisher": "iPAS",
         "authority": "official",
         "evidence": {
           "page": 2,
-          "quote": "「A 公司在溫盤報告書提到盤查的範圍包含台灣廠與大"
+          "quote": "「A 公司在溫盤報告書提到盤查的範圍包含台灣廠與大陸廠。」請問這段描述內容描述的是界定何種邊界？"
         }
       },
       "alt_sources": [],
       "evidence_quote": "「A 公司在溫盤報告書提到盤查的範圍包含台灣廠與大",
       "notes": "complete extraction",
       "exam_subject": "考科2",
-      "subject_confidence": 0.83,
+      "subject_confidence": 1.0,
       "_quality_score": 100,
       "metadata": {
         "_legacy_pipeline_metadata": {
@@ -30229,6 +30276,13 @@
         ],
         "evidence": [
           {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "quote": "「A 公司在溫盤報告書提到盤查的範圍包含台灣廠與大陸廠。」請問這段描述內容描述的是界定何種邊界？\n(A)營運邊界；(B)組織邊界；(C)報告邊界；(D)以上皆非\n解答：(B)",
+            "supports_option": "B",
+            "note": "參考樣題（114 年版）第二科第 1 題：PDF 印「解答：(B)」。",
+            "generated_by": "tools/import_official_sample.py"
+          },
+          {
             "quote": "「A 公司在溫盤報告書提到盤查的範圍包含台灣廠與大陸廠。」請問這段描述內容描\n述的是界定何種邊界？ \n(A)營運邊界；(B)組織邊界；(C)報告邊界；(D)以上皆非 \n解答：(B)",
             "supports_option": "B",
             "verified_on": "2026-07-13",
@@ -30241,17 +30295,27 @@
           "date": "2026-07-15",
           "anchored_on": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
           "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        },
+        "renamed_from": {
+          "item_id": "S1-p02-q001",
+          "on": "2026-10-18",
+          "why": "參考樣題登記進 restoration-manifest（#128）：依科目拆成 S_IPAS_SAMPLE_114_L11、S_IPAS_SAMPLE_114_L12 兩個來源，item_id 改成「來源代號-q三位數題號」，題幹與選項改用 tools/ipas_sample_pdf.py 照 PDF 擷取的文字（與公告試題同一套空白規則）；年份、題型、考科的可信度也換成匯入工具建出的值（PDF 印了版次、科目與四個選項）。題幹的「描 述」原本是 PDF 折行處多出來的空白，照 PDF 改成「描述」。"
         }
+      },
+      "official_sample": {
+        "edition": "114",
+        "subject": "L12",
+        "question_number": 1
       }
     },
     {
-      "item_id": "S1-p02-q003",
+      "item_id": "S_IPAS_SAMPLE_114_L12-q003",
       "year": 2025,
-      "year_confidence": "medium",
+      "year_confidence": "high",
       "credential": "iPAS 淨零碳規劃管理師",
       "level": null,
       "topic_tags": [],
-      "question_type": "unknown",
+      "question_type": "single_choice",
       "stem": "下列何者屬於產品碳足跡「目的與範疇」階段，應界定的項目？",
       "options": [
         {
@@ -30274,13 +30338,13 @@
       "answer": "B",
       "explanation": "引文重現了這道題並附上解答，指向「功能單位」。也就是說，產品碳足跡的「目的與範疇」階段所應界定的項目是功能單位；分配程序、重要單元過程清冊與特定的 GHG 排放與移除，都不是這個階段要界定的東西。",
       "source": {
-        "source_id": "S1",
+        "source_id": "S_IPAS_SAMPLE_114_L12",
         "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
         "publisher": "iPAS",
         "authority": "official",
         "evidence": {
           "page": 2,
-          "quote": "下列何者屬於產品碳足跡「目的與範疇」階段，應界定的"
+          "quote": "下列何者屬於產品碳足跡「目的與範疇」階段，應界定的項目？"
         }
       },
       "alt_sources": [
@@ -30304,6 +30368,13 @@
         ],
         "evidence": [
           {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "quote": "下列何者屬於產品碳足跡「目的與範疇」階段，應界定的項目？\n(A)分配程序；(B)功能單位；(C)重要單元過程清冊；(D)特定的 GHG 排放與移除\n解答：(B)",
+            "supports_option": "B",
+            "note": "參考樣題（114 年版）第二科第 3 題：PDF 印「解答：(B)」。",
+            "generated_by": "tools/import_official_sample.py"
+          },
+          {
             "quote": "下列何者屬於產品碳足跡「目的與範疇」階段，應界定的項目？ \n(A)分配程序；(B)功能單位；(C)重要單元過程清冊；(D)特定的GHG 排放與移除 \n解答：(B)",
             "supports_option": "B",
             "verified_on": "2026-07-13",
@@ -30316,18 +30387,28 @@
           "date": "2026-07-15",
           "anchored_on": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
           "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        },
+        "renamed_from": {
+          "item_id": "S1-p02-q003",
+          "on": "2026-10-18",
+          "why": "參考樣題登記進 restoration-manifest（#128）：依科目拆成 S_IPAS_SAMPLE_114_L11、S_IPAS_SAMPLE_114_L12 兩個來源，item_id 改成「來源代號-q三位數題號」，題幹與選項改用 tools/ipas_sample_pdf.py 照 PDF 擷取的文字（與公告試題同一套空白規則）；年份、題型、考科的可信度也換成匯入工具建出的值（PDF 印了版次、科目與四個選項）。"
         }
+      },
+      "official_sample": {
+        "edition": "114",
+        "subject": "L12",
+        "question_number": 3
       }
     },
     {
-      "item_id": "S1-p02-q004",
+      "item_id": "S_IPAS_SAMPLE_114_L12-q004",
       "year": 2025,
-      "year_confidence": "medium",
+      "year_confidence": "high",
       "credential": "iPAS 淨零碳規劃管理師",
       "level": null,
       "topic_tags": [],
-      "question_type": "unknown",
-      "stem": "某工廠在一年內的能源使用情況如下： 使用電力 500,000 kWh（每 kWh 電力產生 0.527 公斤二氧化碳） 使用柴油 20,000 公升（每公升柴油產生 2.68 公斤二氧化碳） 使用天然氣 100,000 立方米（每立方米天然氣產生 1.85 公斤二氧化碳） 請計算該工廠一年內總共產生的二氧化碳排放量。",
+      "question_type": "single_choice",
+      "stem": "某工廠在一年內的能源使用情況如下：使用電力 500,000 kWh（每 kWh 電力產生 0.527 公斤二氧化碳）使用柴油 20,000 公升（每公升柴油產生 2.68 公斤二氧化碳）使用天然氣 100,000 立方米（每立方米天然氣產生 1.85 公斤二氧化碳）請計算該工廠一年內總共產生的二氧化碳排放量。",
       "options": [
         {
           "key": "A",
@@ -30349,13 +30430,13 @@
       "answer": "B",
       "explanation": "引文（附有解答）給定三組活動數據與係數：電力 500,000 kWh、每 kWh 0.527 公斤；柴油 20,000 公升、每公升 2.68 公斤；天然氣 100,000 立方米、每立方米 1.85 公斤。把每一項的用量分別乘上它對應的排放係數，再把三項全部相加，總量即為 502,100 公斤，與引文標示的解答一致。其餘選項都不等於這三項乘積的總和。",
       "source": {
-        "source_id": "S1",
+        "source_id": "S_IPAS_SAMPLE_114_L12",
         "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
         "publisher": "iPAS",
         "authority": "official",
         "evidence": {
           "page": 2,
-          "quote": "某工廠在一年內的能源使用情況如下： 使用電力 50"
+          "quote": "某工廠在一年內的能源使用情況如下：使用電力 500,000 kWh（每 kWh 電力產生 0.527 公斤二氧化碳）使用柴油 20,000 公升（每公升柴油產生 2.68 公斤二氧化碳）使用天然氣 100,000 立方米（每立方米天然氣產生 1.85 公斤二氧化碳）請計算該工廠一年內總共產生的二氧化碳排放量。"
         }
       },
       "alt_sources": [],
@@ -30377,6 +30458,13 @@
         ],
         "evidence": [
           {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "quote": "某工廠在一年內的能源使用情況如下：使用電力 500,000 kWh（每 kWh 電力產生 0.527 公斤二氧化碳）使用柴油 20,000 公升（每公升柴油產生 2.68 公斤二氧化碳）使用天然氣 100,000 立方米（每立方米天然氣產生 1.85 公斤二氧化碳）請計算該工廠一年內總共產生的二氧化碳排放量。\n(A)371,350 公斤；(B)502,100 公斤；(C)413,000 公斤；(D)421,500 公斤\n解答：(B)",
+            "supports_option": "B",
+            "note": "參考樣題（114 年版）第二科第 4 題：PDF 印「解答：(B)」。",
+            "generated_by": "tools/import_official_sample.py"
+          },
+          {
             "quote": "使用電力 500,000 kWh（每kWh 電力產生0.527 公斤二氧化碳） \n使用柴油 20,000 公升（每公升柴油產生2.68 公斤二氧化碳） \n使用天然氣 100,000 立方米（每立方米天然氣產生1.85 公斤二氧化碳） \n請計算該工廠一年內總共產生的二氧化碳排放量。 \n \n(A) 371,350 公斤；(B) 502,100 公斤；(C) 413,000 公斤；(D) 421,500 公斤 \n解答：(B)",
             "supports_option": "B",
             "verified_on": "2026-07-13",
@@ -30389,7 +30477,17 @@
           "date": "2026-07-15",
           "anchored_on": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
           "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+        },
+        "renamed_from": {
+          "item_id": "S1-p02-q004",
+          "on": "2026-10-18",
+          "why": "參考樣題登記進 restoration-manifest（#128）：依科目拆成 S_IPAS_SAMPLE_114_L11、S_IPAS_SAMPLE_114_L12 兩個來源，item_id 改成「來源代號-q三位數題號」，題幹與選項改用 tools/ipas_sample_pdf.py 照 PDF 擷取的文字（與公告試題同一套空白規則）；年份、題型、考科的可信度也換成匯入工具建出的值（PDF 印了版次、科目與四個選項）。"
         }
+      },
+      "official_sample": {
+        "edition": "114",
+        "subject": "L12",
+        "question_number": 4
       }
     },
     {
@@ -61909,6 +62007,258 @@
             "supports_option": "A",
             "note": "115 年第二次公告試題第二科第 50 題：PDF 的答案欄印 A。",
             "generated_by": "tools/import_official_exam.py"
+          }
+        ]
+      }
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L11-q001",
+      "year": 2025,
+      "year_confidence": "high",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "single_choice",
+      "stem": "關於「再生能源」的定義，下列何者正確？",
+      "options": [
+        {
+          "key": "A",
+          "text": "100%不排放碳的能源"
+        },
+        {
+          "key": "B",
+          "text": "只使用太陽能和風能的能源"
+        },
+        {
+          "key": "C",
+          "text": "從持續不斷地補充的自然過程中得到的能量來源"
+        },
+        {
+          "key": "D",
+          "text": "由動植物質產生的能源"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_IPAS_SAMPLE_114_L11",
+        "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+        "publisher": "iPAS",
+        "authority": "official",
+        "evidence": {
+          "page": 1,
+          "quote": "關於「再生能源」的定義，下列何者正確？"
+        }
+      },
+      "alt_sources": [],
+      "notes": "由參考樣題 PDF 擷取（tools/import_official_sample.py）；題幹、選項、答案照 PDF。",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "official_sample": {
+        "edition": "114",
+        "subject": "L11",
+        "question_number": 1
+      },
+      "metadata": {
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "quote": "關於「再生能源」的定義，下列何者正確？\n(A)100%不排放碳的能源；(B)只使用太陽能和風能的能源；(C)從持續不斷地補充的自然過程中得到的能量來源；(D)由動植物質產生的能源\n解答：(C)",
+            "supports_option": "C",
+            "note": "參考樣題（114 年版）第一科第 1 題：PDF 印「解答：(C)」。",
+            "generated_by": "tools/import_official_sample.py"
+          }
+        ]
+      }
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L11-q003",
+      "year": 2025,
+      "year_confidence": "high",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "single_choice",
+      "stem": "關於「碳中和」，下列何者正確？",
+      "options": [
+        {
+          "key": "A",
+          "text": "每天的二氧化碳排放量始終維持在零，確保不產生任何形式的溫室氣體排放"
+        },
+        {
+          "key": "B",
+          "text": "於特定範疇內之主體相關的人為二氧化碳排放量與人為二氧化碳移除量達平衡狀態"
+        },
+        {
+          "key": "C",
+          "text": "完全不再依賴任何形式的碳燃料，包括化石燃料和生物燃料的使用"
+        },
+        {
+          "key": "D",
+          "text": "透過政策規範，將整體溫室氣體排放量減少至少一半"
+        }
+      ],
+      "answer": "B",
+      "explanation": null,
+      "source": {
+        "source_id": "S_IPAS_SAMPLE_114_L11",
+        "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+        "publisher": "iPAS",
+        "authority": "official",
+        "evidence": {
+          "page": 1,
+          "quote": "關於「碳中和」，下列何者正確？"
+        }
+      },
+      "alt_sources": [],
+      "notes": "由參考樣題 PDF 擷取（tools/import_official_sample.py）；題幹、選項、答案照 PDF。",
+      "exam_subject": "考科1",
+      "subject_confidence": 1.0,
+      "official_sample": {
+        "edition": "114",
+        "subject": "L11",
+        "question_number": 3
+      },
+      "metadata": {
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "quote": "關於「碳中和」，下列何者正確？\n(A)每天的二氧化碳排放量始終維持在零，確保不產生任何形式的溫室氣體排放；(B)於特定範疇內之主體相關的人為二氧化碳排放量與人為二氧化碳移除量達平衡狀態；(C)完全不再依賴任何形式的碳燃料，包括化石燃料和生物燃料的使用；(D)透過政策規範，將整體溫室氣體排放量減少至少一半\n解答：(B)",
+            "supports_option": "B",
+            "note": "參考樣題（114 年版）第一科第 3 題：PDF 印「解答：(B)」。",
+            "generated_by": "tools/import_official_sample.py"
+          }
+        ]
+      }
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L12-q002",
+      "year": 2025,
+      "year_confidence": "high",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "single_choice",
+      "stem": "碳足跡計算是以生命週期概念計算，下列何者的目的排放量需要包含至總量中？",
+      "options": [
+        {
+          "key": "A",
+          "text": "最終產品處理"
+        },
+        {
+          "key": "B",
+          "text": "產品配送"
+        },
+        {
+          "key": "C",
+          "text": "生產製造"
+        },
+        {
+          "key": "D",
+          "text": "以上皆是"
+        }
+      ],
+      "answer": "D",
+      "explanation": null,
+      "source": {
+        "source_id": "S_IPAS_SAMPLE_114_L12",
+        "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+        "publisher": "iPAS",
+        "authority": "official",
+        "evidence": {
+          "page": 2,
+          "quote": "碳足跡計算是以生命週期概念計算，下列何者的目的排放量需要包含至總量中？"
+        }
+      },
+      "alt_sources": [],
+      "notes": "由參考樣題 PDF 擷取（tools/import_official_sample.py）；題幹、選項、答案照 PDF。",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "official_sample": {
+        "edition": "114",
+        "subject": "L12",
+        "question_number": 2
+      },
+      "metadata": {
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "quote": "碳足跡計算是以生命週期概念計算，下列何者的目的排放量需要包含至總量中？\n(A)最終產品處理；(B)產品配送；(C)生產製造；(D)以上皆是\n解答：(D)",
+            "supports_option": "D",
+            "note": "參考樣題（114 年版）第二科第 2 題：PDF 印「解答：(D)」。",
+            "generated_by": "tools/import_official_sample.py"
+          }
+        ]
+      }
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L12-q005",
+      "year": 2025,
+      "year_confidence": "high",
+      "credential": "iPAS 淨零碳規劃管理師",
+      "level": null,
+      "topic_tags": [],
+      "question_type": "single_choice",
+      "stem": "下列何者不屬於 ISO 14064-1: 2018 定義之其他間接排放？",
+      "options": [
+        {
+          "key": "A",
+          "text": "組織使用產品"
+        },
+        {
+          "key": "B",
+          "text": "運輸"
+        },
+        {
+          "key": "C",
+          "text": "輸入能源"
+        },
+        {
+          "key": "D",
+          "text": "其他來源"
+        }
+      ],
+      "answer": "C",
+      "explanation": null,
+      "source": {
+        "source_id": "S_IPAS_SAMPLE_114_L12",
+        "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+        "publisher": "iPAS",
+        "authority": "official",
+        "evidence": {
+          "page": 2,
+          "quote": "下列何者不屬於 ISO 14064-1: 2018 定義之其他間接排放？"
+        }
+      },
+      "alt_sources": [],
+      "notes": "由參考樣題 PDF 擷取（tools/import_official_sample.py）；題幹、選項、答案照 PDF。",
+      "exam_subject": "考科2",
+      "subject_confidence": 1.0,
+      "official_sample": {
+        "edition": "114",
+        "subject": "L12",
+        "question_number": 5
+      },
+      "metadata": {
+        "sources": [
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf"
+        ],
+        "evidence": [
+          {
+            "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+            "quote": "下列何者不屬於 ISO 14064-1: 2018 定義之其他間接排放？\n(A)組織使用產品；(B)運輸；(C)輸入能源；(D)其他來源\n解答：(C)",
+            "supports_option": "C",
+            "note": "參考樣題（114 年版）第二科第 5 題：PDF 印「解答：(C)」。",
+            "generated_by": "tools/import_official_sample.py"
           }
         ]
       }

@@ -468,7 +468,7 @@ describe('ResultPage 答案依據', () => {
 
 describe('官方公告試題的錯題卡', () => {
   it('答錯的官方公告試題，錯題卡的答案依據寫出官方公告的參考答案', () => {
-    const officialQuestion = {
+    const officialQuestion: QuizQuestion = {
       id: 'S_IPAS_115_01_L11-q001',
       stem: '官方公告試題的題幹？',
       options: [
@@ -486,9 +486,9 @@ describe('官方公告試題的錯題卡', () => {
       evidence: {
         quote: '官方公告試題的題幹？\n(A)甲；(B)乙；(C)丙；(D)丁',
         url: 'https://www.ipas.org.tw/official.pdf',
-        official: { answer: 'C', reference: '115 年第一次公告試題第一科第 1 題' },
+        official: { kind: 'exam', answer: 'C', reference: '115 年第一次公告試題第一科第 1 題' },
       },
-    } as unknown as QuizQuestion;
+    };
     render(
       <ResultPage
         result={makeResult({

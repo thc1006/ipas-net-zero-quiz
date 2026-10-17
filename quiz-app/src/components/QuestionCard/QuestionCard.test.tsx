@@ -421,7 +421,7 @@ describe('官方公告試題的標記', () => {
       evidence: {
         quote: '官方公告試題的題幹？\n(A)甲；(B)乙；(C)丙；(D)丁',
         url: 'https://www.ipas.org.tw/official.pdf',
-        official: { answer: 'C', reference: '115 年第一次公告試題第一科第 1 題' },
+        official: { kind: 'exam', answer: 'C', reference: '115 年第一次公告試題第一科第 1 題' },
       },
     };
     const { rerender } = render(
@@ -433,11 +433,44 @@ describe('官方公告試題的標記', () => {
     expect(isInaccessible(line)).toBe(false);
   });
 
-  it('其他題目不標：共筆題與主題庫裡不是官方公告的題目', () => {
+  it('參考樣題在題卡上標出是哪一版；主庫配對的那一題（gist）也一樣', () => {
+    const sample: QuizQuestion = {
+      ...mockQuestion,
+      id: 'S_IPAS_SAMPLE_114_L12-q001',
+      sourceType: 'unique',
+      officialSample: { edition: '114', subject: 'L12', question_number: 1 },
+    };
+    for (const q of [sample, { ...sample, id: 'gist-287', sourceType: 'gist' as const }]) {
+      const { unmount } = render(<QuestionCard question={q} questionNumber={1} onSelectAnswer={vi.fn()} />);
+      const tag = screen.getByText('官方參考樣題（114 年版）');
+      expect(isInaccessible(tag)).toBe(false);
+      expect(tag.querySelector('.material-icons')).toHaveAttribute('aria-hidden', 'true');
+      expect(screen.queryByText(/官方公告試題/), q.id).not.toBeInTheDocument();
+      unmount();
+    }
+  });
+
+  it('作答後，參考樣題的答案依據寫出 PDF 印的解答與出處', () => {
+    const answered: QuizQuestion = {
+      ...mockQuestion,
+      id: 'S_IPAS_SAMPLE_114_L12-q001',
+      sourceType: 'unique',
+      officialSample: { edition: '114', subject: 'L12', question_number: 1 },
+      evidence: {
+        quote: '參考樣題的題幹？\n(A)甲；(B)乙；(C)丙；(D)丁\n解答：(B)',
+        url: 'https://www.ipas.org.tw/sample.pdf',
+        official: { kind: 'sample', answer: 'B', reference: '參考樣題（114 年版）第二科第 1 題' },
+      },
+    };
+    render(<QuestionCard question={answered} questionNumber={1} showAnswer onSelectAnswer={vi.fn()} />);
+    expect(isInaccessible(screen.getByText('參考樣題的解答：(B)（參考樣題（114 年版）第二科第 1 題）'))).toBe(false);
+  });
+
+  it('其他題目不標：共筆題與主題庫裡不是官方的題目', () => {
     const plainUnique: QuizQuestion = { ...mockQuestion, id: 'S_CHU_06-q001', sourceType: 'unique' };
     for (const q of [mockQuestion, plainUnique]) {
       const { unmount } = render(<QuestionCard question={q} questionNumber={1} onSelectAnswer={vi.fn()} />);
-      expect(screen.queryByText(/官方公告試題/), q.id).not.toBeInTheDocument();
+      expect(screen.queryByText(/官方公告試題|參考樣題/), q.id).not.toBeInTheDocument();
       unmount();
     }
   });

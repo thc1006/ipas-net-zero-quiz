@@ -195,9 +195,10 @@ N['disp_dup_ds'] = DISP.get('duplicate_in_dataset', 0)
 N['disp_figure'] = DISP.get('not_imported_figure', 0)
 # 「沒有解析的題目」：與 docs-counts 那道 gate 同一個算法（解析去空白後是空的）
 N['no_explanation'] = sum(1 for q in ALL if not (q.get('explanation') or '').strip())
-# 其中不是官方公告試題的（官方只公布答案、沒有解析；DATA-PROVENANCE 分開寫）
+# 其中不是官方題目的（公告試題與參考樣題都只公布答案、沒有解析；DATA-PROVENANCE 分開寫）。
+# 只排除 official_exam 時，新匯入、還沒有解析的參考樣題會被算進「補寫解析之後剩下的」
 N['no_explanation_not_official'] = sum(1 for q in ALL if not (q.get('explanation') or '').strip()
-                                       and 'official_exam' not in q)
+                                       and 'official_exam' not in q and 'official_sample' not in q)
 
 changed = []
 
@@ -350,7 +351,7 @@ RULES = [
     (PROV, r'實測\s*\*\*\d+\s*/\s*(\d+)\*\*', N['restored'], 'DATA-PROVENANCE 實測相符（分母）', 'all'),
     (PROV, r'沒有解析的題目從 420 降到 (\d+)', N['no_explanation'], 'DATA-PROVENANCE 沒有解析的題數'),
     (PROV, r'其中 (\d+) 題是補寫解析之後剩下的', N['no_explanation_not_official'],
-     'DATA-PROVENANCE 沒有解析、不是官方公告試題的題數'),
+     'DATA-PROVENANCE 沒有解析、不是官方題目的題數'),
     (README, r'(\d+)\s*題由來源 PDF', N['restored'], 'README 還原題數'),
 ]
 

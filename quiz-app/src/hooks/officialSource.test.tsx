@@ -6,7 +6,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useQuiz } from './useQuiz';
 import { allQuestions, getRandomQuestionsFromPool, getSourceCandidates } from '../data/questions';
-import { officialSessions } from '../utils/question-source';
+import { officialSessions, sampleEditions } from '../utils/question-source';
 import type { QuizConfig } from '../types/quiz';
 import {
   __resetPracticePoolCacheForTesting,
@@ -52,7 +52,9 @@ describe('useQuiz：只出官方題目', () => {
     expect(started).toBe(true);
     const want = getSourceCandidates('all', 'official').slice(0, 20).map((q) => q.id);
     expect(result.current.questions.map((q) => q.id)).toEqual(want);
-    expect(result.current.questions.filter((q) => !q.officialExam)).toEqual([]);
+    expect(result.current.questions.filter((q) => !q.officialExam && !q.officialSample)).toEqual([]);
+    // 原卷順序從最早的一份開始：114 年版的參考樣題排在 115 年的公告試題之前
+    expect(result.current.questions[0].officialSample?.edition).toBe('114');
   });
 
   it('隨機：N 題、不重複、全部取自官方題', () => {
@@ -93,6 +95,17 @@ describe('useQuiz：只出官方題目', () => {
       result.current.questions.filter(
         (q) => q.subject !== '考科2' || q.officialExam?.session !== session
       )
+    ).toEqual([]);
+  });
+
+  it('可與考科、版次組合：只出那一版參考樣題的那一科，題數不夠時出實際有的題數', () => {
+    const [edition] = sampleEditions(allQuestions);
+    const candidates = getSourceCandidates('考科1', `sample:${edition}`);
+    expect(candidates.length).toBeGreaterThan(0);
+    const { result } = start({ ...base, subject: '考科1', questionSource: `sample:${edition}`, questionCount: 100 });
+    expect(result.current.questions.map((q) => q.id)).toEqual(candidates.map((q) => q.id));
+    expect(
+      result.current.questions.filter((q) => q.subject !== '考科1' || q.officialSample?.edition !== edition)
     ).toEqual([]);
   });
 
@@ -186,7 +199,7 @@ describe('useQuiz.startQuizWithPool：只出官方題目時不混練習池', () 
     expect(started).toBe(true);
     expect(result.current.questions).toHaveLength(50);
     expect(result.current.questions.filter((q) => q.sourceType === 'practice_pool')).toEqual([]);
-    expect(result.current.questions.filter((q) => !q.officialExam)).toEqual([]);
+    expect(result.current.questions.filter((q) => !q.officialExam && !q.officialSample)).toEqual([]);
   });
 
   it('一題都沒有時不開始測驗（回傳 false），也不會改用練習池補題', async () => {

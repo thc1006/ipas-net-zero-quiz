@@ -121,6 +121,10 @@ describe('語料輪廓（換題庫時用 -u 重新產生）', () => {
       { where: 'hooks/officialSource.test.tsx／pages/HomePage.test.tsx／tests/e2e/official-mode.spec.ts', what: '只出官方題目：官方題至少 50 題，最新一場的考科二少於 100 題（題數不夠的情境）', semantics: '依語料重設' },
       { where: 'questions.test.ts／pages/HomePage.test.tsx／hooks/officialSource.test.tsx', what: '只出官方題目：每一場的考科一、考科二都有官方題（反空轉）', semantics: '依語料重設' },
       { where: 'hooks/officialSource.test.tsx', what: "只出官方題目：'all' 與沒有 questionSource 逐題比對時，主題庫全部、考科一、考科二各至少 40 題可計分（各取 40 題）", semantics: '依語料重設' },
+      { where: 'data/official-sample.test.ts／questions.test.ts／schema-contract.test.ts／utils/official-exam.test.ts／utils/question-source.test.ts／tools/tests/test_official_sample_import.py', what: '參考樣題、它的來源與主庫配對的那一題至少各一（反空轉）', semantics: '依語料重設' },
+      { where: 'questions.test.ts／hooks/officialSource.test.tsx', what: '只出官方題目：每一版參考樣題的考科一、考科二都有題目（反空轉）', semantics: '依語料重設' },
+      { where: 'tools/tests/test_restore_reproducibility.py', what: '--verify 印出的題數：官方公告試題與參考樣題各至少一題（反空轉）', semantics: '依語料重設' },
+      { where: 'pages/HomePage.test.tsx／hooks/officialSource.test.tsx／App.test.tsx／tests/e2e/official-mode.spec.ts', what: '只出官方題目：參考樣題只有 114 年版、共 10 題，原卷順序的第一題是它（寫死版次與題數）', semantics: '依語料重設' },
     ];
     expect(ratchets.length).toBeGreaterThan(5);
     expect(ratchets).toMatchSnapshot();

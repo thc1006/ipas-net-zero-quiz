@@ -3,7 +3,7 @@ import { beforeAll, afterEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent, cleanup, within } from '@testing-library/react';
 import { HomePage } from './HomePage';
 import { allQuestions, getSourceCandidates } from '../data/questions';
-import { officialSessions } from '../utils/question-source';
+import { officialSessions, sampleEditions } from '../utils/question-source';
 
 // 現有資料每個考科、每一場都有官方題，「範圍內一題都沒有」只能讓抽題範圍落空來測。
 // 預設照常回傳（其他測試不受影響），sourceEmpty.value 為 true 時才回傳空陣列；sourceLimit.value 是數字時
@@ -442,15 +442,18 @@ describe('題目來源（只出官方題目）', () => {
   const sourceSelect = () => screen.getByLabelText('題目來源') as HTMLSelectElement;
   const lastConfig = (fn: ReturnType<typeof vi.fn>) => fn.mock.calls[fn.mock.calls.length - 1][0];
 
-  it('選單列出全部題目、官方公告試題（全部場次）與每一場公告試題（新到舊）', () => {
+  it('選單列出全部題目、全部官方題目、每一場公告試題與每一版參考樣題（新到舊）', () => {
     render(<HomePage onStartQuiz={() => {}} />);
     const options = Array.from(sourceSelect().options).map((o) => [o.value, o.textContent]);
     const sessions = officialSessions(allQuestions);
+    const editions = sampleEditions(allQuestions);
     expect(sessions.length).toBeGreaterThanOrEqual(2);
+    expect(editions).toEqual(['114']);
     expect(options).toEqual([
       ['all', '全部題目'],
-      ['official', '官方公告試題（全部場次）'],
-      ...sessions.map((s) => [`exam:${s}`, expect.stringMatching(/^1\d\d 年第.+次官方公告試題$/)]),
+      ['official', '全部官方題目'],
+      ...sessions.map((s) => [`exam:${s}`, expect.stringMatching(/^1\d\d 年第.+次公告試題$/)]),
+      ['sample:114', '參考樣題（114 年版）'],
     ]);
   });
 
@@ -458,25 +461,42 @@ describe('題目來源（只出官方題目）', () => {
     const onStartQuiz = vi.fn();
     render(<HomePage onStartQuiz={onStartQuiz} />);
     expect(sourceSelect().value).toBe('all');
-    expect(screen.queryByText(/官方公告試題，不會混入/)).toBeNull();
+    expect(screen.queryByText(/，不會混入其他來源的題目/)).toBeNull();
     // 說明是空的，就不要讓螢幕閱讀器去念一段空白的描述
     expect(sourceSelect().hasAttribute('aria-describedby')).toBe(false);
     fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
     expect(lastConfig(onStartQuiz).questionSource ?? 'all').toBe('all');
   });
 
-  it('選官方公告試題：開始時帶 questionSource，並說明可出的題數', () => {
+  it('選全部官方題目：開始時帶 questionSource，並說明可出的題數', () => {
     const onStartQuiz = vi.fn();
     render(<HomePage onStartQuiz={onStartQuiz} />);
     fireEvent.change(sourceSelect(), { target: { value: 'official' } });
     const n = getSourceCandidates('all', 'official').length;
-    expect(screen.getByText(`可出 ${n} 題官方公告試題，不會混入其他來源的題目。`)).toBeInTheDocument();
+    expect(
+      screen.getByText(`可出 ${n} 題官方題目（公告試題與參考樣題），不會混入其他來源的題目。`)
+    ).toBeInTheDocument();
     const describedBy = sourceSelect().getAttribute('aria-describedby');
-    expect(document.getElementById(describedBy ?? '')?.textContent).toContain(`可出 ${n} 題官方公告試題`);
+    expect(document.getElementById(describedBy ?? '')?.textContent).toContain(`可出 ${n} 題官方題目`);
     // 加強練習池沒有啟用時，不說「這個模式不會混入」（那一句只在啟用時才有意義）
     expect(screen.queryByText('加強練習池在這個模式不會混入。')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
     expect(lastConfig(onStartQuiz).questionSource).toBe('official');
+  });
+
+  it('說明用的稱呼跟著來源換：某一場是官方公告試題、某一版是參考樣題', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    const [session] = officialSessions(allQuestions);
+    fireEvent.change(sourceSelect(), { target: { value: `exam:${session}` } });
+    const exams = getSourceCandidates('all', `exam:${session}`).length;
+    expect(screen.getByText(`可出 ${exams} 題官方公告試題，不會混入其他來源的題目。`)).toBeInTheDocument();
+    fireEvent.change(sourceSelect(), { target: { value: 'sample:114' } });
+    const samples = getSourceCandidates('all', 'sample:114').length;
+    expect(samples).toBe(10);
+    expect(screen.getByText(`可出 ${samples} 題參考樣題，不會混入其他來源的題目。`)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
+    expect(lastConfig(onStartQuiz).questionSource).toBe('sample:114');
   });
 
   it('可與考科組合：換考科時可出的題數跟著變', () => {
@@ -485,7 +505,9 @@ describe('題目來源（只出官方題目）', () => {
     fireEvent.change(screen.getByLabelText('考科範圍'), { target: { value: '考科1' } });
     const n = getSourceCandidates('考科1', 'official').length;
     expect(n).toBeLessThan(getSourceCandidates('all', 'official').length);
-    expect(screen.getByText(`可出 ${n} 題官方公告試題，不會混入其他來源的題目。`)).toBeInTheDocument();
+    expect(
+      screen.getByText(`可出 ${n} 題官方題目（公告試題與參考樣題），不會混入其他來源的題目。`)
+    ).toBeInTheDocument();
   });
 
   it('題數多於官方題時，開始前就明確告知實際會出幾題', () => {
@@ -520,7 +542,9 @@ describe('題目來源（只出官方題目）', () => {
 
     fireEvent.change(sourceSelect(), { target: { value: 'official' } });
     expect(within(tip).queryByText(/下一場測驗會額外混入/)).toBeNull();
-    expect(within(tip).getByText(/這一場不會混入練習池/)).toBeInTheDocument();
+    expect(within(tip).getByText(/目前的題目來源只出官方題目，這一場不會混入練習池/)).toBeInTheDocument();
+    fireEvent.change(sourceSelect(), { target: { value: 'sample:114' } });
+    expect(within(tip).getByText(/目前的題目來源只出參考樣題，這一場不會混入練習池/)).toBeInTheDocument();
     expect(within(tip).queryByText(/查看抽題分布/)).toBeNull();
 
     fireEvent.change(sourceSelect(), { target: { value: 'all' } });
@@ -536,7 +560,7 @@ describe('題目來源（只出官方題目）', () => {
 
     fireEvent.change(sourceSelect(), { target: { value: 'official' } });
     expect(within(tip).queryByText(/啟用後下一場練習會混入/)).toBeNull();
-    expect(within(tip).getByText(/啟用後這一場也不會混入/)).toBeInTheDocument();
+    expect(within(tip).getByText(/目前的題目來源只出官方題目，啟用後這一場也不會混入/)).toBeInTheDocument();
   });
 
   it('題數不合法時不出現「題數不夠」的提醒（題數那一格自己會報錯）', () => {
@@ -548,11 +572,13 @@ describe('題目來源（只出官方題目）', () => {
     for (const value of ['', 'abc', '0']) {
       fireEvent.change(screen.getByLabelText('題數'), { target: { value } });
       expect(screen.queryByText(/^題數設定是/)).toBeNull();
-      expect(screen.getByText('可出 1 題官方公告試題，不會混入其他來源的題目。')).toBeInTheDocument();
+      expect(
+        screen.getByText('可出 1 題官方題目（公告試題與參考樣題），不會混入其他來源的題目。')
+      ).toBeInTheDocument();
     }
     // 對照：合法的題數多於 1 題就提醒（上面沒有提醒，不是因為這個範圍永遠不會提醒）
     fireEvent.change(screen.getByLabelText('題數'), { target: { value: '2' } });
-    expect(screen.getByText('題數設定是 2 題，但只有 1 題官方公告試題，本次會出 1 題。')).toBeInTheDocument();
+    expect(screen.getByText('題數設定是 2 題，但只有 1 題官方題目，本次會出 1 題。')).toBeInTheDocument();
   });
 
   // 螢幕閱讀器只會念「內容改變了的」live region：它必須一直在畫面上，空的也在
@@ -566,7 +592,7 @@ describe('題目來源（只出官方題目）', () => {
     expect(hint).toHaveAttribute('aria-atomic', 'true');
     fireEvent.change(sourceSelect(), { target: { value: 'official' } });
     expect(document.getElementById('source-hint')).toBe(hint);
-    expect(hint!.textContent).toMatch(/^可出 \d+ 題官方公告試題/);
+    expect(hint!.textContent).toMatch(/^可出 \d+ 題官方題目/);
   });
 
   it('範圍內一題官方題都沒有：說明無法開始、開始按鈕停用；換回全部題目就能開始', () => {
@@ -574,7 +600,7 @@ describe('題目來源（只出官方題目）', () => {
     const onStartQuiz = vi.fn();
     render(<HomePage onStartQuiz={onStartQuiz} />);
     fireEvent.change(sourceSelect(), { target: { value: 'official' } });
-    expect(screen.getByText('這個範圍沒有官方公告試題，無法開始。')).toBeInTheDocument();
+    expect(screen.getByText('這個範圍沒有官方題目，無法開始。')).toBeInTheDocument();
     expect(screen.queryByText(/^可出 /)).toBeNull();
     const start = screen.getByRole('button', { name: /開始測驗/ });
     expect(start).toBeDisabled();
@@ -583,7 +609,7 @@ describe('題目來源（只出官方題目）', () => {
 
     fireEvent.change(sourceSelect(), { target: { value: 'all' } });
     expect(start).toBeEnabled();
-    expect(screen.queryByText('這個範圍沒有官方公告試題，無法開始。')).toBeNull();
+    expect(screen.queryByText('這個範圍沒有官方題目，無法開始。')).toBeNull();
     fireEvent.click(start);
     expect(onStartQuiz).toHaveBeenCalledTimes(1);
   });

@@ -13,7 +13,7 @@
 - 每題 → `metadata.valid_as_of` + `metadata.sources[]`（一手來源，quarterly workflow 會 curl）
 
 > **`meta.content_review.last_review_date`（本輪窗口起點 `2026-07-13`）不代表「整份題庫已查證到那一天」。**
-> 本輪只實查了 **133 / 979** 題（含 **2026-07-20** 補查的 IFRS/ISSB/TCFD 那批；已查主題見 `meta.content_review.scope`），
+> 本輪只實查了 **133 / 983** 題（含 **2026-07-20** 補查的 IFRS/ISSB/TCFD 那批；已查主題見 `meta.content_review.scope`），
 > 未查題數記於 `not_reviewed_this_round_count`。這些數字皆由 `tools/sync_derived_counts.py` 依公式算、由 gate 釘死在資料上；
 > **這裡不再內嵌會漂的快照（原本的「12 題沿用 2026-01-23」「668 題未標」已刪）。**
 >
