@@ -32,6 +32,13 @@
   margin-bottom: var(--spacing-lg);
 }
 
+/* 副標拆成三段，優先在段與段之間換行。中文預設任兩個字之間都能斷，窄螢幕會把「驗」單獨擠到第二行，或斷成
+   「…考古題線｜上測驗」；word-break: keep-all 在 WebKit 反而斷成「（｜初級）」。文字縮放 200% 以內
+   「（初級）」不會被拆開，再放大時窄螢幕才會拆開。tests/e2e/home-subtitle.spec.ts 守著。 */
+.hero-subtitle__phrase {
+  display: inline-block;
+}
+
 .stats-badges {
   display: flex;
   justify-content: center;
