@@ -397,7 +397,7 @@ jobs:
           name: dist
           path: quiz-app/dist/
 
-      # chromium 跑全套；firefox + webkit 只跑 Settings 跨瀏覽器 smoke（PR #108）
+      # chromium 跑全套；firefox + webkit 只跑跨瀏覽器 smoke：Settings（PR #108）與首頁副標的斷行
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium firefox webkit
 

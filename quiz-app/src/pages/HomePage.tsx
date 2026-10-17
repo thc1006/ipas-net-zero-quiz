@@ -150,7 +150,9 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           淨零碳備考神器
         </h1>
         <p className="hero-subtitle">
-          iPAS 淨零碳規劃管理師 考古題線上測驗
+          <span className="hero-subtitle__phrase">iPAS 淨零碳規劃管理師</span>
+          <span className="hero-subtitle__phrase">（初級）</span>
+          <span className="hero-subtitle__phrase">考古題線上測驗</span>
         </p>
         <div className="stats-badges">
           <span className="badge badge-success">
