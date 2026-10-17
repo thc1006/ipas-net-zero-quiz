@@ -32,9 +32,13 @@ jobs:
 
       - name: Setup uv
         # setup-uv 自 v8.0.0 起不發布 @v10 這種浮動 tag（寫了會找不到），改用不可變更的 release tag
-        uses: astral-sh/setup-uv@v10.2.0
+        uses: astral-sh/setup-uv@v10.3.3
         with:
-          version: '0.12.12'
+          version: '0.13.6'
+          # 釘住 uv 發行檔（uv-x86_64-unknown-linux-gnu.tar.gz）的 sha256，與 release 附的 .sha256 相符。
+          # setup-uv 內建的 checksum 清單沒有這一版時，會改用執行當下抓來的 manifest 驗證，等於讓 manifest
+          # 替自己背書；這裡給的值優先。換 uv 版本時要一起更新。
+          checksum: 'f29c3e94ffabd7e6f3ba521dba169a9b7ec12100bf3257087f0f24f6123f3645'
 
       - name: pyproject.toml 改了就必須同步更新 uv.lock
         run: uv lock --check --project tools
