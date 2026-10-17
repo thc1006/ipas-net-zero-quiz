@@ -1,6 +1,6 @@
 // 首頁元件 - 測驗配置與開始
-import { useState, useCallback, useEffect } from 'react';
-import { stats } from '../data/questions';
+import { useState, useCallback, useEffect, useMemo } from 'react';
+import { allQuestions, getSourceCandidates, stats } from '../data/questions';
 import { PRACTICE_POOL_COUNTS } from '../data/practice-pool-counts';
 import { defaultConfig } from '../hooks/useQuiz';
 import { usePracticeMode } from '../hooks/usePracticeMode';
@@ -8,7 +8,8 @@ import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeO
 import { PracticePoolHistogram } from '../components/PracticePoolHistogram/PracticePoolHistogram';
 import { readBool, writeBool } from '../utils/local-storage';
 import { loadProgress, formatRelativeTime } from '../utils/quiz-progress-storage';
-import type { QuizConfig, ExamSubject } from '../types/quiz';
+import { officialSessions, questionSourceLabel } from '../utils/question-source';
+import type { QuizConfig, ExamSubject, QuestionSource } from '../types/quiz';
 import './HomePage.css';
 
 function mainBankCountForSubject(subject: ExamSubject | 'all'): number {
@@ -23,6 +24,13 @@ const DISCLOSURE_SEEN_KEY = 'practice-pool-disclosure-seen';
 
 /** 題數上限 */
 const QUESTION_COUNT_MAX = 100;
+
+/** 題目來源選單（#128）：全部題目、官方公告試題（全部場次）、各場公告試題（新到舊，由資料算出） */
+const SOURCE_OPTIONS: QuestionSource[] = [
+  'all',
+  'official',
+  ...officialSessions(allQuestions).map((s): QuestionSource => `exam:${s}`),
+];
 
 /**
  * 可開始測驗時回傳 1–100（超過 100 夾為 100）；空白、非純整數、< 1 皆為 null。
@@ -58,6 +66,13 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   const [optInDialogOpen, setOptInDialogOpen] = useState(false);
   const parsedQuestionCount = parseClampedQuestionCount(questionCountInput);
   const canStartQuiz = parsedQuestionCount !== null;
+  // 只出官方題目時：這個考科範圍有幾題可出（'all' 時是 null，不顯示也不限制）
+  const source = config.questionSource ?? 'all';
+  const sourceAvailable = useMemo(
+    () => (source === 'all' ? null : getSourceCandidates(config.subject, source).length),
+    [config.subject, source]
+  );
+  const canStart = canStartQuiz && sourceAvailable !== 0;
 
   // 首次進首頁、尚未 opt-in、尚未看過揭露 → 自動彈 dialog
   // 已 opt-in 過或已 dismissed 過則不彈
@@ -98,6 +113,11 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
     },
     []
   );
+
+  const handleSourceChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value as QuestionSource;
+    setConfig((prev) => ({ ...prev, questionSource: value }));
+  }, []);
 
   const handleCountChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,6 +160,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   }, [config, onStartQuiz, parsedQuestionCount]);
 
   const countHintId = 'count-hint';
+  const sourceHintId = 'source-hint';
 
   return (
     <div className="home-page animate-fade-in">
@@ -225,13 +246,20 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
 
         if (enabled) {
           title = '加強練習池已啟用';
-          desc = `下一場測驗會額外混入 ${PRACTICE_POOL_COUNTS.total} 題（${PRACTICE_POOL_COUNTS.externalMock} 模擬 + ${PRACTICE_POOL_COUNTS.aiGenerated} AI 產題；每題附來源徽章）。`;
+          // 只出官方題目時練習池不混入（#128），這裡不能再說「下一場會混入」
+          desc =
+            source === 'all'
+              ? `下一場測驗會額外混入 ${PRACTICE_POOL_COUNTS.total} 題（${PRACTICE_POOL_COUNTS.externalMock} 模擬 + ${PRACTICE_POOL_COUNTS.aiGenerated} AI 產題；每題附來源徽章）。`
+              : `目前的題目來源只出官方公告試題，這一場不會混入練習池；題目來源選「全部題目」時，才會額外混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
           ctaLabel = '停用加強練習';
           ctaIcon = 'remove_circle_outline';
           modifierClass = 'practice-pool-tip--enabled';
         } else if (hasOptedIn) {
           title = '想多練？啟用加強練習池';
-          desc = `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章），啟用後下一場練習會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
+          desc =
+            source === 'all'
+              ? `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章），啟用後下一場練習會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`
+              : `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章）。目前的題目來源只出官方公告試題，啟用後這一場也不會混入；題目來源選「全部題目」時才會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
           ctaLabel = `啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習`;
           ctaIcon = 'add_circle_outline';
           modifierClass = '';
@@ -259,7 +287,8 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
                 {title}
               </h3>
               <p className="practice-pool-tip__desc">{desc}</p>
-              {enabled && (
+              {/* 抽題分布畫的是主題庫加練習池；只出官方題目時抽題範圍不是這個，不顯示 */}
+              {enabled && source === 'all' && (
                 <details className="practice-pool-tip__details">
                   <summary className="practice-pool-tip__details-summary">
                     查看抽題分布
@@ -313,6 +342,46 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
                 考科二：淨零碳盤查規範與程序概要 ({stats.subject2} 題)
               </option>
             </select>
+          </div>
+
+          {/* 題目來源（#128）：只出官方公告試題；放在既有的測驗設定裡，不另加按鈕 */}
+          <div className="config-item">
+            <label htmlFor="source">題目來源</label>
+            <select
+              id="source"
+              value={source}
+              onChange={handleSourceChange}
+              aria-describedby={sourceAvailable === null ? undefined : sourceHintId}
+            >
+              {SOURCE_OPTIONS.map((s) => (
+                <option key={s} value={s}>
+                  {questionSourceLabel(s)}
+                </option>
+              ))}
+            </select>
+            {/* live region 一直在畫面上，內容換了螢幕閱讀器才會念 */}
+            <p
+              id={sourceHintId}
+              className="config-item__hint"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {sourceAvailable === null ? null : sourceAvailable === 0 ? (
+                <span>這個範圍沒有官方公告試題，無法開始。</span>
+              ) : (
+                <>
+                  <span>可出 {sourceAvailable} 題官方公告試題，不會混入其他來源的題目。</span>
+                  {parsedQuestionCount !== null && parsedQuestionCount > sourceAvailable && (
+                    <span className="config-item__hint--notice">
+                      題數設定是 {parsedQuestionCount} 題，但只有 {sourceAvailable} 題官方公告試題，本次會出{' '}
+                      {sourceAvailable} 題。
+                    </span>
+                  )}
+                  {practiceMode.enabled && <span>加強練習池在這個模式不會混入。</span>}
+                </>
+              )}
+            </p>
           </div>
 
           {/* 測驗模式 */}
@@ -370,7 +439,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           type="button"
           className="btn btn-primary start-btn"
           onClick={handleStart}
-          disabled={!canStartQuiz}
+          disabled={!canStart}
         >
           <span className="material-icons">play_arrow</span>
           開始測驗

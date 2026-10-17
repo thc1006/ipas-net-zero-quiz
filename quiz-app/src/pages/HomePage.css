@@ -274,6 +274,13 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+  /* 手機版單欄是 1fr，它的下限是 grid 項目的 min-width: auto，也就是選單最長選項的寬度。
+     考科範圍的「考科二：淨零碳盤查規範與程序概要」在 main 上就把整頁撐寬（360px 一般字級多
+     25 到 41px、最大字級多 104 到 120px，Chromium、Firefox、WebKit 實測）。加上 min-width: 0
+     之後選單跟著欄寬縮，窄螢幕上選中的長選項會被截掉一段。桌面多欄時欄寬由 grid 決定，有沒有這條
+     規則都一樣：選項比欄寬長就截，main 上的考科範圍在一般字級就是如此。
+     tests/e2e/official-mode.spec.ts 量手機寬度守著。 */
+  min-width: 0;
 }
 
 .config-item label {
@@ -308,6 +315,23 @@
   color: var(--color-text-secondary);
   margin: 0;
   min-height: 1em;
+}
+
+/* 只出官方題目的說明（#128）：每一句一行；題數不夠的那一句用警示色 */
+.config-item__hint > span {
+  display: block;
+}
+
+.config-item__hint--notice {
+  color: var(--color-warning-fg);
+  font-weight: 500;
+}
+
+/* 題目來源的說明在「全部題目」時是空的：它是一直存在的 live region（內容換了螢幕閱讀器才會念），
+   空的時候不佔高度，也抵掉它前面那一段 flex 的 gap，否則那一格比旁邊的欄位高一段間距 */
+.config-item__hint:empty {
+  min-height: 0;
+  margin-top: calc(-1 * var(--spacing-xs));
 }
 
 .config-item__hint--error {

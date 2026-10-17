@@ -24,15 +24,14 @@ function App() {
   const practiceMode = usePracticeMode();
 
   // 開始測驗 — 若使用者已啟用「加強練習池」（settings toggle），自動把練習池
-  // 題目混入抽題範圍（async startQuizWithPool）；否則沿用同步 startQuiz。
+  // 題目混入抽題範圍（async startQuizWithPool；只出官方題目時不載入、不混入）；否則沿用同步 startQuiz。
+  // 一題都抽不到（只出官方題目而範圍內沒有官方題，#128）時不切頁，否則會停在只剩 header 的空白測驗頁。
   const handleStartQuiz = useCallback(
     async (config: QuizConfig) => {
-      if (practiceMode.enabled) {
-        await quiz.startQuizWithPool({ ...config, includePracticePool: true });
-      } else {
-        quiz.startQuiz(config);
-      }
-      setCurrentView('quiz');
+      const started = practiceMode.enabled
+        ? await quiz.startQuizWithPool({ ...config, includePracticePool: true })
+        : quiz.startQuiz(config);
+      if (started) setCurrentView('quiz');
     },
     [quiz, practiceMode.enabled]
   );
@@ -72,15 +71,13 @@ function App() {
     }
   }, [quiz]);
 
-  // 重新測驗
+  // 重新測驗（抽不到題目時同樣不切頁）
   const handleRetry = useCallback(async () => {
     if (lastResult?.config) {
-      if (practiceMode.enabled) {
-        await quiz.startQuizWithPool({ ...lastResult.config, includePracticePool: true });
-      } else {
-        quiz.startQuiz(lastResult.config);
-      }
-      setCurrentView('quiz');
+      const started = practiceMode.enabled
+        ? await quiz.startQuizWithPool({ ...lastResult.config, includePracticePool: true })
+        : quiz.startQuiz(lastResult.config);
+      if (started) setCurrentView('quiz');
     }
   }, [quiz, lastResult, practiceMode.enabled]);
 

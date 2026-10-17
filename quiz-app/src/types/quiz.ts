@@ -223,6 +223,12 @@ export interface QuizDataset {
 /** 測驗模式 */
 export type QuizMode = 'practice' | 'exam' | 'review';
 
+/**
+ * 題目來源（#128）：'all' 是全部題目；其餘只出帶官方公告試題標記（officialExam）的題目，
+ * 'exam:115-01' 只出那一場。判斷依據是資料上的標記，不是題號或文字（utils/question-source.ts）。
+ */
+export type QuestionSource = 'all' | 'official' | `exam:${string}`;
+
 /** 測驗配置 */
 export interface QuizConfig {
   mode: QuizMode;
@@ -238,8 +244,12 @@ export interface QuizConfig {
   // 而且它本來也不該存在：主題庫是從來源 PDF 分欄重建的，選項順序有證據鏈
   // （--verify 逐題比對），執行期洗牌會讓畫面上的題目與已驗證的來源不一致。
   // 練習池原本的答案偏斜（永遠選 B 得 60 分）已在資料層重排解決（χ²=0.02）。
-  /** 是否將加強練習池題目混入抽題範圍（須使用者已 opt-in） */
+  /** 是否將加強練習池題目混入抽題範圍（須使用者已 opt-in）；只出官方題目時一律不混 */
   includePracticePool?: boolean;
+  /**
+   * 題目來源。沒有這個欄位（舊版存下的進度與結果）等同 'all'：行為與加入這個欄位之前完全相同。
+   */
+  questionSource?: QuestionSource;
   showAnswerImmediately: boolean;
 }
 

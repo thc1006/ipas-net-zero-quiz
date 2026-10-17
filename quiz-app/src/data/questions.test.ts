@@ -14,7 +14,10 @@ import {
   getSimilarQuestions,
   dataset,
   withOfficialAnswer,
+  getSourceCandidates,
 } from './questions';
+import { byPaperOrder, officialSessions } from '../utils/question-source';
+import { contentSignature } from '../utils/question-identity';
 
 describe('題庫資料模組', () => {
   describe('stats 統計資料', () => {
@@ -410,5 +413,43 @@ describe('官方公告試題的答案依據帶出官方答案', () => {
     expect(withOfficialAnswer(asWritten, evidence)?.official?.answer).toBe(q.answer);
     expect(withOfficialAnswer({ ...asWritten, official_exam: undefined }, evidence)?.official).toBeUndefined();
     expect(withOfficialAnswer(asWritten, { ...evidence, url: 'https://law.moj.gov.tw/x' })?.official).toBeUndefined();
+  });
+});
+
+// #128 只出官方題目：抽題範圍只含帶官方標記、考科相符、有標準答案的題目，照原卷順序。
+describe('getSourceCandidates（只出官方題目時的抽題範圍）', () => {
+  const official = allQuestions.filter((q) => q.officialExam && isQuestionScorable(q));
+  const keyOf = (q: (typeof allQuestions)[number]) =>
+    `${q.officialExam!.session}|${q.officialExam!.subject}|${q.officialExam!.question_number}`;
+
+  it('全部考科：每一題都帶官方標記、有標準答案、不重複，照原卷順序，一題不漏', () => {
+    const got = getSourceCandidates('all', 'official');
+    expect(got.length).toBeGreaterThan(0);
+    expect(got.filter((q) => !q.officialExam || !isQuestionScorable(q))).toEqual([]);
+    expect(new Set(got.map(contentSignature)).size).toBe(got.length);
+    expect(got.map(keyOf)).toEqual([...got].sort(byPaperOrder).map(keyOf));
+    expect(new Set(got.map((q) => q.id))).toEqual(new Set(official.map((q) => q.id)));
+  });
+
+  it('可與考科組合：只出考科一的官方題', () => {
+    const got = getSourceCandidates('考科1', 'official');
+    expect(got.length).toBeGreaterThan(0);
+    expect(got.filter((q) => q.subject !== '考科1' || q.officialExam?.subject !== 'L11')).toEqual([]);
+    expect(got.length).toBe(official.filter((q) => q.subject === '考科1').length);
+  });
+
+  it('只出某一場、某一科', () => {
+    for (const session of officialSessions(allQuestions)) {
+      for (const subject of ['考科1', '考科2'] as const) {
+        const got = getSourceCandidates(subject, `exam:${session}`);
+        const want = official.filter((q) => q.officialExam!.session === session && q.subject === subject);
+        expect(got.length).toBeGreaterThan(0);
+        expect(got.map((q) => q.id)).toEqual([...want].sort(byPaperOrder).map((q) => q.id));
+      }
+    }
+  });
+
+  it('認不得的場次一題都不出（不退回全部題目）', () => {
+    expect(getSourceCandidates('all', 'exam:999-01')).toEqual([]);
   });
 });

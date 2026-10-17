@@ -7,11 +7,16 @@ import type { OfficialExam } from '../types/quiz';
 const CHINESE_ORDINAL = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
 const SUBJECT_NAME: Record<string, string> = { L11: '第一科', L12: '第二科' };
 
-function session(o: OfficialExam): string {
-  const [year, round] = o.session.split('-');
+/** 場次「115-01」在畫面上的說法：「115 年第一次」 */
+export function sessionLabel(session: string): string {
+  const [year, round] = session.split('-');
   const n = Number(round);
   const ordinal = CHINESE_ORDINAL[n - 1];
   return ordinal ? `${year} 年第${ordinal}次` : `${year} 年第 ${n} 次`;
+}
+
+function session(o: OfficialExam): string {
+  return sessionLabel(o.session);
 }
 
 /** 題卡上的標籤：「115 年第一次官方公告試題」 */

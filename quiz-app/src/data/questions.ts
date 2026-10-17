@@ -8,8 +8,10 @@ import type {
   GistQuestion,
   UniqueQuestion,
   ExamSubject,
+  QuestionSource,
 } from '../types/quiz';
 import { isQuestionScorable } from '../utils/scorable';
+import { sourceCandidates } from '../utils/question-source';
 
 // 載入原始資料（build 時會被 Vite 處理）
 import rawData from './integrated_dataset.json';
@@ -193,6 +195,19 @@ export function getQuestionsBySubject(
 ): QuizQuestion[] {
   if (subject === 'all') return allQuestions;
   return allQuestions.filter((q) => q.subject === subject);
+}
+
+/**
+ * 只出官方題目時的抽題範圍（#128）：主題庫裡帶對應官方標記、考科相符、有標準答案的題目，
+ * 照原卷順序排列，依內容去重（規則見 utils/question-source.ts 的 sourceCandidates）。
+ *
+ * source 是 'all' 時不走這裡：startQuiz 原本的抽題路徑一行不動，行為與加入這個功能之前完全相同。
+ */
+export function getSourceCandidates(
+  subject: ExamSubject | 'all',
+  source: QuestionSource
+): QuizQuestion[] {
+  return sourceCandidates(allQuestions, subject, source);
 }
 
 /**

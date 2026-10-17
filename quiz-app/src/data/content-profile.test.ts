@@ -116,6 +116,11 @@ describe('語料輪廓（換題庫時用 -u 重新產生）', () => {
       { where: 'questions.test.ts', what: '每一份官方來源至少一題的答案依據帶出官方答案（反空轉）', semantics: '依語料重設' },
       { where: 'questions.test.ts', what: '依據出自自己出處的非官方題至少一題（反空轉）', semantics: '依語料重設' },
       { where: 'restoration-manifest.test.ts', what: '含圖表、不收錄的官方題（not_imported_figure）至少一題（反空轉）', semantics: '依語料重設' },
+      { where: 'utils/question-source.test.ts／pages/HomePage.test.tsx／tests/e2e/official-mode.spec.ts', what: '只出官方題目：官方公告試題至少兩場（反空轉）', semantics: '依語料重設' },
+      { where: 'utils/question-source.test.ts', what: '只出官方題目：官方題與非官方題各至少 40 題（反空轉，混著排序的測試各取 40 題）', semantics: '依語料重設' },
+      { where: 'hooks/officialSource.test.tsx／pages/HomePage.test.tsx／tests/e2e/official-mode.spec.ts', what: '只出官方題目：官方題至少 50 題，最新一場的考科二少於 100 題（題數不夠的情境）', semantics: '依語料重設' },
+      { where: 'questions.test.ts／pages/HomePage.test.tsx／hooks/officialSource.test.tsx', what: '只出官方題目：每一場的考科一、考科二都有官方題（反空轉）', semantics: '依語料重設' },
+      { where: 'hooks/officialSource.test.tsx', what: "只出官方題目：'all' 與沒有 questionSource 逐題比對時，主題庫全部、考科一、考科二各至少 40 題可計分（各取 40 題）", semantics: '依語料重設' },
     ];
     expect(ratchets.length).toBeGreaterThan(5);
     expect(ratchets).toMatchSnapshot();
