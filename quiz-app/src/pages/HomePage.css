@@ -32,6 +32,17 @@
   margin-bottom: var(--spacing-lg);
 }
 
+/* 副標拆成三段，只在段與段之間換行：「iPAS 淨零碳規劃管理師」｜「（初級）」｜「考古題線上測驗」。
+   中文預設任兩個字之間都能斷：窄螢幕會把「驗」單獨擠到第二行（344px）、斷成「…考古題線｜上測驗」
+   （320px），最大字級加上縮放時還會把「（初級）」拆成「（初｜級）」。word-break: keep-all 也不行：
+   WebKit 只在空白處斷，「iPAS」會單獨一行，窄螢幕還會溢出。「（初級）」自成一段，文字縮放 200% 以內
+   不會被拆開；一段本身比一行還寬時，就在那一段裡面換行，不會畫到畫面外。縮放到 250% 以上時，三個引擎都會
+   拆開「（初級）」，Chromium 在最大字級還會畫到畫面外（2026-10 實測）。
+   tests/e2e/home-subtitle.spec.ts 在 Chromium、Firefox、WebKit 量真實排版、截圖比對守著。 */
+.hero-subtitle__phrase {
+  display: inline-block;
+}
+
 .stats-badges {
   display: flex;
   justify-content: center;
