@@ -1,8 +1,12 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
+// 與正式 build 同一份 define 與 json 設定：單元測試看到的就是出貨的值。寫出副檔名：Vite 打算改成預設的
+// configLoader: 'native' 用 Node 自己的 import，不會補副檔名（沒寫就是 ERR_MODULE_NOT_FOUND）
+import { shared } from './vite.config.ts';
 
 export default defineConfig({
+  ...shared,
   plugins: [react()],
   test: {
     environment: 'jsdom',
