@@ -64,7 +64,7 @@
 
 ## 技術細節
 
-- 純前端 SPA（React 18 + TypeScript + Vite），部署於 GitHub Pages
+- 純前端 SPA（React 19 + TypeScript + Vite），部署於 GitHub Pages
 - 資料 schema 啟動時於 dev 模式 fail-fast 驗證
 - AI 輔助解析使用 puter.js（OpenAI / Anthropic / Google 等多模型）
 - 來源徽章區分主題庫 / 模擬 / AI 產題；AI 產題附 quality_flags（時效性 / 爭議 / 低信心）

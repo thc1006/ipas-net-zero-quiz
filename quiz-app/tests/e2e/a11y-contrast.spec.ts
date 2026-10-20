@@ -58,11 +58,24 @@ function parseColor(s: string, label: string): number[] {
   }
   throw new Error(`Unsupported color value for ${label}: "${t}"`);
 }
-/** rgba tint 疊在 bg 上的實際色 */
-function alphaOver(rgba: string, bg: number[], label: string): number[] {
-  const m = (rgba ?? '').match(/rgba?\(([^)]+)\)/);
-  if (!m) throw new Error(`Not an rgba value for ${label}: "${rgba}"`);
-  const p = m[1].split(',').map((x) => parseFloat(x));
+/** #rgba／#rrggbbaa → [r, g, b, a]（a 是 0 到 1）；其他寫法回 null。
+ * Vite 8 用 Lightning CSS 壓縮 CSS，會把 rgba(76, 175, 80, 0.12) 改寫成 #4caf501f，
+ * 所以 tint 讀回來可能是帶 alpha 的 hex。alpha 照實換算成 n/255：那就是瀏覽器實際畫出來的值。 */
+function hexWithAlpha(color: string): number[] | null {
+  const m = (color ?? '').trim().match(/^#([0-9a-fA-F]{4}|[0-9a-fA-F]{8})$/);
+  if (!m) return null;
+  const h = m[1].length === 4 ? [...m[1]].map((c) => c + c).join('') : m[1];
+  const [r, g, b, a] = [0, 2, 4, 6].map((i) => parseInt(h.slice(i, i + 2), 16));
+  return [r, g, b, a / 255];
+}
+/** 半透明 tint（rgba() 或 #rgba／#rrggbbaa）疊在 bg 上的實際色 */
+function alphaOver(color: string, bg: number[], label: string): number[] {
+  let p = hexWithAlpha(color);
+  if (!p) {
+    const m = (color ?? '').match(/rgba?\(([^)]+)\)/);
+    if (!m) throw new Error(`Not an rgba or alpha-hex value for ${label}: "${color}"`);
+    p = m[1].split(',').map((x) => parseFloat(x));
+  }
   const a = p.length >= 4 ? p[3] : 1;
   return [p[0], p[1], p[2]].map((c, i) => Math.round(a * c + (1 - a) * bg[i]));
 }
@@ -88,6 +101,8 @@ function splitTopLevel(str: string): string[] {
 /** gradient 單一 stop → 不透明 rgb：半透明 stop（如衍生分數卡的 tint 端點）疊在 backdrop 上；
  * 不透明 stop（hex / rgb / rgba a=1）走 fail-closed parseColor。 */
 function resolveStop(tok: string, backdrop: number[], label: string): number[] {
+  const hex = hexWithAlpha(tok);
+  if (hex && hex[3] !== 1) return alphaOver(tok, backdrop, label); // 半透明 hex → 疊底
   const m = tok.match(/^rgba?\(\s*([^)]+)\)$/i);
   if (m) {
     const p = m[1].split(',').map((x) => parseFloat(x));
@@ -129,6 +144,34 @@ function gradientStops(g: string, label: string, backdrop: number[]): number[][]
   }
   return stops;
 }
+
+// 解析器本身：三種半透明寫法要換算成同一個疊色。Lightning CSS 兩種 hex 都會產出：r、g、b、alpha
+// 四個色版的兩位 hex 都是同一個數字時寫成 4 碼（例如 --color-text-secondary 的 #0009），其餘寫成
+// 8 碼（#4caf501f、#2e7d3233）；產物裡已經沒有 rgba()。這支 spec 讀的 token 目前只出現 8 碼，
+// 所以 4 碼（#rgba）與 rgba() 這兩條路（含漸層 stop 的 rgba() 分支）要在這裡直接測，否則寫錯也
+// 不會有任何頁面讓它紅。底色除了白色再用一個三個色版都不同的顏色：白底三個色版相同，
+// 疊色時取錯色版也驗不出來。
+test('色彩解析：#rgba、#rrggbbaa、rgba() 疊在白底與彩色底上的結果相同', () => {
+  const white = [255, 255, 255];
+  const colored = [0, 128, 255];
+  expect(hexWithAlpha('#4caf501f')).toEqual([76, 175, 80, 31 / 255]);
+  expect(hexWithAlpha('#f008')).toEqual([255, 0, 0, 136 / 255]);
+  expect(hexWithAlpha('#ff0000')).toBeNull();
+  expect(hexWithAlpha('rgba(255, 0, 0, 0.5)')).toBeNull();
+  const cases: [number[], number[]][] = [
+    [white, [255, 119, 119]],
+    [colored, [136, 60, 119]],
+  ];
+  for (const [bg, want] of cases) {
+    const viaRgba = alphaOver('rgba(255, 0, 0, 0.5333333)', bg, 'rgba');
+    expect(viaRgba).toEqual(want);
+    expect(alphaOver('#ff000088', bg, '8 碼')).toEqual(viaRgba);
+    expect(alphaOver('#f008', bg, '4 碼')).toEqual(viaRgba);
+    expect(resolveStop('#f008', bg, 'stop')).toEqual(viaRgba);
+    expect(resolveStop('rgba(255, 0, 0, 0.5333333)', bg, 'stop')).toEqual(viaRgba);
+  }
+  expect(resolveStop('#ff0000', white, 'stop')).toEqual([255, 0, 0]);
+});
 
 test('語意 token：每個真實 fg/bg 配對跨 16 組（theme×CVD×HC）達 WCAG AA（#109）', async ({
   page,

@@ -11,6 +11,7 @@
 //    2026-07 拿法條逐字比對，找到 13 個實質缺陷，**13 個當初全都被判 CONFIRMED**。
 //    一句假的保證比沒有保證更糟。詳見 SourceBadge.tsx 開頭。
 // - 帶 quality_flag：紅邊警示
+import type { JSX } from 'react';
 import type {
   PracticePoolSourceType,
   PracticePoolQualityFlag,

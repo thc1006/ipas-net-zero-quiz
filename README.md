@@ -103,7 +103,7 @@ CBAM、ISO 14068-1 屬**科目一**；**科目二只涵蓋 ISO 14064-1 與 ISO 1
 
 ## 開發
 
-需要 Node.js ≥ 20 與 pnpm ≥ 9。
+需要 Node.js 24（確切版本見 `quiz-app/.nvmrc`，CI 與部署都讀它）與 pnpm 12（確切版本見 `quiz-app/package.json` 的 `packageManager`；`corepack enable` 之後會自動用對的版本）。
 
 ```bash
 corepack enable && pnpm install
@@ -117,11 +117,7 @@ pnpm test:e2e       # E2E（playwright）
 pnpm lint && pnpm type-check
 ```
 
-> CI 會先跑 `npm install -g corepack@latest` —— Node 20.18 內建的 Corepack 簽名公鑰
-> 已過期（[nodejs/corepack#612](https://github.com/nodejs/corepack/issues/612)），
-> 不升級會裝不動 pnpm。本機遇到同樣問題時也照做。
-
-**技術棧**：React 18 + TypeScript（strict）／Vite 6／Vitest + Testing Library + Playwright／
+**技術棧**：React 19 + TypeScript（strict）／Vite 8／Vitest + Testing Library + Playwright／
 GitHub Actions（lint · tsc · test · build · e2e · CodeQL · Codecov）／GitHub Pages 自動部署。
 
 ## 授權

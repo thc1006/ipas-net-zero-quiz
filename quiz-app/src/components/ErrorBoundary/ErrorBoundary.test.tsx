@@ -1,4 +1,5 @@
 // ErrorBoundary 測試
+import type { JSX } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { ErrorBoundary } from './ErrorBoundary';

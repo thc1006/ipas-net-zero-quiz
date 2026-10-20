@@ -1,5 +1,5 @@
 // React Error Boundary — 抓住子元件 render error 並顯示 fallback UI
-// React 18 沒有 hook 版的 boundary，class component 是唯一手段
+// React（到 19 都）沒有 hook 版的 boundary，class component 仍是唯一手段
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { logger as defaultLogger, type Logger } from '../../utils/logger';
 import { BUG_REPORT_URL } from '../../data/app-meta';

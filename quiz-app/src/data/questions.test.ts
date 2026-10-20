@@ -219,6 +219,9 @@ describe('題庫資料模組', () => {
       expect(result.length).toBeLessThanOrEqual(stats.total);
     });
 
+    // 三種考科範圍各抽 200 份，共 600 次真實抽題，CI 上約 4 秒。
+    // Vitest 2 的逾時管不到同步測試；Vitest 3 起同步測試也照預設 5 秒算逾時，
+    // 開 coverage 又平行跑的時候會被誤判。所以給明確的上限，斷言本身不變。
     it('抽出的考卷不應出現內容相同的題目（實際跑 200 份）', () => {
       const sig = (q: { stem: string; options: { text: string }[] }) =>
         q.stem.replace(/\s+/g, '') +
@@ -234,7 +237,7 @@ describe('題庫資料模組', () => {
           expect(new Set(sigs).size).toBe(sigs.length);
         }
       }
-    });
+    }, 30_000);
   });
 
   describe('getQuestionById', () => {
