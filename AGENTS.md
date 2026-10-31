@@ -64,6 +64,14 @@ tools/ 頂層新增、移除或改名工具時，同時改 `tools/tests/test_off
   換了）或 `law-articles.pinned.json` → **先問**。
 - 資料與文件的數字對不上 → 跑 `pnpm preflight`，不要手改數字。
 
+## 重新釘選法規時
+
+`tools/pin_law_articles.py` 重新釘選後 gate 全綠，不代表題目沒過時：
+
+1. 逐條讀變動的條文。
+2. 全庫找引用那些條文的題目，連同沒寫條號、只講內容的題目，兩個題庫都要找。
+3. 答案、解析、引文過時就改，理由寫進該題。官方公告試題、參考樣題與 PDF 還原題的題幹、選項、答案，以及匯入工具負責的引文都不手改，要記錄術語問題用 `source_terminology_note`，其他情況先問專案所有者。
+
 ## 改資料時
 
 1. 先讀資料確認問題真的存在，不要相信描述（外部複審常針對舊 commit）。
@@ -73,6 +81,7 @@ tools/ 頂層新增、移除或改名工具時，同時改 `tools/tests/test_off
 4. 解析裡每個條號／標準編號／百分比／年份／數量，都必須能在題幹、選項或引文裡找到。
    驗法：`python -c "import sys;sys.path.insert(0,'tools');from explanation_guard import check;..."`
 5. 解析裡用「」括起來又提到法規的句子會被逐字比對釘選條文。是意譯就**不要加引號**。
+   答案依據的引文也要逐字：空白不計、全半形視為相同，其他標點要一樣；省略處寫刪節號，每段至少 6 字，不能跨條。
 6. 把「為什麼這樣改」寫進該題的 `provenance`／`metadata`，不是只寫在 commit 訊息裡。
 7. `pnpm preflight`。
 

@@ -264,3 +264,187 @@ describe('法條引文必須逐字', () => {
     expect(bad, '解析引用了一個不存在的法條條號').toEqual([]);
   });
 });
+
+// 上面的 gate 只看題幹與解析，沒有讀答案依據，而且比對前去掉標點。碳費收費辦法 §9 在 115-09-01 從
+// 「其扣除比率為零點三。」改成「其扣除比率為零點三；供屬…」，重新釘選後整份題庫照樣全綠。
+// 這裡比對答案依據的引文：空白不計、全半形視為相同，其他標點要一樣；省略處寫刪節號；網址寫了條號，引文要在那一條裡。
+// 抓不到舊引文剛好是新條文子字串的修法（沒有句尾標點的引文、條文後面多一項），重新釘選時要人工讀過變動的條文。
+describe('答案依據的引文與釘選條文逐字相符', () => {
+  const strict = (s: string) => s.normalize('NFKC').replace(/\s+/gu, '');
+
+  // 環境部法規網上的釘選法規，引文一樣要比對。新的 id 要先分類，不會安靜略過
+  const MOENV_PINNED: Record<string, string> = {
+    GL005954: 'O0020102',
+    GL007914: 'O0020139',
+    GL007915: 'O0020140',
+  };
+  const MOENV_NOT_PINNED = new Set([
+    'GL004941',
+    'GL006011',
+    'GL007755',
+    'GL007761',
+    'GL007916',
+    'GL007931',
+    'GL007934',
+    'GL007955',
+  ]);
+
+  const moenvId = (url: string) =>
+    /moenv\.gov\.tw/iu.test(url) ? url.match(/[?&]id=([a-z]+\d+)/iu)?.[1].toUpperCase() : undefined;
+  const pcodeOf = (url: string): string | undefined => {
+    const pcode = MOENV_PINNED[moenvId(url) ?? ''] ?? url.match(/[?&]pcode=([a-z0-9]+)/iu)?.[1].toUpperCase();
+    return pcode && pcode in PINNED ? pcode : undefined;
+  };
+  const articleOf = (url: string) => url.match(/[?&]flno=([0-9-]+)/iu)?.[1];
+
+  /** 每一段都要在同一條裡、照順序出現；太短的段落什麼都對得上，不算數。 */
+  const MIN_PART_LEN = 6;
+  const isStrictlyVerbatim = (pcode: string, quote: string, article?: string) => {
+    const parts = quote
+      .split(/…+|⋯+|\.{3,}/u)
+      .map(strict)
+      .filter((part) => part.length > 0);
+    if (parts.length === 0 || parts.some((part) => part.length < MIN_PART_LEN)) return false;
+    const { articles } = PINNED[pcode];
+    const candidates = article === undefined ? Object.values(articles) : [articles[article] ?? ''];
+    return candidates.map(strict).some((text) => {
+      let from = 0;
+      return parts.every((part) => {
+        const at = text.indexOf(part, from);
+        from = at + part.length;
+        return at >= 0;
+      });
+    });
+  };
+
+  interface Evidence {
+    url?: string;
+    quote?: string;
+  }
+  type WithEvidence = BankItem & {
+    item_id?: string;
+    metadata?: { evidence?: Evidence[] };
+    provenance?: { evidence?: Evidence[] };
+  };
+  interface Entry {
+    who: string;
+    url: string;
+    quote: string;
+  }
+  // 主題庫在 metadata.evidence，練習池在 provenance.evidence
+  const ALL_EVIDENCE: Entry[] = [
+    ...(MAIN as WithEvidence[]).map((i) => [i, i.metadata?.evidence] as const),
+    ...(POOL as WithEvidence[]).map((i) => [i, i.provenance?.evidence] as const),
+  ].flatMap(([item, evidence]) =>
+    (evidence ?? []).map((e) => ({
+      who: item.id ?? item.item_id ?? `gist[${item.index}]`,
+      url: e.url ?? '',
+      quote: e.quote ?? '',
+    }))
+  );
+  const onPinnedLaw = (e: Entry) => pcodeOf(e.url) !== undefined && e.quote !== '';
+  const EVIDENCE = ALL_EVIDENCE.filter(onPinnedLaw);
+
+  const notVerbatim = (entries: Entry[]) =>
+    entries
+      .filter((e) => !isStrictlyVerbatim(pcodeOf(e.url)!, e.quote, articleOf(e.url)))
+      .map((e) => `${e.who}（${PINNED[pcodeOf(e.url)!].name}）：${e.quote.slice(0, 60)}`);
+  const unclassified = (urls: string[]) =>
+    urls.flatMap((url) => moenvId(url) ?? []).filter((id) => !(id in MOENV_PINNED) && !MOENV_NOT_PINNED.has(id));
+
+  it('指向釘選法規的引文，每一段都逐字出現在同一條裡（含標點）', () => {
+    expect(notVerbatim(EVIDENCE), '每段要逐字且至少 6 字，省略處寫刪節號，不能跨條').toEqual([]);
+  });
+
+  it('環境部法規網的 id 都分類過', () => {
+    expect(
+      unclassified(ALL_EVIDENCE.map((e) => e.url)),
+      '新的環境部法規 id：是釘選法規就加進 MOENV_PINNED，不是就加進 MOENV_NOT_PINNED'
+    ).toEqual([]);
+  });
+
+  it('掃到兩個題庫與環境部法規網的引文', () => {
+    expect(EVIDENCE.length).toBeGreaterThan(100);
+    expect(new Set(EVIDENCE.map((e) => pcodeOf(e.url))).size).toBeGreaterThanOrEqual(5);
+    expect(EVIDENCE.some((e) => e.who.startsWith('gist['))).toBe(true);
+    expect(EVIDENCE.some((e) => e.who.startsWith('pool-'))).toBe(true);
+    expect(EVIDENCE.some((e) => !/^(gist\[|pool-)/u.test(e.who)), 'our_unique_items 的引文沒有掃到').toBe(true);
+    for (const id of ['GL005954', 'GL007914']) {
+      expect(EVIDENCE.some((e) => e.url.includes(id)), `${id} 的引文沒有掃到`).toBe(true);
+    }
+    expect(EVIDENCE.some((e) => articleOf(e.url) !== undefined), '寫了條號的引文沒有掃到').toBe(true);
+  });
+
+  describe('（變異測試）網址的各種寫法都對得上法規', () => {
+    it.each([
+      ['https://law.moj.gov.tw/LawClass/LawAll.aspx?PCODE=O0020139', 'O0020139'],
+      ['https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=o0020139', 'O0020139'],
+      ['https://law.moj.gov.tw/LawClass/LawSingle.aspx?media=print&pcode=O0020139&flno=9', 'O0020139'],
+      ['https://oaout.moenv.gov.tw/laW/LawContent.aspx?ID=gl007914', 'O0020139'],
+      ['https://OAOUT.MOENV.GOV.TW/law/LawContent.aspx?id=GL007914', 'O0020139'],
+      ['https://oaout.moenv.gov.tw/law/LawContent.aspx?media=print&id=GL007914', 'O0020139'],
+      ['https://oaout.moenv.gov.tw/law/Download.ashx?FileID=1&id=GL007914&type=LAW', 'O0020139'],
+      ['https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL005954', 'O0020102'],
+      ['https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007915', 'O0020140'],
+    ])('%s', (url, pcode) => {
+      expect(pcodeOf(url)).toBe(pcode);
+    });
+
+    it('沒分類的 id 會被報出來，別的網站的 id 不算', () => {
+      expect(unclassified(['https://oaout.moenv.gov.tw/law/Download.ashx?id=GL999999'])).toEqual(['GL999999']);
+      expect(unclassified(['https://oaout.moenv.gov.tw/law/LawContent.aspx?id=FL015479'])).toEqual(['FL015479']);
+      expect(unclassified(['https://oaout.moenv.gov.tw/law/LawContent.aspx?id=ABC1'])).toEqual(['ABC1']);
+      expect(unclassified(['https://example.org/x?id=GL999999'])).toEqual([]);
+    });
+  });
+
+  describe('（變異測試）比對的判準', () => {
+    const OLD = '得供非屬經審查認定之高碳洩漏風險事業使用，其扣除比率為零點三';
+    const NEW = '供屬經審查認定之高碳洩漏風險事業使用，其扣除比率為零點一';
+    const LAST_ARTICLE = '本辦法自發布日施行';
+
+    it('修法前的句尾擋得下，去掉標點的比對擋不下', () => {
+      expect(isStrictlyVerbatim('O0020139', `${OLD}。`)).toBe(false);
+      expect(isVerbatim('O0020139', `${OLD}。`)).toBe(true);
+    });
+    it('全半形視為相同', () => {
+      expect(isStrictlyVerbatim('O0020139', OLD.replace('，', ','))).toBe(true);
+    });
+    it('刪節號前後都是原文才通過，開頭與結尾的刪節號不影響比對', () => {
+      expect(isStrictlyVerbatim('O0020139', `${OLD}……${NEW}`)).toBe(true);
+      expect(isStrictlyVerbatim('O0020139', `${OLD}...${NEW}`)).toBe(true);
+      expect(isStrictlyVerbatim('O0020139', `${OLD}⋯${NEW}`)).toBe(true);
+      expect(isStrictlyVerbatim('O0020139', `${OLD}..${NEW}`), '兩個點不是刪節號').toBe(false);
+      expect(isStrictlyVerbatim('O0020139', `……${OLD}……`)).toBe(true);
+      expect(isStrictlyVerbatim('O0020139', `${OLD}……捏造的一段條文內容`)).toBe(false);
+      expect(isStrictlyVerbatim('O0020139', `捏造的一段條文內容……${NEW}`)).toBe(false);
+    });
+    it('只有刪節號的引文不算數', () => {
+      expect(isStrictlyVerbatim('O0020139', '……')).toBe(false);
+    });
+    it('段落順序要與條文相同', () => {
+      expect(isStrictlyVerbatim('O0020139', `${NEW}……${OLD}`)).toBe(false);
+    });
+    it('不能跨條接合', () => {
+      expect(isStrictlyVerbatim('O0020139', LAST_ARTICLE)).toBe(true);
+      expect(isStrictlyVerbatim('O0020139', `${OLD}……${LAST_ARTICLE}`)).toBe(false);
+    });
+    it('只剩標點的段落不算數，每段至少 6 字', () => {
+      expect(isStrictlyVerbatim('O0020139', `${OLD}……。`)).toBe(false);
+      expect(isStrictlyVerbatim('O0020139', `${OLD}……率為零點一`)).toBe(false);
+      expect(isStrictlyVerbatim('O0020139', `${OLD}……比率為零點一`)).toBe(true);
+    });
+    it('網址寫了條號，引文要在那一條裡', () => {
+      expect(articleOf('https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020139&FLNO=3-1')).toBe('3-1');
+      expect(isStrictlyVerbatim('O0020139', OLD, '9')).toBe(true);
+      expect(isStrictlyVerbatim('O0020139', OLD, '1')).toBe(false);
+      expect(isStrictlyVerbatim('O0020139', OLD, '999')).toBe(false);
+    });
+    it('掃描會報出不逐字的引文', () => {
+      const moj = 'https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139';
+      expect(notVerbatim([{ who: 'a', url: moj, quote: OLD }])).toEqual([]);
+      expect(notVerbatim([{ who: 'b', url: moj, quote: `${OLD}。` }])).toHaveLength(1);
+      expect(notVerbatim([{ who: 'c', url: `${moj}&flno=1`, quote: OLD }]), '引文不在網址寫的那一條').toHaveLength(1);
+    });
+  });
+});
