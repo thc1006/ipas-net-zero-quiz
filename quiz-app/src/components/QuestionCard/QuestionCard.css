@@ -207,6 +207,7 @@
   flex: 1;
   font-size: var(--font-size-base);
   line-height: 1.5;
+  word-break: break-word;
 }
 
 /* 選項圖示 */
@@ -479,6 +480,8 @@
   font-size: var(--font-size-sm);
   line-height: 1.8;
   color: var(--color-text-primary);
+  white-space: pre-line;
+  word-break: break-word;
 }
 
 /* 未能對應考科的題目 —— 不要冒充任何一科 */

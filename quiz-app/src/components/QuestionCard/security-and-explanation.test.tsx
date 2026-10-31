@@ -4,7 +4,8 @@
 //    等於讓未經審核的生成內容取代已審核的內容。
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { QuestionCard, renderMarkdown } from './QuestionCard';
+import { QuestionCard } from './QuestionCard';
+import { renderMarkdown } from '../../utils/render-markdown';
 import type { QuizQuestion } from '../../types/quiz';
 
 const base: QuizQuestion = {
@@ -56,7 +57,40 @@ describe('AI 輸出不得注入 HTML', () => {
   });
 });
 
+describe('renderMarkdown 的斜體', () => {
+  it('成對星號包住的文字是斜體，單一字元也算', () => {
+    expect(renderMarkdown('這是 *斜體* 文字')).toBe('這是 <em>斜體</em> 文字');
+    expect(renderMarkdown('*a*')).toBe('<em>a</em>');
+  });
+
+  it('星號內側有空白就不是斜體：算式的乘號要留著', () => {
+    for (const text of ['5 * 3 * 2', '5 *3 * 2', '5 * 3* 2']) {
+      expect(renderMarkdown(text)).toBe(text);
+    }
+  });
+
+  it('文字裡的 $& 不會被當成取代樣式', () => {
+    expect(renderMarkdown('前 *a$&b* 後')).toBe('前 <em>a$&amp;b</em> 後');
+  });
+});
+
 describe('題庫解析必須被看見', () => {
+  it('解析裡的粗體會轉換，不會把星號顯示出來，HTML 一樣逸出', () => {
+    render(
+      <QuestionCard
+        question={{ ...base, explanation: '這是**重點**。<img src=x>' }}
+        questionNumber={1}
+        selectedAnswer="A"
+        showAnswer
+        onSelectAnswer={() => {}}
+      />
+    );
+    const section = screen.getByLabelText('題庫解析');
+    expect(screen.getByText('重點').tagName).toBe('STRONG');
+    expect(section.textContent).not.toContain('**');
+    expect(section.querySelector('img')).toBeNull();
+  });
+
   it('揭曉答案後顯示人工解析', () => {
     render(
       <QuestionCard

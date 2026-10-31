@@ -110,6 +110,7 @@ describe('語料輪廓（換題庫時用 -u 重新產生）', () => {
       { where: 'dataset-integrity.test.ts', what: 'CORRECTED_BUT_STABLE 等題號登記簿', semantics: '換題庫時清空重建' },
       { where: 'law-quote-integrity.test.ts', what: '指向釘選法規的答案依據引文下限（反空轉）', semantics: '依語料重設' },
       { where: 'tests/e2e/quiz-flow.spec.ts', what: '錯題卡與題庫相似題的張數下限（反空轉）', semantics: '依語料重設' },
+      { where: 'explanation-rendering.test.ts', what: '有解析與用到粗體的題數下限（反空轉）', semantics: '依語料重設' },
       { where: 'evidence-display.test.ts', what: '帶答案依據的題數下限（反空轉）', semantics: '依語料重設' },
       { where: 'docs-counts.test.ts', what: '文件數字對帳（由 tools/sync_derived_counts.py 維護）', semantics: '執行工具即可' },
       { where: 'data/official-exam.test.ts／schema-contract.test.ts／tools/tests/test_official_exam_import.py', what: '官方公告試題與官方來源至少一份（反空轉）', semantics: '依語料重設' },

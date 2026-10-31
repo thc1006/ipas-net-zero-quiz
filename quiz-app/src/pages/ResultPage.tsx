@@ -12,6 +12,7 @@ import type { QuizResult, QuizQuestion } from '../types/quiz';
 import { BankSimilarQuestionItem } from '../components/BankSimilarQuestionItem/BankSimilarQuestionItem';
 import { buildFeedbackUrl } from '../utils/question-feedback-url';
 import { selectWeakQuestions } from '../utils/question-stats-storage';
+import { renderMarkdown } from '../utils/render-markdown';
 import { useAllQuestionStats } from '../hooks/useQuestionStats';
 import './ResultPage.css';
 
@@ -399,9 +400,11 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                           .split(PARAGRAPH_BREAK)
                           .filter((para) => para.trim())
                           .map((para, i) => (
-                            <p key={i} className="wrong-explanation__body">
-                              {para}
-                            </p>
+                            <p
+                              key={i}
+                              className="wrong-explanation__body"
+                              dangerouslySetInnerHTML={{ __html: renderMarkdown(para) }}
+                            />
                           ))}
                       </section>
                     )}

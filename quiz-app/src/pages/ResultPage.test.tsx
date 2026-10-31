@@ -612,6 +612,26 @@ describe('考試模式的錯題檢討', () => {
     expect(screen.getByText(/這是一題練習池題目/)).toBeInTheDocument();
   });
 
+  it('解析裡的粗體照題目頁轉換，不會把星號顯示出來', () => {
+    render(
+      <ResultPage
+        result={makeResult({
+          answers: [makeAnswer({ questionId: 'pool-only-1', correctAnswer: 'B' })],
+          questions: [{ ...poolQuestion, explanation: '這是**重點**。<img src=x>' }],
+          wrongCount: 1,
+          correctCount: 0,
+          score: 0,
+        })}
+        onGoHome={vi.fn()}
+        onRetry={vi.fn()}
+      />
+    );
+    const section = screen.getByLabelText('題庫解析');
+    expect(within(section).getByText('重點').tagName).toBe('STRONG');
+    expect(section.textContent).not.toContain('**');
+    expect(section.querySelector('img')).toBeNull();
+  });
+
   it('考試模式看得到題庫解析，且多段解析不會被壓成一段', () => {
     // 練習模式靠 showAnswer 在題目頁顯示解析；考試模式 showAnswerImmediately=false，
     // 題目頁不顯示，因此結果頁是使用者唯一看得到解析的地方。

@@ -735,6 +735,7 @@
   font-size: var(--font-size-xs);
   line-height: 1.7;
   color: var(--color-text-primary);
+  white-space: pre-line;
   word-break: break-word;
 }
 

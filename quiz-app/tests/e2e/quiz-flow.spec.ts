@@ -139,6 +139,7 @@ test.describe('測驗流程', () => {
     await page.locator('.option-item').first().click();
     await page.getByRole('button', { name: /完成測驗/i }).click();
 
+    await expect(page.locator('.wrong-explanation__body').first()).toHaveCSS('white-space', 'pre-line');
     const realOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth
     );
@@ -162,6 +163,25 @@ test.describe('測驗流程', () => {
       const box = (await icon.boundingBox())!;
       expect(box.x + box.width, '勾或叉被推出畫面').toBeLessThanOrEqual(320);
     }
+  });
+
+  // 題目頁的解析與結果頁是兩份樣式：gist-1 在這裡一樣會撐寬頁面，分段也要留著
+  test('手機寬度：題目頁的解析不會撐寬頁面，分段也留著', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    await page.getByLabel('隨機出題順序').uncheck();
+    await page.getByRole('button', { name: /開始測驗/i }).click();
+    await page.locator('.option-item').first().click();
+
+    const body = page.locator('.curated-explanation__body');
+    await expect(body).toBeVisible();
+    await expect(body).toHaveCSS('white-space', 'pre-line');
+    await page.locator('.option-text').first().evaluate((el) => {
+      el.textContent = 'x'.repeat(200);
+    });
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    );
+    expect(overflow, '題目頁的解析或選項把頁面撐寬了').toBe(0);
   });
 
   // 相似題的題幹與選項沒有 word-break 時，展開後頁面會被撐寬，勾與叉也跟著被推出畫面
