@@ -128,6 +128,7 @@ describe('語料輪廓（換題庫時用 -u 重新產生）', () => {
       { where: 'questions.test.ts／hooks/officialSource.test.tsx', what: '只出官方題目：每一版參考樣題的考科一、考科二都有題目（反空轉）', semantics: '依語料重設' },
       { where: 'tools/tests/test_restore_reproducibility.py', what: '--verify 印出的題數：官方公告試題與參考樣題各至少一題（反空轉）', semantics: '依語料重設' },
       { where: 'pages/HomePage.test.tsx／hooks/officialSource.test.tsx／App.test.tsx／tests/e2e/official-mode.spec.ts', what: '只出官方題目：參考樣題只有 114 年版、共 10 題，原卷順序的第一題是它（寫死版次與題數）', semantics: '依語料重設' },
+      { where: 'tests/e2e/quiz-flow.spec.ts', what: '加強練習池：啟用時一場 100 題抽得到練習池題（反空轉，去重且可計分的主題庫 981 題、練習池 154 題時，抽不到的機率約 2.2e-7）', semantics: '依語料重設' },
     ];
     expect(ratchets.length).toBeGreaterThan(5);
     expect(ratchets).toMatchSnapshot();

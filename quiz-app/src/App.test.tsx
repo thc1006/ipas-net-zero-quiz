@@ -4,17 +4,27 @@ import { render, screen, fireEvent, cleanup, waitFor, act } from '@testing-libra
 import App from './App';
 import { getSourceCandidates } from './data/questions';
 import { officialExamLabel, officialSampleLabel } from './utils/official-exam';
+import { __resetPracticePoolCacheForTesting, __setPracticePoolForTesting } from './utils/practice-pool';
+import { buildFixturePool } from './utils/__fixtures__/practice-pool-fixture';
+import type { QuizQuestion } from './types/quiz';
 
 // #128：按下開始那一刻抽不到題目時，App 要留在原頁。首頁在可出題數是 0 時會停用開始按鈕，
 // 正常操作走不到這裡；要驗 App 有照 startQuiz 的回傳值決定切不切頁，只能讓首頁算題數時照常、
 // 按下開始之後抽題才落空。預設照常回傳（其他測試不受影響），sourceEmpty.value 為 true 時才回傳空陣列。
 const sourceEmpty = vi.hoisted(() => ({ value: false }));
+// 這一場的抽題範圍：混入練習池時（startQuizWithPool）與隨機的只出官方題目（pickFromSource）會呼叫這個函式，
+// 全部題目而不混練習池時不會（走 getRandomQuestions）。一場抽 100 題要抽到練習池題是機率，這裡看的是範圍，不靠運氣
+const drawRange = vi.hoisted(() => ({ value: null as QuizQuestion[] | null }));
 vi.mock('./data/questions', async (importOriginal) => {
   const actual = await importOriginal<typeof import('./data/questions')>();
   return {
     ...actual,
     getSourceCandidates: (...args: Parameters<typeof actual.getSourceCandidates>) =>
       sourceEmpty.value ? [] : actual.getSourceCandidates(...args),
+    getRandomQuestionsFromPool: (...args: Parameters<typeof actual.getRandomQuestionsFromPool>) => {
+      drawRange.value = args[0];
+      return actual.getRandomQuestionsFromPool(...args);
+    },
   };
 });
 
@@ -70,6 +80,8 @@ afterEach(() => {
   localStorage.clear();
   vi.unstubAllGlobals();
   sourceEmpty.value = false;
+  drawRange.value = null;
+  __resetPracticePoolCacheForTesting();
 });
 
 describe('App', () => {
@@ -101,6 +113,67 @@ describe('App', () => {
     fireEvent.click(screen.getByRole('button', { name: /開始/ }));
     await waitFor(() => {
       expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument();
+    });
+  });
+
+  // App 依練習模式決定混不混練習池，按鈕在首頁與設定頁：不重新整理，切換當下就要算數
+  describe('切換加強練習池之後的下一場', () => {
+    beforeEach(() => {
+      __setPracticePoolForTesting(buildFixturePool());
+      localStorage.setItem('practice-pool-ai-opt-in', '1');
+    });
+
+    const startAndWait = async () => {
+      fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+      await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+    };
+    const poolIdsInRange = () =>
+      drawRange.value?.filter((q) => q.sourceType === 'practice_pool').map((q) => q.id);
+
+    it('在首頁啟用：下一場混入練習池', async () => {
+      render(<App />);
+      fireEvent.click(screen.getByRole('button', { name: '啟用加強練習池' }));
+      await startAndWait();
+      expect(poolIdsInRange()).toContain('fixture-3'); // fixture 裡的 AI 產題
+    });
+
+    it('在首頁停用：下一場不混入練習池', async () => {
+      localStorage.setItem('practice-pool-enabled', '1');
+      render(<App />);
+      fireEvent.click(screen.getByRole('button', { name: '停用加強練習池' }));
+      await startAndWait();
+      expect(drawRange.value).toBeNull();
+    });
+
+    it('別的分頁清掉 localStorage：下一場不混入練習池', async () => {
+      localStorage.setItem('practice-pool-enabled', '1');
+      render(<App />);
+      act(() => {
+        localStorage.clear();
+        localStorage.setItem('practice-pool-disclosure-seen', '1');
+        window.dispatchEvent(new StorageEvent('storage', { key: null }));
+      });
+      await startAndWait();
+      expect(drawRange.value).toBeNull();
+    });
+
+    it('在設定頁啟用：回首頁後下一場混入練習池', async () => {
+      render(<App />);
+      fireEvent.click(screen.getByLabelText(/開啟設定/));
+      fireEvent.click(screen.getByLabelText('啟用加強練習池'));
+      fireEvent.click(screen.getByRole('button', { name: /返回首頁/ }));
+      await startAndWait();
+      expect(poolIdsInRange()).toContain('fixture-3');
+    });
+
+    it('在設定頁停用：回首頁後下一場不混入練習池', async () => {
+      localStorage.setItem('practice-pool-enabled', '1');
+      render(<App />);
+      fireEvent.click(screen.getByLabelText(/開啟設定/));
+      fireEvent.click(screen.getByLabelText('啟用加強練習池'));
+      fireEvent.click(screen.getByRole('button', { name: /返回首頁/ }));
+      await startAndWait();
+      expect(drawRange.value).toBeNull();
     });
   });
 

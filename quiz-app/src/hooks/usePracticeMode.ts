@@ -1,6 +1,6 @@
 // 加強練習模式狀態：以 localStorage 持久化是否啟用、是否已 opt-in 揭露
 // 依 EU AI Act Art.50（2026-08-02 起）：使用 AI 產題前須揭露給使用者
-import { useCallback, useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 import { readBool, writeBool } from '../utils/local-storage';
 
 const ENABLED_KEY = 'practice-pool-enabled';
@@ -21,41 +21,65 @@ export interface UsePracticeModeResult {
   resetOptIn: () => void;
 }
 
-export function usePracticeMode(): UsePracticeModeResult {
-  const [enabled, setEnabled] = useState<boolean>(() => readBool(ENABLED_KEY));
-  const [hasOptedIn, setHasOptedIn] = useState<boolean>(() => readBool(OPTED_IN_KEY));
+// App、HomePage、SettingsPage 各呼叫一次這個 hook，要看到同一個值：App 依它決定混不混練習池，按鈕在頁面上。
+// storage 事件不會在寫入的分頁觸發，所以同一個分頁的變動由這裡通知每一個訂閱者。
+const listeners = new Set<() => void>();
+// 寫不進 localStorage 的值（私密模式、額度用完）：沒有這一份，按了啟用也不會生效
+const unsaved = new Map<string, boolean>();
 
+const read = (key: string): boolean => unsaved.get(key) ?? readBool(key);
+const readEnabled = (): boolean => read(ENABLED_KEY);
+const readHasOptedIn = (): boolean => read(OPTED_IN_KEY);
+
+function write(key: string, value: boolean): void {
+  writeBool(key, value);
+  if (readBool(key) === value) unsaved.delete(key);
+  else unsaved.set(key, value);
+}
+
+function notify(): void {
+  listeners.forEach((listener) => listener());
+}
+
+function subscribe(listener: () => void): () => void {
   // sync if storage changes from another tab
-  useEffect(() => {
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === ENABLED_KEY) setEnabled(readBool(ENABLED_KEY));
-      if (e.key === OPTED_IN_KEY) setHasOptedIn(readBool(OPTED_IN_KEY));
-    };
-    window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
-  }, []);
+  const onStorage = (e: StorageEvent) => {
+    // e.key === null：另一 tab 呼叫 localStorage.clear()
+    if (e.key === null) unsaved.clear();
+    else unsaved.delete(e.key);
+    listener();
+  };
+  listeners.add(listener);
+  window.addEventListener('storage', onStorage);
+  return () => {
+    listeners.delete(listener);
+    window.removeEventListener('storage', onStorage);
+  };
+}
 
-  const enable = useCallback(() => {
-    setEnabled(true);
-    writeBool(ENABLED_KEY, true);
-  }, []);
+function enable(): void {
+  write(ENABLED_KEY, true);
+  notify();
+}
 
-  const disable = useCallback(() => {
-    setEnabled(false);
-    writeBool(ENABLED_KEY, false);
-  }, []);
+function disable(): void {
+  write(ENABLED_KEY, false);
+  notify();
+}
 
-  const acceptOptIn = useCallback(() => {
-    setHasOptedIn(true);
-    writeBool(OPTED_IN_KEY, true);
-    setEnabled(true);
-    writeBool(ENABLED_KEY, true);
-  }, []);
+function acceptOptIn(): void {
+  write(OPTED_IN_KEY, true);
+  write(ENABLED_KEY, true);
+  notify();
+}
 
-  const resetOptIn = useCallback(() => {
-    setHasOptedIn(false);
-    writeBool(OPTED_IN_KEY, false);
-  }, []);
+function resetOptIn(): void {
+  write(OPTED_IN_KEY, false);
+  notify();
+}
 
+export function usePracticeMode(): UsePracticeModeResult {
+  const enabled = useSyncExternalStore(subscribe, readEnabled);
+  const hasOptedIn = useSyncExternalStore(subscribe, readHasOptedIn);
   return { enabled, hasOptedIn, enable, disable, acceptOptIn, resetOptIn };
 }

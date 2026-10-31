@@ -352,6 +352,40 @@ test.describe('無障礙功能', () => {
   });
 });
 
+// App 依練習模式決定混不混練習池，按鈕在首頁：這一條不能重新整理，重新載入會把兩邊的值對齊
+test.describe('加強練習池', () => {
+  async function gotoHomeWithPool(page: import('@playwright/test').Page, enabled: boolean): Promise<void> {
+    await page.addInitScript((poolEnabled) => {
+      window.localStorage.setItem('practice-pool-ai-opt-in', '1');
+      window.localStorage.setItem('practice-pool-enabled', poolEnabled ? '1' : '0');
+    }, enabled);
+    await gotoHome(page);
+  }
+
+  async function poolQuestionsInHundred(page: import('@playwright/test').Page): Promise<number> {
+    await page.getByLabel('題數').fill('100');
+    await page.getByRole('button', { name: /開始測驗/i }).click();
+    await expect(page.locator('.question-card')).toBeVisible();
+    // 進度裡主題庫題只存 id，練習池題存整包物件（utils/quiz-progress-storage.ts）
+    return page.evaluate(() => {
+      const saved = JSON.parse(window.localStorage.getItem('ipas-quiz-in-progress-v2')!);
+      return saved.state.questions.filter((q: unknown) => typeof q !== 'string').length;
+    });
+  }
+
+  test('在首頁啟用：下一場混入練習池', async ({ page }) => {
+    await gotoHomeWithPool(page, false);
+    await page.getByRole('button', { name: '啟用加強練習池' }).click();
+    expect(await poolQuestionsInHundred(page)).toBeGreaterThan(0);
+  });
+
+  test('在首頁停用：下一場不混入練習池', async ({ page }) => {
+    await gotoHomeWithPool(page, true);
+    await page.getByRole('button', { name: '停用加強練習池' }).click();
+    expect(await poolQuestionsInHundred(page)).toBe(0);
+  });
+});
+
 test.describe('響應式設計', () => {
   test('行動裝置應正常顯示', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
