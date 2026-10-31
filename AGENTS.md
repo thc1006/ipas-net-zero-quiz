@@ -110,6 +110,11 @@ tools/ 頂層新增、移除或改名工具時，同時改 `tools/tests/test_off
 4. `cd quiz-app && pnpm test:run -u src/data/content-profile.test.ts`（語料輪廓換了），再 `pnpm preflight`；
    回 repo 根目錄跑 `uv run --locked --directory tools pytest` 與 `python tools/gen_gap_reports.py`。
 5. PR 說明寫明：合併後由專案所有者把 GitHub About 的題數改成新的主題庫題數（`quiz-app-ci.yml` 會比對）。
+6. 擷取器報「不在白名單」時，**不要**直接加鍵。訊息列出全部的鍵與常數名稱：用瀏覽器（Chrome、Firefox）與 `pdftotext` 逐頁比對 PDF
+   與擷取結果，每一頁看到的都相同，才把鍵加進訊息指名的常數，理由寫在常數旁的註解，同時改 `tools/tests/test_ipas_sample_pdf.py`
+   裡釘住白名單的測試，跑 `--verify`。看到的不同 → 停下來報告，不加鍵。
+7. 擷取器過了也**不等於**閱讀器上看到的就是這些字：它只比 pdfminer 與 MuPDF，其他閱讀器的修復與搜尋行為不一定涵蓋。新登記的 PDF
+   一律在 Chrome 與 Firefox 都開過，逐題比對題幹、選項與答案和擷取結果，比對過才寫進 `SOURCE_REVIEWS`。
 
 題幹、選項、答案一律取自官方 PDF，**絕不**手改。要附額外依據，寫進匯入工具的 `EXTRA_EVIDENCE`
 （法條要寫 `clause`），再重新匯入：工具負責的引文會換成新的版本，Tools CI 會逐欄比對題庫與工具的輸出。

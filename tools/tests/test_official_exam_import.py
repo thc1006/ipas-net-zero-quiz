@@ -28,6 +28,7 @@ import import_official_exam as I
 import ipas_exam_pdf
 import restore_from_source_pdf as R
 import test_ipas_exam_pdf as samples  # 合成的 PDF（header() 拒絕的樣本、整份卷）
+from test_ipas_exam_pdf import any_stream_key  # noqa: F401  （autouse：這些樣本畫的圖與表單，鍵比真實卷多）
 
 try:
     import resource
@@ -1901,7 +1902,8 @@ def _registered_only(ends):
     return ends
 
 
-def test_the_tools_on_disk_stop_where_the_tested_ones_do(tmp_path):
+def test_the_tools_on_disk_stop_where_the_tested_ones_do(tmp_path, monkeypatch):
+    monkeypatch.undo()  # 子行程裡沒有 any_stream_key：這裡也走真的白名單，訊息才比得起來
     # 測試 import 的模組不一定是 CLI 跑的檔案：conftest.py 預先把審過的版本放進 sys.modules、對 tools/ 裝 path hook、
     # 改寫 PathFinder.find_spec，或 venv 的 .pth 只在 pytest 底下換掉 import，tools/ 裡放寬的檔案照樣整套全綠（第二十六輪
     # 確認審查實測 4 種）。同一個行程裡的檢查都能被同一個行程裡的程式改掉，所以另開一個 Python 從 tools/ 的檔案再走一遍：
