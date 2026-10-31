@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 /**
  * 測驗流程 E2E 測試
  */
 // PR #37 加了首次自動彈 PracticeOptInDialog；e2e test 需先設定 seen flag
 // 才能 click 主畫面元件不被 dialog overlay 擋住
-async function gotoHome(page: import('@playwright/test').Page): Promise<void> {
+async function gotoHome(page: Page): Promise<void> {
   await page.addInitScript(() => {
     window.localStorage.setItem('practice-pool-disclosure-seen', '1');
   });
@@ -383,6 +383,65 @@ test.describe('加強練習池', () => {
     await gotoHomeWithPool(page, true);
     await page.getByRole('button', { name: '停用加強練習池' }).click();
     expect(await poolQuestionsInHundred(page)).toBe(0);
+  });
+});
+
+// #150 把參考樣題的 id 改成來源代號，瀏覽器裡的舊進度還是舊 id。
+// 第一題 S1-p01-q004 是 S_IPAS_SAMPLE_114_L11-q004 的舊 id（metadata.renamed_from）
+test.describe('題目改過 id', () => {
+  const OLD_ID = 'S1-p01-q004';
+
+  async function seed(page: Page, entries: Record<string, unknown>): Promise<void> {
+    await page.addInitScript((seeded) => {
+      window.localStorage.setItem('practice-pool-disclosure-seen', '1');
+      for (const [key, value] of Object.entries(seeded)) {
+        window.localStorage.setItem(key, JSON.stringify(value));
+      }
+    }, entries);
+  }
+
+  const save = (answers: unknown[]) => ({
+    version: 2,
+    savedAt: Date.now(),
+    state: {
+      isActive: true,
+      questions: [OLD_ID, 'gist-1'],
+      currentIndex: 0,
+      answers,
+      startTime: Date.now(),
+      config: {
+        mode: 'practice',
+        subject: 'all',
+        questionCount: 2,
+        shuffleQuestions: false,
+        showAnswerImmediately: true,
+      },
+    },
+  });
+
+  test('舊進度照常續作，作答紀錄接得上', async ({ page }) => {
+    await seed(page, {
+      'ipas-quiz-in-progress-v2': save([
+        {
+          questionId: OLD_ID,
+          selectedAnswer: 'A',
+          correctAnswer: 'A',
+          isCorrect: true,
+          timeSpent: 1,
+          timestamp: 1,
+          sourceCategory: 'main_bank',
+        },
+      ]),
+    });
+    await page.goto('/');
+
+    const resume = page.getByRole('button', { name: /繼續測驗/ });
+    await expect(resume).toBeVisible();
+    await resume.click();
+
+    await expect(page.locator('.question-card')).toBeVisible();
+    await expect(page.locator('.question-options input:checked')).toHaveValue('A');
+    await expect(page.locator('.option-item.correct')).toHaveCount(1);
   });
 });
 

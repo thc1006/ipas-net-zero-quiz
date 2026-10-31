@@ -9,6 +9,7 @@ import {
 } from './quiz-progress-storage';
 import type { QuizState } from '../hooks/useQuiz';
 import { allQuestions } from '../data/questions';
+import dataset from '../data/integrated_dataset.json';
 import { officialSessions } from './question-source';
 
 const STORAGE_KEY = 'ipas-quiz-in-progress-v2';
@@ -83,6 +84,101 @@ afterEach(() => {
 });
 
 describe('quiz-progress-storage', () => {
+  // #150 把參考樣題的 id 改成來源代號，舊進度裡還是舊 id。資料驅動：下一次改名不用改這裡
+  describe('改過 id 的題目', () => {
+    const renames = (dataset.our_unique_items as { item_id: string; metadata?: { renamed_from?: { item_id: string } } }[])
+      .filter((q) => q.metadata?.renamed_from)
+      .map((q) => ({ oldId: q.metadata!.renamed_from!.item_id, newId: q.item_id }));
+    const others = allQuestions.filter((q) => q.hasAnswer).slice(0, 2);
+
+    function storeSave(
+      questions: unknown[],
+      answers: { questionId: string; correctAnswer: string | null }[] = [],
+      overrides: { key?: string; version?: number; config?: Partial<NonNullable<QuizState['config']>> } = {}
+    ): void {
+      localStorage.setItem(
+        overrides.key ?? STORAGE_KEY,
+        JSON.stringify({
+          version: overrides.version ?? 2,
+          savedAt: 1,
+          state: {
+            ...makeState({ currentIndex: 1 }),
+            questions,
+            answers,
+            config: { ...fakeConfig, ...overrides.config },
+          },
+        })
+      );
+    }
+
+    it.each(renames)('進度裡的 $oldId 續作成 $newId，作答紀錄跟著走', ({ oldId, newId }) => {
+      const answer = allQuestions.find((q) => q.id === newId)!.answer;
+      storeSave(
+        [others[0].id, oldId, others[1].id],
+        [
+          { questionId: others[0].id, correctAnswer: others[0].answer },
+          { questionId: oldId, correctAnswer: answer },
+        ]
+      );
+
+      const state = loadProgress()!.state;
+
+      expect(state.questions.map((q) => q.id)).toEqual([others[0].id, newId, others[1].id]);
+      expect(state.answers.map((a) => a.questionId)).toEqual([others[0].id, newId]);
+      expect(localStorage.getItem(STORAGE_KEY)).not.toBeNull();
+    });
+
+    it.each(renames)('整題存下來的舊題 $oldId（題幹是舊的）一樣續作，換成現行題庫的題目', ({ oldId, newId }) => {
+      const current = allQuestions.find((q) => q.id === newId)!;
+      const stale = { ...current, id: oldId, stem: `${current.stem}（舊題幹）` };
+      storeSave([others[0], stale], [{ questionId: oldId, correctAnswer: current.answer }]);
+
+      const state = loadProgress()!.state;
+
+      expect(state.questions[1]).toBe(current);
+      expect(state.answers[0].questionId).toBe(newId);
+    });
+
+    it('legacy v1 key 的舊進度也接得上', () => {
+      const { oldId, newId } = renames[0];
+      const current = allQuestions.find((q) => q.id === newId)!;
+      storeSave([others[0], { ...current, id: oldId }], [], { key: LEGACY_STORAGE_KEY, version: 1 });
+
+      expect(loadProgress()!.state.questions[1]).toBe(current);
+    });
+
+    it('只出官方題目的舊進度：改名後的題目仍算官方題，不會被來源檢查放棄', () => {
+      const { oldId, newId } = renames[0];
+      storeSave([oldId, oldId], [], { config: { questionSource: 'official' } });
+
+      expect(loadProgress()!.state.questions.map((q) => q.id)).toEqual([newId, newId]);
+    });
+
+    it('續作之後再存，寫下去的是新 id', () => {
+      const { oldId, newId } = renames[0];
+      storeSave([others[0].id, oldId]);
+
+      saveProgress(loadProgress()!.state);
+
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)!);
+      expect(saved.state.questions).toEqual([others[0].id, newId]);
+    });
+
+    it('沒改過 id 的練習池題物件不受影響', () => {
+      const pooled = { id: 'pool-1', stem: '練習池題', options: [], answer: 'A', subject: '考科1' };
+      storeSave([others[0].id, pooled]);
+
+      expect(loadProgress()!.state.questions[1]).toEqual(pooled);
+    });
+
+    it('整題存下來的物件 id 撞到主題庫、但沒改過 id：不換成主題庫那一題（minifyQuestion 就是為了這個才存整題）', () => {
+      const collided = { ...others[1], stem: '練習池裡 id 撞號的題目' };
+      storeSave([others[0].id, collided]);
+
+      expect(loadProgress()!.state.questions[1]).toEqual(collided);
+    });
+  });
+
   describe('saveProgress', () => {
     it('isActive=true 時寫入 localStorage', () => {
       saveProgress(makeState({ isActive: true }));

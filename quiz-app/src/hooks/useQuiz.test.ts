@@ -3,6 +3,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useQuiz, defaultConfig } from './useQuiz';
 import type { QuizConfig } from '../types/quiz';
+import { allQuestions } from '../data/questions';
+import dataset from '../data/integrated_dataset.json';
 import { __setPracticePoolForTesting } from '../utils/practice-pool';
 import { buildFixturePool } from '../utils/__fixtures__/practice-pool-fixture';
 
@@ -458,6 +460,49 @@ describe('useQuiz Hook', () => {
       expect(fresh.result.current.isActive).toBe(true);
       expect(fresh.result.current.currentIndex).toBe(expectedIndex);
       expect(fresh.result.current.questions.length).toBe(expectedQuestionCount);
+    });
+
+    it('題目改過 id：舊進度照常續作，已答的那一題還是已答（#150）', () => {
+      const renamed = (dataset.our_unique_items as { item_id: string; metadata?: { renamed_from?: { item_id: string } } }[]).find(
+        (q) => q.metadata?.renamed_from
+      )!;
+      const oldId = renamed.metadata!.renamed_from!.item_id;
+      const current = allQuestions.find((q) => q.id === renamed.item_id)!;
+      const next = allQuestions.find((q) => q.hasAnswer && q.id !== current.id)!;
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 2,
+          savedAt: 1,
+          state: {
+            isActive: true,
+            questions: [oldId, next.id],
+            currentIndex: 0,
+            answers: [
+              {
+                questionId: oldId,
+                selectedAnswer: current.answer,
+                correctAnswer: current.answer,
+                isCorrect: true,
+                timeSpent: 1,
+                timestamp: 1,
+                sourceCategory: 'main_bank',
+              },
+            ],
+            startTime: 1,
+            config: defaultConfig,
+          },
+        })
+      );
+      const { result } = renderHook(() => useQuiz());
+
+      act(() => {
+        expect(result.current.resumeQuiz()).toBe(true);
+      });
+
+      expect(result.current.currentQuestion?.id).toBe(current.id);
+      expect(result.current.currentAnswer?.selectedAnswer).toBe(current.answer);
+      expect(result.current.progress.answered).toBe(1);
     });
 
     // 主題庫題在 localStorage 裡存的是 id，續作時會用現行題庫重建；練習池題存的是

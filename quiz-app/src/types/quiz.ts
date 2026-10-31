@@ -9,6 +9,14 @@ export interface QuizOption {
   text: string;
 }
 
+/** 一次改 id 的紀錄。再改一次時，這一筆整個放進新紀錄的 previous */
+export interface QuestionRename {
+  item_id: string;
+  on: string;
+  why: string;
+  previous?: QuestionRename;
+}
+
 /**
  * 主庫題目共用 metadata（PR #68 加 sources + sources_verified_date；
  * Refs #69 — 改為明列欄位、移除 `[k: string]: unknown` 索引簽章使型別更嚴）
@@ -57,6 +65,9 @@ export interface MainBankItemMetadata {
   /** 題幹被修潤過的紀錄（是「偏離」，不是「來源」—— 不要放進 verification_source） */
   stem_edit_note?: string;
   stem_edit_note_recorded_on?: string;
+
+  /** 這一題改過 id 時的舊 id。使用者的進度與統計存的可能還是舊 id，見 data/renamed-questions.ts */
+  renamed_from?: QuestionRename;
 
   /**
    * **名字在說謊的舊欄位** —— 保留歷史，但不再冒充證據。
