@@ -4,17 +4,27 @@ import { render, screen, fireEvent, cleanup, waitFor, act } from '@testing-libra
 import App from './App';
 import { getSourceCandidates } from './data/questions';
 import { officialExamLabel, officialSampleLabel } from './utils/official-exam';
+import { __resetPracticePoolCacheForTesting, __setPracticePoolForTesting } from './utils/practice-pool';
+import { buildFixturePool } from './utils/__fixtures__/practice-pool-fixture';
+import type { QuizQuestion } from './types/quiz';
 
 // #128：按下開始那一刻抽不到題目時，App 要留在原頁。首頁在可出題數是 0 時會停用開始按鈕，
 // 正常操作走不到這裡；要驗 App 有照 startQuiz 的回傳值決定切不切頁，只能讓首頁算題數時照常、
 // 按下開始之後抽題才落空。預設照常回傳（其他測試不受影響），sourceEmpty.value 為 true 時才回傳空陣列。
 const sourceEmpty = vi.hoisted(() => ({ value: false }));
+// 這一場的抽題範圍：混入練習池時（startQuizWithPool）與隨機的只出官方題目（pickFromSource）會呼叫這個函式，
+// 全部題目而不混練習池時不會（走 getRandomQuestions）。一場抽 100 題要抽到練習池題是機率，這裡看的是範圍，不靠運氣
+const drawRange = vi.hoisted(() => ({ value: null as QuizQuestion[] | null }));
 vi.mock('./data/questions', async (importOriginal) => {
   const actual = await importOriginal<typeof import('./data/questions')>();
   return {
     ...actual,
     getSourceCandidates: (...args: Parameters<typeof actual.getSourceCandidates>) =>
       sourceEmpty.value ? [] : actual.getSourceCandidates(...args),
+    getRandomQuestionsFromPool: (...args: Parameters<typeof actual.getRandomQuestionsFromPool>) => {
+      drawRange.value = args[0];
+      return actual.getRandomQuestionsFromPool(...args);
+    },
   };
 });
 
@@ -70,6 +80,8 @@ afterEach(() => {
   localStorage.clear();
   vi.unstubAllGlobals();
   sourceEmpty.value = false;
+  drawRange.value = null;
+  __resetPracticePoolCacheForTesting();
 });
 
 describe('App', () => {
@@ -104,6 +116,76 @@ describe('App', () => {
     });
   });
 
+  // App 依練習模式決定混不混練習池，按鈕在首頁與設定頁：不重新整理，切換當下就要算數
+  describe('切換加強練習池之後的下一場', () => {
+    beforeEach(() => {
+      __setPracticePoolForTesting(buildFixturePool());
+      localStorage.setItem('practice-pool-ai-opt-in', '1');
+    });
+
+    const startAndWait = async () => {
+      fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+      await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+    };
+    const poolIdsInRange = () =>
+      drawRange.value?.filter((q) => q.sourceType === 'practice_pool').map((q) => q.id);
+
+    it('在首頁啟用：下一場混入練習池', async () => {
+      render(<App />);
+      fireEvent.click(screen.getByRole('button', { name: '啟用加強練習池' }));
+      await startAndWait();
+      expect(poolIdsInRange()).toContain('fixture-3'); // fixture 裡的 AI 產題
+    });
+
+    it('選過只出官方題目再切回全部題目：下一場照常混入練習池', async () => {
+      localStorage.setItem('practice-pool-enabled', '1');
+      render(<App />);
+      fireEvent.change(screen.getByLabelText('題目來源'), { target: { value: 'official' } });
+      fireEvent.change(screen.getByLabelText('題目來源'), { target: { value: 'all' } });
+      await startAndWait();
+      expect(poolIdsInRange()).toContain('fixture-3');
+    });
+
+    it('在首頁停用：下一場不混入練習池', async () => {
+      localStorage.setItem('practice-pool-enabled', '1');
+      render(<App />);
+      fireEvent.click(screen.getByRole('button', { name: '停用加強練習池' }));
+      await startAndWait();
+      expect(drawRange.value).toBeNull();
+    });
+
+    it('別的分頁清掉 localStorage：下一場不混入練習池', async () => {
+      localStorage.setItem('practice-pool-enabled', '1');
+      render(<App />);
+      act(() => {
+        localStorage.clear();
+        localStorage.setItem('practice-pool-disclosure-seen', '1');
+        window.dispatchEvent(new StorageEvent('storage', { key: null }));
+      });
+      await startAndWait();
+      expect(drawRange.value).toBeNull();
+    });
+
+    it('在設定頁啟用：回首頁後下一場混入練習池', async () => {
+      render(<App />);
+      fireEvent.click(screen.getByLabelText(/開啟設定/));
+      fireEvent.click(screen.getByLabelText('啟用加強練習池'));
+      fireEvent.click(screen.getByRole('button', { name: /返回首頁/ }));
+      await startAndWait();
+      expect(poolIdsInRange()).toContain('fixture-3');
+    });
+
+    it('在設定頁停用：回首頁後下一場不混入練習池', async () => {
+      localStorage.setItem('practice-pool-enabled', '1');
+      render(<App />);
+      fireEvent.click(screen.getByLabelText(/開啟設定/));
+      fireEvent.click(screen.getByLabelText('啟用加強練習池'));
+      fireEvent.click(screen.getByRole('button', { name: /返回首頁/ }));
+      await startAndWait();
+      expect(drawRange.value).toBeNull();
+    });
+  });
+
   // #128：只出官方題目時，練習池啟用也不混入；「再測一次」沿用同一個題目來源
   it('只出官方題目：練習池啟用時也只出官方題目，再測一次也一樣', async () => {
     // 原卷順序的第一題是最早那一份（114 年版參考樣題）的第一題：題卡上標的是它的版次
@@ -127,6 +209,135 @@ describe('App', () => {
     fireEvent.click(screen.getByRole('button', { name: /完成測驗/ }));
     await waitFor(() => expect(screen.getByRole('button', { name: /再測一次/ })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /再測一次/ }));
+    await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+    expect(screen.getByText(firstLabel)).toBeInTheDocument();
+  });
+
+  it('官方題日後被拿掉標記：只拿掉那一題，其他進度留著', async () => {
+    const [kept] = getSourceCandidates('all', 'official');
+    localStorage.setItem(
+      'ipas-quiz-in-progress-v2',
+      JSON.stringify({
+        version: 2,
+        savedAt: Date.now(),
+        state: {
+          isActive: true,
+          questions: ['gist-1', kept.id],
+          currentIndex: 0,
+          answers: [],
+          startTime: Date.now(),
+          config: {
+            mode: 'practice',
+            subject: 'all',
+            questionCount: 2,
+            shuffleQuestions: false,
+            showAnswerImmediately: true,
+            questionSource: 'official',
+          },
+        },
+      })
+    );
+    render(<App />);
+    fireEvent.click(screen.getByRole('button', { name: '繼續測驗' }));
+    await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+    expect(document.querySelector('.question-card')).toHaveTextContent(kept.stem);
+    expect(screen.getByText(/1\s*\/\s*1/)).toBeInTheDocument();
+  });
+
+  // 屬於來源的題目都不可計分、其餘可計分但不屬於來源：提示留著的話，按下去沒有題目可以續作，頁面不會動
+  it('沒有題目可以續作：不顯示繼續測驗，清掉存檔', () => {
+    localStorage.setItem(
+      'ipas-quiz-in-progress-v2',
+      JSON.stringify({
+        version: 2,
+        savedAt: Date.now(),
+        state: {
+          isActive: true,
+          questions: [
+            'gist-1',
+            {
+              id: 'revoked',
+              stem: '撤掉答案的官方題',
+              options: [],
+              answer: null,
+              hasAnswer: false,
+              officialExam: { session: '115-01', subject: 'L11', question_number: 1 },
+            },
+          ],
+          currentIndex: 0,
+          answers: [],
+          startTime: Date.now(),
+          config: {
+            mode: 'practice',
+            subject: 'all',
+            questionCount: 2,
+            shuffleQuestions: false,
+            showAnswerImmediately: true,
+            questionSource: 'official',
+          },
+        },
+      })
+    );
+    render(<App />);
+    expect(screen.queryByRole('button', { name: '繼續測驗' })).toBeNull();
+    expect(localStorage.getItem('ipas-quiz-in-progress-v2')).toBeNull();
+  });
+
+  describe('存檔的題目來源不對', () => {
+    const save = (questionSource: unknown) =>
+      localStorage.setItem(
+        'ipas-quiz-in-progress-v2',
+        JSON.stringify({
+          version: 2,
+          savedAt: Date.now(),
+          state: {
+            isActive: true,
+            questions: ['gist-1', 'gist-2'],
+            currentIndex: 0,
+            answers: [],
+            startTime: Date.now(),
+            config: {
+              mode: 'practice',
+              subject: 'all',
+              questionCount: 2,
+              shuffleQuestions: false,
+              showAnswerImmediately: true,
+              questionSource,
+            },
+          },
+        })
+      );
+
+    // 5：續作之後按再測一次，matchesSource 對數字呼叫 startsWith，頁面卡在結果頁。'official'：題目全是非官方題
+    for (const questionSource of [5, 'official']) {
+      it(`${JSON.stringify(questionSource)}：不顯示繼續測驗，可以開新的一場`, async () => {
+        save(questionSource);
+        render(<App />);
+        expect(screen.queryByRole('button', { name: '繼續測驗' })).toBeNull();
+        expect(localStorage.getItem('ipas-quiz-in-progress-v2')).toBeNull();
+        fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+        await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+      });
+    }
+  });
+
+  it('只出官方題目中途回首頁、繼續測驗：再測一次仍只出官方題目', async () => {
+    const first = getSourceCandidates('all', 'official')[0];
+    const firstLabel = officialSampleLabel(first.officialSample!);
+    render(<App />);
+    fireEvent.change(screen.getByLabelText('題目來源'), { target: { value: 'official' } });
+    fireEvent.change(screen.getByLabelText('題數'), { target: { value: '1' } });
+    fireEvent.click(screen.getByLabelText('隨機出題順序')); // 不隨機：第一題固定，不靠機率
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+
+    fireEvent.click(screen.getByLabelText('回首頁'));
+    fireEvent.click(await screen.findByRole('button', { name: '繼續測驗' }));
+    await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+
+    fireEvent.click(document.querySelector('.option-item')!);
+    fireEvent.click(screen.getByRole('button', { name: /完成測驗/ }));
+    fireEvent.click(await screen.findByRole('button', { name: /再測一次/ }));
     await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
     expect(screen.getByText(firstLabel)).toBeInTheDocument();
   });

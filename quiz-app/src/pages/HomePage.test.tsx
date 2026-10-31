@@ -373,7 +373,7 @@ describe('HomePage', () => {
   // 註：questions 佔位需為「合理 shape」的物件（含 id/stem/options）—— loadProgress
   // （#106 重建）會拒絕含 null/垃圾/缺欄位的 payload（避免 resume 時 crash）。
   // 這些 fixture 寫在 legacy v1 key 上，順帶驗證 v2 loader 對舊 key 的回退讀取；
-  // hint 只讀 questions.length / answers.length，佔位內容不影響斷言。
+  // 佔位題要有答案：沒有可續作的題目時不顯示 hint。
 
   it('localStorage 無進度時不顯示 resume hint', () => {
     render(<HomePage onStartQuiz={() => {}} onResumeQuiz={() => {}} />);
@@ -388,7 +388,7 @@ describe('HomePage', () => {
         savedAt: Date.now() - 5 * 60_000, // 5 分鐘前
         state: {
           isActive: true,
-          questions: new Array(20).fill({ id: 'x', stem: '題', options: [] }),
+          questions: new Array(20).fill({ id: 'x', stem: '題', options: [], answer: 'A' }),
           currentIndex: 7,
           answers: new Array(7).fill({ questionId: 'x' }),
           startTime: Date.now(),
@@ -412,7 +412,7 @@ describe('HomePage', () => {
         savedAt: Date.now(),
         state: {
           isActive: true,
-          questions: new Array(10).fill({ id: 'x', stem: '題', options: [] }),
+          questions: new Array(10).fill({ id: 'x', stem: '題', options: [], answer: 'A' }),
           currentIndex: 3,
           answers: new Array(3).fill({ questionId: 'x' }),
           startTime: Date.now(),
@@ -434,7 +434,7 @@ describe('HomePage', () => {
         savedAt: Date.now(),
         state: {
           isActive: true,
-          questions: new Array(5).fill({ id: 'x', stem: '題', options: [] }),
+          questions: new Array(5).fill({ id: 'x', stem: '題', options: [], answer: 'A' }),
           currentIndex: 1,
           answers: [],
           startTime: Date.now(),
@@ -534,6 +534,44 @@ describe('題目來源（只出官方題目）', () => {
     expect(screen.queryByText(/^題數設定是/)).toBeNull();
     fireEvent.change(screen.getByLabelText('題數'), { target: { value: String(n + 1) } });
     expect(screen.getByText(`題數設定是 ${n + 1} 題，但只有 ${n} 題官方公告試題，本次會出 ${n} 題。`)).toBeInTheDocument();
+  });
+
+  it('題數超過 100 時，提醒看的是實際會用的 100 題：題目夠就不提醒', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    fireEvent.change(sourceSelect(), { target: { value: 'official' } });
+    expect(getSourceCandidates('all', 'official').length).toBeGreaterThan(100);
+    fireEvent.change(screen.getByLabelText('題數'), { target: { value: '500' } });
+    expect(screen.queryByText(/^題數設定是/)).toBeNull();
+  });
+
+  it('題數超過 100 時，提醒裡寫的是實際會用的 100 題，不是輸入的數字', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    const [session] = officialSessions(allQuestions);
+    fireEvent.change(sourceSelect(), { target: { value: `exam:${session}` } });
+    fireEvent.change(screen.getByLabelText('考科範圍'), { target: { value: '考科2' } });
+    fireEvent.change(screen.getByLabelText('題數'), { target: { value: '500' } });
+    const n = getSourceCandidates('考科2', `exam:${session}`).length;
+    expect(screen.getByText(`題數設定是 100 題，但只有 ${n} 題官方公告試題，本次會出 ${n} 題。`)).toBeInTheDocument();
+  });
+
+  it('換題目來源不動考科範圍', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    fireEvent.change(screen.getByLabelText('考科範圍'), { target: { value: '考科2' } });
+    fireEvent.change(sourceSelect(), { target: { value: 'official' } });
+    expect(screen.getByLabelText('考科範圍')).toHaveValue('考科2');
+    fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
+    expect(lastConfig(onStartQuiz)).toMatchObject({ subject: '考科2', questionSource: 'official' });
+  });
+
+  it('換測驗模式不動題目來源', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    fireEvent.change(sourceSelect(), { target: { value: 'official' } });
+    fireEvent.change(screen.getByLabelText('測驗模式'), { target: { value: 'exam' } });
+    expect(sourceSelect()).toHaveValue('official');
+    fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
+    expect(lastConfig(onStartQuiz)).toMatchObject({ mode: 'exam', questionSource: 'official' });
   });
 
   it('加強練習池啟用時，說明這個模式不會混入練習題', () => {

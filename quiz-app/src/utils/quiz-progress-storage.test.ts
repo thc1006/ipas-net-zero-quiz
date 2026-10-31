@@ -3,11 +3,13 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import {
   saveProgress,
   loadProgress,
+  loadResumableProgress,
   clearProgress,
   formatRelativeTime,
 } from './quiz-progress-storage';
 import type { QuizState } from '../hooks/useQuiz';
 import { allQuestions } from '../data/questions';
+import { officialSessions } from './question-source';
 
 const STORAGE_KEY = 'ipas-quiz-in-progress-v2';
 const LEGACY_STORAGE_KEY = 'ipas-quiz-in-progress'; // v1 舊 key
@@ -386,6 +388,111 @@ describe('quiz-progress-storage', () => {
       saveProgress(makeState({ questions: qs, currentIndex: 0, answers: [] }));
       const raw = localStorage.getItem(STORAGE_KEY)!;
       expect(raw.length).toBeLessThan(6000);
+    });
+  });
+
+  // 只出官方題目（#128）的保證也要對續作成立；存檔是使用者端的資料，可能損壞或被竄改
+  describe('題目來源（questionSource）', () => {
+    const officialIds = allQuestions.filter((q) => q.officialExam).slice(0, 2).map((q) => q.id);
+    const nonOfficialId = allQuestions.find((q) => !q.officialExam && !q.officialSample)!.id;
+
+    function store(questionSource: unknown, questions: unknown[]): void {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 2,
+          savedAt: 0,
+          state: {
+            isActive: true,
+            questions,
+            currentIndex: 0,
+            answers: [],
+            startTime: 123,
+            config: { ...fakeConfig, questionSource },
+          },
+        })
+      );
+    }
+
+    function expectAbandoned(load: typeof loadProgress = loadProgress): void {
+      expect(load()).toBeNull();
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
+    }
+
+    it.each([
+      ['exam:115-01', { officialExam: null }],
+      ['sample:114', { officialSample: null }],
+    ])('存檔裡的官方標記是 null 時（%s）放棄，不會讓首頁崩潰', (source, marker) => {
+      store(source, [
+        { id: 'x-1', stem: 's', options: [{ key: 'A', text: 'a' }], answer: 'A', hasAnswer: true, subject: '考科1', ...marker },
+      ]);
+      expectAbandoned(loadResumableProgress);
+    });
+
+    for (const bad of [5, 0, true, null, ['official'], { source: 'official' }]) {
+      it(`不是字串（${JSON.stringify(bad)}）→ 放棄 resume（回 null 並清掉）`, () => {
+        store(bad, officialIds);
+        expectAbandoned();
+      });
+    }
+
+    // 官方題日後被拿掉標記時，留在進度裡的就是這種題目。這裡不放棄：resumeQuiz 只拿掉那一題（見 hooks/officialSource.test.tsx）
+    it('進度裡只有部分題目屬於這個來源 → 正常載入，存檔留著', () => {
+      store('official', [officialIds[0], nonOfficialId]);
+      expect(loadResumableProgress()?.state.questions.map((q) => q.id)).toEqual([officialIds[0], nonOfficialId]);
+      expect(localStorage.getItem(STORAGE_KEY)).not.toBeNull();
+    });
+
+    it('沒有一題屬於這個來源 → 沒有可續作的題目（回 null 並清掉）', () => {
+      store('official', [nonOfficialId, fakeQuestions[0]]);
+      expectAbandoned(loadResumableProgress);
+    });
+
+    it('只出某一場，進度裡全是別場的官方題 → 沒有可續作的題目（回 null 並清掉）', () => {
+      const [newest, older] = officialSessions(allQuestions);
+      const oldId = allQuestions.find((q) => q.officialExam?.session === older)!.id;
+      store(`exam:${newest}`, [oldId]);
+      expectAbandoned(loadResumableProgress);
+    });
+
+    it('認不得的來源 → 沒有可續作的題目（回 null 並清掉）', () => {
+      store('exam', officialIds);
+      expectAbandoned(loadResumableProgress);
+    });
+
+    it('屬於來源的題目都不可計分 → 沒有可續作的題目（回 null 並清掉）', () => {
+      const revoked = { ...fakeQuestions[0], officialExam: { session: '115-01', subject: 'L11', question_number: 1 } };
+      store('official', [nonOfficialId, revoked]);
+      expectAbandoned(loadResumableProgress);
+    });
+
+    it('沒有來源而全部不可計分、或這一場已經不在進行 → 沒有可續作的題目（回 null 並清掉）', () => {
+      saveProgress(makeState());
+      expectAbandoned(loadResumableProgress);
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ version: 2, savedAt: 0, state: { ...makeState({ isActive: false }), questions: [nonOfficialId] } })
+      );
+      expectAbandoned(loadResumableProgress);
+    });
+
+    it('題目都屬於這個來源 → 正常載入，來源不變', () => {
+      const [session] = officialSessions(allQuestions);
+      const sessionId = allQuestions.find((q) => q.officialExam?.session === session)!.id;
+      for (const [source, ids] of [
+        ['official', officialIds],
+        [`exam:${session}`, [sessionId]],
+      ] as const) {
+        store(source, [...ids]);
+        expect(loadResumableProgress()?.state.config?.questionSource).toBe(source);
+      }
+    });
+
+    it("'all' 與沒有這個欄位（#128 之前存下的進度）不查題目", () => {
+      for (const source of ['all', undefined]) {
+        store(source, [nonOfficialId]);
+        expect(loadResumableProgress()?.state.questions.map((q) => q.id)).toEqual([nonOfficialId]);
+      }
     });
   });
 
