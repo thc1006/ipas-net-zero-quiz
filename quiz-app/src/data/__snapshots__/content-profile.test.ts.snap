@@ -34,6 +34,11 @@ exports[`語料輪廓（換題庫時用 -u 重新產生） > 棘輪與反空轉�
   },
   {
     "semantics": "依語料重設",
+    "what": "指向釘選法規的答案依據引文下限（反空轉）",
+    "where": "law-quote-integrity.test.ts",
+  },
+  {
+    "semantics": "依語料重設",
     "what": "帶答案依據的題數下限（反空轉）",
     "where": "evidence-display.test.ts",
   },
@@ -152,7 +157,7 @@ exports[`語料輪廓（換題庫時用 -u 重新產生） > 題庫規模與分�
   },
   "品質旗標": {
     "主題庫使用次數": {
-      "time_sensitive": 331,
+      "time_sensitive": 332,
     },
     "練習池使用次數": {
       "low_confidence": 3,

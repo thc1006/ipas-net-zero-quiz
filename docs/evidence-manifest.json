@@ -4310,8 +4310,8 @@
     {
       "qid": "gist[125]",
       "bank": "main",
-      "url": "https://oaout.moenv.gov.tw/laW/LawContent.aspx?id=GL007914",
-      "host": "oaout.moenv.gov.tw",
+      "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020139",
+      "host": "law.moj.gov.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true

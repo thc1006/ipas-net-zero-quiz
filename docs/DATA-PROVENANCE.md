@@ -809,8 +809,8 @@ gh workflow run quarterly-time-sensitive-verify.yml
 - **重建的題目有證據鏈** —— 159 題逐題記錄來自哪一份 PDF（含 sha256）的哪一頁、哪一欄、
   第幾題，以及 PDF 自己印的 answer key。跑 `uv run --locked --project tools python tools/restore_from_source_pdf.py --verify`
   可完整重現（實測 **159/159** 相符）
-- **改過的答案留得下痕跡** —— 41 題答案曾被更正，每題都保留 `metadata.prior_answer`
-  與 `_correction_note`（改了什麼、憑什麼改）。其中 41 題附一手來源 URL，
+- **改過的答案留得下痕跡** —— 42 題答案曾被更正，每題都保留 `metadata.prior_answer`
+  與 `_correction_note`（改了什麼、憑什麼改）。其中 42 題附一手來源 URL，
   另外 0 題的依據是標準條文／公版教材本身 —— 也就是說**每一筆更正都指得出一個可以點開的一手來源**，
   沒有任何一題是靠「我記得」改的。
   推翻來源 PDF 的答案卡需要列明依據，而且 CI 會擋下沒有依據的偏離。
