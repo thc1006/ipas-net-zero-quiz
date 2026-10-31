@@ -624,11 +624,54 @@ def _draw_page(doc, rows, *, page_no, pages, watermark=True, header=PAGE_HEADER,
         extra(page)
 
 
+def _any_stream_key(monkeypatch):
+    """放開串流字典的鍵：PyMuPDF 畫的圖片與表單，鍵比真實 PDF 多（ICC 的 /Alternate、表單的 /BBox、圖片的 /DecodeParms）。
+    用它的測試驗的是後面那幾道檢查，鍵本身在 test_ipas_sample_pdf 的白名單測試裡驗。濾鏡與 /Length 的規則照跑。"""
+    real = ipas_exam_pdf._stream_problems
+
+    def loose(data, streams, entries, _, home):
+        kept = {pos: {key: value for key, value in dictionary.items() if key != 'DecodeParms'}
+                for pos, dictionary in streams.items()}
+        return real(data, kept, entries, frozenset(key for dictionary in kept.values() for key in dictionary), home)
+    monkeypatch.setattr(ipas_exam_pdf, '_stream_problems', loose)
+
+
+@pytest.fixture(autouse=True)
+def any_stream_key(monkeypatch):
+    _any_stream_key(monkeypatch)
+
+
+@pytest.fixture
+def any_resource(monkeypatch):
+    """放開頁面資源的白名單：/Shading、/ColorSpace 這些鍵本身已經擋了（test_ipas_sample_pdf 的白名單測試），這裡驗的是
+    白名單後面那幾道檢查：它們是第二道防線，白名單先報了就沒有測試走得到。"""
+    monkeypatch.setattr(ipas_exam_pdf, '_resource_keys_problem', lambda *_: None)
+
+
+def _blank_pdf():
+    """新的空白 PDF。MuPDF 把 /Info 寫進新文件的目錄字典，真實的 PDF 沒有（目錄字典只收 CATALOG_KEYS）：先拿掉。"""
+    doc = pymupdf.open()
+    catalog = doc.pdf_catalog()
+    doc.update_object(catalog, f'<</Type/Catalog/Pages {doc.xref_get_key(catalog, "Pages")[1]}>>')
+    return doc
+
+
+def _blank_unused_icc(doc):
+    """PyMuPDF 插圖時寫的 ICC 串流，圖改成 /DeviceRGB 之後沒有人參照，留著的 /Alternate 真實卷沒有（串流字典的白名單）。"""
+    numbers = range(1, doc.xref_length())
+    used = {doc.xref_get_key(x, 'ColorSpace')[1].split()[0] for x in numbers if doc.xref_get_key(x, 'ColorSpace')[0] == 'xref'}
+    kept = {match[1] for x in map(int, used) for match in re.finditer(r'(\d+) 0 R', doc.xref_object(x))}
+    for x in numbers:
+        if doc.xref_get_key(x, 'Alternate')[0] != 'null' and str(x) not in kept:
+            doc.update_object(x, '<<>>')
+
+
 def _exam(tmp_path, pages, page_options=None):
     """page_options：{頁碼: _draw_page 的選項}。"""
-    doc = pymupdf.open()
+    doc = _blank_pdf()
     for number, rows in enumerate(pages, start=1):
         _draw_page(doc, rows, page_no=number, pages=len(pages), **(page_options or {}).get(number, {}))
+    _blank_unused_icc(doc)
     path = tmp_path / 'exam.pdf'
     doc.save(path)
     return path
@@ -756,7 +799,7 @@ def test_the_page_watermark_is_not_mistaken_for_a_figure(tmp_path):
     (_in_q1(_stencil((122, 144, 300, 158))), r'^第 1 頁的圖片遮罩（.*）畫在字「某」（x=122\.0, '),
 ], ids=['watermark-over-the-text', 'white-image-over-the-stem', 'white-shading-over-the-answer',
         'white-stencil-over-the-stem'])
-def test_an_image_drawn_over_text_stops_the_extraction(tmp_path, options, message):
+def test_an_image_drawn_over_text_stops_the_extraction(tmp_path, options, message, any_resource):
     # 真實卷的浮水印是頁面第一個畫的東西，在所有字的下面；最後才畫的圖（浮水印也一樣）會把先畫的字蓋掉，
     # pdfminer 照樣抽得出那些字（以前合成卷的浮水印就是這樣蓋住第 2 題的 (C)(D) 與大半個第 3 題）
     with pytest.raises(ValueError, match=message):
@@ -772,7 +815,7 @@ def test_an_image_over_nothing_but_a_space_is_only_a_figure(tmp_path):
 
 
 @pytest.mark.parametrize('first', [False, True], ids=['over-the-text', 'under-the-text'])
-def test_a_shading_without_bounds_stops_the_extraction(tmp_path, first):
+def test_a_shading_without_bounds_stops_the_extraction(tmp_path, first, any_resource):
     # 沒有 /BBox 的軸向漸層，範圍只由剪裁路徑決定，MuPDF 給的外框是無限大：看不出蓋住了什麼（真實卷沒有任何漸層）
     shading = _shading((50, 150, 80, 170), bounded=False, first=first)
     with pytest.raises(ValueError, match='^第 1 頁有範圍無法判斷的漸層'):
@@ -1039,7 +1082,7 @@ def test_a_figure_inside_a_question_stops_the_extraction(tmp_path, number, draw)
     (lambda page: page.insert_image(pymupdf.Rect(45, 200, 80, 220), pixmap=_pixmap(40), overlay=False), '圖片'),
 ], ids=['white-box', 'white-box-as-curve', 'strike-through', 'thin-bar-0.6pt', 'thin-bar-1.5pt', 'white-strips',
         'black-shading-underneath', 'image-underneath'])
-def test_a_drawing_in_the_answer_column_stops_the_extraction(tmp_path, draw, kind):
+def test_a_drawing_in_the_answer_column_stops_the_extraction(tmp_path, draw, kind, any_resource):
     with pytest.raises(ValueError, match=rf'^第 1 頁第 2 列（題號 1\.）的答案欄裡有圖形（{kind}）'):
         extract(_two_page_exam(tmp_path, page_options=_in_q1(draw)))
 
@@ -1085,7 +1128,7 @@ def test_every_thin_line_in_a_question_is_a_figure(tmp_path, number, box):
         extract(_two_page_exam(tmp_path, page_options=_in_q1(lambda page: _fill(page, *box))))
 
 
-def test_a_shading_inside_a_question_is_a_figure(tmp_path):
+def test_a_shading_inside_a_question_is_a_figure(tmp_path, any_resource):
     # pdfminer 看不到漸層（sh）：從 PyMuPDF 的 bboxlog 算。畫在字的下面（蓋在字上的另外報錯）
     shading = _shading((300, 180, 470, 226), grey=0.5, first=True)
     with pytest.raises(ValueError, match='^第 1 題的題目欄裡有圖片或圖形'):
@@ -1266,7 +1309,7 @@ def test_squashed_text_stops_the_extraction(tmp_path, operators, message):
     _coloured_text(WHITE_INK, 1),
     _coloured_text(NO_INK, 1),
 ], ids=['indexed-palette', 'devicen-two-inks', 'devicen-one-ink', 'spot-colour-without-ink', 'white-ink', 'no-ink'])
-def test_text_in_a_colour_space_of_its_own_stops_the_extraction(tmp_path, draw):
+def test_text_in_a_colour_space_of_its_own_stops_the_extraction(tmp_path, draw, any_resource):
     # 自訂色彩空間（cs、scn）pdfminer 讀不出真的顏色（調色盤索引、特別色的色調、DeviceN 一律給 (0,)），
     # 運算元數目也看色彩空間：內容串流的檢查就擋掉（真實卷只用 g、rg 設顏色）
     with pytest.raises(ValueError, match='^第 1 頁的內容串流有 Word 不會寫的運算子「cs」'):
@@ -1375,7 +1418,7 @@ def test_text_outside_the_table_must_really_be_drawn(tmp_path):
 
 def test_only_glyphs_left_by_the_clip_count_as_drawn():
     # 四段字用的字母互不重複，才看得出是哪一段留下來
-    doc = pymupdf.open()
+    doc = _blank_pdf()
     page = doc.new_page(width=595, height=842)
     page.insert_text((100, 100), 'N', fontname='helv', fontsize=12)       # 讓頁面資源裡有 /helv
     _raw(page, b'q 90 730 60 20 re W n BT /helv 12 Tf 100 736 Td (Kept) Tj ET Q')         # 剪裁路徑包住它
@@ -1390,7 +1433,7 @@ def test_only_glyphs_left_by_the_clip_count_as_drawn():
 def test_only_glyphs_in_a_visible_colour_count_as_drawn():
     # texttrace 的顏色（換算成 RGB；只描邊的字是描邊色）連同不透明度，與白紙的對比至少 3:1：紅、藍、中灰是畫出來
     # 的字（真實卷頁首的日期就是紅字），淺灰、白色描邊、三成不透明的黑字不是。每段字用的字母互不重複
-    doc = pymupdf.open()
+    doc = _blank_pdf()
     page = doc.new_page(width=595, height=842)
     page.insert_text((100, 100), 'N', fontname='helv', fontsize=12)
     _add_resource(page, 'ExtGState', 'GS9', '<</Type/ExtGState/ca 0.3>>')
@@ -1409,7 +1452,7 @@ def test_only_glyphs_in_a_visible_colour_count_as_drawn():
 def test_glyphs_inside_an_actualtext_span_are_matched_one_by_one():
     # 有的 PDF 用 ActualText 標記替代文字：rawdict 預設照它換字，三個字形只剩一個起點，另外兩個會被當成
     # 被剪裁掉（pdfminer 與 texttrace 都照字形抽）。所以叫 PyMuPDF 不要換
-    doc = pymupdf.open()
+    doc = _blank_pdf()
     page = doc.new_page(width=595, height=842)
     page.insert_text((100, 100), 'N', fontname='helv', fontsize=12)
     _raw(page, b'/Span <</ActualText (a)>> BDC BT /helv 12 Tf 100 700 Td (WXY) Tj ET EMC')
@@ -1521,6 +1564,7 @@ def test_a_borderless_table_inside_a_question_stops_the_extraction(tmp_path, spa
 
 
 CJK = pymupdf.Font('cjk')  # PyMuPDF 內建的中文 TrueType 字型（Droid Sans Fallback），可以整個內嵌
+TRUETYPE = CJK.buffer
 
 
 def _embedded_cjk(page, text, at, cid_to_gid='/Identity', name='kai'):
@@ -1636,8 +1680,8 @@ def _raw_annotation(spec, direct=False):
     (_raw_annotation('<</Type/Annot/Rect[300 600 500 620]/Contents(C)>>'), 'None'),
     (_raw_annotation('<</Type/Annot/Subtype/FreeText/Rect[300 600 500 620]/Contents(C)>>', direct=True), 'FreeText'),
     (_raw_annotation('null', direct=True), 'None'),                     # 壞掉的項目：看不出是什麼，一樣報
-    (lambda page: (page.insert_link(LINK), page.add_freetext_annot(pymupdf.Rect(300, 150, 540, 170), 'C')), 'FreeText'),
-    (_link_with_appearance, r'Link（帶外觀串流 /AP）'),
+    (lambda page: (page.insert_link(LINK), page.add_freetext_annot(pymupdf.Rect(300, 150, 540, 170), 'C')), 'Link、FreeText'),
+    (_link_with_appearance, 'Link'),
 ], ids=['free-text', 'stamp', 'sticky-note', 'highlight', 'rectangle', 'form-field', 'unknown-kind', 'no-kind',
         'direct-object', 'null-entry', 'after-a-link', 'link-with-an-appearance'])
 def test_a_pdf_annotation_stops_the_extraction(tmp_path, annotate, kind):
@@ -1646,9 +1690,10 @@ def test_a_pdf_annotation_stops_the_extraction(tmp_path, annotate, kind):
         extract(_two_page_exam(tmp_path, page_options=_in_q1(annotate)))
 
 
-def test_a_link_is_not_treated_as_an_annotation_to_worry_about(tmp_path):
-    # Word 把網址轉成 Link 註解，它本身不畫任何東西（沒有 /AP；帶 /AP 的見上面的 link-with-an-appearance）
-    assert extract(_two_page_exam(tmp_path, page_options=_in_q1(lambda page: page.insert_link(LINK)))) == EXPECTED
+def test_a_link_stops_the_extraction(tmp_path):
+    # 6 份真實試題 PDF 都沒有註解。/Border 與 /C 讓閱讀器畫出外框（審查實測：紅框框住「非」），白色的細框排成格子就蓋掉一個字
+    with pytest.raises(ValueError, match=r'^第 1 頁有 PDF 註解（Link）'):
+        extract(_two_page_exam(tmp_path, page_options=_in_q1(lambda page: page.insert_link(LINK))))
 
 
 def _page_resources(page) -> int:
@@ -1738,7 +1783,7 @@ def _optional_content(on, indirect=False):
     (_optional_content(on=False, indirect=True), r'^PDF 有選擇性內容（圖層'),
     (_form_xobject(subtype='indirect'), r'^PDF 裡有 /Subtype 不是直接名稱的物件'),
 ], ids=['form-without-bbox', 'form-with-bbox', 'layer-off', 'layer-on', 'layer-list-elsewhere', 'indirect-subtype'])
-def test_a_form_xobject_or_a_layer_stops_the_extraction(tmp_path, structure, message):
+def test_a_form_xobject_or_a_layer_stops_the_extraction(tmp_path, structure, message, any_resource):
     # 表單裡的內容 pdfminer 不一定讀得到（沒有 /BBox 就整個跳過），圖層則是各家閱讀器顯示的不一樣：
     # 兩者都會讓抽出來的字與閱讀器上看到的不同。真實的公告試題（Word 匯出）兩種都沒有。
     with pytest.raises(ValueError, match=message):
@@ -2307,7 +2352,7 @@ def test_content_the_two_programs_read_differently_stops_the_extraction(tmp_path
     _pattern_text,                                             # 圖樣（tiling pattern）裡的字，pdfminer 不讀
     lambda page: _raw(page, b'391 0 0 164 102 316 cm BI /W 2 /H 2 /CS /G /BPC 8 ID \x00\xff\xff\x00 EI', first=True),
 ], ids=['text-in-a-pattern', 'inline-image-both-read'])
-def test_patterns_and_inline_images_stop_the_extraction(tmp_path, draw):
+def test_patterns_and_inline_images_stop_the_extraction(tmp_path, draw, any_resource):
     with pytest.raises(ValueError, match='^第 1 頁的內容串流有 Word 不會寫的運算子「(cs|BI)」'):
         extract(_two_page_exam(tmp_path, page_options={1: {'extras': [draw]}, 2: {'extras': [draw]}}))
 
@@ -2483,7 +2528,7 @@ def test_a_drawn_glyph_must_have_the_scale_and_the_ink_of_the_extracted_one(glyp
 
 def test_visible_glyphs_record_both_scales_and_the_ink():
     # 垂直縮成四分之一的字：texttrace 的字級只看水平方向（12），rawdict 的是兩個方向的幾何平均（6）
-    doc = pymupdf.open()
+    doc = _blank_pdf()
     page = doc.new_page(width=595, height=842)
     page.insert_text((100, 100), 'N', fontname='helv', fontsize=12)
     _raw(page, b'q BT /helv 12 Tf 1 0 0 0.25 100 670 Tm (V) Tj ET Q')
@@ -2535,7 +2580,7 @@ def test_a_type3_font_anywhere_in_the_pdf_stops_the_extraction(tmp_path):
 
 
 @pytest.mark.parametrize('structure', [_form_xobject(bbox=False), _optional_content(on=False)], ids=['form', 'layer'])
-def test_the_header_is_not_read_from_a_pdf_with_forms_or_layers(tmp_path, structure):
+def test_the_header_is_not_read_from_a_pdf_with_forms_or_layers(tmp_path, structure, any_resource):
     # 頁首也是抽出來的字：表單與圖層裡的字，閱讀器上看到的與抽出來的不同，拿它對 SOURCES 之前就擋
     with pytest.raises(ValueError, match='^PDF (裡有表單物件|有選擇性內容)'):
         header(_two_page_exam(tmp_path, page_options=_in_q1(structure)))
@@ -2703,10 +2748,10 @@ def test_every_refusal_of_the_extraction_is_checked_against_the_header(tmp_path,
             ('EXTRACT_ONLY', (*EXTRACT_ONLY, re.compile('第 1 頁有 PDF 註解')), annotated, '寫得太寬'),
             ('EXTRACT_ONLY', tuple(p for p in EXTRACT_ONLY if not p.match('整份 PDF 找不到選項標記「(」')),
              no_marker, '沒有列在 EXTRACT_ONLY')):
-        monkeypatch.setitem(globals(), name, value)
-        with pytest.raises(AssertionError, match=complaint):
-            extract(path)
-        monkeypatch.undo()
+        with monkeypatch.context() as patch:
+            patch.setitem(globals(), name, value)
+            with pytest.raises(AssertionError, match=complaint):
+                extract(path)
 
 
 # header() 在表格之前拒絕的樣本：每一個階段至少一種（兩個工具的端對端測試也拿它們跑，test_official_exam_import）
@@ -2757,12 +2802,12 @@ def test_the_header_and_the_extraction_run_the_same_checks(tmp_path, monkeypatch
     exam = _two_page_exam(tmp_path)
     for run in (header, extract):
         calls = []
-        for name in ('_unreadable', '_opened', '_pages', '_outside_table'):
-            real = getattr(ipas_exam_pdf, name)
-            monkeypatch.setattr(ipas_exam_pdf, name, lambda *args, name=name, real=real, **kwargs: calls.append(
-                (name, len(args), sorted(kwargs))) or real(*args, **kwargs))
-        run(exam)
-        monkeypatch.undo()
+        with monkeypatch.context() as patch:
+            for name in ('_unreadable', '_opened', '_pages', '_outside_table'):
+                real = getattr(ipas_exam_pdf, name)
+                patch.setattr(ipas_exam_pdf, name, lambda *args, name=name, real=real, **kwargs: calls.append(
+                    (name, len(args), sorted(kwargs))) or real(*args, **kwargs))
+            run(exam)
         assert calls == [('_unreadable', 0, []), ('_opened', 1, []), ('_pages', 2, []), ('_outside_table', 1, [])], \
             run.__name__
 
@@ -2885,7 +2930,7 @@ def test_a_note_row_between_questions_stops_the_extraction(tmp_path):
 
 
 def test_a_page_without_the_table_stops_the_extraction(tmp_path):
-    doc = pymupdf.open()
+    doc = _blank_pdf()
     doc.new_page().insert_text((72, 72), '沒有表格的頁面', fontname='china-t', fontsize=12)
     path = tmp_path / 'no-table.pdf'
     doc.save(path)
@@ -2956,7 +3001,7 @@ def test_spaces_at_the_same_origin_cannot_stand_in_for_a_hidden_glyph(tmp_path, 
 
 def test_each_glyph_is_matched_with_its_own_rawdict_record():
     # 字級與墨跡只看同一個字、同一個起點的 rawdict 紀錄：同一個起點上別的字形（空白、別的字）不能替它作證
-    doc = pymupdf.open()
+    doc = _blank_pdf()
     page = doc.new_page(width=595, height=842)
     page.insert_text((100, 100), 'N', fontname='helv', fontsize=12)
     # K 整個剪掉；同一個起點兩個空白，中間隔一個畫在別處的空白（rawdict 就列兩筆）
@@ -3071,7 +3116,7 @@ def test_to_unicode_on_a_font_that_is_not_embedded_stops_the_extraction(tmp_path
 
 
 def _font_file():
-    return PDFStream({}, b'')
+    return PDFStream({}, TRUETYPE)
 
 
 # 真實卷字型描述的每一個欄位（ArialMT 的值）；Word 內嵌字型的描述另有字型檔
@@ -3469,7 +3514,7 @@ def test_text_on_a_dark_watermark_stops_the_extraction(tmp_path, value):
 
 def test_the_shades_of_an_image_count_its_soft_mask():
     # 紅色的圖配一半透明的遮罩：疊在白紙上是 (255, 127, 127)，不是紅色（PyMuPDF 的 Pixmap 不套 /SMask，套上之後是預乘的）
-    doc = pymupdf.open()
+    doc = _blank_pdf()
     page = doc.new_page()
     red = pymupdf.Pixmap(pymupdf.csRGB, pymupdf.IRect(0, 0, 4, 4), False)
     red.set_rect(red.irect, (255, 0, 0))
@@ -3543,7 +3588,7 @@ def test_a_dark_figure_under_the_text_is_a_figure_not_a_watermark(tmp_path):
 
 def test_the_shades_of_an_image_are_every_colour_from_dark_to_light():
     # 左半黑、右半白的圖：兩種顏色都要記，由深到淺（灰字壓在中間亮度的一塊上才找得到）
-    doc = pymupdf.open()
+    doc = _blank_pdf()
     page = doc.new_page()
     pix = pymupdf.Pixmap(pymupdf.csRGB, pymupdf.IRect(0, 0, 4, 4), False)
     pix.set_rect(pymupdf.IRect(0, 0, 2, 4), (255, 255, 255))
@@ -3570,7 +3615,7 @@ ALTERNATE_PAGE2 = [PAGE2[0], PAGE2[1], ('D', '5.', PAGE2[2][2])]  # 第 5 題的
 def _page_that_is_also_a_node(tmp_path):
     """第 2 頁是 /Type /Page、有自己的內容（答案 B），又帶 /Kids [另一頁]（答案 D）：pdfminer 與 MuPDF 都把它當成頁面，
     PDFium 照 /Kids 往下走、畫出另一頁（第十三輪審查實測：Chrome 上第 5 題的答案是 D，擷取是 B）。"""
-    doc = pymupdf.open()
+    doc = _blank_pdf()
     for rows in (PAGE1, PAGE2, ALTERNATE_PAGE2):
         _draw_page(doc, rows, page_no=min(doc.page_count + 1, 2), pages=2)
     root = int(doc.xref_get_key(doc.pdf_catalog(), 'Pages')[1].split()[0])
@@ -3791,7 +3836,7 @@ def test_what_either_program_cannot_read_is_a_value_error(tmp_path, monkeypatch,
 def test_the_shades_of_a_watermark_with_a_matte_drop_the_alpha_mupdf_adds():
     # 遮罩帶 /Matte 的圖（Word 的寫法），PyMuPDF 的 Pixmap(doc, xref) 多給一個 alpha：要先拿掉才能接遮罩。
     # 算出來的要與 MuPDF 自己畫在白紙上的相差不到一個色階（灰 200、不透明度 60/255）
-    doc = pymupdf.open()
+    doc = _blank_pdf()
     page = doc.new_page()
     _insert_watermark(page)
     xref = page.get_images(full=True)[0][0]
@@ -3947,7 +3992,7 @@ def test_black_text_on_a_dithered_watermark_of_light_dots_is_accepted(tmp_path):
 
 def test_the_shades_of_a_colour_stored_above_its_mask_follow_mupdf():
     # 預乘過的顏色比透明度大（240 對 85；真實卷的浮水印有一萬多點這樣）：MuPDF 還原時夾回 255，疊在白紙上是白的
-    doc = pymupdf.open()
+    doc = _blank_pdf()
     page = doc.new_page()
     pix = pymupdf.Pixmap(pymupdf.csRGB, 8, 8, bytes([240, 213, 228, 85]) * 64, True)
     xref = _word_image_of(page, pix, pymupdf.Rect(100, 100, 180, 180))
@@ -5616,10 +5661,12 @@ def test_an_object_only_mupdf_picks_up_is_refused(tmp_path):
     assert (_syntax_of(tmp_path, data) or '').startswith(SYNTAX_PROBLEM + 'MuPDF 重建 xref 時，第 99 號物件讀到的與原本的不同')
 
 
-def test_a_catalog_only_mupdf_picks_up_is_refused(tmp_path):
+def test_a_catalog_only_mupdf_picks_up_is_refused(tmp_path, monkeypatch):
     # 檔尾之後一個帶 /Root 的字典（前面沒有 trailer）：MuPDF 重建 xref 時照它找目錄物件，整頁換成另一棵頁面樹的
     # 「Other」（第十八輪修正時實測；Poppler 與 PDFium 照舊）
     data = _hand_pdf([*ONE_PAGE, *ANOTHER_TREE]) + b'<</Root 7 0 R>>\n'
+    assert (_syntax_of(tmp_path, data) or '').startswith(SYNTAX_PROBLEM + '最後一個 %%EOF 之後')  # 先被檔尾的規則擋下
+    monkeypatch.setattr(ipas_exam_pdf, '_tail_problem', lambda *_, **__: None)  # 後面那道重建的比對也要還在
     assert (_syntax_of(tmp_path, data) or '').startswith(SYNTAX_PROBLEM + 'MuPDF 重建 xref 時，目錄物件是第 7 號（原本是第 1 號）')
 
 

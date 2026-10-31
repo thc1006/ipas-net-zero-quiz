@@ -136,6 +136,17 @@ def test_reimporting_restores_the_tool_evidence_that_was_edited_by_hand():
         item['metadata']['evidence'][0], {'url': 'https://example.org/', 'quote': '人加的引文', 'supports_option': 'C'}]
 
 
+def test_reimporting_drops_the_url_only_this_tools_old_evidence_needed():
+    # 舊的工具引文帶進來的網址，這次不再需要就從 sources 拿掉。「工具的引文」認的是呼叫者給的標記，不是公告試題工具的預設值
+    item = S.build_item(SRC, META, _question(1))
+    edited = copy.deepcopy(item)
+    edited['metadata']['evidence'][0]['url'] = 'https://example.org/old.pdf'
+    edited['metadata']['sources'].append('https://example.org/old.pdf')
+    merged = _dataset(edited)
+    assert _merge(merged, [item]) == 1
+    assert merged['our_unique_items'][1]['metadata']['sources'] == item['metadata']['sources']
+
+
 @pytest.mark.parametrize(('field', 'change'), [
     ('stem', '改過的題幹'), ('options', []), ('answer', 'D'), ('exam_subject', '考科2'),
     ('official_sample', {'edition': '999', 'subject': 'L11', 'question_number': 3}),

@@ -37,6 +37,7 @@ const MAN = manifestRaw as unknown as {
     item_id: string;
     source_id: string;
     source_question_number: number;
+    page: number;
     answer_key: string;
     answer_override: unknown;
     dataset_answer: string | null;
@@ -65,6 +66,18 @@ const sampleEvidence = (it: Marked) =>
   (it.metadata?.evidence ?? []).filter((e) => e.generated_by === GENERATED_BY);
 const sourceIdOf = (o: OfficialSample) => `S_IPAS_SAMPLE_${o.edition}_${o.subject}`;
 const SUBJECT_NAME: Record<string, string> = { L11: '第一科', L12: '第二科' };
+// 改過 item_id 的題目：新的 → 舊的。a6e68b7 之前的主題庫有這 5 個舊 id，之後沒有了；參考樣題的其他題是新匯入的。
+// 這是已經發生的歷史，只會多不會少，所以連同日期寫死在這裡，不從題庫推
+const RENAMED_ON = '2026-10-18';
+const RENAMES: Record<string, string> = {
+  'S_IPAS_SAMPLE_114_L11-q004': 'S1-p01-q004',
+  'S_IPAS_SAMPLE_114_L11-q005': 'S1-p01-q005',
+  'S_IPAS_SAMPLE_114_L12-q001': 'S1-p02-q001',
+  'S_IPAS_SAMPLE_114_L12-q003': 'S1-p02-q003',
+  'S_IPAS_SAMPLE_114_L12-q004': 'S1-p02-q004',
+};
+const renamedFrom = (it: Marked) =>
+  (it.metadata as { renamed_from?: { item_id?: string; on?: string; why?: string } } | undefined)?.renamed_from;
 
 describe('參考樣題的標記必須對得回 PDF', () => {
   it('這道 gate 不能空轉：題庫裡有匯入的參考樣題、也有主庫配對的那一題，manifest 裡有參考樣題的來源', () => {
@@ -135,6 +148,35 @@ describe('參考樣題的標記必須對得回 PDF', () => {
         it.item_id !== `${src}-q${String(o.question_number).padStart(3, '0')}`
       );
     }).map((it) => it.item_id);
+    expect(bad).toEqual([]);
+  });
+
+  // 題目改名之後，要從新 id 找回舊的 commit、舊的回報，靠的是 renamed_from。工具不寫這個欄位，它是人寫的。
+  // practice_pool.json 與 question-identity.ts、cross-bank-integrity.test.ts 的註解也提到 S1-p02-q004，那幾處是說明文字
+  it('metadata.renamed_from 正是登記的那幾題：刪掉、指到別的 id、多寫一題都不行', () => {
+    const found = Object.fromEntries(
+      ALL.filter((it) => renamedFrom(it)).map((it) => [it.ref, renamedFrom(it)?.item_id])
+    );
+    expect(found).toEqual(RENAMES);
+    const anywhere = JSON.stringify([datasetRaw, poolRaw]).split('"renamed_from"').length - 1;
+    expect(anywhere, '題庫裡別的地方也有 renamed_from').toBe(Object.keys(RENAMES).length);
+  });
+
+  it('舊 id 照 PDF 的頁碼與題號（S1-p頁-q題號），主題庫與練習池都沒有這個 id，並寫明改名的日期與理由', () => {
+    const ids = new Set([...ALL.map((it) => it.ref), ...POOL.map((p) => String(p.id))]);
+    const bad = ALL.filter((it) => {
+      const r = renamedFrom(it);
+      if (!r) return false;
+      const e = ENTRY.get(it.ref);
+      const page = String(e?.page).padStart(2, '0');
+      const number = String(e?.source_question_number).padStart(3, '0');
+      return (
+        r.item_id !== `S1-p${page}-q${number}` ||
+        ids.has(r.item_id) ||
+        r.on !== RENAMED_ON ||
+        !r.why?.trim()
+      );
+    }).map((it) => it.ref);
     expect(bad).toEqual([]);
   });
 

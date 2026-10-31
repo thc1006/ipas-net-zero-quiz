@@ -24,7 +24,10 @@ Poppler 畫出來的邊緣深一些，也有 10:1）。
 
 其餘照 PDF，特殊字元也不轉換（NFKC 會連照原樣保留的 ₂、全形標點、％、～ 一起改掉）。
 下列情形一律丟 ValueError，不猜（兩套程式讀不了的寫法也一樣，見 _unreadable）：
-  物件：字典裡同一個鍵寫兩次、名稱裡的 NUL 與不標準的 # 跳脫、詞與詞之間的垂直定位字元、關鍵字裡的 NUL、超過
+  物件：串流字典有 STREAM_KEYS 以外的鍵（/F 在 pdfminer 與 MuPDF 是 /Filter，PDFium 不看）、/Filter 不是 STREAM_FILTERS
+        裡直接寫的一個名稱、xref 串流以外有 /DecodeParms、/Length 不是直接寫的整數或落點後面不是 endstream（見
+        _stream_problems）、檔案裡的 startxref 不是都指到讀過的那幾段 xref、最後一個 %%EOF 之後還有東西（見 _tail_problem）、
+        字典裡同一個鍵寫兩次、名稱裡的 NUL 與不標準的 # 跳脫、詞與詞之間的垂直定位字元、關鍵字裡的 NUL、超過
         NAME_BYTES 的名稱（照原始的寫法數）、不是 Word 寫法的數字、十六進位字串不是偶數個數字以 > 結束、Word 不寫的
         關鍵字或不在它的位置的關鍵字、對不上的 > 與對不上的結尾（字典裡的 ]、陣列裡的 >>）、一個物件不只一個值（串流
         前面也只能有它的字典）、字典
@@ -37,20 +40,23 @@ Poppler 畫出來的邊緣深一些，也有 10:1）。
         不同（各家讀到不同的物件，或 pdfminer 卡住，見 _syntax_problem；MuPDF 開檔時就重建 xref 的報 xref 壞了）、
         Poppler 重建 xref 時會放棄（物件編號放不下，或找不到 /Root 是參照的 trailer：只有 xref 串流的檔案就是）；
   版面：頁面樹不是 Word 的寫法（根節點只寫 /Type /Pages、/Kids、/Count，每一頁自己寫 /MediaBox）或兩套程式讀到的
-        頁面清單不同（見 _page_list_problem）、表格不是每頁剛好一張（空白頁、只有「《以下空白》」的頁另有說明）、某一列不是「答案欄 + 題目欄」兩格
+        頁面清單不同（見 _page_list_problem）、頁面字典有 PAGE_KEYS 以外的鍵、CropBox 與 MediaBox 不同、目錄字典有
+        CATALOG_KEYS 以外的鍵（見 _catalog_problem）、線性化的 PDF（見 _linearized_problem）、
+        表格不是每頁剛好一張（空白頁、只有「《以下空白》」的頁另有說明）、某一列不是「答案欄 + 題目欄」兩格
         （表頭除外：灰底會多切出兩格）、表格裡有不屬於任何一列的字、整份找不到選項標記、
         表頭不是「答案｜題目」或不在頁首、題號不連續、答案不是 A–D、選項不是正好 A–D（(E) 也算）、一行兩個選項、
         題幹或選項是空的、續列不是緊接在頁首的表頭之後、同一行裡有定位點的大空隙或連續三個以上的空白
         （無框線的表格，見 _check_spacing）、同一個視覺行的字分成上下兩行（基線錯開超過 3pt 的上下標、分數、
         錯開的兩欄，見 _check_line_overlap）、
-        PDF 註解（Link 以外的都算，帶外觀串流 /AP 的 Link 也算：文字方塊、印章、便利貼、螢光筆、表單欄位，
+        PDF 註解（Link 也算：文字方塊、印章、便利貼、螢光筆、表單欄位，
         都不在頁面內容裡）、選擇性內容（圖層）、表單物件（Form XObject）、/Subtype 不是直接名稱的物件
         （見 _layers_or_forms）、xref 表壞了而兩套程式各自重建（讀到的可能是不同版本的頁面，見 _rebuilt_xref；畫完每一頁
         再查一次）、Word 不會寫的圖形狀態（/TR、/TR2、Normal 以外的混色、/SMask）、頁面自己沒有 /Resources 字典
-        （沿用上層節點的也算，見 _resources）、Word 不會寫的字型（見 _font_problem：內嵌的只收 Word 的 Type0（帶
-        ToUnicode 串流、/CIDSystemInfo (Adobe)(Identity)、/CIDToGIDMap /Identity）與 TrueType、沒有內嵌的不准帶
-        ToUnicode、字集與 CMap 不同、/Differences、真實卷沒有用的簡單字型（符號字型）與 /Flags、字型描述裡 Word 不寫的
-        欄位、沒有內嵌的 Type0 不是 PyMuPDF 內建中文字型的名稱）、Type 3 字型（頁面資源以外的也算）；
+        （沿用上層節點的也算，見 _resources）、頁面資源有 RESOURCE_KEYS 以外的鍵、Word 不會寫的字型（見 _font_problem：內嵌的只收 Word 的 Type0（帶
+        ToUnicode 串流、/CIDSystemInfo (Adobe)(Identity)、/CIDToGIDMap /Identity）與 TrueType、字型檔不是解得開的
+        TrueType、沒有內嵌的不准帶 ToUnicode、字集與 CMap 不同、/Differences、真實卷沒有用的簡單字型（符號字型）與
+        /Flags、字型描述裡 Word 不寫的欄位、沒有內嵌的 Type0 不是 PyMuPDF 內建中文字型的名稱）、Type 3 字型（頁面資源
+        以外的也算）；
   內容串流：不是兩套 PDF 程式讀法一致的寫法（見 _content_grammar：運算子後面接 NUL 之類的切詞差異、超過各家上限的
         數字、名稱與字串、多給或少給的運算元、inline 圖、圖樣與自訂色彩空間、Word 不寫的文字畫法），或兩套程式解出來的
         位元組不同；
@@ -66,7 +72,8 @@ Poppler 畫出來的邊緣深一些，也有 10:1）。
         MIN_CONTRAST 的對比（深色的圖也會被當成浮水印；黑白細點在閱讀器上平均成灰色，見 _on_watermark）；
   字：  特殊碼位（見 _odd_character；U+0020、U+3000 以外的空白也算，表格外的字也查），以及表格裡旋轉、倒置、
         鏡像、斜切、負字級、壓扁（字寬不到字級的一成）、
-        沒有真的畫出來（看不清楚：顏色連同不透明度疊在白紙上，對比不到 MIN_CONTRAST；被剪裁路徑整個切掉；沒有墨跡）、
+        沒有真的畫出來（看不清楚：顏色連同不透明度疊在白紙上，對比不到 MIN_CONTRAST；被剪裁路徑整個切掉；沒有墨跡；
+        墨跡沒有完整在頁面內）、
         畫出來的樣子與 pdfminer 算的不同（兩個方向的縮放不同：被壓扁；墨跡的中心不在 pdfminer 的字框裡：字框被字型描述的
         /Descent 移開，分行分列就跟著錯，見 _drawn）、
         疊印（同一個字印兩次，或不同的字疊在一起）的字，比本文小卻不是下標數字、或不到本文一半的字；
@@ -82,7 +89,15 @@ Poppler 畫出來的邊緣深一些，也有 10:1）。
         考試名稱的次序或考試日期不成立（「第十十次」「02 月 30 日」）。
 頁首由 header() 讀出（場次、西元考試日期、科目代號），匯入時拿它對 SOURCES 登記的值。
 
+擷取器保證什麼：pdfminer 抽到的與 MuPDF 畫出來的逐字對得上，兩者讀的是同一份物件。其他閱讀器（Chrome 的 PDFium、
+Firefox 的 pdf.js、Poppler）不在擷取時跑：已知它們與這兩套讀法不同的地方，用白名單（只收真實 PDF 寫的鍵、濾鏡）與結構上的
+不變量（xref 的段數與 startxref、線性化、CropBox、字要完整在頁面內）去掉。閱讀器自己的修復與搜尋行為不一定都涵蓋，所以
+登記新的 PDF 時仍要在 Chrome 與 Firefox 都開過、逐題比對（AGENTS.md「匯入 iPAS 官方公告試題」）。
+
 已知擋不住、要靠人工讀一遍的（在目前的公告試題裡都沒有出現）：
+  - FreeType 解得開、Poppler 解不開的字型檔（_truetype_problem 只用 FreeType 試）。
+  - 字型的字寬表與字型檔不一致（審查的 F1_hmtx_past_eof：hmtx 表超出檔案，四家閱讀器的答案都與擷取相同，沒有再追）。
+  - 線性化字典的 /H 提示資料：只查型別，它對 PDFium 畫頁面的影響沒有實測（公告試題不收線性化，只影響參考樣題）。
   - 換頁表頭之後、兩格版面的題組說明列（會被當成續列併進上一題）；與 (D) 同一格、接在它後面的註記段落
     （會併進選項 D）。
   - 內嵌字型的字形與抽出來的字不一致（ToUnicode 或字型檔自己的對照表說是 A，畫的是 C；有筆畫的字形對到空白也是）：
@@ -90,16 +105,18 @@ Poppler 畫出來的邊緣深一些，也有 10:1）。
     內嵌的字型看墨跡，沒有內嵌的字型不准帶 ToUnicode（見 _font_problem）。
   - 墨跡的中心仍在 pdfminer 的字框裡、只移開不到半個字的字框（字型描述的 /Descent 小改）：刻意畫在格線旁邊的字，
     歸到哪一格、哪一行以 pdfminer 的字框為準（真實卷的字離格線都在十點以上）。
-  - 只切掉字的一部分的矩形剪裁路徑（還看得到一部分就算畫出來）。
+  - 把字切到幾乎看不見的矩形剪裁路徑：MuPDF 只看剪裁範圍碰不碰到字，0.01pt 高的細條也算畫出來，閱讀器上字等於消失
+    （審查實測：「不正確」的「不」用它藏起來，抽出來的是「不正確」，看到的是「正確」）。真實卷的剪裁路徑都是矩形
+    （整頁或儲存格，見 _odd_clip），沒辦法一律擋；參考樣題沒有表格，一律不准（ipas_sample_pdf._clip_operator）。
   - 錯開超過四分之一個字寬的不同字（重疊不到 75%）。
   - 表頭列（「答案｜題目」）裡的圖形：表頭不是題目，不影響擷取。
-  - Link 註解的外框（/Border）：MuPDF 與 PDFium 都不畫，Acrobat 可能畫一個框（不會蓋住字）。
   - 表格外畫成向量圖形的字（轉成外框、沒有文字層的勘誤），以及表格外蓋在字上的向量圖形：表格外只查文字層與
     圖片（反方向的核對也只核字與圖）；真實卷頁首的橫線本來就壓在字上，沒辦法一律擋。
   - 組合字元與異體字選擇器（Unicode 的 Mn 類，照原樣保留）；字級與本文相同、基線升降不到 3pt 的上下標數字
     （併進同一行，當成一般的字）。
-另一個方向（誤報，不會安靜通過）：MediaBox 原點不是 (0,0)、CropBox 比 MediaBox 小、有 /UserUnit、或 /Rotate
-不是 0 的 PDF，兩套 PDF 程式的座標對不上，字會被判成沒有畫出來而報錯；有水平縮放的字（Tz 不是 100，例如 Word 的
+另一個方向（誤報，不會安靜通過）：MediaBox 原點不是 (0,0)、或 /Rotate 不是 0 的 PDF，兩套 PDF 程式的座標對不上，
+字會被判成沒有畫出來而報錯（CropBox 與 MediaBox 不同、有 /UserUnit 的 PDF 不收，見 _page_list_problem：切掉一半的字
+在 MuPDF 看來還是畫出來了）；有水平縮放的字（Tz 不是 100，例如 Word 的
 「字元比例」，或文字矩陣兩個方向的縮放不同）也一樣：pdfminer 的字級不含水平縮放，兩邊的字級對不上。字型只收 8 份
 真實卷的寫法（_font_problem）：公告試題改用 Word 內嵌成別種寫法的字型（例如 CFF 的 OpenType 字型）時也會報錯。
 Word 以外的程式存的 PDF（Acrobat 的增量更新、根節點帶頁面屬性、別種物件串流的寫法）也一樣（_syntax_problem、
@@ -235,6 +252,27 @@ BUILTIN_CJK = frozenset({'Fangti'})  # PyMuPDF 內建中文字型（china-t）�
 SUBSET = re.compile(r'^[A-Z]{6}\+')  # 內嵌的子集字型在 /BaseFont 前面加的六個大寫字母與「+」
 # 字型描述（/FontDescriptor）裡 Word 會寫的欄位（8 份真實卷的全部），加上字型檔（是哪一種另外查）
 ROOT_KEYS = frozenset({'Type', 'Kids', 'Count'})  # Word 的頁面樹根節點只寫這三項：沒有可以沿用給頁面的屬性
+# 白名單，不是黑名單（/XFA 讓 Firefox 整份畫另一份文件，/DefaultRGB 讓 Poppler 上答案欄全部消失，審查實測：寫法擋不完）。
+# 目錄字典與頁面資源是 6 份真實試題 PDF 實際寫的全部的鍵。頁面字典另外收 /CropBox（要等於 /MediaBox）、/Rotate（真的
+# 樣題寫 0，公告試題不是 0 時字對不上、會報錯）與 /Annots（真實 PDF 都沒有這個鍵：放行是要讓 _annotations 報出註解的種類）。
+# 下一份 PDF 撞到白名單時：訊息列出全部的鍵，人工比對之後把鍵加進來（AGENTS.md「匯入 iPAS 官方公告試題」）
+CATALOG_KEYS = frozenset({'Type', 'Pages', 'Lang', 'MarkInfo', 'Metadata', 'StructTreeRoot', 'ViewerPreferences'})
+PAGE_KEYS = frozenset({'Type', 'Parent', 'Resources', 'MediaBox', 'Contents', 'Group', 'Tabs', 'StructParents',
+                       'CropBox', 'Rotate', 'Annots'})
+RESOURCE_KEYS = frozenset({'Font', 'ExtGState', 'ProcSet', 'XObject'})
+# 串流字典：6 份真實試題 PDF 的串流寫的全部的鍵，加上 xref 串流的 /Index、/Prev（Word 沒有寫，_listed 與 xref 鏈逐項查）。
+# /F、/FFilter、/FDecodeParms 是外部檔案用的，pdfminer 與 MuPDF 把 /F 當成 /Filter，PDFium 不看（審查實測：同一段串流兩邊
+# 解出不同的內容）；/DP、/DL 也不在裡面
+STREAM_KEYS = frozenset({'Length', 'Filter', 'Type', 'Subtype', 'Length1', 'First', 'N', 'W', 'Index', 'Prev', 'Size', 'Root',
+                         'Info', 'ID', 'Width', 'Height', 'BitsPerComponent', 'ColorSpace', 'Interpolate', 'SMask', 'Matte'})
+STREAM_FILTERS = frozenset({'FlateDecode', 'DCTDecode'})  # 7 份真實 PDF：直接寫的一個名稱（沒有陣列、沒有縮寫），或沒有 /Filter
+STREAM_START = re.compile(rb'stream(?:\r\n|\n)')  # 規範只收這兩種；單獨的 CR 各家從不同的位置開始讀資料
+STREAM_END = re.compile(rb'(?:\r\n|\n|\r)?endstream')  # /Length 的落點
+STARTXREF = re.compile(rb'startxref')  # 照原始位元組數：註解裡的、別的字裡的（xstartxref）都算
+STARTXREF_VALUE = re.compile(rb'startxref[\0\t\n\f\r ]*(\d{1,10})(?![0-9])')
+EOF_TAIL = re.compile(rb'[\t\n\f\r ]*')  # 最後一個 %%EOF 之後只准空白：8 份真實 PDF 最多一個 CR LF
+LINEARIZED_KEYS = frozenset({'Linearized', 'L', 'H', 'O', 'E', 'N', 'T'})  # /P 另外查：省略或 0
+LINEARIZED_SEARCH = 1024  # Poppler 在檔案開頭這麼多位元組裡找線性化字典的 endobj
 DESCRIPTOR_KEYS = frozenset({'Type', 'FontName', 'Flags', 'FontBBox', 'ItalicAngle', 'Ascent', 'Descent', 'CapHeight',
                              'AvgWidth', 'MaxWidth', 'FontWeight', 'XHeight', 'Leading', 'StemV', *FONT_FILES})
 OBJECT_HEADER = re.compile(rb'(\d+) 0 obj')  # xref 指到的物件開頭：編號、世代號 0（8 份真實卷每一個都是這樣寫）
@@ -242,6 +280,7 @@ SYNTAX = 'PDF 的物件不是 Word 的寫法：'
 REBUILT = ('PDF 的 xref 表壞了，pdfminer 或 PyMuPDF 只好自己重建 —— 兩套 PDF 程式讀到的可能是不同版本的頁面，需要人工確認'
            '（重新下載，或向出題單位確認）。')
 OBJECTS = 100_000  # 物件編號的上限：8 份真實卷最多 2,870 個物件；再多就不逐一核對（二十萬個就要好幾秒）
+TRUETYPE_HEADER = b'\0\1\0\0'  # sfnt 版本 1.0：7 份真實 PDF（6 份試題與參考樣題）的 30 個字型檔都是
 XREF_TABLE = re.compile(rb'xref(?:\r\n|\r|\n)')
 XREF_SUBSECTION = re.compile(rb'(\d+) (\d+)(?:\r\n|\r|\n)')
 XREF_ENTRY = re.compile(rb'\d{10} \d{5} [fn](?: \r| \n|\r\n)')  # 標準的一筆：20 個位元組，類型只有 n 與 f
@@ -566,15 +605,19 @@ def _visible_glyphs(page, trace=None) -> dict[str, list[tuple]]:
       （第十一輪審查實測）。8 份真實卷每一個不是空白的字形，texttrace 與 rawdict 的（字, 起點）都對得上（空白不查：
       呼叫端只核對看得見的字）。
     - texttrace 的字先依（字, 起點）去重：填色加描邊的字（Word 表頭的粗體）它列兩次，rawdict 只列一次。
-    - 描邊蓋掉填色（別的顏色、在頁面上太粗的描邊）不在這裡判斷：整頁的字另由 _text_profile、_probe 擋。"""
+    - 描邊蓋掉填色（別的顏色、在頁面上太粗的描邊）不在這裡判斷：整頁的字另由 _text_profile、_probe 擋。
+    - 墨跡要完整在頁面內：TEXT_CLIP 只丟掉整個在頁面外的字，MediaBox 切掉字的下半部時它還在，閱讀器上「B」與「D」看不出
+      差別（審查實測：解答行的基線移到頁面外 6pt，答案換成 D 照收）。8 個檔案每一個有墨跡的字形都在頁面內，最小邊距 14.9pt。"""
     import pymupdf  # 延後 import：只處理列的單元測試不需要它
 
     flags = (pymupdf.TEXT_CLIP | pymupdf.TEXT_PRESERVE_LIGATURES | pymupdf.TEXT_PRESERVE_WHITESPACE
              | pymupdf.TEXT_IGNORE_ACTUALTEXT  # 不照 ActualText 換字：起點才對得上 texttrace
              | pymupdf.TEXT_ACCURATE_BBOXES)
+    box = page.rect
     records: dict[tuple[str, tuple[float, float]], list[tuple]] = {}  # (字, 起點) → [(兩個方向的縮放, 墨跡)]
     for text, origin, scale, ink in _rawdict(page, flags):
-        records.setdefault((text, origin), []).append((scale, ink))
+        if box.x0 <= ink[0] and box.y0 <= ink[1] and ink[2] <= box.x1 and ink[3] <= box.y1:  # 碰到頁面還不算：見上面
+            records.setdefault((text, origin), []).append((scale, ink))
     visible: dict[tuple[str, tuple[float, float]], float] = {}  # (字, 起點) → 字級
     for span in page.get_texttrace() if trace is None else trace:
         if _contrast(span['color'], span['opacity']) >= MIN_CONTRAST:
@@ -1018,7 +1061,8 @@ def _table_count_error(pno: int, page, count: int) -> str:
 
 def _annotations(page) -> list[str]:
     """頁面 /Annots 裡的註解（連同表單欄位）的種類：/Subtype 的名稱，沒有 /Subtype 的是 'None'。
-    Link 不算，除非它帶外觀串流（/AP）：Word 的網址只有 Link 本身，不畫任何東西；/AP 則會被 PDFium（Chrome）畫出來。
+    Link 也算：/Border 與 /C 讓閱讀器畫出外框，白色的細框排成格子就蓋掉一個字，/AP 也會被 PDFium（Chrome）畫出來，
+    PyMuPDF 的 get_links 不列 /A /S /Named 的 Link（審查實測）。8 個真實檔案都沒有註解，全部不收最簡單。
     直接讀 /Annots，不用 PyMuPDF 的 annot_xrefs：它會跳過不認得的種類，閱讀器卻照樣畫出那種註解的外觀。"""
     from pdfplumber.utils import resolve  # 延後 import：只處理列的單元測試不需要它
 
@@ -1026,11 +1070,7 @@ def _annotations(page) -> list[str]:
     for annot in resolve(page.page_obj.annots) or ():
         annot = resolve(annot)
         subtype = resolve(annot.get('Subtype')) if isinstance(annot, dict) else None
-        kind = str(getattr(subtype, 'name', subtype))
-        if kind != 'Link':
-            kinds.append(kind)
-        elif resolve(annot.get('AP')) is not None:
-            kinds.append('Link（帶外觀串流 /AP）')
+        kinds.append(str(getattr(subtype, 'name', subtype)))
     return kinds
 
 
@@ -1056,6 +1096,8 @@ def _font_problem(font: dict, *, embedded_descriptor_keys: frozenset[str] = froz
       不照編碼選字形，擷取是答案「C」，閱讀器畫的是一個星形符號（U+2723，第十二輪審查實測）。內嵌的只收 TrueType、/FontFile2。
     - /DW 是數字、/W 是陣列：pdfminer 拿它們算字寬，別的寫法讓它出錯。字型描述只收 DESCRIPTOR_KEYS：沒有內嵌的字型，
       閱讀器照描述換字型，/FontFamily (Symbol) 讓 Poppler 換成符號字型，答案 C 畫成空白（第十三輪審查實測）。
+    - /FontFile2 要是解得開的 TrueType（_truetype_problem）：字型檔是空的或垃圾時，閱讀器一樣當成沒有內嵌、照字型描述
+      換字型，擷取不變（審查實測：/FontFamily (Symbol) 讓 Poppler 把 (C) 畫成 (Χ)）。
     8 份真實卷全是這些寫法（簡單字型的 /BaseFont 只有 ArialMT、TimesNewRomanPSMT、TimesNewRomanPS-BoldMT 與內嵌的
     DFKaiShu-SB-Estd-BF）；沒有內嵌的 Type1 與 Type0 是 PyMuPDF 內建字型的寫法。Type 3 另外報（_resources）。
     不是 Word 輸出的 PDF（參考樣題是 Acrobat 輸出的，見 ipas_sample_pdf）另給三個參數，預設就是 Word 的規則：
@@ -1081,6 +1123,8 @@ def _font_problem(font: dict, *, embedded_descriptor_keys: frozenset[str] = froz
     files = [key for key in FONT_FILES if isinstance(descriptor, dict) and key in descriptor]
     if files and not all(isinstance(resolve(descriptor[key]), PDFStream) for key in files):
         return f'/{files[0]}（字型檔要是串流：鍵寫了、值不是字型檔時，閱讀器當成沒有內嵌，照字型描述換字型）'
+    if 'FontFile2' in files and (problem := _truetype_problem(resolve(descriptor['FontFile2']).get_data())):
+        return f'/FontFile2（{problem}：閱讀器讀不了字型檔時當成沒有內嵌，照字型描述換字型）'
     allowed = DESCRIPTOR_KEYS | (embedded_descriptor_keys if files else frozenset())
     if isinstance(descriptor, dict) and (extra := sorted(set(descriptor) - allowed)):
         return (f'/FontDescriptor /{extra[0]}（字型描述只收 Word 會寫的欄位：沒有內嵌的字型，閱讀器照它換字型，'
@@ -1138,6 +1182,20 @@ def _font_problem(font: dict, *, embedded_descriptor_keys: frozenset[str] = froz
     return None
 
 
+def _truetype_problem(data: bytes) -> str | None:
+    """/FontFile2 的內容是不是真的 TrueType：開頭是 TRUETYPE_HEADER，FreeType 解得開（MuPDF、PDFium、Poppler 讀字型檔
+    都用它，pymupdf.Font 就是）。開頭要先查：pymupdf.Font 收到空的 fontbuffer 不出錯，默默換成內建字型。"""
+    import pymupdf  # 延後 import：只處理列的單元測試不需要它
+
+    if data[:len(TRUETYPE_HEADER)] != TRUETYPE_HEADER:
+        return '不是 TrueType'
+    try:
+        pymupdf.Font(fontbuffer=data)
+    except pymupdf.mupdf.FzErrorBase:
+        return 'FreeType 解不開'
+    return None
+
+
 def _tounicode_mismatch(font: dict) -> str | None:
     """簡單字型的 /ToUnicode 與 /WinAnsiEncoding 第一個不一致的字碼（「字碼 0x42 對到「D」，WinAnsiEncoding 是「B」」），
     都一致就回 None。ToUnicode 不是串流、或字碼超過一個位元組，也算不一致。"""
@@ -1158,6 +1216,13 @@ def _tounicode_mismatch(font: dict) -> str | None:
         if winansi.get(code) != text:
             return f'字碼 {code:#04x} 對到「{text}」，WinAnsiEncoding 是「{winansi.get(code, "（沒有這個字碼）")}」'
     return None
+
+
+def _allow_list_problem(found: dict[str, list[str]], constant: str) -> str:
+    """白名單報錯的訊息：found 是 {在哪裡: 不在白名單裡的鍵}，全部列出（不必修一個、跑一次），constant 是白名單常數的名稱。"""
+    places = '；'.join(f'{where}有 {"、".join(f"/{key}" for key in keys)}' for where, keys in found.items())
+    return (f'{places}：不在白名單 {constant} 裡。下一步：人工用瀏覽器與 pdftotext 比對這份 PDF，看到的與擷取到的相同，'
+            f'才把鍵加進 {constant}，見 AGENTS.md「匯入 iPAS 官方公告試題」。')
 
 
 def _resources(page, **font_rules) -> list[str]:
@@ -1211,6 +1276,21 @@ def _resources(page, **font_rules) -> list[str]:
     return problems
 
 
+def _resource_keys_problem(pdf, keys: frozenset[str] = RESOURCE_KEYS, home: str = 'ipas_exam_pdf') -> str | None:
+    """每一頁自己的 /Resources 有 keys 以外的鍵：回傳錯誤訊息，沒有就回 None。/ColorSpace 的 /DefaultGray、/DefaultRGB 讓
+    Poppler 把一般的字換成別的顏色（審查實測：字消失、答案欄全部不見），pdfminer 與 MuPDF 不看它。內容用到別的資源時，
+    _content_problem 與 bboxlog 另外擋，這裡是白名單，不判斷哪一種有害（/ProcSet 無害，真的樣題只是沒有寫）。"""
+    from pdfplumber.utils import resolve  # 延後 import：只處理列的單元測試不需要它
+
+    found = {}
+    for pno, page in enumerate(pdf.pages, start=1):
+        own = resolve(pdf.doc.getobj(page.page_obj.pageid))
+        resources = resolve(own.get('Resources'))
+        if extra := sorted(map(str, set(resources) - keys)):
+            found[f'第 {pno} 頁的頁面資源'] = extra
+    return _allow_list_problem(found, f'{home}.RESOURCE_KEYS') if found else None
+
+
 def _layers_or_forms(doc) -> str | None:
     """選擇性內容（圖層）與表單物件（Form XObject）：兩者都會讓抽出來的字與閱讀器上看到的不同。
     圖層：各家閱讀器顯示哪些圖層並不一致（關著的 /Intent /Design 圖層，MuPDF 不畫、PDFium 照畫），pdfminer 則不分圖層照抽。
@@ -1237,6 +1317,14 @@ def _layers_or_forms(doc) -> str | None:
     return None
 
 
+def _catalog_problem(pdf, keys: frozenset[str] = CATALOG_KEYS, home: str = 'ipas_exam_pdf') -> str | None:
+    """目錄字典有 keys 以外的鍵：回傳錯誤訊息，沒有就回 None。整份文件的行為都掛在這裡（/AcroForm 的 /XFA、/OpenAction、
+    /Names、/Collection），閱讀器照做，兩套擷取程式都不看。"""
+    if extra := sorted(map(str, set(pdf.doc.catalog) - keys)):
+        return _allow_list_problem({'PDF 的目錄字典': extra}, f'{home}.CATALOG_KEYS')
+    return None
+
+
 def _rebuilt_xref(pdf, rendered) -> bool:
     """xref 表壞了、pdfminer 或 PyMuPDF 只好自己重建：pdfminer 改成掃描整個檔案，PyMuPDF 的 is_repaired。
     兩套程式各自重建，讀到的可能是不同版本的頁面（審查實測：一筆 xref 多一個空白，pdfminer 讀到另一份沒被參照的
@@ -1258,6 +1346,8 @@ def _page_list_problem(pdf, rendered) -> str | None:
     /Type（間接參照的那一頁它跳過，MuPDF 照讀）；/Count 與 /Kids 不符時 MuPDF 開檔時照 /Count 算頁數，逐頁讀時才照
     /Kids 修正（頁數要在逐頁讀之前記下來）。
     樹照 Word 寫了，兩套程式讀到的頁面（物件編號、順序）還是要逐一相同；兩邊都沒有頁面也報錯（頁碼的核對要有頁面）。
+    頁面字典只收 PAGE_KEYS，/CropBox 要等於 /MediaBox：切掉最後一行的下半部時，字碰到裁切範圍，PyMuPDF 算畫出來了，閱讀器上
+    只剩上緣（審查實測：「B」換成「D」照收，看不出差別），所以不比切掉多少。
     回傳錯誤訊息，沒有就回 None。"""
     root_ref = pdf.doc.catalog.get('Pages')
     root = pdf.doc.getobj(root_ref.objid) if hasattr(root_ref, 'objid') else None
@@ -1274,6 +1364,14 @@ def _page_list_problem(pdf, rendered) -> str | None:
         return ('頁面樹不是 Word 的寫法（根節點只寫 /Type /Pages、直接列出每一頁的 /Kids 與等於頁數的 /Count；每一頁都是'
                 ' /Type /Page、沒有 /Kids、/Parent 指回根節點、自己寫四個數字的 /MediaBox）—— 各家找頁面、沿用屬性的方法'
                 '不同，閱讀器上看到的頁可能是另一頁、或被裁掉一部分，需要人工確認。')
+    pages = {pno: pdf.doc.getobj(kid.objid) for pno, kid in enumerate(kids, start=1)}
+    found = {f'第 {pno} 頁的頁面字典': extra for pno, page in pages.items()
+             if (extra := sorted(map(str, set(page) - PAGE_KEYS)))}
+    if found:
+        return _allow_list_problem(found, 'ipas_exam_pdf.PAGE_KEYS')
+    for pno, page in pages.items():
+        if page.get('CropBox', page['MediaBox']) != page['MediaBox']:
+            return (f'第 {pno} 頁的 CropBox 與 MediaBox 不同 —— 被裁掉的字閱讀器上看不到，擷取時照樣抽得出來，需要人工確認。')
     count = rendered.page_count
     mine, theirs = [page.page_obj.pageid for page in pdf.pages], [page.xref for page in rendered]
     if mine != theirs or count != len(theirs):
@@ -1420,7 +1518,8 @@ def _mupdf_entry(native, length: int, number: int):
     return {'n': (None, entry.ofs, 0), 'o': (entry.ofs, entry.gen, 0)}.get(entry.type)
 
 
-def _rebuild_problem(data: bytes, entries: dict, rendered, rooted: set[int]) -> str | None:
+def _rebuild_problem(data: bytes, entries: dict, rendered, rooted: set[int], *,
+                     xref_streams_only: bool = False) -> str | None:
     """xref 要重建時，Poppler 或 MuPDF 讀到的與原本的不同之處；都相同是 None。entries 是 pdfminer 採用的 xref 登記
     （{編號: (物件串流, 位置或索引, 0)}，與 MuPDF 逐號相同），rendered 是 MuPDF 照 xref 開的文件，rooted 是 xref 表後面
     那幾個 trailer 裡，pdfminer 讀到 /Root 是參照的那幾個（「trailer」這個字）的位置。
@@ -1432,7 +1531,9 @@ def _rebuild_problem(data: bytes, entries: dict, rendered, rooted: set[int]) -> 
     - MuPDF：真的重建一次（startxref 指到檔頭，它只好掃描整個檔案；10 份真實 PDF（12 個檔案）每份約 0.01–0.02 秒）。每一個編號重建
       前後要相同（它記的位置是上一個詞的結尾，跳過空白與註解再比），目錄物件也要相同。最壞的情形它看到的編號大到
       8,388,607：多花約 0.7 GB 與 1 秒，超過 OBJECTS 就不逐號比對。
-    PDFium 的重建叫不出來看，靠 DEFINITION：它逐詞掃描，只看位元組的 DEFINITION 涵蓋它會當成物件開頭的每一處。"""
+    PDFium 的重建叫不出來看，靠 DEFINITION：它逐詞掃描，只看位元組的 DEFINITION 涵蓋它會當成物件開頭的每一處。
+    xref_streams_only：整份沒有 trailer 的 PDF（Acrobat 的），Poppler 重建時放棄不算問題：它打不開，不會讀到另一份。
+    有 trailer 卻找不到 /Root 的，規則照舊。"""
     import pymupdf  # 延後 import：只處理列的單元測試不需要它
     from pymupdf import mupdf
 
@@ -1440,7 +1541,7 @@ def _rebuild_problem(data: bytes, entries: dict, rendered, rooted: set[int]) -> 
     read = []  # Poppler 讀 trailer 字典的位置
     if (rebuilt := _poppler_rebuild(data, read)) is None:
         return 'Poppler 重建 xref 會失敗（有它放不下的物件編號），重建之後物件都讀不到'
-    if not any(start - len(b'trailer') in rooted for start in read):
+    if not (xref_streams_only and not read) and not any(start - len(b'trailer') in rooted for start in read):
         return 'Poppler 重建 xref 會失敗（找不到 /Root 是參照的 trailer），重建之後物件都讀不到'
     for number, (pos, _) in sorted(rebuilt.items()):
         if FILLER.match(data, pos).end() != starts.get(number):
@@ -1463,7 +1564,120 @@ def _rebuild_problem(data: bytes, entries: dict, rendered, rooted: set[int]) -> 
     return None
 
 
-def _syntax_problem(pdf_path: Path, rendered) -> str | None:
+def _stream_problems(data: bytes, streams: dict, entries: dict, keys: frozenset[str], home: str) -> list[str]:
+    """串流的字典與資料的邊界：streams 是 {stream 這個字的位置: 字典}，entries 是 xref 登記的物件。
+    - 字典只收 keys：/F 在 pdfminer 與 MuPDF 是 /Filter，PDFium 不看，兩邊解出不同的內容（審查實測）。鍵不只擋這一個：
+      白名單不必知道還有哪些。
+    - /Filter 只收 STREAM_FILTERS 裡直接寫的一個名稱，/DecodeParms 只收 xref 串流：別的濾鏡、串接、縮寫與預測器，各家
+      解到資料結尾之後的行為不同。
+    - /Length 是直接寫的整數，stream 後面是 CR LF 或 LF，落點後面（可以有一個換行）正好是 endstream：Poppler 與 pdf.js 照
+      /Length 讀，pdfminer 與 MuPDF 找 endstream，字串裡的 endstream 就讓兩邊讀到不同的長度（審查實測）。"""
+    from bisect import bisect_right
+
+    starts = sorted((where, number) for number, (stream, where, _) in entries.items() if stream is None)
+    positions = [where for where, _ in starts]
+    extra, odd = {}, []
+    for pos, dictionary in sorted(streams.items()):
+        at = bisect_right(positions, pos) - 1
+        where = f'第 {starts[at][1]} 號物件' if at >= 0 else f'位置 {pos} 的串流'
+        if keys_left := sorted(map(str, set(dictionary) - keys)):
+            extra[f'{where}的串流字典'] = keys_left
+        filters = dictionary.get('Filter')
+        if 'Filter' in dictionary and getattr(filters, 'name', None) not in STREAM_FILTERS:
+            odd.append(f'{where}的 /Filter 不是 {"、".join(sorted(STREAM_FILTERS))} 其中一個直接寫的名稱')
+        if 'DecodeParms' in dictionary and getattr(dictionary.get('Type'), 'name', None) != 'XRef':
+            odd.append(f'{where}的 /DecodeParms 只收 xref 串流')
+        length = dictionary.get('Length')
+        body = STREAM_START.match(data, pos)
+        if type(length) is not int:
+            odd.append(f'{where}的 /Length 不是直接寫的整數')
+        elif not body:
+            odd.append(f'{where}的 stream 後面不是 CR LF 或 LF')
+        elif not STREAM_END.match(data, body.end() + length):
+            odd.append(f'{where}的 /Length 的落點後面不是 endstream（Poppler 照 /Length 讀，pdfminer 與 MuPDF 找 endstream）')
+    return ([_allow_list_problem(extra, f'{home}.STREAM_KEYS')] if extra else []) + odd
+
+
+def _linearized_problem(data: bytes, blank: bytes, doc, entries: dict, *, allowed: bool, home: str) -> str | None:
+    """線性化的 PDF，閱讀器有另一條讀法：/L 等於檔案長度時，Poppler 從線性化字典的 endobj 後面開始讀 xref（不是檔尾的
+    startxref），PDFium 的 FPDFAvail_GetDocument 同樣；Chrome、Firefox、Poppler 的第一頁是 /O，Poppler 與 FPDFAvail 的頁數
+    是 /N（實測：真的樣題改成 /N 1，第 2 頁不見；mutool 線性化時把 /O 寫成內容串流，Poppler 只讀到 5 題）。pdfminer 與
+    MuPDF 只有檔尾那一條，兩條路讀到的要是同一份（審查實測：/O 指向頁面樹外的一頁、新的一段 xref 跳過第一段、只新增
+    物件的更新，題庫是 B，Chrome、Firefox、Poppler 是 C）。所以第一個物件是線性化字典時：
+    - 字典只收 LINEARIZED_KEYS，/P 只能省略或是 0；/Linearized 是 1，/L、/O、/N 是整數，分別等於檔案長度、頁面樹的第一頁、
+      頁數；/E、/T 是整數，/H 是陣列。閱讀器第一個物件只看字典，後面接 stream 也一樣（鍵多一個 /Length，這裡擋下）。
+    - 讀到的 xref 正好兩段，第一段就在字典的 endobj 後面（中間只有空白：PDFium 跳過註解、Poppler 不跳過），endobj 是檔案裡
+      第一個（Poppler 找這個字串，註解裡的也算），第一段從頭 LINEARIZED_SEARCH 個位元組裡開始（它只讀這麼多）。檔尾那一條讀到第一段又只有兩段，
+      兩條路就是同一條，之後也就沒有更新。
+    /T 與提示資料（/H）只查型別：實測 /T 往後移 20、40，Poppler 讀到的不變（它開檔時整條 xref 都讀了）；提示資料是否影響
+    PDFium 的頁面沒有實測。
+    allowed 是 False（Word 的 PDF，6 份真實試題都不是線性化的）時，線性化一律不收。回傳問題的描述，沒有就回 None。"""
+    from pdfminer.pdftypes import PDFStream  # 延後 import：只處理列的單元測試不需要它
+    from pdfplumber.utils import resolve
+
+    first = next(DEFINITION.finditer(blank), None)
+    number = int(first[1]) if first else None
+    if entries.get(number, (0, 0))[:2] != (None, first and first.start()):  # 沒有人登記的物件開頭，_syntax_problem 另外報
+        return None
+    head = doc.getobj(number)
+    head = head.attrs if isinstance(head, PDFStream) else head
+    if not isinstance(head, dict) or 'Linearized' not in head:
+        return None
+    if not allowed:
+        return 'PDF 是線性化的（Word 不寫：閱讀器有另一條讀法，讀到的 xref 與擷取程式不同）'
+    if extra := sorted(map(str, set(head) - LINEARIZED_KEYS - {'P'})):
+        return _allow_list_problem({'線性化字典': extra}, 'ipas_exam_pdf.LINEARIZED_KEYS')
+    pages = resolve(doc.catalog.get('Pages'))
+    kids = resolve(pages.get('Kids')) if isinstance(pages, dict) else None
+    tree = kids if isinstance(kids, list) and kids else [None]
+    for key, want in (('Linearized', 1), ('L', len(data)), ('O', getattr(tree[0], 'objid', None)), ('N', len(tree))):
+        if type(head.get(key)) is not int or head[key] != want:
+            return f'線性化字典的 /{key} 是 {head.get(key)}，應為 {want}（閱讀器照它讀檔案與第一頁、算頁數）'
+    if 'P' in head and (type(head['P']) is not int or head['P'] != 0):
+        return f'線性化字典的 /P 是 {head["P"]}（/O 是第幾頁：只收 0）'
+    for key in ('E', 'T'):
+        if type(head.get(key)) is not int:
+            return f'線性化字典的 /{key} 不是整數'
+    if not isinstance(head.get('H'), list):
+        return '線性化字典的 /H 不是陣列'
+    end = data.find(b'endobj')
+    start = SPACE.match(data, end + len(b'endobj')).end()
+    if not first.start() < end or start >= LINEARIZED_SEARCH or doc.starts[0] != start or len(doc.starts) != 2:
+        return ('線性化之後又接了更新，或第一段 xref 不是第一個讀到的（閱讀器從線性化字典後面那一段讀起，不讀之後的更新，'
+                '檔尾的 startxref 要指回那一段，而且只有兩段）')
+    return None
+
+
+def _tail_problem(data: bytes, doc, *, linearized: bool) -> str | None:
+    """檔案裡的 startxref 與檔尾：pdfminer 與 MuPDF 只看最後一個 startxref，PDFium 會在檔案裡另外找。最後一個 startxref
+    之後用註解藏起另一份物件、一段 xref 串流與「%% startxref」時，pdfminer、MuPDF、Poppler、Firefox 照原本的讀，Chrome 讀到
+    藏起來的那一份，答案不同（第三輪審查實測）。所以照原始位元組（不先拿掉註解）：
+    - 每一個 startxref 後面都是一個數字，指到擷取程式經由 startxref 與 /Prev 讀到的一段 xref（/XRefStm 指到的不算），
+      同一段只能被指一次，個數也就不超過那幾段；線性化的 PDF 的第一頁那一段可以寫「startxref 0」。真實 PDF：6 份試題都是
+      3 段（其中 1 段是 /XRefStm 指的）、2 個 startxref，樣題 2 段、2 個。qpdf 線性化時第一頁那一段沒有寫 startxref，
+      所以只要求「不多」，不要求相等。
+    - 最後一個 %%EOF 之後只有空白。
+    回傳問題的描述，沒有就回 None。"""
+    side = {xref.get_trailer().get('XRefStm') for xref in doc.xrefs}
+    chained = [start for start in doc.starts if start not in side]
+    marks = [STARTXREF_VALUE.match(data, mark.start()) for mark in STARTXREF.finditer(data)]
+    zero = linearized and b'/Linearized' in data[:LINEARIZED_SEARCH]
+    values = [int(mark[1]) if mark else None for mark in marks]
+    pointed = [value for value in values if value != 0 or not zero]
+    if len(marks) > len(chained) or len(pointed) != len(set(pointed)):
+        return (f'startxref 出現 {len(marks)} 次，擷取程式經由它讀到的 xref 只有 {len(chained)} 段（註解裡、最後一個 %%EOF '
+                '之後的也算：PDFium 會在檔案裡另外找 startxref，讀到藏起來的另一份）')
+    if any(value not in chained for value in pointed):
+        return f'startxref 指到的位置 {values} 不全是擷取程式讀到的 xref（{chained}）'
+    end = data.rfind(b'%%EOF')
+    if end < 0 or EOF_TAIL.match(data, end + 5).end() != len(data):
+        return '最後一個 %%EOF 之後還有空白以外的東西（閱讀器可能從那裡讀到另一份 xref）'
+    return None
+
+
+def _syntax_problem(pdf_path: Path, rendered, *, array_null_in_object_streams: bool = False,
+                    xref_streams_only: bool = False, linearized: bool = False,
+                    stream_keys: frozenset[str] = STREAM_KEYS, home: str = 'ipas_exam_pdf') -> str | None:
     """PDF 物件的寫法只收 Word 的：pdfminer 解析時會丟掉、各家讀法卻不同的地方，在 pdfplumber 開檔之前先查。
     - 字典裡同一個鍵寫兩次：Poppler 的字型表取第一個、一般的字典取最後一個（32 項以上看排序），pdfminer、MuPDF 與
       PDFium 取最後一個（第十四輪審查實測：頁面的字型表寫兩個 /FS，擷取與 MuPDF、PDFium 是答案 C，Poppler 畫的是 A）。
@@ -1535,6 +1749,11 @@ def _syntax_problem(pdf_path: Path, rendered) -> str | None:
     世代號全是 0，沒有重複的鍵，也沒有只是一個參照的物件，兩套程式逐號相同，每一個物件開頭都是登記的那一個；
     每一個參照都有登記的物件，兩個 trailer 都在 xref 表後面、/Root 相同，Poppler 與 MuPDF 重建之後讀到的與原本相同。
     MuPDF 開檔時就重建了 xref 的，直接報 xref 壞了（REBUILT）；pdfminer 自己重建時不查（開檔之後由 _rebuilt_xref 報）。
+    串流的字典、濾鏡與 /Length 見 _stream_problems，stream_keys 是字典的白名單，home 是訊息裡白名單常數所在的模組。
+    不是 Word 輸出的 PDF（參考樣題是 Acrobat 輸出的，見 ipas_sample_pdf）另給三個參數，預設就是 Word 的規則，其餘照查：
+    array_null_in_object_streams 收物件串流裡陣列中的 null（真的樣題 PDF 的 15 個都在結構樹的 /ParentTree 陣列裡，
+    pdfminer 讀成關鍵字、閱讀器讀成 null，兩邊都是一個不是字典的元素；字典裡的值與物件串流最上層的照舊不收）；
+    xref_streams_only 見 _rebuild_problem；linearized 收線性化的 PDF，見 _linearized_problem。
     回傳錯誤訊息，沒有就回 None。"""
     import io
     from pdfminer.pdfdocument import PDFDocument, PDFXRefFallback  # 延後 import：只處理列的單元測試不需要它
@@ -1549,7 +1768,7 @@ def _syntax_problem(pdf_path: Path, rendered) -> str | None:
     size = mupdf.pdf_xref_len(native)
     if size > OBJECTS:
         return f'{SYNTAX}物件太多（編號到 {size - 1}，超過 {OBJECTS}）—— 8 份真實卷最多 2,870 個物件，需要人工確認。'
-    found, targets = [], []
+    found, targets, stream_dicts = [], [], {}
 
     class Watched:
         """解析時記下 pdfminer 會丟掉的：字典裡重複的鍵（解析完只剩最後一個）、參照的世代號、名稱裡的 NUL 與不標準的
@@ -1664,7 +1883,8 @@ def _syntax_problem(pdf_path: Path, rendered) -> str | None:
 
         def do_keyword(self, pos, token):  # 字典與陣列裡只能有 R 與 null，物件串流裡只能有 R；檔案裡物件的最上層剛好一個值
             on_top = not self.context and not isinstance(self, PDFStreamParser)
-            if (token is not self.KEYWORD_R and isinstance(self, PDFStreamParser)
+            array_null = array_null_in_object_streams and token is self.KEYWORD_NULL and self.curtype == 'a'
+            if (token is not self.KEYWORD_R and isinstance(self, PDFStreamParser) and not array_null
                     or self.context and token not in (self.KEYWORD_R, self.KEYWORD_NULL)
                     or on_top and token.name in NOT_ON_TOP):
                 found.append(f'物件的語法裡，關鍵字「{token.name[:20].decode("latin-1")}」不在它的位置（物件串流裡的 obj、'
@@ -1674,6 +1894,8 @@ def _syntax_problem(pdf_path: Path, rendered) -> str | None:
                 # 也可以是串流接 endstream
                 stack = [value for _, value in self.curstack]
                 one = len(stack) == 1 and not isinstance(stack[0], PSKeyword)
+                if token is self.KEYWORD_STREAM and one and isinstance(stack[0], dict):
+                    stream_dicts[pos] = stack[0]
                 if not (one and (token is not self.KEYWORD_STREAM or isinstance(stack[0], dict))
                         or token is self.KEYWORD_ENDOBJ and len(stack) == 2 and isinstance(stack[0], PDFStream)
                         and stack[1] == KWD(b'endstream')):
@@ -1804,7 +2026,14 @@ def _syntax_problem(pdf_path: Path, rendered) -> str | None:
                 roots.add(root.objid if isinstance(root, PDFObjRef) else repr(root))
         if len(roots) > 1:
             found.append(f'trailer 的 /Root 不一致（第 {" 號與第 ".join(map(str, sorted(roots, key=str)))} 號物件）')
-        if not found and (problem := _rebuild_problem(data, entries, rendered, rooted)):  # 前面有問題就不重建（最壞多花 0.7 GB）
+        found += _stream_problems(data, stream_dicts, entries, stream_keys, home)
+        if problem := _linearized_problem(data, blank, doc, entries, allowed=linearized, home=home):
+            found.append(problem)
+        if problem := _tail_problem(data, doc, linearized=linearized):  # 線性化的說明比較準，先報
+            found.append(problem)
+        # 前面有問題就不重建（最壞多花 0.7 GB）
+        if not found and (problem := _rebuild_problem(data, entries, rendered, rooted,
+                                                      xref_streams_only=xref_streams_only)):
             found.append(problem)
     except Chained as chained:
         return (f'{SYNTAX}第 {chained.args[0]} 號物件整個只是一個參照 —— pdfminer 解參照時一路跟下去，繞回自己就不會停'
@@ -1966,7 +2195,6 @@ def _pages(pdf, rendered) -> list[tuple]:
         raise ValueError(problem)
     for pno, page in enumerate(pdf.pages, start=1):
         # 註解（文字方塊、印章、便利貼、螢光筆、表單欄位）不在頁面內容裡，pdfminer 抽不到。
-        # Link 除外（帶外觀串流的不算）：Word 的網址會變成 Link，它本身不畫任何東西。
         if odd := _annotations(page):
             raise ValueError(f'第 {pno} 頁有 PDF 註解（{"、".join(odd)}）—— 註解不在頁面內容裡，擷取不到，'
                              '可能是勘誤或補充說明，需要人工確認。')
@@ -1975,6 +2203,10 @@ def _pages(pdf, rendered) -> list[tuple]:
                              '遮罩、字型的對照表），或字形程序畫什麼都可以，抽出來的字不一定是閱讀器上看到的，'
                              '需要人工確認。')
     if problem := _layers_or_forms(rendered):
+        raise ValueError(problem)
+    if problem := _catalog_problem(pdf):
+        raise ValueError(problem)
+    if problem := _resource_keys_problem(pdf):
         raise ValueError(problem)
     pages = []
     for pno, page in enumerate(pdf.pages, start=1):
