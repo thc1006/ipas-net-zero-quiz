@@ -58,6 +58,16 @@ describe('HomePage', () => {
     expect(screen.getAllByText(/考科二/).length).toBeGreaterThan(0);
   });
 
+  // 這個站練的是初級能力鑑定（官方公告試題的標題就是「淨零碳規劃管理師-初級能力鑑定」），
+  // 首頁副標原本只寫證照名稱、沒寫等級。
+  // 斷言綁在副標元素上：getByText 會在整個 DOM 找，字串藏在別處、副標維持舊字也照樣通過。
+  it('副標在證照名稱後標出等級（初級）', () => {
+    const { container } = render(<HomePage onStartQuiz={() => {}} />);
+    const subtitle = container.querySelector('.hero-subtitle');
+    expect(subtitle).toBeVisible();
+    expect(subtitle?.textContent?.trim()).toBe('iPAS 淨零碳規劃管理師（初級）考古題線上測驗');
+  });
+
   it('does NOT show practice-pool indicator when disabled', () => {
     render(<HomePage onStartQuiz={() => {}} />);
     expect(screen.queryByText(/加強練習池啟用中/)).toBeNull();
