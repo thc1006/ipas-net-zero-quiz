@@ -5,7 +5,9 @@ import {
   recordAttempts,
   clearStats,
   selectWeakQuestions,
+  type QuestionStat,
 } from './question-stats-storage';
+import dataset from '../data/integrated_dataset.json';
 
 // 真實 Map-based localStorage mock — test-setup 裡的 vi.fn() 不會保存值
 function installLocalStorageMock() {
@@ -39,6 +41,54 @@ describe('question-stats-storage', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+  });
+
+  // #150 把參考樣題的 id 改成來源代號，舊統計還掛在舊 id 上
+  describe('改過 id 的題目', () => {
+    const renames = (dataset.our_unique_items as { item_id: string; metadata?: { renamed_from?: { item_id: string } } }[])
+      .filter((q) => q.metadata?.renamed_from)
+      .map((q) => ({ oldId: q.metadata!.renamed_from!.item_id, newId: q.item_id }));
+    const store = (items: Record<string, QuestionStat>) =>
+      localStorage.setItem('ipas-question-stats', JSON.stringify({ version: 1, items }));
+
+    it.each(renames)('$oldId 的統計算到 $newId，舊 id 不再出現', ({ oldId, newId }) => {
+      const stat = { attempts: 3, correct: 1, lastTriedAt: 100 };
+      store({ [oldId]: stat, other: { attempts: 1, correct: 1, lastTriedAt: 5 } });
+
+      expect(loadStats()).toEqual({
+        [newId]: stat,
+        other: { attempts: 1, correct: 1, lastTriedAt: 5 },
+      });
+    });
+
+    it('新舊 id 都有統計：次數相加，最後作答時間取較晚的，順序不影響結果', () => {
+      const { oldId, newId } = renames[0];
+      const merged = { attempts: 5, correct: 3, lastTriedAt: 200 };
+      store({
+        [oldId]: { attempts: 3, correct: 1, lastTriedAt: 100 },
+        [newId]: { attempts: 2, correct: 2, lastTriedAt: 200 },
+      });
+      expect(loadStats()).toEqual({ [newId]: merged });
+
+      store({
+        [newId]: { attempts: 2, correct: 2, lastTriedAt: 200 },
+        [oldId]: { attempts: 3, correct: 1, lastTriedAt: 100 },
+      });
+      expect(loadStats()).toEqual({ [newId]: merged });
+    });
+
+    it('讀幾次都一樣，再記一次也不會把舊統計算兩次', () => {
+      const { oldId, newId } = renames[0];
+      store({ [oldId]: { attempts: 3, correct: 1, lastTriedAt: 100 } });
+      loadStats();
+      expect(loadStats()[newId].attempts).toBe(3);
+
+      recordAttempts([{ id: newId, isCorrect: true, at: 300 }]);
+
+      const saved = JSON.parse(localStorage.getItem('ipas-question-stats')!);
+      expect(saved.items).toEqual({ [newId]: { attempts: 4, correct: 2, lastTriedAt: 300 } });
+      expect(loadStats()).toEqual(saved.items);
+    });
   });
 
   describe('loadStats', () => {
@@ -167,7 +217,7 @@ describe('question-stats-storage', () => {
   });
 
   describe('selectWeakQuestions', () => {
-    const opts = { minAttempts: 3, maxRate: 0.5, limit: 10 };
+    const opts = { minAttempts: 3, maxRate: 0.5, limit: 10, isKnown: () => true };
 
     it('attempts < minAttempts 的題目被排除', () => {
       const stats = {
@@ -210,6 +260,18 @@ describe('question-stats-storage', () => {
 
     it('空 stats 回空陣列', () => {
       expect(selectWeakQuestions({}, opts)).toEqual([]);
+    });
+
+    it('找不到題目的 id 先濾掉再取前 N 名：已刪除的題目不佔名額', () => {
+      const stats = {
+        gone1: { attempts: 9, correct: 0, lastTriedAt: 1 },
+        gone2: { attempts: 9, correct: 0, lastTriedAt: 1 },
+        kept: { attempts: 5, correct: 2, lastTriedAt: 1 },
+      };
+
+      const weak = selectWeakQuestions(stats, { ...opts, limit: 1, isKnown: (id) => id === 'kept' });
+
+      expect(weak.map((w) => w.id)).toEqual(['kept']);
     });
 
     it('完全沒符合條件的 stats 回空陣列', () => {

@@ -386,7 +386,7 @@ test.describe('加強練習池', () => {
   });
 });
 
-// #150 把參考樣題的 id 改成來源代號，瀏覽器裡的舊進度還是舊 id。
+// #150 把參考樣題的 id 改成來源代號，瀏覽器裡的舊進度與舊統計還是舊 id。
 // 第一題 S1-p01-q004 是 S_IPAS_SAMPLE_114_L11-q004 的舊 id（metadata.renamed_from）
 test.describe('題目改過 id', () => {
   const OLD_ID = 'S1-p01-q004';
@@ -419,7 +419,7 @@ test.describe('題目改過 id', () => {
     },
   });
 
-  test('舊進度照常續作，作答紀錄接得上', async ({ page }) => {
+  test('舊進度照常續作，作答紀錄與題卡上的統計都接得上', async ({ page }) => {
     await seed(page, {
       'ipas-quiz-in-progress-v2': save([
         {
@@ -432,6 +432,7 @@ test.describe('題目改過 id', () => {
           sourceCategory: 'main_bank',
         },
       ]),
+      'ipas-question-stats': { version: 1, items: { [OLD_ID]: { attempts: 4, correct: 1, lastTriedAt: 1 } } },
     });
     await page.goto('/');
 
@@ -442,6 +443,29 @@ test.describe('題目改過 id', () => {
     await expect(page.locator('.question-card')).toBeVisible();
     await expect(page.locator('.question-options input:checked')).toHaveValue('A');
     await expect(page.locator('.option-item.correct')).toHaveCount(1);
+    await expect(page.getByTestId('question-stat-chip')).toContainText('答對率 25%');
+  });
+
+  test('最常答錯：舊 id 算到現在的題目，找不到題目的 id 不佔前 10 名', async ({ page }) => {
+    const stale = Object.fromEntries(
+      Array.from({ length: 12 }, (_, i) => [`S9-p01-q${i}`, { attempts: 9, correct: 0, lastTriedAt: 1 }])
+    );
+    await seed(page, {
+      'ipas-question-stats': {
+        version: 1,
+        items: { ...stale, [OLD_ID]: { attempts: 4, correct: 1, lastTriedAt: 1 } },
+      },
+    });
+    await page.goto('/');
+    await page.getByLabel('隨機出題順序').focus();
+    await page.keyboard.press('Space');
+    await page.locator('#count').fill('1');
+
+    await page.getByRole('button', { name: /開始測驗/ }).click();
+    await page.locator('.option-item').first().click();
+    await page.getByRole('button', { name: /完成測驗/ }).click();
+
+    await expect(page.getByTestId('weak-section').locator('.weak-item')).toHaveCount(1);
   });
 });
 

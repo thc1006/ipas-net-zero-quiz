@@ -416,6 +416,19 @@ describe('ResultPage', () => {
       expect(screen.queryByTestId('weak-section')).not.toBeInTheDocument();
     });
 
+    it('找不到題目的 id 不佔前 10 名：排在後面的現行題目照常顯示', () => {
+      const gone = Object.fromEntries(
+        Array.from({ length: 10 }, (_, i) => [`gone-${i}`, { attempts: 9, correct: 0, lastTriedAt: 1 }])
+      );
+      installStatsLocalStorage({
+        ...gone,
+        'fx-weak-1': { attempts: 5, correct: 2, lastTriedAt: 100 },
+      });
+      render(<ResultPage result={makeResult()} onGoHome={() => {}} onRetry={() => {}} />);
+
+      expect(within(screen.getByTestId('weak-section')).getByText('弱題一：題幹一')).toBeInTheDocument();
+    });
+
     it('有 weak 題目時渲染 + 題幹 + 答對率 + 順序（rate 升冪）', () => {
       installStatsLocalStorage({
         'fx-weak-1': { attempts: 5, correct: 1, lastTriedAt: 100 }, // 20%

@@ -82,7 +82,7 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
   );
 
   // 累積最常答錯（Refs #64）— pure 篩選/排序在 selectWeakQuestions，
-  // 此處只負責 id → 題幹查找（沒查到的就過濾掉，多為已被刪除題或 pool 題未載入）
+  // 此處只負責 id → 題幹查找（沒查到的多為已被刪除題或 pool 題未載入，selectWeakQuestions 先濾掉，才不會佔名額）
   // 透過 useAllQuestionStats 訂閱跨 tab 變更：別的分頁清除統計時，本頁也即時更新
   const allStats = useAllQuestionStats();
   const weakQuestions = useMemo(() => {
@@ -90,13 +90,9 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
       minAttempts: WEAK_MIN_ATTEMPTS,
       maxRate: WEAK_MAX_RATE,
       limit: WEAK_LIST_LIMIT,
+      isKnown: (id) => lookupQuestion(id) !== undefined,
     });
-    return weak
-      .map((w) => {
-        const q = lookupQuestion(w.id);
-        return q ? { ...w, stem: q.stem } : null;
-      })
-      .filter((x): x is NonNullable<typeof x> => x !== null);
+    return weak.map((w) => ({ ...w, stem: lookupQuestion(w.id)!.stem }));
   }, [allStats]);
 
   // 請求 AI 解釋特定題目（Streaming）
