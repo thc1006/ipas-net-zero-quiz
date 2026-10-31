@@ -48,6 +48,7 @@
 
 .answer-evidence__link {
   font-size: var(--font-size-xs);
+  word-break: break-word;
 }
 
 .answer-evidence__grade {

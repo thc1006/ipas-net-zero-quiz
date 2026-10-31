@@ -12,6 +12,7 @@ import type { QuizResult, QuizQuestion } from '../types/quiz';
 import { BankSimilarQuestionItem } from '../components/BankSimilarQuestionItem/BankSimilarQuestionItem';
 import { buildFeedbackUrl } from '../utils/question-feedback-url';
 import { selectWeakQuestions } from '../utils/question-stats-storage';
+import { renderMarkdown } from '../utils/render-markdown';
 import { useAllQuestionStats } from '../hooks/useQuestionStats';
 import './ResultPage.css';
 
@@ -349,6 +350,33 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                         </span>
                       </a>
                     </div>
+                    {/* role="list"：Safari 的 VoiceOver 不把 list-style: none 的 ul 念成清單 */}
+                    <ul className="wrong-options" role="list" aria-label="選項">
+                      {question.options.map((option) => {
+                        const isCorrectOption = option.key === answer.correctAnswer;
+                        const isSelected = option.key === answer.selectedAnswer;
+                        const status = isCorrectOption ? 'correct' : isSelected ? 'selected' : null;
+                        return (
+                          <li
+                            key={option.key}
+                            className={status ? `wrong-option wrong-option--${status}` : 'wrong-option'}
+                          >
+                            <span className="wrong-option__key">{option.key}</span>
+                            <span className="wrong-option__text">{option.text}</span>
+                            {status === 'correct' && (
+                              <span className="material-icons sm text-success" role="img" aria-label="正確答案">
+                                check_circle
+                              </span>
+                            )}
+                            {status === 'selected' && (
+                              <span className="material-icons sm text-error" role="img" aria-label="你的答案">
+                                cancel
+                              </span>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
                     <div className="wrong-answers">
                       <span className="your-answer">
                         你的答案：
@@ -372,9 +400,11 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                           .split(PARAGRAPH_BREAK)
                           .filter((para) => para.trim())
                           .map((para, i) => (
-                            <p key={i} className="wrong-explanation__body">
-                              {para}
-                            </p>
+                            <p
+                              key={i}
+                              className="wrong-explanation__body"
+                              dangerouslySetInnerHTML={{ __html: renderMarkdown(para) }}
+                            />
                           ))}
                       </section>
                     )}

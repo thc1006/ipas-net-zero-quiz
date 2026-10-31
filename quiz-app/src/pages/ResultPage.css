@@ -314,6 +314,7 @@
   font-size: var(--font-size-sm);
   margin-bottom: var(--spacing-sm);
   line-height: 1.6;
+  word-break: break-word;
 }
 
 /* 回報此題 icon button（#63）— 與 QuestionCard.css 同 rule，
@@ -337,6 +338,43 @@
 .wrong-feedback-link.question-feedback-link:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+.wrong-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin: 0 0 var(--spacing-sm);
+  padding: 0;
+  list-style: none;
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.wrong-option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+}
+
+.wrong-option--correct {
+  background: var(--color-success-bg);
+}
+
+.wrong-option--selected {
+  background: var(--color-error-bg);
+}
+
+.wrong-option__key {
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.wrong-option__text {
+  flex: 1;
+  word-break: break-word;
 }
 
 .wrong-answers {
@@ -434,6 +472,7 @@
 .ai-response-inline .ai-content {
   font-size: var(--font-size-sm);
   line-height: 1.7;
+  word-break: break-word;
 }
 
 .ai-response-inline .ai-content p {
@@ -575,6 +614,7 @@
   font-size: var(--font-size-sm);
   line-height: 1.5;
   margin: 0 0 var(--spacing-xs) 0;
+  word-break: break-word;
 }
 
 .similar-meta {
@@ -695,6 +735,8 @@
   font-size: var(--font-size-xs);
   line-height: 1.7;
   color: var(--color-text-primary);
+  white-space: pre-line;
+  word-break: break-word;
 }
 
 .wrong-explanation__body:last-child {

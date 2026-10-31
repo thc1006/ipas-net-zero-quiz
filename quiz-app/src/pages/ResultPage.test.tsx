@@ -506,6 +506,77 @@ describe('官方公告試題的錯題卡', () => {
   });
 });
 
+describe('錯題卡列出原本的選項', () => {
+  // 圖示的 ligature 也算 textContent，比對選項內容時去掉
+  const optionText = (li: HTMLElement) => li.textContent?.replace(/check_circle|cancel/, '');
+
+  function renderWrong(answer: Partial<AnswerRecord> = {}, questions: QuizQuestion[] = []) {
+    render(
+      <ResultPage
+        result={makeResult({
+          answers: [makeAnswer(answer)],
+          questions,
+          wrongCount: 1,
+          correctCount: 0,
+          score: 0,
+        })}
+        onGoHome={vi.fn()}
+        onRetry={vi.fn()}
+      />
+    );
+    return within(screen.getByRole('list', { name: '選項' })).getAllByRole('listitem');
+  }
+
+  it('依題目的順序列出每個選項的代號與內容', () => {
+    const items = renderWrong();
+    expect(items.map(optionText)).toEqual(['ACO2', 'BO2', 'CN2', 'DAr']);
+  });
+
+  it('標出你的答案與正確答案，其他選項沒有標記', () => {
+    const [a, b, c, d] = renderWrong();
+    const correct = within(a).getByRole('img', { name: '正確答案' });
+    expect(correct).toHaveTextContent('check_circle');
+    expect(correct).toHaveClass('text-success');
+    expect(a).toHaveClass('wrong-option--correct');
+    expect(within(a).queryByRole('img', { name: '你的答案' })).toBeNull();
+    const selected = within(b).getByRole('img', { name: '你的答案' });
+    expect(selected).toHaveTextContent('cancel');
+    expect(selected).toHaveClass('text-error');
+    expect(b).toHaveClass('wrong-option--selected');
+    expect(within(b).queryByRole('img', { name: '正確答案' })).toBeNull();
+    for (const li of [c, d]) expect(within(li).queryByRole('img')).toBeNull();
+  });
+
+  it('練習池題用當次題目快照的選項（主題庫索引查不到）', () => {
+    const poolQuestion = {
+      id: 'pool-only-2',
+      stem: '練習池題目',
+      options: [
+        { key: 'A', text: '甲' },
+        { key: 'B', text: '乙' },
+      ],
+      answer: 'B',
+      subject: '考科2',
+      sourceType: 'practice_pool',
+      year: null,
+      hasAnswer: true,
+    } as unknown as QuizQuestion;
+    const items = renderWrong(
+      { questionId: 'pool-only-2', selectedAnswer: 'A', correctAnswer: 'B' },
+      [poolQuestion]
+    );
+    expect(items.map(optionText)).toEqual(['A甲', 'B乙']);
+    expect(within(items[0]).getByRole('img', { name: '你的答案' })).toBeInTheDocument();
+    expect(within(items[1]).getByRole('img', { name: '正確答案' })).toBeInTheDocument();
+  });
+
+  it('沒有作答紀錄的選項（selectedAnswer 為 null）只標正確答案', () => {
+    const items = renderWrong({ selectedAnswer: null });
+    expect(screen.queryByRole('img', { name: '你的答案' })).toBeNull();
+    expect(within(items[0]).getByRole('img', { name: '正確答案' })).toBeInTheDocument();
+  });
+});
+
 describe('考試模式的錯題檢討', () => {
   const poolQuestion = {
     id: 'pool-only-1',
@@ -539,6 +610,26 @@ describe('考試模式的錯題檢討', () => {
       />
     );
     expect(screen.getByText(/這是一題練習池題目/)).toBeInTheDocument();
+  });
+
+  it('解析裡的粗體照題目頁轉換，不會把星號顯示出來', () => {
+    render(
+      <ResultPage
+        result={makeResult({
+          answers: [makeAnswer({ questionId: 'pool-only-1', correctAnswer: 'B' })],
+          questions: [{ ...poolQuestion, explanation: '這是**重點**。<img src=x>' }],
+          wrongCount: 1,
+          correctCount: 0,
+          score: 0,
+        })}
+        onGoHome={vi.fn()}
+        onRetry={vi.fn()}
+      />
+    );
+    const section = screen.getByLabelText('題庫解析');
+    expect(within(section).getByText('重點').tagName).toBe('STRONG');
+    expect(section.textContent).not.toContain('**');
+    expect(section.querySelector('img')).toBeNull();
   });
 
   it('考試模式看得到題庫解析，且多段解析不會被壓成一段', () => {

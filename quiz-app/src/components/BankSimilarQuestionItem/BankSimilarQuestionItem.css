@@ -54,3 +54,7 @@
   color: var(--color-text-secondary);
   margin: var(--spacing-xs) 0;
 }
+
+.bank-similar-option .option-text {
+  word-break: break-word;
+}
