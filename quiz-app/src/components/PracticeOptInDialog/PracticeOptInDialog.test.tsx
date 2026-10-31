@@ -1,4 +1,4 @@
-// PracticeOptInDialog 元件測試（focus trap / ESC / overlay click / aria）
+// PracticeOptInDialog 元件測試（焦點陷阱 / ESC / overlay click / aria）
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent, cleanup, waitFor } from '@testing-library/react';
 import { PracticeOptInDialog } from './PracticeOptInDialog';
@@ -69,6 +69,63 @@ describe('PracticeOptInDialog', () => {
     // useEffect 在 jsdom 中時機可能不確定；用 waitFor 容錯
     await waitFor(() => {
       expect(document.activeElement).toBe(decline);
+    });
+  });
+
+  describe('Tab 焦點陷阱', () => {
+    // 對話框裡可以 Tab 到的依序是內文捲動區、暫不啟用、我已了解。fireEvent 回傳 false 表示預設行為被攔下
+    function setup() {
+      render(<PracticeOptInDialog open onAccept={() => {}} onDecline={() => {}} />);
+      return {
+        dialog: document.querySelector('.optin-dialog') as HTMLElement,
+        body: document.querySelector('.optin-body') as HTMLElement,
+        decline: screen.getByRole('button', { name: /暫不啟用/ }),
+        accept: screen.getByRole('button', { name: /我已了解/ }),
+      };
+    }
+
+    it('在最後一顆按鈕按 Tab，繞回第一個', () => {
+      const { body, accept } = setup();
+      accept.focus();
+      expect(fireEvent.keyDown(document, { key: 'Tab' })).toBe(false);
+      expect(document.activeElement).toBe(body);
+    });
+
+    it('在第一個按 Shift+Tab，繞到最後一顆按鈕', () => {
+      const { body, accept } = setup();
+      body.focus();
+      expect(fireEvent.keyDown(document, { key: 'Tab', shiftKey: true })).toBe(false);
+      expect(document.activeElement).toBe(accept);
+    });
+
+    it('焦點在對話框本身（點了空白處）時，Tab 接回第一個、Shift+Tab 接回最後一個', () => {
+      const { dialog, body, accept } = setup();
+      dialog.focus();
+      expect(fireEvent.keyDown(document, { key: 'Tab' })).toBe(false);
+      expect(document.activeElement).toBe(body);
+      dialog.focus();
+      expect(fireEvent.keyDown(document, { key: 'Tab', shiftKey: true })).toBe(false);
+      expect(document.activeElement).toBe(accept);
+    });
+
+    it('在中間的按鈕按 Tab 或 Shift+Tab，交給瀏覽器照常移動', () => {
+      const { decline } = setup();
+      decline.focus();
+      expect(fireEvent.keyDown(document, { key: 'Tab' })).toBe(true);
+      expect(fireEvent.keyDown(document, { key: 'Tab', shiftKey: true })).toBe(true);
+      expect(document.activeElement).toBe(decline);
+    });
+
+    it('其他按鍵不攔，也不關閉對話框（焦點在最後一顆按鈕，當成 Tab 就會被拉走）', () => {
+      const onDecline = vi.fn();
+      render(<PracticeOptInDialog open onAccept={() => {}} onDecline={onDecline} />);
+      const accept = screen.getByRole('button', { name: /我已了解/ });
+      accept.focus();
+      for (const key of ['a', 'Enter', 'ArrowDown']) {
+        expect(fireEvent.keyDown(document, { key }), key).toBe(true);
+      }
+      expect(document.activeElement).toBe(accept);
+      expect(onDecline).not.toHaveBeenCalled();
     });
   });
 
