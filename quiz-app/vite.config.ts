@@ -2,7 +2,7 @@ import { defineConfig, type Plugin, type UserConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { parse } from 'acorn'
 import { resolve } from 'path'
-import { readFileSync, writeFileSync, existsSync } from 'fs'
+import { readFileSync, readdirSync, statSync, writeFileSync, existsSync } from 'fs'
 
 /**
  * 平台識別（名稱、網址、SEO 文案）只有一份：repo 根目錄的 platform.config.json。
@@ -127,10 +127,13 @@ function syntaxFloor(): Plugin {
  * 逐欄相同。看的是題庫模組自己：別的模組另外 JSON.parse 一份同樣的字串（例如 ?raw），不算數。
  * src 裡引用 package.json 也一樣安靜（?raw、?url、new URL、CSS 的 url()、動態 import 都算），所以照模組的
  * 路徑認：任何 chunk 或 asset 來自 package.json 就讓 build 失敗。比 inline 上限小的檔案會變成 base64 寫進
- * JS 或 CSS，路徑與字串都看不到，所以 build 的 assetsInlineLimit 讓 package.json 一律不 inline。
- * JS chunk 裡出現 devDependencies 也讓 build 失敗。
+ * JS 或 CSS，路徑與字串都看不到，所以 build 的 assetsInlineLimit 讓 package.json 不 inline。
+ * 路徑認不出來的還有兩種：?inline 不看 assetsInlineLimit，CSS 的 url() 與 new URL 又是直接讀檔、不經過模組，
+ * 內容就以 base64 寫進去了；worker 是另一次打包，產物對這次 build 只是一個 asset，看不到它的模組。所以也看
+ * 內容：bundle 裡的每一個檔案與 public/（Vite 原樣複製，不在 bundle 裡），明文或 base64 解開之後出現 devDependencies
+ * 都讓 build 失敗（見 carriesDevDependencies）。負面測試在 src/bundle-contents.test.ts。
  */
-function bundleContents(): Plugin {
+export function bundleContents(publicDir = resolve(import.meta.dirname, 'public')): Plugin {
   return {
     name: 'bundle-contents',
     apply: 'build',
@@ -146,9 +149,15 @@ function bundleContents(): Plugin {
           this.error(`${file.fileName} 來自 package.json：src 不要 import package.json，改用注入的常數（見 shared）`)
         }
       }
-      for (const c of chunks) {
-        if (readFileSync(resolve(dir, c.fileName), 'utf-8').includes('devDependencies')) {
-          this.error(`${c.fileName} 帶著 package.json 的 devDependencies：src 不要 import package.json，改用注入的常數`)
+      // .map 不看：sourcesContent 是原始碼，data/app-meta.ts 的註解就寫著這個字；打包進去的內容在 chunk 或 asset 裡看得到
+      const written = files.filter((file) => !file.fileName.endsWith('.map')).map((file) => resolve(dir, file.fileName))
+      // statSync 解開 symlink：Vite 複製時也解開，entry.isFile() 對連結回 false，dist 裡卻是真的檔案
+      const copied = readdirSync(publicDir, { recursive: true, withFileTypes: true })
+        .map((entry) => resolve(entry.parentPath, entry.name))
+        .filter((path) => statSync(path).isFile())
+      for (const path of [...written, ...copied]) {
+        if (carriesDevDependencies(readFileSync(path, 'latin1'))) {
+          this.error(`${path} 帶著 package.json 的 devDependencies：package.json 不能出貨，執行期要用的值改用注入的常數`)
         }
       }
       for (const name of ['integrated_dataset.json', 'practice_pool.json']) {
@@ -174,6 +183,17 @@ function bundleContents(): Plugin {
       }
     },
   }
+}
+
+/** 不是 base64 的一個字元。逐字元切開再看長度：[A-Za-z0-9+/]{20,} 靠回溯，單一字串超過約 5 MiB 時 RangeError */
+const NOT_BASE64 = new RegExp(String.raw`[^A-Za-z0-9+/]`)
+
+/** 明文，或 Vite 寫成 data URL 的 base64 解開之後，看得到 devDependencies（它的 base64 是 20 個字元，更短的不用看） */
+function carriesDevDependencies(text: string): boolean {
+  if (text.includes('devDependencies')) return true
+  return text
+    .split(NOT_BASE64)
+    .some((run) => run.length >= 20 && Buffer.from(run, 'base64').includes('devDependencies'))
 }
 
 /** code 裡每一個 JSON.parse(字串) 的字串內容（acorn 解析，跳脫照 JS 的規則還原） */
@@ -222,7 +242,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
-    // package.json 不 inline：被引用時一定變成 asset，bundleContents 才認得出來（見那裡的說明）
+    // package.json 不 inline：沒寫 ?inline 就一定變成 asset，bundleContents 才認得出路徑（見那裡的說明）
     assetsInlineLimit: (file) => (resolve(import.meta.dirname, file) === PACKAGE_JSON ? false : undefined),
     // 支援底線是 Safari 14（iOS 16.4 以前的 iPhone 也要開得起來；見 src/browser-compat.test.ts）。
     // 這一組是 Vite 6 的預設（'modules'）。Vite 8 的預設改成 Safari 16.4／Chrome 111，
