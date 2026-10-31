@@ -137,6 +137,15 @@ describe('App', () => {
       expect(poolIdsInRange()).toContain('fixture-3'); // fixture 裡的 AI 產題
     });
 
+    it('選過只出官方題目再切回全部題目：下一場照常混入練習池', async () => {
+      localStorage.setItem('practice-pool-enabled', '1');
+      render(<App />);
+      fireEvent.change(screen.getByLabelText('題目來源'), { target: { value: 'official' } });
+      fireEvent.change(screen.getByLabelText('題目來源'), { target: { value: 'all' } });
+      await startAndWait();
+      expect(poolIdsInRange()).toContain('fixture-3');
+    });
+
     it('在首頁停用：下一場不混入練習池', async () => {
       localStorage.setItem('practice-pool-enabled', '1');
       render(<App />);
@@ -310,6 +319,27 @@ describe('App', () => {
         await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
       });
     }
+  });
+
+  it('只出官方題目中途回首頁、繼續測驗：再測一次仍只出官方題目', async () => {
+    const first = getSourceCandidates('all', 'official')[0];
+    const firstLabel = officialSampleLabel(first.officialSample!);
+    render(<App />);
+    fireEvent.change(screen.getByLabelText('題目來源'), { target: { value: 'official' } });
+    fireEvent.change(screen.getByLabelText('題數'), { target: { value: '1' } });
+    fireEvent.click(screen.getByLabelText('隨機出題順序')); // 不隨機：第一題固定，不靠機率
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+
+    fireEvent.click(screen.getByLabelText('回首頁'));
+    fireEvent.click(await screen.findByRole('button', { name: '繼續測驗' }));
+    await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+
+    fireEvent.click(document.querySelector('.option-item')!);
+    fireEvent.click(screen.getByRole('button', { name: /完成測驗/ }));
+    fireEvent.click(await screen.findByRole('button', { name: /再測一次/ }));
+    await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+    expect(screen.getByText(firstLabel)).toBeInTheDocument();
   });
 
   for (const practice of [false, true]) {

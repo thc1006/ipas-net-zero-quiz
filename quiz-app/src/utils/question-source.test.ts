@@ -216,6 +216,14 @@ describe('抽題範圍 sourceCandidates', () => {
     expect(sourceCandidates([inExam, s], 'all', 'exam:115-01').map((q) => q.id)).toEqual(['fixture-exam-copy']);
   });
 
+  // getSourceCandidates 傳進來的是 allQuestions：就地排序的話，主題庫的順序跟著被改掉
+  it('不動傳進來的陣列', () => {
+    const pool = [...allQuestions].reverse();
+    const before = pool.map((q) => q.id);
+    sourceCandidates(pool, 'all', 'official');
+    expect(pool.map((q) => q.id)).toEqual(before);
+  });
+
   it('考科不符的不收', () => {
     const subject = a.subject as ExamSubject;
     const other: ExamSubject = subject === '考科1' ? '考科2' : '考科1';

@@ -12,7 +12,14 @@ import {
   __resetPracticePoolCacheForTesting,
   __setPracticePoolForTesting,
 } from '../utils/practice-pool';
+import { loadPracticePool } from '../utils/practice-pool';
 import { buildFixturePool } from '../utils/__fixtures__/practice-pool-fixture';
+
+// 練習池是動態 import（瀏覽器要另外下載一個 chunk），只出官方題目時用不到它
+vi.mock('../utils/practice-pool', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../utils/practice-pool')>();
+  return { ...actual, loadPracticePool: vi.fn(actual.loadPracticePool) };
+});
 
 const base: QuizConfig = {
   mode: 'practice',
@@ -202,6 +209,33 @@ describe('useQuiz.startQuizWithPool：只出官方題目時不混練習池', () 
     expect(result.current.questions.filter((q) => !q.officialExam && !q.officialSample)).toEqual([]);
   });
 
+  it('只出官方題目時不載入練習池', async () => {
+    vi.mocked(loadPracticePool).mockClear();
+    await startWithPool({ ...base, questionSource: 'official' });
+    expect(loadPracticePool).not.toHaveBeenCalled();
+    // 對照：全部題目時會載入，上面沒呼叫不是因為這個 spy 接不到
+    await startWithPool({ ...base, questionSource: 'all' });
+    expect(loadPracticePool).toHaveBeenCalledOnce();
+  });
+
+  // 首頁選過官方題目再切回全部題目時，送出的 questionSource 是 'all'，不是 undefined
+  it("questionSource 是 'all' 時照常混入練習池", async () => {
+    const { result } = await startWithPool({
+      ...base,
+      questionSource: 'all',
+      shuffleQuestions: true,
+      questionCount: 100_000, // 超過總題數：全部抽出，不靠運氣
+    });
+    const pool = result.current.questions.filter((q) => q.sourceType === 'practice_pool');
+    expect(pool.map((q) => q.id).sort()).toEqual([
+      'fixture-1',
+      'fixture-2',
+      'fixture-3',
+      'fixture-4',
+      'fixture-5',
+    ]);
+  });
+
   it('一題都沒有時不開始測驗（回傳 false），也不會改用練習池補題', async () => {
     const { result } = renderHook(() => useQuiz());
     let started: boolean | undefined;
@@ -240,6 +274,59 @@ describe('useQuiz.resumeQuiz：題目來源', () => {
 
   afterEach(() => {
     localStorage.clear();
+  });
+
+  // 再測一次用的是這一場的設定：續作弄丟題目來源的話，再測一次會悄悄回到全部題目
+  function expectRetryOfficial(result: { current: ReturnType<typeof useQuiz> }): void {
+    expect(result.current.config?.questionSource).toBe('official');
+    let finished: ReturnType<ReturnType<typeof useQuiz>['finishQuiz']> = null;
+    act(() => {
+      finished = result.current.finishQuiz();
+    });
+    expect(finished!.config.questionSource).toBe('official');
+    act(() => {
+      result.current.startQuiz(finished!.config);
+    });
+    expect(result.current.questions.map((q) => q.id)).toEqual(
+      getSourceCandidates('all', 'official').slice(0, 3).map((q) => q.id)
+    );
+  }
+
+  function startOfficialThenReload(tamper?: (state: { answers: { correctAnswer: string }[] }) => void) {
+    const first = renderHook(() => useQuiz());
+    act(() => {
+      first.result.current.startQuiz({ ...base, questionSource: 'official', questionCount: 3 });
+    });
+    act(() => {
+      first.result.current.submitAnswer('A');
+    });
+    first.unmount();
+    if (tamper) {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)!);
+      tamper(saved.state);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    }
+    const { result } = renderHook(() => useQuiz());
+    let resumed: boolean | undefined;
+    act(() => {
+      resumed = result.current.resumeQuiz();
+    });
+    expect(resumed).toBe(true);
+    return result;
+  }
+
+  it('續作之後題目來源還在，再測一次仍只出官方題目', () => {
+    const result = startOfficialThenReload();
+    expect(result.current.progress.answered).toBe(1);
+    expectRetryOfficial(result);
+  });
+
+  it('作答紀錄被對帳丟棄的那條路（標準答案已更正）也一樣', () => {
+    const result = startOfficialThenReload((state) => {
+      state.answers[0].correctAnswer = 'Z'; // 紀錄的答案與現行題庫不同：這筆丟棄，走重新錨定
+    });
+    expect(result.current.progress.answered).toBe(0);
+    expectRetryOfficial(result);
   });
 
   // 官方題日後被拿掉標記、場次改了，進度裡就會有不屬於這個來源的題目。整份放棄的話，作答 60 題的進度

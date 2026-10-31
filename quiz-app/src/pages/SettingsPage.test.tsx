@@ -1,6 +1,8 @@
 // SettingsPage component test — practice toggle + opt-in dialog flow
 import { beforeAll, afterEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent, cleanup, waitFor } from '@testing-library/react';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 // Mock usePracticePool 避免背景 fetch 造成 act warning（pre-existing pattern issue）
 vi.mock('../hooks/usePracticePool', () => ({
@@ -90,6 +92,14 @@ describe('SettingsPage', () => {
     const toggle = screen.getByLabelText('啟用加強練習池') as HTMLInputElement;
     fireEvent.click(toggle);
     expect(localStorage.getItem('practice-pool-enabled')).toBe('0');
+  });
+
+  it('關於區塊顯示 package.json 的版本', () => {
+    const { version } = JSON.parse(
+      readFileSync(resolve(__dirname, '..', '..', 'package.json'), 'utf8')
+    ) as { version: string };
+    renderSettings();
+    expect(document.querySelector('.settings-page')).toHaveTextContent(`淨零碳備考神器 v${version}`);
   });
 
   // 色覺辨認模式即時預覽 — 讓使用者切換當下就看到回饋色變化

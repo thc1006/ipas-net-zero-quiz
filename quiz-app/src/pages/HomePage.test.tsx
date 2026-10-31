@@ -536,6 +536,44 @@ describe('題目來源（只出官方題目）', () => {
     expect(screen.getByText(`題數設定是 ${n + 1} 題，但只有 ${n} 題官方公告試題，本次會出 ${n} 題。`)).toBeInTheDocument();
   });
 
+  it('題數超過 100 時，提醒看的是實際會用的 100 題：題目夠就不提醒', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    fireEvent.change(sourceSelect(), { target: { value: 'official' } });
+    expect(getSourceCandidates('all', 'official').length).toBeGreaterThan(100);
+    fireEvent.change(screen.getByLabelText('題數'), { target: { value: '500' } });
+    expect(screen.queryByText(/^題數設定是/)).toBeNull();
+  });
+
+  it('題數超過 100 時，提醒裡寫的是實際會用的 100 題，不是輸入的數字', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    const [session] = officialSessions(allQuestions);
+    fireEvent.change(sourceSelect(), { target: { value: `exam:${session}` } });
+    fireEvent.change(screen.getByLabelText('考科範圍'), { target: { value: '考科2' } });
+    fireEvent.change(screen.getByLabelText('題數'), { target: { value: '500' } });
+    const n = getSourceCandidates('考科2', `exam:${session}`).length;
+    expect(screen.getByText(`題數設定是 100 題，但只有 ${n} 題官方公告試題，本次會出 ${n} 題。`)).toBeInTheDocument();
+  });
+
+  it('換題目來源不動考科範圍', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    fireEvent.change(screen.getByLabelText('考科範圍'), { target: { value: '考科2' } });
+    fireEvent.change(sourceSelect(), { target: { value: 'official' } });
+    expect(screen.getByLabelText('考科範圍')).toHaveValue('考科2');
+    fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
+    expect(lastConfig(onStartQuiz)).toMatchObject({ subject: '考科2', questionSource: 'official' });
+  });
+
+  it('換測驗模式不動題目來源', () => {
+    const onStartQuiz = vi.fn();
+    render(<HomePage onStartQuiz={onStartQuiz} />);
+    fireEvent.change(sourceSelect(), { target: { value: 'official' } });
+    fireEvent.change(screen.getByLabelText('測驗模式'), { target: { value: 'exam' } });
+    expect(sourceSelect()).toHaveValue('official');
+    fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
+    expect(lastConfig(onStartQuiz)).toMatchObject({ mode: 'exam', questionSource: 'official' });
+  });
+
   it('加強練習池啟用時，說明這個模式不會混入練習題', () => {
     localStorage.setItem('practice-pool-enabled', '1');
     render(<HomePage onStartQuiz={() => {}} />);
