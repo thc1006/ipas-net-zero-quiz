@@ -7,7 +7,7 @@ import { usePracticeMode } from '../hooks/usePracticeMode';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
 import { PracticePoolHistogram } from '../components/PracticePoolHistogram/PracticePoolHistogram';
 import { readBool, writeBool } from '../utils/local-storage';
-import { loadProgress, formatRelativeTime } from '../utils/quiz-progress-storage';
+import { loadResumableProgress, formatRelativeTime } from '../utils/quiz-progress-storage';
 import {
   officialSessions,
   questionSourceLabel,
@@ -68,7 +68,7 @@ const { questionCount: _defaultQuestionCount, ...defaultHomeConfig } = defaultCo
 export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   const [config, setConfig] = useState<HomePageConfig>(defaultHomeConfig);
   // Resume hint：mount 時讀一次 localStorage（不訂閱、不輪詢）
-  const [savedProgress] = useState(() => loadProgress());
+  const [savedProgress] = useState(() => loadResumableProgress());
   const [questionCountInput, setQuestionCountInput] = useState(() =>
     String(defaultConfig.questionCount)
   );

@@ -17,6 +17,7 @@ import {
 } from '../data/questions';
 import { loadPracticePool, toQuizQuestion } from '../utils/practice-pool';
 import {
+  resumableQuestions,
   saveProgress,
   loadProgress,
   clearProgress,
@@ -409,10 +410,11 @@ export function useQuiz() {
 
     // 本次修正前存下的進度可能含無答案題（answer=null，排除計分），而進度永不過期，
     // 之後任何時間續作都會遇到。續作時一併濾掉，讓「使用者不遇到無答案題」的保證
-    // 對舊進度也成立（Refs #93/#94/#95）。
-    const answerable = s.questions.filter((q) => isQuestionScorable(q));
-    if (answerable.length === 0) {
-      // 整份都是無答案題（極端）→ 沒有可續的題目，清掉舊進度、不續作。
+    // 對舊進度也成立（Refs #93/#94/#95）。不屬於這一場題目來源的題目（#128，例如官方題日後被拿掉標記）
+    // 同樣濾掉，「只出官方題目時每一題都帶官方標記」才對續作成立。
+    const resumable = resumableQuestions(s);
+    if (resumable.length === 0) {
+      // 整份都濾光了（極端）→ 沒有可續的題目，清掉舊進度、不續作。
       clearProgress();
       return false;
     }
@@ -422,35 +424,32 @@ export function useQuiz() {
     // 凍在舊答案。策略：丟棄該筆紀錄，讓該題以未作答呈現，使用者依現行內容重答（重答走
     // submitAnswer 會依現行答案重新計分）。只比得到「標準答案字母」—— 選項文字若在答案字母
     // 不變下被改寫，紀錄仍相容（顯示自動更新為現行），無法也無需從紀錄偵測（未存舊選項）。
-    const answerById = new Map(answerable.map((q) => [q.id, q]));
+    const answerById = new Map(resumable.map((q) => [q.id, q]));
     const reconciledAnswers = s.answers.filter((a) => {
       const q = answerById.get(a.questionId);
       return !!q && a.correctAnswer === q.answer;
     });
 
     const nothingDropped =
-      answerable.length === s.questions.length &&
+      resumable.length === s.questions.length &&
       reconciledAnswers.length === s.answers.length;
 
     if (nothingDropped) {
       setState(s); // 常態快路徑：題目與答案紀錄都無變動
     } else {
-      // 有題被濾掉（無答案題）或有紀錄被對帳丟棄（答案已更正）→ 重新錨定：currentIndex
-      // 指回原本正在作答的那一題（若它還在），否則往前收斂；answers 用對帳後的結果，
-      // 避免 finishQuiz 的 skippedCount 與畫面回饋算錯。
-      const curId = s.questions[s.currentIndex]?.id;
-      const survivedIdx = answerable.findIndex((q) => q.id === curId);
+      // 有題被濾掉（無答案題、不屬於來源）或有紀錄被對帳丟棄（答案已更正）→ 重新錨定：currentIndex
+      // 是原本那一題前面留下了幾題：那一題還在就指回它，不在就落在它後面第一題（只夾住 currentIndex 的話，
+      // 拿掉多題時會跳過未答的題目），它是最後一題時夾回去；answers 用對帳後的結果，避免 finishQuiz 的
+      // skippedCount 與畫面回饋算錯。
+      const keptBefore = s.questions.slice(0, s.currentIndex).filter((q) => resumable.includes(q));
       setState({
         ...s,
-        questions: answerable,
-        currentIndex:
-          survivedIdx >= 0
-            ? survivedIdx
-            : Math.min(s.currentIndex, answerable.length - 1),
+        questions: resumable,
+        currentIndex: Math.min(keptBefore.length, resumable.length - 1),
         answers: reconciledAnswers,
       });
     }
-    rehydratePoolQuestions(answerable);
+    rehydratePoolQuestions(resumable);
     setQuestionStartTime(Date.now());
     return true;
   }, [rehydratePoolQuestions]);

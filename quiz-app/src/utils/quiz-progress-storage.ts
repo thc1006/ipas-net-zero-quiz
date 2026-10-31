@@ -32,8 +32,10 @@
 //   看不到 v2、刪不到；新 bundle 永遠優先採 v2。
 
 import type { QuizState } from '../hooks/useQuiz';
-import type { QuizQuestion } from '../types/quiz';
+import type { QuizConfig, QuizQuestion } from '../types/quiz';
 import { getQuestionById } from '../data/questions';
+import { matchesSource } from './question-source';
+import { isQuestionScorable } from './scorable';
 
 // v2 用獨立 key，與已部署的 v1 bundle 隔離（見檔頭「儲存 key 版本化」）。
 const STORAGE_KEY = 'ipas-quiz-in-progress-v2';
@@ -176,6 +178,18 @@ export function loadProgress(): PersistedProgress | null {
   }
 }
 
+/**
+ * 首頁的「繼續測驗」提示用：loadProgress 之後再看 resumeQuiz 續作得了嗎。續作不了的進度清掉，否則提示
+ * 留在畫面上，按下去沒有反應。
+ */
+export function loadResumableProgress(): PersistedProgress | null {
+  const saved = loadProgress();
+  if (!saved) return null;
+  if (saved.state.isActive && resumableQuestions(saved.state).length > 0) return saved;
+  removeStored();
+  return null;
+}
+
 /** Clear stored progress unconditionally（v2 + legacy 兩個 key 都清）。 */
 export function clearProgress(): void {
   removeStored();
@@ -197,6 +211,32 @@ function isValidEnvelope(v: unknown): v is PersistedProgressRaw {
   if (!s || typeof s !== 'object') return false;
   if (!Array.isArray((s as { questions?: unknown }).questions)) return false;
   return true;
+}
+
+/**
+ * 這一題屬於這一場的題目來源嗎。來源認不認得、怎麼算屬於，全看 matchesSource，這裡不列來源。
+ * 沒有這個欄位（舊版存下的進度）等同 'all'。
+ */
+function belongsToSavedSource(q: QuizQuestion, config: QuizConfig | null): boolean {
+  return matchesSource(q, config?.questionSource ?? 'all');
+}
+
+/**
+ * 續作時留下的題目：有標準答案（Refs #93/#94/#95）、屬於這一場的題目來源（官方題日後被拿掉標記就不屬於了，
+ * 整份刪掉等於作答進度沒有任何提示就沒了，所以只拿掉那幾題）。resumeQuiz 與首頁的提示都看這一份。
+ */
+export function resumableQuestions(state: QuizState): QuizQuestion[] {
+  return state.questions.filter(
+    (q) => isQuestionScorable(q) && belongsToSavedSource(q, state.config)
+  );
+}
+
+/**
+ * 題目來源（#128）不是字串時，再測一次會在 matchesSource 呼叫 startsWith 而 crash，放棄整份。沒有這個欄位
+ * 等同 'all'。認不得的來源不在這裡擋：matchesSource 一題都不收，resumableQuestions 是空的。
+ */
+function isValidSource(source: unknown): boolean {
+  return source === undefined || typeof source === 'string';
 }
 
 /**
@@ -230,6 +270,7 @@ function isValidState(st: QuizState): boolean {
   if (st.isActive) {
     if (typeof st.startTime !== 'number') return false;
     if (st.config === null || typeof st.config !== 'object') return false;
+    if (!isValidSource(st.config.questionSource)) return false;
   }
 
   return true;

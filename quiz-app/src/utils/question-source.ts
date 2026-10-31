@@ -17,9 +17,9 @@ export function matchesSource(q: QuizQuestion, source: QuestionSource): boolean 
   if (source === 'official') return Boolean(exam || sample);
   // 場次與版次的格式不另外驗：比的是資料上的值，那裡的格式由 schema 守（main-bank.schema.json）
   if (source.startsWith('exam:'))
-    return exam !== undefined && exam.session === source.slice('exam:'.length);
+    return exam?.session === source.slice('exam:'.length);
   if (source.startsWith('sample:')) {
-    return sample !== undefined && sample.edition === source.slice('sample:'.length);
+    return sample?.edition === source.slice('sample:'.length);
   }
   return false;
 }

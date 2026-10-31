@@ -204,6 +204,114 @@ describe('App', () => {
     expect(screen.getByText(firstLabel)).toBeInTheDocument();
   });
 
+  it('官方題日後被拿掉標記：只拿掉那一題，其他進度留著', async () => {
+    const [kept] = getSourceCandidates('all', 'official');
+    localStorage.setItem(
+      'ipas-quiz-in-progress-v2',
+      JSON.stringify({
+        version: 2,
+        savedAt: Date.now(),
+        state: {
+          isActive: true,
+          questions: ['gist-1', kept.id],
+          currentIndex: 0,
+          answers: [],
+          startTime: Date.now(),
+          config: {
+            mode: 'practice',
+            subject: 'all',
+            questionCount: 2,
+            shuffleQuestions: false,
+            showAnswerImmediately: true,
+            questionSource: 'official',
+          },
+        },
+      })
+    );
+    render(<App />);
+    fireEvent.click(screen.getByRole('button', { name: '繼續測驗' }));
+    await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+    expect(document.querySelector('.question-card')).toHaveTextContent(kept.stem);
+    expect(screen.getByText(/1\s*\/\s*1/)).toBeInTheDocument();
+  });
+
+  // 屬於來源的題目都不可計分、其餘可計分但不屬於來源：提示留著的話，按下去沒有題目可以續作，頁面不會動
+  it('沒有題目可以續作：不顯示繼續測驗，清掉存檔', () => {
+    localStorage.setItem(
+      'ipas-quiz-in-progress-v2',
+      JSON.stringify({
+        version: 2,
+        savedAt: Date.now(),
+        state: {
+          isActive: true,
+          questions: [
+            'gist-1',
+            {
+              id: 'revoked',
+              stem: '撤掉答案的官方題',
+              options: [],
+              answer: null,
+              hasAnswer: false,
+              officialExam: { session: '115-01', subject: 'L11', question_number: 1 },
+            },
+          ],
+          currentIndex: 0,
+          answers: [],
+          startTime: Date.now(),
+          config: {
+            mode: 'practice',
+            subject: 'all',
+            questionCount: 2,
+            shuffleQuestions: false,
+            showAnswerImmediately: true,
+            questionSource: 'official',
+          },
+        },
+      })
+    );
+    render(<App />);
+    expect(screen.queryByRole('button', { name: '繼續測驗' })).toBeNull();
+    expect(localStorage.getItem('ipas-quiz-in-progress-v2')).toBeNull();
+  });
+
+  describe('存檔的題目來源不對', () => {
+    const save = (questionSource: unknown) =>
+      localStorage.setItem(
+        'ipas-quiz-in-progress-v2',
+        JSON.stringify({
+          version: 2,
+          savedAt: Date.now(),
+          state: {
+            isActive: true,
+            questions: ['gist-1', 'gist-2'],
+            currentIndex: 0,
+            answers: [],
+            startTime: Date.now(),
+            config: {
+              mode: 'practice',
+              subject: 'all',
+              questionCount: 2,
+              shuffleQuestions: false,
+              showAnswerImmediately: true,
+              questionSource,
+            },
+          },
+        })
+      );
+
+    // 5：續作之後按再測一次，matchesSource 對數字呼叫 startsWith，頁面卡在結果頁。'official'：題目全是非官方題
+    for (const questionSource of [5, 'official']) {
+      it(`${JSON.stringify(questionSource)}：不顯示繼續測驗，可以開新的一場`, async () => {
+        save(questionSource);
+        render(<App />);
+        expect(screen.queryByRole('button', { name: '繼續測驗' })).toBeNull();
+        expect(localStorage.getItem('ipas-quiz-in-progress-v2')).toBeNull();
+        fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+        await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+      });
+    }
+  });
+
   for (const practice of [false, true]) {
     it(`抽不到題目時留在首頁，不會停在只剩 header 的空白測驗頁${practice ? '（練習池啟用）' : ''}`, async () => {
       if (practice) {
