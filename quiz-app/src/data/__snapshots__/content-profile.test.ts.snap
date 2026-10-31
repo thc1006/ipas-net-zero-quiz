@@ -39,6 +39,11 @@ exports[`語料輪廓（換題庫時用 -u 重新產生） > 棘輪與反空轉�
   },
   {
     "semantics": "依語料重設",
+    "what": "錯題卡與題庫相似題的張數下限（反空轉）",
+    "where": "tests/e2e/quiz-flow.spec.ts",
+  },
+  {
+    "semantics": "依語料重設",
     "what": "帶答案依據的題數下限（反空轉）",
     "where": "evidence-display.test.ts",
   },

@@ -83,6 +83,123 @@ test.describe('測驗流程', () => {
     await expect(page.locator('.score-label')).toBeVisible();
   });
 
+  // 參考樣題照原卷順序、全選 A 時答錯的題目固定，不靠隨機；jsdom 不排版也不算 CSS，只有真瀏覽器量得到
+  test('錯題卡列出每個選項，底色與圖示對得上正確答案和你的答案', async ({ page }) => {
+    await page.getByLabel('題目來源').selectOption('sample:114');
+    await page.getByLabel('隨機出題順序').uncheck();
+    await page.getByLabel(/題數/i).fill('10');
+    await page.getByRole('button', { name: /開始測驗/i }).click();
+
+    for (let i = 0; i < 10; i++) {
+      await page.locator('.option-item').first().click();
+      if (i < 9) await page.getByRole('button', { name: /下一題/i }).click();
+    }
+    await page.getByRole('button', { name: /完成測驗/i }).click();
+
+    const [successTint, errorTint, none] = await page.evaluate(() => {
+      const probe = document.body.appendChild(document.createElement('span'));
+      const read = (background: string) => {
+        probe.style.background = background;
+        return getComputedStyle(probe).backgroundColor;
+      };
+      const colors = [read('var(--color-success-bg)'), read('var(--color-error-bg)'), read('transparent')];
+      probe.remove();
+      return colors;
+    });
+
+    const cards = page.locator('.wrong-item');
+    await expect(cards.first()).toBeVisible();
+    const count = await cards.count();
+    expect(count).toBeGreaterThan(0);
+    for (let i = 0; i < count; i++) {
+      const options = cards.nth(i).getByRole('list', { name: '選項' }).getByRole('listitem');
+      await expect(options).toHaveCount(4);
+      const correct = options.filter({ has: page.getByRole('img', { name: '正確答案' }) });
+      const selected = options.filter({ has: page.getByRole('img', { name: '你的答案' }) });
+      await expect(correct).toHaveCount(1);
+      await expect(selected).toHaveCount(1);
+      await expect(correct).toHaveCSS('background-color', successTint);
+      await expect(selected).toHaveCSS('background-color', errorTint);
+      await expect(options.filter({ hasNot: page.getByRole('img') }).first()).toHaveCSS('background-color', none);
+    }
+  });
+
+  // gist-1 的卡原本會撐寬頁面（Chromium 在 390px 寬是 477px），勾與叉被推出畫面；另外注入不能斷行的字串，涵蓋題幹與選項
+  test('手機寬度：長網址與不能斷行的字串不會撐寬頁面，勾與叉都在畫面裡', async ({ page }) => {
+    await page.route('https://js.puter.com/v2/', (route) =>
+      route.fulfill({
+        contentType: 'text/javascript',
+        body: `window.puter = { ai: { chat: async () => '回覆' }, auth: { isSignedIn: () => true, getUser: async () => ({ username: 'stub' }), signIn: async () => {} } };`,
+      })
+    );
+    await page.setViewportSize({ width: 320, height: 800 });
+    await page.getByLabel('隨機出題順序').uncheck();
+    await page.getByLabel(/題數/i).fill('1');
+    await page.getByRole('button', { name: /開始測驗/i }).click();
+    await page.locator('.option-item').first().click();
+    await page.getByRole('button', { name: /完成測驗/i }).click();
+
+    const realOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    );
+    expect(realOverflow, 'gist-1 的錯題卡把頁面撐寬了').toBe(0);
+
+    await page.locator('.btn-ai').click();
+    await page.locator('.ai-content p').first().waitFor();
+
+    const long = 'x'.repeat(200);
+    for (const selector of ['.wrong-stem', '.wrong-option__text', '.wrong-explanation__body', '.answer-evidence__link', '.ai-content p']) {
+      await page.locator(selector).first().evaluate((el, text) => {
+        el.textContent = text;
+      }, long);
+    }
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    );
+    expect(overflow, '錯題卡把頁面撐寬了').toBe(0);
+    for (const icon of await page.locator('.wrong-option [role="img"]').all()) {
+      const box = (await icon.boundingBox())!;
+      expect(box.x + box.width, '勾或叉被推出畫面').toBeLessThanOrEqual(320);
+    }
+  });
+
+  // 相似題的題幹與選項沒有 word-break 時，展開後頁面會被撐寬，勾與叉也跟著被推出畫面
+  test('手機寬度：展開題庫相似題也不會撐寬頁面，勾與叉都在畫面裡', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    await page.getByLabel('隨機出題順序').uncheck();
+    await page.getByLabel(/題數/i).fill('20');
+    await page.getByRole('button', { name: /開始測驗/i }).click();
+    for (let i = 0; i < 20; i++) {
+      await page.locator('.option-item').first().click();
+      if (i < 19) await page.getByRole('button', { name: /下一題/i }).click();
+    }
+    await page.getByRole('button', { name: /完成測驗/i }).click();
+
+    const toggles = page.getByRole('button', { name: '題庫相似題', exact: false });
+    await expect(toggles.first()).toBeVisible();
+    const count = await toggles.count();
+    expect(count).toBeGreaterThan(3);
+    for (let i = 0; i < count; i++) await toggles.nth(i).click();
+    await expect(page.getByRole('button', { name: '收起題庫相似題' })).toHaveCount(count);
+
+    const long = 'x'.repeat(200);
+    for (const selector of ['.similar-stem', '.bank-similar-option .option-text']) {
+      await page.locator(selector).first().evaluate((el, text) => {
+        el.textContent = text;
+      }, long);
+    }
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    );
+    expect(overflow, '展開相似題把頁面撐寬了').toBe(0);
+    for (const icon of await page.locator('.wrong-option [role="img"]').all()) {
+      const box = (await icon.boundingBox())!;
+      expect(box.x + box.width, '勾或叉被推出畫面').toBeLessThanOrEqual(320);
+    }
+  });
+
   // 有跳題時結果頁會多出第 5 張「未作答」統計卡；驗證 grid（auto-fit）讓五張卡在桌面
   // 同一列、不落單（jsdom 無法算版面，只有真實瀏覽器測得到，故放 E2E）。
   test('跳題後結果頁的五張統計卡在桌面寬度同列、不落單', async ({ page }) => {
