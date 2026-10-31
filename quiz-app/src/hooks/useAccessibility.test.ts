@@ -34,6 +34,35 @@ describe('useAccessibility', () => {
     localStorage.clear();
   });
 
+  it('封鎖網站資料時系統主題變更照常跟隨（handler 裡讀 localStorage 不能丟錯）', () => {
+    const listeners: ((e: { matches: boolean }) => void)[] = [];
+    const matchMedia = window.matchMedia;
+    window.matchMedia = () =>
+      ({
+        matches: false,
+        addEventListener: (_: string, listener: (e: { matches: boolean }) => void) => listeners.push(listener),
+        removeEventListener: () => {},
+      }) as unknown as MediaQueryList;
+    const descriptor = Object.getOwnPropertyDescriptor(window, 'localStorage')!;
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      get() {
+        throw new DOMException('The operation is insecure.', 'SecurityError');
+      },
+    });
+    try {
+      const { result } = renderHook(() => useAccessibility());
+      expect(listeners).toHaveLength(1);
+
+      act(() => listeners.forEach((listener) => listener({ matches: true })));
+
+      expect(result.current.settings.darkMode).toBe(true);
+    } finally {
+      Object.defineProperty(window, 'localStorage', descriptor);
+      window.matchMedia = matchMedia;
+    }
+  });
+
   it('default settings include darkMode and fontSize', () => {
     const { result } = renderHook(() => useAccessibility());
     expect(result.current.settings).toHaveProperty('darkMode');

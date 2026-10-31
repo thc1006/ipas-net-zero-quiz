@@ -68,6 +68,32 @@ describe('VisitorCounter', () => {
     });
   });
 
+  it('sessionStorage 讀不到（封鎖網站資料）時照常顯示', async () => {
+    vi.stubGlobal('fetch', mockFetchAbacusOk(42));
+    const descriptor = Object.getOwnPropertyDescriptor(window, 'sessionStorage')!;
+    Object.defineProperty(window, 'sessionStorage', {
+      configurable: true,
+      get() {
+        throw new DOMException('The operation is insecure.', 'SecurityError');
+      },
+    });
+    try {
+      render(<VisitorCounter namespace="test-ns-blocked" counterKey="visits" />);
+      expect(await screen.findByLabelText(/訪客人次：42/)).toBeInTheDocument();
+    } finally {
+      Object.defineProperty(window, 'sessionStorage', descriptor);
+    }
+  });
+
+  it('sessionStorage 寫不進去（額度用完）時數字照常顯示', async () => {
+    vi.stubGlobal('fetch', mockFetchAbacusOk(42));
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new DOMException('quota', 'QuotaExceededError');
+    });
+    render(<VisitorCounter namespace="test-ns-quota" counterKey="visits" />);
+    expect(await screen.findByLabelText(/訪客人次：42/)).toBeInTheDocument();
+  });
+
   it('uses GET endpoint when sessionStorage marks visited', async () => {
     sessionStorage.setItem('visited-test-ns4-visits', 'true');
     const fetchMock = mockFetchAbacusOk(7);

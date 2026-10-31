@@ -36,6 +36,15 @@ function loadSettings(): AccessibilitySettings {
   return defaultSettings;
 }
 
+/** 使用者手動存過設定嗎？讀不到 localStorage（封鎖網站資料）時算沒有 */
+function hasStoredSettings(): boolean {
+  try {
+    return !!localStorage.getItem(STORAGE_KEY);
+  } catch {
+    return false;
+  }
+}
+
 /**
  * 儲存設定到 localStorage
  */
@@ -136,8 +145,7 @@ export function useAccessibility() {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handler = (e: MediaQueryListEvent) => {
       // 只有在使用者沒有手動設定時才跟隨系統
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (!stored) {
+      if (!hasStoredSettings()) {
         updateSettings({ darkMode: e.matches });
       }
     };

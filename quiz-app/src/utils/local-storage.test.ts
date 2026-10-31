@@ -1,6 +1,6 @@
 // localStorage helper 測試
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
-import { readBool, writeBool } from './local-storage';
+import { readBool, readSessionFlag, writeBool, writeSessionFlag } from './local-storage';
 
 // 還原真實 localStorage（test-setup.ts 把它 mock 成空函式）
 function installRealLocalStorage() {
@@ -26,6 +26,29 @@ afterEach(() => {
 });
 
 describe('local-storage helpers', () => {
+  it('readSessionFlag／writeSessionFlag 讀寫同一個 key', () => {
+    expect(readSessionFlag('session-flag')).toBe(false);
+    writeSessionFlag('session-flag');
+    expect(readSessionFlag('session-flag')).toBe(true);
+    window.sessionStorage.removeItem('session-flag');
+  });
+
+  it('sessionStorage 讀不到時 readSessionFlag 回 false，writeSessionFlag 不丟錯', () => {
+    const descriptor = Object.getOwnPropertyDescriptor(window, 'sessionStorage')!;
+    Object.defineProperty(window, 'sessionStorage', {
+      configurable: true,
+      get() {
+        throw new DOMException('The operation is insecure.', 'SecurityError');
+      },
+    });
+    try {
+      expect(readSessionFlag('session-flag')).toBe(false);
+      expect(() => writeSessionFlag('session-flag')).not.toThrow();
+    } finally {
+      Object.defineProperty(window, 'sessionStorage', descriptor);
+    }
+  });
+
   it('readBool returns false for missing key', () => {
     expect(readBool('missing')).toBe(false);
   });

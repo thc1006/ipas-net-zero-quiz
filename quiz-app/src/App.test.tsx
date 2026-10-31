@@ -402,6 +402,40 @@ describe('App', () => {
     expect(skipLink).toHaveAttribute('href', '#main-content');
   });
 
+  // 還原放在 afterEach：測試逾時也要還原，否則同一檔後面的測試全部跟著丟 SecurityError
+  describe('瀏覽器封鎖網站資料（讀 localStorage、sessionStorage 都丟 SecurityError）', () => {
+    const descriptors = new Map<string, PropertyDescriptor>();
+
+    beforeEach(() => {
+      for (const name of ['localStorage', 'sessionStorage']) {
+        descriptors.set(name, Object.getOwnPropertyDescriptor(window, name)!);
+        Object.defineProperty(window, name, {
+          configurable: true,
+          get() {
+            throw new DOMException('Access is denied for this document.', 'SecurityError');
+          },
+        });
+      }
+      vi.stubGlobal(
+        'fetch',
+        vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => ({ value: 7 }) })
+      );
+    });
+
+    afterEach(() => {
+      cleanup();
+      for (const [name, descriptor] of descriptors) Object.defineProperty(window, name, descriptor);
+    });
+
+    it('頁面照常顯示，訪客計數也顯示', async () => {
+      render(<App />);
+      fireEvent.click(screen.getByRole('button', { name: /暫不啟用/ }));
+
+      expect(screen.getByLabelText(/開啟設定/)).toBeInTheDocument();
+      expect(await screen.findByLabelText('訪客人次：7')).toBeInTheDocument();
+    });
+  });
+
   it('footer renders GitHub link + 問題回報 link', () => {
     render(<App />);
     const githubLinks = screen.getAllByLabelText(/GitHub 專案連結/);
