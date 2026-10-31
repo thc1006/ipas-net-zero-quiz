@@ -74,7 +74,8 @@
           "items": { "$ref": "practice-pool.schema.json#/$defs/qualityFlag" },
           "description": "與練習池共用同一套詞彙（utils/quality-flags.ts 兩庫共套同一組規則）。"
         },
-        "metadata": { "$ref": "#/$defs/metadata" }
+        "metadata": { "$ref": "#/$defs/metadata" },
+        "official_sample": { "$ref": "#/$defs/officialSample" }
       }
     },
     "gistItem": {
@@ -112,6 +113,17 @@
       "properties": {
         "session": { "type": "string", "pattern": "^\\d{3}-(0[1-9]|[1-9]\\d)$", "description": "民國年-梯次，例如 115-01；梯次從 01 起算" },
         "exam_date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "subject": { "type": "string", "pattern": "^L\\d{2}$", "description": "L11 第一科、L12 第二科" },
+        "question_number": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "officialSample": {
+      "type": "object",
+      "description": "iPAS 參考樣題的出處（tools/import_official_sample.py 寫入）。主庫的 gist 題與參考樣題是同一題時，也標在那一題上（restore_from_source_pdf.py 的 DATASET_DUPLICATES）。與 quiz-app/src/utils/main-bank-schema.ts 的 validateOfficialSample 同一條規則。",
+      "required": ["edition", "subject", "question_number"],
+      "additionalProperties": false,
+      "properties": {
+        "edition": { "type": "string", "pattern": "^\\d{3}$", "description": "版次（民國年），例如 114 年版是 114" },
         "subject": { "type": "string", "pattern": "^L\\d{2}$", "description": "L11 第一科、L12 第二科" },
         "question_number": { "type": "integer", "minimum": 1 }
       }

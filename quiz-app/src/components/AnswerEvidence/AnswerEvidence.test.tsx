@@ -34,7 +34,7 @@ describe('AnswerEvidence', () => {
   // 框裡要另外寫出答案欄印的是哪一個、題目在 PDF 的哪裡，否則整個框沒有一句說出答案。
   const official = {
     ...primary,
-    official: { answer: 'C', reference: '115 年第一次公告試題第一科第 1 題' },
+    official: { kind: 'exam' as const, answer: 'C', reference: '115 年第一次公告試題第一科第 1 題' },
   };
 
   it('依據是官方公告試題本身時，寫出官方公告的參考答案與題目出處（哪一場、哪一科、第幾題）', () => {
@@ -54,6 +54,19 @@ describe('AnswerEvidence', () => {
         screen.getByText('官方公告的參考答案：(C)（115 年第一次公告試題第一科第 1 題）')
       )
     ).toBe(false);
+  });
+
+  // 參考樣題的 PDF 在每一題下面印「解答：(X)」，不是公告的參考答案：說法跟著換，出處寫版次
+  it('依據是參考樣題本身時，寫出參考樣題的解答與題目出處（哪一版、哪一科、第幾題）', () => {
+    const sample = {
+      ...primary,
+      official: { kind: 'sample' as const, answer: 'B', reference: '參考樣題（114 年版）第二科第 1 題' },
+    };
+    render(<AnswerEvidence evidence={sample} />);
+    expect(
+      isInaccessible(screen.getByText('參考樣題的解答：(B)（參考樣題（114 年版）第二科第 1 題）'))
+    ).toBe(false);
+    expect(screen.queryByText(/官方公告的參考答案/)).not.toBeInTheDocument();
   });
 
   it('其他引文不寫官方答案', () => {

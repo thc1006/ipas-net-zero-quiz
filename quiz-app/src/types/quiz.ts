@@ -108,6 +108,8 @@ export interface GistQuestion {
   explanation?: string;
   /** 品質旗標（PR #68 起部分主庫題目寫入 'time_sensitive' 等；Refs #69） */
   quality_flags?: PracticePoolQualityFlag[];
+  /** 參考樣題的某一題就是這一題時才有（restore_from_source_pdf.py 的 DATASET_DUPLICATES） */
+  official_sample?: OfficialSample;
   metadata?: MainBankItemMetadata;
 }
 
@@ -120,6 +122,16 @@ export interface OfficialExam {
   /** 科目代碼：L11 第一科、L12 第二科 */
   subject: string;
   /** 在該份公告試題裡的題號 */
+  question_number: number;
+}
+
+/** iPAS 參考樣題的出處。由 tools/import_official_sample.py 寫入；題幹、選項、答案都取自 iPAS 官網的參考樣題 PDF。 */
+export interface OfficialSample {
+  /** 版次（民國年），例如 114 年版是「114」 */
+  edition: string;
+  /** 科目代碼：L11 第一科、L12 第二科 */
+  subject: string;
+  /** 在該份參考樣題那一科裡的題號 */
   question_number: number;
 }
 
@@ -147,6 +159,8 @@ export interface UniqueQuestion {
   quality_flags?: PracticePoolQualityFlag[];
   /** 官方公告試題才有 */
   official_exam?: OfficialExam;
+  /** 參考樣題才有 */
+  official_sample?: OfficialSample;
   metadata?: MainBankItemMetadata;
 }
 
@@ -180,13 +194,15 @@ export interface QuizQuestion {
     url: string;
     authority?: string;
     /**
-     * 官方公告試題：依據就是官方 PDF 上的這一題時，答案欄印的選項與題目在 PDF 的位置。
-     * 引文只印得出題目本身，UI 另外寫出這一行，框裡才有一句話說出答案。
+     * 官方題目：依據就是官方 PDF 上的這一題時，PDF 印的答案（公告試題的答案欄、參考樣題的「解答」）與題目在
+     * PDF 的位置。引文只印得出題目本身，UI 另外寫出這一行，框裡才有一句話說出答案。
      */
-    official?: { answer: string; reference: string };
+    official?: { kind: 'exam' | 'sample'; answer: string; reference: string };
   };
   /** 官方公告試題的出處（場次、考試日期、科目、題號）；UI 在題卡上標出來 */
   officialExam?: OfficialExam;
+  /** 參考樣題的出處（版次、科目、題號）；UI 在題卡上標出來 */
+  officialSample?: OfficialSample;
   /** 解析文字（給 AI helper 與 UI 參考），可能為空 */
   explanation?: string | null;
   /** 練習池題目專屬：UI 用以渲染來源徽章；主題庫題不帶 */
@@ -223,6 +239,13 @@ export interface QuizDataset {
 /** 測驗模式 */
 export type QuizMode = 'practice' | 'exam' | 'review';
 
+/**
+ * 題目來源（#128）：'all' 是全部題目；'official' 是官方題目（公告試題與參考樣題）；'exam:115-01' 只出那一場
+ * 公告試題，'sample:114' 只出那一版參考樣題。判斷依據是資料上的標記（officialExam、officialSample），
+ * 不是題號或文字（utils/question-source.ts）。
+ */
+export type QuestionSource = 'all' | 'official' | `exam:${string}` | `sample:${string}`;
+
 /** 測驗配置 */
 export interface QuizConfig {
   mode: QuizMode;
@@ -238,8 +261,12 @@ export interface QuizConfig {
   // 而且它本來也不該存在：主題庫是從來源 PDF 分欄重建的，選項順序有證據鏈
   // （--verify 逐題比對），執行期洗牌會讓畫面上的題目與已驗證的來源不一致。
   // 練習池原本的答案偏斜（永遠選 B 得 60 分）已在資料層重排解決（χ²=0.02）。
-  /** 是否將加強練習池題目混入抽題範圍（須使用者已 opt-in） */
+  /** 是否將加強練習池題目混入抽題範圍（須使用者已 opt-in）；只出官方題目時一律不混 */
   includePracticePool?: boolean;
+  /**
+   * 題目來源。沒有這個欄位（舊版存下的進度與結果）等同 'all'：行為與加入這個欄位之前完全相同。
+   */
+  questionSource?: QuestionSource;
   showAnswerImmediately: boolean;
 }
 

@@ -63,6 +63,7 @@ import urllib.request
 from pathlib import Path
 
 import ipas_exam_pdf
+import ipas_sample_pdf
 
 # 繁體中文 Windows 的預設 codepage 是 cp950 —— 而那正是這個專案的主要讀者。
 # 這支腳本印 ✓ / / 中文，在 cp950 下會直接 UnicodeEncodeError，**一題都還沒驗就死**。
@@ -78,8 +79,9 @@ DATASET = REPO / 'quiz-app' / 'src' / 'data' / 'integrated_dataset.json'
 SNAPSHOT = REPO / 'tools' / 'tests' / 'fixtures' / 'restore_source_extract.json'
 
 # 來源 PDF。沒寫 layout 的是商研院模擬卷的雙欄版面；layout 為 ipas_exam_table 的是 iPAS 官方公告試題的
-# 表格版面（擷取器是 tools/ipas_exam_pdf.py）。kind 為 official_exam 的來源不是「被刪除後還原」的題目，
-# 在題庫裡的記為 imported，不計入 restored_count。
+# 表格版面（擷取器是 tools/ipas_exam_pdf.py），ipas_sample 是 iPAS 參考樣題（tools/ipas_sample_pdf.py）。
+# kind 為 official_exam、official_sample 的來源不是「被刪除後還原」的題目，在題庫裡的記為 imported，
+# 不計入 restored_count。
 SOURCES = {
     'S_CHU_06': {
         'url': 'https://usr.chu.edu.tw/var/file/81/1081/img/697134715.pdf',
@@ -150,6 +152,31 @@ SOURCES = {
                '各有各的登記，以點陣圖呈現：只有文字無法作答，題庫還不支援圖片。',
             15: '計算要用的各交通工具排放係數表以點陣圖呈現：只有文字無法作答，題庫還不支援圖片。',
         },
+    },
+    # iPAS 參考樣題（114 年版）：一份 PDF 兩頁，第一頁第一科、第二頁第二科，各 5 題。照公告試題的做法依科目拆成
+    # 兩個來源（同一個網址與 sha256）。網址的檔名寫「114年1月版」、時間戳是 2025-12-26；title 照 PDF 第一頁的標題
+    # 與那一科的科目那一行寫。
+    'S_IPAS_SAMPLE_114_L11': {
+        'url': 'https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf',
+        'sha256': 'c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160',
+        'title': '淨零碳規劃管理師能力鑑定 參考樣題(114 年版) L11 淨零碳規劃管理基礎概論',
+        'exam_subject': '考科1',
+        'layout': 'ipas_sample',
+        'kind': 'official_sample',
+        'edition': '114',
+        'published_on': '2025-12-26',
+        'subject': 'L11',
+    },
+    'S_IPAS_SAMPLE_114_L12': {
+        'url': 'https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf',
+        'sha256': 'c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160',
+        'title': '淨零碳規劃管理師能力鑑定 參考樣題(114 年版) L12 淨零碳盤查規範與程序概要',
+        'exam_subject': '考科2',
+        'layout': 'ipas_sample',
+        'kind': 'official_sample',
+        'edition': '114',
+        'published_on': '2025-12-26',
+        'subject': 'L12',
     },
 }
 
@@ -249,6 +276,18 @@ SOURCE_REVIEWS = {
     },
 }
 
+# 參考樣題的兩個來源是同一份 PDF，查核紀錄也是同一份（manifest 裡以網址為鍵，合成一筆）
+SAMPLE_REVIEW = {
+    'status': 'OFFICIAL',
+    'note': (
+        'iPAS 官方參考樣題（114 年版），答案取自 PDF 每一題下方的「解答：(X)」。一份 PDF 兩頁，第一頁第一科、'
+        '第二頁第二科，各 5 題，依科目拆成兩個來源。第一科第 2 題與主庫的 gist_items[287] 是同一題（題幹不計空白、'
+        '選項、答案都相同），不另外匯入（duplicate_in_dataset，見 DATASET_DUPLICATES）。'
+    ),
+}
+SOURCE_REVIEWS['S_IPAS_SAMPLE_114_L11'] = SAMPLE_REVIEW
+SOURCE_REVIEWS['S_IPAS_SAMPLE_114_L12'] = SAMPLE_REVIEW
+
 # 試過、驗證後放棄的做法（寫進 _meta.tried_and_rejected，避免下一個人再試一次）。
 TRIED_AND_REJECTED = {
     'answer_vs_explanation_detector': (
@@ -264,7 +303,8 @@ TRIED_AND_REJECTED = {
 # 來源 PDF 各自的總題數。這是「對帳」的分母 ——
 # 少了這個，manifest 只能說「我還原了 159 題」，卻證明不了「沒有東西被弄丟」。
 EXPECTED_QUESTION_COUNT = {'S_CHU_06': 100, 'S_CHU_07': 70, 'S_IPAS_115_01_L11': 50, 'S_IPAS_115_01_L12': 50,
-                           'S_IPAS_115_02_L11': 50, 'S_IPAS_115_02_L12': 50}
+                           'S_IPAS_115_02_L11': 50, 'S_IPAS_115_02_L12': 50,
+                           'S_IPAS_SAMPLE_114_L11': 5, 'S_IPAS_SAMPLE_114_L12': 5}
 
 COLUMN_BOUNDARY = 292.0
 CJK = re.compile(r'[⺀-鿿豈-﫿＀-￯]')
@@ -476,6 +516,17 @@ DATASET_DUPLICATES = {
         'decided_on': '2026-09-28',
         'why': '同一題、同一個答案 (A)「數據收集資訊，包括數據來源」。來源這一題的 (C) 印成「ISO9001」，'
                '主庫的 (C) 是「內外部議題」。',
+    },
+    ('S_IPAS_SAMPLE_114_L11', 2): {
+        'dataset_item': 'gist_items[287]',
+        'dataset_answer': 'C',
+        'dataset_answer_text': '生態轉型',
+        'source_answer_key': 'C',
+        'source_text_sha256': '3747b76b1259b1fd7c6f06a07b8328ac73262afdcae77f0b7434cb82af02f1c3',
+        'decided_on': '2026-10-18',
+        'why': '同一題（我國 2050 淨零排放路徑的四大轉型，何者不是）：題幹不計空白相同（主庫的 2050 前後是窄的不換行'
+               '空白），四個選項與答案 (C)「生態轉型」都相同，主庫那一題同樣是考科一。專案所有者決定不重複收錄，在主庫'
+               '那一題標上 official_sample（#128）。',
     },
 }
 
@@ -823,8 +874,10 @@ def _disposition_for_dropped(q: dict, src_id: str, same_pdf: dict, ds_items: lis
     }
 
 
-EXTRACTORS = {'two_column': extract, 'ipas_exam_table': ipas_exam_pdf.extract}
+EXTRACTORS = {'two_column': extract, 'ipas_exam_table': ipas_exam_pdf.extract, 'ipas_sample': ipas_sample_pdf.extract}
 HEADER_READERS = {'ipas_exam_table': ipas_exam_pdf.header}  # 讀得到頁首（哪一場、哪一科）的版面
+# 參考樣題：一份 PDF 有兩科，讀頁首與擷取都要說是哪一科（SOURCES 的 subject）
+SAMPLE_HEADER_READERS = {'ipas_sample': ipas_sample_pdf.header}
 
 
 EXAM_SUBJECT = {'L11': '考科1', 'L12': '考科2'}  # iPAS 的科目代號 → 題庫的考科
@@ -849,10 +902,25 @@ def check_official_header(src_id: str, meta: dict, header) -> None:
         sys.exit(f'✗ {src_id} 的 PDF 頁首與 SOURCES 不符：' + '；'.join(wrong) + '。')
 
 
+def check_sample_header(src_id: str, meta: dict, header) -> None:
+    """參考樣題：PDF 的版次、科目（與它決定的考科）、標題（第一頁的標題加上那一科的科目那一行），必須與 SOURCES
+    登記的一致。理由與 check_official_header 相同：SOURCES 這幾欄是人抄的，sha256 釘不住它們。"""
+    wrong = [f'{what}：SOURCES 寫「{mine}」，PDF 是「{theirs}」' for what, mine, theirs in (
+        ('版次', meta['edition'], header.edition),
+        ('科目', meta['subject'], header.subject_code),
+        ('考科', meta['exam_subject'], EXAM_SUBJECT.get(header.subject_code)),
+        ('標題', meta['title'], f'{header.title} {header.subject}'),
+    ) if mine != theirs]
+    if wrong:
+        sys.exit(f'✗ {src_id} 的 PDF 與 SOURCES 不符：' + '；'.join(wrong) + '。')
+
+
+OFFICIAL_KINDS = ('official_exam', 'official_sample')  # 匯入的官方題目（不是被刪除後還原的題目）
+
 # 來源 PDF 的每一題都要是其中一種（manifest 的說明文字由這張表產生，新增一種就寫在這裡）
 ACCOUNTED = {
     'restored': '還原進 dataset',
-    'imported': '官方公告試題，匯入 dataset',
+    'imported': '官方公告試題與參考樣題，匯入 dataset',
     'duplicate_within_source': 'PDF 自己重印',
     'duplicate_in_dataset': '主庫已有相同題',
     'not_imported_figure': '官方公告試題要讀圖、題庫還不支援圖片：登記在 figure_questions，不收錄，寫明理由',
@@ -868,7 +936,7 @@ def check_figure_questions(src_ids) -> None:
         if registered is None:
             continue
         if SOURCES[s].get('kind') != 'official_exam':
-            sys.exit(f'✗ {s}：只有官方來源可以登記圖表題（figure_questions）。')
+            sys.exit(f'✗ {s}：只有官方公告試題可以登記圖表題（figure_questions）：參考樣題與模擬卷都不行。')
         if not isinstance(registered, dict) or not registered:
             sys.exit(f'✗ {s}：figure_questions 應是「題號 → 理由」的表 —— 沒有圖表題就整個拿掉。')
         total = EXPECTED_QUESTION_COUNT.get(s)
@@ -892,6 +960,8 @@ def extract_sources(cache: Path) -> dict:
             sys.exit(f'✗ {src_id}: 不認得的版面 {layout!r}')
         if meta.get('kind') == 'official_exam' and layout not in HEADER_READERS:
             sys.exit(f'✗ {src_id}: 官方來源的版面 {layout!r} 讀不到頁首，無法確認它是哪一場、哪一科。')
+        if (meta.get('kind') == 'official_sample') != (layout in SAMPLE_HEADER_READERS):
+            sys.exit(f'✗ {src_id}: 參考樣題（kind official_sample）與它的版面（{layout!r}）要一起用。')
         load_pdf(src_id, cache)
         path = cache / f'{src_id}.pdf'
         header = None
@@ -899,8 +969,13 @@ def extract_sources(cache: Path) -> dict:
             if meta.get('kind') == 'official_exam':  # 先確定是 SOURCES 說的那一場、那一科，再擷取
                 header = HEADER_READERS[layout](path)
                 check_official_header(src_id, meta, header)
+            elif meta.get('kind') == 'official_sample':  # 參考樣題：先確定是 SOURCES 說的那一版、那一科
+                header = SAMPLE_HEADER_READERS[layout](path, meta['subject'])
+                check_sample_header(src_id, meta, header)
             figures = frozenset(meta.get('figure_questions', {}))
-            questions = EXTRACTORS[layout](path, figure_questions=figures) if figures else EXTRACTORS[layout](path)
+            subject = (meta['subject'],) if layout in SAMPLE_HEADER_READERS else ()  # 參考樣題要說是哪一科
+            questions = (EXTRACTORS[layout](path, *subject, figure_questions=figures) if figures
+                         else EXTRACTORS[layout](path, *subject))
         except ValueError as e:  # ipas_exam_pdf 遇到不在預期內的版面一律丟 ValueError
             sys.exit(f'✗ {src_id}: {e}')
         out[src_id] = {'pdf_sha256': meta['sha256']}
@@ -966,11 +1041,14 @@ def assemble(extracted: dict, ds: dict) -> dict:
     check_counts_registered()
     # 官方來源：SOURCES 的場次、考試日期、科目、考科、標題要對得上 --emit 記下的 PDF 頁首（CI 不讀 PDF，也看得到）
     for s, meta in SOURCES.items():
-        if meta.get('kind') == 'official_exam':
+        if meta.get('kind') in OFFICIAL_KINDS:
             recorded = extracted.get(s, {}).get('header')
             if recorded is None:
                 sys.exit(f'✗ {s}：擷取快照沒有 PDF 的頁首 —— 官方來源要跑 --emit，把頁首記進快照（CI 拿它核對 SOURCES）。')
-            check_official_header(s, meta, ipas_exam_pdf.Header(**recorded))
+            if meta['kind'] == 'official_exam':
+                check_official_header(s, meta, ipas_exam_pdf.Header(**recorded))
+            else:
+                check_sample_header(s, meta, ipas_sample_pdf.Header(**recorded))
     # 圖表題（figure_questions）：題目要讀圖、題庫還不支援圖片的官方題，不收錄，憑證裡記下理由。
     # 哪幾題有圖是 PDF 的事實，由擷取快照記著：登記必須正好是那幾題（改了登記要跑 --emit，擷取器會對照 PDF）
     check_figure_questions(SOURCES)
@@ -1058,7 +1136,7 @@ def assemble(extracted: dict, ds: dict) -> dict:
                 'source_question_number': q['number'],
                 'page': q['page'],
                 'column': q['column'],
-                'status': 'imported' if SOURCES[src_id].get('kind') == 'official_exam' else 'restored',
+                'status': 'imported' if SOURCES[src_id].get('kind') in OFFICIAL_KINDS else 'restored',
                 'item_id': item_id,
             })
 
@@ -1172,10 +1250,24 @@ def assemble(extracted: dict, ds: dict) -> dict:
                  '有沒有已知的問題。')
 
     restored_per_source = {s: sum(1 for e in entries if e['source_id'] == s) for s in SOURCES}
+    # 以 PDF 網址為鍵：同一份 PDF 拆成幾個來源（參考樣題依科目拆成兩個）時合成一筆，題數相加、來源代號並列，
+    # 查核紀錄必須一字不差
+    documents: dict[str, dict] = {}
+    for s, review in SOURCE_REVIEWS.items():
+        url = SOURCES[s]['url']
+        if url not in documents:
+            documents[url] = {'items': restored_per_source[s], 'subject': s, **review}
+            continue
+        seen = documents[url]
+        if {k: v for k, v in seen.items() if k not in ('items', 'subject')} != review:
+            sys.exit(f'✗ {s} 與 {seen["subject"]} 是同一份 PDF（{url}），SOURCE_REVIEWS 卻寫得不一樣：'
+                     '同一份 PDF 只有一份查核紀錄。')
+        seen['items'] += restored_per_source[s]
+        seen['subject'] += f'、{s}'
 
     return {
         '_meta': {
-            'description': '來源 PDF 逐題的憑證：被刪除後還原的題目，以及匯入的官方公告試題。'
+            'description': '來源 PDF 逐題的憑證：被刪除後還原的題目，以及匯入的官方公告試題與參考樣題。'
                            '來源 PDF 的**每一題**都有交代：'
                            + '、'.join(f'{status}（{meaning}）' for status, meaning in ACCOUNTED.items()) + '。'
                            '任何一題交代不出來就是 UNACCOUNTED —— 產生 manifest 時直接失敗，'
@@ -1218,12 +1310,9 @@ def assemble(extracted: dict, ds: dict) -> dict:
             'ci_note': 'CI 不下載 PDF：restoration-manifest.test.ts 驗 manifest ↔ dataset 一致；'
                        'tools/tests/test_restore_reproducibility.py 用 committed 的擷取快照重組整份 manifest、逐字比對。'
                        '快照與來源 PDF 是否一致，由 --verify 驗。',
-            'source_documents': {
-                SOURCES[s]['url']: {'items': restored_per_source[s], 'subject': s, **review}
-                for s, review in SOURCE_REVIEWS.items()
-            },
+            'source_documents': documents,
             'tried_and_rejected': TRIED_AND_REJECTED,
-            'imported_note': '官方公告試題（SOURCES 的 kind 為 official_exam）不是被刪除後還原的題目：'
+            'imported_note': '官方公告試題與參考樣題（SOURCES 的 kind 為 official_exam、official_sample）不是被刪除後還原的題目：'
                              '在題庫裡的記為 imported，不計入 restored_count。其餘規則與還原題相同：逐題記錄'
                              ' PDF 的 sha256、頁碼、題號、PDF 印的答案與三個文字 hash，任何偏離都要列明。',
         },
@@ -1351,8 +1440,10 @@ def verify(cache: Path) -> int:
                                           ('答案衝突', len(conflicts))) if n]
         print(f'✗ {bad} 項不符 —— {"、".join(reasons)}')
         return 1
+    # 匯入的題目分兩種來源報題數：參考樣題不是公告試題
+    kinds = [fresh['_meta']['sources'][e['source_id']].get('kind') for e in fresh['entries']]
     print(f'{len(fresh["entries"])} 題全部與來源 PDF 相符（還原 {fresh["_meta"]["restored_count"]} 題、'
-          f'官方公告試題 {fresh["_meta"]["imported_count"]} 題）')
+          f'官方公告試題 {kinds.count("official_exam")} 題、參考樣題 {kinds.count("official_sample")} 題）')
     print('   （擷取快照與 manifest 都與重跑結果逐字相同；repo 文字 == 來源 + 已列明的修正）')
     return 0
 

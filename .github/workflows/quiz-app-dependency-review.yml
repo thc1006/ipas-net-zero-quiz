@@ -1,6 +1,6 @@
 # 依賴審查
 # 檢查 PR 中新增的依賴是否有已知漏洞
-# 最後更新：2026-01-22
+# 最後更新：2026-10-03
 
 name: Quiz App Dependency Review
 
@@ -22,17 +22,32 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      # Advisory only — Dependency graph 需 repo settings 啟用；未啟用時 action
-      # 回 'Dependency review is not supported on this repository' → step fail。
-      # continue-on-error 放在 step 層級才能讓 job 整體 conclusion = success
-      # （job 層級 continue-on-error 只防 workflow fail，但 job 仍標 failed）。
-      # 待 user 啟用 Dependency graph 後，此 step 會自動成功並轉嚴格 gate。
+      # 目前不擋任何東西：repo 沒有啟用 Dependency graph，這一步一跑就回
+      # 'Dependency review is not supported on this repository' 而失敗，
+      # 再由 continue-on-error 吞掉（放在 step 層級，job 整體才會標 success）。
+      # 要變成真的會擋 PR 的 gate，兩件事都得做：在 repo settings 啟用 Dependency graph，
+      # 並拿掉這裡的 continue-on-error。只做前者，授權或漏洞不合格時 job 仍然是綠的。
       - name: Dependency Review
         continue-on-error: true
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v5
         with:
           fail-on-severity: high
           allow-licenses: MIT, MIT-0, Apache-2.0, BSD-2-Clause, BSD-2-Clause-Views, BSD-3-Clause, ISC, 0BSD, CC-BY-4.0, CC0-1.0, Python-2.0, BlueOak-1.0.0, Unlicense, LGPL-2.1-or-later
+          # Vite 8 一定會帶進 lightningcss（MPL-2.0，build 時壓縮 CSS 用，不會進網站的程式碼）。
+          # 擁有者 2026-10-03 決定只放行它與各平台的預編譯套件；其他套件遇到 MPL-2.0 照樣擋。
+          allow-dependencies-licenses: >-
+            pkg:npm/lightningcss,
+            pkg:npm/lightningcss-android-arm64,
+            pkg:npm/lightningcss-darwin-arm64,
+            pkg:npm/lightningcss-darwin-x64,
+            pkg:npm/lightningcss-freebsd-x64,
+            pkg:npm/lightningcss-linux-arm-gnueabihf,
+            pkg:npm/lightningcss-linux-arm64-gnu,
+            pkg:npm/lightningcss-linux-arm64-musl,
+            pkg:npm/lightningcss-linux-x64-gnu,
+            pkg:npm/lightningcss-linux-x64-musl,
+            pkg:npm/lightningcss-win32-arm64-msvc,
+            pkg:npm/lightningcss-win32-x64-msvc
           comment-summary-in-pr: always

@@ -5,10 +5,8 @@ import { usePracticeMode } from '../hooks/usePracticeMode';
 import { usePracticePool } from '../hooks/usePracticePool';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
 import { clearStats } from '../utils/question-stats-storage';
-import packageJson from '../../package.json';
+import { APP_VERSION } from '../data/app-meta';
 import './SettingsPage.css';
-
-const APP_VERSION = packageJson.version;
 
 interface SettingsPageProps {
   accessibility: ReturnType<typeof useAccessibility>;

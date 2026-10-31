@@ -276,16 +276,17 @@ def build_item(src_id: str, meta: dict, question: dict, extra_evidence: list[dic
     }
 
 
-def _refresh_owned_evidence(current: dict, built: dict) -> bool:
+def _refresh_owned_evidence(current: dict, built: dict, *, generated_by: str = GENERATED_BY) -> bool:
     """工具負責的引文（帶 generated_by 標記）整批換成這次建出來的版本，排在前面；其他引文照留，
     即使網址相同。sources 以工具的網址開頭；舊的工具引文帶進來的網址，這次不再需要、也沒有人工引文
-    用它，就拿掉。回傳檔案裡寫出來的內容有沒有變（含順序）。"""
+    用它，就拿掉。回傳檔案裡寫出來的內容有沒有變（含順序）。generated_by 是呼叫的工具自己的標記
+    （參考樣題的匯入工具有它自己的）。"""
     meta = current.get('metadata') or {}
     current['metadata'] = meta
     before = json.dumps([meta.get('evidence'), meta.get('sources')], ensure_ascii=False)
     evidence = meta.get('evidence') or []
-    others = [e for e in evidence if e.get('generated_by') != GENERATED_BY]
-    dropped = ({e.get('url') for e in evidence if e.get('generated_by') == GENERATED_BY}
+    others = [e for e in evidence if e.get('generated_by') != generated_by]
+    dropped = ({e.get('url') for e in evidence if e.get('generated_by') == generated_by}
                - {e.get('url') for e in others})
     meta['evidence'] = [dict(e) for e in built['metadata']['evidence']] + others
     ours = built['metadata']['sources']
@@ -293,8 +294,9 @@ def _refresh_owned_evidence(current: dict, built: dict) -> bool:
     return json.dumps([meta['evidence'], meta['sources']], ensure_ascii=False) != before
 
 
-def merge(dataset: dict, items: list[dict]) -> int:
-    """新題接在 our_unique_items 最後；已經在的題目核對工具負責的欄位、更新工具負責的引文。
+def merge(dataset: dict, items: list[dict], *, owned: tuple[str, ...] = OWNED, generated_by: str = GENERATED_BY) -> int:
+    """新題接在 our_unique_items 最後；已經在的題目核對工具負責的欄位（owned）、更新工具負責的引文。
+    owned、generated_by 給參考樣題的匯入工具用（tools/import_official_sample.py），預設是這支工具的。
 
     回傳更新了引文的題數。
     """
@@ -306,11 +308,11 @@ def merge(dataset: dict, items: list[dict]) -> int:
             dataset['our_unique_items'].append(item)
             existing[item['item_id']] = item  # 同一個來源傳了兩次：第二次當成「已經在題庫裡」
             continue
-        changed = [f for f in OWNED if current.get(f) != item[f]]
+        changed = [f for f in owned if current.get(f) != item[f]]
         if changed:
             sys.exit(f'✗ {item["item_id"]} 已經在題庫裡，而且 {changed} 與這次擷取的結果不同 —— '
                      '不覆寫。來源 PDF 變了要先查清楚；題庫被改過就要先還原。')
-        refreshed += _refresh_owned_evidence(current, item)
+        refreshed += _refresh_owned_evidence(current, item, generated_by=generated_by)
     return refreshed
 
 

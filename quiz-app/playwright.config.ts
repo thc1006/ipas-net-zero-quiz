@@ -22,18 +22,18 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    // Firefox / WebKit 只跑 Settings smoke（PR #108：驗自訂 <select> + 色覺模式的跨瀏覽器
-    // 行為），透過 testMatch 限制 —— 不把整套 E2E 乘三，只有 settings-smoke.spec.ts 會在
-    // 這兩個 project 執行。
+    // Firefox / WebKit 只跑跨瀏覽器 smoke，透過 testMatch 限制，不把整套 E2E 乘三：
+    // settings-smoke.spec.ts（PR #108：自訂 <select> + 色覺模式）與 official-mode.spec.ts
+    // （#128：題目來源選單在手機寬度不能把頁面撐寬，選單的固有寬度各引擎不同）。
     {
       name: 'firefox-smoke',
       use: { ...devices['Desktop Firefox'] },
-      testMatch: /settings-smoke\.spec\.ts/,
+      testMatch: /(settings-smoke|official-mode)\.spec\.ts/,
     },
     {
       name: 'webkit-smoke',
       use: { ...devices['Desktop Safari'] },
-      testMatch: /settings-smoke\.spec\.ts/,
+      testMatch: /(settings-smoke|official-mode)\.spec\.ts/,
     },
     // 行動裝置測試（如需可取消註解）
     // {

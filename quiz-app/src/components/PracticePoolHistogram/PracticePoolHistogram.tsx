@@ -1,5 +1,6 @@
 // 加強練習池抽題分佈預覽
 // 啟用後讓使用者看到「下一場測驗的抽題範圍」實際組成（主題庫 + 模擬 + AI 產題）
+import type { JSX } from 'react';
 import { POOL_BY_SUBJECT } from '../../data/practice-pool-counts';
 import type { ExamSubject } from '../../types/quiz';
 import './PracticePoolHistogram.css';

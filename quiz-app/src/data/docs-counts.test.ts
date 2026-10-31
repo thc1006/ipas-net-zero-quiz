@@ -848,11 +848,13 @@ describe('gate 缺口：README / DATA-PROVENANCE 的每一個數字都要有人�
     expect(Number(m![1]), 'README 的「沒有解析題數」與資料不符').toBe(noExp);
     expect(noExp, '這條測試在空轉 —— 全庫都有解析了？').toBeGreaterThan(0);
 
-    // 同一段接著拆成兩群：補寫解析之後剩下的，與（官方只公布答案的）官方公告試題
+    // 同一段接著拆成兩群：補寫解析之後剩下的，與（官方只公布答案的）官方題目。官方題目有兩種：公告試題
+    // （official_exam）與參考樣題（official_sample），只看前者會把新匯入、還沒有解析的參考樣題算進「補寫剩下的」
     const notOfficial = ALL.filter(
       (i) =>
         !((i as unknown as { explanation?: string }).explanation ?? '').trim() &&
-        !('official_exam' in (i as object))
+        !('official_exam' in (i as object)) &&
+        !('official_sample' in (i as object))
     ).length;
     const rest = PROVENANCE.match(/其中 (\d+) 題是補寫解析之後剩下的/);
     expect(rest, 'DATA-PROVENANCE 找不到「其中 N 題是補寫解析之後剩下的」').not.toBeNull();

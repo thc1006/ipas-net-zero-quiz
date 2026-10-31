@@ -801,6 +801,13 @@ const KNOWN_ANSWER_VARIANTS: ReadonlyArray<{ pair: [string, string]; why: string
       'gist[358] 是數據品質管理。（gist[358] 原本答 SRRA 覆核，那才是錯的，已更正。）',
   },
   { pair: ['S_CHU_06-q060', 'S_CHU_06-q078'], why: '來源 PDF 同一題問了兩次、選項組不同；兩個答案都在描述「減緩」—— 同義。（q060 的選項本身是同義反覆，那是來源的問題）' },
+  {
+    pair: ['gist[285]', 'S_IPAS_SAMPLE_114_L11-q001'],
+    why:
+      '同一題、同一個答案 (C)：gist[285] 是參考樣題（114 年版）第一科第 1 題的改寫，答案「從持續不斷補充的自然過程中' +
+      '取得的能量來源」與 PDF 的「從持續不斷地補充的自然過程中得到的能量來源」只差「地」與「取得／得到」，同義。' +
+      '專案所有者決定照 PDF 另收原題（#128）',
+  },
 ];
 
 describe('同一道題不得有兩個不同的正解', () => {
@@ -899,7 +906,7 @@ const CALC_ANSWERS: ReadonlyArray<{
   { id: 'gist[497]', expect: '32.4 tCO2e',    math: '180,000 kg × 0.18 kgCO2e/kg ÷ 1000', inputs: ['180,000', '0.18'] },
   { id: 'gist[498]', expect: '30 tCO2e',      math: '200,000 kg × 0.15 kgCO2e/kg ÷ 1000', inputs: ['200,000', '0.15'] },
   {
-    id: 'S1-p02-q004',
+    id: 'S_IPAS_SAMPLE_114_L12-q004',
     expect: '502,100 公斤',
     math:
       '多來源加總：電力 500,000 kWh × 0.527 = 263,500 kg；柴油 20,000 L × 2.68 = 53,600 kg；' +

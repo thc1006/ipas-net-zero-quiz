@@ -1,5 +1,6 @@
 // SourceBreakdown — ResultPage 顯示「按題目來源分組的正確率」
 // 讓使用者識別「我的主題庫真實水準」 vs 池題練習表現
+import type { JSX } from 'react';
 import type { AnswerRecord } from '../../types/quiz';
 import './SourceBreakdown.css';
 

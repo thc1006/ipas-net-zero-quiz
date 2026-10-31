@@ -10,7 +10,7 @@
 
 | | 題數 | 說明 |
 | --- | ---: | --- |
-| **主題庫** | **979 題** | 考科一 539 + 考科二 440。其中 159 題由來源 PDF 分欄重建 |
+| **主題庫** | **983 題** | 考科一 542 + 考科二 441。其中 159 題由來源 PDF 分欄重建 |
 | **加強練習池**（選用） | **154 題** | 54 題公開模擬題 + 100 題 AI 產題。**預設關閉**，需於設定頁 opt-in |
 
 考科歸屬依官方「iPAS 能力鑑定簡章」§2.5 評鑑內容（`L11` / `L12`）劃分：
@@ -35,6 +35,7 @@ CBAM、ISO 14068-1 屬**科目一**；**科目二只涵蓋 ISO 14064-1 與 ISO 1
 ## 功能
 
 - **練習 / 考試**兩種模式，可依考科與題數出卷
+- **只出官方題目**：題目來源可選全部官方題目、某一場官方公告試題或某一版 iPAS 參考樣題，可與考科組合
 - **AI 解析**（Puter.js，免 API key）
 - **無障礙**：高對比、色覺辨認（CVD）模式、字級調整、深色模式
 - 成績與錯題**匯出**
@@ -79,7 +80,7 @@ CBAM、ISO 14068-1 屬**科目一**；**科目二只涵蓋 ISO 14064-1 與 ISO 1
 
 本工具為非官方 iPAS 備考輔助，題庫整理可能含錯誤，最終以 iPAS 官方公告為準。
 本專案不就內容正確性、可考性、或考試結果提供任何保證。
-（主題庫收錄 iPAS 官網公告的初級公告試題，題卡上標出是哪一次的；要讀圖的題目題庫還不支援，暫不收錄。其餘題目整理自公開資料與社群共筆。）
+（主題庫收錄 iPAS 官網公告的初級公告試題與參考樣題，題卡上標出是哪一次、哪一版的；要讀圖的題目題庫還不支援，暫不收錄。其餘題目整理自公開資料與社群共筆。）
 
 ## 內容時效性
 
@@ -88,7 +89,7 @@ CBAM、ISO 14068-1 屬**科目一**；**科目二只涵蓋 ISO 14064-1 與 ISO 1
 以及下一個到期日（最近的是 **2026-12-15：ISAE 3410 撤回，由 ISSA 5000 取代**）。
 
 `meta.content_review.last_review_date` **不代表整份題庫都查證到那一天** ——
-本輪只實查 **133 / 979** 題。判斷單一題目請看該題的 `metadata.valid_as_of`。
+本輪只實查 **133 / 983** 題。判斷單一題目請看該題的 `metadata.valid_as_of`。
 
 季排程 `quarterly-time-sensitive-verify` 現在做兩件事，但**能力範圍差很多**：
 
@@ -103,7 +104,7 @@ CBAM、ISO 14068-1 屬**科目一**；**科目二只涵蓋 ISO 14064-1 與 ISO 1
 
 ## 開發
 
-需要 Node.js ≥ 20 與 pnpm ≥ 9。
+需要 Node.js 24（確切版本見 `quiz-app/.nvmrc`，CI 與部署都讀它）與 pnpm 12（確切版本見 `quiz-app/package.json` 的 `packageManager`；`corepack enable` 之後會自動用對的版本）。
 
 ```bash
 corepack enable && pnpm install
@@ -117,11 +118,7 @@ pnpm test:e2e       # E2E（playwright）
 pnpm lint && pnpm type-check
 ```
 
-> CI 會先跑 `npm install -g corepack@latest` —— Node 20.18 內建的 Corepack 簽名公鑰
-> 已過期（[nodejs/corepack#612](https://github.com/nodejs/corepack/issues/612)），
-> 不升級會裝不動 pnpm。本機遇到同樣問題時也照做。
-
-**技術棧**：React 18 + TypeScript（strict）／Vite 6／Vitest + Testing Library + Playwright／
+**技術棧**：React 19 + TypeScript（strict）／Vite 8／Vitest + Testing Library + Playwright／
 GitHub Actions（lint · tsc · test · build · e2e · CodeQL · Codecov）／GitHub Pages 自動部署。
 
 ## 授權

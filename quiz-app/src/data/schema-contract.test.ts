@@ -184,6 +184,45 @@ describe('同一批壞資料，schema 與手寫 validator 必須都拒收', () =
     });
   });
 
+  // 參考樣題的出處（official_sample）：匯入的題目在 our_unique_items，主庫配對的那一題在 gist_items，兩處都要擋
+  const sampleBreakages: ReadonlyArray<readonly [string, (o: Record<string, unknown>) => void]> = [
+    ['edition 不是三位數的民國年', (o) => { o.edition = '114 年'; }],
+    ['edition 是兩位數', (o) => { o.edition = '14'; }],
+    ['edition 是數字', (o) => { o.edition = 114; }],
+    ['subject 不是「L11」這種格式', (o) => { o.subject = '第一科'; }],
+    ['subject 是三位數', (o) => { o.subject = 'L111'; }],
+    ['question_number 是 0', (o) => { o.question_number = 0; }],
+    ['question_number 是字串', (o) => { o.question_number = '1'; }],
+    ['question_number 是小數', (o) => { o.question_number = 1.5; }],
+    ['缺 edition', (o) => { delete o.edition; }],
+    ['缺 subject', (o) => { delete o.subject; }],
+    ['缺 question_number', (o) => { delete o.question_number; }],
+    ['多出不認得的欄位', (o) => { o.session = '115-01'; }],
+  ];
+
+  for (const bank of ['our_unique_items', 'gist_items'] as const) {
+    it.each(sampleBreakages)(`主題庫 ${bank}：official_sample 的%s，兩邊都要擋`, (what, mutate) => {
+      const doc = clone(dataset) as unknown as Record<typeof bank, Record<string, unknown>[]>;
+      const item = doc[bank].find((i) => i.official_sample);
+      expect(item, `${bank} 裡沒有參考樣題：這組案例在空轉`).toBeDefined();
+      mutate(item!.official_sample as Record<string, unknown>);
+      expect(validateMainSchema(doc), `${what}：JSON Schema 放行了`).toBe(false);
+      expect(validateMainBank(doc).length, `${what}：手寫 validator 放行了`).toBeGreaterThan(0);
+    });
+
+    it.each(officialNotObjects)(`主題庫 ${bank}：official_sample 是%s（不是物件），兩邊都要擋`, (what, value) => {
+      const doc = clone(dataset) as unknown as Record<typeof bank, Record<string, unknown>[]>;
+      const index = doc[bank].findIndex((i) => i.official_sample);
+      expect(index, `${bank} 裡沒有參考樣題：這組案例在空轉`).toBeGreaterThanOrEqual(0);
+      doc[bank][index].official_sample = value;
+      expect(validateMainSchema(doc), `${what}：JSON Schema 放行了`).toBe(false);
+      expect(validateMainBank(doc), `${what}：手寫 validator 沒有說它不是物件`).toContainEqual({
+        path: `${bank}[${index}].official_sample`,
+        message: 'must be object',
+      });
+    });
+  }
+
   it('沒有做壞的原始資料，兩邊都要放行（確認上面不是「什麼都擋」）', () => {
     expect(validatePoolSchema(clone(pool))).toBe(true);
     expect(validatePracticePool(clone(pool))).toEqual([]);

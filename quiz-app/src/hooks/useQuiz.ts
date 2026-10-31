@@ -13,6 +13,7 @@ import {
   getRandomQuestionsFromPool,
   dedupeByContent,
   allQuestions,
+  getSourceCandidates,
 } from '../data/questions';
 import { loadPracticePool, toQuizQuestion } from '../utils/practice-pool';
 import {
@@ -54,6 +55,20 @@ export const defaultConfig: QuizConfig = {
 };
 
 /**
+ * #128 只出官方題目：範圍只有 getSourceCandidates 給的官方題。官方題不夠時就出實際有的題數
+ * （首頁開始前已經告知），不補非官方題、不混練習池。隨機時沿用主題庫同一套洗牌。
+ */
+function pickFromSource(config: QuizConfig): QuizQuestion[] {
+  const candidates = getSourceCandidates(config.subject, config.questionSource ?? 'all');
+  return config.shuffleQuestions
+    ? getRandomQuestionsFromPool(candidates, config.questionCount, 'all', true)
+    : candidates.slice(0, config.questionCount);
+}
+
+/** 只出官方題目嗎？沒有 questionSource（舊版存下的設定）等同 'all' */
+const isSourceFiltered = (config: QuizConfig): boolean => (config.questionSource ?? 'all') !== 'all';
+
+/**
  * 測驗邏輯 Hook
  */
 export function useQuiz() {
@@ -67,11 +82,14 @@ export function useQuiz() {
     if (state.isActive) saveProgress(state);
   }, [state]);
 
-  /** 開始測驗 */
-  const startQuiz = useCallback((config: QuizConfig) => {
+  /** 開始測驗；只出官方題目而一題都抽不到時不開始，回傳 false（全部題目的路徑照舊，一律回傳 true） */
+  const startQuiz = useCallback((config: QuizConfig): boolean => {
     let questions: QuizQuestion[];
 
-    if (config.shuffleQuestions) {
+    if (isSourceFiltered(config)) {
+      questions = pickFromSource(config);
+      if (questions.length === 0) return false;
+    } else if (config.shuffleQuestions) {
       // 隨機抽題 —— 無標準答案的題目一律不出（練習與考試皆同）。
       // 這類題答案是 null（來源互斥或多重正解，已排除計分），出到使用者面前
       // 只會看到「沒有正解可對」而困惑（Refs #93/#94/#95）。
@@ -98,17 +116,24 @@ export function useQuiz() {
       config,
     });
     setQuestionStartTime(Date.now());
+    return true;
   }, []);
 
   /**
    * 開始測驗（async 版本）：當 config.includePracticePool 為 true 時，
    * 動態載入練習池並混入抽題範圍；否則行為等同 startQuiz。
+   * 只出官方題目時（questionSource 不是 'all'）一律不載入、不混入練習池，只從官方題抽；
+   * 一題都抽不到時回傳 false、不開始測驗（與 startQuiz 相同）。
    * 練習池僅在使用者於 settings 啟用後才應傳入 includePracticePool=true。
    */
-  const startQuizWithPool = useCallback(async (config: QuizConfig) => {
+  const startQuizWithPool = useCallback(async (config: QuizConfig): Promise<boolean> => {
     let questions: QuizQuestion[];
 
-    if (config.includePracticePool) {
+    if (isSourceFiltered(config)) {
+      // 只出官方題目時一律不混練習池：不載入、不合併
+      questions = pickFromSource(config);
+      if (questions.length === 0) return false;
+    } else if (config.includePracticePool) {
       const pool = await loadPracticePool();
       const poolItems = pool.items
         .map(toQuizQuestion)
@@ -160,6 +185,7 @@ export function useQuiz() {
       config,
     });
     setQuestionStartTime(Date.now());
+    return true;
   }, []);
 
   /** 回答題目 */

@@ -2,7 +2,14 @@
 import { describe, it, expect } from 'vitest';
 import datasetRaw from '../data/integrated_dataset.json';
 import type { UniqueQuestion } from '../types/quiz';
-import { officialExamLabel, officialExamPlace, officialExamReference } from './official-exam';
+import {
+  officialExamLabel,
+  officialExamPlace,
+  officialExamReference,
+  officialSampleLabel,
+  officialSampleReference,
+  sampleEditionLabel,
+} from './official-exam';
 
 const exam = { session: '115-01', exam_date: '2026-05-16', subject: 'L11', question_number: 5 };
 
@@ -53,6 +60,39 @@ describe('畫面的稱呼與匯入工具寫進資料的 note 一致', () => {
         );
       })
       .map((it) => it.item_id);
+    expect(bad).toEqual([]);
+  });
+});
+
+describe('參考樣題的稱呼', () => {
+  const sample = { edition: '114', subject: 'L12', question_number: 4 };
+
+  it('題卡上的標籤寫出是哪一版的官方參考樣題', () => {
+    expect(officialSampleLabel(sample)).toBe('官方參考樣題（114 年版）');
+    expect(sampleEditionLabel('115')).toBe('參考樣題（115 年版）');
+  });
+
+  it('完整出處：版次、科目、題號（科目與題號的說法與公告試題相同）', () => {
+    expect(officialSampleReference(sample)).toBe('參考樣題（114 年版）第二科第 4 題');
+    expect(officialSampleReference({ ...sample, subject: 'L21' })).toBe('參考樣題（114 年版）L21 第 4 題');
+  });
+});
+
+// 參考樣題的匯入工具（tools/import_official_sample.py）也用自己的一份詞彙寫 note：
+// 「參考樣題（114 年版）第一科第 1 題：PDF 印「解答：(C)」。」用題庫裡的每一題對帳（主庫配對的那一題也是）
+describe('畫面的稱呼與參考樣題匯入工具寫進資料的 note 一致', () => {
+  const ds = datasetRaw as unknown as {
+    our_unique_items: UniqueQuestion[];
+    gist_items: { official_sample?: UniqueQuestion['official_sample']; answer?: string; metadata?: UniqueQuestion['metadata'] }[];
+  };
+  const samples = [...ds.gist_items, ...ds.our_unique_items].filter((it) => it.official_sample);
+
+  it('每一題參考樣題的 note 都是「出處：PDF 印「解答：(X)」。」', () => {
+    expect(samples.length, '題庫裡沒有參考樣題：這條測試在空轉').toBeGreaterThan(0);
+    const bad = samples.filter((it) => {
+      const note = (it.metadata?.evidence ?? []).find((e) => e.generated_by === 'tools/import_official_sample.py')?.note;
+      return note !== `${officialSampleReference(it.official_sample!)}：PDF 印「解答：(${it.answer})」。`;
+    });
     expect(bad).toEqual([]);
   });
 });

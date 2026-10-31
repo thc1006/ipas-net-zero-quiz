@@ -592,14 +592,15 @@ def _origin(char: dict) -> tuple[float, float]:
     return char['matrix'][4], char['top'] + char['y1'] - char['matrix'][5]
 
 
-def _same_glyph(char_origin, char_size, origin, size) -> bool:
+def _same_glyph(char_origin, char_size, origin, size, *, x_tolerance: float = ORIGIN) -> bool:
     """同一個字形：起點相差 ORIGIN 以內、字級相差 SIZE_MATCH 以內。以前比的是「左緣 0.5pt、垂直中心半個字級」：
-    字級由 PDF 決定，400pt 的隱形字就能借到 200pt 外另一列同一個字母的「看得見」（審查實測：兩題答案互換）。"""
-    return (abs(char_origin[0] - origin[0]) <= ORIGIN and abs(char_origin[1] - origin[1]) <= ORIGIN
+    字級由 PDF 決定，400pt 的隱形字就能借到 200pt 外另一列同一個字母的「看得見」（審查實測：兩題答案互換）。
+    x_tolerance 是起點水平方向的容差，公告試題用 ORIGIN；Acrobat 輸出的參考樣題另給（見 ipas_sample_pdf 的 ORIGIN_X）。"""
+    return (abs(char_origin[0] - origin[0]) <= x_tolerance and abs(char_origin[1] - origin[1]) <= ORIGIN
             and abs(char_size - size) <= SIZE_MATCH * max(char_size, size))
 
 
-def _drawn(char: dict, glyphs) -> bool:
+def _drawn(char: dict, glyphs, *, x_tolerance: float = ORIGIN) -> bool:
     """pdfplumber 的字在 PyMuPDF 畫出來的字形（_visible_glyphs）裡找得到：同一個字、同一個起點與字級（_same_glyph），
     而且畫出來的樣子就是 pdfminer 算的樣子 —— rawdict 裡這個字形自己的某一筆紀錄同時符合：
     - 兩個方向的縮放也與 pdfminer 的字級（字框的高）相差 SIZE_MATCH 以內：兩套程式讀到不同的矩陣時，閱讀器上的字
@@ -611,7 +612,7 @@ def _drawn(char: dict, glyphs) -> bool:
     對不上也可能是兩邊解碼不同（少見的字型編碼），一樣報錯。"""
     here = _origin(char)
     for x, y, size, records in glyphs.get(char['text'], ()):
-        if _same_glyph(here, char['size'], (x, y), size) and any(
+        if _same_glyph(here, char['size'], (x, y), size, x_tolerance=x_tolerance) and any(
                 abs(scale - char['size']) <= SIZE_MATCH * max(scale, char['size'])
                 and ink[2] > ink[0] and ink[3] > ink[1] and char['top'] <= (ink[1] + ink[3]) / 2 <= char['bottom']
                 for scale, ink in records):
@@ -619,9 +620,10 @@ def _drawn(char: dict, glyphs) -> bool:
     return False
 
 
-def _check_chars(chars: list[dict], where: str, glyphs) -> None:
+def _check_chars(chars: list[dict], where: str, glyphs, *, x_tolerance: float = ORIGIN) -> None:
     """表格一列裡的字：碼位（空白字元也查：只有 SPACES 是真正的空白）、方向、字寬、有沒有真的畫出來（看得清楚、
-    沒被剪掉，見 _visible_glyphs）、有沒有疊印（同一個字印兩次，或不同的字疊在一起）。where 是報錯時說的位置。"""
+    沒被剪掉，見 _visible_glyphs）、有沒有疊印（同一個字印兩次，或不同的字疊在一起）。where 是報錯時說的位置；
+    x_tolerance 傳給 _same_glyph。"""
     seen: dict[str, list[dict]] = {}
     for c in chars:
         text = c['text']
@@ -637,7 +639,7 @@ def _check_chars(chars: list[dict], where: str, glyphs) -> None:
         if c['x1'] - c['x0'] < SQUASHED * c['size']:
             raise ValueError(f'{where}有壓扁的字「{text}」{at}：字寬 {c["x1"] - c["x0"]:.2f}pt，不到字級 {c["size"]:g}pt '
                              '的一成 —— 閱讀器上幾乎看不到，會被混進題目，需要人工確認。')
-        if not _drawn(c, glyphs):
+        if not _drawn(c, glyphs, x_tolerance=x_tolerance):
             raise ValueError(f'{where}的字「{text}」{at}在 PyMuPDF 畫出的頁面上找不到：沒有真的畫出來（看不清楚：與白紙的'
                              f'對比不到 {MIN_CONTRAST}:1，或被剪裁掉、沒有墨跡），或兩套 PDF 程式讀到的字、位置、大小不同'
                              ' —— 會被混進題目，需要人工確認。')
@@ -725,17 +727,18 @@ def _log_drawings(log, box) -> int:
     return sum(1 for kind, b in log if kind in ('fill-path', 'stroke-path') and _intersects(b, inner))
 
 
-def _unextracted_glyph(trace, chars):
+def _unextracted_glyph(trace, chars, *, x_tolerance: float = ORIGIN):
     """反方向的核對：PyMuPDF 畫出來、pdfminer 卻沒有抽到的字（空白不算）：同一個字、同一個起點與字級（_same_glyph，
     與 _drawn 相同）。內容串流已經限定成兩邊讀法一致的寫法（_content_grammar），剩下的是字型：ToUnicode 把字對到
-    空字串，閱讀器照畫，pdfminer 抽出來是空的。8 份真實卷全頁 90,263 個字形都對得上。回傳 (字, 字框)，沒有就回 None。"""
+    空字串，閱讀器照畫，pdfminer 抽出來是空的。8 份真實卷全頁 90,263 個字形都對得上。回傳 (字, 字框)，沒有就回 None。
+    x_tolerance 傳給 _same_glyph（參考樣題另給，見 ipas_sample_pdf 的 ORIGIN_X）。"""
     known: dict[str, list[tuple[tuple[float, float], float]]] = {}
     for c in chars:
         known.setdefault(c['text'], []).append((_origin(c), c['size']))
     for span in trace:
         for ucs, _, origin, bbox in span['chars']:
             text = chr(ucs)
-            if not text.isspace() and not any(_same_glyph(here, size, origin, span['size'])
+            if not text.isspace() and not any(_same_glyph(here, size, origin, span['size'], x_tolerance=x_tolerance)
                                                for here, size in known.get(text, ())):
                 return text, bbox
     return None
@@ -1031,7 +1034,8 @@ def _annotations(page) -> list[str]:
     return kinds
 
 
-def _font_problem(font: dict) -> str | None:
+def _font_problem(font: dict, *, embedded_descriptor_keys: frozenset[str] = frozenset(),
+                  simple_fonts: frozenset[str] = SIMPLE_FONTS, simple_tounicode: bool = False) -> str | None:
     """字型字典（pdfminer 讀到的）裡 Word 不會寫、各家讀法可能不同的地方：回傳「/鍵（原因）」，沒有就回 None。
     畫哪一個字形、抽出哪一個字，各家都照字型的這幾張對照表；寫法不同，就可能畫的是一個字、抽出來是另一個：
     - 內嵌的 Type0 只收 Word 的寫法：Identity-H（字碼就是 CID）、一個 CIDFontType2、/CIDToGIDMap /Identity（CID 就是
@@ -1053,7 +1057,11 @@ def _font_problem(font: dict) -> str | None:
     - /DW 是數字、/W 是陣列：pdfminer 拿它們算字寬，別的寫法讓它出錯。字型描述只收 DESCRIPTOR_KEYS：沒有內嵌的字型，
       閱讀器照描述換字型，/FontFamily (Symbol) 讓 Poppler 換成符號字型，答案 C 畫成空白（第十三輪審查實測）。
     8 份真實卷全是這些寫法（簡單字型的 /BaseFont 只有 ArialMT、TimesNewRomanPSMT、TimesNewRomanPS-BoldMT 與內嵌的
-    DFKaiShu-SB-Estd-BF）；沒有內嵌的 Type1 與 Type0 是 PyMuPDF 內建字型的寫法。Type 3 另外報（_resources）。"""
+    DFKaiShu-SB-Estd-BF）；沒有內嵌的 Type1 與 Type0 是 PyMuPDF 內建字型的寫法。Type 3 另外報（_resources）。
+    不是 Word 輸出的 PDF（參考樣題是 Acrobat 輸出的，見 ipas_sample_pdf）另給三個參數，預設就是 Word 的規則：
+    embedded_descriptor_keys 是內嵌的字型的字型描述另外可以寫的欄位（閱讀器照描述換字型只發生在沒有內嵌時）；
+    simple_fonts 換掉 SIMPLE_FONTS；simple_tounicode 讓內嵌的簡單字型可以帶 /ToUnicode，但每一個字碼對到的字都要與
+    /WinAnsiEncoding 相同（_tounicode_mismatch）：字形照編碼選，抽出來的字照 ToUnicode，兩者一致才是同一個字。"""
     from pdfminer.pdftypes import PDFStream  # 延後 import：只處理列的單元測試不需要它
     from pdfplumber.utils import resolve
 
@@ -1071,10 +1079,16 @@ def _font_problem(font: dict) -> str | None:
             return '/DescendantFonts（要剛好一個 CIDFont）'
     descriptor = resolve((font if kid is None else kid).get('FontDescriptor'))
     files = [key for key in FONT_FILES if isinstance(descriptor, dict) and key in descriptor]
-    if isinstance(descriptor, dict) and (extra := sorted(set(descriptor) - DESCRIPTOR_KEYS)):
+    if files and not all(isinstance(resolve(descriptor[key]), PDFStream) for key in files):
+        return f'/{files[0]}（字型檔要是串流：鍵寫了、值不是字型檔時，閱讀器當成沒有內嵌，照字型描述換字型）'
+    allowed = DESCRIPTOR_KEYS | (embedded_descriptor_keys if files else frozenset())
+    if isinstance(descriptor, dict) and (extra := sorted(set(descriptor) - allowed)):
         return (f'/FontDescriptor /{extra[0]}（字型描述只收 Word 會寫的欄位：沒有內嵌的字型，閱讀器照它換字型，'
                 '/FontFamily (Symbol) 就讓 Poppler 換成符號字型）')
-    if 'ToUnicode' in font and (kid is None or not files):
+    if 'ToUnicode' in font and kid is None and files and simple_tounicode:
+        if mismatch := _tounicode_mismatch(font):
+            return f'/ToUnicode（{mismatch}：字形照編碼選，抽出來的字照 ToUnicode，兩者要是同一個字）'
+    elif 'ToUnicode' in font and (kid is None or not files):
         return ('/ToUnicode（只有內嵌的 Type0 字型可以帶：簡單字型的字由編碼決定；沒有內嵌的字型，閱讀器照字碼換字型畫，'
                 '抽出來的卻是 ToUnicode 對到的字）')
     encoding = name(font.get('Encoding'))
@@ -1082,7 +1096,7 @@ def _font_problem(font: dict) -> str | None:
         if encoding != 'WinAnsiEncoding':
             return '/Encoding（簡單字型只收 /WinAnsiEncoding：/Differences 能把字碼改對到別的字形）'
         base = name(font.get('BaseFont'))  # 不是 UTF-8 的名稱，pdfminer 給的是 bytes
-        if not isinstance(base, str) or SUBSET.sub('', base) not in SIMPLE_FONTS:
+        if not isinstance(base, str) or SUBSET.sub('', base) not in simple_fonts:
             return f'/BaseFont /{base}（簡單字型只收真實卷用的幾種：符號字型不照編碼選字形，答案 C 畫成星形符號）'
         if descriptor is not None and (not isinstance(descriptor, dict) or resolve(descriptor.get('Flags')) != 32):
             return '/FontDescriptor（/Flags 只收 32：非符號字型）'
@@ -1124,7 +1138,29 @@ def _font_problem(font: dict) -> str | None:
     return None
 
 
-def _resources(page) -> list[str]:
+def _tounicode_mismatch(font: dict) -> str | None:
+    """簡單字型的 /ToUnicode 與 /WinAnsiEncoding 第一個不一致的字碼（「字碼 0x42 對到「D」，WinAnsiEncoding 是「B」」），
+    都一致就回 None。ToUnicode 不是串流、或字碼超過一個位元組，也算不一致。"""
+    from io import BytesIO
+
+    from pdfminer.cmapdb import CMapParser, FileUnicodeMap  # 延後 import：只處理列的單元測試不需要它
+    from pdfminer.encodingdb import EncodingDB
+    from pdfminer.pdftypes import PDFStream
+    from pdfplumber.utils import resolve
+
+    stream = resolve(font.get('ToUnicode'))
+    if not isinstance(stream, PDFStream):
+        return 'ToUnicode 不是串流'
+    cmap = FileUnicodeMap()
+    CMapParser(cmap, BytesIO(stream.get_data())).run()
+    winansi = EncodingDB.get_encoding('WinAnsiEncoding')
+    for code, text in sorted(cmap.cid2unichr.items()):
+        if winansi.get(code) != text:
+            return f'字碼 {code:#04x} 對到「{text}」，WinAnsiEncoding 是「{winansi.get(code, "（沒有這個字碼）")}」'
+    return None
+
+
+def _resources(page, **font_rules) -> list[str]:
     """頁面資源裡 Word 不會寫的東西：圖形狀態（ExtGState）只准 /Type、/BM /Normal（或 /Compatible）、/CA、/ca、
     /SMask /None；字型不准 Type 3，其他的照 _font_problem。回傳問題清單（「圖形狀態 GS9 的 /TR」「Type 3 字型 F3」
     「字型 F1 的 /ToUnicode（…）」）。
@@ -1136,7 +1172,8 @@ def _resources(page) -> list[str]:
       參照改用上層的（審查實測：PDFium 整頁中文變亂碼、畫出上層的 Type 3 字形；/Parent 指向樹外的節點，兩邊讀到
       不同的資源）。
     - 字型表、圖形狀態表與其中每一項都要是字典（不是字典時，這裡不猜各家怎麼讀）。
-    8 份真實卷的圖形狀態只有 /BM /Normal 與 /CA、/ca 1，字型只有 Type0 與 TrueType，每一頁都有自己的 /Resources 字典。"""
+    8 份真實卷的圖形狀態只有 /BM /Normal 與 /CA、/ca 1，字型只有 Type0 與 TrueType，每一頁都有自己的 /Resources 字典。
+    font_rules 原樣傳給 _font_problem（不是 Word 輸出的 PDF 用）。"""
     from pdfplumber.utils import resolve  # 延後 import：只處理列的單元測試不需要它
 
     def name(value):
@@ -1169,7 +1206,7 @@ def _resources(page) -> list[str]:
             problems.append(f'字型 {key}（不是字典）')
         elif name(font.get('Subtype')) == 'Type3':
             problems.append(f'Type 3 字型 {key}')
-        elif problem := _font_problem(font):
+        elif problem := _font_problem(font, **font_rules):
             problems.append(f'字型 {key} 的 {problem}')
     return problems
 

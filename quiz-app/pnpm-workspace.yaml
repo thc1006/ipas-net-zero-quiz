@@ -1,0 +1,21 @@
+# pnpm 11 起不再讀 package.json 的 "pnpm" 欄位，pnpm 的設定一律寫在這裡。
+
+# 不讓 pnpm 依 packageManager 自己換版本，版本改由 CI 的 pnpm/action-setup 與本機的 corepack 把關
+# （兩者本來就讀 packageManager）。不這樣做，pnpm 會在 pnpm-lock.yaml 最前面多寫一份
+# 「環境文件」（packageManagerDependencies）；GitHub 的 dependency graph 只讀第一份 YAML 文件，
+# 會把整個專案讀成零個相依，dependency review 與 Dependabot 就什麼都看不到
+# （dependabot/dependabot-core#15904）。download、warn、error 三種值都會寫出那份文件，只有 ignore 不會。
+pmOnFail: ignore
+
+# 發布未滿 24 小時的版本不收：被入侵的套件版本多半在幾小時內就被發現、下架。
+# pnpm 12 的預設也是 1440 分鐘，但沒寫出來時不會擋：pnpm add 指定一個太新的版本，pnpm 會自己在
+# 這裡加 minimumReleaseAgeExclude 例外放行。寫出 minimumReleaseAge 之後，非互動環境（CI）會直接
+# 安裝失敗，互動終端機會先詢問要不要加例外（實測）。minimumReleaseAgeStrict 是 pnpm 自動放行時
+# 提示要打開的開關，一併寫上。
+minimumReleaseAge: 1440
+minimumReleaseAgeStrict: true
+
+# 依賴的安裝腳本預設不執行；沒列在這裡、又帶安裝腳本的套件，安裝會直接失敗（strictDepBuilds）。
+# fsevents 只裝在 macOS，安裝腳本是 node-gyp rebuild；套件本身就附預先編好的 binary，不需要重編。
+allowBuilds:
+  fsevents: false

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "description": "來源 PDF 逐題的憑證：被刪除後還原的題目，以及匯入的官方公告試題。來源 PDF 的**每一題**都有交代：restored（還原進 dataset）、imported（官方公告試題，匯入 dataset）、duplicate_within_source（PDF 自己重印）、duplicate_in_dataset（主庫已有相同題）、not_imported_figure（官方公告試題要讀圖、題庫還不支援圖片：登記在 figure_questions，不收錄，寫明理由）。任何一題交代不出來就是 UNACCOUNTED —— 產生 manifest 時直接失敗，不會安靜地當成「重複」放過。",
+    "description": "來源 PDF 逐題的憑證：被刪除後還原的題目，以及匯入的官方公告試題與參考樣題。來源 PDF 的**每一題**都有交代：restored（還原進 dataset）、imported（官方公告試題與參考樣題，匯入 dataset）、duplicate_within_source（PDF 自己重印）、duplicate_in_dataset（主庫已有相同題）、not_imported_figure（官方公告試題要讀圖、題庫還不支援圖片：登記在 figure_questions，不收錄，寫明理由）。任何一題交代不出來就是 UNACCOUNTED —— 產生 manifest 時直接失敗，不會安靜地當成「重複」放過。",
     "hash_fields": {
       "raw_pdf_text_sha256": "PDF 原文（擷取後、未套用任何修正：雙欄的模擬卷分欄擷取，官方公告試題逐列擷取表格）。拿原始 PDF 重跑就該得到這個值。",
       "canonical_source_text_sha256": "套用 transformations 所列的修正之後的來源文字。dataset 應該等於這個。",
@@ -9,13 +9,13 @@
       "why": "舊版只存一個 pdf_text_sha256，名字宣稱是「PDF 裡的文字」，實際卻是「套用修正之後」的文字（S_CHU_06 第 37 題的選項標號原文是 (A)(B)(B)(C)，被改成 (A)(B)(C)(D)）。結果任何人拿原始 PDF 重算都會對不上，而且看不出為什麼。一條只有作者本人重算才對得上的證據鏈，不是證據鏈。"
     },
     "generated_by": "tools/restore_from_source_pdf.py",
-    "source_question_total": 370,
+    "source_question_total": 380,
     "restored_count": 159,
-    "imported_count": 198,
+    "imported_count": 207,
     "disposition_summary": {
-      "duplicate_in_dataset": 3,
+      "duplicate_in_dataset": 4,
       "duplicate_within_source": 8,
-      "imported": 198,
+      "imported": 207,
       "not_imported_figure": 2,
       "restored": 159
     },
@@ -85,6 +85,28 @@
           "9": "題幹的「下圖」是校園配置圖：大學（學校代碼）、附設醫院（醫事機構代碼）、便利商店（公司／商業登記）各有各的登記，以點陣圖呈現：只有文字無法作答，題庫還不支援圖片。",
           "15": "計算要用的各交通工具排放係數表以點陣圖呈現：只有文字無法作答，題庫還不支援圖片。"
         }
+      },
+      "S_IPAS_SAMPLE_114_L11": {
+        "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+        "sha256": "c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160",
+        "title": "淨零碳規劃管理師能力鑑定 參考樣題(114 年版) L11 淨零碳規劃管理基礎概論",
+        "exam_subject": "考科1",
+        "layout": "ipas_sample",
+        "kind": "official_sample",
+        "edition": "114",
+        "published_on": "2025-12-26",
+        "subject": "L11"
+      },
+      "S_IPAS_SAMPLE_114_L12": {
+        "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+        "sha256": "c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160",
+        "title": "淨零碳規劃管理師能力鑑定 參考樣題(114 年版) L12 淨零碳盤查規範與程序概要",
+        "exam_subject": "考科2",
+        "layout": "ipas_sample",
+        "kind": "official_sample",
+        "edition": "114",
+        "published_on": "2025-12-26",
+        "subject": "L12"
       }
     },
     "source_pdf_typos": {
@@ -99,7 +121,9 @@
       "S_IPAS_115_01_L11": [],
       "S_IPAS_115_01_L12": [],
       "S_IPAS_115_02_L11": [],
-      "S_IPAS_115_02_L12": []
+      "S_IPAS_115_02_L12": [],
+      "S_IPAS_SAMPLE_114_L11": [],
+      "S_IPAS_SAMPLE_114_L12": []
     },
     "how_to_reproduce": [
       "uv sync --locked --project tools",
@@ -147,12 +171,18 @@
         "subject": "S_IPAS_115_02_L12",
         "status": "OFFICIAL",
         "note": "iPAS 官方公告試題（115 年第二次，考試日期 2026-08-15，官網 2026-08-31 公告），答案取自 PDF 的答案欄。PDF 首頁註明「※相關法規可能修訂，試題參考答案以該次考試公告時之法規內容為準。」—— 所以每一題都標時效，valid_as_of 為考試日期。第 9、15 題的題目要讀圖（校園配置圖、排放係數表，都是點陣圖），題庫還不支援圖片，不收錄（not_imported_figure，理由記在處置裡）。"
+      },
+      "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf": {
+        "items": 9,
+        "subject": "S_IPAS_SAMPLE_114_L11、S_IPAS_SAMPLE_114_L12",
+        "status": "OFFICIAL",
+        "note": "iPAS 官方參考樣題（114 年版），答案取自 PDF 每一題下方的「解答：(X)」。一份 PDF 兩頁，第一頁第一科、第二頁第二科，各 5 題，依科目拆成兩個來源。第一科第 2 題與主庫的 gist_items[287] 是同一題（題幹不計空白、選項、答案都相同），不另外匯入（duplicate_in_dataset，見 DATASET_DUPLICATES）。"
       }
     },
     "tried_and_rejected": {
       "answer_vs_explanation_detector": "曾寫過一支「答案的文字對不對得上該題解析」的偵測器，想用**單一來源的內部一致性**取代交叉比對。**在已知有病的 214245506.pdf 上驗證後放棄**：已知錯位的題目分數是 0.00 / 0.12 / 0.58，而**健康的題目也有 0.00 / 0.06 / 0.06** ——分佈完全重疊，**沒有鑑別力**；而且 159 題裡只有 21 題抽得出解析。**一個分不開陽性與陰性的偵測器，它的綠燈是一句假的保證。** 已刪除，不 ship。"
     },
-    "imported_note": "官方公告試題（SOURCES 的 kind 為 official_exam）不是被刪除後還原的題目：在題庫裡的記為 imported，不計入 restored_count。其餘規則與還原題相同：逐題記錄 PDF 的 sha256、頁碼、題號、PDF 印的答案與三個文字 hash，任何偏離都要列明。"
+    "imported_note": "官方公告試題與參考樣題（SOURCES 的 kind 為 official_exam、official_sample）不是被刪除後還原的題目：在題庫裡的記為 imported，不計入 restored_count。其餘規則與還原題相同：逐題記錄 PDF 的 sha256、頁碼、題號、PDF 印的答案與三個文字 hash，任何偏離都要列明。"
   },
   "entries": [
     {
@@ -6302,6 +6332,159 @@
       "transformations": [],
       "matches_source": true,
       "dataset_answer": "A"
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L11-q001",
+      "source_id": "S_IPAS_SAMPLE_114_L11",
+      "source_document": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+      "source_sha256": "c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160",
+      "page": 1,
+      "column": null,
+      "source_question_number": 1,
+      "answer_key": "C",
+      "answer_override": null,
+      "raw_pdf_text_sha256": "eba973c035e154ab98a7e3121367b9084799adf8ade4cba2fabe81f0fd1b2860",
+      "canonical_source_text_sha256": "eba973c035e154ab98a7e3121367b9084799adf8ade4cba2fabe81f0fd1b2860",
+      "dataset_text_sha256": "eba973c035e154ab98a7e3121367b9084799adf8ade4cba2fabe81f0fd1b2860",
+      "transformations": [],
+      "matches_source": true,
+      "dataset_answer": "C"
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L11-q003",
+      "source_id": "S_IPAS_SAMPLE_114_L11",
+      "source_document": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+      "source_sha256": "c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160",
+      "page": 1,
+      "column": null,
+      "source_question_number": 3,
+      "answer_key": "B",
+      "answer_override": null,
+      "raw_pdf_text_sha256": "9fdacccc48e395717f6d4b6bdb3f3409b4b7c57c20662336a0bcfc41fc99b282",
+      "canonical_source_text_sha256": "9fdacccc48e395717f6d4b6bdb3f3409b4b7c57c20662336a0bcfc41fc99b282",
+      "dataset_text_sha256": "9fdacccc48e395717f6d4b6bdb3f3409b4b7c57c20662336a0bcfc41fc99b282",
+      "transformations": [],
+      "matches_source": true,
+      "dataset_answer": "B"
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L11-q004",
+      "source_id": "S_IPAS_SAMPLE_114_L11",
+      "source_document": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+      "source_sha256": "c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160",
+      "page": 1,
+      "column": null,
+      "source_question_number": 4,
+      "answer_key": "A",
+      "answer_override": null,
+      "raw_pdf_text_sha256": "e8be1031914fdafa9f0489e79908096c9c8d9653c00c2d9fbdb067f13e5757bb",
+      "canonical_source_text_sha256": "e8be1031914fdafa9f0489e79908096c9c8d9653c00c2d9fbdb067f13e5757bb",
+      "dataset_text_sha256": "e8be1031914fdafa9f0489e79908096c9c8d9653c00c2d9fbdb067f13e5757bb",
+      "transformations": [],
+      "matches_source": true,
+      "dataset_answer": "A"
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L11-q005",
+      "source_id": "S_IPAS_SAMPLE_114_L11",
+      "source_document": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+      "source_sha256": "c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160",
+      "page": 1,
+      "column": null,
+      "source_question_number": 5,
+      "answer_key": "B",
+      "answer_override": null,
+      "raw_pdf_text_sha256": "a871ba6dda77eb474749e7cecbb4dddedd772e488e0ced3738e341582ad3d68a",
+      "canonical_source_text_sha256": "a871ba6dda77eb474749e7cecbb4dddedd772e488e0ced3738e341582ad3d68a",
+      "dataset_text_sha256": "a871ba6dda77eb474749e7cecbb4dddedd772e488e0ced3738e341582ad3d68a",
+      "transformations": [],
+      "matches_source": true,
+      "dataset_answer": "B"
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L12-q001",
+      "source_id": "S_IPAS_SAMPLE_114_L12",
+      "source_document": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+      "source_sha256": "c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160",
+      "page": 2,
+      "column": null,
+      "source_question_number": 1,
+      "answer_key": "B",
+      "answer_override": null,
+      "raw_pdf_text_sha256": "21a5798e722af191728b644ba200f98db2bcc3434438f9a8139c63346d060994",
+      "canonical_source_text_sha256": "21a5798e722af191728b644ba200f98db2bcc3434438f9a8139c63346d060994",
+      "dataset_text_sha256": "21a5798e722af191728b644ba200f98db2bcc3434438f9a8139c63346d060994",
+      "transformations": [],
+      "matches_source": true,
+      "dataset_answer": "B"
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L12-q002",
+      "source_id": "S_IPAS_SAMPLE_114_L12",
+      "source_document": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+      "source_sha256": "c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160",
+      "page": 2,
+      "column": null,
+      "source_question_number": 2,
+      "answer_key": "D",
+      "answer_override": null,
+      "raw_pdf_text_sha256": "643d125e90557c28b52f3eaefd7eb4df5238b44aae4724c4a1bcd0f4ac54ebbe",
+      "canonical_source_text_sha256": "643d125e90557c28b52f3eaefd7eb4df5238b44aae4724c4a1bcd0f4ac54ebbe",
+      "dataset_text_sha256": "643d125e90557c28b52f3eaefd7eb4df5238b44aae4724c4a1bcd0f4ac54ebbe",
+      "transformations": [],
+      "matches_source": true,
+      "dataset_answer": "D"
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L12-q003",
+      "source_id": "S_IPAS_SAMPLE_114_L12",
+      "source_document": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+      "source_sha256": "c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160",
+      "page": 2,
+      "column": null,
+      "source_question_number": 3,
+      "answer_key": "B",
+      "answer_override": null,
+      "raw_pdf_text_sha256": "08f43397959ee022c21dac857ad5c9c8366a38055e316c881e511367e89e81cf",
+      "canonical_source_text_sha256": "08f43397959ee022c21dac857ad5c9c8366a38055e316c881e511367e89e81cf",
+      "dataset_text_sha256": "08f43397959ee022c21dac857ad5c9c8366a38055e316c881e511367e89e81cf",
+      "transformations": [],
+      "matches_source": true,
+      "dataset_answer": "B"
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L12-q004",
+      "source_id": "S_IPAS_SAMPLE_114_L12",
+      "source_document": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+      "source_sha256": "c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160",
+      "page": 2,
+      "column": null,
+      "source_question_number": 4,
+      "answer_key": "B",
+      "answer_override": null,
+      "raw_pdf_text_sha256": "0e1c908db48d8f16d224ecf9a36a3a4713f7863302036a99246fe7269cf7ecb4",
+      "canonical_source_text_sha256": "0e1c908db48d8f16d224ecf9a36a3a4713f7863302036a99246fe7269cf7ecb4",
+      "dataset_text_sha256": "0e1c908db48d8f16d224ecf9a36a3a4713f7863302036a99246fe7269cf7ecb4",
+      "transformations": [],
+      "matches_source": true,
+      "dataset_answer": "B"
+    },
+    {
+      "item_id": "S_IPAS_SAMPLE_114_L12-q005",
+      "source_id": "S_IPAS_SAMPLE_114_L12",
+      "source_document": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/%E6%B7%A8%E9%9B%B6%E7%A2%B3%E8%A6%8F%E5%8A%83%E7%AE%A1%E7%90%86%E5%B8%AB%E8%83%BD%E5%8A%9B%E9%91%91%E5%AE%9A+%E5%8F%83%E8%80%83%E6%A8%A3%E9%A1%8C(114%E5%B9%B41%E6%9C%88%E7%89%88)_20251226030032.pdf",
+      "source_sha256": "c2bc871e15ee1c1459229ecde76018d011645fea38dd42fb5c7c3d728a7c9160",
+      "page": 2,
+      "column": null,
+      "source_question_number": 5,
+      "answer_key": "C",
+      "answer_override": null,
+      "raw_pdf_text_sha256": "ef3ccff77ea43189157c76361f27f1987e5ef6aaeca98bc2ab928e695a74a398",
+      "canonical_source_text_sha256": "ef3ccff77ea43189157c76361f27f1987e5ef6aaeca98bc2ab928e695a74a398",
+      "dataset_text_sha256": "ef3ccff77ea43189157c76361f27f1987e5ef6aaeca98bc2ab928e695a74a398",
+      "transformations": [],
+      "matches_source": true,
+      "dataset_answer": "C"
     }
   ],
   "dispositions": [
@@ -9341,6 +9524,97 @@
       "column": null,
       "status": "imported",
       "item_id": "S_IPAS_115_02_L12-q050"
+    },
+    {
+      "source_id": "S_IPAS_SAMPLE_114_L11",
+      "source_question_number": 1,
+      "page": 1,
+      "column": null,
+      "status": "imported",
+      "item_id": "S_IPAS_SAMPLE_114_L11-q001"
+    },
+    {
+      "status": "duplicate_in_dataset",
+      "duplicate_of": {
+        "dataset_item": "gist_items[287]"
+      },
+      "stem_similarity": 1.0,
+      "source_answer_key": "C",
+      "source_answer_text": "生態轉型",
+      "dataset_answer": "C",
+      "dataset_answer_text": "生態轉型",
+      "answers_agree": true,
+      "answer_option_alignment": 1.0,
+      "normalized_text_sha256": "3747b76b1259b1fd7c6f06a07b8328ac73262afdcae77f0b7434cb82af02f1c3",
+      "evidence": "題幹相同（不計空白與標點）。兩邊是同一題、答案一致，由人登記（DATASET_DUPLICATES，2026-10-18）：同一題（我國 2050 淨零排放路徑的四大轉型，何者不是）：題幹不計空白相同（主庫的 2050 前後是窄的不換行空白），四個選項與答案 (C)「生態轉型」都相同，主庫那一題同樣是考科一。專案所有者決定不重複收錄，在主庫那一題標上 official_sample（#128）。",
+      "source_id": "S_IPAS_SAMPLE_114_L11",
+      "source_question_number": 2,
+      "page": 1,
+      "column": null
+    },
+    {
+      "source_id": "S_IPAS_SAMPLE_114_L11",
+      "source_question_number": 3,
+      "page": 1,
+      "column": null,
+      "status": "imported",
+      "item_id": "S_IPAS_SAMPLE_114_L11-q003"
+    },
+    {
+      "source_id": "S_IPAS_SAMPLE_114_L11",
+      "source_question_number": 4,
+      "page": 1,
+      "column": null,
+      "status": "imported",
+      "item_id": "S_IPAS_SAMPLE_114_L11-q004"
+    },
+    {
+      "source_id": "S_IPAS_SAMPLE_114_L11",
+      "source_question_number": 5,
+      "page": 1,
+      "column": null,
+      "status": "imported",
+      "item_id": "S_IPAS_SAMPLE_114_L11-q005"
+    },
+    {
+      "source_id": "S_IPAS_SAMPLE_114_L12",
+      "source_question_number": 1,
+      "page": 2,
+      "column": null,
+      "status": "imported",
+      "item_id": "S_IPAS_SAMPLE_114_L12-q001"
+    },
+    {
+      "source_id": "S_IPAS_SAMPLE_114_L12",
+      "source_question_number": 2,
+      "page": 2,
+      "column": null,
+      "status": "imported",
+      "item_id": "S_IPAS_SAMPLE_114_L12-q002"
+    },
+    {
+      "source_id": "S_IPAS_SAMPLE_114_L12",
+      "source_question_number": 3,
+      "page": 2,
+      "column": null,
+      "status": "imported",
+      "item_id": "S_IPAS_SAMPLE_114_L12-q003"
+    },
+    {
+      "source_id": "S_IPAS_SAMPLE_114_L12",
+      "source_question_number": 4,
+      "page": 2,
+      "column": null,
+      "status": "imported",
+      "item_id": "S_IPAS_SAMPLE_114_L12-q004"
+    },
+    {
+      "source_id": "S_IPAS_SAMPLE_114_L12",
+      "source_question_number": 5,
+      "page": 2,
+      "column": null,
+      "status": "imported",
+      "item_id": "S_IPAS_SAMPLE_114_L12-q005"
     }
   ]
 }

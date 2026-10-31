@@ -410,7 +410,7 @@ def test_a_listed_figure_question_found_in_the_bank_stops(figure_source):
 # 匯入報成「登記的題目沒有圖」、理由寫成 None 被 str() 變成 'None' 通過、不存在的題號 51 安靜寫進 manifest、
 # 非官方來源在 --emit／--verify 先丟 TypeError。現在三個入口都在下載與擷取之前查，同一個函式。
 BAD_REGISTRIES = [
-    ({**META, 'kind': None, 'figure_questions': {2: FIGURE_WHY}}, '只有官方來源可以登記圖表題'),
+    ({**META, 'kind': None, 'figure_questions': {2: FIGURE_WHY}}, '只有官方公告試題可以登記圖表題'),
     ({**META, 'figure_questions': {'2': FIGURE_WHY}}, "圖表題的題號 '2' 不是 1 到 2 之間的整數"),
     ({**META, 'figure_questions': {True: FIGURE_WHY}}, '圖表題的題號 True 不是 1 到 2 之間的整數'),
     ({**META, 'figure_questions': {3: FIGURE_WHY}}, '圖表題的題號 3 不是 1 到 2 之間的整數'),
@@ -438,6 +438,18 @@ def test_a_figure_registry_that_makes_no_sense_stops_extraction_before_downloadi
     monkeypatch.setitem(R.EXPECTED_QUESTION_COUNT, SRC, 2)
     monkeypatch.setattr(R, 'load_pdf', lambda src_id, cache: downloads.append(src_id))
     with pytest.raises(SystemExit, match=message):
+        R.extract_sources(tmp_path)
+    assert downloads == []
+
+
+def test_a_sample_source_cannot_register_figure_questions(monkeypatch, tmp_path):
+    # 參考樣題也算官方題目，但圖表題的登記只給公告試題（擷取器、manifest 的 not_imported_figure 都只有公告試題那一套）
+    downloads = []
+    meta = {**META, 'kind': 'official_sample', 'layout': 'ipas_sample', 'figure_questions': {2: FIGURE_WHY}}
+    monkeypatch.setattr(R, 'SOURCES', {SRC: meta})
+    monkeypatch.setitem(R.EXPECTED_QUESTION_COUNT, SRC, 2)
+    monkeypatch.setattr(R, 'load_pdf', lambda src_id, cache: downloads.append(src_id))
+    with pytest.raises(SystemExit, match=f'{SRC}：只有官方公告試題可以登記圖表題'):
         R.extract_sources(tmp_path)
     assert downloads == []
 
@@ -957,12 +969,15 @@ def test_main_stops_on_a_header_that_disagrees_before_writing(official_source, m
 # hook —— 這幾條測試看不到，交給 code review，與 header() 那條釘選測試的邊界相同。
 
 TOOL_SOURCES = {  # 審查過的原始碼的 sha256（換行統一成 LF）：兩個工具讀頁首的函式，與比對用的 check_official_header
-    'extract_sources': '73e659961a7909f76780f765a4cfa69528c239af2c76e7db6d3009ef065a8e6a',
+    # 2026-10-18：加入參考樣題（kind official_sample）的分支，在同一個 try 的第一句裡讀樣題的頁首、與 SOURCES 比對
+    # （check_sample_header），擷取時傳科目；公告試題那一支一字未改
+    'extract_sources': 'a5834cace73dbf4ecf5307e0f8d4195193a7947be684d50158a9f7d7df9b1d66',
     'main': 'e204e4f0ebb4c60497903ad3f77b62f792ddda1f71b3e604d5e5b92063cfe7a8',
     'check_official_header': 'ecb53c82afd1e6d049c5f2b3bfeee30f219c9b781c0151682058e8b088b29dcd',
 }
 DEFAULTS = {'extract_sources': (None, None), 'main': ((None,), None), 'check_official_header': (None, None)}  # 預設值
-MODULE_NAMES = ('R', 'sys', 'ipas_exam_pdf', 'HEADER_READERS', 'check_official_header', 'SOURCES', 'EXTRACTORS')
+MODULE_NAMES = ('R', 'sys', 'ipas_exam_pdf', 'HEADER_READERS', 'check_official_header', 'SOURCES', 'EXTRACTORS',
+                'ipas_sample_pdf', 'SAMPLE_HEADER_READERS', 'check_sample_header')
 DYNAMIC_ACCESS = ('vars', 'globals', 'locals', 'exec', 'eval', 'compile', '__import__', 'setattr', 'delattr', 'getattr',
            '__builtins__', 'breakpoint')
 MUTATOR_METHODS = ('update', 'setdefault', 'pop', 'popitem', 'clear', 'append', 'extend', 'insert', 'remove', 'add',
@@ -1041,6 +1056,8 @@ def _uses(function, name):  # name 出現的每一處（連同它所在的那一
 def test_both_tools_read_the_header_with_the_parsers_own_function():
     assert R.HEADER_READERS == {'ipas_exam_table': ipas_exam_pdf.header}
     assert R.HEADER_READERS['ipas_exam_table'] is ipas_exam_pdf.header
+    assert R.SAMPLE_HEADER_READERS == {'ipas_sample': R.ipas_sample_pdf.header}
+    assert R.SAMPLE_HEADER_READERS['ipas_sample'] is R.ipas_sample_pdf.header
     assert R.ipas_exam_pdf is I.ipas_exam_pdf is ipas_exam_pdf
     assert I.R is R  # 匯入工具叫的 R.check_official_header 就是下面釘住的那一個（換成另一個模組，雜湊照樣相符）
     # 模組的類別換成自訂的 __getattribute__，就能對測試交出真的 R、對 main 交出另一個（第二十二輪確認審查實測）
@@ -1322,10 +1339,13 @@ def test_the_wording_of_git_before_2_17_is_read_the_same_way(monkeypatch, tmp_pa
 @pytest.mark.parametrize(('function', 'first', 'variables'), [
     (R.extract_sources,
      "if meta.get('kind') == 'official_exam':\n    header = HEADER_READERS[layout](path)\n"
-     '    check_official_header(src_id, meta, header)',
+     '    check_official_header(src_id, meta, header)\n'
+     "elif meta.get('kind') == 'official_sample':\n    header = SAMPLE_HEADER_READERS[layout](path, meta['subject'])\n"
+     '    check_sample_header(src_id, meta, header)',
      {'src_id': ['for (src_id, meta) in SOURCES.items()'], 'meta': ['for (src_id, meta) in SOURCES.items()'],
       'layout': ["layout = meta.get('layout', 'two_column')"], 'path': ["path = cache / f'{src_id}.pdf'"],
-      'header': ['header = HEADER_READERS[layout](path)', 'header = None'], 'cache': ['〈參數〉']}),
+      'header': ['header = HEADER_READERS[layout](path)', 'header = None',
+                 "header = SAMPLE_HEADER_READERS[layout](path, meta['subject'])"], 'cache': ['〈參數〉']}),
     (I.main, 'R.check_official_header(src_id, meta, ipas_exam_pdf.header(path))',
      {'src_id': ['for src_id in sources', 'for src_id in sources'],
       'meta': ['meta = R.SOURCES.get(src_id)', 'meta = R.SOURCES[src_id]'],
@@ -1651,13 +1671,15 @@ def reached(*args, **kwargs):
 
 
 seen = {}
+# 擷取器所在的模組：參考樣題是 ipas_sample_pdf（匯入工具是 import_official_sample.py），其他是 ipas_exam_pdf
+PARSER = 'ipas_sample_pdf' if (task.get('meta') or {}).get('kind') == 'official_sample' else 'ipas_exam_pdf'
 
 
 def restore_sample(namespace):
     seen['namespace'] = namespace
     namespace['SOURCES'] = {task['source']: task['meta']}
-    namespace['EXTRACTORS']['ipas_exam_table'] = reached
-    namespace['ipas_exam_pdf'].extract = reached
+    namespace['EXTRACTORS'][task['meta']['layout']] = reached
+    namespace[PARSER].extract = reached
     namespace['SNAPSHOT'] = Path(task['scratch'], 'restore_source_extract.json')
     namespace['MANIFEST'] = Path(task['scratch'], 'restoration-manifest.json')
 
@@ -1666,8 +1688,8 @@ def import_sample(namespace):
     seen['namespace'] = namespace
     namespace['R'].SOURCES = {task['source']: task['meta']}
     namespace['R'].EXPECTED_QUESTION_COUNT[task['source']] = 2
-    namespace['R'].EXTRACTORS['ipas_exam_table'] = reached
-    namespace['ipas_exam_pdf'].extract = reached
+    namespace['R'].EXTRACTORS[task['meta']['layout']] = reached
+    namespace[PARSER].extract = reached
     namespace['DATASET'] = Path(task['scratch'], 'integrated_dataset.json')
 
 
@@ -1681,8 +1703,8 @@ elif task['tool']:
             as_cli(os.path.join(tools, 'restore_from_source_pdf.py'), ['--verify', '--cache', task['cache']],
                    restore_sample)
         else:
-            as_cli(os.path.join(tools, 'import_official_exam.py'), [task['source'], '--cache', task['cache']],
-                   import_sample)
+            importer = 'import_official_sample.py' if PARSER == 'ipas_sample_pdf' else 'import_official_exam.py'
+            as_cli(os.path.join(tools, importer), [task['source'], '--cache', task['cache']], import_sample)
     except SystemExit as stopped:
         end = '沒有停' if stopped.code in (0, None) else str(stopped.code)
     except Extracted:
@@ -1692,9 +1714,10 @@ elif task['tool']:
 namespace = seen.get('namespace', {})
 writes = [str(namespace.get(name)) for name in (('SNAPSHOT', 'MANIFEST') if task['tool'] == 'restore' else ('DATASET',))
           if namespace]  # restore 寫快照與 manifest，匯入工具寫題庫
-pdf, R = namespace.get('ipas_exam_pdf'), namespace.get('R', namespace)
+pdf, R = namespace.get(PARSER), namespace.get('R', namespace)
 stubs = [getattr(pdf, 'extract', None) is reached,
-         (R['EXTRACTORS'] if isinstance(R, dict) else R.EXTRACTORS).get('ipas_exam_table') is reached] if namespace else []
+         (R['EXTRACTORS'] if isinstance(R, dict) else R.EXTRACTORS).get(task['meta']['layout']) is reached
+         ] if namespace else []
 isolation.append(state())  # 跑完之後
 fingerprints.append(fingerprint())
 Path(out).write_text(json.dumps({'flags': flags, 'isolation': isolation, 'preloaded': preloaded,
@@ -1767,8 +1790,8 @@ def test_the_ban_sees_each_way_a_tool_could_tell_how_it_runs(line, found):
 TOOLS_FOLDER = Path(__file__).resolve().parents[1]
 # tools/ 頂層登記的工具模組：新增工具要加在這裡（AGENTS.md），其他檔案不要放在 tools/ 頂層
 TOOL_MODULES = {'answer_key_crosscheck', 'build_evidence_manifest', 'explanation_guard', 'fetch_text', 'gen_gap_reports',
-                'import_official_exam', 'ipas_exam_pdf', 'pin_law_articles', 'restore_from_source_pdf',
-                'sync_derived_counts', 'verify_agent_quotes', 'verify_citations'}
+                'import_official_exam', 'import_official_sample', 'ipas_exam_pdf', 'ipas_sample_pdf', 'pin_law_articles',
+                'restore_from_source_pdf', 'sync_derived_counts', 'verify_agent_quotes', 'verify_citations'}
 
 
 # 照 -I -S 啟動、沒有跑 site 的子行程：site 不在 sys.modules，finder 與 path hook 只有預設的（3.13 與 3.14 實測）
