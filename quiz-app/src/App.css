@@ -53,3 +53,25 @@
     padding: var(--spacing-md) var(--spacing-sm);
   }
 }
+
+/* 開始測驗失敗（練習池 chunk 載不到）的訊息 */
+.start-failed {
+  max-width: 560px;
+  margin: 0 auto var(--spacing-md);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-error-solid);
+  border-radius: var(--radius-md);
+  /* header 固定在上面，訊息不能捲到它底下 */
+  scroll-margin-top: 5rem;
+}
+
+.start-failed p {
+  flex: 1 1 100%;
+  margin: 0;
+}

@@ -422,6 +422,101 @@ describe('useQuiz Hook', () => {
       });
     });
 
+    // 練習池是非同步載入：等它的時候使用者可能走開了，回來的結果不能蓋掉現在的畫面
+    describe('等練習池時使用者走開', () => {
+      const saveThreeQuestions = () =>
+        window.localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({
+            version: 2,
+            savedAt: 1,
+            state: {
+              isActive: true,
+              questions: ['gist-1', 'gist-2', 'gist-3'],
+              currentIndex: 0,
+              answers: [],
+              startTime: 1,
+              config: defaultConfig,
+            },
+          })
+        );
+      const poolConfig = { ...defaultConfig, includePracticePool: true };
+
+      beforeEach(() => __setPracticePoolForTesting(buildFixturePool()));
+
+      it('按了繼續測驗：續作的那一場不被換掉，回傳 false', async () => {
+        saveThreeQuestions();
+        const { result } = renderHook(() => useQuiz());
+        let pending: Promise<boolean> = Promise.resolve(true);
+
+        act(() => {
+          pending = result.current.startQuizWithPool(poolConfig);
+          result.current.resumeQuiz();
+        });
+
+        await act(async () => {
+          expect(await pending).toBe(false);
+        });
+        expect(result.current.questions.map((q) => q.id)).toEqual(['gist-1', 'gist-2', 'gist-3']);
+      });
+
+      it('開了別的一場（沒有練習池）：不被換掉', async () => {
+        const { result } = renderHook(() => useQuiz());
+        let pending: Promise<boolean> = Promise.resolve(true);
+
+        act(() => {
+          pending = result.current.startQuizWithPool(poolConfig);
+          result.current.startQuiz({ ...defaultConfig, questionCount: 3 });
+        });
+
+        await act(async () => {
+          expect(await pending).toBe(false);
+        });
+        expect(result.current.questions).toHaveLength(3);
+      });
+
+      it('cancelPendingStart 之後載入完成：不開始', async () => {
+        const { result } = renderHook(() => useQuiz());
+        let pending: Promise<boolean> = Promise.resolve(true);
+
+        act(() => {
+          pending = result.current.startQuizWithPool(poolConfig);
+          result.current.cancelPendingStart();
+        });
+
+        await act(async () => {
+          expect(await pending).toBe(false);
+        });
+        expect(result.current.isActive).toBe(false);
+      });
+
+      it('連按兩次開始：只有最後一次算數', async () => {
+        const { result } = renderHook(() => useQuiz());
+        let first: Promise<boolean> = Promise.resolve(true);
+        let second: Promise<boolean> = Promise.resolve(false);
+
+        act(() => {
+          first = result.current.startQuizWithPool(poolConfig);
+          second = result.current.startQuizWithPool({ ...poolConfig, questionCount: 3 });
+        });
+
+        await act(async () => {
+          expect(await first).toBe(false);
+          expect(await second).toBe(true);
+        });
+        expect(result.current.questions).toHaveLength(3);
+      });
+
+      it('沒有走開：照常開始', async () => {
+        const { result } = renderHook(() => useQuiz());
+
+        await act(async () => {
+          expect(await result.current.startQuizWithPool({ ...poolConfig, questionCount: 3 })).toBe(true);
+        });
+        expect(result.current.questions).toHaveLength(3);
+      });
+    });
+
     it('localStorage 無進度時 resumeQuiz 回 false、不改 state', () => {
       const { result } = renderHook(() => useQuiz());
       let returned = true;

@@ -1,5 +1,5 @@
 // 測驗邏輯 Hook
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { isQuestionScorable } from '../utils/scorable';
 import type {
   QuizQuestion,
@@ -75,6 +75,12 @@ const isSourceFiltered = (config: QuizConfig): boolean => (config.questionSource
 export function useQuiz() {
   const [state, setState] = useState<QuizState>(initialState);
   const [questionStartTime, setQuestionStartTime] = useState<number>(0);
+  // 練習池是非同步載入：等它的時候使用者可能續作、開了別場或換頁。只有最新的請求算數，
+  // 晚到的結果不能蓋掉現在的測驗，失敗也不能報到別的畫面
+  const latestStart = useRef(0);
+  const cancelPendingStart = useCallback(() => {
+    latestStart.current++;
+  }, []);
 
   // 持久化 in-progress 測驗（Refs #71）：
   // 每次 state 變動且 isActive=true 時寫入 localStorage；isActive=false 不動
@@ -85,6 +91,7 @@ export function useQuiz() {
 
   /** 開始測驗；只出官方題目而一題都抽不到時不開始，回傳 false（全部題目的路徑照舊，一律回傳 true） */
   const startQuiz = useCallback((config: QuizConfig): boolean => {
+    latestStart.current++;
     let questions: QuizQuestion[];
 
     if (isSourceFiltered(config)) {
@@ -126,8 +133,10 @@ export function useQuiz() {
    * 只出官方題目時（questionSource 不是 'all'）一律不載入、不混入練習池，只從官方題抽；
    * 一題都抽不到時回傳 false、不開始測驗（與 startQuiz 相同）。
    * 練習池僅在使用者於 settings 啟用後才應傳入 includePracticePool=true。
+   * 載入途中被取代或取消時回傳 false，不開始、也不丟載入失敗。
    */
   const startQuizWithPool = useCallback(async (config: QuizConfig): Promise<boolean> => {
+    const request = ++latestStart.current;
     let questions: QuizQuestion[];
 
     if (isSourceFiltered(config)) {
@@ -135,7 +144,11 @@ export function useQuiz() {
       questions = pickFromSource(config);
       if (questions.length === 0) return false;
     } else if (config.includePracticePool) {
-      const pool = await loadPracticePool();
+      const pool = await loadPracticePool().catch((err: unknown) => {
+        if (request === latestStart.current) throw err;
+        return null;
+      });
+      if (!pool || request !== latestStart.current) return false;
       const poolItems = pool.items
         .map(toQuizQuestion)
         .filter((q) => {
@@ -404,6 +417,7 @@ export function useQuiz() {
    * 由 App.tsx 在使用者點「繼續測驗」時呼叫。
    */
   const resumeQuiz = useCallback((): boolean => {
+    latestStart.current++;
     const saved = loadProgress();
     if (!saved || !saved.state.isActive) return false;
     const s = saved.state;
@@ -503,6 +517,7 @@ export function useQuiz() {
     // 操作
     startQuiz,
     startQuizWithPool,
+    cancelPendingStart,
     submitAnswer,
     nextQuestion,
     prevQuestion,
