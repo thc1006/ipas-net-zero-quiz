@@ -20,7 +20,20 @@ export interface QuestionCardProps {
   selectedAnswer?: string | null;
   showAnswer?: boolean;
   onSelectAnswer: (answer: string) => void;
+  /**
+   * 選了就鎖定的模式（練習模式）才傳。有傳時方向鍵只移動，Enter 或空白鍵才作答，作答後呼叫它：
+   * 原生 radio 的方向鍵會連帶選取，第一下就交卷；選項鎖定後變 disabled，焦點留在上面會掉到 body。
+   */
+  onKeyboardAnswered?: () => void;
 }
+
+/** 方向鍵移動的方向（與原生 radio 相同：上左往前、下右往後，頭尾相接） */
+const ARROW_STEP: Record<string, number> = {
+  ArrowDown: 1,
+  ArrowRight: 1,
+  ArrowUp: -1,
+  ArrowLeft: -1,
+};
 
 export function QuestionCard({
   question,
@@ -28,8 +41,13 @@ export function QuestionCard({
   selectedAnswer = null,
   showAnswer = false,
   onSelectAnswer,
+  onKeyboardAnswered,
 }: QuestionCardProps) {
   const labelId = useId();
+  // 方向鍵移到、還沒確認的選項。焦點離開選項群組就清掉：沒確認的選項不能看起來像答過
+  const [movedTo, setMovedTo] = useState<string | null>(null);
+  const [keyboardInOptions, setKeyboardInOptions] = useState(false);
+  const shownAnswer = selectedAnswer ?? movedTo;
   const [aiResponse, setAiResponse] = useState<AIResponse | null>(null);
   const sourceLabels = useMemo(
     () =>
@@ -77,7 +95,7 @@ export function QuestionCard({
   const getOptionStatus = useCallback(
     (optionKey: string): 'default' | 'selected' | 'correct' | 'incorrect' => {
       if (!showAnswer) {
-        return selectedAnswer === optionKey ? 'selected' : 'default';
+        return shownAnswer === optionKey ? 'selected' : 'default';
       }
 
       // 顯示答案模式
@@ -89,7 +107,7 @@ export function QuestionCard({
       }
       return 'default';
     },
-    [showAnswer, selectedAnswer, question.answer]
+    [showAnswer, selectedAnswer, shownAnswer, question.answer]
   );
 
   const handleOptionClick = useCallback(
@@ -102,14 +120,41 @@ export function QuestionCard({
   );
 
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent, optionKey: string) => {
+    (e: React.KeyboardEvent<HTMLInputElement>, optionKey: string) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         handleOptionClick(optionKey);
+        onKeyboardAnswered?.();
+        return;
       }
+      const step = ARROW_STEP[e.key];
+      if (!onKeyboardAnswered || !step) return;
+      e.preventDefault();
+      // 加 Alt／Ctrl／Meta 也要攔下：WebKit 照樣點下一個選項，放行就直接交卷。代價是焦點在選項上時 Alt+左 不能上一頁
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      const inputs = Array.from(
+        e.currentTarget.closest('[role="radiogroup"]')?.querySelectorAll('input') ?? []
+      );
+      const next = inputs[(inputs.indexOf(e.currentTarget) + step + inputs.length) % inputs.length];
+      setMovedTo(next.value);
+      next.focus({ preventScroll: true });
     },
-    [handleOptionClick]
+    [handleOptionClick, onKeyboardAnswered]
   );
+
+  // 提示只給鍵盤：滑鼠點選項時選項也會拿到焦點，那一下不能閃出提示
+  // radio 高度 0，瀏覽器只保一條線進視窗，整個選項可能還在固定的 header 底下
+  const handleOptionsFocus = useCallback((e: React.FocusEvent<HTMLDivElement>) => {
+    if (!e.target.matches(':focus-visible')) return;
+    setKeyboardInOptions(true);
+    e.target.closest('.option-item')?.scrollIntoView({ block: 'nearest' });
+  }, []);
+
+  const handleOptionsBlur = useCallback((e: React.FocusEvent<HTMLDivElement>) => {
+    if (e.currentTarget.contains(e.relatedTarget)) return;
+    setMovedTo(null);
+    setKeyboardInOptions(false);
+  }, []);
 
   // 請求 AI 解釋
   const handleAskAI = useCallback(async () => {
@@ -209,23 +254,38 @@ export function QuestionCard({
       )}
 
       {/* 題幹 */}
-      <div className="question-stem" id={labelId}>
+      {/* tabIndex：鍵盤按下一題時焦點移到這裡 */}
+      <div
+        className={`question-stem${onKeyboardAnswered ? ' question-stem--keyboard-hint' : ''}`}
+        id={labelId}
+        tabIndex={-1}
+      >
         <p>{question.stem}</p>
       </div>
+
+      {/* 常駐的 live region：內容變動才會念。放在選項上方，矮視窗才看得到 */}
+      {onKeyboardAnswered && (
+        <p role="status" className="option-keyboard-hint">
+          {!showAnswer && (keyboardInOptions || movedTo) && <span>按 Enter 或空白鍵確認答案</span>}
+        </p>
+      )}
 
       {/* 選項 */}
       <div
         className="question-options"
         role="radiogroup"
         aria-labelledby={labelId}
+        onFocus={onKeyboardAnswered && handleOptionsFocus}
+        onBlur={onKeyboardAnswered && handleOptionsBlur}
       >
         {question.options.map((option) => (
           <OptionButton
             key={option.key}
             option={option}
             status={getOptionStatus(option.key)}
-            isSelected={selectedAnswer === option.key}
+            isSelected={shownAnswer === option.key}
             isDisabled={showAnswer}
+            commitOnClick={!!onKeyboardAnswered}
             redundantPrefix={redundantPrefix}
             onClick={() => handleOptionClick(option.key)}
             onKeyDown={(e) => handleKeyDown(e, option.key)}
@@ -353,16 +413,21 @@ export function QuestionCard({
   );
 }
 
+/** 受控的 radio 一定要有 onChange，React 才不會警告 */
+const noop = () => {};
+
 // 選項按鈕子元件
 interface OptionButtonProps {
   option: QuizOption;
   status: 'default' | 'selected' | 'correct' | 'incorrect';
   isSelected: boolean;
   isDisabled: boolean;
+  /** 點了就作答：方向鍵移到的選項已經是 checked，再點不會有 change，要看 click */
+  commitOnClick: boolean;
   /** 全選項共有的冗餘前綴關鍵字（例如「GRI」），UI 渲染時 dim 化 */
   redundantPrefix?: string | null;
   onClick: () => void;
-  onKeyDown: (e: React.KeyboardEvent) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 function OptionButton({
@@ -370,6 +435,7 @@ function OptionButton({
   status,
   isSelected,
   isDisabled,
+  commitOnClick,
   redundantPrefix,
   onClick,
   onKeyDown,
@@ -387,7 +453,8 @@ function OptionButton({
         value={option.key}
         checked={isSelected}
         disabled={isDisabled}
-        onChange={onClick}
+        onChange={commitOnClick ? noop : onClick}
+        onClick={commitOnClick ? onClick : undefined}
         onKeyDown={onKeyDown}
         aria-label={`${option.key}: ${option.text}`}
       />
