@@ -174,17 +174,71 @@ test('放大到 400%：內文至少三行，滾輪捲對話框，標題與按鈕
   }
 });
 
-test('放大到 400%：開啟時焦點在第一顆按鈕，Tab 到第二顆，兩顆都捲得進視窗', async ({ page }) => {
-  await page.setViewportSize({ width: 341, height: 192 });
-  await page.goto('/');
-  const decline = page.getByRole('button', { name: '暫不啟用' });
-  const accept = page.getByRole('button', { name: /我已了解/ });
+// 字型的樣式表（global.css 用 @import 載 Google Fonts）還沒到時對話框就開了，WebKit 的 focus() 捲的是後面的頁面，
+// 對話框不動，按鈕在對話框的可見範圍外。CI 上常是這個順序；「樣式表晚到」讓它晚 1.5 秒到，固定重現（只有 WebKit
+// 會先執行程式，另外兩個引擎等樣式表）。「字型檔晚到」時 load 還沒到（Firefox 與 WebKit 的 load 等字型檔），
+// 按鈕要在這時就看得到，不能等 load
+type Late = '' | '樣式表晚到' | '字型檔晚到' | '樣式表與字型檔都晚到';
 
-  await expect(decline).toBeFocused();
-  await expect(decline).toBeInViewport({ ratio: 1 });
-  await page.keyboard.press('Tab');
-  await expect(accept).toBeFocused();
-  await expect(accept).toBeInViewport({ ratio: 1 });
+/** 讓字型的樣式表或字型檔晚到；回傳放行字型檔的函式 */
+async function delayFonts(page: Page, late: Late): Promise<() => void> {
+  let release = () => {};
+  const cssLate = late === '樣式表晚到' || late === '樣式表與字型檔都晚到';
+  const filesLate = late === '字型檔晚到' || late === '樣式表與字型檔都晚到';
+  if (!cssLate && !filesLate) return release;
+  const held = new Promise<void>((ok) => (release = ok));
+  await page.route(/fonts\.googleapis\.com/, async (route) => {
+    if (cssLate) await new Promise((ok) => setTimeout(ok, 1500));
+    // 字型檔晚到時，樣式表宣告一個字型檔，呼叫 release 之前都不放行
+    const body = filesLate
+      ? "@font-face { font-family: 'Noto Sans TC'; src: url(https://fonts.gstatic.com/held.woff2) format('woff2'); }"
+      : '';
+    await route.fulfill({ contentType: 'text/css', body });
+  });
+  await page.route(/fonts\.gstatic\.com/, async (route) => {
+    await held;
+    await route.abort().catch(() => undefined);
+  });
+  return release;
+}
+
+const LATE: Late[] = ['', '樣式表晚到', '字型檔晚到', '樣式表與字型檔都晚到'];
+for (const late of LATE) {
+  test(`放大到 400%：開啟時焦點在第一顆按鈕，Tab 到第二顆，兩顆都捲得進視窗${late && `（${late}）`}`, async ({ page }) => {
+    const release = await delayFonts(page, late);
+    await page.setViewportSize({ width: 341, height: 192 });
+    await page.goto('/', { waitUntil: late.includes('字型檔') ? 'commit' : 'load' });
+    const decline = page.getByRole('button', { name: '暫不啟用' });
+    const accept = page.getByRole('button', { name: /我已了解/ });
+
+    await expect(decline).toBeFocused();
+    await expect(decline).toBeInViewport({ ratio: 1 });
+    if (late.includes('字型檔')) {
+      expect(await page.evaluate(() => document.fonts.status), '字型檔還沒到，不是等到 load 才看得到').toBe('loading');
+      release();
+    }
+    expect(await page.evaluate(() => document.scrollingElement!.scrollTop), '後面的頁面沒有跟著捲').toBe(0);
+    await page.keyboard.press('Tab');
+    await expect(accept).toBeFocused();
+    await expect(accept).toBeInViewport({ ratio: 1 });
+  });
+}
+
+test('放大到 400%：字型檔還在下載時往上捲到標題，下載完不會被捲回去', async ({ page, browserName }) => {
+  const release = await delayFonts(page, '字型檔晚到');
+  await page.setViewportSize({ width: 341, height: 192 });
+  await page.goto('/', { waitUntil: 'commit' });
+  const dialog = page.locator('.optin-dialog');
+  await expect(page.getByRole('button', { name: '暫不啟用' })).toBeInViewport({ ratio: 1 });
+  await dialog.evaluate((el) => (el.scrollTop = 0));
+  await expect(page.locator('#optin-title')).toBeInViewport({ ratio: 1 });
+  expect(await page.evaluate(() => document.fonts.status)).toBe('loading');
+  // Firefox 與 WebKit 的 load 等字型檔：捲的時候 load 還沒到，等 load 才捲的寫法在這裡會把它捲回去。Chromium 不等
+  if (browserName !== 'chromium') expect(await page.evaluate(() => document.readyState)).not.toBe('complete');
+  release();
+  await page.waitForFunction(() => document.readyState === 'complete');
+  await page.waitForTimeout(300);
+  expect(await dialog.evaluate((el) => el.scrollTop), '載完之後被捲回底部').toBe(0);
 });
 
 test('首次造訪對話框：點對話框空白處再按 Tab 或 Shift+Tab，焦點不會離開對話框', async ({ page }) => {
