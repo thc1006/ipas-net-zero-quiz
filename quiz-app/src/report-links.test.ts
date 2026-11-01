@@ -7,7 +7,13 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, matchesGlob, relative, resolve } from 'node:path';
 import { parse } from 'yaml';
 import { REPO_URL } from './data/app-meta';
-import { buildBugReportUrl, buildFeedbackUrl, DISCUSSIONS_URL, REPORT_URL } from './utils/feedback-url';
+import {
+  buildBugReportUrl,
+  buildFeedbackUrl,
+  DISCUSSIONS_URL,
+  REPORT_URL,
+  type QuestionFeedbackContext,
+} from './utils/feedback-url';
 
 const root = resolve(__dirname, '..', '..');
 const templateDir = join(root, '.github', 'ISSUE_TEMPLATE');
@@ -309,6 +315,19 @@ describe('issue 範本', () => {
   it('名稱檢查認得每一種引號，欄位的 description 只看選或用後面的名稱', () => {
     expect(quotedIn('選「甲」或『乙』，或 "丙" 與“丁”')).toEqual(['甲', '乙', '丙', '丁']);
     expect(quotedIn('設定頁的「關於」，若選「其它」或用『題目錯誤回報』', String.raw`[選用]`)).toEqual(['其它', '題目錯誤回報']);
+  });
+
+  it('題目回報的「從哪個頁面回報」，說明與範例寫的是程式會帶入的值', () => {
+    // 少列或多列 fromPage 的值，tsc 會報錯
+    const fromPages = { quiz: true, result: true } satisfies Record<QuestionFeedbackContext['fromPage'], true>;
+    const field = (forms['question-feedback.yml'].body as Item[]).find((item) => item.id === 'from_page');
+    expect(field?.type).toBe('input');
+    for (const fromPage of Object.keys(fromPages) as QuestionFeedbackContext['fromPage'][]) {
+      const sent = new URL(buildFeedbackUrl({ questionId: 'gist-1', stem: '題幹', fromPage })).searchParams.get('from_page');
+      expect(sent).toBe(fromPage);
+      expect(field?.attributes?.description, fromPage).toContain(fromPage);
+      expect(field?.attributes?.placeholder, fromPage).toContain(fromPage);
+    }
   });
 
   it('程式預填的每一個欄位，在範本裡都是文字欄位', () => {

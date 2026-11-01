@@ -60,7 +60,7 @@ body:
     id: from_page
     attributes:
       label: 從哪個頁面回報？
-      description: 可選；自動帶入「測驗中」或「結果頁錯題列表」
+      description: 可選；從旗子圖示開啟時自動帶入 quiz（測驗中）或 result（結果頁的錯題列表）
       placeholder: quiz / result
     validations:
       required: false
