@@ -52297,7 +52297,7 @@
         }
       ],
       "answer": "B",
-      "explanation": null,
+      "explanation": "誤差是量測結果減去被測量的真值。已知的系統效應可以量化，用修正值或修正因子補償；評估不確定性時也假設量測結果已針對所有已知的顯著系統效應修正，所以已知的系統誤差應予以修正。隨機誤差則無法補償，通常可以增加觀測次數來減小。不確定性描述的是可合理歸屬於被測量的值的分散程度，可用標準差，或在某個信賴水準下區間的半寬表示：±5% 是這個區間的範圍，不是有 5% 的數據出錯。校正儀器是為了去除系統效應，但校正所用的量測標準與參考物質本身的不確定性仍要納入，校正不能完全消除不確定性。查驗是以系統化、文件化及獨立性等方式執行查證或重要項目評估的作業；查驗結果與原登錄的盤查資料不一致時，事業要上傳修正後的排放量清冊及盤查報告書。",
       "source": {
         "source_id": "S_IPAS_115_01_L12",
         "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
@@ -52324,9 +52324,77 @@
       "metadata": {
         "valid_as_of": "2026-05-16",
         "sources": [
-          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf"
+          "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
+          "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+          "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=2",
+          "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=9"
         ],
         "evidence": [
+          {
+            "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+            "quote": "B.2.19 error (of measurement) result of a measurement minus a true value of the measurand",
+            "supports_option": "B",
+            "note": "JCGM 100:2008 附錄 B.2.19：誤差是量測結果減去被測量的真值。",
+            "generated_by": "tools/import_official_exam.py"
+          },
+          {
+            "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+            "quote": "3.2.3 Systematic error, like random error, cannot be eliminated but it too can often be reduced. If a systematic error arises from a recognized effect of an influence quantity on a measurement result, hereafter termed a systematic effect, the effect can be quantified and, if it is significant in size relative to the required accuracy of the measurement, a correction (B.2.23) or correction factor (B.2.24) can be applied to compensate for the effect. It is assumed that, after correction, the expectation or expected value of the error arising from a systematic effect is zero.",
+            "supports_option": "B",
+            "note": "JCGM 100:2008 第 3.2.3 節：系統誤差和隨機誤差一樣無法完全消除，但常可減小；已知的系統效應可以量化，用修正值或修正因子補償。",
+            "generated_by": "tools/import_official_exam.py"
+          },
+          {
+            "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+            "quote": "3.2.4 It is assumed that the result of a measurement has been corrected for all recognized significant systematic effects and that every effort has been made to identify such effects.",
+            "supports_option": "B",
+            "note": "JCGM 100:2008 第 3.2.4 節：評估不確定性時，假設量測結果已針對所有已知的顯著系統效應修正。",
+            "generated_by": "tools/import_official_exam.py"
+          },
+          {
+            "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+            "quote": "3.2.2 Random error presumably arises from unpredictable or stochastic temporal and spatial variations of influence quantities. The effects of such variations, hereafter termed random effects, give rise to variations in repeated observations of the measurand. Although it is not possible to compensate for the random error of a measurement result, it can usually be reduced by increasing the number of observations; its expectation or expected value (C.2.9, C.3.1) is zero.",
+            "supports_option": "B",
+            "note": "JCGM 100:2008 第 3.2.2 節：隨機誤差無法補償，通常可以增加觀測次數來減小。",
+            "generated_by": "tools/import_official_exam.py"
+          },
+          {
+            "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+            "quote": "B.2.18 uncertainty (of measurement) parameter, associated with the result of a measurement, that characterizes the dispersion of the values that could reasonably be attributed to the measurand",
+            "supports_option": "B",
+            "note": "JCGM 100:2008 附錄 B.2.18：不確定性是表示可合理歸屬於被測量的值的分散程度的參數。",
+            "generated_by": "tools/import_official_exam.py"
+          },
+          {
+            "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+            "quote": "The parameter may be, for example, a standard deviation (or a given multiple of it), or the half-width of an interval having a stated level of confidence.",
+            "supports_option": "B",
+            "note": "JCGM 100:2008 附錄 B.2.18 NOTE 1：這個參數可以是標準差（或它的倍數），或在某個信賴水準下區間的半寬。",
+            "generated_by": "tools/import_official_exam.py"
+          },
+          {
+            "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+            "quote": "Often, measuring instruments and systems are adjusted or calibrated using measurement standards and reference materials to eliminate systematic effects; however, the uncertainties associated with these standards and materials must still be taken into account.",
+            "supports_option": "B",
+            "note": "JCGM 100:2008 第 3.2.4 節 NOTE 1：校正可以去除系統效應，校正所用的量測標準與參考物質的不確定性仍要納入。",
+            "generated_by": "tools/import_official_exam.py"
+          },
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=2",
+            "quote": "六、查驗：指以系統化、文件化及獨立性等方式，執行查證或重要項目評估之作業。",
+            "supports_option": "B",
+            "clause": "第2條",
+            "note": "溫室氣體排放量盤查登錄及查驗管理辦法第 2 條第 6 款：查驗是以系統化、文件化及獨立性等方式執行查證或重要項目評估的作業。",
+            "generated_by": "tools/import_official_exam.py"
+          },
+          {
+            "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=9",
+            "quote": "事業原登錄之排放量盤查資料與查驗機構查驗結果不一致者，事業應於上傳查驗結果時併同上傳修正後之排放量清冊及盤查報告書。",
+            "supports_option": "B",
+            "clause": "第9條",
+            "note": "溫室氣體排放量盤查登錄及查驗管理辦法第 9 條：原登錄的盤查資料與查驗結果不一致時，由事業在上傳查驗結果時一併上傳修正後的排放量清冊及盤查報告書。",
+            "generated_by": "tools/import_official_exam.py"
+          },
           {
             "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
             "quote": "依據 ISO14064-1：2018 之規範，關於「不確定性（Uncertainty）」與「誤差（Error）」，下列敘述何者正確？\n(A)透過校正儀器可以完全消除不確定性，但無法消除誤差；(B)誤差是指測量值與真值之間的差異，應予以修正；(C)若不確定性評估結果為±5%，代表數據錯誤率為 5%；(D)查驗機構的主要職責是計算不確定性，而非發現誤差",
@@ -52334,7 +52402,11 @@
             "note": "115 年第一次公告試題第二科第 6 題：PDF 的答案欄印 B。",
             "generated_by": "tools/import_official_exam.py"
           }
-        ]
+        ],
+        "explanation_source": {
+          "generated_by": "tools/import_official_exam.py",
+          "why": "#148：學員回報這一題先說答案是 D、後來說是 B。查過的事：題庫與官方 PDF 的答案都是 B；這一題原本沒有解析，答案依據只有官方題目本身。補上解析，每一句都對應到這一題的引文：誤差的定義、已知系統誤差的修正與隨機誤差（JCGM 100:2008 B.2.19、3.2.2、3.2.3、3.2.4）；不確定性的定義與表示方式、校正所用標準的不確定性（B.2.18 與它的 NOTE 1、3.2.4 NOTE 1）；查驗的定義（溫管辦法第 2 條第 6 款）；查驗結果與原登錄資料不一致時，修正的義務在事業：由事業上傳修正後的清冊（溫管辦法第 9 條）。"
+        }
       }
     },
     {

@@ -512,6 +512,24 @@ describe('官方題目的答案依據帶出官方答案', () => {
     expect(withOfficialAnswer(q, undefined)).toBeUndefined();
   });
 
+  // #148 回報的那一題：答案照 PDF 是 B，原本沒有解析、依據只有官方題目本身
+  it('115 年第一次第二科第 6 題：有匯入工具寫的解析，答案依據是 GUM 的誤差定義，也寫出官方答案 B', () => {
+    const q = getQuestionById('S_IPAS_115_01_L12-q006')!;
+    expect(q.answer).toBe('B');
+    expect(q.explanation).toMatch(/誤差應予以修正/);
+    const metadata = raw.get(q.id)!.metadata as Record<string, unknown>;
+    expect(metadata.explanation_source).toMatchObject({ generated_by: 'tools/import_official_exam.py' });
+    expect(q.evidence?.url).toBe('https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf');
+    expect(q.evidence?.quote).toMatch(/^B\.2\.19 error \(of measurement\)/);
+    // 法條（第 2 條查驗的定義、第 9 條）只撐解析的最後一句，排在 GUM 後面、官方題目前面
+    const urls = (raw.get(q.id)!.metadata?.evidence ?? []).map((e) => e.url);
+    expect(urls.slice(-3, -1)).toEqual([
+      'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=2',
+      'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=9',
+    ]);
+    expect(q.evidence?.official).toEqual({ kind: 'exam', answer: 'B', reference: '115 年第一次公告試題第二科第 6 題' });
+  });
+
   it('每一份官方來源都至少有一題帶出官方答案（不讓一整場安靜地消失）', () => {
     const sessions = new Set(official.map((q) => `${q.officialExam!.session} ${q.officialExam!.subject}`));
     expect(sessions.size, '題庫裡沒有官方公告試題 —— 這條測試在空轉').toBeGreaterThan(0);

@@ -18,6 +18,8 @@ official_exam）；題目由 ipas_exam_pdf.py 從 PDF 擷取。這支只負責�
 已經在題庫裡的題目（重新匯入時）：
   - 題幹、選項、答案、考科或 official_exam 與這次擷取的結果不同就中止 —— 來源 PDF 變了要先查清楚，
     題庫被改過就要先還原；
+  - 解析由 EXTRA_EXPLANATIONS 帶進來（metadata.explanation_source 帶 generated_by 標記），重新匯入時換成表上
+    的版本、從表上拿掉就拿掉；人工寫的解析不覆寫；
   - 工具負責的引文（官方題目本身與 EXTRA_EVIDENCE，每一則都帶 generated_by 標記）整批換成這次建出來的
     版本：改了、加了、從表上拿掉了 EXTRA_EVIDENCE，重新匯入就會生效；被手改的也換回工具建出來的版本；
   - metadata.sources 以工具的網址開頭；工具的引文帶進來、這次不再需要的網址一併拿掉，除非還有人工的
@@ -37,6 +39,7 @@ import sys
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
+import explanation_guard
 import ipas_exam_pdf
 import restore_from_source_pdf as R
 from restore_from_source_pdf import load_pdf
@@ -51,6 +54,7 @@ ORDINAL = '一二三四五六七八九十'  # 第十一次起寫阿拉伯數字�
 # 鍵：(來源代號, 題號)。法條（全國法規資料庫的網址）要寫 clause，由 law_evidence_problems 對照
 # law-articles.pinned.json 的釘選條文核對：法規要已釘選、網址的 flno 與 clause 是同一條、引文逐字在那一條裡
 # （匯入時與 CI 的工具測試都跑）。
+GUM = 'https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf'  # JCGM 100:2008（GUM）
 EXTRA_EVIDENCE: dict[tuple[str, int], list[dict]] = {
     # 題幹點名的條文本身就寫著答案（引文與 law-articles.pinned.json 的釘選條文逐字相同）
     ('S_IPAS_115_01_L12', 17): [{
@@ -101,6 +105,110 @@ EXTRA_EVIDENCE: dict[tuple[str, int], list[dict]] = {
         'note': '《巴黎協定》第 6 條第 2 項：以國際轉讓減緩成果達成國家自定貢獻時，要以健全的核算確保避免重複計算；'
                 '第 3 項：這種使用須出於自願，並經參與的締約方授權。',
     }],
+    # #148：學員回報這一題「先說答案是 D、後來說是 B」。答案照 PDF 是 B，題庫原本只有官方題目本身這一則依據。
+    # 量測的誤差、修正與不確定性用 JCGM 100:2008（GUM；BIPM 網站上的免費全文，2026-11-01 下載）：題幹的
+    # ISO 14064-1 沒有公開全文，GUM 是這兩個詞的通用定義。溫管辦法（已釘選）放在最後：第 2 條第 6 款是「查驗」的
+    # 定義，第 9 條是查驗結果與原登錄資料不一致時，由事業上傳修正後的清冊。兩條都只撐解析的最後一句。
+    ('S_IPAS_115_01_L12', 6): [
+        {
+            'url': GUM,
+            'quote': 'B.2.19 error (of measurement) result of a measurement minus a true value of the measurand',
+            'supports_option': 'B',
+            'note': 'JCGM 100:2008 附錄 B.2.19：誤差是量測結果減去被測量的真值。',
+        },
+        {
+            'url': GUM,
+            'quote': '3.2.3 Systematic error, like random error, cannot be eliminated but it too can often be reduced. '
+                     'If a systematic error arises from a recognized effect of an influence quantity on a measurement '
+                     'result, hereafter termed a systematic effect, the effect can be quantified and, if it is '
+                     'significant in size relative to the required accuracy of the measurement, a correction (B.2.23) '
+                     'or correction factor (B.2.24) can be applied to compensate for the effect. It is assumed that, '
+                     'after correction, the expectation or expected value of the error arising from a systematic '
+                     'effect is zero.',
+            'supports_option': 'B',
+            'note': 'JCGM 100:2008 第 3.2.3 節：系統誤差和隨機誤差一樣無法完全消除，但常可減小；已知的系統效應可以'
+                    '量化，用修正值或修正因子補償。',
+        },
+        {
+            'url': GUM,
+            'quote': '3.2.4 It is assumed that the result of a measurement has been corrected for all recognized '
+                     'significant systematic effects and that every effort has been made to identify such effects.',
+            'supports_option': 'B',
+            'note': 'JCGM 100:2008 第 3.2.4 節：評估不確定性時，假設量測結果已針對所有已知的顯著系統效應修正。',
+        },
+        {
+            'url': GUM,
+            'quote': '3.2.2 Random error presumably arises from unpredictable or stochastic temporal and spatial '
+                     'variations of influence quantities. The effects of such variations, hereafter termed random '
+                     'effects, give rise to variations in repeated observations of the measurand. Although it is not '
+                     'possible to compensate for the random error of a measurement result, it can usually be reduced '
+                     'by increasing the number of observations; its expectation or expected value (C.2.9, C.3.1) is '
+                     'zero.',
+            'supports_option': 'B',
+            'note': 'JCGM 100:2008 第 3.2.2 節：隨機誤差無法補償，通常可以增加觀測次數來減小。',
+        },
+        {
+            'url': GUM,
+            'quote': 'B.2.18 uncertainty (of measurement) parameter, associated with the result of a measurement, that '
+                     'characterizes the dispersion of the values that could reasonably be attributed to the measurand',
+            'supports_option': 'B',
+            'note': 'JCGM 100:2008 附錄 B.2.18：不確定性是表示可合理歸屬於被測量的值的分散程度的參數。',
+        },
+        {
+            'url': GUM,
+            'quote': 'The parameter may be, for example, a standard deviation (or a given multiple of it), or the '
+                     'half-width of an interval having a stated level of confidence.',
+            'supports_option': 'B',
+            'note': 'JCGM 100:2008 附錄 B.2.18 NOTE 1：這個參數可以是標準差（或它的倍數），或在某個信賴水準下區間的半寬。',
+        },
+        {
+            'url': GUM,
+            'quote': 'Often, measuring instruments and systems are adjusted or calibrated using measurement standards '
+                     'and reference materials to eliminate systematic effects; however, the uncertainties associated '
+                     'with these standards and materials must still be taken into account.',
+            'supports_option': 'B',
+            'note': 'JCGM 100:2008 第 3.2.4 節 NOTE 1：校正可以去除系統效應，校正所用的量測標準與參考物質的不確定性仍要納入。',
+        },
+        {
+            'url': 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=2',
+            'quote': '六、查驗：指以系統化、文件化及獨立性等方式，執行查證或重要項目評估之作業。',
+            'supports_option': 'B',
+            'clause': '第2條',
+            'note': '溫室氣體排放量盤查登錄及查驗管理辦法第 2 條第 6 款：查驗是以系統化、文件化及獨立性等方式執行查證或重要項目'
+                    '評估的作業。',
+        },
+        {
+            'url': 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=9',
+            'quote': '事業原登錄之排放量盤查資料與查驗機構查驗結果不一致者，事業應於上傳查驗結果時併同上傳修正後之排放量清冊'
+                     '及盤查報告書。',
+            'supports_option': 'B',
+            'clause': '第9條',
+            'note': '溫室氣體排放量盤查登錄及查驗管理辦法第 9 條：原登錄的盤查資料與查驗結果不一致時，由事業在上傳查驗結果時'
+                    '一併上傳修正後的排放量清冊及盤查報告書。',
+        },
+    ],
+}
+
+
+# 官方題目的解析（#148）。官方 PDF 只公布答案、沒有解析；要替官方題寫解析，寫在這裡再重新匯入，不手改題庫。
+# 鍵與 EXTRA_EVIDENCE 相同：(來源代號, 題號)。text 是解析，why 是為什麼要寫（記進題庫的 metadata.explanation_source）。
+# 解析裡的條號、節號、標準編號、百分比、年份、數量，都必須出現在這一題的題幹、選項或引文（官方題目本身與
+# EXTRA_EVIDENCE）裡：build_item 用 tools/explanation_guard.py 核對，匯入時與 Tools CI 都跑，找不到就中止。
+# 解析指涉選項的內容，不寫選項字母（quiz-app 的 explanation-hygiene gate）；引號裡寫法條原文要逐字。
+EXTRA_EXPLANATIONS: dict[tuple[str, int], dict[str, str]] = {
+    ('S_IPAS_115_01_L12', 6): {
+        'text': '誤差是量測結果減去被測量的真值。已知的系統效應可以量化，用修正值或修正因子補償；評估不確定性時也假設量測結果已針'
+                '對所有已知的顯著系統效應修正，所以已知的系統誤差應予以修正。隨機誤差則無法補償，通常可以增加觀測次數來減小。不確'
+                '定性描述的是可合理歸屬於被測量的值的分散程度，可用標準差，或在某個信賴水準下區間的半寬表示：±5% 是這個區間的'
+                '範圍，不是有 5% 的數據出錯。校正儀器是為了去除系統效應，但校正所用的量測標準與參考物質本身的不確定性仍要納入'
+                '，校正不能完全消除不確定性。查驗是以系統化、文件化及獨立性等方式執行查證或重要項目評估的作業；查驗結果與原登錄的'
+                '盤查資料不一致時，事業要上傳修正後的排放量清冊及盤查報告書。',
+        'why': '#148：學員回報這一題先說答案是 D、後來說是 B。查過的事：題庫與官方 PDF 的答案都是 B；這一題原本沒'
+               '有解析，答案依據只有官方題目本身。補上解析，每一句都對應到這一題的引文：誤差的定義、已知系統誤差的修正與隨機誤差'
+               '（JCGM 100:2008 B.2.19、3.2.2、3.2.3、3.2.4）；不確定性的定義與表示方式、校正'
+               '所用標準的不確定性（B.2.18 與它的 NOTE 1、3.2.4 NOTE 1）；查驗的定義（溫管辦法第 2 '
+               '條第 6 款）；查驗結果與原登錄資料不一致時，修正的義務在事業：由事業上傳修正後的清冊（溫管辦法第 9 條）。',
+    },
 }
 
 
@@ -113,6 +221,7 @@ CLAUSE = re.compile(r'第(\d+)條(?:之(\d+))?')
 EXTRA_SOURCES = {
     'https://unfccc.int/sites/default/files/resource/parisagreement_publication.pdf':
         '9c19b811a9e346bc532de9c64430494776dc434804d84cb48ad1ceacb66c884e',
+    GUM: '41bbf068fbc0d7986c98691b2d1af6680cb3044f6a1a89b3560933ed9ef9626c',  # 2026-11-01 下載
 }
 
 
@@ -222,6 +331,22 @@ def _printed(question: dict) -> str:
     return question['stem'] + '\n' + '；'.join(f'({o["key"]}){o["text"]}' for o in question['options'])
 
 
+def _explanation(src_id: str, question: dict, evidence: list[dict]) -> dict | None:
+    """EXTRA_EXPLANATIONS 的那一則（沒有就 None），先用 explanation_guard 對照題幹、選項與這一題的引文核對。"""
+    entry = EXTRA_EXPLANATIONS.get((src_id, question['number']))
+    if entry is None:
+        return None
+    item_id = f'{src_id}-q{question["number"]:03d}'
+    text, why = entry.get('text'), entry.get('why')
+    if not (isinstance(text, str) and text.strip() and isinstance(why, str) and why.strip()):
+        sys.exit(f'✗ {item_id}：EXTRA_EXPLANATIONS 的項目要有 text（解析）與 why（為什麼寫），兩個都不能是空的。')
+    allowed = [question['stem'], *(o['text'] for o in question['options']), *(e['quote'] for e in evidence)]
+    if bad := explanation_guard.check(text, allowed):
+        sys.exit(f'✗ {item_id} 的解析有題幹、選項與引文裡都找不到的斷言：'
+                 f'{", ".join(f"{kind}「{claim}」" for kind, claim in bad)}：改解析，或在 EXTRA_EVIDENCE 補上依據。')
+    return {'text': text, 'source': {'generated_by': GENERATED_BY, 'why': why}}
+
+
 def build_item(src_id: str, meta: dict, question: dict, extra_evidence: list[dict] | None = None) -> dict:
     """一題擷取結果 → 題庫的一題。"""
     number, answer = question['number'], question['answer']
@@ -237,6 +362,7 @@ def build_item(src_id: str, meta: dict, question: dict, extra_evidence: list[dic
         'generated_by': GENERATED_BY,
     }
     extras = [{**e, 'generated_by': GENERATED_BY} for e in extra_evidence or []]
+    explanation = _explanation(src_id, question, [*extras, official])
     return {
         'item_id': f'{src_id}-q{number:03d}',
         'year': int(meta['exam_date'][:4]),
@@ -248,7 +374,7 @@ def build_item(src_id: str, meta: dict, question: dict, extra_evidence: list[dic
         'stem': question['stem'],
         'options': [dict(o) for o in question['options']],
         'answer': answer,
-        'explanation': None,
+        'explanation': explanation['text'] if explanation else None,
         'source': {
             'source_id': src_id,
             'url': meta['url'],
@@ -272,6 +398,8 @@ def build_item(src_id: str, meta: dict, question: dict, extra_evidence: list[dic
             # 題庫的慣例：引文的網址也列在 sources 裡（季排程依它檢查連結）
             'sources': list(dict.fromkeys([meta['url'], *(e['url'] for e in extras)])),
             'evidence': [*extras, official],
+            # 解析是工具寫的（EXTRA_EXPLANATIONS）才有這一欄；放在最後，與重新匯入時加進去的位置相同
+            **({'explanation_source': explanation['source']} if explanation else {}),
         },
     }
 
@@ -312,8 +440,33 @@ def merge(dataset: dict, items: list[dict], *, owned: tuple[str, ...] = OWNED, g
         if changed:
             sys.exit(f'✗ {item["item_id"]} 已經在題庫裡，而且 {changed} 與這次擷取的結果不同 —— '
                      '不覆寫。來源 PDF 變了要先查清楚；題庫被改過就要先還原。')
-        refreshed += _refresh_owned_evidence(current, item, generated_by=generated_by)
+        evidence_changed = _refresh_owned_evidence(current, item, generated_by=generated_by)
+        explanation_changed = _refresh_owned_explanation(current, item, generated_by=generated_by)
+        refreshed += evidence_changed or explanation_changed
     return refreshed
+
+
+def _refresh_owned_explanation(current: dict, built: dict, *, generated_by: str = GENERATED_BY) -> bool:
+    """工具負責的解析（metadata.explanation_source 帶 generated_by 標記）換成這次建出來的版本；表上拿掉了，
+    工具的解析也拿掉。沒有標記的解析是人工寫的：表上沒有這一題就照留，表上有就中止，不覆寫。
+    回傳題庫有沒有變。"""
+    meta = current.get('metadata') or {}
+    current['metadata'] = meta
+    owned = (meta.get('explanation_source') or {}).get('generated_by') == generated_by
+    want, source = built.get('explanation'), (built.get('metadata') or {}).get('explanation_source')
+    if want is None:
+        if not owned:
+            return False
+        current['explanation'] = None
+        del meta['explanation_source']
+        return True
+    if not owned and (current.get('explanation') or '').strip():
+        sys.exit(f'✗ {current.get("item_id")} 已經有人工寫的解析，EXTRA_EXPLANATIONS 也有一則，不覆寫。'
+                 '要改由工具負責，先把人工的那一則搬進 EXTRA_EXPLANATIONS 並從題庫拿掉。')
+    before = (current.get('explanation'), meta.get('explanation_source'))
+    current['explanation'] = want
+    meta['explanation_source'] = dict(source)
+    return before != (want, source)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -376,7 +529,7 @@ def main(argv: list[str] | None = None) -> int:
     added = len(dataset['our_unique_items']) - before
     # 與 tools/sync_derived_counts.py 相同的寫法：縮排 2、不跳脫中文、檔尾不換行
     DATASET.write_text(json.dumps(dataset, ensure_ascii=False, indent=2), encoding='utf-8', newline='\n')
-    print(f'新增 {added} 題；已在題庫裡 {len(items) - added} 題，其中 {refreshed} 題更新了工具負責的引文或來源。'
+    print(f'新增 {added} 題；已在題庫裡 {len(items) - added} 題，其中 {refreshed} 題更新了工具負責的引文、來源或解析。'
           '接著跑 restore_from_source_pdf.py --emit 記進憑證，再 cd quiz-app && pnpm preflight。')
     return 0
 

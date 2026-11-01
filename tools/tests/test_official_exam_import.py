@@ -135,6 +135,94 @@ def test_extra_evidence_must_support_the_official_answer():
                                                                      'supports_option': 'C'}])
 
 
+# ── EXTRA_EXPLANATIONS：官方題目的解析（#148）──────────────────────────────────────
+#
+# 官方 PDF 只有答案、沒有解析。解析由匯入工具的 EXTRA_EXPLANATIONS 帶進來，與 EXTRA_EVIDENCE 一樣是工具負責
+# 的欄位：匯入時與 Tools CI 都拿 explanation_guard 對照題幹、選項與這一題的引文核對，斷言找不到出處就中止。
+
+EXPLAINED = {'text': '選項C7 才對，其他三個選項都不對。', 'why': '測試用：說明為什麼要寫這一則解析。'}
+
+
+def _explained(monkeypatch, entry=None, number=7):
+    monkeypatch.setattr(I, 'EXTRA_EXPLANATIONS', {(SRC, number): dict(entry or EXPLAINED)})
+
+
+def test_an_item_without_an_entry_has_no_explanation():
+    item = I.build_item(SRC, META, _question(7))
+    assert item['explanation'] is None
+    assert 'explanation_source' not in item['metadata']
+
+
+def test_an_entry_becomes_the_explanation_with_its_reason_and_the_tool_marker(monkeypatch):
+    _explained(monkeypatch, {'text': '選項C7 才對。', 'why': '測試用的理由。'})
+    item = I.build_item(SRC, META, _question(7))
+    assert item['explanation'] == '選項C7 才對。'
+    assert item['metadata']['explanation_source'] == {'generated_by': 'tools/import_official_exam.py',
+                                                      'why': '測試用的理由。'}
+    assert list(item['metadata'])[-1] == 'explanation_source'  # 與重新匯入時加進去的位置相同
+
+
+@pytest.mark.parametrize(('text', 'claim'), [
+    ('依 ISO 14064-1 第 8.3 節，選項C7 才對。', '第8.3節'),
+    ('依第 9 條，選項C7 才對。', '第9條'),
+    ('選項C7 才對，±10% 是範圍。', '10%'),
+    ('依 2019 年的規範，選項C7 才對。', '2019'),
+], ids=['section', 'article', 'percent', 'year'])
+def test_an_explanation_with_a_claim_found_nowhere_stops_the_import(monkeypatch, text, claim):
+    _explained(monkeypatch, {'text': text, 'why': '測試'})
+    with pytest.raises(SystemExit, match=f'{SRC}-q007.*解析.*{re.escape(claim)}'):
+        I.build_item(SRC, META, _question(7))
+
+
+def test_a_claim_in_the_extra_evidence_of_that_question_is_allowed(monkeypatch):
+    _explained(monkeypatch, {'text': '依第 9 條，選項C7 才對。', 'why': '測試'})
+    law = {'url': 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=X&flno=9', 'quote': '第9條的條文',
+           'supports_option': 'C'}
+    assert I.build_item(SRC, META, _question(7), extra_evidence=[law])['explanation'] == '依第 9 條，選項C7 才對。'
+    # 另一題的引文不算：引文只能撐自己那一題的解析
+    with pytest.raises(SystemExit, match='第9條'):
+        I.build_item(SRC, META, _question(7))
+
+
+def test_the_claims_in_the_stem_and_options_are_allowed(monkeypatch):
+    _explained(monkeypatch, {'text': '選項C7 才對，第 7 題的題幹問的是範圍。', 'why': '測試'})
+    assert I.build_item(SRC, META, _question(7, stem='依第 7 條，下列何者正確？'))['explanation']
+
+
+@pytest.mark.parametrize('entry', [{'text': '', 'why': '測試'}, {'text': '解析', 'why': ''}, {'text': '解析'},
+                                   {'why': '測試'}], ids=['empty-text', 'empty-why', 'no-why', 'no-text'])
+def test_an_entry_needs_both_a_text_and_a_reason(monkeypatch, entry):
+    _explained(monkeypatch, entry)
+    with pytest.raises(SystemExit, match='EXTRA_EXPLANATIONS'):
+        I.build_item(SRC, META, _question(7))
+
+
+def test_reimporting_applies_adds_and_removes_the_tool_explanation(monkeypatch):
+    dataset = _dataset(I.build_item(SRC, META, _question(7)))
+    item = dataset['our_unique_items'][1]
+    _explained(monkeypatch)
+    assert I.merge(dataset, [I.build_item(SRC, META, _question(7))]) == 1
+    assert item['explanation'] == EXPLAINED['text']
+    assert item['metadata']['explanation_source']['generated_by'] == I.GENERATED_BY
+    assert I.merge(dataset, [I.build_item(SRC, META, _question(7))]) == 0  # 再匯入一次：沒有東西要改
+    item['explanation'] = '有人手改的解析'
+    assert I.merge(dataset, [I.build_item(SRC, META, _question(7))]) == 1  # 手改的換回工具的版本
+    assert item['explanation'] == EXPLAINED['text']
+    monkeypatch.setattr(I, 'EXTRA_EXPLANATIONS', {})
+    assert I.merge(dataset, [I.build_item(SRC, META, _question(7))]) == 1  # 從表上拿掉：工具的解析也拿掉
+    assert item['explanation'] is None and 'explanation_source' not in item['metadata']
+
+
+def test_reimporting_never_overwrites_an_explanation_written_by_hand(monkeypatch):
+    dataset = _dataset(I.build_item(SRC, META, _question(7)))
+    item = dataset['our_unique_items'][1]
+    item['explanation'] = '人工寫的解析'
+    _explained(monkeypatch)
+    with pytest.raises(SystemExit, match=f'{SRC}-q007.*人工'):
+        I.merge(dataset, [I.build_item(SRC, META, _question(7))])
+    assert item['explanation'] == '人工寫的解析'
+
+
 # ── merge：寫進題庫，不覆寫已經在的題目 ─────────────────────────────────────────
 
 def _dataset(*items):
@@ -604,10 +692,20 @@ def test_the_bank_holds_what_the_importer_builds():
         # 使用者看到的就不是工具核對過的那一則
         if (meta.get('evidence') or [])[:len(built_meta['evidence'])] != built_meta['evidence']:
             diff.append('metadata.evidence（必須以工具建出的引文開頭，順序相同）')
+        # 解析（#148）：官方公告試題的解析只能由 EXTRA_EXPLANATIONS 帶進來。表上有的，題庫必須正是工具建出的那一則與
+        # 理由；表上沒有的，題庫不能有解析，也不能有 explanation_source（人工直接寫進題庫的解析，這裡要紅）
+        source = meta.get('explanation_source')
+        if built['explanation'] is not None:
+            if (item.get('explanation'), source) != (built['explanation'], built_meta['explanation_source']):
+                diff.append('explanation（必須正是 EXTRA_EXPLANATIONS 的那一則）')
+        elif (item.get('explanation') or '').strip() or source is not None:
+            diff.append('explanation（官方公告試題的解析要寫進 EXTRA_EXPLANATIONS，不能直接寫進題庫）')
         if diff:
             bad.append(f'{built["item_id"]}: {diff}')
-    assert bad == [], ('題庫裡的官方公告試題與匯入工具建出來的不同。工具負責的欄位不可手改；要改引文，'
-                       '改 EXTRA_EVIDENCE 再重新匯入（見 AGENTS.md）。\n' + '\n'.join(bad[:20]))
+    assert bad == [], ('題庫裡的官方公告試題與匯入工具建出來的不同。工具負責的欄位不可手改；要改引文或解析，'
+                       '改 EXTRA_EVIDENCE、EXTRA_EXPLANATIONS 再重新匯入（見 AGENTS.md）。\n' + '\n'.join(bad[:20]))
+    explained = [b['item_id'] for b in built_items if b['explanation'] is not None]
+    assert 'S_IPAS_115_01_L12-q006' in explained, 'q006（#148）沒有解析：這條測試的解析那一半在空轉'
 
 
 # ── 非法條的額外引文：CI 拿不到原文，由 --verify-extra 對照登記過 sha256 的來源 PDF 逐字核對 ────────────
@@ -810,6 +908,13 @@ def test_every_extra_evidence_entry_belongs_to_an_imported_official_question():
     assert sorted(set(I.EXTRA_EVIDENCE) - official) == []
 
 
+def test_every_extra_explanation_belongs_to_an_imported_official_question():
+    official = {(s, q['number']) for s, meta in R.SOURCES.items() if meta.get('kind') == 'official_exam'
+                for q in R.load_snapshot()[s]['questions'] if q['number'] not in meta.get('figure_questions', {})}
+    assert I.EXTRA_EXPLANATIONS, 'EXTRA_EXPLANATIONS 是空的：空轉'
+    assert sorted(set(I.EXTRA_EXPLANATIONS) - official) == []
+
+
 def test_the_official_layout_is_extracted_with_the_table_extractor(monkeypatch, tmp_path):
     calls = []
     monkeypatch.setattr(R, 'SOURCES', {SRC: META})
@@ -972,8 +1077,9 @@ def test_main_stops_on_a_header_that_disagrees_before_writing(official_source, m
 TOOL_SOURCES = {  # 審查過的原始碼的 sha256（換行統一成 LF）：兩個工具讀頁首的函式，與比對用的 check_official_header
     # 2026-10-18：加入參考樣題（kind official_sample）的分支，在同一個 try 的第一句裡讀樣題的頁首、與 SOURCES 比對
     # （check_sample_header），擷取時傳科目；公告試題那一支一字未改
+    # 2026-11-02（#148）：main 最後一行的完成訊息從「引文或來源」改成「引文、來源或解析」，讀頁首的路一字未改
     'extract_sources': 'a5834cace73dbf4ecf5307e0f8d4195193a7947be684d50158a9f7d7df9b1d66',
-    'main': 'e204e4f0ebb4c60497903ad3f77b62f792ddda1f71b3e604d5e5b92063cfe7a8',
+    'main': '12039ee1a4c839ce40978bc47cfed95705e50737a6c1d08c753b02dc783d3315',
     'check_official_header': 'ecb53c82afd1e6d049c5f2b3bfeee30f219c9b781c0151682058e8b088b29dcd',
 }
 DEFAULTS = {'extract_sources': (None, None), 'main': ((None,), None), 'check_official_header': (None, None)}  # 預設值
