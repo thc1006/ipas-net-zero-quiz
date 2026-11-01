@@ -521,13 +521,20 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                         </div>
                       )}
 
-                      {/* 題庫內相似題 */}
+                      {/* 題庫內相似題：是另外的題目（#148：舊版緊接在錯題卡的「正確答案：D」下面，
+                          讀起來像同一題的答案），所以有自己的標題與框，每一題標「相似題 N」 */}
                       {showBankSimilar[qid] && (
-                        <div className="bank-similar-section">
-                          <div className="bank-similar-header">
-                            <span className="material-icons sm">library_books</span>
-                            <span>題庫內相似題目</span>
-                          </div>
+                        <section
+                          className="bank-similar-section"
+                          aria-labelledby={`bank-similar-heading-${qid}`}
+                        >
+                          <h3 className="bank-similar-header" id={`bank-similar-heading-${qid}`}>
+                            <span className="material-icons sm" aria-hidden="true">library_books</span>
+                            <span>題庫裡的其他相似題</span>
+                          </h3>
+                          <p className="bank-similar-note">
+                            下面是另外幾道題目，各有各的答案，與上面這一題的答案無關。
+                          </p>
                           {(() => {
                             const similarQs = getSimilarQuestions(qid, 5);
                             if (similarQs.length === 0) {
@@ -547,7 +554,7 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                               </ul>
                             );
                           })()}
-                        </div>
+                        </section>
                       )}
                     </div>
                   </div>

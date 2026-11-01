@@ -231,6 +231,31 @@ describe('ResultPage', () => {
     expect(within(reveal).getByText(/您選擇了 A/)).toBeInTheDocument();
   });
 
+  // #148：舊版的錯題卡下面接著相似題，gist-504 那張卡寫「正確答案：D」，下一行就是 q006 的題幹與選項，
+  // 讀起來像是同一題的答案是 D。相似題要有自己的標題、說明它們是別的題目，每一題也要標出來
+  it('題庫相似題是獨立的一區：標題寫明是其他題目，每一題標「相似題 N」，不含錯題卡自己的答案', () => {
+    render(
+      <ResultPage
+        result={makeResult({ score: 0, correctCount: 0, wrongCount: 1, answers: [makeAnswer()] })}
+        onGoHome={() => {}}
+        onRetry={() => {}}
+      />
+    );
+    fireEvent.click(screen.getByRole('button', { name: /題庫相似題/ }));
+    const panel = screen.getByRole('region', { name: '題庫裡的其他相似題' });
+    expect(within(panel).getByRole('heading', { name: '題庫裡的其他相似題' })).toBeInTheDocument();
+    expect(within(panel).getByText('下面是另外幾道題目，各有各的答案，與上面這一題的答案無關。')).toBeInTheDocument();
+    const items = within(panel).getAllByRole('listitem');
+    expect(items).toHaveLength(1);
+    expect(within(items[0]).getByText('相似題 1')).toBeInTheDocument();
+    // 錯題卡自己的作答與正確答案在這一區外面
+    expect(within(panel).queryByText(/你的答案/)).toBeNull();
+    expect(panel.contains(document.querySelector('.wrong-answers'))).toBe(false);
+    // 標題在第一題之前
+    const heading = within(panel).getByRole('heading');
+    expect(heading.compareDocumentPosition(items[0]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
   it('onGoHome / onRetry 按鈕觸發 callback', () => {
     const onGoHome = vi.fn();
     const onRetry = vi.fn();

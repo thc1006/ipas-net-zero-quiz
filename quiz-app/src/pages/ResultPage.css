@@ -560,22 +560,29 @@
 }
 
 /* 題庫內相似題區塊 */
+/* 是另外的題目，不是錯題卡的延伸（#148）：框加粗、與上面隔開，標題下面有一句說明 */
 .bank-similar-section {
-  margin-top: var(--spacing-sm);
+  margin-top: var(--spacing-md);
   padding: var(--spacing-sm);
   background: var(--color-surface);
   border-radius: var(--radius-sm);
-  border: 1px solid var(--color-info-fg);
+  border: 2px solid var(--color-info-fg);
 }
 
 .bank-similar-header {
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
+  margin: 0 0 var(--spacing-xs);
   font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-info-fg);
-  margin-bottom: var(--spacing-sm);
+}
+
+.bank-similar-note {
+  margin: 0 0 var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
 }
 
 .bank-similar-header .material-icons {
@@ -593,17 +600,18 @@
 
 .bank-similar-item {
   display: flex;
-  gap: var(--spacing-sm);
+  flex-direction: column;
+  gap: var(--spacing-xs);
   padding: var(--spacing-sm);
   background: var(--color-surface-variant);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
 }
 
 .similar-index {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   font-weight: 600;
   color: var(--color-info-fg);
-  min-width: 24px;
 }
 
 .similar-content {

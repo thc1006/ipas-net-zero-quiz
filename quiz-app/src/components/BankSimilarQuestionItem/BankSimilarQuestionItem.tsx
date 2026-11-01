@@ -136,7 +136,7 @@ export function BankSimilarQuestionItem({
   if (!question.options?.length) {
     return (
       <li className="bank-similar-item">
-        <span className="similar-index">{index}.</span>
+        <span className="similar-index">相似題 {index}</span>
         <div className="similar-content">
           <p className="similar-stem">{question.stem}</p>
           <p className="bank-similar-no-options">此題無選項資料</p>
@@ -152,7 +152,7 @@ export function BankSimilarQuestionItem({
 
   return (
     <li className="bank-similar-item">
-      <span className="similar-index">{index}.</span>
+      <span className="similar-index">相似題 {index}</span>
       <div className="similar-content">
         <p className="similar-stem" id={labelId}>
           {question.stem}
