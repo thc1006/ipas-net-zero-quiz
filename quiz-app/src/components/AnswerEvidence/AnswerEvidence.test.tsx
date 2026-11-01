@@ -47,6 +47,14 @@ describe('AnswerEvidence', () => {
     ).toBe(false);
   });
 
+  // 引文與它的出處連結相鄰，官方答案在連結後面：官方答案底下若接著連結，那個連結看起來就是官方答案的出處，
+  // 而顯示的引文可能是法條或 GUM，連結指的是別份文件（PR #160 審查）
+  it('順序是引文、引文的出處連結、官方答案', () => {
+    const { container } = render(<AnswerEvidence evidence={official} />);
+    const order = [...container.querySelectorAll('blockquote, a, p')].map((el) => el.tagName);
+    expect(order).toEqual(['BLOCKQUOTE', 'A', 'P']);
+  });
+
   it('結果頁的精簡框一樣寫出官方答案', () => {
     render(<AnswerEvidence evidence={official} compact />);
     expect(

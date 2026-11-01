@@ -3,6 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { act, render, screen, fireEvent, isInaccessible } from '@testing-library/react';
 import { QuestionCard } from './QuestionCard';
 import type { QuizQuestion } from '../../types/quiz';
+import { getQuestionById } from '../../data/questions';
 
 const mockQuestion: QuizQuestion = {
   id: 'test-1',
@@ -658,6 +659,15 @@ describe('官方公告試題的標記', () => {
     rerender(<QuestionCard question={answered} questionNumber={1} showAnswer onSelectAnswer={vi.fn()} />);
     const line = screen.getByText('官方公告的參考答案：(C)（115 年第一次公告試題第一科第 1 題）');
     expect(isInaccessible(line)).toBe(false);
+  });
+
+  // #148：答案依據是法條的官方題（溫管辦法第 4 條排在官方 PDF 那一則前面），以前這一行就不見了
+  it('真實的官方題：答案依據是法條時，也寫出官方公告的參考答案', () => {
+    const q = getQuestionById('S_IPAS_115_01_L12-q017')!;
+    expect(q.evidence?.url).toMatch(/^https:\/\/law\.moj\.gov\.tw\//);
+    render(<QuestionCard question={q} questionNumber={1} selectedAnswer="A" showAnswer onSelectAnswer={vi.fn()} />);
+    expect(screen.getByText(/依前項排放係數法計算燃料燃燒產生之排放量/)).toBeInTheDocument();
+    expect(screen.getByText('官方公告的參考答案：(C)（115 年第一次公告試題第二科第 17 題）')).toBeInTheDocument();
   });
 
   it('參考樣題在題卡上標出是哪一版；主庫配對的那一題（gist）也一樣', () => {
