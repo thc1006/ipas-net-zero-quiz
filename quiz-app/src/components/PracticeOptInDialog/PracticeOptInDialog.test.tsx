@@ -72,6 +72,28 @@ describe('PracticeOptInDialog', () => {
     });
   });
 
+  describe('開啟時把對話框捲到按鈕', () => {
+    // jsdom 不排版，scrollTop 寫了讀回來還是 0，所以看有沒有寫到對話框上
+    afterEach(() => vi.restoreAllMocks());
+
+    it('focus 不自己捲；畫第一個畫面前把對話框捲到底', async () => {
+      const focus = vi.spyOn(HTMLElement.prototype, 'focus');
+      const scrollTop = vi.spyOn(Element.prototype, 'scrollTop', 'set');
+      render(<PracticeOptInDialog open onAccept={() => {}} onDecline={() => {}} />);
+      expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+      await new Promise((ok) => requestAnimationFrame(ok));
+      expect(scrollTop.mock.contexts).toEqual([document.querySelector('.optin-dialog')]);
+    });
+
+    it('第一個畫面之前就關掉：不再捲', async () => {
+      const scrollTop = vi.spyOn(Element.prototype, 'scrollTop', 'set');
+      const { rerender } = render(<PracticeOptInDialog open onAccept={() => {}} onDecline={() => {}} />);
+      rerender(<PracticeOptInDialog open={false} onAccept={() => {}} onDecline={() => {}} />);
+      await new Promise((ok) => requestAnimationFrame(ok));
+      expect(scrollTop).not.toHaveBeenCalled();
+    });
+  });
+
   describe('Tab 焦點陷阱', () => {
     // 對話框裡可以 Tab 到的依序是內文捲動區、暫不啟用、我已了解。fireEvent 回傳 false 表示預設行為被攔下
     function setup() {

@@ -20,8 +20,15 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
     if (!open) return;
     const previouslyFocused = document.activeElement as HTMLElement | null;
 
-    // 焦點進第一顆按鈕，不是排在前面的內文捲動區：先按得到按鈕，要捲內文再 Shift+Tab
-    dialogRef.current?.querySelector('button')?.focus();
+    // 焦點進第一顆按鈕，不是排在前面的內文捲動區：先按得到按鈕，要捲內文再 Shift+Tab。
+    // 不讓 focus() 自己捲：樣式表還沒載完（Google Fonts 慢）時 WebKit 照沒有樣式的版面捲，捲的是後面的頁面。
+    // 改成畫第一個畫面前（requestAnimationFrame）自己把對話框捲到底，對話框比視窗高（放大 400%）時按鈕才進得來。
+    // 樣式表到之前頁面不會畫，所以這時樣式一定已經套上。不等 load：load 也等字型檔，下載期間按鈕都在畫面外
+    const dialog = dialogRef.current!;
+    dialog.querySelector('button')!.focus({ preventScroll: true });
+    const frame = requestAnimationFrame(() => {
+      dialog.scrollTop = dialog.scrollHeight;
+    });
 
     // 註：故意不設 aria-hidden 於 #root —— dialog 自己已有 aria-modal="true"，
     // 螢幕閱讀器會把 modal 外的內容視為 inert。若再設 root 的 aria-hidden，
@@ -52,6 +59,7 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
     document.addEventListener('keydown', onKey);
 
     return () => {
+      cancelAnimationFrame(frame);
       document.removeEventListener('keydown', onKey);
       previouslyFocused?.focus?.();
     };
