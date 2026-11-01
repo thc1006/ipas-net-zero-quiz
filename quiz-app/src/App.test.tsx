@@ -1,10 +1,14 @@
 // App component test — render flow + ErrorBoundary 包裹 + practice-mode wiring
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { render, screen, fireEvent, cleanup, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup, waitFor, act, within } from '@testing-library/react';
 import App from './App';
 import { getSourceCandidates } from './data/questions';
 import { officialExamLabel, officialSampleLabel } from './utils/official-exam';
-import { __resetPracticePoolCacheForTesting, __setPracticePoolForTesting } from './utils/practice-pool';
+import {
+  __resetPracticePoolCacheForTesting,
+  __setPracticePoolForTesting,
+  loadPracticePool,
+} from './utils/practice-pool';
 import { buildFixturePool } from './utils/__fixtures__/practice-pool-fixture';
 import type { QuizQuestion } from './types/quiz';
 
@@ -24,6 +28,32 @@ vi.mock('./data/questions', async (importOriginal) => {
     getRandomQuestionsFromPool: (...args: Parameters<typeof actual.getRandomQuestionsFromPool>) => {
       drawRange.value = args[0];
       return actual.getRandomQuestionsFromPool(...args);
+    },
+  };
+});
+
+// 練習池 chunk 載不到：真實情境是部署新版後的舊分頁或斷線，dynamic import 會 reject。
+// 擋在 import 這一層，走的是真的 loadPracticePool，重試才驗得到
+const poolBroken = vi.hoisted(() => ({ value: false }));
+vi.mock('./data/practice_pool.json', async (importOriginal) => {
+  const actual = await importOriginal<{ default: unknown }>();
+  return {
+    get default() {
+      if (poolBroken.value) throw new TypeError('Failed to fetch dynamically imported module');
+      return actual.default;
+    },
+  };
+});
+
+// 讓載入掛著：測試先走開，再放行，看晚到的結果會不會影響現在的畫面
+const poolHold = vi.hoisted(() => ({ value: null as Promise<void> | null }));
+vi.mock('./utils/practice-pool', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('./utils/practice-pool')>();
+  return {
+    ...actual,
+    loadPracticePool: async () => {
+      if (poolHold.value) await poolHold.value;
+      return actual.loadPracticePool();
     },
   };
 });
@@ -81,6 +111,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
   sourceEmpty.value = false;
   drawRange.value = null;
+  poolBroken.value = false;
   __resetPracticePoolCacheForTesting();
 });
 
@@ -113,6 +144,194 @@ describe('App', () => {
     fireEvent.click(screen.getByRole('button', { name: /開始/ }));
     await waitFor(() => {
       expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument();
+    });
+  });
+
+  describe('練習池 chunk 載不到', () => {
+    const reload = vi.fn();
+
+    beforeEach(() => {
+      localStorage.setItem('practice-pool-enabled', '1');
+      localStorage.setItem('practice-pool-ai-opt-in', '1');
+      reload.mockClear();
+      vi.stubGlobal('location', { ...window.location, reload });
+    });
+
+    it('按開始：留在原頁，說明原因並提供重新載入', async () => {
+      poolBroken.value = true;
+      render(<App />);
+
+      fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+
+      const alert = await screen.findByRole('alert');
+      expect(alert).toHaveTextContent('題目載入失敗');
+      expect(screen.queryByText(/第\s*1\s*題/)).not.toBeInTheDocument();
+
+      fireEvent.click(within(alert).getByRole('button', { name: '重新載入' }));
+      expect(reload).toHaveBeenCalledOnce();
+    });
+
+    it('關閉按鈕收起訊息', async () => {
+      poolBroken.value = true;
+      render(<App />);
+      fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+
+      fireEvent.click(within(await screen.findByRole('alert')).getByRole('button', { name: '關閉' }));
+
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
+
+    it('換頁時訊息收起，回來也不再出現', async () => {
+      poolBroken.value = true;
+      render(<App />);
+      fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+      await screen.findByRole('alert');
+
+      fireEvent.click(screen.getByLabelText(/開啟設定/));
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+      // 設定頁也會載入練習池：等它結束，不留到下一個測試
+      await act(() => loadPracticePool().catch(() => undefined));
+    });
+
+    it('停用加強練習池時訊息收起', async () => {
+      poolBroken.value = true;
+      render(<App />);
+      fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+      await screen.findByRole('alert');
+
+      fireEvent.click(screen.getByRole('button', { name: '停用加強練習池' }));
+
+      await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+    });
+
+    it('訊息出現時焦點移到再試一次；重新載入會失去進行中的東西，不能一按 Enter 就發生', async () => {
+      poolBroken.value = true;
+      render(<App />);
+      fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+
+      const alert = await screen.findByRole('alert');
+
+      await waitFor(() => expect(within(alert).getByRole('button', { name: '再試一次' })).toHaveFocus());
+    });
+
+    it('再試一次用同一份設定重新開始', async () => {
+      poolBroken.value = true;
+      render(<App />);
+      fireEvent.change(screen.getByLabelText('題數'), { target: { value: '7' } });
+      fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+      const alert = await screen.findByRole('alert');
+
+      poolBroken.value = false;
+      fireEvent.click(within(alert).getByRole('button', { name: '再試一次' }));
+
+      expect(await screen.findByText('1 / 7')).toBeInTheDocument();
+    });
+
+    describe('載入掛著的時候使用者走開', () => {
+      let release = () => {};
+
+      beforeEach(() => {
+        poolHold.value = new Promise((resolve) => {
+          release = resolve;
+        });
+      });
+
+      afterEach(() => {
+        poolHold.value = null;
+      });
+
+      const settle = () => act(() => new Promise<void>((resolve) => setTimeout(resolve, 50)));
+
+      it('去設定頁之後失敗：訊息不出現，焦點不被搶走', async () => {
+        poolBroken.value = true;
+        render(<App />);
+        fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+        fireEvent.click(screen.getByLabelText(/開啟設定/));
+        const back = screen.getByRole('button', { name: /返回首頁/ });
+        back.focus();
+
+        release();
+        await settle();
+
+        expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+        expect(back).toHaveFocus();
+        await act(() => loadPracticePool().catch(() => undefined));
+      });
+
+      it('去設定頁之後成功：不會跳到測驗頁', async () => {
+        render(<App />);
+        fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+        fireEvent.click(screen.getByLabelText(/開啟設定/));
+
+        release();
+        await settle();
+
+        expect(screen.getByText(/^外觀$/)).toBeInTheDocument();
+      });
+
+      it('按了繼續測驗之後成功：續作的 1 / 3 不被換成新的一場', async () => {
+        localStorage.setItem(
+          'ipas-quiz-in-progress-v2',
+          JSON.stringify({
+            version: 2,
+            savedAt: 1,
+            state: {
+              isActive: true,
+              questions: ['gist-1', 'gist-2', 'gist-3'],
+              currentIndex: 0,
+              answers: [],
+              startTime: 1,
+              config: {
+                mode: 'practice',
+                subject: 'all',
+                questionCount: 3,
+                shuffleQuestions: false,
+                showAnswerImmediately: true,
+              },
+            },
+          })
+        );
+        render(<App />);
+        fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+        fireEvent.click(screen.getByRole('button', { name: /繼續測驗/ }));
+        expect(await screen.findByText('1 / 3')).toBeInTheDocument();
+
+        release();
+        await settle();
+
+        expect(screen.getByText('1 / 3')).toBeInTheDocument();
+      });
+    });
+
+    it('再按一次開始成功時訊息消失', async () => {
+      poolBroken.value = true;
+      render(<App />);
+      fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+      await screen.findByRole('alert');
+
+      poolBroken.value = false;
+      fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+
+      await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
+
+    it('結果頁按再測一次走同一條路', async () => {
+      render(<App />);
+      fireEvent.change(screen.getByLabelText('題數'), { target: { value: '1' } });
+      fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+      await screen.findByText(/第\s*1\s*題/);
+      fireEvent.click(screen.getByRole('button', { name: /完成測驗/ }));
+      const retry = await screen.findByRole('button', { name: /再測一次/ });
+
+      poolBroken.value = true;
+      __resetPracticePoolCacheForTesting(); // 這一場還沒載入過練習池
+      fireEvent.click(retry);
+
+      const alert = await screen.findByRole('alert');
+      expect(alert).toHaveTextContent('題目載入失敗');
+      expect(alert).toHaveTextContent('重新載入會清掉這份結果');
+      expect(screen.getByRole('button', { name: /再測一次/ })).toBeInTheDocument();
     });
   });
 
@@ -400,6 +619,40 @@ describe('App', () => {
     render(<App />);
     const skipLink = screen.getByText(/跳到主要內容/);
     expect(skipLink).toHaveAttribute('href', '#main-content');
+  });
+
+  // 還原放在 afterEach：測試逾時也要還原，否則同一檔後面的測試全部跟著丟 SecurityError
+  describe('瀏覽器封鎖網站資料（讀 localStorage、sessionStorage 都丟 SecurityError）', () => {
+    const descriptors = new Map<string, PropertyDescriptor>();
+
+    beforeEach(() => {
+      for (const name of ['localStorage', 'sessionStorage']) {
+        descriptors.set(name, Object.getOwnPropertyDescriptor(window, name)!);
+        Object.defineProperty(window, name, {
+          configurable: true,
+          get() {
+            throw new DOMException('Access is denied for this document.', 'SecurityError');
+          },
+        });
+      }
+      vi.stubGlobal(
+        'fetch',
+        vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => ({ value: 7 }) })
+      );
+    });
+
+    afterEach(() => {
+      cleanup();
+      for (const [name, descriptor] of descriptors) Object.defineProperty(window, name, descriptor);
+    });
+
+    it('頁面照常顯示，訪客計數也顯示', async () => {
+      render(<App />);
+      fireEvent.click(screen.getByRole('button', { name: /暫不啟用/ }));
+
+      expect(screen.getByLabelText(/開啟設定/)).toBeInTheDocument();
+      expect(await screen.findByLabelText('訪客人次：7')).toBeInTheDocument();
+    });
   });
 
   it('footer renders GitHub link + 問題回報 link', () => {

@@ -98,6 +98,8 @@
   align-items: center;
   margin-top: var(--spacing-lg);
   gap: var(--spacing-md);
+  /* 鍵盤作答後捲到這裡：留一點空間，貼著視窗底部時小數點的捲動量與晚到的版面變動會切掉按鈕 */
+  scroll-margin-bottom: var(--spacing-sm);
 }
 
 .nav-center {
@@ -105,9 +107,10 @@
   text-align: center;
 }
 
-.hint-text {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+.answer-outcome {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-text-primary);
 }
 
 /* 響應式 */
@@ -155,8 +158,5 @@
   }
   .progress-info {
     font-size: var(--font-size-sm);
-  }
-  .hint-text {
-    font-size: var(--font-size-xs);
   }
 }

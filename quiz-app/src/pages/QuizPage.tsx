@@ -1,8 +1,13 @@
 // 測驗頁面元件
-import { useState, useCallback, useEffect, useLayoutEffect } from 'react';
+import { useState, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { QuestionCard } from '../components/QuestionCard';
 import type { useQuiz } from '../hooks/useQuiz';
 import './QuizPage.css';
+
+function answerOutcome(answer: string | null, selected: string | null): string {
+  if (answer === null) return '此題目無標準答案';
+  return selected === answer ? '答對了' : `答錯了，正確答案是 ${answer}`;
+}
 
 interface QuizPageProps {
   quiz: ReturnType<typeof useQuiz>;
@@ -15,6 +20,12 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [hasAnswered, setHasAnswered] = useState(false);
   const [abortConfirmOpen, setAbortConfirmOpen] = useState(false);
+  // 這一題剛剛怎麼作答的；回到答過的題目是 null，對錯不再念一次
+  const [answeredBy, setAnsweredBy] = useState<'keyboard' | 'pointer' | null>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
+  const navigationRef = useRef<HTMLDivElement>(null);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+  const focusStemAfterNext = useRef(false);
 
   // ESC 關閉 abort confirm dialog（a11y 期待行為）
   useEffect(() => {
@@ -48,6 +59,13 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
     const prior = currentAnswer?.selectedAnswer ?? null;
     setSelectedAnswer(prior);
     setHasAnswered(prior !== null && !!config?.showAnswerImmediately);
+    setAnsweredBy(null);
+    if (focusStemAfterNext.current) {
+      focusStemAfterNext.current = false;
+      const stem = pageRef.current?.querySelector<HTMLElement>('.question-stem');
+      stem?.focus({ preventScroll: true });
+      stem?.scrollIntoView({ block: 'start' });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuestion?.id]);
 
@@ -71,6 +89,7 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
 
       if (config?.showAnswerImmediately) {
         setHasAnswered(true);
+        setAnsweredBy('pointer');
       }
     },
     [hasAnswered, config?.showAnswerImmediately, submitAnswer]
@@ -86,6 +105,17 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
     }
   }, [isLastQuestion, onFinish, nextQuestion]);
 
+  const handleKeyboardAnswered = useCallback(() => setAnsweredBy('keyboard'), []);
+
+  // 鍵盤作答後焦點落在下一題：選項鎖定後焦點會掉到 body，下一步要做的就是這顆。
+  // 要等解析畫出來：導覽列這時才在最後的位置。捲導覽列，對錯文字與按鈕一起進視窗；自己捲而不靠 focus()，
+  // 各引擎捲動量不同，Firefox 會把按鈕捲到中間。nearest 捲得最少，放得下時選項還在。
+  useLayoutEffect(() => {
+    if (answeredBy !== 'keyboard') return;
+    nextButtonRef.current?.focus({ preventScroll: true });
+    navigationRef.current?.scrollIntoView({ block: 'nearest' });
+  }, [answeredBy]);
+
   // 上一題（選取狀態由 layout effect 依該題紀錄還原）
   const handlePrev = useCallback(() => {
     prevQuestion();
@@ -98,7 +128,7 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
   const showAnswer = config?.showAnswerImmediately && hasAnswered;
 
   return (
-    <div className="quiz-page">
+    <div className="quiz-page" ref={pageRef}>
       {/* 進度條 + 結束測驗按鈕 */}
       <div className="quiz-progress">
         <div className="progress-info">
@@ -176,10 +206,11 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
         selectedAnswer={selectedAnswer}
         showAnswer={showAnswer}
         onSelectAnswer={handleSelectAnswer}
+        onKeyboardAnswered={config?.showAnswerImmediately ? handleKeyboardAnswered : undefined}
       />
 
       {/* 導覽按鈕 */}
-      <div className="quiz-navigation">
+      <div className="quiz-navigation" ref={navigationRef}>
         <button
           className="btn btn-secondary"
           onClick={handlePrev}
@@ -189,15 +220,28 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
           上一題
         </button>
 
+        {/* 常駐的 live region，內容變動才會念。鍵盤作答時畫面捲到這裡，選項可能已經捲走，所以要看得見；
+            滑鼠與觸控看著選項作答，只念給螢幕閱讀器 */}
         <div className="nav-center">
-          {config?.mode === 'practice' && !hasAnswered && selectedAnswer && (
-            <span className="hint-text">點擊選項確認答案</span>
+          {config?.showAnswerImmediately && (
+            <p role="status" className={answeredBy === 'keyboard' ? 'answer-outcome' : 'sr-only'}>
+              {answeredBy && answerOutcome(currentQuestion.answer, selectedAnswer)}
+            </p>
           )}
         </div>
 
         <button
+          ref={nextButtonRef}
           className="btn btn-primary"
-          onClick={handleNext}
+          onClick={(e) => {
+            // detail 0 是鍵盤或輔助工具的點擊：新題幹可能在畫面外，焦點跟著過去。不移到選項，連按 Enter 才不會替下一題作答
+            focusStemAfterNext.current = !!config?.showAnswerImmediately && e.detail === 0;
+            handleNext();
+          }}
+          onKeyDown={(e) => {
+            // 按住 Enter 或空白鍵作答時，焦點已經移到這裡：重複的按鍵不算按下一題，否則一路跳題
+            if (e.repeat && config?.showAnswerImmediately) e.preventDefault();
+          }}
           disabled={!selectedAnswer && config?.mode === 'exam'}
         >
           {isLastQuestion ? (

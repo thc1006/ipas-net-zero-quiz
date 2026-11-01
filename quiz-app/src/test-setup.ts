@@ -16,6 +16,9 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
 });
 
+// jsdom 沒有 scrollIntoView
+Element.prototype.scrollIntoView = vi.fn();
+
 // Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

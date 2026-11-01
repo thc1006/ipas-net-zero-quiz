@@ -130,6 +130,9 @@ describe('語料輪廓（換題庫時用 -u 重新產生）', () => {
       { where: 'pages/HomePage.test.tsx／hooks/officialSource.test.tsx／App.test.tsx／tests/e2e/official-mode.spec.ts', what: '只出官方題目：參考樣題只有 114 年版、共 10 題，原卷順序的第一題是它（寫死版次與題數）', semantics: '依語料重設' },
       { where: 'pages/HomePage.test.tsx', what: '只出官方題目：全部官方題目超過 100 題（題數夠、不該提醒的情境）', semantics: '依語料重設' },
       { where: 'tests/e2e/quiz-flow.spec.ts', what: '加強練習池：啟用時一場 100 題抽得到練習池題（反空轉，去重且可計分的主題庫 981 題、練習池 154 題時，抽不到的機率約 2.2e-7）', semantics: '依語料重設' },
+      { where: 'data/renamed-questions.test.ts', what: '改過 id 的題目至少一題（反空轉）', semantics: '依語料重設' },
+      { where: 'tests/e2e/practice-keyboard.spec.ts', what: '鍵盤作答：視窗高 720 以上時，前 6 題至少一題的正確選項與下一題放得下同一個畫面（反空轉，解析變長時可能要改尺寸）', semantics: '依語料重設' },
+      { where: 'tests/e2e/dialog-fit.spec.ts', what: '首次造訪對話框：量的尺寸與字級裡至少一種內文要捲動（反空轉，寫死的是揭露文字的長度），要捲動的都捲得動', semantics: '依語料重設' },
     ];
     expect(ratchets.length).toBeGreaterThan(5);
     expect(ratchets).toMatchSnapshot();

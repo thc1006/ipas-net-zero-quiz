@@ -10,6 +10,8 @@
 //   未完成的 quiz 不算數，語義一致。
 // - localStorage 容量試算：~870 題 × ~80 bytes ≈ 70 KB（遠 < 5 MB quota）
 
+import { currentQuestionId } from '../data/renamed-questions';
+
 const STORAGE_KEY = 'ipas-question-stats';
 const SCHEMA_VERSION = 1;
 
@@ -32,6 +34,29 @@ export interface AttemptUpdate {
   at: number;
 }
 
+/**
+ * 改過 id 的題目：舊 id 的統計算到現在的 id。新舊 id 都有時兩邊都是真的作答過，次數相加。
+ * 只在讀取時換算，recordAttempts 寫回去才落地，所以讀幾次都不會重複計算。
+ */
+function withCurrentIds(items: Record<string, QuestionStat>): Record<string, QuestionStat> {
+  const merged = new Map<string, QuestionStat>();
+  for (const [id, stat] of Object.entries(items)) {
+    const currentId = currentQuestionId(id);
+    const other = merged.get(currentId);
+    merged.set(
+      currentId,
+      other
+        ? {
+            attempts: other.attempts + stat.attempts,
+            correct: other.correct + stat.correct,
+            lastTriedAt: Math.max(other.lastTriedAt, stat.lastTriedAt),
+          }
+        : stat
+    );
+  }
+  return Object.fromEntries(merged);
+}
+
 /** Load all stats. Returns {} on absent / wrong shape / quota error. */
 export function loadStats(): Record<string, QuestionStat> {
   try {
@@ -46,7 +71,7 @@ export function loadStats(): Record<string, QuestionStat> {
       }
       return {};
     }
-    return parsed.items;
+    return withCurrentIds(parsed.items);
   } catch {
     try {
       localStorage.removeItem(STORAGE_KEY);
@@ -97,7 +122,7 @@ export function clearStats(): void {
  * 條件：attempts >= minAttempts 且 correct/attempts < maxRate
  * 排序：rate 升冪 → attempts 降冪 → lastTriedAt 降冪
  *
- * Pure 函式，方便單元測試；ResultPage 用 stemLookup 把 id 轉題幹後渲染。
+ * Pure 函式，方便單元測試；ResultPage 用 isKnown 濾掉找不到的 id，再把 id 轉題幹後渲染。
  */
 export interface WeakItem {
   id: string;
@@ -109,13 +134,20 @@ export interface WeakItem {
 
 export function selectWeakQuestions(
   stats: Record<string, QuestionStat>,
-  opts: { minAttempts: number; maxRate: number; limit: number }
+  opts: {
+    minAttempts: number;
+    maxRate: number;
+    limit: number;
+    /** 這個 id 還找得到題目嗎？找不到的（已刪除、練習池沒載入）要在取前 N 名之前濾掉，否則佔走名額 */
+    isKnown: (id: string) => boolean;
+  }
 ): WeakItem[] {
   const out: WeakItem[] = [];
   for (const [id, s] of Object.entries(stats)) {
     if (s.attempts < opts.minAttempts) continue;
     const rate = s.correct / s.attempts;
     if (rate >= opts.maxRate) continue;
+    if (!opts.isKnown(id)) continue;
     out.push({ id, attempts: s.attempts, correct: s.correct, rate, lastTriedAt: s.lastTriedAt });
   }
   out.sort((a, b) => {

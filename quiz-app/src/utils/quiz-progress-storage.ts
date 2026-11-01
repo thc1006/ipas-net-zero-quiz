@@ -24,6 +24,7 @@
 //     文字在「答案字母不變」下被改寫僅屬顯示更新（計分以字母為準、相容），刻意不偵測（偵測
 //     需存舊內容，違背最小化目的）。
 //   - 若某題 id 已從題庫移除 → 整份 resume 放棄（回 null），避免題數錯位／currentIndex 越界。
+//     改過 id 的題目不算移除：題庫記了舊 id（metadata.renamed_from），題目與作答紀錄都轉成現在的 id。
 //   - 向後相容：v1（全物件）payload 仍可載入 —— 重建把物件原樣返回。
 //
 //   儲存 key 版本化（避免部署期舊分頁誤刪新資料）：v2 寫入獨立 key（…-v2），讀取先 v2、
@@ -34,6 +35,7 @@
 import type { QuizState } from '../hooks/useQuiz';
 import type { QuizConfig, QuizQuestion } from '../types/quiz';
 import { getQuestionById } from '../data/questions';
+import { currentQuestionId } from '../data/renamed-questions';
 import { matchesSource } from './question-source';
 import { isQuestionScorable } from './scorable';
 
@@ -103,14 +105,19 @@ function reconstructState(
   const questions: QuizQuestion[] = [];
   for (const stored of rawState.questions) {
     if (typeof stored === 'string') {
-      const q = getQuestionById(stored);
+      const q = getQuestionById(currentQuestionId(stored));
       // id 指向的題目已從題庫移除 → 放棄整份 resume（保守：不 resume 破碎題組）。
       // 註：這與 resumeQuiz 對「答案被 null 掉」的部分還原刻意不對稱 —— 題目「刪除」
       // 極罕見（通常是就地更正而非刪除），故選簡單保守的整份放棄，不複製 re-anchor 邏輯。
       if (!q) return null;
       questions.push(q);
     } else if (isPlausibleQuestion(stored)) {
-      questions.push(stored);
+      // 改過 id 的題目整題存下來（v1）：題幹可能還是舊的，一律換成現行題庫的題目
+      const renamed =
+        currentQuestionId(stored.id) !== stored.id
+          ? getQuestionById(currentQuestionId(stored.id))
+          : undefined;
+      questions.push(renamed ?? stored);
     } else {
       // null／數字／shape 不符（缺 id/stem/options）的物件 → payload 已損壞，放棄整份。
       // 否則 resumeQuiz 取 .hasAnswer、或 QuestionCard 讀 .options 會在「繼續測驗」時 crash，
@@ -170,7 +177,11 @@ export function loadProgress(): PersistedProgress | null {
       removeStored();
       return null;
     }
-    return { version: parsed.version, savedAt: parsed.savedAt, state };
+    const answers = state.answers.map((a) => ({
+      ...a,
+      questionId: currentQuestionId(a.questionId),
+    }));
+    return { version: parsed.version, savedAt: parsed.savedAt, state: { ...state, answers } };
   } catch {
     // JSON.parse 失敗（壞掉的 JSON）也清掉，避免下次載入重複吃同一筆壞資料
     removeStored();

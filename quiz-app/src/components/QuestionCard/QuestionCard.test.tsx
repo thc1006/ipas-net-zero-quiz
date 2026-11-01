@@ -1,6 +1,6 @@
 // QuestionCard 元件測試（TDD - 先寫測試）
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent, isInaccessible } from '@testing-library/react';
+import { act, render, screen, fireEvent, isInaccessible } from '@testing-library/react';
 import { QuestionCard } from './QuestionCard';
 import type { QuizQuestion } from '../../types/quiz';
 
@@ -107,6 +107,192 @@ describe('QuestionCard 元件', () => {
       fireEvent.keyDown(optionA, { key: 'Enter' });
 
       expect(handleSelect).toHaveBeenCalledWith('A');
+    });
+  });
+
+  // 原生 radio 的方向鍵與真實焦點順序在 tests/e2e/practice-keyboard.spec.ts，這裡驗元件自己的邏輯
+  describe('選了就鎖定的模式（有 onKeyboardAnswered）', () => {
+    const renderLocking = () => {
+      const onSelectAnswer = vi.fn();
+      const onKeyboardAnswered = vi.fn();
+      render(
+        <QuestionCard
+          question={mockQuestion}
+          questionNumber={1}
+          onSelectAnswer={onSelectAnswer}
+          onKeyboardAnswered={onKeyboardAnswered}
+        />
+      );
+      return { onSelectAnswer, onKeyboardAnswered, radios: screen.getAllByRole('radio') };
+    };
+
+    it('方向鍵不作答：攔下原生行為，焦點與選取移到下一個選項，顯示提示', () => {
+      const { onSelectAnswer, onKeyboardAnswered, radios } = renderLocking();
+      radios[0].focus();
+
+      // fireEvent 回傳 false 表示事件被 preventDefault
+      expect(fireEvent.keyDown(radios[0], { key: 'ArrowDown' })).toBe(false);
+
+      expect(onSelectAnswer).not.toHaveBeenCalled();
+      expect(onKeyboardAnswered).not.toHaveBeenCalled();
+      expect(radios[1]).toHaveFocus();
+      expect(radios[1]).toBeChecked();
+      expect(radios[1].closest('.option-item')).toHaveClass('selected');
+      expect(screen.getByRole('status')).toHaveTextContent('按 Enter 或空白鍵確認答案');
+    });
+
+    it('焦點離開選項群組：移到的選項不再是選中的樣子，提示收起', () => {
+      const { radios, onSelectAnswer } = renderLocking();
+      const outside = document.body.appendChild(document.createElement('button'));
+      radios[0].focus();
+      fireEvent.keyDown(radios[0], { key: 'ArrowDown' });
+
+      act(() => outside.focus());
+
+      expect(radios[1]).not.toBeChecked();
+      expect(document.querySelector('.option-item.selected')).toBeNull();
+      expect(screen.getByRole('status')).toBeEmptyDOMElement();
+      expect(onSelectAnswer).not.toHaveBeenCalled();
+      outside.remove();
+    });
+
+    it('焦點在選項之間移動：提示留著', () => {
+      const { radios } = renderLocking();
+      radios[0].focus();
+      fireEvent.keyDown(radios[0], { key: 'ArrowDown' });
+      fireEvent.keyDown(radios[1], { key: 'ArrowDown' });
+
+      expect(radios[2]).toBeChecked();
+      expect(screen.getByRole('status')).toHaveTextContent('按 Enter 或空白鍵確認答案');
+    });
+
+    it('移到的選項已經是 checked，再點一次也作答', () => {
+      const { onSelectAnswer, radios } = renderLocking();
+      radios[0].focus();
+      fireEvent.keyDown(radios[0], { key: 'ArrowDown' });
+
+      fireEvent.click(radios[1]);
+
+      expect(onSelectAnswer).toHaveBeenCalledExactlyOnceWith('B');
+    });
+
+    it('鍵盤 Tab 進來時就看得到提示；滑鼠聚焦不顯示', () => {
+      const { radios } = renderLocking();
+
+      // jsdom 沒有 :focus-visible 的啟發式，用 matches 模擬瀏覽器的判斷
+      const matches = vi.spyOn(radios[0], 'matches').mockReturnValue(false);
+      act(() => radios[0].focus());
+      expect(screen.getByRole('status')).toBeEmptyDOMElement();
+      act(() => radios[0].blur());
+
+      matches.mockReturnValue(true);
+      act(() => radios[0].focus());
+      expect(matches).toHaveBeenCalledWith(':focus-visible');
+      expect(screen.getByRole('status')).toHaveTextContent('按 Enter 或空白鍵確認答案');
+
+      act(() => radios[0].blur());
+      expect(screen.getByRole('status')).toBeEmptyDOMElement();
+    });
+
+    it.each([
+      ['ArrowUp', 0, 3],
+      ['ArrowLeft', 0, 3],
+      ['ArrowDown', 3, 0],
+      ['ArrowRight', 3, 0],
+      ['ArrowRight', 1, 2],
+      ['ArrowLeft', 2, 1],
+    ])('%s 從第 %i 個移到第 %i 個（頭尾相接）', (key, from, to) => {
+      const { radios } = renderLocking();
+      radios[from].focus();
+
+      fireEvent.keyDown(radios[from], { key });
+
+      expect(radios[to]).toHaveFocus();
+    });
+
+    it.each(['altKey', 'ctrlKey', 'metaKey'])('%s 加方向鍵也攔下、不移動：WebKit 放行就會點下一個選項，直接交卷', (modifier) => {
+      const { radios, onSelectAnswer } = renderLocking();
+      radios[0].focus();
+
+      expect(fireEvent.keyDown(radios[0], { key: 'ArrowDown', [modifier]: true })).toBe(false);
+
+      expect(radios[0]).toHaveFocus();
+      expect(radios[1]).not.toBeChecked();
+      expect(onSelectAnswer).not.toHaveBeenCalled();
+    });
+
+    it.each([['Enter'], [' ']])('按「%s」才作答，答的是焦點所在的選項，並通知移走焦點', (key) => {
+      const { onSelectAnswer, onKeyboardAnswered, radios } = renderLocking();
+      radios[0].focus();
+      fireEvent.keyDown(radios[0], { key: 'ArrowDown' });
+      fireEvent.keyDown(radios[1], { key: 'ArrowDown' });
+
+      expect(fireEvent.keyDown(radios[2], { key })).toBe(false);
+
+      expect(onSelectAnswer).toHaveBeenCalledExactlyOnceWith('C');
+      expect(onKeyboardAnswered).toHaveBeenCalledOnce();
+    });
+
+    it('滑鼠、觸控與螢幕閱讀器的點擊照舊：點了就作答，不移走焦點', () => {
+      const { onSelectAnswer, onKeyboardAnswered } = renderLocking();
+
+      fireEvent.click(screen.getByText(/二氧化碳/));
+
+      expect(onSelectAnswer).toHaveBeenCalledExactlyOnceWith('A');
+      expect(onKeyboardAnswered).not.toHaveBeenCalled();
+    });
+
+    it('還沒聚焦時提示是空的，不佔版面', () => {
+      renderLocking();
+
+      expect(screen.getByRole('status')).toBeEmptyDOMElement();
+    });
+
+    it('提示排在選項前面：放在後面矮視窗看不到', () => {
+      renderLocking();
+
+      const [status, group] = [screen.getByRole('status'), screen.getByRole('radiogroup')];
+      expect(status.compareDocumentPosition(group) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    });
+
+    it('作答後提示收起', () => {
+      render(
+        <QuestionCard
+          question={mockQuestion}
+          questionNumber={1}
+          selectedAnswer="A"
+          showAnswer
+          onSelectAnswer={vi.fn()}
+          onKeyboardAnswered={vi.fn()}
+        />
+      );
+
+      expect(screen.getByRole('status')).toBeEmptyDOMElement();
+    });
+
+    it('鍵盤聚焦選項：把整個選項捲進視窗（radio 高度 0，瀏覽器只保一條線）', () => {
+      const { radios } = renderLocking();
+      const scrollIntoView = vi.mocked(Element.prototype.scrollIntoView);
+      scrollIntoView.mockClear();
+      vi.spyOn(radios[1], 'matches').mockReturnValue(true);
+
+      act(() => radios[1].focus());
+
+      expect(scrollIntoView).toHaveBeenCalledExactlyOnceWith({ block: 'nearest' });
+      expect(scrollIntoView.mock.contexts[0]).toBe(radios[1].closest('.option-item'));
+    });
+  });
+
+  describe('可以改答案的模式（沒有 onKeyboardAnswered，考試模式）', () => {
+    it('方向鍵交給瀏覽器：不攔、不移動焦點，也沒有提示', () => {
+      render(<QuestionCard question={mockQuestion} questionNumber={1} onSelectAnswer={vi.fn()} />);
+      const radios = screen.getAllByRole('radio');
+      radios[0].focus();
+
+      expect(fireEvent.keyDown(radios[0], { key: 'ArrowDown' })).toBe(true);
+
+      expect(radios[0]).toHaveFocus();
+      expect(screen.queryByRole('status')).toBeNull();
     });
   });
 

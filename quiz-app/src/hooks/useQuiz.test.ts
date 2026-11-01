@@ -3,6 +3,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useQuiz, defaultConfig } from './useQuiz';
 import type { QuizConfig } from '../types/quiz';
+import { allQuestions } from '../data/questions';
+import dataset from '../data/integrated_dataset.json';
 import { __setPracticePoolForTesting } from '../utils/practice-pool';
 import { buildFixturePool } from '../utils/__fixtures__/practice-pool-fixture';
 
@@ -420,6 +422,101 @@ describe('useQuiz Hook', () => {
       });
     });
 
+    // 練習池是非同步載入：等它的時候使用者可能走開了，回來的結果不能蓋掉現在的畫面
+    describe('等練習池時使用者走開', () => {
+      const saveThreeQuestions = () =>
+        window.localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({
+            version: 2,
+            savedAt: 1,
+            state: {
+              isActive: true,
+              questions: ['gist-1', 'gist-2', 'gist-3'],
+              currentIndex: 0,
+              answers: [],
+              startTime: 1,
+              config: defaultConfig,
+            },
+          })
+        );
+      const poolConfig = { ...defaultConfig, includePracticePool: true };
+
+      beforeEach(() => __setPracticePoolForTesting(buildFixturePool()));
+
+      it('按了繼續測驗：續作的那一場不被換掉，回傳 false', async () => {
+        saveThreeQuestions();
+        const { result } = renderHook(() => useQuiz());
+        let pending: Promise<boolean> = Promise.resolve(true);
+
+        act(() => {
+          pending = result.current.startQuizWithPool(poolConfig);
+          result.current.resumeQuiz();
+        });
+
+        await act(async () => {
+          expect(await pending).toBe(false);
+        });
+        expect(result.current.questions.map((q) => q.id)).toEqual(['gist-1', 'gist-2', 'gist-3']);
+      });
+
+      it('開了別的一場（沒有練習池）：不被換掉', async () => {
+        const { result } = renderHook(() => useQuiz());
+        let pending: Promise<boolean> = Promise.resolve(true);
+
+        act(() => {
+          pending = result.current.startQuizWithPool(poolConfig);
+          result.current.startQuiz({ ...defaultConfig, questionCount: 3 });
+        });
+
+        await act(async () => {
+          expect(await pending).toBe(false);
+        });
+        expect(result.current.questions).toHaveLength(3);
+      });
+
+      it('cancelPendingStart 之後載入完成：不開始', async () => {
+        const { result } = renderHook(() => useQuiz());
+        let pending: Promise<boolean> = Promise.resolve(true);
+
+        act(() => {
+          pending = result.current.startQuizWithPool(poolConfig);
+          result.current.cancelPendingStart();
+        });
+
+        await act(async () => {
+          expect(await pending).toBe(false);
+        });
+        expect(result.current.isActive).toBe(false);
+      });
+
+      it('連按兩次開始：只有最後一次算數', async () => {
+        const { result } = renderHook(() => useQuiz());
+        let first: Promise<boolean> = Promise.resolve(true);
+        let second: Promise<boolean> = Promise.resolve(false);
+
+        act(() => {
+          first = result.current.startQuizWithPool(poolConfig);
+          second = result.current.startQuizWithPool({ ...poolConfig, questionCount: 3 });
+        });
+
+        await act(async () => {
+          expect(await first).toBe(false);
+          expect(await second).toBe(true);
+        });
+        expect(result.current.questions).toHaveLength(3);
+      });
+
+      it('沒有走開：照常開始', async () => {
+        const { result } = renderHook(() => useQuiz());
+
+        await act(async () => {
+          expect(await result.current.startQuizWithPool({ ...poolConfig, questionCount: 3 })).toBe(true);
+        });
+        expect(result.current.questions).toHaveLength(3);
+      });
+    });
+
     it('localStorage 無進度時 resumeQuiz 回 false、不改 state', () => {
       const { result } = renderHook(() => useQuiz());
       let returned = true;
@@ -458,6 +555,49 @@ describe('useQuiz Hook', () => {
       expect(fresh.result.current.isActive).toBe(true);
       expect(fresh.result.current.currentIndex).toBe(expectedIndex);
       expect(fresh.result.current.questions.length).toBe(expectedQuestionCount);
+    });
+
+    it('題目改過 id：舊進度照常續作，已答的那一題還是已答（#150）', () => {
+      const renamed = (dataset.our_unique_items as { item_id: string; metadata?: { renamed_from?: { item_id: string } } }[]).find(
+        (q) => q.metadata?.renamed_from
+      )!;
+      const oldId = renamed.metadata!.renamed_from!.item_id;
+      const current = allQuestions.find((q) => q.id === renamed.item_id)!;
+      const next = allQuestions.find((q) => q.hasAnswer && q.id !== current.id)!;
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 2,
+          savedAt: 1,
+          state: {
+            isActive: true,
+            questions: [oldId, next.id],
+            currentIndex: 0,
+            answers: [
+              {
+                questionId: oldId,
+                selectedAnswer: current.answer,
+                correctAnswer: current.answer,
+                isCorrect: true,
+                timeSpent: 1,
+                timestamp: 1,
+                sourceCategory: 'main_bank',
+              },
+            ],
+            startTime: 1,
+            config: defaultConfig,
+          },
+        })
+      );
+      const { result } = renderHook(() => useQuiz());
+
+      act(() => {
+        expect(result.current.resumeQuiz()).toBe(true);
+      });
+
+      expect(result.current.currentQuestion?.id).toBe(current.id);
+      expect(result.current.currentAnswer?.selectedAnswer).toBe(current.answer);
+      expect(result.current.progress.answered).toBe(1);
     });
 
     // 主題庫題在 localStorage 裡存的是 id，續作時會用現行題庫重建；練習池題存的是

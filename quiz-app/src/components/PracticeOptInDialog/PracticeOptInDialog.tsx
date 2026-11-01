@@ -20,9 +20,8 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
     if (!open) return;
     const previouslyFocused = document.activeElement as HTMLElement | null;
 
-    // Move focus into the first focusable element inside dialog
-    const focusables = dialogRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
-    focusables?.[0]?.focus();
+    // 焦點進第一顆按鈕，不是排在前面的內文捲動區：先按得到按鈕，要捲內文再 Shift+Tab
+    dialogRef.current?.querySelector('button')?.focus();
 
     // 註：故意不設 aria-hidden 於 #root —— dialog 自己已有 aria-modal="true"，
     // 螢幕閱讀器會把 modal 外的內容視為 inert。若再設 root 的 aria-hidden，
@@ -35,15 +34,17 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
         return;
       }
       if (e.key !== 'Tab') return;
-      // Simple focus trap
-      const nodes = dialogRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
-      if (!nodes || nodes.length === 0) return;
+      // 焦點陷阱。listener 只在對話框開著時掛著，ref 一定在；裡面一定有內文捲動區與兩顆按鈕
+      const nodes = [...dialogRef.current!.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)];
       const f = nodes[0];
       const l = nodes[nodes.length - 1];
-      if (e.shiftKey && document.activeElement === f) {
+      const active = document.activeElement;
+      // 點對話框空白處時焦點在對話框本身（tabIndex -1）或 body，不在 nodes 裡，也要接回來
+      const outside = !nodes.includes(active as HTMLElement);
+      if (e.shiftKey && (active === f || outside)) {
         e.preventDefault();
         l.focus();
-      } else if (!e.shiftKey && document.activeElement === l) {
+      } else if (!e.shiftKey && (active === l || outside)) {
         e.preventDefault();
         f.focus();
       }
@@ -71,36 +72,39 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
     >
       <div className="optin-dialog" ref={dialogRef} tabIndex={-1}>
         <h2 id="optin-title">啟用加強練習池</h2>
-        <p id="optin-desc">
-          加強練習池是<strong>獨立於主題庫的補充題目</strong>，總計 {PRACTICE_POOL_COUNTS.total} 題。題目來自兩種來源：
-        </p>
-        <ul>
-          <li>
-            <strong>模擬題（{PRACTICE_POOL_COUNTS.externalMock} 題）</strong>：公開模擬題（非官方試題）。
-          </li>
-          <li>
-            <strong>AI 產題（{PRACTICE_POOL_COUNTS.aiGenerated} 題）</strong>：由語言模型依環境部、CBAM、ISO 等
-            法規與標準產生，每題附一手來源連結。
-          </li>
-        </ul>
-        <p className="optin-note">
-          <strong>老實說：這些題目有多可信。</strong>
-        </p>
-        <ul className="optin-note">
-          <li>
-            <strong>機器擋得住的</strong>：解析中「」括起來、宣稱是法條原文的句子，CI 會逐字比對
-            全國法規資料庫的條文 —— 捏造的條文會被擋下來。數值題的答案也逐題經人工手算或查證出處。
-          </li>
-          <li>
-            <strong>機器擋不住的</strong>：「條號有沒有掛錯」「有沒有捏造出一部不存在的法規」——
-            這些我們<strong>確實抓到過</strong>（曾把碳費公式掛在錯的條號上、捏造過一部不存在的辦法）。
-            連結是活的不代表指對地方。
-          </li>
-        </ul>
-        <p className="optin-note">
-          每題皆顯示來源徽章。<strong>請以法規原文與官方教材為最終依據。</strong>
-          本揭露依 EU AI Act Art. 50（2026-08-02 起對 AI 生成文字強制揭露）。
-        </p>
+        {/* 小視窗上只有這裡捲動，標題與按鈕留在畫面內。tabIndex：WebKit 的捲動區鍵盤到不了 */}
+        <div className="optin-body" role="group" aria-labelledby="optin-title" tabIndex={0}>
+          <p id="optin-desc">
+            加強練習池是<strong>獨立於主題庫的補充題目</strong>，總計 {PRACTICE_POOL_COUNTS.total} 題。題目來自兩種來源：
+          </p>
+          <ul>
+            <li>
+              <strong>模擬題（{PRACTICE_POOL_COUNTS.externalMock} 題）</strong>：公開模擬題（非官方試題）。
+            </li>
+            <li>
+              <strong>AI 產題（{PRACTICE_POOL_COUNTS.aiGenerated} 題）</strong>：由語言模型依環境部、CBAM、ISO 等
+              法規與標準產生，每題附一手來源連結。
+            </li>
+          </ul>
+          <p className="optin-note">
+            <strong>老實說：這些題目有多可信。</strong>
+          </p>
+          <ul className="optin-note">
+            <li>
+              <strong>機器擋得住的</strong>：解析中「」括起來、宣稱是法條原文的句子，CI 會逐字比對
+              全國法規資料庫的條文 —— 捏造的條文會被擋下來。數值題的答案也逐題經人工手算或查證出處。
+            </li>
+            <li>
+              <strong>機器擋不住的</strong>：「條號有沒有掛錯」「有沒有捏造出一部不存在的法規」——
+              這些我們<strong>確實抓到過</strong>（曾把碳費公式掛在錯的條號上、捏造過一部不存在的辦法）。
+              連結是活的不代表指對地方。
+            </li>
+          </ul>
+          <p className="optin-note">
+            每題皆顯示來源徽章。<strong>請以法規原文與官方教材為最終依據。</strong>
+            本揭露依 EU AI Act Art. 50（2026-08-02 起對 AI 生成文字強制揭露）。
+          </p>
+        </div>
         <div className="optin-actions">
           <button className="btn btn-secondary" onClick={onDecline}>
             暫不啟用

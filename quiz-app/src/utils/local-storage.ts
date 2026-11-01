@@ -20,3 +20,20 @@ export function writeBool(key: string, value: boolean): void {
     /* quota or disabled — silently ignore */
   }
 }
+
+// 封鎖網站資料時，連讀 window.sessionStorage 這個屬性都會丟 SecurityError
+export function readSessionFlag(key: string): boolean {
+  try {
+    return window.sessionStorage.getItem(key) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+export function writeSessionFlag(key: string): void {
+  try {
+    window.sessionStorage.setItem(key, 'true');
+  } catch {
+    /* quota or disabled: ignore */
+  }
+}

@@ -18,11 +18,17 @@ let poolCached: PracticePool | null = null;
 
 export function loadPracticePool(): Promise<PracticePool> {
   if (!poolPromise) {
-    poolPromise = import('../data/practice_pool.json').then((m) => {
-      const pool = m.default as unknown as PracticePool;
-      poolCached = pool;
-      return pool;
-    });
+    poolPromise = import('../data/practice_pool.json')
+      .then((m) => {
+        const pool = m.default as unknown as PracticePool;
+        poolCached = pool;
+        return pool;
+      })
+      .catch((err) => {
+        // 失敗不留在快取：網路恢復後下一次呼叫要重新載入
+        poolPromise = null;
+        throw err;
+      });
   }
   return poolPromise;
 }

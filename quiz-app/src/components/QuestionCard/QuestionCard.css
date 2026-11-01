@@ -99,6 +99,38 @@
   gap: var(--spacing-sm);
 }
 
+/* 鍵盤聚焦選項時的提示。元素要常駐，live region 才念得到。
+   提示出現或收起都不能改變版面：滑鼠按下時提示收起，選項一移位，放開時已經不在同一個選項上，click 就沒了。
+   所以文字絕對定位，元素本身沒有內容、高度 0，文字落在題幹與選項之間；這個空隙由 .question-stem--keyboard-hint 依提示的行高保留，
+   字級變大時一起變大，不會壓到題幹。練習模式不論有沒有顯示提示都保留這個空隙。
+   貼在固定的 header 下面：矮視窗移到後面的選項時提示才不會被捲走，這時底下是捲上去的內容，底色要不透明 */
+.question-stem--keyboard-hint {
+  margin-bottom: calc(var(--font-size-sm) * 1.6 + 2 * var(--spacing-xs));
+}
+
+.option-keyboard-hint {
+  position: sticky;
+  top: 6.5rem;
+  z-index: 1;
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.option-keyboard-hint span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--spacing-xs);
+  white-space: nowrap;
+  background: var(--color-surface);
+}
+
+.question-stem {
+  scroll-margin-top: 6rem; /* 固定的 header，加上題卡進場動畫的位移 */
+}
+
 /* 選項項目 */
 .option-item {
   display: flex;
@@ -110,6 +142,8 @@
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast) var(--easing-standard);
+  scroll-margin-top: 7rem; /* 固定的 header 加提示 */
+  scroll-margin-bottom: 1px;
 }
 
 .option-item:hover:not(.correct):not(.incorrect) {

@@ -1,6 +1,7 @@
 // 訪客計數器元件
 // 以 Abacus (jasoncameron.dev) 為主，counterapi.dev 為備援；皆失敗時不顯示。
 import { useEffect, useRef, useState } from 'react';
+import { readSessionFlag, writeSessionFlag } from '../../utils/local-storage';
 import './VisitorCounter.css';
 
 interface VisitorCounterProps {
@@ -79,7 +80,7 @@ export function VisitorCounter({
 
     const inflightKey = `${namespace}:${counterKey}`;
     const sessionKey = `visited-${namespace}-${counterKey}`;
-    const visitedThisSession = sessionStorage.getItem(sessionKey) === 'true';
+    const visitedThisSession = readSessionFlag(sessionKey);
     const alreadyBumpedInApp = inflightOrBumpedKeys.has(inflightKey);
     // strict-mode 雙觸發時：第一次 effect 加 inflightKey；第二次 effect 看到 Set 裡已有
     // key，改走 get 只讀值，不 bump
@@ -98,7 +99,7 @@ export function VisitorCounter({
         );
         if (!isMountedRef.current) return;
         setCount(result.count);
-        if (shouldBump) sessionStorage.setItem(sessionKey, 'true');
+        if (shouldBump) writeSessionFlag(sessionKey);
       } catch (err: unknown) {
         if (isAbortError(err)) return;
         if (isMountedRef.current) setCount(null);

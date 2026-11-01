@@ -25,16 +25,20 @@ export default defineConfig({
     // Firefox / WebKit 只跑跨瀏覽器 smoke，透過 testMatch 限制，不把整套 E2E 乘三：
     // settings-smoke.spec.ts（PR #108：自訂 <select> + 色覺模式）、official-mode.spec.ts
     // （#128：題目來源選單在手機寬度不能把頁面撐寬，選單的固有寬度各引擎不同）與
-    // home-subtitle.spec.ts（首頁副標的斷行：各引擎開始換行的寬度不同）。
+    // home-subtitle.spec.ts（首頁副標的斷行：各引擎開始換行的寬度不同）、
+    // practice-keyboard.spec.ts（radio 的方向鍵與 Tab 落點各引擎不同）、
+    // dialog-fit.spec.ts（對話框的高度各引擎不同）、
+    // storage-blocked.spec.ts（封鎖網站資料時各引擎丟的例外不同）、
+    // pool-load.spec.ts（chunk 載入失敗的處理）。
     {
       name: 'firefox-smoke',
       use: { ...devices['Desktop Firefox'] },
-      testMatch: /(settings-smoke|official-mode|home-subtitle)\.spec\.ts/,
+      testMatch: /(settings-smoke|official-mode|practice-keyboard|dialog-fit|storage-blocked|pool-load|home-subtitle)\.spec\.ts/,
     },
     {
       name: 'webkit-smoke',
       use: { ...devices['Desktop Safari'] },
-      testMatch: /(settings-smoke|official-mode|home-subtitle)\.spec\.ts/,
+      testMatch: /(settings-smoke|official-mode|practice-keyboard|dialog-fit|storage-blocked|pool-load|home-subtitle)\.spec\.ts/,
     },
     // 行動裝置測試（如需可取消註解）
     // {

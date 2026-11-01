@@ -18,7 +18,21 @@
   padding: var(--spacing-lg);
   max-width: 560px;
   width: 100%;
+  /* 比視窗高時由 .optin-body 捲動：遮罩不能捲，對話框一超出就碰不到上緣與按鈕。
+     內文縮到最小高度還放不下（放大 400%）時，對話框自己捲 */
+  max-height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.optin-body {
+  flex: 1 1 auto;
+  /* 至少三行（下面 p 的字級與行高） */
+  min-height: calc(3 * 1.6 * var(--font-size-sm));
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .optin-dialog h2 {
@@ -50,7 +64,15 @@
 
 .optin-actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: var(--spacing-sm);
   margin-top: var(--spacing-md);
+}
+
+/* 手機直放：按鈕放不下同一列，各佔一列 */
+@media (max-width: 420px) {
+  .optin-actions .btn {
+    flex: 1 1 100%;
+  }
 }
