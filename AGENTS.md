@@ -118,6 +118,9 @@ tools/ 頂層新增、移除或改名工具時，同時改 `tools/tests/test_off
 
 題幹、選項、答案一律取自官方 PDF，**絕不**手改。要附額外依據，寫進匯入工具的 `EXTRA_EVIDENCE`
 （法條要寫 `clause`），再重新匯入：工具負責的引文會換成新的版本，Tools CI 會逐欄比對題庫與工具的輸出。
+官方公告試題的解析一樣**絕不**手改題庫：寫進 `EXTRA_EXPLANATIONS`（`text` 與 `why`）再重新匯入；解析裡的斷言要在該題的
+題幹、選項或引文裡，匯入時與 Tools CI 都用 `explanation_guard` 核對，找不到就先在 `EXTRA_EVIDENCE` 補依據。Tools CI 也擋
+直接寫進題庫的公告試題解析；參考樣題與 gist-287 不在這道檢查裡。
 法條引文由匯入工具對照 `law-articles.pinned.json` 的釘選條文核對（匯入時與 Tools CI 都跑）：網址是全國法規資料庫、
 法規已釘選（沒有就**先問**要不要釘選）、`clause` 與網址的 `flno` 是同一條、引文逐字在那一條裡。其他來源（例如
 UNFCCC 的條約出版本）CI 不核對原文：要在 `EXTRA_SOURCES` 登記那一份 PDF 的 sha256，把 PDF 存進快取（檔名是

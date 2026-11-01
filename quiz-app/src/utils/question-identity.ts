@@ -49,6 +49,31 @@ export function normalizeText(t: string | null | undefined): string {
     .toLowerCase();
 }
 
+/** 字串裡每一個字元二元組（相鄰兩個字）出現幾次 */
+function bigramCounts(s: string): Map<string, number> {
+  const m = new Map<string, number>();
+  for (let i = 0; i + 1 < s.length; i++) {
+    const g = s.slice(i, i + 2);
+    m.set(g, (m.get(g) ?? 0) + 1);
+  }
+  return m;
+}
+
+/**
+ * 兩段題幹有多像：normalizeText 之後，字元二元組的 Dice 係數，0 到 1。
+ * 中文沒有空白分詞，二元組不必斷詞就看得出改寫（「下列哪種」與「以下何種」只差兩個二元組）。
+ * 正規化後不到兩個字的，相同算 1、不同算 0。
+ */
+export function stemSimilarity(a: string, b: string): number {
+  const x = normalizeText(a);
+  const y = normalizeText(b);
+  if (x.length < 2 || y.length < 2) return x.length > 0 && x === y ? 1 : 0;
+  const gy = bigramCounts(y);
+  let shared = 0;
+  for (const [g, n] of bigramCounts(x)) shared += Math.min(n, gy.get(g) ?? 0);
+  return (2 * shared) / (x.length - 1 + (y.length - 1));
+}
+
 /** 一道題的內容指紋：題幹 + 選項集合（順序無關 —— 重排選項不會變成另一道題）。 */
 export function contentSignature(q: {
   stem: string;

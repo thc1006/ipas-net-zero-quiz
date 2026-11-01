@@ -39,6 +39,8 @@ describe('BankSimilarQuestionItem', () => {
   it('options 為 undefined 時不崩潰並顯示 fallback UI', () => {
     render(<BankSimilarQuestionItem question={questionWithoutOptions()} index={1} />);
     expect(screen.getByText(/此題無選項資料/)).toBeInTheDocument();
+    // 沒有選項的那一條路也標「相似題 N」（#148）
+    expect(screen.getByText('相似題 1')).toBeInTheDocument();
     expect(screen.getByText(/無選項資料題幹/)).toBeInTheDocument();
   });
 
@@ -51,7 +53,9 @@ describe('BankSimilarQuestionItem', () => {
 
   it('渲染題幹、序號與所有選項，作答前不顯示揭曉區', () => {
     render(<BankSimilarQuestionItem question={makeQuestion()} index={3} />);
-    expect(screen.getByText('3.')).toBeInTheDocument();
+    // #148：序號寫成「相似題 3」，不是只有「3.」，一眼看得出這是另一題
+    expect(screen.getByText('相似題 3')).toBeInTheDocument();
+    expect(screen.queryByText('3.')).toBeNull();
     expect(screen.getByText(/下列何者屬於再生能源/)).toBeInTheDocument();
     (['A', 'B', 'C', 'D'] as const).forEach((k) => {
       expect(screen.getByTestId(`bank-similar-option-${k}`)).toBeInTheDocument();
@@ -101,6 +105,15 @@ describe('BankSimilarQuestionItem', () => {
     expect(optC.classList.contains('selected')).toBe(true);
     expect(optC.classList.contains('correct')).toBe(false);
     expect(optC.classList.contains('incorrect')).toBe(false);
+    // #148：選取的樣式有圓點記號，沒有代表正確的圖示
+    expect(optC.querySelectorAll('.option-selected-mark')).toHaveLength(1);
+    expect(optC.querySelector('.option-icon')).toBeNull();
+  });
+
+  it('有標準答案的題目揭曉後，正確與錯誤的選項不帶選取記號', () => {
+    render(<BankSimilarQuestionItem question={makeQuestion()} index={1} />);
+    fireEvent.click(screen.getByTestId('bank-similar-option-A'));
+    expect(document.querySelector('.option-selected-mark')).toBeNull();
   });
 
   it('鍵盤 Enter 可選取選項並觸發揭曉', () => {

@@ -6,7 +6,16 @@
 // 這個旗標一旦被改掉或漏掉，畫面上看不出差別（照樣會跳認證），只有第一次造訪的
 // 使用者會突然被要求註冊 —— 正是這種「安靜壞掉」需要測試。
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { ensurePuterAuth, loadPuterSDK } from './ai-helper';
+import {
+  buildExplainPrompt,
+  buildSimilarQuestionPrompt,
+  ensurePuterAuth,
+  explainQuestion,
+  explainQuestionStream,
+  generateSimilarQuestionStream,
+  loadPuterSDK,
+} from './ai-helper';
+import type { QuizQuestion } from '../types/quiz';
 
 type AuthMock = {
   isSignedIn: ReturnType<typeof vi.fn>;
@@ -291,5 +300,80 @@ describe('loadPuterSDK：SDK 載入成功後又消失', () => {
     installPuter({});
     tag2.onload?.(new Event('load'));
     await expect(again).resolves.toBe(true);
+  });
+});
+
+// #148：AI 生成相似題只拿到原題的題幹，模型可能回一道題幹幾乎一樣、答案不同的題目；AI 解析的系統提示又要
+// 模型「直接給出明確的答案」，等於鼓勵它另外判一個答案。
+describe('AI 的 prompt（#148）', () => {
+  const q006: QuizQuestion = {
+    id: 'S_IPAS_115_01_L12-q006',
+    stem: '依據 ISO14064-1：2018 之規範，關於「不確定性（Uncertainty）」與「誤差（Error）」，下列敘述何者正確？',
+    options: [
+      { key: 'A', text: '透過校正儀器可以完全消除不確定性，但無法消除誤差' },
+      { key: 'B', text: '誤差是指測量值與真值之間的差異，應予以修正' },
+      { key: 'C', text: '若不確定性評估結果為±5%，代表數據錯誤率為 5%' },
+      { key: 'D', text: '查驗機構的主要職責是計算不確定性，而非發現誤差' },
+    ],
+    answer: 'B',
+    subject: '考科2',
+    sourceType: 'unique',
+    hasAnswer: true,
+  };
+
+  it('相似題的 prompt 帶原題的選項與正確答案，要求換情境、不沿用原題的句子，並照固定格式回覆', () => {
+    const p = buildSimilarQuestionPrompt(q006);
+    expect(p).toContain(`原題目：${q006.stem}`);
+    for (const o of q006.options) expect(p).toContain(`${o.key}. ${o.text}`);
+    expect(p).toContain('原題的正確答案：B');
+    expect(p).toContain('題幹不要沿用原題的句子');
+    expect(p).toContain('也不要只把「正確」改成「錯誤」');
+    expect(p).toContain('新題目的答案與原題無關');
+    expect(p).toMatch(/題目：……\n[\s\S]*正確答案：……/u);
+    // 固定格式（#148）：第一行就是「題目：」與題幹，不引用、不複述原題，畫面才找得到要比對的那一行
+    expect(p).toContain('回覆裡不要引用或複述原題');
+    expect(p).toContain('只回覆下面這個格式，前後不要加其他文字。第一行是「題目：」，後面接新題目的題幹，題幹寫在同一行：\n題目：……');
+  });
+
+  it('原題沒有標準答案時照實說，不寫「正確答案：null」', () => {
+    const p = buildSimilarQuestionPrompt({ ...q006, answer: null, hasAnswer: false });
+    expect(p).toContain('原題沒有標準答案');
+    expect(p).not.toContain('null');
+  });
+
+  it('解析的 prompt 帶正確答案，並要模型以它為準、不要改判成其他選項', () => {
+    const p = buildExplainPrompt(q006);
+    expect(p).toContain('正確答案：B');
+    expect(p).toContain('以題庫標示的正確答案為準');
+    expect(p).toContain('不要改判成其他選項');
+    for (const prompt of [p, buildSimilarQuestionPrompt(q006)]) {
+      expect(prompt).not.toContain('直接給出明確的答案');
+      expect(prompt).not.toContain('語氣自信');
+    }
+  });
+
+  describe('送出去的就是這幾個 prompt', () => {
+    let chat: ReturnType<typeof vi.fn>;
+    beforeEach(() => {
+      installPuter({ isSignedIn: vi.fn(() => true) });
+      chat = (window as unknown as { puter: { ai: { chat: ReturnType<typeof vi.fn> } } }).puter.ai.chat;
+      chat.mockResolvedValue('回覆');
+    });
+    afterEach(() => {
+      delete (window as unknown as { puter?: unknown }).puter;
+    });
+
+    it('generateSimilarQuestionStream', async () => {
+      await generateSimilarQuestionStream(q006, () => {});
+      expect(chat.mock.calls[0][0]).toBe(buildSimilarQuestionPrompt(q006));
+    });
+    it('explainQuestionStream', async () => {
+      await explainQuestionStream(q006, () => {});
+      expect(chat.mock.calls[0][0]).toBe(buildExplainPrompt(q006));
+    });
+    it('explainQuestion', async () => {
+      await explainQuestion(q006);
+      expect(chat.mock.calls[0][0]).toBe(buildExplainPrompt(q006));
+    });
   });
 });

@@ -143,12 +143,14 @@ function officialPdfUrl(q: UniqueQuestion | GistQuestion): string | undefined {
 }
 
 /**
- * 官方題目的答案依據就是官方 PDF 上的這一題時，帶出 PDF 印的答案（公告試題的答案欄、參考樣題的「解答」）
- * 與題目出處（哪一場或哪一版、哪一科、第幾題）。
+ * 官方題目的引文裡有官方 PDF 上的這一題（支持正解）時，帶出 PDF 印的答案（公告試題的答案欄、參考樣題的
+ * 「解答」）與題目出處（哪一場或哪一版、哪一科、第幾題）。
  *
  * 引文只印得出題目本身（題幹與四個選項），UI 靠這一行才有一句話說出答案。
- * 網址兩邊都正規化再比：pickEvidence 給的是 `new URL().href`，而 source.url 是資料裡的原樣 ——
- * 寫著未編碼中文或大寫主機名的網址，直接比會對不上，整場的答案行就安靜地消失。
+ * 看的是這一題所有的引文，不只畫面挑中的那一則（#148）：題目另有法條或《巴黎協定》的引文時，那一則排在
+ * 前面、被 pickEvidence 挑中，以前這一行就不見了。官方答案說的是這一題，不是那一則引文。
+ * 網址兩邊都正規化再比：source.url 是資料裡的原樣，寫著未編碼中文或大寫主機名的網址
+ * 直接比會對不上，整場的答案行就安靜地消失。
  */
 export function withOfficialAnswer(
   q: UniqueQuestion | GistQuestion,
@@ -156,7 +158,15 @@ export function withOfficialAnswer(
 ): QuizQuestion['evidence'] {
   const exam = 'official_exam' in q ? q.official_exam : undefined;
   if ((!exam && !q.official_sample) || !evidence || !q.answer) return evidence;
-  if (evidence.url !== officialPdfUrl(q)) return evidence;
+  const pdf = officialPdfUrl(q);
+  const fromPdf = (q.metadata?.evidence ?? []).some(
+    (e) =>
+      e.supports_option === q.answer &&
+      (e.quote ?? '').trim().length >= 8 &&
+      pdf !== undefined &&
+      safeEvidenceUrl(e.url) === pdf
+  );
+  if (!fromPdf) return evidence;
   // 出處寫出場次或版次：115 年第二次匯入之後，結果頁上「第一科第 1 題」就分不出是哪一場
   const official = exam
     ? { kind: 'exam' as const, answer: q.answer, reference: officialExamReference(exam) }

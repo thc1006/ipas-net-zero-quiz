@@ -118,6 +118,7 @@ describe('語料輪廓（換題庫時用 -u 重新產生）', () => {
       { where: 'questions.test.ts／utils/official-exam.test.ts', what: '官方公告試題至少一題（反空轉）', semantics: '依語料重設' },
       { where: 'questions.test.ts', what: '每一份官方來源至少一題的答案依據帶出官方答案（反空轉）', semantics: '依語料重設' },
       { where: 'questions.test.ts', what: '依據出自自己出處的非官方題至少一題（反空轉）', semantics: '依語料重設' },
+      { where: 'questions.test.ts', what: '答案依據是法條或其他引文的官方公告試題至少一題，它也要帶出官方答案（反空轉，#148）', semantics: '依語料重設' },
       { where: 'restoration-manifest.test.ts', what: '含圖表、不收錄的官方題（not_imported_figure）至少一題（反空轉）', semantics: '依語料重設' },
       { where: 'utils/question-source.test.ts／pages/HomePage.test.tsx／tests/e2e/official-mode.spec.ts', what: '只出官方題目：官方公告試題至少兩場（反空轉）', semantics: '依語料重設' },
       { where: 'utils/question-source.test.ts', what: '只出官方題目：官方題與非官方題各至少 40 題（反空轉，混著排序的測試各取 40 題）', semantics: '依語料重設' },
@@ -133,6 +134,7 @@ describe('語料輪廓（換題庫時用 -u 重新產生）', () => {
       { where: 'data/renamed-questions.test.ts', what: '改過 id 的題目至少一題（反空轉）', semantics: '依語料重設' },
       { where: 'tests/e2e/practice-keyboard.spec.ts', what: '鍵盤作答：視窗高 720 以上時，前 6 題至少一題的正確選項與下一題放得下同一個畫面（反空轉，解析變長時可能要改尺寸）', semantics: '依語料重設' },
       { where: 'tests/e2e/dialog-fit.spec.ts', what: '首次造訪對話框：量的尺寸與字級裡至少一種內文要捲動（反空轉，寫死的是揭露文字的長度），要捲動的都捲得動', semantics: '依語料重設' },
+      { where: 'utils/generated-question.test.ts', what: 'AI 照抄偵測的全庫測試：題庫與練習池有選項的題目超過 1000 題（反空轉，#148）', semantics: '依語料重設' },
     ];
     expect(ratchets.length).toBeGreaterThan(5);
     expect(ratchets).toMatchSnapshot();

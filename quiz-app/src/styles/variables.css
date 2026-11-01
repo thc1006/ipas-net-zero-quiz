@@ -70,6 +70,14 @@
   --color-on-warning: #ffffff;
   --color-warning-score: linear-gradient(135deg, var(--color-warning-bg), var(--color-surface));
 
+  /* 選取但還沒揭曉答案的選項（#148）：用無彩度的灰，不借主色的綠。主色的綠與正確答案的綠在淺色主題的
+     代號圓、深色主題的框線是同一個顏色，考試模式選了 D，看起來就像系統說答案是 D。
+     灰色不受色覺模式影響，與每一種模式的正確、錯誤樣式都差得夠遠（e2e selected-option.spec.ts 量色差）。
+     -fg：框線與代號圓；-on：代號圓上的字；-bg：選項底色（疊在題卡上）。 */
+  --color-selected-fg: #212121;
+  --color-on-selected: #ffffff;
+  --color-selected-bg: rgba(0, 0, 0, 0.2);
+
   /* 中性色 */
   --neutral-0: #000000;
   --neutral-10: #1c1b1f;
@@ -155,6 +163,10 @@
   --color-info-fg: #64b5f6;
   --color-warning-fg: #ffb74d;
 
+  --color-selected-fg: #f5f5f5;
+  --color-on-selected: #121212;
+  --color-selected-bg: rgba(255, 255, 255, 0.24);
+
   --color-background: #121212;
   --color-surface: #1e1e1e;
   --color-surface-variant: #2d2d2d;
@@ -178,6 +190,7 @@
   --color-surface: #ffffff;
   --color-border: #000000;
   --color-divider: #000000;
+  --color-selected-fg: #000000;
 }
 
 [data-theme='dark'][data-high-contrast='true'] {
@@ -187,6 +200,8 @@
   --color-surface: #000000;
   --color-border: #ffffff;
   --color-divider: #ffffff;
+  --color-selected-fg: #ffffff;
+  --color-on-selected: #000000;
 }
 
 /* CVD 色覺辨認障礙模式 */

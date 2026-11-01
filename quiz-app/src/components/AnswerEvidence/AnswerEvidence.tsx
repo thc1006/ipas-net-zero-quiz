@@ -12,8 +12,8 @@ export interface AnswerEvidenceProps {
     url: string;
     authority?: string;
     /**
-     * 官方題目：依據就是官方 PDF 上的這一題時，PDF 印的答案（公告試題的答案欄、參考樣題的「解答」）與題目出處
-     * （哪一場或哪一版、哪一科、第幾題）
+     * 官方題目：這一題的引文裡有官方 PDF 上的這一題時（不一定是上面顯示的這一則），PDF 印的答案（公告試題的答案欄、
+     * 參考樣題的「解答」）與題目出處（哪一場或哪一版、哪一科、第幾題）。顯示在引文的出處連結下面，連結跟著它的引文
      */
     official?: { kind: 'exam' | 'sample'; answer: string; reference: string };
   };
@@ -42,12 +42,6 @@ export function AnswerEvidence({ evidence, compact = false }: AnswerEvidenceProp
         {!isPrimary && <span className="answer-evidence__grade">次級來源</span>}
       </div>
       <blockquote className="answer-evidence__quote">{evidence.quote}</blockquote>
-      {evidence.official && (
-        <p className="answer-evidence__official-answer">
-          {evidence.official.kind === 'sample' ? '參考樣題的解答' : '官方公告的參考答案'}
-          ：({evidence.official.answer})（{evidence.official.reference}）
-        </p>
-      )}
       <a
         className="answer-evidence__link source-link"
         href={evidence.url}
@@ -56,6 +50,13 @@ export function AnswerEvidence({ evidence, compact = false }: AnswerEvidenceProp
       >
         {prettifySourceUrl(evidence.url)}
       </a>
+      {/* 官方答案說的是這一題，不是上面那一則引文：放在引文的連結後面，連結才不會看起來是官方答案的出處 */}
+      {evidence.official && (
+        <p className="answer-evidence__official-answer">
+          {evidence.official.kind === 'sample' ? '參考樣題的解答' : '官方公告的參考答案'}
+          ：({evidence.official.answer})（{evidence.official.reference}）
+        </p>
+      )}
     </div>
   );
 }

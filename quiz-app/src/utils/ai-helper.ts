@@ -54,10 +54,70 @@ const SYSTEM_PROMPT = `你是一位專業的 iPAS 淨零碳規劃管理師考試
 
 回答原則：
 1. 針對淨零碳、碳中和、溫室氣體、ISO 14064、碳盤查、ESG、GRI、SASB 等主題提供專業解答
-2. 直接給出明確的答案和解釋，語氣自信且專業
+2. 題目附有正確答案時，以題庫標示的正確答案為準說明理由，不要改判成其他選項；認為答案有疑義時，寫出疑點並請考生向題庫回報
 3. 回答需完整但不冗長，包含必要的專業術語
 4. 使用繁體中文回答
 5. 每個選項都要分析對錯原因`;
+// #148：第 2 點原本是「直接給出明確的答案和解釋，語氣自信且專業」。模型的判斷與題庫答案不同時，
+// 這句話等於要它自信地講另一個答案，學員看到的就是「AI 說答案是 D」。
+
+const optionLines = (question: QuizQuestion): string =>
+  question.options.map((o) => `${o.key}. ${o.text}`).join('\n');
+
+/** AI 解析的 prompt（explainQuestion 與 explainQuestionStream 共用） */
+export function buildExplainPrompt(question: QuizQuestion): string {
+  return `${SYSTEM_PROMPT}
+
+請解釋以下題目：
+
+題目：${question.stem}
+
+選項：
+${optionLines(question)}
+
+${question.answer ? `正確答案：${question.answer}` : '（此題無標準答案）'}
+
+請提供：
+1. 題目重點解析（2-3 句）
+2. 各選項分析
+3. 相關概念補充
+4. 記憶小技巧（如有）`;
+}
+
+/**
+ * AI 生成相似題的 prompt（#148）。以前只給原題的題幹：模型不知道原題考的是哪個選項，常常回一道題幹幾乎
+ * 一樣、答案卻不同的題目，又顯示在原題的錯題卡裡。現在給選項與答案，要求換情境、不沿用原題的句子，
+ * 並照固定格式回覆：第一行是「題目：」接新題目的題幹，不引用、不複述原題。畫面用這一行比對有沒有照抄
+ * （utils/generated-question.ts）；模型不照格式時，那邊另有退路。
+ */
+export function buildSimilarQuestionPrompt(question: QuizQuestion): string {
+  return `${SYSTEM_PROMPT}
+
+以下是題庫的一道原題，請另外出一道測驗相同概念的新題目。
+
+原題目：${question.stem}
+
+原題選項：
+${optionLines(question)}
+
+${question.answer ? `原題的正確答案：${question.answer}` : '原題沒有標準答案'}
+
+要求：
+1. 換一個情境（不同的行業、數據或使用情況），題幹不要沿用原題的句子，也不要只把「正確」改成「錯誤」
+2. 四個選項 A、B、C、D，只有一個正確答案
+3. 新題目的答案與原題無關，依新題目本身判斷
+4. 難度與原題相近，附簡短解析
+5. 回覆裡不要引用或複述原題
+
+只回覆下面這個格式，前後不要加其他文字。第一行是「題目：」，後面接新題目的題幹，題幹寫在同一行：
+題目：……
+A. ……
+B. ……
+C. ……
+D. ……
+正確答案：……
+解析：……`;
+}
 
 const PUTER_SDK_URL = 'https://js.puter.com/v2/';
 /** 只認自己插入的那個 script —— 不要用 src*="puter.com" 去猜別人的資源 */
@@ -335,22 +395,7 @@ export async function explainQuestion(question: QuizQuestion): Promise<AIRespons
     };
   }
 
-  const prompt = `${SYSTEM_PROMPT}
-
-請解釋以下題目：
-
-題目：${question.stem}
-
-選項：
-${question.options.map((o) => `${o.key}. ${o.text}`).join('\n')}
-
-${question.answer ? `正確答案：${question.answer}` : '（此題無標準答案）'}
-
-請提供：
-1. 題目重點解析（2-3 句）
-2. 各選項分析
-3. 相關概念補充
-4. 記憶小技巧（如有）`;
+  const prompt = buildExplainPrompt(question);
 
   try {
     const response = await window.puter.ai.chat(prompt, { model: AI_MODEL });
@@ -460,22 +505,7 @@ export async function explainQuestionStream(
     };
   }
 
-  const prompt = `${SYSTEM_PROMPT}
-
-請解釋以下題目：
-
-題目：${question.stem}
-
-選項：
-${question.options.map((o) => `${o.key}. ${o.text}`).join('\n')}
-
-${question.answer ? `正確答案：${question.answer}` : '（此題無標準答案）'}
-
-請提供：
-1. 題目重點解析（2-3 句）
-2. 各選項分析
-3. 相關概念補充
-4. 記憶小技巧（如有）`;
+  const prompt = buildExplainPrompt(question);
 
   try {
     const response = await window.puter.ai.chat(prompt, {
@@ -558,22 +588,7 @@ export async function generateSimilarQuestionStream(
     };
   }
 
-  const prompt = `${SYSTEM_PROMPT}
-
-參考以下題目，生成一道相似但不同的練習題：
-
-原題目：${question.stem}
-
-請生成：
-1. 新題目（測試相同概念但使用不同情境或數據）
-2. 四個選項 A/B/C/D
-3. 正確答案
-4. 簡短解析
-
-格式要求：
-- 題目難度與原題相近
-- 確保答案正確
-- 避免抄襲原題`;
+  const prompt = buildSimilarQuestionPrompt(question);
 
   try {
     const response = await window.puter.ai.chat(prompt, {

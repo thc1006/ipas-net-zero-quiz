@@ -58,9 +58,9 @@
   color: var(--color-text-secondary);
 }
 
-/* 官方公告試題：引文只印得出題目本身，答案欄印的選項另外寫成一行 */
+/* 官方公告試題：引文只印得出題目本身，答案欄印的選項另外寫成一行，放在引文的出處連結下面 */
 .answer-evidence__official-answer {
-  margin: 0 0 var(--spacing-xs);
+  margin: var(--spacing-xs) 0 0;
   font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-text-primary);

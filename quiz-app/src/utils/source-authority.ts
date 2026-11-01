@@ -93,6 +93,7 @@ export const PRIMARY: readonly HostRule[] = [
   { host: 're100.org.tw', who: 'RE100 臺灣（綠色和平協力）—— RE100 在台推動' },
   { host: 'globalmethanepledge.org', who: '全球甲烷承諾 —— 承諾文本本身' },
   { host: 'ecovadis.com', who: 'EcoVadis —— 其評級與獎牌規則的發布者（規則改了這裡就會變）' },
+  { host: 'bipm.org', who: 'BIPM 國際度量衡局：網站提供 JCGM（量測指引聯合委員會）文件的免費全文，例如 JCGM 100（GUM）的誤差、不確定性定義' },
 
   // ── 企業自我揭露 ────────────────────────────────────────────────
   // 對「這家企業承諾了什麼」而言，企業自己的公告**就是**出處 ——

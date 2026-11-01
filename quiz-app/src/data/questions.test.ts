@@ -398,24 +398,39 @@ describe('官方題目的答案依據帶出官方答案', () => {
   };
   const pickedIsItsOwnSource = (q: (typeof dataset.our_unique_items)[number]): boolean =>
     pickedIsFrom(q, q.source?.url);
+  // 這一題的引文裡有沒有官方 PDF 上的那一題（支持正解、夠長的引文），不管它是不是畫面挑中的那一則
+  const carries = (
+    q: { answer: string | null; metadata?: (typeof dataset.our_unique_items)[number]['metadata'] },
+    url: string | undefined
+  ): boolean =>
+    url !== undefined &&
+    (q.metadata?.evidence ?? []).some(
+      (e) => e.supports_option === q.answer && (e.quote ?? '').trim().length >= 8 && e.url === url
+    );
 
-  it('依據就是官方 PDF 那一題時，帶出答案欄的選項與題目位置；依據不是那一題（法條、《巴黎協定》）時不帶', () => {
+  // #148：以前只在畫面挑中的依據就是官方 PDF 那一題時才帶出官方答案。題目另有法條或《巴黎協定》的引文時，
+  // 那一則排在前面、被挑中，「官方公告的參考答案」那一行就不見了（115 年第一次的 4 題）
+  it('官方公告試題一律帶出答案欄的選項與題目位置，答案依據是法條或《巴黎協定》時也帶', () => {
     for (const q of official) {
-      const expected = pickedIsItsOwnSource(raw.get(q.id)!)
+      const expected = carries(raw.get(q.id)!, raw.get(q.id)!.source?.url)
         ? { kind: 'exam', answer: q.answer, reference: expectedReference(q.officialExam!) }
         : undefined;
       expect(q.evidence?.official, q.id).toEqual(expected);
     }
+    const scorable = official.filter((q) => q.hasAnswer);
+    expect(scorable.filter((q) => !q.evidence?.official).map((q) => q.id), '有答案的官方題沒有帶出官方答案').toEqual([]);
+    const otherFirst = scorable.filter((q) => !pickedIsItsOwnSource(raw.get(q.id)!));
+    expect(otherFirst.length, '沒有答案依據是別的引文的官方題：這條測試的 #148 那一半在空轉').toBeGreaterThan(0);
   });
 
-  it('參考樣題也一樣：依據就是樣題 PDF 那一題時，帶出「解答」印的選項與題目位置；主庫配對的那一題也帶', () => {
+  it('參考樣題也一樣：引文裡有樣題 PDF 那一題時，帶出「解答」印的選項與題目位置；主庫配對的那一題也帶', () => {
     expect(samples.length, '題庫裡沒有參考樣題：這條測試在空轉').toBeGreaterThan(0);
     const twins = samples.filter((q) => rawGist.has(q.id));
     expect(twins.length, '沒有主庫配對的參考樣題：這條測試的 gist 那一半在空轉').toBeGreaterThan(0);
     for (const q of samples) {
       const o = q.officialSample!;
       const pdf = SAMPLE_PDF[`S_IPAS_SAMPLE_${o.edition}_${o.subject}`]?.url;
-      const expected = pickedIsFrom(raw.get(q.id) ?? rawGist.get(q.id)!, pdf)
+      const expected = carries(raw.get(q.id) ?? rawGist.get(q.id)!, pdf)
         ? {
             kind: 'sample',
             answer: q.answer,
@@ -433,20 +448,20 @@ describe('官方題目的答案依據帶出官方答案', () => {
 
   // 主庫配對的那一題（gist）沒有 source.url 可比，認的是參考樣題匯入工具寫的那一則引文（generated_by）：
   // data/official-sample.test.ts 拿 manifest 核對過它的網址就是樣題 PDF
-  it('主庫配對的那一題：依據是匯入工具寫的那一則才帶；依據是別的引文、引文沒有標記、標記是別的工具，都不帶', () => {
+  it('主庫配對的那一題：引文裡有匯入工具寫的那一則才帶；引文沒有標記、標記是別的工具，都不帶', () => {
     const g = dataset.gist_items.find((x) => x.official_sample)!;
     const own = g.metadata!.evidence!.find(
       (e) => e.generated_by === 'tools/import_official_sample.py'
     )!;
     const evidence = { quote: own.quote!, url: own.url! };
-    expect(withOfficialAnswer(g, evidence)?.official).toEqual({
+    const expected = {
       kind: 'sample',
       answer: g.answer,
       reference: `參考樣題（114 年版）第一科第 ${g.official_sample!.question_number} 題`,
-    });
-    expect(
-      withOfficialAnswer(g, { ...evidence, url: 'https://law.moj.gov.tw/x' })?.official
-    ).toBeUndefined();
+    };
+    expect(withOfficialAnswer(g, evidence)?.official).toEqual(expected);
+    // 畫面挑中的是別的引文（例如法條）也帶：官方答案說的是這一題，不是那一則引文（#148）
+    expect(withOfficialAnswer(g, { ...evidence, url: 'https://law.moj.gov.tw/x' })?.official).toEqual(expected);
     const relabel = (generated_by: string | undefined) => ({
       ...g,
       metadata: {
@@ -461,6 +476,58 @@ describe('官方題目的答案依據帶出官方答案', () => {
     expect(
       withOfficialAnswer({ ...g, official_sample: undefined }, evidence)?.official
     ).toBeUndefined();
+  });
+
+  // 出處與引文都不是 https（safeEvidenceUrl 兩邊都給 undefined）：「沒有網址」不能等於「同一個網址」
+  it('出處與引文的網址都不是 https，就不帶', () => {
+    const q = raw.get(official[0].id)!;
+    const http = q.source!.url!.replace(/^https:/, 'http:');
+    const plain = {
+      ...q,
+      source: { ...q.source, url: http },
+      metadata: { ...q.metadata, evidence: q.metadata!.evidence!.map((e) => ({ ...e, url: http })) },
+    };
+    const evidence = { quote: '畫面挑中的引文', url: 'https://law.moj.gov.tw/x' };
+    expect(withOfficialAnswer(plain, evidence)?.official).toBeUndefined();
+    expect(withOfficialAnswer(q, evidence)?.official?.answer).toBe(q.answer);
+  });
+
+  it('官方 PDF 那一則不支持正解、或引文太短，就不帶', () => {
+    const q = raw.get(official[0].id)!;
+    const evidence = { quote: '畫面挑中的引文', url: 'https://law.moj.gov.tw/x' };
+    const withOwn = (change: Record<string, unknown>) => ({
+      ...q,
+      metadata: {
+        ...q.metadata,
+        evidence: q.metadata!.evidence!.map((e) => (e.url === q.source!.url ? { ...e, ...change } : e)),
+      },
+    });
+    expect(withOfficialAnswer(withOwn({}), evidence)?.official?.answer).toBe(q.answer);
+    const other = ['A', 'B', 'C', 'D'].find((k) => k !== q.answer)!;
+    expect(withOfficialAnswer(withOwn({ supports_option: other }), evidence)?.official).toBeUndefined();
+    expect(withOfficialAnswer(withOwn({ quote: '太短' }), evidence)?.official).toBeUndefined();
+    // 長度的邊界：8 個字算（與 pickEvidence 同一條），7 個字不算
+    expect(withOfficialAnswer(withOwn({ quote: '一二三四五六七八' }), evidence)?.official?.answer).toBe(q.answer);
+    expect(withOfficialAnswer(withOwn({ quote: '一二三四五六七' }), evidence)?.official).toBeUndefined();
+    expect(withOfficialAnswer(q, undefined)).toBeUndefined();
+  });
+
+  // #148 回報的那一題：答案照 PDF 是 B，原本沒有解析、依據只有官方題目本身
+  it('115 年第一次第二科第 6 題：有匯入工具寫的解析，答案依據是 GUM 的誤差定義，也寫出官方答案 B', () => {
+    const q = getQuestionById('S_IPAS_115_01_L12-q006')!;
+    expect(q.answer).toBe('B');
+    expect(q.explanation).toMatch(/誤差應予以修正/);
+    const metadata = raw.get(q.id)!.metadata as Record<string, unknown>;
+    expect(metadata.explanation_source).toMatchObject({ generated_by: 'tools/import_official_exam.py' });
+    expect(q.evidence?.url).toBe('https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf');
+    expect(q.evidence?.quote).toMatch(/^B\.2\.19 error \(of measurement\)/);
+    // 法條（第 2 條查驗的定義、第 9 條）只撐解析的最後一句，排在 GUM 後面、官方題目前面
+    const urls = (raw.get(q.id)!.metadata?.evidence ?? []).map((e) => e.url);
+    expect(urls.slice(-3, -1)).toEqual([
+      'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=2',
+      'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=9',
+    ]);
+    expect(q.evidence?.official).toEqual({ kind: 'exam', answer: 'B', reference: '115 年第一次公告試題第二科第 6 題' });
   });
 
   it('每一份官方來源都至少有一題帶出官方答案（不讓一整場安靜地消失）', () => {
@@ -494,17 +561,30 @@ describe('官方題目的答案依據帶出官方答案', () => {
     const own = q.source!.url!;
     const folder = own.slice(0, own.lastIndexOf('/') + 1);
     for (const url of [`${folder}%E8%80%83%E7%A7%911%E6%95%99%E6%9D%90.pdf`, `${folder}115-01-L12.pdf`]) {
-      expect(withOfficialAnswer(q, { quote: '同一個資料夾裡的另一份文件', url })?.official, url).toBeUndefined();
+      const moved = {
+        ...q,
+        metadata: { ...q.metadata, evidence: q.metadata!.evidence!.map((e) => ({ ...e, url })) },
+      };
+      expect(withOfficialAnswer(moved, { quote: '同一個資料夾裡的另一份文件', url })?.official, url).toBeUndefined();
     }
   });
 
   it('網址寫法不同（中文未編碼、主機名大寫）也認得出是同一份官方 PDF', () => {
     const q = raw.get(official[0].id)!;
-    const evidence = { quote: '官方公告試題的題幹與選項', url: 'https://www.ipas.org.tw/%E5%85%AC%E5%91%8A.pdf' };
-    const asWritten = { ...q, source: { ...q.source, url: 'https://WWW.ipas.org.tw/公告.pdf' } };
-    expect(withOfficialAnswer(asWritten, evidence)?.official?.answer).toBe(q.answer);
-    expect(withOfficialAnswer({ ...asWritten, official_exam: undefined }, evidence)?.official).toBeUndefined();
-    expect(withOfficialAnswer(asWritten, { ...evidence, url: 'https://law.moj.gov.tw/x' })?.official).toBeUndefined();
+    const encoded = 'https://www.ipas.org.tw/%E5%85%AC%E5%91%8A.pdf';
+    const evidence = { quote: '官方公告試題的題幹與選項', url: encoded };
+    const withOwnUrl = (url: string) => ({
+      ...q,
+      source: { ...q.source, url: 'https://WWW.ipas.org.tw/公告.pdf' },
+      metadata: {
+        ...q.metadata,
+        evidence: q.metadata!.evidence!.map((e) => (e.url === q.source!.url ? { ...e, url } : e)),
+      },
+    });
+    expect(withOfficialAnswer(withOwnUrl(encoded), evidence)?.official?.answer).toBe(q.answer);
+    expect(withOfficialAnswer(withOwnUrl('https://www.ipas.org.tw/公告.pdf'), evidence)?.official?.answer).toBe(q.answer);
+    expect(withOfficialAnswer({ ...withOwnUrl(encoded), official_exam: undefined }, evidence)?.official).toBeUndefined();
+    expect(withOfficialAnswer(withOwnUrl('https://law.moj.gov.tw/x'), evidence)?.official).toBeUndefined();
   });
 
   it('參考樣題的標記換成公告試題的標記，帶出的就是公告試題的說法（兩種不會混用）', () => {

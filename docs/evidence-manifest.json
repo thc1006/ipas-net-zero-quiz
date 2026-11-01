@@ -8,8 +8,8 @@
   "summary": {
     "main_tier1_questions": 966,
     "pool_tier1_questions": 140,
-    "total_evidence_records": 1169,
-    "primary_evidence_records": 1160,
+    "total_evidence_records": 1178,
+    "primary_evidence_records": 1169,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -2017,6 +2017,87 @@
       "bank": "main",
       "url": "https://www.ipas.org.tw/api/proxy/uploads/certification_resource/ca7c798fe06a4ec8a97d5b72cd741963/115-01-%E5%88%9D%E7%B4%9A%E6%B7%A8%E9%9B%B6%E7%A2%B3_L12_%E6%B7%A8%E9%9B%B6%E7%A2%B3%E7%9B%A4%E6%9F%A5%E8%A6%8F%E7%AF%84%E8%88%87%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%A6%81_%E5%85%AC%E5%91%8A%E8%A9%A6%E9%A1%8C_20260729142047.pdf",
       "host": "www.ipas.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q006",
+      "bank": "main",
+      "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=2",
+      "host": "law.moj.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q006",
+      "bank": "main",
+      "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020102&flno=9",
+      "host": "law.moj.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q006",
+      "bank": "main",
+      "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+      "host": "www.bipm.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q006",
+      "bank": "main",
+      "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+      "host": "www.bipm.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q006",
+      "bank": "main",
+      "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+      "host": "www.bipm.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q006",
+      "bank": "main",
+      "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+      "host": "www.bipm.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q006",
+      "bank": "main",
+      "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+      "host": "www.bipm.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q006",
+      "bank": "main",
+      "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+      "host": "www.bipm.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "S_IPAS_115_01_L12-q006",
+      "bank": "main",
+      "url": "https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf",
+      "host": "www.bipm.org",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
