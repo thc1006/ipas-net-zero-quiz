@@ -3,10 +3,11 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { APP_VERSION, BUG_REPORT_URL } from './app-meta';
+import { APP_VERSION, REPO_URL } from './app-meta';
 
 const pkg = JSON.parse(readFileSync(resolve(__dirname, '..', '..', 'package.json'), 'utf8')) as {
   version: string;
+  repository: { url: string };
   bugs: { url: string };
 };
 
@@ -14,9 +15,15 @@ const pkg = JSON.parse(readFileSync(resolve(__dirname, '..', '..', 'package.json
 const QUOTED = /['"`][^'"`\n]*package\.json(\?[^'"`\n]*)?['"`]/;
 
 describe('app-meta', () => {
-  it('版本與問題回報網址就是 package.json 寫的', () => {
+  it('版本與 repo 網址就是 package.json 寫的（repository.url 去掉結尾的 .git）', () => {
     expect(APP_VERSION).toBe(pkg.version);
-    expect(BUG_REPORT_URL).toBe(pkg.bugs.url);
+    expect(pkg.repository.url).toMatch(/\.git$/);
+    expect(REPO_URL).toBe(pkg.repository.url.slice(0, -'.git'.length));
+    expect(REPO_URL).toMatch(/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/);
+  });
+
+  it('package.json 的 bugs.url 是 GitHub issues：問題回報開 issue，不再指向討論區', () => {
+    expect(pkg.bugs.url).toBe(`${REPO_URL}/issues`);
   });
 
   it('出貨的程式不引用 package.json（任何寫法：import、?raw、?url、動態 import、alias）', () => {

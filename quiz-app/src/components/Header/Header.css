@@ -74,9 +74,19 @@
   justify-content: center;
 }
 
-.icon-btn svg {
-  width: 24px;
-  height: 24px;
+/* 回報問題、討論區：寬螢幕在圖示旁顯示字，窄螢幕（下面的 640px）跟其他按鈕一樣只留圖示 */
+.icon-btn.header-link {
+  width: auto;
+  gap: var(--spacing-xs);
+  padding: 0 var(--spacing-sm);
+}
+
+.header-link:hover {
+  text-decoration: none;
+}
+
+.header-link-text {
+  white-space: nowrap;
 }
 
 /* 響應式 — 中等手機（≤640px）保留 logo-text，但 subtitle 隱藏 */
@@ -94,9 +104,14 @@
   .header-actions {
     gap: 0;
   }
-  .icon-btn {
+  .icon-btn,
+  .icon-btn.header-link {
     width: 44px;
     height: 44px;
+    padding: 0;
+  }
+  .header-link-text {
+    display: none;
   }
 }
 

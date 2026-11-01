@@ -11,12 +11,16 @@ on:
   # 這裡的 url-status job 測的就是那些檔案。少了它們，「只改分類器」的 PR
   # 根本不會觸發 CI —— 最需要跑分類器測試的修改，反而完全略過分類器測試。
   # （這正是 `*) DEAD` catch-all 與 `grep -c || echo 0` 能活那麼久沒被發現的環境。）
+  # .github/ISSUE_TEMPLATE/** 與 README.md：src/report-links.test.ts 讀它們（範本規則、回報連結），
+  # 那支測試也檢查這裡涵蓋它掃描的每一個檔案。
   pull_request:
     paths:
       - 'quiz-app/**'
       - '.github/workflows/quiz-app-*.yml'
       - '.github/scripts/**'
       - '.github/workflows/quarterly-time-sensitive-verify.yml'
+      - '.github/ISSUE_TEMPLATE/**'
+      - 'README.md'
   push:
     branches: [main]
     paths:
@@ -24,6 +28,8 @@ on:
       - '.github/workflows/quiz-app-*.yml'
       - '.github/scripts/**'
       - '.github/workflows/quarterly-time-sensitive-verify.yml'
+      - '.github/ISSUE_TEMPLATE/**'
+      - 'README.md'
   workflow_dispatch:
 
 # 顯式宣告最小權限

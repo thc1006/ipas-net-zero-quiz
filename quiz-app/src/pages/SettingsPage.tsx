@@ -5,7 +5,8 @@ import { usePracticeMode } from '../hooks/usePracticeMode';
 import { usePracticePool } from '../hooks/usePracticePool';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
 import { clearStats } from '../utils/question-stats-storage';
-import { APP_VERSION } from '../data/app-meta';
+import { APP_VERSION, REPO_URL } from '../data/app-meta';
+import { DISCUSSIONS_URL, REPORT_URL } from '../utils/feedback-url';
 import './SettingsPage.css';
 
 interface SettingsPageProps {
@@ -298,21 +299,17 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
           本工具題庫僅供練習參考。
         </p>
         <div className="about-links">
-          <a
-            href="https://github.com/thc1006/ipas-net-zero-quiz"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="material-icons sm">code</span>
+          <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
+            <span className="material-icons sm" aria-hidden="true">code</span>
             GitHub 原始碼
           </a>
-          <a
-            href="https://github.com/thc1006/ipas-net-zero-quiz/discussions/1"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="material-icons sm">bug_report</span>
-            問題回報
+          <a href={REPORT_URL} target="_blank" rel="noopener noreferrer">
+            <span className="material-icons sm" aria-hidden="true">bug_report</span>
+            回報問題
+          </a>
+          <a href={DISCUSSIONS_URL} target="_blank" rel="noopener noreferrer">
+            <span className="material-icons sm" aria-hidden="true">forum</span>
+            討論區
           </a>
         </div>
       </section>

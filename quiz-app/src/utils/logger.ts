@@ -85,6 +85,19 @@ function sanitizeForPersist(input: unknown, depth = 0): unknown {
   return out;
 }
 
+/** 任何值都轉得成字串：沒有原型的物件、toString 丟例外的物件，String() 會丟 TypeError */
+export function toText(value: unknown): string {
+  try {
+    return String(value);
+  } catch {
+    try {
+      return Object.prototype.toString.call(value);
+    } catch {
+      return `[${typeof value}]`;
+    }
+  }
+}
+
 function serializeError(err: unknown): string | undefined {
   if (err === undefined || err === null) return undefined;
   if (err instanceof Error) {
@@ -94,7 +107,7 @@ function serializeError(err: unknown): string | undefined {
   try {
     return JSON.stringify(err);
   } catch {
-    return String(err);
+    return toText(err);
   }
 }
 

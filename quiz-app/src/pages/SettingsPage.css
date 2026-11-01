@@ -227,7 +227,8 @@
 
 .about-links {
   display: flex;
-  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+  gap: var(--spacing-sm) var(--spacing-lg);
   margin-top: var(--spacing-md);
 }
 

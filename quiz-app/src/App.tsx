@@ -11,6 +11,8 @@ import { Header } from './components/Header';
 import { VisitorCounter } from './components/VisitorCounter';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { logger } from './utils/logger';
+import { REPO_URL } from './data/app-meta';
+import { DISCUSSIONS_URL, REPORT_URL } from './utils/feedback-url';
 import type { QuizConfig, QuizResult } from './types/quiz';
 import './App.css';
 
@@ -184,7 +186,7 @@ function App() {
         <div className="container">
           <div className="footer-links">
             <a
-              href="https://github.com/thc1006/ipas-net-zero-quiz"
+              href={REPO_URL}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub 專案連結"
@@ -193,12 +195,12 @@ function App() {
               GitHub
             </a>
             <span className="divider">·</span>
-            <a
-              href="https://github.com/thc1006/ipas-net-zero-quiz/discussions/1"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              問題回報
+            <a href={REPORT_URL} target="_blank" rel="noopener noreferrer">
+              回報問題
+            </a>
+            <span className="divider">·</span>
+            <a href={DISCUSSIONS_URL} target="_blank" rel="noopener noreferrer">
+              討論區
             </a>
             <span className="divider">·</span>
             <VisitorCounter />

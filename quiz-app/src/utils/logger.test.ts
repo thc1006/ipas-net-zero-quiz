@@ -140,6 +140,27 @@ describe('Logger', () => {
       expect(log.getRecentErrors()[0].error).toBe('[object Object]');
     });
 
+    it('JSON.stringify 與 String() 都丟例外的值也記得下來（錯誤畫面的 componentDidCatch 會記這種值）', () => {
+      const log = new Logger({ isDev: false });
+      const boom = (): never => {
+        throw new Error('nope');
+      };
+      const circular = Object.create(null) as Record<string, unknown>;
+      circular.self = circular;
+      const hostile = {
+        get message() {
+          return boom();
+        },
+        toString: boom,
+        get [Symbol.toStringTag]() {
+          return boom();
+        },
+      };
+      log.error('msg', circular);
+      log.error('msg', hostile);
+      expect(log.getRecentErrors().map((e) => e.error)).toEqual(['[object Object]', '[object]']);
+    });
+
     it('handles undefined err (no error param)', () => {
       const log = new Logger({ isDev: false });
       log.error('just a message');

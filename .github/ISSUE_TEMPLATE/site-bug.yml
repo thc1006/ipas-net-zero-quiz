@@ -1,0 +1,75 @@
+name: 網站問題
+description: 網站出錯、畫面異常或功能不能用（某一題的內容有錯，請用「題目回報」）
+title: "[網站問題] "
+labels: ["bug", "quiz-app:frontend"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        某一題的答案或內容有錯，請按題目旁的旗子圖示，或改選「題目回報」範本。
+        使用問題、讀書討論與功能建議，請到[討論區](https://github.com/thc1006/ipas-net-zero-quiz/discussions)。
+
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: 發生了什麼
+      description: 看到的錯誤訊息或畫面。截圖可以直接貼進來
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 重現步驟
+      description: 從打開網站開始，做了哪些操作
+      placeholder: |
+        1. 首頁的題目來源選「全部官方題目」
+        2. 按「開始測驗」
+        3. 作答到第 3 題時……
+    validations:
+      required: false
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 原本預期的結果
+    validations:
+      required: false
+
+  - type: dropdown
+    id: page
+    attributes:
+      label: 在哪個頁面
+      options:
+        - 首頁（測驗設定）
+        - 測驗中
+        - 結果頁
+        - 設定
+        - 其他
+    validations:
+      required: false
+
+  - type: input
+    id: device_browser
+    attributes:
+      label: 裝置與瀏覽器
+      placeholder: 例如 iPhone 13 的 Safari、Windows 11 的 Chrome
+    validations:
+      required: false
+
+  - type: input
+    id: app_version
+    attributes:
+      label: 網站版本
+      description: 從網站上的連結開啟時會自動帶入；設定頁的「關於」也看得到
+    validations:
+      required: false
+
+  - type: textarea
+    id: error_message
+    attributes:
+      label: 錯誤訊息
+      description: 從網站的錯誤畫面開啟時會自動帶入第一行，可以修改或刪掉
+      render: text
+    validations:
+      required: false
