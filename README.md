@@ -134,8 +134,10 @@ GitHub Actions（lint · tsc · test · build · e2e · CodeQL · Codecov）／G
 > **AGPL §13**：若您修改本專案後**以網路服務形式提供**（SaaS／公開網頁／API），
 > 必須讓所有使用者能取得**對應修改版的完整原始碼**，授權同樣為 AGPL-3.0-or-later。
 
-若您是權利人，認為本專案的引用超出合理使用範圍，請開 issue 或聯絡維護者，該筆內容會儘速複審處理。
+若您是權利人，認為本專案的引用超出合理使用範圍，請按該題旁的旗子圖示回報（或在 issue 範本選單選「題目回報」，回報類型選「其他」），也可以聯絡維護者，該筆內容會儘速複審處理。
 
-## 回報問題
+## 回報問題與討論
 
-發現錯題或有建議，請至 [Discussions #1](https://github.com/thc1006/ipas-net-zero-quiz/discussions/1)。
+- **某一題有錯**：按題目旁的旗子圖示，會開啟已帶入題號與題幹的 issue 表單，按下送出才會建立 issue。
+- **網站出錯、畫面異常或功能不能用**：[開 issue](https://github.com/thc1006/ipas-net-zero-quiz/issues/new/choose) 選「網站問題」。
+- **使用問題、讀書討論與功能建議**：到 [Discussions](https://github.com/thc1006/ipas-net-zero-quiz/discussions)。

@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        感謝協助維護題庫！從測驗 / 結果頁的「回報此題」按鈕跳來時，下方欄位多數會自動帶入。
+        感謝協助維護題庫！在測驗中或結果頁按題目旁的旗子圖示開啟時，下方欄位多數會自動帶入。
         若 q_id / q_stem 為空，請貼到該欄位裡的「題目開頭」幫助我們定位題目。
 
   - type: input
@@ -60,7 +60,7 @@ body:
     id: from_page
     attributes:
       label: 從哪個頁面回報？
-      description: 可選；自動帶入「測驗中」或「結果頁錯題列表」
+      description: 可選；從旗子圖示開啟時自動帶入 quiz（測驗中）或 result（結果頁的錯題列表）
       placeholder: quiz / result
     validations:
       required: false

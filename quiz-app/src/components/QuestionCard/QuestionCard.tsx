@@ -9,7 +9,7 @@ import { prettifySourceUrl } from '../../utils/source-label';
 import { officialExamLabel, officialSampleLabel } from '../../utils/official-exam';
 import { findRedundantPrefix } from '../../utils/option-prefix';
 import { subjectClass, subjectLabel } from '../../utils/subject-label';
-import { buildFeedbackUrl } from '../../utils/question-feedback-url';
+import { buildFeedbackUrl } from '../../utils/feedback-url';
 import { useAllQuestionStats } from '../../hooks/useQuestionStats';
 import { renderMarkdown } from '../../utils/render-markdown';
 import './QuestionCard.css';

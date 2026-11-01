@@ -1,6 +1,6 @@
 // SettingsPage component test — practice toggle + opt-in dialog flow
 import { beforeAll, afterEach, describe, expect, it, vi } from 'vitest';
-import { render, screen, fireEvent, cleanup, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup, waitFor, within } from '@testing-library/react';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
@@ -13,6 +13,8 @@ vi.mock('../hooks/usePracticePool', () => ({
 
 import { SettingsPage } from './SettingsPage';
 import { useAccessibility } from '../hooks/useAccessibility';
+import { REPO_URL } from '../data/app-meta';
+import { DISCUSSIONS_URL, REPORT_URL } from '../utils/feedback-url';
 
 
 // 還原真實 localStorage 行為（test-setup.ts 把它 mock 成空函式）
@@ -100,6 +102,25 @@ describe('SettingsPage', () => {
     ) as { version: string };
     renderSettings();
     expect(document.querySelector('.settings-page')).toHaveTextContent(`淨零碳備考神器 v${version}`);
+  });
+
+  it('關於區塊：原始碼、回報問題與討論區分成三個連結', () => {
+    renderSettings();
+    const about = within(screen.getByRole('heading', { name: '關於' }).closest('section')!);
+    const expected = [
+      ['GitHub 原始碼', REPO_URL],
+      ['回報問題', REPORT_URL],
+      ['討論區', DISCUSSIONS_URL],
+    ];
+    // 圖示 aria-hidden，連結的名稱就是畫面上的字
+    const links = expected.map(([name]) => about.getByRole('link', { name }));
+    expect(links.map((link) => link.getAttribute('href'))).toEqual(expected.map(([, href]) => href));
+    expect(about.getAllByRole('link')).toEqual(links);
+    for (const link of links) {
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+      expect(link.querySelector('.material-icons')).toHaveAttribute('aria-hidden', 'true');
+    }
   });
 
   // 色覺辨認模式即時預覽 — 讓使用者切換當下就看到回饋色變化

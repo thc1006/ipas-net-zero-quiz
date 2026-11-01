@@ -199,8 +199,14 @@ textarea {
   background: rgba(46, 125, 50, 0.08);
 }
 
-/* Material Icons 樣式 */
+/* Material Icons 樣式。圖示是字型的連字：Google Fonts 被擋或還沒載入時，畫出來的是「add_circle_outline」這串字，
+   窄螢幕上會把按鈕與整頁撐寬。固定成一個圖示的寬，多出來的字裁掉；字型載入時圖示本來就是 1em 寬，版面不變 */
 .material-icons {
+  display: inline-block;
+  width: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  flex-shrink: 0;
   font-size: 24px;
   vertical-align: middle;
 }

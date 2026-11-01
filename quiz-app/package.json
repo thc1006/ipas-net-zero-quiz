@@ -51,7 +51,8 @@
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "typescript-eslint": "^8.71.2",
     "vite": "^8.3.4",
-    "vitest": "^5.0.5"
+    "vitest": "^5.0.5",
+    "yaml": "^2.9.1"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -69,6 +70,6 @@
   },
   "license": "AGPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/thc1006/ipas-net-zero-quiz/discussions/1"
+    "url": "https://github.com/thc1006/ipas-net-zero-quiz/issues"
   }
 }

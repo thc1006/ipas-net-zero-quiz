@@ -130,6 +130,8 @@ sha256），再跑 `uv run --locked --project tools python tools/import_official
   本 repo 出過一條「先過濾再檢查」的 gate，`bad` 永遠是空陣列，從未守住任何東西。
 - 反空轉斷言（`toBeGreaterThan(N)`）必須有，但它會把語料規模寫死 ——
   新增時同步登記到 `quiz-app/src/data/content-profile.test.ts` 的清單。
+- E2E 要判斷版面是否進了某個 media query，用頁面裡的 `matchMedia(...)`，不要拿視窗寬度推：WebKit 用扣掉捲軸（8px）的寬度比，
+  視窗 641px 時 `(max-width: 640px)` 已經成立。
 - **regex 一律用 `String.raw`**。普通字串與模板字串都會把 `\s` 當 identity escape 變成字面 `s`，
   規則會安靜失效（踩過兩次）。
 - 新增「文件裡的數字」時，**同時**加 gate 與 `tools/sync_derived_counts.py` 的同步規則。

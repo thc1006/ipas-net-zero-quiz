@@ -2,6 +2,8 @@
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent, cleanup, waitFor, act, within } from '@testing-library/react';
 import App from './App';
+import { REPO_URL } from './data/app-meta';
+import { DISCUSSIONS_URL, REPORT_URL } from './utils/feedback-url';
 import { getSourceCandidates } from './data/questions';
 import { officialExamLabel, officialSampleLabel } from './utils/official-exam';
 import {
@@ -33,16 +35,21 @@ vi.mock('./data/questions', async (importOriginal) => {
 });
 
 // 練習池 chunk 載不到：真實情境是部署新版後的舊分頁或斷線，dynamic import 會 reject。
-// 擋在 import 這一層，走的是真的 loadPracticePool，重試才驗得到
+// 擋在 import 這一層，走的是真的 loadPracticePool，重試才驗得到。
+// factory 不用 importOriginal，真的練習池在 beforeAll 先載好：async 的 factory 還在等 importOriginal 載整份 JSON 時，
+// practice-pool.ts 再 import 一次拿到的是沒有 mock 的原檔（Vitest mocker 原始碼自己註明：this will not work if user
+// does Promise.all(import(), import())）。設定頁的測試開始載入練習池就結束了，機器忙時 factory 拖到「載不到」的測試，
+// 那裡的 import 拿到真的練習池，測驗照常開始，preflight 偶爾紅
 const poolBroken = vi.hoisted(() => ({ value: false }));
-vi.mock('./data/practice_pool.json', async (importOriginal) => {
-  const actual = await importOriginal<{ default: unknown }>();
-  return {
-    get default() {
-      if (poolBroken.value) throw new TypeError('Failed to fetch dynamically imported module');
-      return actual.default;
-    },
-  };
+const actualPool = vi.hoisted(() => ({ value: null as unknown }));
+vi.mock('./data/practice_pool.json', () => ({
+  get default() {
+    if (poolBroken.value) throw new TypeError('Failed to fetch dynamically imported module');
+    return actualPool.value;
+  },
+}));
+beforeAll(async () => {
+  actualPool.value = (await vi.importActual<{ default: unknown }>('./data/practice_pool.json')).default;
 });
 
 // 讓載入掛著：測試先走開，再放行，看晚到的結果會不會影響現在的畫面
@@ -601,10 +608,11 @@ describe('App', () => {
     });
   }
 
-  it('Header GitHub icon link points to discussions', () => {
+  it('Header 的回報問題開 issue 範本選單，討論區開 Discussions', () => {
     render(<App />);
-    const link = screen.getByLabelText(/社群討論/);
-    expect(link).toHaveAttribute('href', expect.stringContaining('/discussions/1'));
+    const header = within(screen.getByRole('banner'));
+    expect(header.getByRole('link', { name: '回報問題' })).toHaveAttribute('href', REPORT_URL);
+    expect(header.getByRole('link', { name: '討論區' })).toHaveAttribute('href', DISCUSSIONS_URL);
   });
 
   it('App wraps content in ErrorBoundary (renders children when no error)', () => {
@@ -655,10 +663,20 @@ describe('App', () => {
     });
   });
 
-  it('footer renders GitHub link + 問題回報 link', () => {
+  it('頁尾：GitHub 專案、回報問題與討論區三個連結，各自指向自己的地方', () => {
     render(<App />);
-    const githubLinks = screen.getAllByLabelText(/GitHub 專案連結/);
-    expect(githubLinks.length).toBeGreaterThan(0);
-    expect(screen.getByText(/問題回報/)).toBeInTheDocument();
+    const footer = within(screen.getByRole('contentinfo'));
+    for (const [name, href] of [
+      ['GitHub 專案連結', REPO_URL],
+      ['回報問題', REPORT_URL],
+      ['討論區', DISCUSSIONS_URL],
+    ]) {
+      const link = footer.getByRole('link', { name });
+      expect(link).toHaveAttribute('href', href);
+      // 開新分頁，不打斷正在作答的測驗
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    }
+    expect(footer.queryByText(/問題回報/)).toBeNull();
   });
 });

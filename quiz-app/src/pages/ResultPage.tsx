@@ -10,7 +10,7 @@ import {
 import { SourceBreakdown } from '../components/SourceBreakdown/SourceBreakdown';
 import type { QuizResult, QuizQuestion } from '../types/quiz';
 import { BankSimilarQuestionItem } from '../components/BankSimilarQuestionItem/BankSimilarQuestionItem';
-import { buildFeedbackUrl } from '../utils/question-feedback-url';
+import { buildFeedbackUrl } from '../utils/feedback-url';
 import { selectWeakQuestions } from '../utils/question-stats-storage';
 import { renderMarkdown } from '../utils/render-markdown';
 import { useAllQuestionStats } from '../hooks/useQuestionStats';

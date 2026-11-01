@@ -20,13 +20,14 @@ const platform = JSON.parse(
 const PACKAGE_JSON = resolve(import.meta.dirname, 'package.json')
 const pkg = JSON.parse(readFileSync(PACKAGE_JSON, 'utf-8')) as {
   version: string
-  bugs: { url: string }
+  repository: { url: string }
 }
 
 /**
  * vite 與 vitest 共用的設定（vitest.config.ts import 這一份）：兩邊各寫一次時，正式 build 那一份寫錯，單元測試
  * 照樣全綠（審查實測：對調兩個值，lint、單元測試、build、E2E 全過）。
- * - define：執行期只用到 package.json 的版本與問題回報網址，build 時注入成常數（src/vite-env.d.ts 宣告）。
+ * - define：執行期只用到 package.json 的版本與 repo 網址（回報問題與討論區的連結都由它組出來，見
+ *   src/utils/feedback-url.ts），build 時注入成常數（src/vite-env.d.ts 宣告）。
  *   src 裡 import package.json 的話，Vite 8（Rolldown）不會只留用到的欄位，scripts、devDependencies、
  *   packageManager 都會進首頁的 chunk（bundleContents 擋下）。
  * - json：namedExports 開著時，Rolldown 把 JSON 寫成物件字面值（連 stringify: true 也一樣）；關掉之後整份 JSON
@@ -36,7 +37,7 @@ const pkg = JSON.parse(readFileSync(PACKAGE_JSON, 'utf-8')) as {
 export const shared = {
   define: {
     __APP_VERSION__: JSON.stringify(pkg.version),
-    __BUG_REPORT_URL__: JSON.stringify(pkg.bugs.url),
+    __REPO_URL__: JSON.stringify(pkg.repository.url.replace(/\.git$/, '')),
   },
   json: { namedExports: false },
 } satisfies UserConfig

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用問題
+    url: https://github.com/thc1006/ipas-net-zero-quiz/discussions/categories/q-a
+    about: 不確定是不是網站的問題，或想問怎麼使用，請到討論區的 Q&A 發問
+  - name: 讀書討論
+    url: https://github.com/thc1006/ipas-net-zero-quiz/discussions/categories/general
+    about: 想和其他考生討論考試、題目或準備方式，請到討論區
+  - name: 功能建議
+    url: https://github.com/thc1006/ipas-net-zero-quiz/discussions/categories/ideas
+    about: 想要的新功能請發在討論區的 Ideas
