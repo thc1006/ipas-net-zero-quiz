@@ -1,4 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { flatten, type RGB } from './color-math';
 
 /**
@@ -14,19 +16,37 @@ function relLum([r, g, b]: RGB): number {
   return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
 }
 
-test('題庫相似題那一區與錯題卡的答案隔開，標題與每一題的標籤都看得到（#148）', async ({ page }) => {
+// 主題庫的題目與答案：考一題、故意選錯，結果頁就一定有一張錯題卡（不靠多答幾題碰運氣）
+const BANK = JSON.parse(
+  readFileSync(fileURLToPath(new URL('../../src/data/integrated_dataset.json', import.meta.url)), 'utf8')
+) as { gist_items: BankItem[]; our_unique_items: BankItem[] };
+interface BankItem {
+  stem: string;
+  options: { key: string; text: string }[];
+  answer: string | null;
+}
+
+async function finishWithWrongAnswers(page: Page): Promise<void> {
   await page.addInitScript(() => {
     window.localStorage.setItem('practice-pool-disclosure-seen', '1');
   });
   await page.goto('/');
-  await page.getByLabel(/題數/i).fill('10');
+  await page.getByLabel(/測驗模式/i).selectOption('exam');
+  await page.getByLabel(/題數/i).fill('1');
   await page.getByRole('button', { name: /開始測驗/i }).click();
-  for (let i = 0; i < 10; i++) {
-    await page.locator('.option-item').first().click();
-    if (i < 9) await page.getByRole('button', { name: /下一題/i }).click();
-  }
+  const stem = (await page.locator('.question-stem p').textContent())!;
+  const texts = await page.locator('.question-options .option-text').allTextContents();
+  const item = [...BANK.gist_items, ...BANK.our_unique_items].find(
+    (q) => q.stem === stem && q.options.every((o, i) => o.text === texts[i])
+  );
+  expect(item?.answer, `題庫裡找不到抽到的這一題或它沒有答案：${stem}`).toBeTruthy();
+  const wrong = item!.options.find((o) => o.key !== item!.answer)!.key;
+  await page.getByTestId(`option-${wrong}`).click();
   await page.getByRole('button', { name: /完成測驗/i }).click();
+}
 
+test('題庫相似題那一區與錯題卡的答案隔開，標題與每一題的標籤都看得到（#148）', async ({ page }) => {
+  await finishWithWrongAnswers(page);
   const card = page.locator('.wrong-item').first();
   await card.getByRole('button', { name: '題庫相似題' }).click();
   const panel = card.getByRole('region', { name: '題庫裡的其他相似題' });
@@ -64,4 +84,51 @@ test('題庫相似題那一區與錯題卡的答案隔開，標題與每一題�
   const border = flatten([...style.layers, style.color], 'border');
   const [hi, lo] = [relLum(outside), relLum(border)].sort((a, b) => b - a);
   expect((hi + 0.05) / (lo + 0.05)).toBeGreaterThanOrEqual(3);
+});
+
+/**
+ * AI 生成相似題（#148）：換掉 Puter，讓「模型」照抄 prompt 裡的原題題幹（或回一道新題）。
+ * prompt 是真的組出來的那一份，所以這裡也驗到 prompt 帶了「原題目：」那一行。
+ */
+async function stubPuter(page: Page, mode: 'echo' | 'new'): Promise<void> {
+  await page.addInitScript((m) => {
+    const w = window as unknown as Record<string, unknown>;
+    w.puter = {
+      ai: {
+        chat: async (prompt: string) => {
+          const stem = /原題目：(.*)/.exec(prompt)?.[1] ?? '';
+          return m === 'echo'
+            ? `題目：${stem}\nA. 甲\nB. 乙\nC. 丙\nD. 丁\n正確答案：C`
+            : '題目：某工廠的鍋爐燃燒天然氣，屬於哪一類排放？\nA. 類別 1\nB. 類別 2\nC. 類別 3\nD. 類別 4\n正確答案：A';
+        },
+      },
+      auth: { isSignedIn: () => true, signIn: async () => ({}), getUser: async () => ({ username: 'e2e' }) },
+      print: () => {},
+    };
+  }, mode);
+}
+
+const NOTE = '這是 AI 依同一個概念另外寫的題目，它附的答案只適用於這道 AI 題目。';
+const ECHO_NOTE =
+  '這道 AI 題目和上面這一題很像。上面這一題的答案以這張卡上的「正確答案」為準，AI 附的答案可能是錯的。';
+
+test('AI 生成相似題：標明是 AI 另外寫的題目，內容照常顯示（#148）', async ({ page }) => {
+  await stubPuter(page, 'new');
+  await finishWithWrongAnswers(page);
+  const card = page.locator('.wrong-item').first();
+  await card.getByRole('button', { name: 'AI 生成相似題' }).click();
+  await expect(card.getByText('AI 生成的新題目（不是上面這一題）')).toBeVisible();
+  await expect(card.getByText(NOTE)).toBeVisible();
+  await expect(card.getByText(/某工廠的鍋爐燃燒天然氣/)).toBeVisible();
+  await expect(card.getByText(ECHO_NOTE)).toHaveCount(0);
+});
+
+test('AI 生成相似題：題幹照抄原題時，內容照樣顯示，多一句提醒（#148）', async ({ page }) => {
+  await stubPuter(page, 'echo');
+  await finishWithWrongAnswers(page);
+  const card = page.locator('.wrong-item').first();
+  await card.getByRole('button', { name: 'AI 生成相似題' }).click();
+  await expect(card.getByText(ECHO_NOTE)).toBeVisible();
+  await expect(card.locator('.generated-content').getByText('正確答案：C')).toBeVisible();
+  await expect(card.getByRole('alert')).toHaveCount(0);
 });

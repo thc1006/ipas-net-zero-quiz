@@ -537,6 +537,22 @@
   margin-top: var(--spacing-xs);
 }
 
+/* AI 生成相似題：說明這是另一題、題幹和原題很像時的提醒（#148） */
+.generated-note {
+  margin: var(--spacing-xs) 0 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.generated-echo-note {
+  margin: var(--spacing-xs) 0 0;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  background: var(--color-warning-bg);
+  color: var(--color-warning-fg);
+  font-size: var(--font-size-sm);
+}
+
 /* Streaming 狀態樣式 */
 .ai-response-inline.streaming {
   border-style: dashed;

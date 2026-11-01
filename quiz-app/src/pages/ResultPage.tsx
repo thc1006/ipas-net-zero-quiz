@@ -13,6 +13,7 @@ import { BankSimilarQuestionItem } from '../components/BankSimilarQuestionItem/B
 import { buildFeedbackUrl } from '../utils/feedback-url';
 import { selectWeakQuestions } from '../utils/question-stats-storage';
 import { renderMarkdown } from '../utils/render-markdown';
+import { echoOfOriginal } from '../utils/generated-question';
 import { useAllQuestionStats } from '../hooks/useQuestionStats';
 import './ResultPage.css';
 
@@ -29,6 +30,22 @@ interface ResultPageProps {
 // 解析可能含多段（#121 新增了不少帶條文引文的長解析）。用常數避免每次 render 重建 RegExp，
 // 也避免在 JSX 內寫逸出序列。
 const PARAGRAPH_BREAK = new RegExp(String.fromCharCode(10) + '{2,}');
+
+// AI 生成相似題（#148）：AI 產的題目顯示在原題的錯題卡裡，要讓人看得出是另一道題。說明只講程式知道的事：
+// 這是 AI 寫的另一道題，它附的答案只是它自己的。題幹和原題很像時（utils/generated-question.ts）多一句提醒，
+// 內容照樣顯示；比對只看字面，所以沒有提醒不代表兩題無關。串流結束才比對，提醒不會在串流途中閃現又消失
+const GENERATED_NOTE = '這是 AI 依同一個概念另外寫的題目，它附的答案只適用於這道 AI 題目。';
+const ECHO_NOTE = '這道 AI 題目和上面這一題很像。上面這一題的答案以這張卡上的「正確答案」為準，AI 附的答案可能是錯的。';
+
+function GeneratedLines({ content }: { content: string }) {
+  return (
+    <div className="ai-content generated-content">
+      {content.split('\n').map((line, i) => (
+        <p key={i}>{line}</p>
+      ))}
+    </div>
+  );
+}
 
 export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
   const { score, correctCount, wrongCount, totalAnswerable, skippedCount, answers, totalTime } =
@@ -80,6 +97,16 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
     (id: string) => sessionQuestions.get(id) ?? getQuestionById(id),
     [sessionQuestions]
   );
+
+  // AI 生成相似題有沒有照抄原題：每一題的結果出來時算一次，不在每次重繪時重算（回覆可能很長，見 generated-question.ts）
+  const echoes = useMemo(() => {
+    const out: Record<string, boolean> = {};
+    for (const [qid, response] of Object.entries(generatedQuestions)) {
+      const stem = lookupQuestion(qid)?.stem;
+      out[qid] = !!(response.success && stem && echoOfOriginal(stem, response.content));
+    }
+    return out;
+  }, [generatedQuestions, lookupQuestion]);
 
   // 累積最常答錯（Refs #64）— pure 篩選/排序在 selectWeakQuestions，
   // 此處只負責 id → 題幹查找（沒查到的多為已被刪除題或 pool 題未載入，selectWeakQuestions 先濾掉，才不會佔名額）
@@ -484,13 +511,8 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                             <span className="material-icons sm rotating">sync</span>
                             <span>AI 生成題目中...</span>
                           </div>
-                          {streamingGenerateContent && (
-                            <div className="ai-content generated-content">
-                              {streamingGenerateContent.split('\n').map((line, i) => (
-                                <p key={i}>{line}</p>
-                              ))}
-                            </div>
-                          )}
+                          <p className="generated-note">{GENERATED_NOTE}</p>
+                          {streamingGenerateContent && <GeneratedLines content={streamingGenerateContent} />}
                         </div>
                       )}
 
@@ -498,7 +520,7 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                         <div className={`ai-response-inline generated ${generatedQ.success ? '' : 'error'}`}>
                           <div className="ai-response-header-inline">
                             <span className="material-icons sm">auto_awesome</span>
-                            <span>AI 生成的相似題</span>
+                            <span>AI 生成的新題目（不是上面這一題）</span>
                             {/* 先前這裡用 confidence < 0.7 條件式顯示「低信心度」。
                                 那個分數是 estimateConfidence() 依回覆長度與關鍵詞加減出來的，
                                 與答案對不對無關（ai-helper 的 AIResponse 註解已寫明不對使用者
@@ -507,11 +529,13 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                             <span className="confidence-inline">未經人工審核</span>
                           </div>
                           {generatedQ.success ? (
-                            <div className="ai-content generated-content">
-                              {generatedQ.content.split('\n').map((line, i) => (
-                                <p key={i}>{line}</p>
-                              ))}
-                            </div>
+                            <>
+                              <p className="generated-note">{GENERATED_NOTE}</p>
+                              {echoes[qid] && (
+                                <p className="generated-echo-note">{ECHO_NOTE}</p>
+                              )}
+                              <GeneratedLines content={generatedQ.content} />
+                            </>
                           ) : (
                             <div className="ai-error">
                               <span className="material-icons sm">error_outline</span>

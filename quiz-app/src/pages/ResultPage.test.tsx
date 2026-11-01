@@ -2,7 +2,7 @@
 // 重點：score 評語分支、stats 渲染、wrongAnswers 分支、handleExport、操作按鈕。
 // AI streaming 路徑需要 puter.js 全 mock，屬整合測試範疇，不在此檔涵蓋。
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-import { render, screen, fireEvent, cleanup, within, waitFor } from '@testing-library/react';
+import { act, render, screen, fireEvent, cleanup, within, waitFor } from '@testing-library/react';
 import type { QuizResult, QuizQuestion, AnswerRecord } from '../types/quiz';
 import type { AIResponse } from '../utils/ai-helper';
 
@@ -69,8 +69,15 @@ vi.mock('../utils/ai-helper', () => ({
   generateSimilarQuestionStream: vi.fn(),
 }));
 
+// 照抄偵測照常跑，只是記下呼叫次數（驗證每一題的結果只算一次，不在每次重繪時重算）
+vi.mock('../utils/generated-question', async (importOriginal) => {
+  const real = await importOriginal<typeof import('../utils/generated-question')>();
+  return { ...real, echoOfOriginal: vi.fn(real.echoOfOriginal) };
+});
+
 import { ResultPage } from './ResultPage';
 import { generateSimilarQuestionStream } from '../utils/ai-helper';
+import { echoOfOriginal } from '../utils/generated-question';
 
 afterEach(() => {
   cleanup();
@@ -341,7 +348,7 @@ describe('ResultPage', () => {
       fireEvent.click(screen.getByRole('button', { name: /AI 生成相似題/ }));
 
       await waitFor(() => {
-        expect(screen.getByText(/AI 生成的相似題/)).toBeInTheDocument();
+        expect(screen.getByText('AI 生成的新題目（不是上面這一題）')).toBeInTheDocument();
       });
       expect(screen.getByText(/新題目：下列何者屬於範疇一直接排放？/)).toBeInTheDocument();
       expect(screen.getByText(/A\. 公務車柴油燃燒/)).toBeInTheDocument();
@@ -361,10 +368,77 @@ describe('ResultPage', () => {
       fireEvent.click(screen.getByRole('button', { name: /AI 生成相似題/ }));
 
       await waitFor(() => {
-        expect(screen.getByText(/AI 生成的相似題/)).toBeInTheDocument();
+        expect(screen.getByText('AI 生成的新題目（不是上面這一題）')).toBeInTheDocument();
       });
       expect(screen.queryByText(/低信心度/)).not.toBeInTheDocument();
       expect(screen.getAllByText('未經人工審核').length).toBeGreaterThan(0);
+    });
+
+    // #148：AI 產的題目顯示在原題的錯題卡裡，要標明是另一道新題。說明只講程式知道的事
+    const NOTE = '這是 AI 依同一個概念另外寫的題目，它附的答案只適用於這道 AI 題目。';
+    const ECHO_NOTE =
+      '這道 AI 題目和上面這一題很像。上面這一題的答案以這張卡上的「正確答案」為準，AI 附的答案可能是錯的。';
+    const generate = (content: string) => {
+      vi.mocked(generateSimilarQuestionStream).mockResolvedValueOnce({ success: true, content, confidence: 0.8 });
+      renderWithWrongAnswer();
+      fireEvent.click(screen.getByRole('button', { name: /AI 生成相似題/ }));
+    };
+
+    it('成功時標明是 AI 另外寫的題目，答案只適用於它自己，不說與上面這一題無關', async () => {
+      generate('題目：某工廠的鍋爐燃燒天然氣，屬於哪一類排放？\nA. 類別 1\nB. 類別 2\n正確答案：A');
+      await screen.findByText('AI 生成的新題目（不是上面這一題）');
+      expect(screen.getByText(NOTE)).toBeInTheDocument();
+      expect(screen.getByText(/某工廠的鍋爐燃燒天然氣/)).toBeVisible();
+      expect(screen.queryByText(ECHO_NOTE)).toBeNull();
+      // 比對抓不到換句話說的改寫，所以任何一句都不能保證兩題無關
+      expect(document.querySelector('.ai-response-inline.generated')!.textContent).not.toMatch(/無關/);
+    });
+
+    // 錯題卡的題幹是「測試題目：下列何者為溫室氣體？」；AI 回一道很像的題目、答案是 C
+    const ECHO = '題目：測試題目：下列何者是溫室氣體？\nA. 二氧化碳\nB. 氧氣\nC. 氮氣\nD. 氬氣\n正確答案：C';
+
+    it('AI 的題幹和原題很像：內容照樣顯示，多一句提醒說上面這一題的答案以卡上的正確答案為準', async () => {
+      generate(ECHO);
+      expect(await screen.findByText(ECHO_NOTE)).toBeVisible();
+      expect(screen.getByText(/正確答案：C/)).toBeVisible();
+      expect(screen.getByText(/正確答案：C/).closest('details')).toBeNull();
+      expect(screen.queryByRole('alert')).toBeNull();
+    });
+
+    // 審查重現的誤報：題幹不像，但選項有一行是原題裡的片段
+    it('只有選項或解析裡有原題的片段，不提醒', async () => {
+      generate('題目：某工廠導入新的監測設備後，盤查人員發現電力數據有偏差，下列何者正確處理？\nA. 測試題目：下列何者為溫室氣體\n答案：A');
+      await screen.findByText(NOTE);
+      expect(screen.queryByText(ECHO_NOTE)).toBeNull();
+    });
+
+    // 串流途中不比對：提醒只在結果出來之後出現一次，不會先閃出來又消失
+    it('照抄偵測每一題只算一次：之後重繪（展開題庫相似題）不再重算', async () => {
+      generate(ECHO);
+      await screen.findByText(ECHO_NOTE);
+      const calls = vi.mocked(echoOfOriginal).mock.calls.length;
+      expect(calls).toBeGreaterThan(0);
+      fireEvent.click(screen.getByRole('button', { name: /題庫相似題/ }));
+      fireEvent.click(screen.getByRole('button', { name: /收起題庫相似題/ }));
+      expect(vi.mocked(echoOfOriginal).mock.calls.length).toBe(calls);
+    });
+
+    it('串流途中不出現提醒，結束後才出現', async () => {
+      let finish: (r: AIResponse) => void = () => {};
+      vi.mocked(generateSimilarQuestionStream).mockImplementationOnce((_q, onChunk) => {
+        onChunk(ECHO, false);
+        return new Promise<AIResponse>((resolve) => {
+          finish = resolve;
+        });
+      });
+      renderWithWrongAnswer();
+      fireEvent.click(screen.getByRole('button', { name: /AI 生成相似題/ }));
+      await screen.findByText(/正確答案：C/);
+      expect(screen.getByText(NOTE)).toBeInTheDocument(); // 串流途中也標明是 AI 另外寫的題目
+      expect(screen.queryByText(ECHO_NOTE)).toBeNull();
+      expect(screen.queryByRole('alert')).toBeNull();
+      act(() => finish({ success: true, content: ECHO, confidence: 0.8 }));
+      expect(await screen.findByText(ECHO_NOTE)).toBeInTheDocument();
     });
 
     it('failure response → 渲染 ai-error 區塊與錯誤訊息', async () => {
