@@ -310,6 +310,47 @@ describe('QuestionCard 元件', () => {
       const optionB = screen.getByRole('radio', { name: /氧氣/ });
       expect(optionB).toBeChecked();
     });
+
+    // #148：考試模式選了 D，D 用的是正確答案的綠色，看起來就像系統說答案是 D。
+    // 選取的樣式要有顏色以外的記號（實心的圓點），而且不能帶任何代表「正確」的圖示或字
+    it('揭曉前，選取的選項有圓點記號，沒有代表正確的圖示或字；其他選項沒有記號', () => {
+      render(
+        <QuestionCard
+          question={mockQuestion}
+          questionNumber={1}
+          selectedAnswer="D"
+          onSelectAnswer={vi.fn()}
+        />
+      );
+      const picked = screen.getByTestId('option-D');
+      expect(picked).toHaveClass('selected');
+      expect(picked).not.toHaveClass('correct');
+      expect(picked.querySelectorAll('.option-selected-mark')).toHaveLength(1);
+      // 圓點只是畫面上的記號：radio 本身已是 checked，報讀不再念一次
+      expect(picked.querySelector('.option-selected-mark')).toHaveAttribute('aria-hidden', 'true');
+      expect(picked.querySelector('.option-icon')).toBeNull();
+      expect(picked.textContent).not.toMatch(/check_circle|verified|正確|答對/);
+      for (const key of ['A', 'B', 'C']) {
+        expect(screen.getByTestId(`option-${key}`).querySelector('.option-selected-mark'), key).toBeNull();
+      }
+    });
+
+    it('揭曉之後不再顯示選取記號：正確與錯誤的樣式照舊', () => {
+      render(
+        <QuestionCard
+          question={mockQuestion}
+          questionNumber={1}
+          selectedAnswer="D"
+          showAnswer={true}
+          onSelectAnswer={vi.fn()}
+        />
+      );
+      expect(document.querySelector('.option-selected-mark')).toBeNull();
+      expect(screen.getByTestId('option-A')).toHaveClass('correct');
+      expect(screen.getByTestId('option-A').querySelector('.option-icon')?.textContent).toBe('check_circle');
+      expect(screen.getByTestId('option-D')).toHaveClass('incorrect');
+      expect(screen.getByTestId('option-D').querySelector('.option-icon')?.textContent).toBe('cancel');
+    });
   });
 
   describe('答案顯示模式', () => {

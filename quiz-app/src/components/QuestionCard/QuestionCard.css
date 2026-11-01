@@ -146,9 +146,10 @@
   scroll-margin-bottom: 1px;
 }
 
-.option-item:hover:not(.correct):not(.incorrect) {
-  background: rgba(46, 125, 50, 0.08);
-  border-color: var(--color-primary);
+/* 懸停與選取都不用綠色（#148）：綠色是「正確答案」。滑鼠點了選項之後通常還停在上面，
+   懸停的樣式不能把選取的樣式蓋掉 */
+.option-item:hover:not(.correct):not(.incorrect):not(.selected) {
+  border-color: var(--color-text-secondary);
 }
 
 .option-item input[type='radio'] {
@@ -159,19 +160,41 @@
 }
 
 .option-item input[type='radio']:focus-visible + .option-key {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-selected-fg);
   outline-offset: 2px;
 }
 
 .option-item input[type='radio']:checked + .option-key {
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: var(--color-selected-fg);
+  color: var(--color-on-selected);
 }
 
-/* 選中狀態 */
+/* 選中、還沒揭曉答案（考試模式、練習模式作答前、題庫相似題沒有標準答案時）：中性的灰，
+   另有實心圓點（.option-selected-mark），不只靠顏色 */
 .option-item.selected {
-  background: rgba(46, 125, 50, 0.12);
-  border-color: var(--color-primary);
+  background: var(--color-selected-bg);
+  border-color: var(--color-selected-fg);
+}
+
+.option-selected-mark {
+  margin-left: auto;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+  border: 2px solid var(--color-selected-fg);
+  border-radius: var(--radius-full);
+  background: var(--color-selected-fg);
+  background-clip: content-box;
+}
+
+/* 強制色彩（Windows 高對比佈景主題）會把一般的背景色換成 Canvas，圓點就成了空心圈，看起來像沒選。
+   系統色不會被換掉：中間改用系統的文字色，與瀏覽器換成的框線同色 */
+@media (forced-colors: active) {
+  .option-selected-mark {
+    background-color: CanvasText;
+  }
 }
 
 /* 正確答案 */

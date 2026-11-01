@@ -75,6 +75,7 @@ function SimilarOptionRow({
           option.text
         )}
       </span>
+      {status === 'selected' && <span className="option-selected-mark" aria-hidden="true" />}
       {status === 'correct' && (
         <span className="option-icon material-icons" aria-label="正確答案">
           check_circle

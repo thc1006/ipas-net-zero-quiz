@@ -101,6 +101,15 @@ describe('BankSimilarQuestionItem', () => {
     expect(optC.classList.contains('selected')).toBe(true);
     expect(optC.classList.contains('correct')).toBe(false);
     expect(optC.classList.contains('incorrect')).toBe(false);
+    // #148：選取的樣式有圓點記號，沒有代表正確的圖示
+    expect(optC.querySelectorAll('.option-selected-mark')).toHaveLength(1);
+    expect(optC.querySelector('.option-icon')).toBeNull();
+  });
+
+  it('有標準答案的題目揭曉後，正確與錯誤的選項不帶選取記號', () => {
+    render(<BankSimilarQuestionItem question={makeQuestion()} index={1} />);
+    fireEvent.click(screen.getByTestId('bank-similar-option-A'));
+    expect(document.querySelector('.option-selected-mark')).toBeNull();
   });
 
   it('鍵盤 Enter 可選取選項並觸發揭曉', () => {

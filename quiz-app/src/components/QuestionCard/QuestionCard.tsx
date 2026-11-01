@@ -471,6 +471,8 @@ function OptionButton({
           option.text
         )}
       </span>
+      {/* 選了、還沒揭曉：實心圓點，不只靠顏色（#148）。radio 本身已是 checked，報讀不必再念一次 */}
+      {status === 'selected' && <span className="option-selected-mark" aria-hidden="true" />}
       {status === 'correct' && (
         <span className="option-icon material-icons" aria-label="正確答案">
           check_circle
