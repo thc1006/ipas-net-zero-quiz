@@ -1542,9 +1542,9 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-02",
         "sources": [
-          "https://www.greentrade.org.tw/CBAM/search"
+          "https://www.greentrade.org.tw/CBAM/search/EU"
         ],
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -1561,16 +1561,17 @@
         },
         "evidence": [
           {
-            "url": "https://www.greentrade.org.tw/CBAM/search",
+            "url": "https://www.greentrade.org.tw/CBAM/search/EU",
             "quote": "臺灣前6碼相同之海關編碼",
             "supports_option": "B"
           }
         ],
         "explanation_source": {
           "date": "2026-07-15",
-          "anchored_on": "https://www.greentrade.org.tw/CBAM/search",
+          "anchored_on": "https://www.greentrade.org.tw/CBAM/search/EU",
           "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
-        }
+        },
+        "source_correction_2026_11_02": "#143：綠色貿易資訊網把 CBAM 專區分成歐盟與英國兩區，歐盟的「CBAM納管產品查詢」從 /CBAM/search 搬到 /CBAM/search/EU（網站首頁的連結已改成新路徑），舊網址在 2026-10-01 季檢與 2026-11-02 重測都是 404，Wayback Machine 最後一次 200 的存檔是 2026-04-17。新網址用季檢的 check_url 實測回 200，不經轉址，頁名是「歐盟CBAM納管產品查詢」。引文「臺灣前6碼相同之海關編碼」仍逐字在新頁上。2026-11-02 也實測了查詢：頁面說明（網站由 /api/v3/cbam/text 載入）寫著「本專頁係根據歐盟CBAM所列出之CN Code稅號前6碼與HS Code進行比對」；輸入欄的提示是「請輸入稅則號別(可鍵入2~11碼，例如：01、0101、0101110000等）」，這段提示從 2023-06 的存檔起就沒有變，輸入 2 到 11 碼都會依臺灣海關編碼的前綴回傳結果（例如輸入 731815 回 2 筆，輸入完整的 73181510004 回 1 筆）。valid_as_of=2026-11-02 指本次內容查證日。"
       },
       "quality_flags": [
         "time_sensitive"
@@ -1951,9 +1952,9 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-02",
         "sources": [
-          "https://www.greentrade.org.tw/CBAM/search"
+          "https://www.greentrade.org.tw/CBAM/search/EU"
         ],
         "deduped_from": [
           "gist[560]"
@@ -1978,11 +1979,12 @@
         },
         "evidence": [
           {
-            "url": "https://www.greentrade.org.tw/CBAM/search",
+            "url": "https://www.greentrade.org.tw/CBAM/search/EU",
             "quote": "比對後無相符資料，該稅號目前不在CBAM納管範圍。",
             "supports_option": "B"
           }
-        ]
+        ],
+        "source_correction_2026_11_02": "#143：綠色貿易資訊網把 CBAM 專區分成歐盟與英國兩區，歐盟的「CBAM納管產品查詢」從 /CBAM/search 搬到 /CBAM/search/EU（網站首頁的連結已改成新路徑），舊網址在 2026-10-01 季檢與 2026-11-02 重測都是 404，Wayback Machine 最後一次 200 的存檔是 2026-04-17。新網址用季檢的 check_url 實測回 200，不經轉址，頁名是「歐盟CBAM納管產品查詢」。引文「比對後無相符資料，該稅號目前不在CBAM納管範圍。」仍逐字在新頁上；頁面說明（網站由 /api/v3/cbam/text 載入）寫著「業者可在搜尋欄輸入出口產品的稅則號碼，則可與CBAM納管產品之相關產品列表清單進行比對」，答案 B 成立。valid_as_of=2026-11-02 指本次內容查證日。"
       },
       "quality_flags": [
         "time_sensitive"

@@ -8,8 +8,8 @@
   "summary": {
     "main_tier1_questions": 966,
     "pool_tier1_questions": 140,
-    "total_evidence_records": 1178,
-    "primary_evidence_records": 1169,
+    "total_evidence_records": 1180,
+    "primary_evidence_records": 1171,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -5858,7 +5858,7 @@
     {
       "qid": "gist[27]",
       "bank": "main",
-      "url": "https://www.greentrade.org.tw/CBAM/search",
+      "url": "https://www.greentrade.org.tw/CBAM/search/EU",
       "host": "www.greentrade.org.tw",
       "authority": "primary",
       "has_quote": true,
@@ -6569,7 +6569,7 @@
     {
       "qid": "gist[34]",
       "bank": "main",
-      "url": "https://www.greentrade.org.tw/CBAM/search",
+      "url": "https://www.greentrade.org.tw/CBAM/search/EU",
       "host": "www.greentrade.org.tw",
       "authority": "primary",
       "has_quote": true,
@@ -9638,6 +9638,15 @@
     {
       "qid": "pool-aig-intl-019",
       "bank": "pool",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-019",
+      "bank": "pool",
       "url": "https://www.iso.org/standard/43279.html",
       "host": "www.iso.org",
       "authority": "primary",
@@ -9685,6 +9694,15 @@
       "bank": "pool",
       "url": "https://unfccc.int/sites/default/files/resource/cma3_auv_12a_PA_6.2.pdf",
       "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-024",
+      "bank": "pool",
+      "url": "https://files.sciencebasedtargets.org/production/files/Above-and-Beyond-Report-on-BVCM.pdf",
+      "host": "files.sciencebasedtargets.org",
       "authority": "primary",
       "has_quote": true,
       "tier1": true

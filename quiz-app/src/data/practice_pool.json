@@ -6374,21 +6374,34 @@
         "evidence": [
           {
             "url": "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf",
-            "quote": "Although most companies will reduce emissions by at least 90% through their\nlong-term science-based targets, not all companies will be able to achieve complete\ndecarbonization and therefore some residual emissions may remain. These emissions must\nbe neutralized to reach net-zero emissions and a state of no impact on the climate from\nGHG emissions.",
+            "quote": "What: Measures companies take to remove carbon from the atmosphere and permanently\nstore it, counterbalancing the impact of emissions that remain unabated after the long-term\nscience-based target is achieved. Emissions excluded from the long-term target boundary\nand the GHG emissions inventory must also be neutralized.\nWhy: Although most companies will reduce emissions by at least 90% through their\nlong-term science-based targets, not all companies will be able to achieve complete\ndecarbonization and therefore, some residual emissions may remain. These emissions must\nbe neutralized to reach net-zero emissions and a state of no impact on the climate from\nGHG emissions.\nA company cannot claim to have reached net-zero until it has achieved its long-term\nscience-based target across all scopes and neutralized residual emissions.",
             "supports_option": "D",
-            "verified_on": "2026-07-16",
-            "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
+            "verified_on": "2026-11-02",
+            "method": "以 2026-11-02 下載的 Net-Zero-Standard.pdf（SBTi Corporate Net-Zero Standard V1.3.1，2026 年 4 月）第 14 頁的 pdftotext 文字，空白不計逐字比對確認。"
           }
         ],
         "citation_audit": {
           "date": "2026-07-14",
           "verdict": "citation_replaced",
           "detail": "原引用 https://sciencebasedtargets.org/corporate-net-zero-standard-v2 經複驗判定不含本題主張；已換為 https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf，該頁上的逐字引文已機械驗證存在且支持本題答案。"
+        },
+        "source_url_fix": {
+          "date": "2026-11-02",
+          "issue": "#143",
+          "removed_url": "https://sciencebasedtargets.org/standards/net-zero-standard",
+          "new_url": "https://sciencebasedtargets.org/corporate-net-zero",
+          "why": "季檢在 2026-10-01 判定舊網址 404，2026-11-02 重測仍是 404。Wayback Machine 沒有這個網址的任何存檔，sciencebasedtargets.org/standards/ 底下只存檔過 /standards/net-zero（301 轉址），所以這不是搬家，舊網址看起來從來沒有存在過。SBTi 的 Corporate Net-Zero Standard 頁面在 /corporate-net-zero（/net-zero 會 301 轉到這裡），改用它。",
+          "how_verified": "新網址用季檢的 check_url 實測回 200，不經轉址。頁上寫著「Throughout 2026, Version 1.3.1 remains the applicable framework for target validation.」「From Q1 2027, companies will have the option to submit targets under either Version 1.3.1 or Version 2.0 during the transition period.」「From February 1, 2028, all new target submissions will be required to align with Version 2.0.」，與題幹的「2026 年適用版本為 v1.3.1」及解析的版本說明一致。",
+          "quote_replaced": {
+            "was": "Although most companies will reduce emissions by at least 90% through their\nlong-term science-based targets, not all companies will be able to achieve complete\ndecarbonization and therefore some residual emissions may remain. These emissions must\nbe neutralized to reach net-zero emissions and a state of no impact on the climate from\nGHG emissions.",
+            "why": "現行 Net-Zero-Standard.pdf 是 V1.3.1，原句改成「and therefore, some residual emissions」（多了逗號），舊引文已經不是逐字。換成 V1.3.1 第 2.3 節 Neutralization 的同一段（What、Why 與下一句）。舊引文帶的第十八輪語意複核是對舊字句做的，沒有沿用。"
+          },
+          "answer_check": "答案 D 在 V1.3.1 下成立：殘餘排放要以移除並永久封存碳的方式中和，而且要先達成跨範疇的長期科學基礎目標才能宣稱淨零。V2.0（2026 年 6 月）的 CNZS-C46 也要求先把範疇一、二、三排放降到零或殘餘水準，再用合格的碳移除中和所有殘餘排放，D 在新版下一樣是錯的。"
         }
       },
       "sources": [
         "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf",
-        "https://sciencebasedtargets.org/standards/net-zero-standard"
+        "https://sciencebasedtargets.org/corporate-net-zero"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -6856,7 +6869,7 @@
         }
       ],
       "answer": "C",
-      "explanation": "ISO 14068-1:2023 以「碳中和管理階層」（carbon neutrality management hierarchy）為核心原則：先量化主體的碳足跡，再以減量與移除增量為優先，殘餘排放才以碳權抵換，並要求透明、可驗證之公開揭露。Scope 3 原則上應納入；用於抵換的碳權必須符合該標準對碳權與碳權計畫所訂的判準，過期或低公信力的單位不符要求。",
+      "explanation": "ISO 14068-1:2023 以「碳中和管理階層」（carbon neutrality management hierarchy）為核心原則：先量化主體的碳足跡，再以減量與移除增量為優先，殘餘排放才以碳權抵換，並要求透明、可驗證之公開揭露。Scope 3 原則上應納入；用於抵換的碳權必須符合該標準對碳權與碳權計畫所訂的判準，過期或低公信力的單位不符要求。ISO 14068-1:2023 已被新版 ISO 14068 取代；ISO 官方頁註明新版只改了標題與編號，其餘內容相同，所以上述原則在新版下不變。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "ISO 14068-1",
@@ -6889,6 +6902,13 @@
             "supports_option": "C",
             "verified_on": "2026-07-16",
             "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
+          },
+          {
+            "url": "https://committee.iso.org/standard/14068",
+            "quote": "ISO 14068 specifies principles, requirements and guidance for achieving and demonstrating carbon neutrality. It provides a standardized approach to quantifying, reducing and offsetting the carbon footprint of organizations and products, including goods, services, buildings and events.\nISO 14068 establishes a hierarchy that prioritizes direct and indirect greenhouse gas emission reductions and removal enhancements within the value chain. Offsetting is used only to counterbalance the carbon footprint that remains after these actions. The standard also includes requirements for carbon neutrality commitments and claims.\nNote: this edition only contains a change to the title and number and the rest of the content is the same.",
+            "supports_option": "C",
+            "verified_on": "2026-11-02",
+            "method": "以 2026-11-02 下載的頁面（ISO 14068:2026，What is ISO 14068? 一段）轉成純文字，空白不計逐字比對確認。"
           }
         ],
         "citation_audit": {
@@ -6906,16 +6926,29 @@
           "how_verified": "以 ISO/FDIS 14068:2023(E) 官方預覽本的目次逐條核對（Annex A 資訊性 Carbon neutrality pathway／Annex B 規範性 Specific requirements／Annex C 資訊性 Comparison…／Annex D 資訊性 Ambition；第 11 節 Offsetting the carbon footprint 下含 11.1 General、11.2 Criteria for carbon credits、11.3 Criteria for carbon crediting programmes、11.4 Documented information）。",
           "why_no_clause_numbers_in_explanation": "ISO 全文為付費文件，節號無法由免費一手來源逐字釘住給讀者查證。既然原本的節號是錯的，正確做法是把敘述寫對、不再指名節號，而不是換一組同樣無法查證的號碼。",
           "note_on_date": "本筆查證於 2026-09-27 進行；本 PR 其餘變更為 2026-08-27，相隔一個月是因為工作中斷。"
+        },
+        "source_url_fix": {
+          "date": "2026-11-02",
+          "issue": "#143",
+          "removed_url": "https://committee.iso.org/sites/tc207sc7/home/projects/published/iso-14068-1.html",
+          "new_url": "https://committee.iso.org/standard/14068",
+          "why": "季檢在 2026-10-01 判定舊網址 404，2026-11-02 重測仍是 404。Wayback Machine 沒有這個網址的存檔；ISO/TC 207/SC 7 委員會網站 projects/published/ 底下只存檔過 mitigation-standards.html 與 adaptation-standards.html，ISO 14068-1 的介紹在 mitigation-standards.html 裡，所以舊網址看起來從來沒有存在過。另外 ISO 目錄已把 ISO 14068-1:2023 標為 Withdrawn，由 2026-09-11 發布的 ISO 14068:2026 取代，所以改引 ISO 目錄裡現行版本的頁面。",
+          "how_verified": "新網址用季檢的 check_url 實測回 200，不經轉址（www.iso.org 對 curl 與 WebFetch 都回 403，季檢會歸為 BLOCKED，驗不到內容，所以用 ISO 自己的 committee.iso.org 目錄頁）。頁上 Status 是 Published、Publication date 是 2026-09，Life cycle 寫 Previously: Withdrawn ISO 14068-1:2023、Now: Published ISO 14068:2026。新增的引文空白不計逐字比對確認在頁上；原有引文（www.iso.org/standard/43279.html）在 committee.iso.org/standard/43279.html 同一份目錄頁上空白不計逐字比對確認，該頁現在標示 Withdrawn、New version available: ISO 14068:2026。",
+          "answer_check": "新版頁面仍寫明減量與價值鏈內的移除增量優先於抵換，抵換只用來處理這些行動之後剩下的碳足跡，而且註明新版只改標題與編號，答案 C 在現行版本下成立。",
+          "explanation_appended": {
+            "text": "ISO 14068-1:2023 已被新版 ISO 14068 取代；ISO 官方頁註明新版只改了標題與編號，其餘內容相同，所以上述原則在新版下不變。",
+            "why": "解析只寫 2023 版，沒說這一版已被取代。補一句版本狀態，斷言（ISO 14068-1、2023、ISO 14068）都在題幹或新引文裡，已用 tools/explanation_guard.py 檢查。"
+          }
         }
       },
       "sources": [
         "https://www.iso.org/standard/43279.html",
-        "https://committee.iso.org/sites/tc207sc7/home/projects/published/iso-14068-1.html"
+        "https://committee.iso.org/standard/14068"
       ],
       "quality_flags": [
         "time_sensitive"
       ],
-      "_standard_replacement_watch": "ISO/FDIS 14068 已進入 approval 階段、將取代 ISO 14068-1:2023；新版發布時需重驗本題。現行有效版本仍是 2023 版，答案未改動。"
+      "_standard_replacement_watch": "ISO 14068:2026 已於 2026-09-11 發布並取代 ISO 14068-1:2023，ISO 官方頁註明新版只改標題與編號，其餘內容相同。2026-11-02 依新版官方頁重驗，答案未改動；題幹仍寫 2023 版。"
     },
     {
       "id": "pool-aig-intl-020",
@@ -7262,16 +7295,32 @@
             "supports_option": "D",
             "verified_on": "2026-07-16",
             "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
+          },
+          {
+            "url": "https://files.sciencebasedtargets.org/production/files/Above-and-Beyond-Report-on-BVCM.pdf",
+            "quote": "BVCM\nactivities and investments are not accounted for in the company’s scope 1, 2 or 3 GHG inventory and therefore do\nnot count towards achieving value-chain emission reduction targets. Efforts to deliver BVCM must not replace or\ndelay corporate value chain decarbonization in line with a 1.5°C pathway – instead, BVCM is a mechanism by which\ncompanies go above and beyond value chain abatement.",
+            "supports_option": "D",
+            "verified_on": "2026-11-02",
+            "method": "以 2026-11-02 下載的 PDF（Above and Beyond, Version 1.0, February 2024）第 7 頁 BVCM Overview 的 pdftotext 文字，空白不計逐字比對確認。"
           }
         ],
         "citation_audit": {
           "date": "2026-07-14",
           "verdict": "supported",
           "detail": "已抓回被引頁面，逐字確認該頁支持本題答案"
+        },
+        "source_url_fix": {
+          "date": "2026-11-02",
+          "issue": "#143",
+          "removed_url": "https://sciencebasedtargets.org/resources/files/Above-and-Beyond-Position-Paper.pdf",
+          "new_url": "https://files.sciencebasedtargets.org/production/files/Above-and-Beyond-Report-on-BVCM.pdf",
+          "why": "季檢在 2026-10-01 判定舊網址 404，2026-11-02 重測仍是 404（301 轉到 files.sciencebasedtargets.org 後 404）。Wayback Machine 在兩個網域都沒有這個檔名的存檔，同一個目錄只存檔過 Above-and-Beyond-Report-on-BVCM.pdf，所以這不是撤下，舊檔名看起來從來沒有存在過。SBTi 的 BVCM 頁面（/beyond-value-chain-mitigation）列出的 BVCM 文件是 2024 年 2 月的〈Above and Beyond: An SBTi Report on the Design and Implementation of Beyond Value Chain Mitigation (BVCM)〉，改引這份報告。",
+          "how_verified": "新網址用季檢的 check_url 實測回 200，不經轉址。新增的引文出自報告第 7 頁的 BVCM Overview；原有引文（Net-Zero-Standard.pdf）也在 2026-11-02 下載的 V1.3.1 第 15 頁逐字比對確認，兩筆都是空白不計。",
+          "answer_check": "答案 D 在現行版本下成立。BVCM 頁寫明 V1.3.1 仍把 BVCM 列為建議，並寫著「BVCM is not a substitute for reducing emissions within a company’s value chain.」；報告寫明 BVCM 不計入範疇一、二、三盤查，也不算達成減量目標，中和殘餘排放則限用永久移除。V2.0（2026 年 6 月）不再用 BVCM 一詞，改成 Ongoing Emissions Responsibility，其 CNZS-C43.1 規定這類支持的減緩成果不得計入範疇一、二、三目標的執行，也不得從盤查扣除，D 在新版下一樣成立。"
         }
       },
       "sources": [
-        "https://sciencebasedtargets.org/resources/files/Above-and-Beyond-Position-Paper.pdf",
+        "https://files.sciencebasedtargets.org/production/files/Above-and-Beyond-Report-on-BVCM.pdf",
         "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf"
       ],
       "quality_flags": [
@@ -10296,11 +10345,20 @@
             "method": "第十六輪查證所取得的一手引文，本次以該輪一併歸檔的來源全文（sbti_v1.txt）**逐字比對**確認後才寫回題庫 —— 不是照抄代理的轉述。"
           }
         ],
-        "citation_fixed_on": "2026-07-15"
+        "citation_fixed_on": "2026-07-15",
+        "source_url_fix": {
+          "date": "2026-11-02",
+          "issue": "#143",
+          "removed_url": "https://sciencebasedtargets.org/standards/net-zero-standard",
+          "new_url": "https://sciencebasedtargets.org/corporate-net-zero",
+          "why": "季檢在 2026-10-01 判定舊網址 404，2026-11-02 重測仍是 404。Wayback Machine 沒有這個網址的任何存檔，sciencebasedtargets.org/standards/ 底下只存檔過 /standards/net-zero（301 轉址），所以這不是搬家，舊網址看起來從來沒有存在過。SBTi 的 Corporate Net-Zero Standard 頁面在 /corporate-net-zero（/net-zero 會 301 轉到這裡），改用它。",
+          "how_verified": "新網址用季檢的 check_url 實測回 200，不經轉址。頁上寫著「Throughout 2026, Version 1.3.1 remains the applicable framework for target validation.」「From Q1 2027, companies will have the option to submit targets under either Version 1.3.1 or Version 2.0 during the transition period.」「From February 1, 2028, all new target submissions will be required to align with Version 2.0.」。兩筆原有引文都在 2026-11-02 下載的 Net-Zero-Standard.pdf（V1.3.1，2026 年 4 月）第 19 頁，空白不計逐字比對確認。",
+          "answer_check": "標準頁寫明 V1.3.1 到 2028-01-31 前都可用來設定目標；V1.3.1 逐字寫著長期目標對許多企業相當於跨範疇至少 90% 的絕對減量，答案 A 成立。V2.0（2026 年 6 月）仍以最遲 2050 年達淨零為準，範疇三的路徑以 2050 年前殘餘排放約 10% 以下為終點，但沒有「跨範疇至少 90%」這句。B、C、D 在兩版下都不成立。"
+        }
       },
       "sources": [
         "https://files.sciencebasedtargets.org/production/files/Net-Zero-Standard.pdf",
-        "https://sciencebasedtargets.org/standards/net-zero-standard",
+        "https://sciencebasedtargets.org/corporate-net-zero",
         "https://sciencebasedtargets.org/corporate-net-zero-standard-v2"
       ],
       "quality_flags": [
