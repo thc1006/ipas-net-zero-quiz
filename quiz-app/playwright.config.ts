@@ -30,17 +30,18 @@ export default defineConfig({
     // dialog-fit.spec.ts（對話框的高度各引擎不同）、
     // storage-blocked.spec.ts（封鎖網站資料時各引擎丟的例外不同）、
     // pool-load.spec.ts（chunk 載入失敗的處理）、
-    // report-links.spec.ts（頁首的回報問題與討論區：字寬各引擎不同，窄螢幕不能把頁首撐寬）與
-    // selected-option.spec.ts、similar-panel.spec.ts（#148：選取選項的顏色與記號、相似題那一區的框，各引擎畫出來的要一起看）。
+    // report-links.spec.ts（頁首的回報問題與討論區：字寬各引擎不同，窄螢幕不能把頁首撐寬）、
+    // selected-option.spec.ts、similar-panel.spec.ts（#148：選取選項的顏色與記號、相似題那一區的框，各引擎畫出來的要一起看）與
+    // star-review.spec.ts（Discussion #1：分頁間的 storage 事件、檔案下載與上傳、按鈕大小，各引擎都要驗）。
     {
       name: 'firefox-smoke',
       use: { ...devices['Desktop Firefox'] },
-      testMatch: /(settings-smoke|official-mode|practice-keyboard|dialog-fit|storage-blocked|pool-load|home-subtitle|report-links|selected-option|similar-panel)\.spec\.ts/,
+      testMatch: /(settings-smoke|official-mode|practice-keyboard|dialog-fit|storage-blocked|pool-load|home-subtitle|report-links|selected-option|similar-panel|star-review)\.spec\.ts/,
     },
     {
       name: 'webkit-smoke',
       use: { ...devices['Desktop Safari'] },
-      testMatch: /(settings-smoke|official-mode|practice-keyboard|dialog-fit|storage-blocked|pool-load|home-subtitle|report-links|selected-option|similar-panel)\.spec\.ts/,
+      testMatch: /(settings-smoke|official-mode|practice-keyboard|dialog-fit|storage-blocked|pool-load|home-subtitle|report-links|selected-option|similar-panel|star-review)\.spec\.ts/,
     },
     // 行動裝置測試（如需可取消註解）
     // {

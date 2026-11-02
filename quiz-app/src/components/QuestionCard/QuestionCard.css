@@ -39,6 +39,15 @@
   opacity: 0.75;
 }
 
+/* 星號與回報此題排在同一行：手機版標頭改成直排時不會各佔一行 */
+.question-header__actions {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: var(--spacing-xs);
+  margin-left: auto;
+}
+
 /* 回報此題 icon button（#63）— 低調 icon-only、開新分頁不打斷答題 flow */
 .question-feedback-link {
   display: inline-flex;

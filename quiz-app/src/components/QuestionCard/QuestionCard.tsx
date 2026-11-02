@@ -12,6 +12,8 @@ import { subjectClass, subjectLabel } from '../../utils/subject-label';
 import { buildFeedbackUrl } from '../../utils/feedback-url';
 import { useAllQuestionStats } from '../../hooks/useQuestionStats';
 import { renderMarkdown } from '../../utils/render-markdown';
+import { StarButton } from '../StarButton/StarButton';
+import { RemoveFromReview } from '../RemoveFromReview/RemoveFromReview';
 import './QuestionCard.css';
 
 export interface QuestionCardProps {
@@ -225,23 +227,26 @@ export function QuestionCard({
             )}
           </span>
         )}
-        {/* 回報此題（Refs #63）— 開新分頁不打斷答題 flow；icon-only 但有 aria-label */}
-        <a
-          className="question-feedback-link"
-          href={buildFeedbackUrl({
-            questionId: question.id,
-            stem: question.stem,
-            fromPage: 'quiz',
-          })}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="回報此題的問題"
-          title="此題有問題？回報維護者"
-        >
-          <span className="material-icons sm" aria-hidden="true">
-            flag
-          </span>
-        </a>
+        <span className="question-header__actions">
+          <StarButton questionId={question.id} />
+          {/* 回報此題（Refs #63）— 開新分頁不打斷答題 flow；icon-only 但有 aria-label */}
+          <a
+            className="question-feedback-link"
+            href={buildFeedbackUrl({
+              questionId: question.id,
+              stem: question.stem,
+              fromPage: 'quiz',
+            })}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="回報此題的問題"
+            title="此題有問題？回報維護者"
+          >
+            <span className="material-icons sm" aria-hidden="true">
+              flag
+            </span>
+          </a>
+        </span>
       </header>
 
       {/* 練習池來源 banner — 主題庫題不顯示 */}
@@ -292,6 +297,14 @@ export function QuestionCard({
           />
         ))}
       </div>
+
+      {/* 待複習的狀態也是答案揭曉後才顯示：考試模式整場都看不到 */}
+      {showAnswer && (
+        <RemoveFromReview
+          questionId={question.id}
+          answeredCorrectly={selectedAnswer === question.answer}
+        />
+      )}
 
       {/* 無答案提示 */}
       {showAnswer && !question.hasAnswer && (

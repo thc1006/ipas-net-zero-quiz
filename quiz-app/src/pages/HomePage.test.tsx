@@ -464,6 +464,9 @@ describe('題目來源（只出官方題目）', () => {
       ['official', '全部官方題目'],
       ...sessions.map((s) => [`exam:${s}`, expect.stringMatching(/^1\d\d 年第.+次公告試題$/)]),
       ['sample:114', '參考樣題（114 年版）'],
+      ['review:starred', '星號題（0 題）'],
+      ['review:wrong', '待複習錯題（0 題）'],
+      ['review:both', '星號 + 待複習錯題（0 題）'],
     ]);
   });
 

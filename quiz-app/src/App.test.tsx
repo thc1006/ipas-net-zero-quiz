@@ -605,6 +605,8 @@ describe('App', () => {
       await act(async () => {});
       expect(screen.getByRole('button', { name: /再測一次/ })).toBeInTheDocument();
       expect(document.querySelector('.question-card')).toBeNull();
+      // 「目前沒有星號題」這類說明只給星號與待複習錯題；官方題目的路徑照舊
+      expect(document.querySelector('.action-notice')).toHaveTextContent('');
     });
   }
 

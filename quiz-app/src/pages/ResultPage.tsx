@@ -10,11 +10,15 @@ import {
 import { SourceBreakdown } from '../components/SourceBreakdown/SourceBreakdown';
 import type { QuizResult, QuizQuestion } from '../types/quiz';
 import { BankSimilarQuestionItem } from '../components/BankSimilarQuestionItem/BankSimilarQuestionItem';
+import { StarButton } from '../components/StarButton/StarButton';
+import { RemoveFromReview } from '../components/RemoveFromReview/RemoveFromReview';
 import { buildFeedbackUrl } from '../utils/feedback-url';
 import { selectWeakQuestions } from '../utils/question-stats-storage';
 import { renderMarkdown } from '../utils/render-markdown';
 import { echoOfOriginal } from '../utils/generated-question';
 import { useAllQuestionStats } from '../hooks/useQuestionStats';
+import { useReview } from '../hooks/useReview';
+import { wrongEntry } from '../utils/review-storage';
 import './ResultPage.css';
 
 const WEAK_MIN_ATTEMPTS = 3;
@@ -25,6 +29,8 @@ interface ResultPageProps {
   result: QuizResult;
   onGoHome: () => void;
   onRetry: () => void;
+  /** 再測一次沒有題目時的說明（星號與待複習錯題的名單可能已經空了） */
+  retryNotice?: string | null;
 }
 
 // 解析可能含多段（#121 新增了不少帶條文引文的長解析）。用常數避免每次 render 重建 RegExp，
@@ -47,7 +53,7 @@ function GeneratedLines({ content }: { content: string }) {
   );
 }
 
-export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
+export function ResultPage({ result, onGoHome, onRetry, retryNotice = null }: ResultPageProps) {
   const { score, correctCount, wrongCount, totalAnswerable, skippedCount, answers, totalTime } =
     result;
 
@@ -73,6 +79,14 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
       [questionId]: !prev[questionId],
     }));
   }, []);
+
+  const review = useReview();
+  // 這一場讓待複習清單有什麼變動；寫入失敗（null）或沒有變動就不說
+  const reviewSummary = useMemo(() => {
+    const { added = 0, removed = 0 } = result.reviewSummary ?? {};
+    const parts = [added > 0 ? `${added} 題進待複習` : '', removed > 0 ? `${removed} 題移出` : ''];
+    return parts.some(Boolean) ? `這場有 ${parts.filter(Boolean).join('、')}。` : null;
+  }, [result.reviewSummary]);
 
   // 計算時間
   const formattedTime = useMemo(() => {
@@ -278,6 +292,8 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
         </div>
       </section>
 
+      {reviewSummary && <p className="review-summary">{reviewSummary}</p>}
+
       {/* 按題目來源分組的正確率（僅啟用練習池且抽到池題時顯示） */}
       <SourceBreakdown answers={answers} />
 
@@ -313,6 +329,13 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
             <span className="material-icons">error_outline</span>
             錯誤題目 ({wrongAnswers.length} 題)
           </h2>
+
+          {/* 手動移出或存不進去時，這句話就不對了，所以看清單上有沒有 */}
+          {wrongAnswers.some((a) => wrongEntry(review, a.questionId)) && (
+            <p className="wrong-review-hint">
+              答錯的題目已進待複習，首頁「題目來源」選「待複習錯題」可以練。
+            </p>
+          )}
 
           {/* AI 功能說明與免責聲明 */}
           <div className="ai-disclaimer">
@@ -355,6 +378,7 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                   <div className="wrong-content">
                     <div className="wrong-stem-row">
                       <p className="wrong-stem">{question.stem}</p>
+                      <StarButton questionId={qid} label={`第 ${index + 1} 題加星號`} />
                       {/* 回報此題（Refs #63）— 開新分頁、不打斷使用者瀏覽結果頁 */}
                       <a
                         className="question-feedback-link wrong-feedback-link"
@@ -410,6 +434,8 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                         <strong className="text-success">{answer.correctAnswer}</strong>
                       </span>
                     </div>
+
+                    <RemoveFromReview questionId={qid} />
 
                     {question.explanation && (
                       <section className="wrong-explanation" aria-label="題庫解析">
@@ -588,6 +614,11 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
           </div>
         </section>
       )}
+
+      {/* live region 一直在畫面上，內容換了螢幕閱讀器才會念 */}
+      <p className="action-notice" role="status" aria-live="polite" aria-atomic="true">
+        {retryNotice}
+      </p>
 
       {/* 操作按鈕 */}
       <section className="action-section">

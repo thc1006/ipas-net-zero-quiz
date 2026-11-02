@@ -4,15 +4,21 @@ import { allQuestions, getSourceCandidates, stats } from '../data/questions';
 import { PRACTICE_POOL_COUNTS } from '../data/practice-pool-counts';
 import { defaultConfig } from '../hooks/useQuiz';
 import { usePracticeMode } from '../hooks/usePracticeMode';
+import { useReviewQuestions } from '../hooks/useReviewQuestions';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
 import { PracticePoolHistogram } from '../components/PracticePoolHistogram/PracticePoolHistogram';
 import { readBool, writeBool } from '../utils/local-storage';
+import { PAGE_LOAD_FAILED } from '../utils/practice-pool';
 import { loadResumableProgress, formatRelativeTime } from '../utils/quiz-progress-storage';
 import {
+  REVIEW_SOURCES,
+  isReviewSource,
   officialSessions,
   questionSourceLabel,
   questionSourceNoun,
   questionSourceScope,
+  reviewEmptyHint,
+  reviewOptionLabel,
   sampleEditions,
 } from '../utils/question-source';
 import type { QuizConfig, ExamSubject, QuestionSource } from '../types/quiz';
@@ -33,7 +39,7 @@ const QUESTION_COUNT_MAX = 100;
 
 /**
  * 題目來源選單（#128）：全部題目、全部官方題目（公告試題與參考樣題都算）、各場公告試題、各版參考樣題
- * （場次與版次都是新到舊，由資料算出）
+ * （場次與版次都是新到舊，由資料算出）。星號題與待複習錯題的選項帶即時題數，接在這些後面
  */
 const SOURCE_OPTIONS: QuestionSource[] = [
   'all',
@@ -76,13 +82,21 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   const [optInDialogOpen, setOptInDialogOpen] = useState(false);
   const parsedQuestionCount = parseClampedQuestionCount(questionCountInput);
   const canStartQuiz = parsedQuestionCount !== null;
-  // 只出官方題目時：這個考科範圍有幾題可出（'all' 時是 null，不顯示也不限制）
+  // 只出官方題目或星號題、待複習錯題時：這個考科範圍有幾題可出（'all' 時是 null，不顯示也不限制）
   const source = config.questionSource ?? 'all';
-  const sourceAvailable = useMemo(
-    () => (source === 'all' ? null : getSourceCandidates(config.subject, source).length),
-    [config.subject, source]
-  );
-  const canStart = canStartQuiz && sourceAvailable !== 0;
+  const review = useReviewQuestions(config.subject);
+  const reviewSelected = isReviewSource(source);
+  const sourceAvailable = useMemo(() => {
+    if (source === 'all') return null;
+    return isReviewSource(source)
+      ? review.counts[source]
+      : getSourceCandidates(config.subject, source).length;
+  }, [config.subject, source, review.counts]);
+  // 練習池還在載入時題數不算數，算好才能開始
+  const reviewLoading = reviewSelected && review.isLoading;
+  const canStart = canStartQuiz && sourceAvailable !== 0 && !reviewLoading;
+  // 星號題與待複習錯題：名單上的練習池題會出，其他練習池題不會（官方題目是一題都不混）
+  const reviewPoolNote = `目前的題目來源只出${questionSourceNoun(source)}，名單上的練習池題照出，其他練習池題不會混入；題目來源選「全部題目」時，才會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
 
   // 首次進首頁、尚未 opt-in、尚未看過揭露 → 自動彈 dialog
   // 已 opt-in 過或已 dismissed 過則不彈
@@ -262,7 +276,9 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           desc =
             source === 'all'
               ? `下一場測驗會額外混入 ${PRACTICE_POOL_COUNTS.total} 題（${PRACTICE_POOL_COUNTS.externalMock} 模擬 + ${PRACTICE_POOL_COUNTS.aiGenerated} AI 產題；每題附來源徽章）。`
-              : `目前的題目來源只出${questionSourceNoun(source)}，這一場不會混入練習池；題目來源選「全部題目」時，才會額外混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
+              : reviewSelected
+                ? reviewPoolNote
+                : `目前的題目來源只出${questionSourceNoun(source)}，這一場不會混入練習池；題目來源選「全部題目」時，才會額外混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
           ctaLabel = '停用加強練習';
           ctaIcon = 'remove_circle_outline';
           modifierClass = 'practice-pool-tip--enabled';
@@ -271,7 +287,9 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           desc =
             source === 'all'
               ? `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章），啟用後下一場練習會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`
-              : `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章）。目前的題目來源只出${questionSourceNoun(source)}，啟用後這一場也不會混入；題目來源選「全部題目」時才會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
+              : reviewSelected
+                ? reviewPoolNote
+                : `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章）。目前的題目來源只出${questionSourceNoun(source)}，啟用後這一場也不會混入；題目來源選「全部題目」時才會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
           ctaLabel = `啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習`;
           ctaIcon = 'add_circle_outline';
           modifierClass = '';
@@ -370,6 +388,11 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
                   {questionSourceLabel(s)}
                 </option>
               ))}
+              {REVIEW_SOURCES.map((s) => (
+                <option key={s} value={s}>
+                  {reviewOptionLabel(s, review.isLoading ? null : review.counts[s])}
+                </option>
+              ))}
             </select>
             {/* live region 一直在畫面上，內容換了螢幕閱讀器才會念 */}
             <p
@@ -379,7 +402,11 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
               aria-live="polite"
               aria-atomic="true"
             >
-              {sourceAvailable === null ? null : sourceAvailable === 0 ? (
+              {reviewLoading ? (
+                <span>正在載入加強練習池，題數算好後才能開始。</span>
+              ) : reviewSelected && sourceAvailable === 0 ? (
+                !review.poolFailed && <span>{reviewEmptyHint(source, review.totals[source] > 0)}</span>
+              ) : sourceAvailable === null ? null : sourceAvailable === 0 ? (
                 <span>這個範圍沒有{questionSourceNoun(source)}，無法開始。</span>
               ) : (
                 <>
@@ -393,8 +420,13 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
                       {questionSourceNoun(source)}，本次會出 {sourceAvailable} 題。
                     </span>
                   )}
-                  {practiceMode.enabled && <span>加強練習池在這個模式不會混入。</span>}
+                  {practiceMode.enabled && !reviewSelected && <span>加強練習池在這個模式不會混入。</span>}
                 </>
+              )}
+              {reviewSelected && review.poolFailed && (
+                <span className="config-item__hint--notice">
+                  {PAGE_LOAD_FAILED}重新載入之前只算主題庫裡的題目。
+                </span>
               )}
             </p>
           </div>

@@ -1,5 +1,5 @@
 // practice-pool util 單元測試
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import {
   filterPool,
   normalizeTopicTag,
@@ -236,5 +236,28 @@ describe('adapter 不得竄改或丟棄資料', () => {
   it('沒有解析時為 null，不是 undefined', () => {
     const q = toQuizQuestion(baseItem({ explanation: undefined }));
     expect(q.explanation).toBeNull();
+  });
+});
+
+describe('loadPracticePool 失敗之後', () => {
+  afterEach(() => {
+    vi.doUnmock('../data/practice_pool.json');
+    vi.resetModules();
+  });
+
+  it('不留著失敗的 promise：一時斷線，下一次呼叫還有機會載到', async () => {
+    const chunk = { fail: true };
+    vi.resetModules();
+    vi.doMock('../data/practice_pool.json', () => {
+      if (chunk.fail) throw new Error('offline');
+      return { default: { items: [{ id: 'after-retry' }] } };
+    });
+    const { loadPracticePool: load, getPracticePoolSync: cached } = await import('./practice-pool');
+    await expect(load()).rejects.toThrow();
+    expect(cached()).toBeNull();
+    chunk.fail = false;
+    vi.resetModules();
+    const pool = await load();
+    expect(pool.items[0].id).toBe('after-retry');
   });
 });

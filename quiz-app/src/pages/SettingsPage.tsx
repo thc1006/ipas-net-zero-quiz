@@ -1,9 +1,11 @@
 // 設定頁面元件
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { useAccessibility } from '../hooks/useAccessibility';
 import { usePracticeMode } from '../hooks/usePracticeMode';
 import { usePracticePool } from '../hooks/usePracticePool';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
+import { ConfirmDialog } from '../components/ConfirmDialog/ConfirmDialog';
+import { ReviewBackup } from '../components/ReviewBackup/ReviewBackup';
 import { clearStats } from '../utils/question-stats-storage';
 import { APP_VERSION, REPO_URL } from '../data/app-meta';
 import { DISCUSSIONS_URL, REPORT_URL } from '../utils/feedback-url';
@@ -29,16 +31,6 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
   const [optInOpen, setOptInOpen] = useState(false);
   // Refs #64：清除作答統計確認 dialog（取代 window.confirm，與 quiz-abort-dialog 同 pattern）
   const [clearStatsConfirmOpen, setClearStatsConfirmOpen] = useState(false);
-
-  // ESC 關閉 clear-stats dialog（a11y 期待行為，對齊 QuizPage abort dialog）
-  useEffect(() => {
-    if (!clearStatsConfirmOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setClearStatsConfirmOpen(false);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [clearStatsConfirmOpen]);
 
   const onTogglePractice = () => {
     if (practiceMode.enabled) {
@@ -241,43 +233,22 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
         </div>
       </section>
 
-      {/* 清除作答統計確認 dialog（Refs #64）— 取代 window.confirm 對齊既有 dialog pattern */}
+      <ReviewBackup />
+
+      {/* 清除作答統計確認 dialog（Refs #64）— 取代 window.confirm */}
       {clearStatsConfirmOpen && (
-        <div
-          className="settings-confirm-dialog-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="clear-stats-confirm-title"
-          onClick={() => setClearStatsConfirmOpen(false)}
+        <ConfirmDialog
+          title="清除作答統計？"
+          confirmLabel="確定清除"
+          onCancel={() => setClearStatsConfirmOpen(false)}
+          onConfirm={() => {
+            clearStats();
+            setClearStatsConfirmOpen(false);
+          }}
         >
-          <div className="settings-confirm-dialog" onClick={(e) => e.stopPropagation()}>
-            <h2 id="clear-stats-confirm-title">清除作答統計？</h2>
-            <p>
-              所有題目的累積答對率紀錄將被刪除，此動作無法復原。
-              （資料僅儲存在本機，不會上傳）
-            </p>
-            <div className="settings-confirm-dialog__actions">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={() => setClearStatsConfirmOpen(false)}
-              >
-                取消
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => {
-                  clearStats();
-                  setClearStatsConfirmOpen(false);
-                }}
-                autoFocus
-              >
-                確定清除
-              </button>
-            </div>
-          </div>
-        </div>
+          所有題目的累積答對率紀錄將被刪除，此動作無法復原。
+          （資料僅儲存在本機，不會上傳）
+        </ConfirmDialog>
       )}
 
       {/* 重置 */}

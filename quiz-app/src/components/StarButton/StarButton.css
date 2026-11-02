@@ -1,0 +1,41 @@
+/* 星號按鈕：一般指標至少 24px（WCAG 2.5.8），觸控至少 44px（WCAG 2.5.5） */
+.star-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: box-shadow var(--transition-fast), color var(--transition-fast);
+}
+
+.star-button svg {
+  display: block;
+}
+
+.star-button[aria-pressed='true'] {
+  color: var(--color-warning-fg);
+}
+
+/* 不換背景：高對比模式的 --color-divider 與文字同色，星號會被蓋成一塊方塊，手機點完 :hover 還留著 */
+.star-button:hover {
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.star-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse), (max-width: 640px) {
+  .star-button {
+    width: 44px;
+    height: 44px;
+  }
+}

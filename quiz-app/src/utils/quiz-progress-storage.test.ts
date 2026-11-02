@@ -11,6 +11,7 @@ import type { QuizState } from '../hooks/useQuiz';
 import { allQuestions } from '../data/questions';
 import dataset from '../data/integrated_dataset.json';
 import { officialSessions } from './question-source';
+import { isQuestionScorable } from './scorable';
 
 const STORAGE_KEY = 'ipas-quiz-in-progress-v2';
 const LEGACY_STORAGE_KEY = 'ipas-quiz-in-progress'; // v1 舊 key
@@ -678,4 +679,39 @@ describe('quiz-progress-storage', () => {
       expect(formatRelativeTime(NOW + 5000, NOW)).toBe('剛才');
     });
   });
+});
+
+describe('星號與待複習錯題的進度', () => {
+  const saved = (questionSource: unknown) => {
+    const q = allQuestions.find((x) => isQuestionScorable(x))!;
+    return {
+      version: 2,
+      savedAt: 1,
+      state: {
+        isActive: true,
+        questions: [q.id],
+        currentIndex: 0,
+        answers: [],
+        startTime: 1,
+        config: { mode: 'practice', subject: 'all', questionCount: 1, shuffleQuestions: false, showAnswerImmediately: true, questionSource },
+      },
+    };
+  };
+
+  // 續作得了嗎看 loadResumableProgress：認不得的字串來源，loadProgress 照樣讀出來，由這裡放棄並清掉
+  for (const source of ['review:starred', 'review:wrong', 'review:both']) {
+    it(`${source}：題目不在名單上也續作得了（名單本來就會變）`, () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved(source)));
+      expect(loadResumableProgress()?.state.config?.questionSource).toBe(source);
+      expect(localStorage.getItem(STORAGE_KEY)).not.toBeNull();
+    });
+  }
+
+  for (const source of ['review:other', 'review:', 5]) {
+    it(`認不得的來源照樣放棄：${String(source)}`, () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved(source)));
+      expect(loadResumableProgress()).toBeNull();
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
+    });
+  }
 });

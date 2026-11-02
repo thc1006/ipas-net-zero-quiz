@@ -200,3 +200,33 @@ describe('SettingsPage', () => {
     });
   });
 });
+
+describe('清除作答統計的確認', () => {
+  it('預設焦點在取消，關閉後回到原按鈕', () => {
+    renderSettings();
+    const open = screen.getByRole('button', { name: /清除作答統計/ });
+    open.focus();
+    fireEvent.click(open);
+    const dialog = screen.getByRole('dialog');
+    expect(within(dialog).getByRole('button', { name: '取消' })).toHaveFocus();
+    fireEvent.click(within(dialog).getByRole('button', { name: '取消' }));
+    expect(open).toHaveFocus();
+  });
+});
+
+describe('SettingsPage：星號與待複習錯題', () => {
+  it('有這個區塊；原本的清除作答統計不動星號與待複習', () => {
+    const review = JSON.stringify({ v: 1, seeded: true, stars: { a: 1 }, wrong: {} });
+    localStorage.setItem('ipas-review-v1', review);
+    localStorage.setItem(
+      'ipas-question-stats',
+      JSON.stringify({ version: 1, items: { x: { attempts: 1, correct: 1, lastTriedAt: 1 } } })
+    );
+    renderSettings();
+    expect(screen.getByRole('heading', { name: '星號與待複習錯題' })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /清除作答統計/ }));
+    fireEvent.click(screen.getByRole('button', { name: '確定清除' }));
+    expect(localStorage.getItem('ipas-question-stats')).toBeNull();
+    expect(localStorage.getItem('ipas-review-v1')).toBe(review);
+  });
+});
