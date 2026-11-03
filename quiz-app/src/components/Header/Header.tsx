@@ -1,5 +1,5 @@
 // Header 元件 - 頂部導覽列
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import type { useAccessibility } from '../../hooks/useAccessibility';
 import { DISCUSSIONS_URL, REPORT_URL } from '../../utils/feedback-url';
 import './Header.css';
@@ -27,6 +27,24 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
     const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(measure);
     observer?.observe(el);
     return () => observer?.disconnect();
+  }, []);
+
+  // html 的 scroll-padding-top 讓 Tab、Shift+Tab 捲到的地方停在頁首下面（App.css）。Firefox 只在焦點不完全在視窗裡時才捲，
+  // 判斷時不扣 scroll-padding：一半在頁首底下的控制項不會捲出來。用鍵盤移動焦點時補捲一次
+  useEffect(() => {
+    const onFocusIn = (e: FocusEvent) => {
+      const target = e.target;
+      if (!(target instanceof Element) || target.closest('.app-header, .review-notice, dialog')) return;
+      requestAnimationFrame(() => {
+        if (document.activeElement !== target || !target.matches(':focus-visible')) return;
+        // 藏起來的 radio、checkbox 沒有大小，看得到的是外面的 label
+        const shown = target.getBoundingClientRect().height > 0 ? target : (target.closest('label') ?? target);
+        const limit = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+        if (shown.getBoundingClientRect().top < limit - 1) shown.scrollIntoView({ block: 'nearest' });
+      });
+    };
+    document.addEventListener('focusin', onFocusIn);
+    return () => document.removeEventListener('focusin', onFocusIn);
   }, []);
 
   return (

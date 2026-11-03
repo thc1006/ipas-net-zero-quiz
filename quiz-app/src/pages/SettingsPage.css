@@ -88,10 +88,15 @@
   flex-shrink: 0;
 }
 
+/* 看不見，但與開關一樣大：WebKit 把焦點捲進畫面時捲的是 input，0x0 的 input 在開關的下緣，
+   捲到頁首下面時開關本身還在頁首底下。點擊由疊在上面的 .toggle-slider 透過 label 傳過來 */
 .toggle-switch input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
   opacity: 0;
-  width: 0;
-  height: 0;
 }
 
 .toggle-slider {
