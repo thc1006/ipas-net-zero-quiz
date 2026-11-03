@@ -1,5 +1,5 @@
 // 星號與待複習錯題的匯出與匯入：匯入先檢查再合併，檢查不過什麼都不寫，而且要說出原因。
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   REVIEW_IMPORT_MAX_BYTES,
   buildReviewExport,
@@ -45,7 +45,7 @@ describe('buildReviewExport', () => {
   it('匯出的內容匯入得回來（認不得的 id 也留著）', () => {
     const text = buildReviewExport(
       { stars: { 'not-in-bank': 1 }, wrong: {} },
-      new Date(0)
+      new Date('2026-11-01T00:00:00.000Z')
     );
     expect(parseReviewImport(text)).toMatchObject({ ok: true, stars: { 'not-in-bank': 1 } });
   });
@@ -225,5 +225,83 @@ describe('readReviewImport', () => {
       ok: false,
       reason: expect.stringMatching(/讀不到/),
     });
+  });
+});
+
+describe('改過 id 的題目', () => {
+  // 2026-10-18：S1-p01-q004 改成 S_IPAS_SAMPLE_114_L11-q004。改名前匯出的備份帶著舊 id
+  const OLD = 'S1-p01-q004';
+  const CUR = 'S_IPAS_SAMPLE_114_L11-q004';
+  const bank = new Set([...allQuestions.map((q) => q.id), ...pool.items.map((i) => i.id)]);
+
+  it('匯入時換成現在的 id，題庫找得到，不算「題庫找不到」', () => {
+    const r = parse(good({ stars: { [OLD]: 10 }, wrong: { [OLD]: { streak: 1, last: 20 } } }));
+    if (!r.ok) throw new Error(r.reason);
+    expect({ ...r.stars }).toEqual({ [CUR]: 10 });
+    expect({ ...r.wrong }).toEqual({ [CUR]: { streak: 1, last: 20 } });
+    expect(countUnknownIds(r, bank)).toBe(0);
+  });
+
+  it('備份裡新舊 id 都有：留時間新的', () => {
+    const r = parse(
+      good({
+        stars: { [OLD]: 30, [CUR]: 10 },
+        wrong: { [OLD]: { streak: 1, last: 10 }, [CUR]: { streak: 0, last: 30 } },
+      })
+    );
+    if (!r.ok) throw new Error(r.reason);
+    expect({ ...r.stars }).toEqual({ [CUR]: 30 });
+    expect({ ...r.wrong }).toEqual({ [CUR]: { streak: 0, last: 30 } });
+  });
+});
+
+describe('時間的範圍', () => {
+  const EXPORTED = '2026-11-01T00:00:00.000Z';
+  const exportedAt = Date.parse(EXPORTED);
+
+  for (const at of [1e300, 8_640_000_000_000_001]) {
+    it(`超出 Date 範圍的時間：整份拒絕（${at}）`, () => {
+      expect(reason(good({ stars: { 'gist-1': at } }))).toMatch(/星號的時間不對/);
+      expect(reason(good({ stars: {}, wrong: { 'gist-1': { streak: 1, last: at } } }))).toMatch(/待複習的紀錄不對/);
+    });
+  }
+
+  it('比匯出時間晚的時間改成匯出時間：備份裡的紀錄不會比匯出還新', () => {
+    const r = parse(
+      good({ exportedAt: EXPORTED, stars: { a: exportedAt + 5 }, wrong: { b: { streak: 1, last: 8_640_000_000_000_000 } } })
+    );
+    if (!r.ok) throw new Error(r.reason);
+    expect(r.stars.a).toBe(exportedAt);
+    expect(r.wrong.b).toEqual({ streak: 1, last: exportedAt });
+  });
+
+  it('匯出時間比現在晚（時鐘不準）：改成現在', () => {
+    const now = exportedAt - 1000;
+    vi.spyOn(Date, 'now').mockReturnValue(now);
+    try {
+      const r = parse(good({ exportedAt: EXPORTED, stars: { a: exportedAt } }));
+      expect(r.ok && r.stars.a).toBe(now);
+    } finally {
+      vi.restoreAllMocks();
+    }
+  });
+});
+
+describe('大小上限', () => {
+  it('每一題都加星號又都在待複習的完整匯出（時間是真實的 13 位數）匯入得了', async () => {
+    const ids = [...allQuestions.map((q) => q.id), ...pool.items.map((i) => i.id)];
+    const at = Date.parse('2026-11-01T00:00:00.000Z');
+    const text = buildReviewExport(
+      {
+        stars: Object.fromEntries(ids.map((id, i) => [id, at - i])),
+        wrong: Object.fromEntries(ids.map((id, i) => [id, { streak: 1, last: at - i }])),
+      },
+      new Date('2026-11-02T00:00:00.000Z')
+    );
+    const file = new File([text], 'b.json');
+    // 前提：比 100 KB 大。上限設得太緊，備份就匯不回來
+    expect(file.size).toBeGreaterThan(100 * 1024);
+    const r = await readReviewImport(file);
+    expect(r.ok ? Object.keys(r.stars).length : r.reason).toBe(new Set(ids).size);
   });
 });

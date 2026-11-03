@@ -5,6 +5,8 @@
 // - 讀是純的（useSyncExternalStore 會在 render 時呼叫）：搬走壞資料、帶入舊統計都發生在寫入時。
 // - 讀不懂的資料不覆寫：壞資料先搬到 :corrupt 才從空的開始，搬不走就不寫；v 大於 1 是新版寫的，唯讀。
 // - 認不得的 id 一律留著（練習池是懶載入的，題庫也會改），只在顯示時過濾。
+// - 改過 id 的題目（metadata.renamed_from）讀的時候算到現在的 id，與作答統計、進度相同；下一次寫入才落地。
+// - 時間超出 Date 的範圍算讀不懂；比現在晚的當成現在：合併時時間新的優先，未來的時間會一直贏。
 // - 字典用沒有 prototype 的物件：id 是 __proto__、constructor 時，查詢與寫入都跟一般 id 一樣。
 // - 測驗中途的事也記在這裡（removed、sessions），重新整理、續作、另一個分頁都看得到：
 //   手動移出之前的作答不會加回；同一場（startTime）在兩個分頁都完成時只記一次。
@@ -12,6 +14,7 @@
 import { readBool, writeBool } from './local-storage';
 import { isQuestionScorable } from './scorable';
 import { loadStats } from './question-stats-storage';
+import { currentQuestionId } from '../data/renamed-questions';
 import type { AnswerRecord, QuizQuestion } from '../types/quiz';
 
 export const REVIEW_STORAGE_KEY = 'ipas-review-v1';
@@ -93,8 +96,14 @@ const hasOwn = (obj: object, key: string): boolean =>
 export const isPlainRecord = (v: unknown): v is Record<string, unknown> =>
   typeof v === 'object' && v !== null && !Array.isArray(v);
 
+/** Date 表示得出來的最晚時間（ECMAScript 的 time value 上限） */
+const MAX_TIME = 8_640_000_000_000_000;
+
 export const isReviewTime = (v: unknown): v is number =>
-  typeof v === 'number' && Number.isFinite(v) && v >= 0;
+  typeof v === 'number' && Number.isFinite(v) && v >= 0 && v <= MAX_TIME;
+
+/** 比 limit 晚的時間改成 limit（通常是現在）。時鐘調過、匯入的檔案都可能帶著未來的時間 */
+export const notAfter = (at: number, limit: number): number => Math.min(at, limit);
 
 export function isReviewWrongEntry(v: unknown): v is ReviewWrongEntry {
   if (!isPlainRecord(v)) return false;
@@ -108,13 +117,33 @@ export function isReviewWrongEntry(v: unknown): v is ReviewWrongEntry {
   );
 }
 
+/**
+ * 改過 id 的題目：舊 id 的紀錄算到現在的 id（question-stats-storage.ts 的 withCurrentIds 也是這樣）。
+ * 新舊 id 都有時留時間新的；一樣新時留現在的 id 那一筆，結果與存的順序無關。
+ */
+export function toCurrentIds<T>(items: Record<string, T>, time: (value: T) => number): Record<string, T> {
+  const out = dict<T>();
+  for (const [id, value] of Object.entries(items)) {
+    const current = currentQuestionId(id);
+    const other = hasOwn(out, current) ? out[current] : undefined;
+    if (other === undefined || time(value) > time(other) || (time(value) === time(other) && id === current)) {
+      out[current] = value;
+    }
+  }
+  return out;
+}
+
 /** 複製成沒有 prototype 的字典；JSON.parse 把 "__proto__" 存成自己的屬性，Object.entries 讀得到 */
-function toDict<T>(source: unknown, accept: (v: unknown) => v is T): { items: Record<string, T>; clean: boolean } {
+function toDict<T>(
+  source: unknown,
+  accept: (v: unknown) => v is T,
+  fix: (v: T) => T
+): { items: Record<string, T>; clean: boolean } {
   const items = dict<T>();
   if (!isPlainRecord(source)) return { items, clean: false };
   let clean = true;
   for (const [id, value] of Object.entries(source)) {
-    if (accept(value)) items[id] = value;
+    if (accept(value)) items[id] = fix(value);
     else clean = false;
   }
   return { items, clean };
@@ -148,17 +177,19 @@ function parseRaw(raw: string | null): { access: ReviewAccess; data: ReviewData 
   }
   if (!isPlainRecord(value)) return { access: 'corrupt', data: emptyData() };
 
-  const stars = toDict(value.stars, isReviewTime);
-  const wrong = toDict(value.wrong, isReviewWrongEntry);
-  const removed = toDict(value.removed ?? {}, isReviewTime);
+  const now = Date.now();
+  const time = (at: number) => notAfter(at, now);
+  const stars = toDict(value.stars, isReviewTime, time);
+  const wrong = toDict(value.wrong, isReviewWrongEntry, ({ streak, last }) => ({ streak, last: time(last) }));
+  const removed = toDict(value.removed ?? {}, isReviewTime, time);
   const sessions = value.sessions ?? [];
   const sessionsClean = Array.isArray(sessions) && sessions.every(isReviewTime);
   const data: ReviewData = {
     v: SCHEMA_VERSION,
     seeded: value.seeded === true,
-    stars: stars.items,
-    wrong: wrong.items,
-    removed: removed.items,
+    stars: toCurrentIds(stars.items, (at) => at),
+    wrong: toCurrentIds(wrong.items, (entry) => entry.last),
+    removed: toCurrentIds(removed.items, (at) => at),
     sessions: sessionsClean ? sessions : [],
   };
   // 新版資料的形狀我們不一定懂：能讀的照讀，讀不懂的不算壞資料（它沒有壞，是這個版本太舊）
@@ -283,7 +314,7 @@ function seedFromStats(data: ReviewData): void {
   for (const [id, stat] of Object.entries(loadStats())) {
     if (stat.correct < stat.attempts && !(id in data.wrong)) {
       // loadStats 接受負的時間，這裡不接受：照抄的話主資料下一次讀就成了壞資料
-      data.wrong[id] = { streak: 0, last: isReviewTime(stat.lastTriedAt) ? stat.lastTriedAt : 0 };
+      data.wrong[id] = { streak: 0, last: isReviewTime(stat.lastTriedAt) ? notAfter(stat.lastTriedAt, Date.now()) : 0 };
     }
   }
   data.seeded = true;
@@ -330,6 +361,8 @@ function update(change: (data: ReviewData) => void, silent = false): boolean {
       return fail();
     }
   }
+  // 寫得進去就是又能儲存了（例如另一個分頁清出空間、重寫了這支 key）
+  corruptStuck = false;
   if (!silent) {
     writeFailed = false;
     firstStar = false;
@@ -339,10 +372,24 @@ function update(change: (data: ReviewData) => void, silent = false): boolean {
   return true;
 }
 
-/** 請瀏覽器別清掉這個網站的資料。結果不影響任何事：不等它，失敗也不管 */
+/**
+ * 請瀏覽器別清掉這個網站的資料。結果不影響任何事：不等它，失敗也不管。
+ * Firefox 會跳詢問視窗（MDN 的 Storage quotas and eviction criteria；Firefox 157 實測 persist() 一直等使用者回應），
+ * 使用者只是按了星號，不該被問：Firefox 只在已經允許過時呼叫。Chrome 與 Safari 不問，依網站的使用情形自動決定。
+ * 不能只看 Permissions API：Chrome 沒允許過時也回 'prompt'，照它判斷的話 Chrome 永遠不會呼叫。
+ */
 function requestPersistence(): void {
   try {
-    navigator.storage?.persist?.().catch(() => undefined);
+    const storage = navigator.storage;
+    if (!storage?.persist) return;
+    if (!/\bFirefox\//.test(String(navigator.userAgent))) {
+      storage.persist().catch(() => undefined);
+      return;
+    }
+    navigator.permissions
+      ?.query({ name: 'persistent-storage' as PermissionName })
+      .then(({ state }) => (state === 'granted' ? storage.persist() : undefined))
+      .catch(() => undefined);
   } catch {
     /* 舊瀏覽器或被政策擋掉 */
   }
@@ -440,7 +487,7 @@ export function reviewResultsFrom(questions: QuizQuestion[], answers: AnswerReco
       id: a.questionId,
       isCorrect: a.isCorrect === true,
       // 舊進度可能沒有這個欄位。沒有 last 的紀錄下一次讀就是壞資料
-      at: isReviewTime(a.timestamp) ? a.timestamp : Date.now(),
+      at: isReviewTime(a.timestamp) ? notAfter(a.timestamp, Date.now()) : Date.now(),
     }));
 }
 

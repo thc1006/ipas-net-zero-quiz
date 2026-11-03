@@ -544,3 +544,15 @@ describe('寫入失敗', () => {
     expect(store.get(REVIEW_STORAGE_KEY)).toBe(raw);
   });
 });
+
+describe('改過 id 的題目', () => {
+  // 2026-10-18：S1-p01-q004 改成 S_IPAS_SAMPLE_114_L11-q004
+  it('改名前加的星號：首頁算得到、不用載入練習池，開始的就是那一題', async () => {
+    put(['S1-p01-q004']);
+    render(<App />);
+    expect(optionText('review:starred')).toBe('星號題（1 題）');
+    await startDrill('review:starred');
+    expect(stem()).toBe(allQuestions.find((q) => q.id === 'S_IPAS_SAMPLE_114_L11-q004')!.stem);
+    expect(loadPracticePool).not.toHaveBeenCalled();
+  });
+});

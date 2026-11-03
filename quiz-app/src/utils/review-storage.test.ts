@@ -23,6 +23,9 @@ import {
   wrongEntry,
 } from './review-storage';
 import { clearStats, recordAttempts } from './question-stats-storage';
+import { buildReviewExport, parseReviewImport } from './review-transfer';
+import { currentQuestionId } from '../data/renamed-questions';
+import { getQuestionById } from '../data/questions';
 import { installRealLocalStorage } from './__fixtures__/real-local-storage';
 import type { AnswerRecord, QuizQuestion } from '../types/quiz';
 
@@ -969,5 +972,256 @@ describe('練習池載入失敗的提醒', () => {
     expect(getReviewNotice()).toBe('pool-failed');
     expect(listener).toHaveBeenCalledTimes(1);
     off();
+  });
+});
+
+describe('改過 id 的題目：讀的時候算到現在的 id（與作答統計、進度相同）', () => {
+  // 2026-10-18 真的發生過：參考樣題匯入時，S1-p01-q004 改成 S_IPAS_SAMPLE_114_L11-q004
+  const OLD = 'S1-p01-q004';
+  const CUR = 'S_IPAS_SAMPLE_114_L11-q004';
+
+  it('前提：題庫記著這次改名，現在的 id 在主題庫裡，舊的不在', () => {
+    expect(currentQuestionId(OLD)).toBe(CUR);
+    expect(getQuestionById(CUR)).toBeDefined();
+    expect(getQuestionById(OLD)).toBeUndefined();
+  });
+
+  it('星號與待複習：快照裡是現在的 id，舊 id 查不到', () => {
+    put(v1({ stars: { [OLD]: 5 }, wrong: { [OLD]: { streak: 1, last: 6 } } }));
+    const review = getReviewSnapshot();
+    expect(review.access).toBe('ok');
+    expect(Object.keys(review.stars)).toEqual([CUR]);
+    expect(isStarred(review, CUR)).toBe(true);
+    expect(isStarred(review, OLD)).toBe(false);
+    expect(wrongEntry(review, CUR)).toEqual({ streak: 1, last: 6 });
+    expect(wrongEntry(review, OLD)).toBeUndefined();
+  });
+
+  it('移出紀錄：舊 id 移出之前的作答，現在的 id 一樣不會加回', () => {
+    put(v1({ removed: { [OLD]: 100 } }));
+    expect(recordReviewResults([{ id: CUR, isCorrect: false, at: 50 }])).toEqual({ added: 0, removed: 0 });
+    expect(stored().wrong).toEqual({});
+  });
+
+  it('新舊 id 都有：星號與移出紀錄留時間新的，待複習留 last 新的那一筆；與存的順序無關', () => {
+    const both = [
+      v1({
+        stars: { [OLD]: 10, [CUR]: 5 },
+        wrong: { [OLD]: { streak: 1, last: 10 }, [CUR]: { streak: 0, last: 20 } },
+        removed: { [OLD]: 30, [CUR]: 10 },
+      }),
+      v1({
+        stars: { [CUR]: 5, [OLD]: 10 },
+        wrong: { [CUR]: { streak: 0, last: 20 }, [OLD]: { streak: 1, last: 10 } },
+        removed: { [CUR]: 10, [OLD]: 30 },
+      }),
+    ];
+    for (const data of both) {
+      store.clear();
+      __resetReviewStoreForTesting();
+      put(data);
+      const review = getReviewSnapshot();
+      expect({ ...review.stars }).toEqual({ [CUR]: 10 });
+      expect({ ...review.wrong }).toEqual({ [CUR]: { streak: 0, last: 20 } });
+      // 移出時間是 30（舊 id 那一筆）：25 的答錯不加回，35 的才算
+      expect(recordReviewResults([{ id: CUR, isCorrect: false, at: 25 }])).toEqual({ added: 0, removed: 0 });
+    }
+  });
+
+  it('寫入時落地成現在的 id：存的資料裡不再有舊 id', () => {
+    put(v1({ stars: { [OLD]: 5 }, wrong: { [OLD]: { streak: 0, last: 6 } }, removed: { [OLD]: 7 } }));
+    expect(setStar('gist-1', true)).toBe(true);
+    const raw = stored() as ReturnType<typeof stored> & { removed: Record<string, number> };
+    expect(Object.keys(raw.stars).sort()).toEqual([CUR, 'gist-1'].sort());
+    expect(Object.keys(raw.wrong)).toEqual([CUR]);
+    expect(Object.keys(raw.removed)).toEqual([CUR]);
+  });
+
+  it('匯出的是現在的 id', () => {
+    put(v1({ stars: { [OLD]: 5 }, wrong: { [OLD]: { streak: 0, last: 6 } } }));
+    const out = JSON.parse(buildReviewExport(getReviewSnapshot(), new Date(0)));
+    expect(Object.keys(out.stars)).toEqual([CUR]);
+    expect(Object.keys(out.wrong)).toEqual([CUR]);
+  });
+});
+
+describe('搬不走的壞資料，之後別的分頁修好了', () => {
+  it('這邊的寫入成功就收掉「目前不會儲存變更」', () => {
+    store.set(REVIEW_STORAGE_KEY, '{broken');
+    const restore = failWrites((k) => k.startsWith(REVIEW_CORRUPT_KEY));
+    seedReview();
+    expect(getReviewNotice()).toBe('corrupt-stuck');
+    restore();
+    // 另一個分頁清出空間之後重寫了這支 key
+    put(v1());
+    expect(setStar('gist-1', true)).toBe(true);
+    expect(isStarred(getReviewSnapshot(), 'gist-1')).toBe(true);
+    expect(getReviewNotice()).not.toBe('corrupt-stuck');
+  });
+
+  it('使用者沒有動手的寫入（開站帶入）成功也收掉', () => {
+    store.set(REVIEW_STORAGE_KEY, '{broken');
+    const restore = failWrites((k) => k.startsWith(REVIEW_CORRUPT_KEY));
+    seedReview();
+    restore();
+    put(v1({ seeded: false }));
+    expect(seedReview()).toBe(true);
+    expect(getReviewNotice()).toBeNull();
+  });
+});
+
+describe('時間的範圍：超出 Date 的算壞資料，比現在晚的改成現在', () => {
+  const NOW = 1_800_000_000_000;
+  const DATE_MAX = 8_640_000_000_000_000;
+
+  it('超出 Date 範圍的時間算壞資料（星號、待複習、移出紀錄、場次）', () => {
+    for (const data of [
+      v1({ stars: { a: DATE_MAX + 1 } }),
+      v1({ stars: { a: 1e300 } }),
+      v1({ wrong: { a: { streak: 0, last: DATE_MAX + 1 } } }),
+      v1({ removed: { a: 1e300 } }),
+      v1({ sessions: [1e300] }),
+    ]) {
+      __resetReviewStoreForTesting();
+      put(data);
+      expect(getReviewSnapshot().access).toBe('corrupt');
+    }
+  });
+
+  it('Date 範圍內但比現在晚：讀成現在，寫回去的也是現在', () => {
+    vi.spyOn(Date, 'now').mockReturnValue(NOW);
+    put(v1({ stars: { a: DATE_MAX }, wrong: { b: { streak: 1, last: NOW + 5 } }, removed: { c: NOW + 9 } }));
+    const review = getReviewSnapshot();
+    expect(review.access).toBe('ok');
+    expect(review.stars.a).toBe(NOW);
+    expect(wrongEntry(review, 'b')).toEqual({ streak: 1, last: NOW });
+    expect(setStar('x', true)).toBe(true);
+    const raw = stored() as ReturnType<typeof stored> & { removed: Record<string, number> };
+    expect(raw.stars.a).toBe(NOW);
+    expect(raw.wrong.b.last).toBe(NOW);
+    expect(raw.removed.c).toBe(NOW);
+  });
+
+  it('作答時間比現在晚（時鐘調過）：記成現在', () => {
+    vi.spyOn(Date, 'now').mockReturnValue(NOW);
+    const q = { id: 'a', answer: 'A', hasAnswer: true, qualityFlags: [] } as unknown as QuizQuestion;
+    const answer = { questionId: 'a', selectedAnswer: 'B', correctAnswer: 'A', isCorrect: false, timestamp: NOW + 1000 } as AnswerRecord;
+    expect(reviewResultsFrom([q], [answer])).toEqual([{ id: 'a', isCorrect: false, at: NOW }]);
+  });
+
+  it('舊統計的時間比現在晚：帶入時改成現在', () => {
+    vi.spyOn(Date, 'now').mockReturnValue(NOW);
+    store.set(STATS_KEY, JSON.stringify({ version: 1, items: { a: { attempts: 2, correct: 1, lastTriedAt: NOW * 2 } } }));
+    seedReview();
+    expect(stored().wrong.a).toEqual({ streak: 0, last: NOW });
+  });
+});
+
+describe('同一場只記一次：場次紀錄的上限與順序', () => {
+  const a = (isCorrect: boolean, at: number) => [{ id: 'a', isCorrect, at }];
+
+  it('分頁 A 完成一場、又做了兩場，分頁 B 才完成同一份進度：只算一次', () => {
+    put(v1({ wrong: { a: { streak: 0, last: 1 } } }));
+    recordReviewResults(a(true, 10), 111); // 分頁 A：a 答對，streak 1
+    recordReviewResults([{ id: 'b', isCorrect: false, at: 20 }], 222);
+    recordReviewResults([{ id: 'c', isCorrect: false, at: 30 }], 333);
+    // 分頁 B 完成 111 那一場：再算一次的話 a 就答對兩次而移出
+    expect(recordReviewResults(a(true, 10), 111)).toEqual({ added: 0, removed: 0 });
+    expect(stored().wrong.a).toEqual({ streak: 1, last: 10 });
+  });
+
+  it('第 51 場之後，最新的那一場重複完成還是只算一次', () => {
+    put(v1({ wrong: { a: { streak: 0, last: 1 } } }));
+    for (let t = 1; t <= 50; t++) recordReviewResults([{ id: `q${t}`, isCorrect: false, at: t }], t);
+    recordReviewResults(a(true, 100), 51);
+    expect(recordReviewResults(a(true, 100), 51)).toEqual({ added: 0, removed: 0 });
+    expect(stored().wrong.a).toEqual({ streak: 1, last: 100 });
+  });
+});
+
+describe('重新匯入同一份備份', () => {
+  const backup = (last: number) =>
+    JSON.stringify({
+      app: 'ipas-net-zero-quiz',
+      schema: 1,
+      exportedAt: '2026-11-01T00:00:00.000Z',
+      stars: {},
+      wrong: { q: { streak: 1, last } },
+    });
+  const importText = (text: string) => {
+    const parsed = parseReviewImport(text);
+    if (!parsed.ok) return parsed.reason;
+    return mergeReview(parsed);
+  };
+
+  it('備份裡的時間在未來：匯入之後答錯，再匯入一次不會把連續答對次數帶回來', () => {
+    const exported = Date.parse('2026-11-01T00:00:00.000Z');
+    vi.spyOn(Date, 'now').mockReturnValue(exported + 1000);
+    expect(importText(backup(8_640_000_000_000_000))).toEqual({ stars: 0, wrong: 1 });
+    recordReviewResults([{ id: 'q', isCorrect: false, at: exported + 2000 }], 1);
+    expect(stored().wrong.q).toEqual({ streak: 0, last: exported + 2000 });
+    vi.spyOn(Date, 'now').mockReturnValue(exported + 3000);
+    importText(backup(8_640_000_000_000_000));
+    expect(stored().wrong.q).toEqual({ streak: 0, last: exported + 2000 });
+  });
+
+  it('超出 Date 範圍的時間（1e300）：整份拒絕，什麼都不寫', () => {
+    expect(importText(backup(1e300))).toMatch(/待複習的紀錄不對/);
+    expect(store.has(REVIEW_STORAGE_KEY)).toBe(false);
+  });
+});
+
+describe('第一次加星號時請瀏覽器保留資料：不跳詢問視窗', () => {
+  // Firefox 對 persist() 跳詢問視窗（MDN：「the user is notified with a UI popup」；Firefox 157 實測 persist() 一直等著）。
+  // Chrome 與 Safari 不問；Chrome 沒允許過時 permissions.query 也回 'prompt'，所以不能只看它
+  const FIREFOX = 'Mozilla/5.0 (X11; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0';
+  const CHROME =
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36';
+  const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
+  const stub = (userAgent: string, state: PermissionState | Error | null) => {
+    const persist = vi.fn(() => Promise.resolve(true));
+    const query = vi.fn(() => (state instanceof Error ? Promise.reject(state) : Promise.resolve({ state })));
+    vi.stubGlobal('navigator', {
+      userAgent,
+      storage: { persist },
+      ...(state === null ? {} : { permissions: { query } }),
+    });
+    return { persist, query };
+  };
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('Firefox、還沒允許過：不呼叫 persist()，星號照樣加上', async () => {
+    const { persist, query } = stub(FIREFOX, 'prompt');
+    expect(setStar('a', true)).toBe(true);
+    await flush();
+    expect(query).toHaveBeenCalledWith({ name: 'persistent-storage' });
+    expect(persist).not.toHaveBeenCalled();
+  });
+
+  it('Firefox、已經允許過：呼叫（不會再問）', async () => {
+    const { persist } = stub(FIREFOX, 'granted');
+    setStar('a', true);
+    await flush();
+    expect(persist).toHaveBeenCalledTimes(1);
+  });
+
+  it('Firefox、沒有 Permissions API 或查詢失敗：不呼叫', async () => {
+    for (const state of [null, new TypeError('bad name')]) {
+      clearStars();
+      const { persist } = stub(FIREFOX, state);
+      expect(setStar('a', true)).toBe(true);
+      await flush();
+      expect(persist).not.toHaveBeenCalled();
+    }
+  });
+
+  it('Chrome：照呼叫，不必先查（它不問）', async () => {
+    const { persist, query } = stub(CHROME, 'prompt');
+    setStar('a', true);
+    expect(persist).toHaveBeenCalledTimes(1);
+    expect(query).not.toHaveBeenCalled();
   });
 });

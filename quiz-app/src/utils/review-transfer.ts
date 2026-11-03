@@ -7,6 +7,8 @@ import {
   isPlainRecord,
   isReviewTime,
   isReviewWrongEntry,
+  notAfter,
+  toCurrentIds,
   type ReviewSnapshot,
   type ReviewStars,
   type ReviewWrong,
@@ -77,9 +79,11 @@ export function parseReviewImport(text: string): ReviewImportResult {
     return reject('這份備份是新版網站匯出的，請先重新整理頁面更新。');
   }
   if (root.schema !== SCHEMA) return reject('備份檔的格式版本不對。');
-  if (typeof root.exportedAt !== 'string' || !Number.isFinite(Date.parse(root.exportedAt))) {
-    return reject('備份檔的匯出時間不對。');
-  }
+  const exportedAt = typeof root.exportedAt === 'string' ? Date.parse(root.exportedAt) : NaN;
+  if (!Number.isFinite(exportedAt)) return reject('備份檔的匯出時間不對。');
+  // 備份裡的紀錄不會比匯出時間新，也不會比現在新。合併時時間新的優先：放著未來的時間，
+  // 之後答錯也蓋不過它，同一份備份每匯入一次就把舊的連續答對次數帶回來
+  const limit = Math.max(0, notAfter(exportedAt, Date.now()));
   if (!isPlainRecord(root.stars)) return reject('備份檔的星號資料不對。');
   if (!isPlainRecord(root.wrong)) return reject('備份檔的待複習資料不對。');
 
@@ -88,16 +92,21 @@ export function parseReviewImport(text: string): ReviewImportResult {
   for (const [id, at] of Object.entries(root.stars)) {
     if (!isSafeId(id)) return reject(`備份裡有無法辨識的題目編號：${shown(id)}`);
     if (!isReviewTime(at)) return reject(`星號的時間不對：${id}`);
-    stars[id] = at;
+    stars[id] = notAfter(at, limit);
   }
   const wrong = Object.create(null) as ReviewWrong;
   for (const [id, entry] of Object.entries(root.wrong)) {
     if (!isSafeId(id)) return reject(`備份裡有無法辨識的題目編號：${shown(id)}`);
     if (!isReviewWrongEntry(entry)) return reject(`待複習的紀錄不對：${id}`);
     const { streak, last }: ReviewWrongEntry = entry;
-    wrong[id] = { streak, last };
+    wrong[id] = { streak, last: notAfter(last, limit) };
   }
-  return { ok: true, stars, wrong };
+  // 改過 id 的題目換成現在的 id：預覽的題數、題庫找不到的題數、合併都用現在的 id
+  return {
+    ok: true,
+    stars: toCurrentIds(stars, (at) => at),
+    wrong: toCurrentIds(wrong, (entry) => entry.last),
+  };
 }
 
 /** 檢查大小、讀檔、解析。大小在讀檔之前擋：大檔案一讀進來分頁就卡住了 */

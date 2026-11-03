@@ -71,6 +71,11 @@ export function ReviewBackup() {
     const now = new Date();
     // 重讀：另一個分頁剛寫的，這裡可能還沒收到 storage 事件，備份不能少那幾筆
     const current = getReviewSnapshot();
+    // 讀不到不等於沒有：匯出一份空的備份還說「已匯出」，使用者會以為存好了
+    if (current.access === 'unavailable') {
+      setMessage('沒有匯出：讀不到這個瀏覽器裡的紀錄，瀏覽器可能封鎖了網站資料。');
+      return;
+    }
     const blob = new Blob([buildReviewExport(current, now)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

@@ -339,3 +339,42 @@ describe('說明', () => {
     expect(screen.getByText(/只存在這個瀏覽器/)).toHaveTextContent(/備份/);
   });
 });
+
+describe('改過 id 的題目', () => {
+  // 2026-10-18：S1-p01-q004 改成 S_IPAS_SAMPLE_114_L11-q004。改名前匯出的備份帶著舊 id
+  const OLD = 'S1-p01-q004';
+  const CUR = 'S_IPAS_SAMPLE_114_L11-q004';
+
+  it('舊 id 的備份：不說題庫找不到，已經有星號的題目不算新增，合併後存的是現在的 id', async () => {
+    put({ [CUR]: 1 });
+    render(<ReviewBackup />);
+    choose(backup({ [OLD]: 1 }, { [OLD]: { streak: 0, last: 2 } }));
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog).not.toHaveTextContent('找不到');
+    expect(dialog).toHaveTextContent('會新增星號 0 題、待複習錯題 1 題。');
+    expect(loadPracticePool).not.toHaveBeenCalled();
+    fireEvent.click(within(dialog).getByRole('button', { name: '確定合併' }));
+    expect(Object.keys(saved().stars)).toEqual([CUR]);
+    expect(Object.keys(saved().wrong)).toEqual([CUR]);
+  });
+});
+
+describe('網站資料被封鎖', () => {
+  it('匯出：讀不到紀錄就不匯出空的備份，說明原因', () => {
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      get() {
+        throw new DOMException('blocked', 'SecurityError');
+      },
+    });
+    const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
+    try {
+      render(<ReviewBackup />);
+      fireEvent.click(screen.getByRole('button', { name: /匯出備份/ }));
+      expect(click).not.toHaveBeenCalled();
+      expect(status()).toHaveTextContent('沒有匯出：讀不到這個瀏覽器裡的紀錄，瀏覽器可能封鎖了網站資料。');
+    } finally {
+      store = installRealLocalStorage();
+    }
+  });
+});
