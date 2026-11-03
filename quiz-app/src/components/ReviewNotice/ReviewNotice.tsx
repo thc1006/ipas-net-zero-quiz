@@ -37,15 +37,26 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
   const fresh = useRef(true);
   const root = document.documentElement;
 
-  // 提示出現之前就要記：按下星號的那一下，提示還沒出現
+  // 提示出現之前就要記：按下星號的那一下，提示還沒出現。換掉它的只有焦點移到別的元素，或按了別的能按的東西：
+  // 點在文字或空白上不算，觸控捲動也不算（從按鈕或選項上開始捲的話，瀏覽器送 pointercancel，不會有 pointerup），
+  // 所以按下時先記著，放開才換
   useEffect(() => {
     const own = (target: EventTarget | null): target is Element =>
       target instanceof Element && !ref.current?.contains(target);
+    let pressed: { pointerId: number; target: Element } | null = null;
     const onPointerDown = (e: PointerEvent) => {
-      if (own(e.target)) {
-        anchor.current = e.target.closest(INTERACTIVE);
+      const target = own(e.target) ? e.target.closest(INTERACTIVE) : null;
+      pressed = target && { pointerId: e.pointerId, target };
+    };
+    const onPointerUp = (e: PointerEvent) => {
+      if (pressed?.pointerId === e.pointerId) {
+        anchor.current = pressed.target;
         fresh.current = true;
       }
+      pressed = null;
+    };
+    const onPointerCancel = () => {
+      pressed = null;
     };
     const onFocusIn = (e: FocusEvent) => {
       if (own(e.target)) {
@@ -54,9 +65,13 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
       }
     };
     document.addEventListener('pointerdown', onPointerDown, true);
+    document.addEventListener('pointerup', onPointerUp, true);
+    document.addEventListener('pointercancel', onPointerCancel, true);
     document.addEventListener('focusin', onFocusIn, true);
     return () => {
       document.removeEventListener('pointerdown', onPointerDown, true);
+      document.removeEventListener('pointerup', onPointerUp, true);
+      document.removeEventListener('pointercancel', onPointerCancel, true);
       document.removeEventListener('focusin', onFocusIn, true);
     };
   }, []);
@@ -134,14 +149,14 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
     window.addEventListener('resize', place);
     window.addEventListener('scroll', later, { passive: true });
     document.addEventListener('focusin', later);
-    document.addEventListener('pointerdown', later);
+    document.addEventListener('pointerup', later);
     return () => {
       cancelAnimationFrame(frame);
       observer?.disconnect();
       window.removeEventListener('resize', place);
       window.removeEventListener('scroll', later);
       document.removeEventListener('focusin', later);
-      document.removeEventListener('pointerdown', later);
+      document.removeEventListener('pointerup', later);
     };
   }, [text, view, root]);
 

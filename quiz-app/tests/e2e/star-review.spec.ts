@@ -1218,3 +1218,95 @@ test.describe('焦點在比視窗還高的題幹上，一路往下捲：提示�
     });
   }
 });
+
+/** 等兩個 frame：提示在 requestAnimationFrame 裡重新選邊（WebKit 觸控點完之後約 0.3 秒才跑下一個 frame） */
+const nextFrames = (page: Page) =>
+  page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+
+/** 題卡上一個點下去不會指到任何東西的點：不在能按、能拿到焦點的元素上，也不在頁首或提示底下 */
+const inertSpotOnCard = (page: Page) =>
+  page.locator('.question-card').evaluate((card) => {
+    const header = document.querySelector('.app-header')!.getBoundingClientRect();
+    const r = card.getBoundingClientRect();
+    for (let y = Math.min(r.bottom, window.innerHeight) - 4; y > Math.max(r.top, header.bottom) + 4; y -= 4) {
+      for (let x = r.left + 4; x < r.right - 4; x += 4) {
+        const hit = document.elementFromPoint(x, y);
+        if (hit && card.contains(hit) && !hit.closest('button, a[href], input, select, textarea, label, summary, [tabindex]')) {
+          return { x, y };
+        }
+      }
+    }
+    return null;
+  });
+
+// 點完星號之後點一下不能按的地方，或從選項上開始的觸控捲動：提示是星號引起的，不能因為這樣就換回底部蓋住它。
+// 改之前 pointerdown 落在不能按的東西上，要保護的元素就變成沒有，提示回到底部
+test.describe('第一次加星號之後點不能按的地方或捲動：剛按的星號照樣不被提示蓋住', () => {
+  /** 320x256 字級特大，題卡的星號捲到視窗底部上方 20px，點下去加星號；提示換到頁首下面 */
+  async function starNearBottom(page: Page, tap: (x: number, y: number) => Promise<void>) {
+    await gotoHome(page, undefined, 'xlarge');
+    await page.getByLabel('隨機出題順序').uncheck();
+    await startButton(page).click();
+    await expect(page.locator('.question-card')).toBeVisible();
+    await settleAnimations(page);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await toViewportBottom(star(page));
+    const before = await spotAndNotice(star(page));
+    await tap(before.x, before.y);
+    await expect(star(page)).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
+    await nextFrames(page);
+    const after = await spotAndNotice(star(page));
+    expect(overlapsNotice(after), `前提：加星號之後提示不蓋住星號 ${JSON.stringify(after)}`).toBe(false);
+  }
+
+  for (const { name, hasTouch } of [
+    { name: '觸控', hasTouch: true },
+    { name: '滑鼠', hasTouch: false },
+  ]) {
+    test(`320x256 字級特大，${name}：點題卡的空白處、捲動一下，再點同一個位置就是取消星號`, async ({ browser, baseURL }) => {
+      const context = await browser.newContext({ baseURL, hasTouch, viewport: { width: 320, height: 256 } });
+      // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+      await stubVisitorCounter(context);
+      const page = await context.newPage();
+      const tap = (x: number, y: number) => (hasTouch ? page.touchscreen.tap(x, y) : page.mouse.click(x, y));
+      await starNearBottom(page, tap);
+
+      const inert = await inertSpotOnCard(page);
+      expect(inert, '前提：題卡上找得到點下去不會指到任何東西的點').not.toBeNull();
+      await tap(inert!.x, inert!.y);
+      await nextFrames(page);
+      const tapped = await spotAndNotice(star(page));
+      expect(overlapsNotice(tapped), `點了空白處之後提示蓋住星號 ${JSON.stringify(tapped)}`).toBe(false);
+
+      await page.evaluate(() => window.scrollBy(0, -1));
+      await nextFrames(page);
+      const scrolled = await spotAndNotice(star(page));
+      expect(overlapsNotice(scrolled), `捲動之後提示蓋住星號 ${JSON.stringify(scrolled)}`).toBe(false);
+      expect(scrolled.hitIsTarget, `點同一個位置點到的不是星號 ${JSON.stringify(scrolled)}`).toBe(true);
+      await tap(scrolled.x, scrolled.y);
+      await expect(star(page), '第二下點到的不是星號').toHaveAttribute('aria-pressed', 'false');
+      await context.close();
+    });
+  }
+
+  // 觸控捲動從選項（label）開始時，瀏覽器先送 pointerdown，開始捲動時送 pointercancel，不會有 pointerup 與 click。
+  // Playwright 在 Firefox 與 WebKit 做不出真的觸控捲動，直接送這兩個事件；選項在視窗外，算成它的話提示就回到底部
+  test('320x256 字級特大：從選項開始的觸控捲動（pointerdown 再 pointercancel），提示照樣不蓋住星號', async ({ browser, baseURL }) => {
+    const context = await browser.newContext({ baseURL, hasTouch: true, viewport: { width: 320, height: 256 } });
+    // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+    await stubVisitorCounter(context);
+    const page = await context.newPage();
+    await starNearBottom(page, (x, y) => page.touchscreen.tap(x, y));
+    await page.locator('.option-item').first().evaluate((label) => {
+      const init = { bubbles: true, cancelable: true, composed: true, pointerId: 41, pointerType: 'touch', isPrimary: true };
+      label.dispatchEvent(new PointerEvent('pointerdown', init));
+      label.dispatchEvent(new PointerEvent('pointercancel', { ...init, cancelable: false }));
+      window.scrollBy(0, -1);
+    });
+    await nextFrames(page);
+    const after = await spotAndNotice(star(page));
+    expect(overlapsNotice(after), `觸控捲動之後提示蓋住星號 ${JSON.stringify(after)}`).toBe(false);
+    await context.close();
+  });
+});
