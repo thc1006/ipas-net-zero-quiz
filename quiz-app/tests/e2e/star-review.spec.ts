@@ -1136,3 +1136,85 @@ test.describe('第一次加星號的提示不蓋住剛按的星號：星號在�
     });
   }
 });
+
+/** 用鍵盤作答第一個選項、按下一題，直到第 n 題；焦點停在題幹（tabIndex=-1），它就是提示不能蓋住的元素 */
+async function keyboardToQuestion(page: Page, n: number): Promise<void> {
+  for (let i = 1; i < n; i++) {
+    await page.locator('.question-feedback-link').focus();
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Enter');
+    await expect(page.getByRole('button', { name: /下一題/ })).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(progress(page)).toHaveText(new RegExp(String.raw`^${i + 1} /`));
+    await expect(page.locator('.question-stem')).toBeFocused();
+  }
+}
+
+/**
+ * 從現在的位置一路往下捲（每次 4px，等兩個 frame），記下每一格的提示與焦點：
+ * 提示讀得到的高度（clientHeight 扣掉 padding）、兩行字的高度、整段字的高度、在哪一邊，
+ * 焦點在頁首下面、視窗裡的長度，其中沒被提示蓋住的長度，與有沒有和提示重疊
+ */
+const scrollSamples = (page: Page, distance: number) =>
+  page.evaluate(async (distance) => {
+    const n = document.querySelector<HTMLElement>('.review-notice')!;
+    const header = document.querySelector('.app-header')!;
+    const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const length = (a: { top: number; bottom: number }, top: number, bottom: number) =>
+      Math.max(0, Math.min(a.bottom, bottom) - Math.max(a.top, top));
+    const rows = [];
+    const start = window.scrollY;
+    for (let y = start; y < start + distance; y += 4) {
+      window.scrollTo(0, y);
+      await frame();
+      const cs = getComputedStyle(n);
+      const padding = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+      const focus = document.activeElement!.getBoundingClientRect();
+      const nr = n.getBoundingClientRect();
+      const headerBottom = Math.max(0, header.getBoundingClientRect().bottom);
+      rows.push({
+        scrollY: Math.round(window.scrollY),
+        side: n.dataset.side,
+        readable: n.clientHeight - padding,
+        twoLines: 2 * parseFloat(cs.lineHeight),
+        content: n.scrollHeight - padding,
+        focusHeight: Math.round(focus.height),
+        room: Math.round(window.innerHeight - headerBottom),
+        inView: Math.round(length(focus, headerBottom, window.innerHeight)),
+        shown: Math.round(length(focus, headerBottom, window.innerHeight) - length(focus, Math.max(nr.top, headerBottom), nr.bottom)),
+        overlap: focus.top < nr.bottom && focus.bottom > nr.top,
+      });
+    }
+    return rows;
+  }, distance);
+
+// 400% 縮放的 1280x1024 是 320x256：鍵盤按下一題之後焦點在題幹，第 10 題的題幹加上兩行提示就超過頁首下面的空間（字級特大與大時
+// 題幹本身就比它高），提示放哪一邊都會碰到題幹。
+// 改之前提示的高度上限算成 0，字整個看不到（存不進去的說明一直留著，也一樣看不到）
+test.describe('焦點在比視窗還高的題幹上，一路往下捲：提示讀得到，題幹不被整個蓋住，不無故換邊', () => {
+  for (const fontSize of ['xlarge', 'large', 'normal'] as const) {
+    test(`320x256 字級 ${fontSize}：第 10 題`, async ({ page }) => {
+      await page.setViewportSize({ width: 320, height: 256 });
+      await gotoHome(page, undefined, fontSize);
+      await page.getByLabel('隨機出題順序').uncheck();
+      await startButton(page).click();
+      await star(page).click();
+      await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
+      await keyboardToQuestion(page, 10);
+      await settleAnimations(page);
+      const rows = await scrollSamples(page, 320);
+      expect(rows).toHaveLength(80);
+      // 前提：題幹加上兩行提示就放不進頁首下面的空間，提示放哪一邊都會碰到題幹
+      const premise = JSON.stringify(rows[0]);
+      expect(rows[0].focusHeight + rows[0].twoLines, `前提：第 10 題的題幹加兩行提示比可用的高度高 ${premise}`).toBeGreaterThan(rows[0].room);
+
+      const unreadable = rows.filter((r) => r.readable < Math.min(r.twoLines, r.content) - 1);
+      expect(unreadable, '提示讀不到兩行').toEqual([]);
+      // 捲到題幹整個在頁首上面之後就不算
+      expect(rows.filter((r) => r.inView > 0 && r.shown <= 0), '題幹整個被蓋住').toEqual([]);
+      // 捲動中換邊只能是換過去就不再碰到題幹
+      const flips = rows.flatMap((r, i) => (i > 0 && r.side !== rows[i - 1].side ? [[rows[i - 1], r]] : []));
+      expect(flips.filter(([before, after]) => !before.overlap || after.overlap), '捲動時無故換邊').toEqual([]);
+    });
+  }
+});

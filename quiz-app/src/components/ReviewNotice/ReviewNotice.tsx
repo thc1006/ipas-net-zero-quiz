@@ -1,7 +1,8 @@
 // 星號與待複習錯題要告訴使用者的事（沒有儲存、新版資料、練習池載入失敗）。放在 App 層，每一頁都看得到；
 // live region 一直在畫面上，內容換了螢幕閱讀器才會念，空的時候不佔高度。
 // 固定在視窗邊上（ReviewNotice.css），不佔版面：出現時不推動任何東西。預設在底部；剛按的東西或有焦點的元素
-// 在底部會被它蓋住時改放頁首下面（placement.ts），捲動、焦點移動時重新選邊。
+// 在底部會被它蓋住時改放頁首下面（placement.ts），焦點移動、按下別的東西時重新選邊；只是捲動的話，原本那一邊
+// 還放得下就不換。兩邊都會碰到時至少留兩行字，不縮成一條線。
 // 量出它蓋住多高：底部給 html 的 scroll-padding-bottom（--review-notice-cover）與頁尾的空白（--review-notice-reserve），
 // 上面給 scroll-padding-top（--review-notice-cover-top，App.css）。頁尾的空白在同一個畫面裡只增不減：
 // 提示收掉或換邊時頁面變短，捲在最底下的話頁面會跟著跳。
@@ -32,6 +33,8 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
   const reservedFor = useRef(view);
   // 最近按的或拿到焦點的元素：提示是它引起的，或使用者正看著它
   const anchor = useRef<Element | null>(null);
+  // anchor 換過（或重新按了同一個）之後還沒選過邊：這一次照預設選，不留在原本那一邊
+  const fresh = useRef(true);
   const root = document.documentElement;
 
   // 提示出現之前就要記：按下星號的那一下，提示還沒出現
@@ -39,10 +42,16 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
     const own = (target: EventTarget | null): target is Element =>
       target instanceof Element && !ref.current?.contains(target);
     const onPointerDown = (e: PointerEvent) => {
-      if (own(e.target)) anchor.current = e.target.closest(INTERACTIVE);
+      if (own(e.target)) {
+        anchor.current = e.target.closest(INTERACTIVE);
+        fresh.current = true;
+      }
     };
     const onFocusIn = (e: FocusEvent) => {
-      if (own(e.target)) anchor.current = e.target;
+      if (own(e.target)) {
+        anchor.current = e.target;
+        fresh.current = true;
+      }
     };
     document.addEventListener('pointerdown', onPointerDown, true);
     document.addEventListener('focusin', onFocusIn, true);
@@ -65,6 +74,8 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
     const place = () => {
       let coverBottom = 0;
       let coverTop = 0;
+      const stay = fresh.current ? null : el.dataset.side === 'top' ? 'top' : 'bottom';
+      fresh.current = false;
       el.style.removeProperty('top');
       el.style.removeProperty('max-height');
       el.dataset.side = 'bottom';
@@ -74,12 +85,19 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
         const natural = el.getBoundingClientRect();
         const gap = Math.max(0, viewportHeight - natural.bottom);
         const target = anchor.current?.isConnected ? box(anchor.current) : null;
+        // 讀得到的最少高度：兩行字加上下的 padding 與框線（box-sizing 是 border-box，max-height 含這些）
+        const cs = getComputedStyle(el);
+        const line = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.6;
+        const frame = ['paddingTop', 'paddingBottom', 'borderTopWidth', 'borderBottomWidth'] as const;
+        const minHeight = Math.ceil(2 * line + frame.reduce((sum, k) => sum + (parseFloat(cs[k]) || 0), 0));
         const { side, maxHeight } = placeNotice({
           viewportHeight,
           headerBottom,
           gap,
           noticeHeight: natural.height,
+          minHeight,
           anchor: target && target.height > 0 ? target : null,
+          stay,
         });
         if (maxHeight !== null) el.style.maxHeight = `${maxHeight}px`;
         if (side === 'top') {
@@ -95,6 +113,8 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
       reserve.current = Math.max(reserve.current, coverBottom);
       root.style.setProperty('--review-notice-reserve', `${reserve.current}px`);
     };
+    // 新的提示（或換了畫面）照預設選邊
+    fresh.current = true;
     place();
     if (!text) return;
 
