@@ -20,12 +20,12 @@
 # 保留它，才能分辨「網域不存在（真的死了）」與「網路抖一下」。
 #
 # 用法：
-#   classify_url_status <http_code> <curl_exit_code> [dns_verdict]
+#   classify_url_status <http_code> <curl_exit_code> [dns_verdict] [waf]
 #   -> 印出 OK | DEAD | DEAD_DNS | BLOCKED | RETRYABLE | UNREACHABLE_* | OTHER
 #
 # 只有 DEAD 與 DEAD_DNS 會開 issue（見 is_failure）；其餘一律只警告。
 
-#   classify_url_status <http_code> <curl_exit> [dns_verdict]
+#   classify_url_status <http_code> <curl_exit> [dns_verdict] [waf]
 #
 # dns_verdict 只在 curl_exit=6 時有意義，可為：
 #   NXDOMAIN  —— 獨立 resolver 確認該網域不存在  -> DEAD_DNS（真的死了，開 issue）
@@ -34,10 +34,15 @@
 # 為什麼要分：curl 的 exit 6 官方定義只是「Couldn't resolve host」，**不保證是 NXDOMAIN**。
 # 暫時性 resolver 故障、SERVFAIL、GitHub runner 自己的 DNS 問題，都會長成同一個 exit 6。
 # 單憑一次 exit 6 就宣告「網域已停用」並開 issue，是過度推論 —— 又是一種喊狼來了。
+#
+# waf 是 detect_challenge 的結果（廠商名，或空字串）。非空代表這次拿到的是 WAF 的
+# 驗證頁，不是那一頁本身：2xx / 3xx 因此不算 OK，改判 BLOCKED（站台活著，內容沒驗到）。
+# 驗證頁也證明不了那一頁不在，所以只警告，不開 issue。
 classify_url_status() {
   local http="${1:-000}"
   local exit_code="${2:-0}"
   local dns_verdict="${3:-}"
+  local waf="${4:-}"
 
   # curl 本身失敗（連 HTTP 回應都沒拿到）—— 保留 exit code 以區分成因
   if [ "$exit_code" -ne 0 ] 2>/dev/null; then
@@ -60,7 +65,15 @@ classify_url_status() {
   fi
 
   case "$http" in
-    2??|3??)                echo 'OK'        ;; # 含 202 Accepted —— EUR-Lex 正常會回這個
+    2??|3??)
+      # 狀態碼本身證明不了頁面還在：unfccc.int（Imperva）連不存在的路徑都回 200，
+      # EUR-Lex（AWS WAF）回的 202 是驗證頁。只有不是驗證頁時才算 OK。
+      if [ -n "$waf" ]; then
+        echo 'BLOCKED'
+      else
+        echo 'OK'
+      fi
+      ;;
     404|410)                echo 'DEAD'      ;; # 資源真的不存在／已移除
     401|403|405|429|451)    echo 'BLOCKED'   ;; # 站台活著，只是擋自動化流量／需授權／法律封鎖
     408|425|500|502|503|504) echo 'RETRYABLE' ;; # 伺服器端暫時性問題，不是連結壞掉
@@ -105,6 +118,89 @@ resolve_dns_status() {
   else
     echo "$r1"        # SERVFAIL / NOERROR / REFUSED ...（此處必非 NXDOMAIN）
   fi
+}
+
+# WAF 驗證頁
+#
+# curl -D 檔裡「最後一個回應」的 header，一行一個 `名稱:值`，全部小寫、值去掉前後空白。
+# curl -L 會把每一跳（301、302 ...）的 header 都寫進同一個檔，--retry 也可能留下
+# 前一次的；只有最後一個區塊是我們拿到 body 的那個回應。
+final_headers() {
+  [ -f "${1:-}" ] || return 0
+  awk '
+    { sub(/\r$/, ""); line = tolower($0) }
+    line ~ /^http\// { out = ""; next }
+    index(line, ":") > 1 {
+      i = index(line, ":")
+      value = substr(line, i + 1)
+      sub(/^[ \t]+/, "", value); sub(/[ \t]+$/, "", value)
+      out = out substr(line, 1, i - 1) ":" value "\n"
+    }
+    END { printf "%s", out }
+  ' "$1"
+}
+
+# detect_challenge <header 檔> <body 檔>
+#   -> 這次的回應若是 WAF 的驗證頁，印出廠商名（aws-waf / imperva / anubis）；否則什麼都不印。
+#      永遠 exit 0（呼叫端是 set -euo pipefail，grep 沒命中的 1 不能漏出去）。
+#
+# 只收「只有驗證頁才會有」的訊號。下面每一條都有 2026-11-04 的實測：
+#
+#   aws-waf  header `x-amzn-waf-action: challenge|captcha`。AWS WAF 的 Challenge 回 202、
+#            CAPTCHA 回 405，都帶這個 header（AWS WAF 開發者指南）。EUR-Lex 的 10 個網址
+#            全是這樣：202，body 只有 challenge.js。注意 EUR-Lex 也送
+#            `Access-Control-Expose-Headers: x-amzn-waf-action`，所以只認 header 名稱。
+#
+#   imperva  Imperva（Incapsula）的驗證頁沒有專屬 header：X-Iinfo、visid_incap_ /
+#            incap_ses_ cookie、X-CDN: Imperva 在 ifrs.org、moi.gov.tw 的正常內容頁上也有。
+#            `_Incapsula_Resource` 這個字串也不行：正常頁的 </body> 前會被注入
+#            `<script src="/_Incapsula_Resource?SWJIYLWA=...">`。只能認驗證頁的結構：
+#              1. JS 驗證頁（212 bytes）：那支 script 後面緊接著空的 <body></body>
+#              2. 擋頁：<iframe src="/_Incapsula_Resource?..."> 裡面寫
+#                 "Request unsuccessful. Incapsula incident ID"
+#            unfccc.int 的首頁與不存在的路徑都回 200 加 1，清單裡兩頁回 200 加 2。
+#
+#   anubis   Anubis 預設對驗證頁與拒絕頁都回 200（官方文件 custom-status-codes），
+#            也沒有專屬 header。它的頁面模板（web/index.templ 的 base）一律放
+#            `<script id="anubis_challenge" type="application/json">`。
+#            anubis.techaro.lol 的真頁面與不存在的路徑都回 200 加這一頁。
+#
+# 沒列進來的：Cloudflare 的驗證頁回 403（清單裡 15 筆實測都是，帶 cf-mitigated: challenge），
+# 本來就是 BLOCKED。其他廠商的 2xx 驗證頁沒有實測或一手文件佐證，先不收。
+#
+# body 只讀前 64 KiB，而且只看 text/html 的回應：驗證頁都很小（實測 212 / 851 / 2038 /
+# 3827 bytes），整份 body 可能是好幾 MB 的 PDF；純文字檔逐字貼出驗證頁的 HTML 也不算。
+# HTML 裡的文章就算提到 Incapsula 或 Anubis，`<` 會被跳脫成 &lt;，對不上這裡的標籤結構。
+#
+# 規則與上限都寫在函式裡：workflow 在 xargs 開的子行程裡呼叫它，全域變數傳不進去。
+detect_challenge() {
+  local hdr="${1:-}" body="${2:-}" headers text
+  local cap="${CHALLENGE_BODY_CAP:-65536}"
+  headers=$'\n'"$(final_headers "$hdr")"
+
+  case "$headers" in
+    *$'\n'x-amzn-waf-action:challenge*|*$'\n'x-amzn-waf-action:captcha*)
+      echo 'aws-waf'; return 0 ;;
+  esac
+
+  case "$headers" in
+    *$'\n'content-type:text/html*) ;;
+    *) return 0 ;;
+  esac
+  [ -f "$body" ] || return 0
+  # 換行換成空白再比對：標籤可能跨行。NUL 也換掉（shell 變數放不下 NUL）。
+  text=$(head -c "$cap" "$body" | tr '\000\r\n' '   ')
+
+  local imperva_js='<script[^>]*[[:space:]]src=["'\'']?/_incapsula_resource\?[^>]*>[[:space:]]*</script>[[:space:]]*(</head>[[:space:]]*)?<body[^>]*>[[:space:]]*</body>'
+  local imperva_block='<iframe[^>]*[[:space:]]src=["'\'']?/_incapsula_resource\?[^>]*>[^<]*incapsula incident id'
+  if LC_ALL=C grep -Eiq -e "$imperva_js" -e "$imperva_block" <<< "$text"; then
+    echo 'imperva'; return 0
+  fi
+  local anubis='<script[^>]*[[:space:]]id=["'\'']?anubis_challenge'   # templ 產生，一律小寫
+  if LC_ALL=C grep -Eq -e "$anubis" <<< "$text"; then
+    echo 'anubis'
+  fi
+  return 0
 }
 
 # 從 URL 取出主機名（給 resolve_dns_status 用）

@@ -205,7 +205,7 @@ Art 22(1) 原文：
 
 | 檢查 | 涵蓋範圍 | 偵測得到「內容變了」嗎 |
 | --- | --- | --- |
-| **連結健康檢查**（`.github/scripts/url-status.sh`） | 所有 time_sensitive 題目的來源 URL | **不行** —— 只看 HTTP 狀態碼 |
+| **連結健康檢查**（`.github/scripts/url-status.sh`） | 所有 time_sensitive 題目的來源 URL | **不行**：只看 HTTP 狀態碼，以及回應是不是 WAF 驗證頁 |
 | **法條原文釘選比對**（`tools/pin_law_articles.py --check`） | **只有 6 部我國法規**（見下） | 可以 —— 條文一改，sha256 就對不上，CI 變紅並自動開 issue |
 
 釘選涵蓋的 6 部法規：氣候變遷因應法（O0020098）、溫室氣體排放量盤查登錄及查驗管理辦法
@@ -227,18 +227,35 @@ Art 22(1) 原文：
 它也曾經**又瞎又愛喊狼來了**（issue #88）：
 
 - **瞎**：只看得到有 source URL 的題目 —— 修正前是 34/569。
-- **喊狼來了**：只接受 HTTP 200（EUR-Lex 正常回 **202** 被判失效）；
+- **喊狼來了**：只接受 HTTP 200（EUR-Lex 回 **202** 被判失效）；
   `$(curl … || echo "000")` 會**串接**出不存在的 `"000000"`；
   403 其實是 Cloudflare 擋 Actions runner，網站活得好好的。
 
-兩者都已修，改為**五分類**（`.github/scripts/url-status.sh`，含 46 項離線 status matrix 測試）：
+兩者都已修，分類寫在 `.github/scripts/url-status.sh`，有離線測試。
+
+修完之後還**瞎了一次**（2026-11-04 修正）：2xx / 3xx 一律算 OK，但有些站台回的 2xx 是 WAF 的驗證頁，
+不是那一頁本身。用與 workflow 相同的 curl 旗標實測：
+
+- EUR-Lex 的 10 個網址全回 **202**，header 帶 `x-amzn-waf-action: challenge`，body 只有 AWS WAF 的
+  `challenge.js`。上面說的「EUR-Lex 回 202」就是這一頁，並不是正常回應。
+- unfccc.int（Imperva / Incapsula）的首頁與**一個不存在的路徑**都回 **200**、212 bytes 的 JS 驗證頁；
+  清單裡另有兩頁回 200 的 "Request unsuccessful. Incapsula incident ID" 擋頁。
+  不存在的頁面也是 200，所以 unfccc.int 的死連結原本一律報成 OK。
+
+驗證頁證明不了頁面還在，也證明不了它不在，所以改判 `BLOCKED`（只警告）。`detect_challenge` 只認
+「只有驗證頁才有」的訊號：AWS WAF 認 header 名稱 `x-amzn-waf-action`；Imperva 沒有專屬 header
+（`X-Iinfo`、`incap_ses_` cookie、`X-CDN: Imperva` 在 ifrs.org 的正常內容頁上也有，正常頁的 body
+結尾也會被注入 `_Incapsula_Resource` 的 script），只能認驗證頁的 HTML 結構；Anubis 預設也回 200，
+認它頁面模板裡的 `<script id="anubis_challenge">`。body 只讀前 64 KiB，只看 `text/html` 的回應。
+Cloudflare 的驗證頁回 403，本來就是 `BLOCKED`。認不出來的驗證頁仍會算成 OK，這一點沒有變。
 
 | 分類 | 條件 | 開 issue？ |
 |---|---|---|
-| `OK` | 2xx / 3xx（**含 202** —— EUR-Lex 正常回這個） | — |
+| `OK` | 2xx / 3xx，且不是 WAF 驗證頁 | 否 |
 | `DEAD` | 404 / 410 | **是** |
-| `UNREACHABLE_DNS` | curl exit 6（NXDOMAIN） | **是** |
-| `BLOCKED` | 401/403/405/429/451（WAF，站台活著） | 否 |
+| `DEAD_DNS` | curl exit 6，**且** 1.1.1.1 與 8.8.8.8 兩個獨立 resolver 都回 NXDOMAIN | **是** |
+| `UNREACHABLE_DNS` | curl exit 6，但沒有兩個 resolver 確認 NXDOMAIN（可能只是 resolver 抖動） | 否 |
+| `BLOCKED` | 401/403/405/429/451；或 2xx/3xx 但拿到的是 WAF 驗證頁（AWS WAF、Imperva、Anubis）。站台活著，內容沒驗到 | 否 |
 | `RETRYABLE` | 408/425/500/502/503/504（伺服器暫時性） | 否 |
 | `UNREACHABLE_*` | curl exit≠0，保留 7=connect / 28=timeout / 35,60=TLS | 否 |
 | `OTHER` | 其餘 HTTP 碼 —— 明示列出，**不靜默歸成 DEAD** | 否 |

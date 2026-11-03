@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 單一 URL 的健康檢查：curl 一次 -> （必要時）DNS 二次確認 -> 分類 -> 輸出一列 TSV。
+# 單一 URL 的健康檢查：curl 一次 -> 認 WAF 驗證頁 -> （必要時）DNS 二次確認 -> 分類 -> 輸出一列 TSV。
 #
 # 為什麼這段也要從 workflow 抽出來：
 #
@@ -15,7 +15,7 @@
 # 抽出來之後，可以用假的 curl / dig（PATH 注入）離線把每條路徑都跑過一遍。
 #
 # 用法：
-#   check_url $'<url>\t<id1,id2>'   -> stdout 一列：cat \t url \t ids \t http \t rc \t dns
+#   check_url $'<url>\t<id1,id2>'   -> stdout 一列：cat \t url \t ids \t http \t rc \t dns \t waf
 #                                      stderr 一列人類可讀
 #
 # 可覆寫（給測試用）：
@@ -31,12 +31,15 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 check_url() {
   local line="$1"
-  local url ids http rc dns cat icon
+  local url ids http rc dns waf cat icon work
   url="${line%%$'\t'*}"
   ids="${line#*$'\t'}"
   [ -z "$url" ] && return 0
 
-  # 直接 GET：許多 WAF 擋 HEAD。-o /dev/null 丟棄 body。
+  # 直接 GET：許多 WAF 擋 HEAD。
+  # header（-D）與 body（-o）寫進暫存目錄，給 detect_challenge 認 WAF 驗證頁：
+  # 只看 http_code 的話，unfccc.int（Imperva）連不存在的頁面都回 200。
+  # body 跟以前的 -o /dev/null 一樣整份下載，detect_challenge 只讀前 64 KiB，讀完就刪。
   # --retry 2 帶指數退避，吸收暫時性的 5xx / 連線重置。
   # 關鍵：http_code 與 curl 的 exit code **分開保留**，不再壓成單一個 '000'。
   # （舊版 `status=$(curl ... -w '%{http_code}' || echo "000")` 會得到 "000000"：
@@ -48,14 +51,17 @@ check_url() {
   # URL 就會讓整個 step 死掉，而不是被記錄下來。
   # 目前因為 check_url 是在 xargs 的 `bash -c` 子行程裡跑（子行程不繼承 -e）而僥倖沒事，
   # 但那是巧合不是設計：哪天把 xargs 換成普通迴圈就會爆。放進 `||` 串列就不受 -e 影響。
+  work=$(mktemp -d)
   http=$("$CURL_BIN" -sL --compressed \
            -A "$HTTP_UA" \
            -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' \
            -H 'Accept-Language: en-US,en;q=0.9' \
            --connect-timeout 10 --max-time 30 \
            --retry 2 --retry-delay 2 --retry-connrefused \
-           -o /dev/null -w '%{http_code}' "$url" 2>/dev/null) && rc=0 || rc=$?
+           -D "$work/headers" -o "$work/body" -w '%{http_code}' "$url" 2>/dev/null) && rc=0 || rc=$?
   [ -n "$http" ] || http='000'
+  waf=$(detect_challenge "$work/headers" "$work/body")
+  rm -rf "$work"
 
   # curl exit 6 只代表「Couldn't resolve host」，**不保證是 NXDOMAIN**。
   # 暫時性 resolver 故障、SERVFAIL、runner 自己的 DNS 問題都長成同一個碼。
@@ -67,11 +73,20 @@ check_url() {
     dns=$(resolve_dns_status "$(url_host "$url")")
   fi
 
-  cat=$(classify_url_status "$http" "$rc" "$dns")
+  cat=$(classify_url_status "$http" "$rc" "$dns" "$waf")
   icon=$(status_icon "$cat")
 
-  # 所有分類都寫進 results.tsv（含 OK），報告才能誠實呈現全貌
-  printf '%s\t%s\t%s\t%s\t%s\t%s\n' "$cat" "$url" "$ids" "$http" "$rc" "$dns"
-  printf '%s %-20s http=%-4s rc=%-3s dns=%-9s %s (ids: %s)\n' \
-    "$icon" "$cat" "$http" "$rc" "${dns:--}" "$url" "$ids" >&2
+  # 所有分類都寫進 results.tsv（含 OK），報告才能誠實呈現全貌。
+  # waf 也要寫出來：BLOCKED 配 http=200 / 202，不寫是哪個 WAF，看的人不知道為什麼。
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$cat" "$url" "$ids" "$http" "$rc" "$dns" "$waf"
+  printf '%s %-20s http=%-4s rc=%-3s dns=%-9s waf=%-8s %s (ids: %s)\n' \
+    "$icon" "$cat" "$http" "$rc" "${dns:--}" "${waf:--}" "$url" "$ids" >&2
 }
+
+# workflow 在 xargs 開的 `bash -c` 子行程裡呼叫 check_url，子行程只看得到 export 的函式。
+# 清單放在這裡、緊鄰定義：新增 helper 卻漏了 export，子行程裡就是 command not found，
+# 驗證頁照狀態碼算成 OK、DNS 二次確認也不會發生，step 卻照樣是綠的。
+# check-url.test.sh 用跟 workflow 一樣的 xargs 跑一次，漏了就紅。
+export -f check_url classify_url_status status_icon resolve_dns_status dig_status url_host \
+  detect_challenge final_headers
+export CURL_BIN HTTP_UA
