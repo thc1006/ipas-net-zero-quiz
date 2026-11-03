@@ -241,11 +241,15 @@
             "url": "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
           }
         ],
-        "citation_fixed_on": "2026-07-15"
+        "citation_fixed_on": "2026-07-15",
+        "source_url_removed": {
+          "date": "2026-11-04",
+          "url": "https://www.cca.gov.tw/information-service/publications/government-publications/2461.html",
+          "why": "2026-11-04 重測回 HTTP 200，但頁面只有 1,063 bytes，內容是「不存在或已被移除」的錯誤頁（軟 404），季檢只看狀態碼，一直算成 OK。網站上找不到同一份出版品的新位置。這個網址只在 sources 裡，不是引文；答案 D 的依據是 25352.html 那則引文（2030 年 28±2%），2026-11-04 重測該頁回 200、標題是國家減碳新目標專區，所以拿掉這個網址，答案與引文不動。"
+        }
       },
       "sources": [
         "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html",
-        "https://www.cca.gov.tw/information-service/publications/government-publications/2461.html",
         "https://www.cca.gov.tw/",
         "https://vocus.cc/article/6901a506fd89780001c2a960"
       ],
