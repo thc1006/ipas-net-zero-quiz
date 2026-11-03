@@ -1310,3 +1310,39 @@ test.describe('第一次加星號之後點不能按的地方或捲動：剛按�
     await context.close();
   });
 });
+
+// 第一次造訪的加強練習池對話框是 role="dialog" 的 div，不是 <dialog>。在裡面用鍵盤移動焦點時，Header.tsx 的補捲不能對
+// 它裡面的元素呼叫 scrollIntoView：對話框自己捲動，html 的 scroll-padding-top 跟它無關，捲了反而把對話框的內容移走
+test.describe('對話框裡用鍵盤移動焦點：頁首的補捲不碰對話框裡的元素', () => {
+  for (const { viewport, fontSize } of [
+    { viewport: { width: 341, height: 192 }, fontSize: 'xlarge' as const },
+    { viewport: { width: 320, height: 256 }, fontSize: 'xlarge' as const },
+    { viewport: { width: 320, height: 256 }, fontSize: 'normal' as const },
+  ]) {
+    test(`加強練習池的對話框 ${viewport.width}x${viewport.height} 字級 ${fontSize}`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await page.addInitScript((size) => {
+        window.localStorage.setItem('ipas-quiz-a11y', JSON.stringify({ fontSize: size }));
+        const calls: string[] = [];
+        (window as unknown as { __dialogScrolls: string[] }).__dialogScrolls = calls;
+        const original = Element.prototype.scrollIntoView;
+        Element.prototype.scrollIntoView = function (this: Element, arg?: boolean | ScrollIntoViewOptions) {
+          if (this.closest('[role="dialog"], [aria-modal="true"], dialog')) {
+            calls.push(`${this.tagName}.${this.className} ${(this.textContent ?? '').trim().slice(0, 12)}`);
+          }
+          return original.call(this, arg);
+        };
+      }, fontSize);
+      await page.goto('/');
+      const dialog = page.getByRole('dialog');
+      await expect(dialog.getByRole('button', { name: '暫不啟用' })).toBeVisible();
+      for (const key of ['Shift+Tab', 'Shift+Tab', 'Tab', 'Tab', 'Tab', 'Shift+Tab']) {
+        await page.keyboard.press(key);
+        await nextFrames(page);
+        // 前提：焦點一直在對話框裡（Tab 出不去）
+        expect(await page.evaluate(() => !!document.activeElement?.closest('[role="dialog"]')), `${key} 之後焦點不在對話框裡`).toBe(true);
+      }
+      expect(await page.evaluate(() => (window as unknown as { __dialogScrolls: string[] }).__dialogScrolls)).toEqual([]);
+    });
+  }
+});

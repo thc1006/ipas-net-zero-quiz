@@ -30,11 +30,13 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
   }, []);
 
   // html 的 scroll-padding-top 讓 Tab、Shift+Tab 捲到的地方停在頁首下面（App.css）。Firefox 只在焦點不完全在視窗裡時才捲，
-  // 判斷時不扣 scroll-padding：一半在頁首底下的控制項不會捲出來。用鍵盤移動焦點時補捲一次
+  // 判斷時不扣 scroll-padding：一半在頁首底下的控制項不會捲出來。用鍵盤移動焦點時補捲一次。
+  // 對話框不管：它們蓋在頁首上面、自己捲動（多半是 role="dialog" 的 div，不是 <dialog>），scroll-padding-top 跟它們無關
   useEffect(() => {
     const onFocusIn = (e: FocusEvent) => {
       const target = e.target;
-      if (!(target instanceof Element) || target.closest('.app-header, .review-notice, dialog')) return;
+      if (!(target instanceof Element)) return;
+      if (target.closest('.app-header, .review-notice, dialog, [role="dialog"], [role="alertdialog"], [aria-modal="true"]')) return;
       requestAnimationFrame(() => {
         if (document.activeElement !== target || !target.matches(':focus-visible')) return;
         // 藏起來的 radio、checkbox 沒有大小，看得到的是外面的 label
