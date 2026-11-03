@@ -68,9 +68,10 @@ test('Firefox 的封鎖設定：封鎖所有 Cookie，頁面照常可用', async
     firefoxUserPrefs: { 'network.cookie.cookieBehavior': 2 },
   });
   try {
-    const page = await (await browser.newContext({ baseURL })).newPage();
+    const context = await browser.newContext({ baseURL });
     // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
-    await stubVisitorCounter(page);
+    await stubVisitorCounter(context);
+    const page = await context.newPage();
 
     await walkThrough(page);
   } finally {
@@ -78,7 +79,10 @@ test('Firefox 的封鎖設定：封鎖所有 Cookie，頁面照常可用', async
   }
 });
 
-test('Chromium 的封鎖設定：封鎖所有 Cookie，頁面照常可用', async ({ browserName, baseURL }, testInfo) => {
+test('Chromium 的封鎖設定：封鎖所有 Cookie，頁面照常可用', async ({
+  browserName,
+  baseURL,
+}, testInfo) => {
   test.skip(browserName !== 'chromium', '設定檔格式只有 Chromium 認得');
   const profile = testInfo.outputPath('profile');
   mkdirSync(join(profile, 'Default'), { recursive: true });
@@ -89,9 +93,9 @@ test('Chromium 的封鎖設定：封鎖所有 Cookie，頁面照常可用', asyn
   // headless shell 不讀使用者設定檔，要完整的 Chromium
   const context = await chromium.launchPersistentContext(profile, { channel: 'chromium', baseURL });
   try {
+    // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋（擋整個 context，已經開著的分頁也算）
+    await stubVisitorCounter(context);
     const page = context.pages()[0] ?? (await context.newPage());
-    // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
-    await stubVisitorCounter(page);
 
     await walkThrough(page);
   } finally {
