@@ -921,6 +921,8 @@ async function shiftTabFromFooter(page: Page): Promise<string[]> {
   const problems: string[] = [];
   for (let i = 0; i < 60; i++) {
     await page.keyboard.press('Shift+Tab');
+    // Header.tsx 在焦點移動後的下一個 frame 才補捲（Firefox），等兩個 frame 再量
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
     const m = await page.evaluate(() => {
       const el = document.activeElement;
       if (!el || el === document.body) return null;
