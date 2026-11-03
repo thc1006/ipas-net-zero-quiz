@@ -1,4 +1,5 @@
-import { test, expect, type Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 /**
  * #128 只出官方題目：「題目來源」選單放在既有的測驗設定裡（不另加按鈕）。

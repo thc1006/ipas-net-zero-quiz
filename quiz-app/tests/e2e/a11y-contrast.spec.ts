@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 /**
  * #109 回歸守門：語意色 role-based token 在**每一種真實前景/背景配對**下都要達 WCAG AA。

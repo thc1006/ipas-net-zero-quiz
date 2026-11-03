@@ -1,4 +1,5 @@
-import { test, expect, type Locator, type Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
+import { test, expect, stubVisitorCounter, STUB_VISITOR_COUNT } from './fixtures';
 
 /**
  * 練習模式選了就鎖定，而原生 radio 的方向鍵會同時移動與選取：第一次按方向鍵就交卷了。
@@ -227,6 +228,12 @@ test.describe('練習模式的鍵盤作答', () => {
     });
   }
 
+  // 這個檔的頁面常捲到底，頁尾一變高度捲動位置就跟著動。計數器連外部服務的話，回應的成敗決定頁尾多高（見 fixtures.ts）
+  test('頁尾的訪客計數器是測試的固定值，不連外部服務', async ({ page }) => {
+    await startQuiz(page, 'practice');
+    await expect(page.locator('.visitor-counter .count')).toHaveText(String(STUB_VISITOR_COUNT));
+  });
+
   // 滑鼠按下時焦點離開選項、提示收起。提示佔版面的話選項會移位，放開時已經不在同一個選項上，click 就沒了
   test('提示收起時版面不動：按著滑鼠等提示收起，放開照樣作答', async ({ page }) => {
     await startQuiz(page, 'practice');
@@ -348,6 +355,8 @@ test.describe('練習模式的鍵盤作答', () => {
       const bad: string[] = [];
       for (const fontSize of ['normal', 'large', 'xlarge']) {
         const context = await browser.newContext({ baseURL, viewport: { width, height }, deviceScaleFactor: scale });
+        // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+        await stubVisitorCounter(context);
         const page = await context.newPage();
         await page.addInitScript((size) => {
           window.localStorage.setItem('ipas-quiz-a11y', JSON.stringify({ fontSize: size }));

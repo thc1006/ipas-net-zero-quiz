@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 /**
  * #110/#112 回歸守門（rendered cascade）：被使用者「選中」的正解 / 選錯選項，其 .option-key 的
