@@ -7,6 +7,8 @@ import {
   isPlainRecord,
   isReviewTime,
   isReviewWrongEntry,
+  newerTime,
+  newerWrong,
   notAfter,
   toCurrentIds,
   type ReviewSnapshot,
@@ -108,8 +110,8 @@ export function parseReviewImport(text: string): ReviewImportResult {
   // 改過 id 的題目換成現在的 id：預覽的題數、題庫找不到的題數、合併都用現在的 id
   return {
     ok: true,
-    stars: toCurrentIds(stars, (at) => at),
-    wrong: toCurrentIds(wrong, (entry) => entry.last),
+    stars: toCurrentIds(stars, newerTime),
+    wrong: toCurrentIds(wrong, newerWrong),
   };
 }
 

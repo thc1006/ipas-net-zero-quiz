@@ -117,18 +117,26 @@ export function isReviewWrongEntry(v: unknown): v is ReviewWrongEntry {
   );
 }
 
+/** 同一題有兩筆時間時留新的。一樣新就是同一個值，留哪一筆都一樣 */
+export const newerTime = (a: number, b: number): boolean => a > b;
+
+/**
+ * 同一題有兩筆待複習紀錄時留 last 新的。一樣新時留連續答對次數少的：寧可多複習一次，
+ * 也不要因為存的順序把題目提早移出（兩筆都一樣時就是同一個值）
+ */
+export const newerWrong = (a: ReviewWrongEntry, b: ReviewWrongEntry): boolean =>
+  a.last > b.last || (a.last === b.last && a.streak < b.streak);
+
 /**
  * 改過 id 的題目：舊 id 的紀錄算到現在的 id（question-stats-storage.ts 的 withCurrentIds 也是這樣）。
- * 新舊 id 都有時留時間新的；一樣新時留現在的 id 那一筆，結果與存的順序無關。
+ * 同一題的幾筆（現在的 id、改過兩次以上的每一代舊 id）由 newer 挑一筆。newer 是嚴格的全序，
+ * 只有值相同時兩邊都不贏，所以結果與存的順序無關。
  */
-export function toCurrentIds<T>(items: Record<string, T>, time: (value: T) => number): Record<string, T> {
+export function toCurrentIds<T>(items: Record<string, T>, newer: (a: T, b: T) => boolean): Record<string, T> {
   const out = dict<T>();
   for (const [id, value] of Object.entries(items)) {
     const current = currentQuestionId(id);
-    const other = hasOwn(out, current) ? out[current] : undefined;
-    if (other === undefined || time(value) > time(other) || (time(value) === time(other) && id === current)) {
-      out[current] = value;
-    }
+    if (!hasOwn(out, current) || newer(value, out[current])) out[current] = value;
   }
   return out;
 }
@@ -187,9 +195,9 @@ function parseRaw(raw: string | null): { access: ReviewAccess; data: ReviewData 
   const data: ReviewData = {
     v: SCHEMA_VERSION,
     seeded: value.seeded === true,
-    stars: toCurrentIds(stars.items, (at) => at),
-    wrong: toCurrentIds(wrong.items, (entry) => entry.last),
-    removed: toCurrentIds(removed.items, (at) => at),
+    stars: toCurrentIds(stars.items, newerTime),
+    wrong: toCurrentIds(wrong.items, newerWrong),
+    removed: toCurrentIds(removed.items, newerTime),
     sessions: sessionsClean ? sessions : [],
   };
   // 新版資料的形狀我們不一定懂：能讀的照讀，讀不懂的不算壞資料（它沒有壞，是這個版本太舊）
