@@ -133,6 +133,7 @@ describe('語料輪廓（換題庫時用 -u 重新產生）', () => {
       { where: 'utils/review-transfer.test.ts', what: '星號與待複習錯題：題庫與練習池的 id 合計超過 1000 個（反空轉，每一個都要過匯入檢查）', semantics: '依語料重設' },
       { where: 'hooks/useReviewQuestions.test.tsx', what: '星號與待複習錯題：可計分題依內容去重後變少（主題庫有跨科重複，反空轉）', semantics: '依語料重設' },
       { where: 'tests/e2e/star-review.spec.ts', what: '星號與待複習錯題：題庫的前幾題在手機寬度高到能往下捲 100px（反空轉，驗說明不被 header 蓋住）', semantics: '依語料重設' },
+      { where: 'tests/e2e/star-review.spec.ts', what: '星號與待複習錯題：前三題答錯的結果頁夠高，第一張錯題卡的星號捲得到視窗底部上方 20px（前提，驗提示換到頁首下面）', semantics: '依語料重設' },
       { where: 'tests/e2e/star-review.spec.ts', what: '星號與待複習錯題：全題庫都加星號時題數是四位數（最長的選項，換成五位數要重量題目來源選單的寬度）', semantics: '依語料重設' },
       { where: 'tests/e2e/quiz-flow.spec.ts', what: '加強練習池：啟用時一場 100 題抽得到練習池題（反空轉，去重且可計分的主題庫 981 題、練習池 154 題時，抽不到的機率約 2.2e-7）', semantics: '依語料重設' },
       { where: 'data/renamed-questions.test.ts', what: '改過 id 的題目至少一題（反空轉）', semantics: '依語料重設' },

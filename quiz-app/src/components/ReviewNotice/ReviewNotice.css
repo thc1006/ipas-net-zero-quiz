@@ -1,8 +1,9 @@
-/* 固定在視窗底部，不佔版面（Discussion #1）。
-   排在文件流裡的話，第一次加星號時提示一出現就把題卡往下推，星號從指標底下移走，第二下點到的是提示；
-   貼在 header 下面的話，鍵盤按下一題時題幹捲到 header 下緣，正好被它蓋住（WCAG 2.4.11）。
-   題卡的星號與題幹都在畫面上方，放在底部蓋不到它們。被蓋住的高度由 ReviewNotice.tsx 量出來：
-   html 的 scroll-padding-bottom 讓捲到焦點的地方停在提示上方，.app 底部留同樣的空白，捲到底也不會被蓋住。 */
+/* 固定在視窗邊上，不佔版面（Discussion #1）。
+   排在文件流裡的話，第一次加星號時提示一出現就把題卡往下推，星號從指標底下移走，第二下點到的是提示。
+   預設在底部：題卡的星號與題幹在畫面上方，鍵盤按下一題時題幹捲到頁首下緣，放在頁首下面會正好蓋住它（WCAG 2.4.11）。
+   剛按的星號或有焦點的元素在底部會被蓋住時（結果頁的錯題卡、矮視窗），ReviewNotice.tsx 改放頁首下面（data-side="top"，
+   top 由它量出頁首的下緣後寫入）。被蓋住的高度也由它量出來：html 的 scroll-padding 讓捲到焦點的地方停在提示的另一邊，
+   .app 底部留同樣的空白，捲到底也不會被蓋住。兩邊都放不下整句時限制高度，提示裡面捲動。 */
 .review-notice {
   position: fixed;
   left: var(--spacing-sm);
@@ -11,6 +12,11 @@
   z-index: 50;
   max-width: 800px;
   margin: 0 auto;
+  overflow-y: auto;
+}
+
+.review-notice[data-side='top'] {
+  bottom: auto;
 }
 
 .review-notice:not(:empty) {
