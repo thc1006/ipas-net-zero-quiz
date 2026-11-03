@@ -1,4 +1,5 @@
 // Header 元件 - 頂部導覽列
+import { useLayoutEffect, useRef } from 'react';
 import type { useAccessibility } from '../../hooks/useAccessibility';
 import { DISCUSSIONS_URL, REPORT_URL } from '../../utils/feedback-url';
 import './Header.css';
@@ -11,9 +12,25 @@ interface HeaderProps {
 
 export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps) {
   const { settings, toggleDarkMode } = accessibility;
+  const headerRef = useRef<HTMLElement>(null);
+
+  // header 固定在上面，高度跟著字級與寬度變（64px 到將近 80px）。捲到題幹、選項時要停在它下面，
+  // 鍵盤提示也貼在它下面：量出來放進 --app-header-height，不寫死 64px（QuestionCard.css、App.css）
+  useLayoutEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const measure = () => {
+      const height = Math.ceil(el.getBoundingClientRect().height);
+      if (height > 0) document.documentElement.style.setProperty('--app-header-height', `${height}px`);
+    };
+    measure();
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(measure);
+    observer?.observe(el);
+    return () => observer?.disconnect();
+  }, []);
 
   return (
-    <header className="app-header">
+    <header className="app-header" ref={headerRef}>
       <div className="header-container">
         {/* Logo / 標題 */}
         <button className="header-logo" onClick={onGoHome} aria-label="回首頁">

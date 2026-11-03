@@ -359,6 +359,17 @@ describe('改過 id 的題目', () => {
   });
 });
 
+describe('確認對話框的說明念得到', () => {
+  it('匯入：題數與「已移出的題目會回到待複習」是對話框的 accessible description', async () => {
+    render(<ReviewBackup />);
+    choose(backup({ [allQuestions[0].id]: 1 }, { [allQuestions[1].id]: { streak: 0, last: 1 } }));
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog).toHaveAccessibleName('合併這份備份？');
+    expect(dialog).toHaveAccessibleDescription(/備份裡有星號 1 題、待複習錯題 1 題，會新增星號 1 題、待複習錯題 1 題。/);
+    expect(dialog).toHaveAccessibleDescription(/已經移出待複習的題目如果在備份裡，會回到待複習。/);
+  });
+});
+
 describe('網站資料被封鎖', () => {
   it('匯出：讀不到紀錄就不匯出空的備份，說明原因', () => {
     Object.defineProperty(window, 'localStorage', {

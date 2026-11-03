@@ -758,3 +758,128 @@ test.describe('星號與待複習錯題', () => {
     });
   });
 });
+
+/** 題卡進場的動畫跑完：量位置之前要等，不然量到的是 transform 途中的位置 */
+const settleAnimations = (page: Page) =>
+  page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))));
+
+/** 星號在視窗裡的位置與頁面捲動量 */
+const starSpot = (page: Page) =>
+  star(page).evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2, top: r.top, left: r.left, scrollY: window.scrollY };
+  });
+
+test.describe('第一次加星號的提示不推動版面（Discussion #1）', () => {
+  for (const { name, viewport, hasTouch } of [
+    { name: '桌面', viewport: { width: 1280, height: 720 }, hasTouch: false },
+    { name: '1024px 觸控', viewport: { width: 1024, height: 768 }, hasTouch: true },
+    { name: '412px 觸控（Pixel 7 的寬度）', viewport: { width: 412, height: 839 }, hasTouch: true },
+  ]) {
+    test(`${name}：加星號與取消都不移動星號、不捲動頁面，第二下點同一個位置就是取消`, async ({ browser, baseURL }) => {
+      const context = await browser.newContext({ baseURL, hasTouch, viewport });
+      const page = await context.newPage();
+      await gotoHome(page);
+      await page.getByLabel('隨機出題順序').uncheck();
+      await startButton(page).click();
+      await expect(page.locator('.question-card')).toBeVisible();
+      await settleAnimations(page);
+      const tap = (x: number, y: number) => (hasTouch ? page.touchscreen.tap(x, y) : page.mouse.click(x, y));
+
+      const before = await starSpot(page);
+      await tap(before.x, before.y);
+      await expect(star(page)).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
+      await settleAnimations(page);
+      expect(await starSpot(page), '第一次加星號之後').toEqual(before);
+
+      await tap(before.x, before.y);
+      await expect(star(page), '第二下點到的不是星號').toHaveAttribute('aria-pressed', 'false');
+      await settleAnimations(page);
+      expect(await starSpot(page), '取消星號之後').toEqual(before);
+      await context.close();
+    });
+  }
+});
+
+/** 有焦點的元素沒有被頁首或星號的提示蓋住（WCAG 2.4.11）：與兩者都不重疊，也在視窗裡 */
+async function expectNotCovered(target: Locator, where: string): Promise<void> {
+  const m = await target.evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    const header = document.querySelector('.app-header')!.getBoundingClientRect();
+    const notice = document.querySelector('.review-notice')!.getBoundingClientRect();
+    return {
+      top: r.top,
+      bottom: r.bottom,
+      headerBottom: header.bottom,
+      noticeTop: notice.top,
+      noticeBottom: notice.bottom,
+      noticeHeight: notice.height,
+      viewport: window.innerHeight,
+    };
+  });
+  const info = `${where} ${JSON.stringify(m)}`;
+  expect(m.noticeHeight, `提示要在畫面上 ${info}`).toBeGreaterThan(0);
+  expect(m.top, `被頁首蓋住 ${info}`).toBeGreaterThanOrEqual(m.headerBottom);
+  expect(m.top < m.noticeBottom && m.bottom > m.noticeTop, `被提示蓋住 ${info}`).toBe(false);
+  expect(m.bottom, `在視窗外 ${info}`).toBeLessThanOrEqual(m.viewport);
+}
+
+test.describe('星號的提示不蓋住有焦點的題幹、選項與鍵盤提示（WCAG 2.4.11）', () => {
+  for (const { name, viewport } of [
+    { name: '桌面', viewport: { width: 1280, height: 720 } },
+    { name: 'Pixel 7 的大小', viewport: { width: 412, height: 839 } },
+  ]) {
+    for (const fontSize of ['normal', 'large', 'xlarge'] as const) {
+      test(`${name}、字級 ${fontSize}：加星號之後用鍵盤作答、下一題、走過每一個選項`, async ({ browser, baseURL }) => {
+        const context = await browser.newContext({ baseURL, viewport });
+        const page = await context.newPage();
+        await gotoHome(page, undefined, fontSize);
+        await page.getByLabel('隨機出題順序').uncheck();
+        await startButton(page).click();
+        await expect(page.locator('.question-card')).toBeVisible();
+        await star(page).click();
+        await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
+
+        const options = page.locator('.question-options input[type="radio"]');
+        const walkOptions = async (question: string) => {
+          await page.locator('.question-feedback-link').focus();
+          await page.keyboard.press('Tab');
+          const count = await options.count();
+          for (let i = 0; i < count; i++) {
+            if (i > 0) await page.keyboard.press('ArrowDown');
+            await expect(options.nth(i)).toBeFocused();
+            await expectNotCovered(page.locator('.option-item').nth(i), `${question}選項 ${i + 1}`);
+            await expectNotCovered(page.locator('.option-keyboard-hint span'), `${question}選項 ${i + 1} 的鍵盤提示`);
+          }
+          return count;
+        };
+
+        const count = await walkOptions('第 1 題');
+        await page.keyboard.press('Enter');
+        const next = page.getByRole('button', { name: /下一題/ });
+        await expect(next).toBeFocused();
+        await expectNotCovered(next, `作答第 ${count} 個選項之後的下一題按鈕`);
+        await page.keyboard.press('Enter');
+        await expect(progress(page)).toHaveText(/^2 \//);
+        await expect(page.locator('.question-stem')).toBeFocused();
+        await settleAnimations(page);
+        await expectNotCovered(page.locator('.question-stem'), '下一題的題幹');
+        await walkOptions('第 2 題');
+        await context.close();
+      });
+    }
+  }
+});
+
+test('提示在畫面上時捲到最底：頁尾整個在提示上方，連結不被蓋住', async ({ page }) => {
+  await page.setViewportSize({ width: 412, height: 839 });
+  await gotoHome(page, undefined, 'xlarge');
+  await page.getByLabel('隨機出題順序').uncheck();
+  await startButton(page).click();
+  await star(page).click();
+  await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
+  await page.locator('.app-footer a').last().focus();
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await expectNotCovered(page.locator('.app-footer'), '捲到最底的頁尾');
+});

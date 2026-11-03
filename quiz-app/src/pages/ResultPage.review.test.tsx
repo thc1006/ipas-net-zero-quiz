@@ -80,7 +80,7 @@ describe('結果頁', () => {
   it('在待複習裡：有移出按鈕，按下去移出，星號不動', () => {
     put({ q1: 1 }, { q1: { streak: 0, last: 1 } });
     renderPage();
-    fireEvent.click(within(card()).getByRole('button', { name: '移出待複習' }));
+    fireEvent.click(within(card()).getByRole('button', { name: '第 1 題移出待複習' }));
     expect(wrongEntry(getReviewSnapshot(), 'q1')).toBeUndefined();
     expect(isStarred(getReviewSnapshot(), 'q1')).toBe(true);
     expect(within(card()).getByText('已移出待複習')).toBeInTheDocument();
@@ -94,7 +94,7 @@ describe('結果頁', () => {
 
   it('不在待複習裡：沒有移出按鈕', () => {
     renderPage();
-    expect(screen.queryByRole('button', { name: '移出待複習' })).toBeNull();
+    expect(screen.queryByRole('button', { name: /移出待複習/ })).toBeNull();
   });
 
   it('星號的名稱含題號：結果頁有好幾顆，念出來要分得出是哪一題', () => {
@@ -108,6 +108,22 @@ describe('結果頁', () => {
     );
     expect(screen.getByRole('button', { name: '第 1 題加星號' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '第 2 題加星號' })).toBeInTheDocument();
+  });
+
+  it('移出待複習的名稱也含題號：每一張錯題卡都有一顆，念出來要分得出是哪一題', () => {
+    put({}, { q1: { streak: 0, last: 1 }, q2: { streak: 0, last: 1 } });
+    const second: AnswerRecord = { ...answer, questionId: 'q2' };
+    render(
+      <ResultPage
+        result={{ ...result, answers: [answer, second], questions: [question, { ...question, id: 'q2' }] }}
+        onGoHome={() => {}}
+        onRetry={() => {}}
+      />
+    );
+    const names = screen.getAllByRole('button', { name: /移出待複習/ }).map((b) => b.getAttribute('aria-label') ?? b.textContent);
+    expect(names).toEqual(['第 1 題移出待複習', '第 2 題移出待複習']);
+    // 看得到的字是名稱的一部分（WCAG 2.5.3）：語音操作說「移出待複習」也點得到
+    for (const b of screen.getAllByRole('button', { name: /移出待複習/ })) expect(b).toHaveTextContent('移出待複習');
   });
 
   it('摘要：這場有幾題進待複習、幾題移出', () => {

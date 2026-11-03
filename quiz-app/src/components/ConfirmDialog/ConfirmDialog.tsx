@@ -1,5 +1,6 @@
 // 設定頁的確認對話框（樣式在 SettingsPage.css）。動作都不能復原，所以預設焦點在取消：
 // 連按兩下 Enter 不會誤清。aria-modal 要名符其實：Tab 出不去，關閉後焦點回到打開它的按鈕。
+// 內文接到 aria-describedby：焦點直接落在取消，沒有它的話螢幕閱讀器只念標題與「取消」，題數與警告都聽不到。
 import { useEffect, useId, useRef, type ReactNode } from 'react';
 
 interface ConfirmDialogProps {
@@ -12,6 +13,7 @@ interface ConfirmDialogProps {
 
 export function ConfirmDialog({ title, children, confirmLabel, onConfirm, onCancel }: ConfirmDialogProps) {
   const titleId = useId();
+  const bodyId = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
   const confirmRef = useRef<HTMLButtonElement>(null);
@@ -49,11 +51,12 @@ export function ConfirmDialog({ title, children, confirmLabel, onConfirm, onCanc
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
+      aria-describedby={bodyId}
       onClick={onCancel}
     >
       <div className="settings-confirm-dialog" onClick={(e) => e.stopPropagation()}>
         <h2 id={titleId}>{title}</h2>
-        <p>{children}</p>
+        <p id={bodyId}>{children}</p>
         <div className="settings-confirm-dialog__actions">
           <button ref={cancelRef} type="button" className="btn btn-secondary" onClick={onCancel}>
             取消

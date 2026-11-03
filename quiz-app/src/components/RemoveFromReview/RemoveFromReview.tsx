@@ -24,9 +24,11 @@ interface RemoveFromReviewProps {
   questionId: string;
   /** 這一題剛才答對了嗎；還沒記錄的作答才要給 */
   answeredCorrectly?: boolean;
+  /** 同一頁有好幾顆時要分得出題目（結果頁的錯題卡）；要包含看得到的「移出待複習」 */
+  label?: string;
 }
 
-export function RemoveFromReview({ questionId, answeredCorrectly }: RemoveFromReviewProps) {
+export function RemoveFromReview({ questionId, answeredCorrectly, label }: RemoveFromReviewProps) {
   const entry = wrongEntry(useReview(), questionId);
   const [removed, setRemoved] = useState(false);
   const doneRef = useRef<HTMLParagraphElement>(null);
@@ -52,6 +54,7 @@ export function RemoveFromReview({ questionId, answeredCorrectly }: RemoveFromRe
       <button
         type="button"
         className="btn btn-secondary"
+        aria-label={label}
         onClick={() => setRemoved(removeFromReview(questionId))}
       >
         移出待複習

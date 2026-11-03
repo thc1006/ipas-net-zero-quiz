@@ -229,7 +229,7 @@ export function QuestionCard({
         )}
         <span className="question-header__actions">
           <StarButton questionId={question.id} />
-          {/* 回報此題（Refs #63）— 開新分頁不打斷答題 flow；icon-only 但有 aria-label */}
+          {/* 回報此題（Refs #63）：開新分頁不打斷答題 flow；icon-only 但有 aria-label */}
           <a
             className="question-feedback-link"
             href={buildFeedbackUrl({

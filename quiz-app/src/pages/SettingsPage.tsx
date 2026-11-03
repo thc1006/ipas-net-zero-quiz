@@ -235,7 +235,7 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
 
       <ReviewBackup />
 
-      {/* 清除作答統計確認 dialog（Refs #64）— 取代 window.confirm */}
+      {/* 清除作答統計確認 dialog（Refs #64）：取代 window.confirm */}
       {clearStatsConfirmOpen && (
         <ConfirmDialog
           title="清除作答統計？"

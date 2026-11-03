@@ -1,10 +1,19 @@
-/* 貼在 header 下方（.app-header 高度約 64px）：星號可能在頁面中段，往下捲了也要看得到 */
-.review-notice:not(:empty) {
-  position: sticky;
-  top: calc(64px + var(--spacing-xs));
+/* 固定在視窗底部，不佔版面（Discussion #1）。
+   排在文件流裡的話，第一次加星號時提示一出現就把題卡往下推，星號從指標底下移走，第二下點到的是提示；
+   貼在 header 下面的話，鍵盤按下一題時題幹捲到 header 下緣，正好被它蓋住（WCAG 2.4.11）。
+   題卡的星號與題幹都在畫面上方，放在底部蓋不到它們。被蓋住的高度由 ReviewNotice.tsx 量出來：
+   html 的 scroll-padding-bottom 讓捲到焦點的地方停在提示上方，.app 底部留同樣的空白，捲到底也不會被蓋住。 */
+.review-notice {
+  position: fixed;
+  left: var(--spacing-sm);
+  right: var(--spacing-sm);
+  bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom, 0px));
   z-index: 50;
   max-width: 800px;
-  margin: 0 auto var(--spacing-sm);
+  margin: 0 auto;
+}
+
+.review-notice:not(:empty) {
   padding: var(--spacing-sm) var(--spacing-md);
   border-left: 4px solid var(--color-warning-fg);
   border-radius: var(--radius-sm);
@@ -14,6 +23,10 @@
   font-size: var(--font-size-sm);
 }
 
-.review-notice:empty {
-  margin: 0;
+html {
+  scroll-padding-bottom: var(--review-notice-cover, 0px);
+}
+
+.app {
+  padding-bottom: var(--review-notice-reserve, 0px);
 }

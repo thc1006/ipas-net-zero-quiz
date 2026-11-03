@@ -123,3 +123,11 @@ describe('ConfirmDialog', () => {
     expect(onCancel).not.toHaveBeenCalled();
   });
 });
+
+describe('說明', () => {
+  it('內文是對話框的 accessible description：螢幕閱讀器打開時念標題也念內容，不只念標題與取消', () => {
+    const { dialog } = openDialog();
+    expect(dialog).toHaveAccessibleName('清除？');
+    expect(dialog).toHaveAccessibleDescription('不能復原');
+  });
+});

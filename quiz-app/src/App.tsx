@@ -206,7 +206,7 @@ function App() {
             </button>
           </div>
         )}
-        <ReviewNotice />
+        <ReviewNotice view={currentView} />
         <ErrorBoundary>
           {currentView === 'home' && (
             <HomePage

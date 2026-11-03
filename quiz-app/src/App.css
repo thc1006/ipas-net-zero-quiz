@@ -68,7 +68,7 @@
   border: 2px solid var(--color-error-solid);
   border-radius: var(--radius-md);
   /* header 固定在上面，訊息不能捲到它底下 */
-  scroll-margin-top: 5rem;
+  scroll-margin-top: calc(var(--app-header-height, 64px) + 1rem);
 }
 
 .start-failed p {
