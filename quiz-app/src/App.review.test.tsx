@@ -575,7 +575,10 @@ describe('練習池載不到時，說的與出的一致', () => {
     await settle();
 
     expect(screen.getByRole('button', { name: /再測一次/ })).toBeInTheDocument();
-    expect(actionNotice()).toHaveTextContent('題目載入失敗，網站可能剛更新。請重新載入頁面再開始。');
+    // 結果只在畫面上：叫人重新載入，就要說這份結果會不見（與開始失敗的訊息相同）
+    expect(actionNotice()).toHaveTextContent(
+      '題目載入失敗，網站可能剛更新。請重新載入頁面再開始。重新載入會清掉這份結果。'
+    );
     expect(actionNotice()).not.toHaveTextContent(/目前沒有/);
     expect(notices()).not.toHaveTextContent(/這一場/);
   });

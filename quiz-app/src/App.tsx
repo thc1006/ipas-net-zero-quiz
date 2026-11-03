@@ -22,6 +22,9 @@ import './App.css';
 
 type View = 'home' | 'quiz' | 'result' | 'settings';
 
+// 結果只存在畫面上（state），叫人重新載入時要說這一句
+const RESULT_LOST_ON_RELOAD = '重新載入會清掉這份結果。';
+
 function App() {
   const [currentView, setCurrentView] = useState<View>('home');
   const [lastResult, setLastResult] = useState<QuizResult | null>(null);
@@ -154,7 +157,7 @@ function App() {
       setRetryNotice(`目前沒有${questionSourceNoun(source)}可以再測一次，回首頁可以選其他題目來源。`);
     } else if (outcome === 'pool-unavailable') {
       // 名單上還有題目，只是練習池載不到：不能說名單空了
-      setRetryNotice(PAGE_LOAD_FAILED);
+      setRetryNotice(`${PAGE_LOAD_FAILED}${RESULT_LOST_ON_RELOAD}`);
     }
   }, [startOrFail, lastResult]);
 
@@ -189,7 +192,7 @@ function App() {
           <div className="start-failed" role="alert" ref={startFailedRef}>
             <p>
               題目載入失敗，網站可能剛更新。請再試一次，或重新載入頁面。
-              {currentView === 'result' && '重新載入會清掉這份結果。'}
+              {currentView === 'result' && RESULT_LOST_ON_RELOAD}
             </p>
             <button
               className="btn btn-primary"
