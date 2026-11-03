@@ -15,6 +15,7 @@ import {
   __setPracticePoolForTesting,
   loadPracticePool,
 } from '../utils/practice-pool';
+import { __resetReviewPoolForTesting } from '../utils/review-pool';
 import { buildFixturePool } from '../utils/__fixtures__/practice-pool-fixture';
 
 vi.mock('../utils/practice-pool', async (importOriginal) => {
@@ -49,6 +50,7 @@ beforeEach(() => {
   store = installRealLocalStorage();
   __resetReviewStoreForTesting();
   __resetPracticePoolCacheForTesting();
+  __resetReviewPoolForTesting();
   vi.mocked(loadPracticePool).mockClear();
   localStorage.setItem('practice-pool-disclosure-seen', '1');
 });

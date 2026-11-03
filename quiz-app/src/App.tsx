@@ -1,6 +1,6 @@
 // 主應用程式元件
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { useQuiz } from './hooks/useQuiz';
+import { ReviewPoolUnavailableError, useQuiz } from './hooks/useQuiz';
 import { useAccessibility } from './hooks/useAccessibility';
 import { usePracticeMode } from './hooks/usePracticeMode';
 import { HomePage } from './pages/HomePage';
@@ -16,6 +16,7 @@ import { DISCUSSIONS_URL, REPORT_URL } from './utils/feedback-url';
 import { ReviewNotice } from './components/ReviewNotice/ReviewNotice';
 import { isReviewSource, questionSourceNoun } from './utils/question-source';
 import { clearReviewNotices, seedReview } from './utils/review-storage';
+import { PAGE_LOAD_FAILED } from './utils/practice-pool';
 import type { QuizConfig, QuizResult } from './types/quiz';
 import './App.css';
 
@@ -75,18 +76,21 @@ function App() {
 
   // 開始測驗。一題都抽不到（只出官方題目而範圍內沒有官方題，#128）時不切頁，否則會停在只剩 header 的空白測驗頁。
   // 練習池是另一個 chunk：斷線時載不到，部署新版後舊分頁也載不到舊檔名，要告訴使用者。
+  // 星號題與待複習錯題載不到練習池時（pool-unavailable）不顯示「再試一次」：這個頁面不會再載入（utils/review-pool.ts），
+  // 首頁的選單與說明會跟著改，結果頁由再測一次說明。
   const startOrFail = useCallback(
-    async (config: QuizConfig): Promise<boolean> => {
+    async (config: QuizConfig): Promise<'started' | 'empty' | 'pool-unavailable' | 'failed'> => {
       lastStartConfig.current = config;
       setStartFailed(false);
       try {
         const started = await launchQuiz(config);
         if (started) setCurrentView('quiz');
-        return started;
+        return started ? 'started' : 'empty';
       } catch (err) {
+        if (err instanceof ReviewPoolUnavailableError) return 'pool-unavailable';
         logger.error('開始測驗失敗：練習池載入不到', err);
         setStartFailed(true);
-        return true;
+        return 'failed';
       }
     },
     [launchQuiz]
@@ -143,10 +147,14 @@ function App() {
     if (!lastResult?.config) return;
     const source = lastResult.config.questionSource;
     const scope = startScope.current;
-    const started = await startOrFail(lastResult.config);
+    const outcome = await startOrFail(lastResult.config);
     // 等練習池的時候換了頁或切了加強練習池：這一次是取消了，不是名單空了
-    if (!started && isReviewSource(source) && scope === startScope.current) {
+    if (scope !== startScope.current || !isReviewSource(source)) return;
+    if (outcome === 'empty') {
       setRetryNotice(`目前沒有${questionSourceNoun(source)}可以再測一次，回首頁可以選其他題目來源。`);
+    } else if (outcome === 'pool-unavailable') {
+      // 名單上還有題目，只是練習池載不到：不能說名單空了
+      setRetryNotice(PAGE_LOAD_FAILED);
     }
   }, [startOrFail, lastResult]);
 

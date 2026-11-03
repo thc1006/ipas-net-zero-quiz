@@ -17,6 +17,7 @@ import {
   hasIdsOutsideMainBank,
 } from '../data/questions';
 import { loadPracticePool, toQuizQuestion } from '../utils/practice-pool';
+import { loadReviewPool } from '../utils/review-pool';
 import {
   resumableQuestions,
   saveProgress,
@@ -34,6 +35,14 @@ import {
   reportReviewPoolFailure,
   reviewResultsFrom,
 } from '../utils/review-storage';
+
+/** 星號題或待複習錯題開始不了，因為名單上的練習池題載不到（主題庫裡的題目又一題都沒有）：不是名單空了 */
+export class ReviewPoolUnavailableError extends Error {
+  constructor() {
+    super('練習池載入不到，名單上的題目出不了');
+    this.name = 'ReviewPoolUnavailableError';
+  }
+}
 
 /** 測驗狀態 */
 export interface QuizState {
@@ -215,7 +224,8 @@ export function useQuiz() {
 
   /**
    * 開始星號題或待複習錯題的一場。名單上可能有練習池題，不管加強練習開了沒，有主題庫沒有的 id 就載入練習池；
-   * 載入失敗時用主題庫出題並告知使用者。一題都抽不到時回傳 false、不開始。
+   * 載入失敗時用主題庫出題，真的開始了才告知使用者這一場只出主題庫的題目。一題都抽不到時回傳 false、不開始；
+   * 抽不到是因為練習池載不到（名單上還有主題庫以外的題目）時丟 ReviewPoolUnavailableError，不是名單空了。
    * 題目清單在這裡定下來：之後取消星號、作答都不影響這一場。
    * 載入途中被取代或取消時回傳 false，不開始、也不報載入失敗（與 startQuizWithPool 相同）。
    */
@@ -225,22 +235,23 @@ export function useQuiz() {
     if (!isReviewSource(source)) return false;
 
     let bank = allQuestions;
+    let poolMissing = false;
     if (hasIdsOutsideMainBank(reviewIds(source, getReviewSnapshot()))) {
-      try {
-        const pool = await loadPracticePool();
-        if (request !== latestStart.current) return false;
-        bank = [...allQuestions, ...pool.items.map(toQuizQuestion)];
-      } catch {
-        if (request !== latestStart.current) return false;
-        reportReviewPoolFailure();
-      }
+      const pool = await loadReviewPool();
+      if (request !== latestStart.current) return false;
+      if (pool) bank = [...allQuestions, ...pool.items.map(toQuizQuestion)];
+      else poolMissing = true;
     }
 
     const questions = drawFrom(
       reviewCandidates(bank, config.subject, source, getReviewSnapshot()),
       config
     );
-    if (questions.length === 0) return false;
+    if (questions.length === 0) {
+      if (poolMissing) throw new ReviewPoolUnavailableError();
+      return false;
+    }
+    if (poolMissing) reportReviewPoolFailure();
 
     setState({
       isActive: true,

@@ -17,6 +17,7 @@ import {
   __setPracticePoolForTesting,
   loadPracticePool,
 } from './utils/practice-pool';
+import { __resetReviewPoolForTesting } from './utils/review-pool';
 import { buildFixturePool } from './utils/__fixtures__/practice-pool-fixture';
 import type { PracticePool } from './types/practicePool';
 import type { QuizQuestion } from './types/quiz';
@@ -60,6 +61,7 @@ beforeEach(() => {
   store = installRealLocalStorage();
   __resetReviewStoreForTesting();
   __resetPracticePoolCacheForTesting();
+  __resetReviewPoolForTesting();
   vi.mocked(loadPracticePool).mockClear();
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 503 }));
   localStorage.setItem('practice-pool-disclosure-seen', '1');
@@ -542,6 +544,68 @@ describe('寫入失敗', () => {
     render(<App />);
     expect(notices()).toHaveTextContent(/只能讀取/);
     expect(store.get(REVIEW_STORAGE_KEY)).toBe(raw);
+  });
+});
+
+describe('練習池載不到時，說的與出的一致', () => {
+  const fixture = buildFixturePool();
+  const settle = () => act(() => new Promise<void>((resolve) => setTimeout(resolve, 50)));
+  const actionNotice = () => document.querySelector('.action-notice')!;
+
+  afterEach(() => {
+    // mockReset 換回原本的實作：持續失敗的設定不跟到下一個測試
+    vi.mocked(loadPracticePool).mockReset();
+  });
+
+  it('再測一次：名單上還有練習池題時，不說名單空了，也不說這一場先出主題庫的題目，說載入失敗', async () => {
+    const [q] = scorable;
+    put([q.id, fixture.items[0].id]);
+    vi.mocked(loadPracticePool).mockRejectedValue(new TypeError('Failed to fetch dynamically imported module'));
+    render(<App />);
+    await waitFor(() => expect(optionText('review:starred')).toBe('星號題（1 題）'));
+    await startDrill('review:starred');
+    // 這一場真的開始了，出的是主題庫的題目：這句是對的
+    expect(notices()).toHaveTextContent(/這一場先出主題庫裡的題目/);
+    answer(q, false);
+    finish();
+    const again = await retry();
+    // 取消主題庫那一題的星號：名單上只剩練習池題
+    fireEvent.click(screen.getByRole('button', { name: '第 1 題加星號' }));
+    fireEvent.click(again);
+    await settle();
+
+    expect(screen.getByRole('button', { name: /再測一次/ })).toBeInTheDocument();
+    expect(actionNotice()).toHaveTextContent('題目載入失敗，網站可能剛更新。請重新載入頁面再開始。');
+    expect(actionNotice()).not.toHaveTextContent(/目前沒有/);
+    expect(notices()).not.toHaveTextContent(/這一場/);
+  });
+
+  it('首頁回報過載入失敗：選單寫幾題就出幾題，開始時不再載入練習池', async () => {
+    const [q] = scorable;
+    put([q.id, fixture.items[0].id]);
+    vi.mocked(loadPracticePool).mockRejectedValueOnce(new TypeError('offline')).mockResolvedValue(fixture);
+    render(<App />);
+    await waitFor(() => expect(optionText('review:starred')).toBe('星號題（1 題）'));
+    fireEvent.change(source(), { target: { value: 'review:starred' } });
+    expect(document.getElementById('source-hint')).toHaveTextContent('重新載入之前只算主題庫裡的題目');
+    await startDrill('review:starred');
+    expect(screen.getByText('1 / 1')).toBeInTheDocument();
+    expect(loadPracticePool).toHaveBeenCalledTimes(1);
+  });
+
+  it('首頁回報過載入失敗之後，回首頁再開也一樣：重新載入頁面之前都只算主題庫', async () => {
+    const [q] = scorable;
+    put([q.id, fixture.items[0].id]);
+    vi.mocked(loadPracticePool).mockRejectedValueOnce(new TypeError('offline')).mockResolvedValue(fixture);
+    render(<App />);
+    await waitFor(() => expect(optionText('review:starred')).toBe('星號題（1 題）'));
+    fireEvent.click(screen.getByLabelText(/開啟設定/));
+    fireEvent.click(screen.getByRole('button', { name: '返回首頁' }));
+    await settle();
+    // 設定頁自己載入練習池成功了，選單還是只算主題庫，開始的也是
+    expect(optionText('review:starred')).toBe('星號題（1 題）');
+    await startDrill('review:starred');
+    expect(screen.getByText('1 / 1')).toBeInTheDocument();
   });
 });
 

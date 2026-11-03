@@ -10,6 +10,7 @@ import {
   __setPracticePoolForTesting,
   loadPracticePool,
 } from '../utils/practice-pool';
+import { __resetReviewPoolForTesting } from '../utils/review-pool';
 import { buildFixturePool } from '../utils/__fixtures__/practice-pool-fixture';
 import { isQuestionScorable } from '../utils/scorable';
 
@@ -38,6 +39,7 @@ beforeEach(() => {
   store = installRealLocalStorage();
   __resetReviewStoreForTesting();
   __resetPracticePoolCacheForTesting();
+  __resetReviewPoolForTesting();
   vi.mocked(loadPracticePool).mockClear();
 });
 

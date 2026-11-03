@@ -1,7 +1,7 @@
 // useQuiz 與星號、待複習錯題：finishQuiz 記錄作答；startReviewQuiz 依名單抽題，題目清單開始時就定下來
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, renderHook } from '@testing-library/react';
-import { useQuiz } from './useQuiz';
+import { ReviewPoolUnavailableError, useQuiz } from './useQuiz';
 import {
   REVIEW_STORAGE_KEY,
   __resetReviewStoreForTesting,
@@ -20,6 +20,7 @@ import {
   __setPracticePoolForTesting,
   loadPracticePool,
 } from '../utils/practice-pool';
+import { __resetReviewPoolForTesting } from '../utils/review-pool';
 import { buildFixturePool } from '../utils/__fixtures__/practice-pool-fixture';
 import { isQuestionScorable } from '../utils/scorable';
 import type { QuizConfig, QuizQuestion, ReviewSource } from '../types/quiz';
@@ -95,6 +96,7 @@ beforeEach(() => {
   store = installRealLocalStorage();
   __resetReviewStoreForTesting();
   __resetPracticePoolCacheForTesting();
+  __resetReviewPoolForTesting();
   vi.mocked(loadPracticePool).mockClear();
 });
 
@@ -390,12 +392,11 @@ describe('startReviewQuiz', () => {
     expect(getReviewNotice()).toBe('pool-failed');
   });
 
-  it('練習池載入失敗又沒有主題庫題：不開始，同樣告知', async () => {
+  it('練習池載入失敗又沒有主題庫題：不開始，丟 ReviewPoolUnavailableError（不是名單空了），不說「這一場先出主題庫」', async () => {
     vi.mocked(loadPracticePool).mockRejectedValueOnce(new Error('offline'));
     put(['pool-only']);
-    const { started } = await drill(config('review:starred'));
-    expect(started).toBe(false);
-    expect(getReviewNotice()).toBe('pool-failed');
+    await expect(drill(config('review:starred'))).rejects.toBeInstanceOf(ReviewPoolUnavailableError);
+    expect(getReviewNotice()).toBeNull();
   });
 
   it('連按兩次開始：只有最後一次算數，前一次晚到也不換掉', async () => {
