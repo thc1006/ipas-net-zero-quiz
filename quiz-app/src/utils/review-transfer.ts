@@ -82,8 +82,12 @@ export function parseReviewImport(text: string): ReviewImportResult {
   const exportedAt = typeof root.exportedAt === 'string' ? Date.parse(root.exportedAt) : NaN;
   if (!Number.isFinite(exportedAt)) return reject('備份檔的匯出時間不對。');
   // 備份裡的紀錄不會比匯出時間新，也不會比現在新。合併時時間新的優先：放著未來的時間，
-  // 之後答錯也蓋不過它，同一份備份每匯入一次就把舊的連續答對次數帶回來
-  const limit = Math.max(0, notAfter(exportedAt, Date.now()));
+  // 之後答錯也蓋不過它，同一份備份每匯入一次就把舊的連續答對次數帶回來。
+  // 匯出時間比現在晚是那台裝置的時鐘快：整份往前移同樣的時間，備份裡的先後與間隔不變。
+  // 只截到現在的話，備份裡的時間都擠成現在，比匯入之後的答錯還新
+  const skew = Math.max(0, exportedAt - Date.now());
+  const limit = Math.max(0, exportedAt - skew);
+  const time = (at: number): number => Math.max(0, notAfter(at - skew, limit));
   if (!isPlainRecord(root.stars)) return reject('備份檔的星號資料不對。');
   if (!isPlainRecord(root.wrong)) return reject('備份檔的待複習資料不對。');
 
@@ -92,14 +96,14 @@ export function parseReviewImport(text: string): ReviewImportResult {
   for (const [id, at] of Object.entries(root.stars)) {
     if (!isSafeId(id)) return reject(`備份裡有無法辨識的題目編號：${shown(id)}`);
     if (!isReviewTime(at)) return reject(`星號的時間不對：${id}`);
-    stars[id] = notAfter(at, limit);
+    stars[id] = time(at);
   }
   const wrong = Object.create(null) as ReviewWrong;
   for (const [id, entry] of Object.entries(root.wrong)) {
     if (!isSafeId(id)) return reject(`備份裡有無法辨識的題目編號：${shown(id)}`);
     if (!isReviewWrongEntry(entry)) return reject(`待複習的紀錄不對：${id}`);
     const { streak, last }: ReviewWrongEntry = entry;
-    wrong[id] = { streak, last: notAfter(last, limit) };
+    wrong[id] = { streak, last: time(last) };
   }
   // 改過 id 的題目換成現在的 id：預覽的題數、題庫找不到的題數、合併都用現在的 id
   return {

@@ -285,6 +285,29 @@ describe('時間的範圍', () => {
       vi.restoreAllMocks();
     }
   });
+
+  it('匯出的裝置時鐘比較快：整份往前移同樣的時間，備份裡的先後與間隔不變', () => {
+    const HOUR = 3_600_000;
+    const now = exportedAt - HOUR;
+    vi.spyOn(Date, 'now').mockReturnValue(now);
+    try {
+      const r = parse(
+        good({
+          exportedAt: EXPORTED,
+          stars: { a: exportedAt - 30 * 60_000, b: exportedAt, early: HOUR / 2 },
+          wrong: { c: { streak: 1, last: exportedAt - 10 * 60_000 } },
+        })
+      );
+      if (!r.ok) throw new Error(r.reason);
+      expect(r.stars.a).toBe(now - 30 * 60_000);
+      expect(r.stars.b).toBe(now);
+      // 移過頭的時間不會變成負的（負的時間下一次讀就是壞資料）
+      expect(r.stars.early).toBe(0);
+      expect(r.wrong.c).toEqual({ streak: 1, last: now - 10 * 60_000 });
+    } finally {
+      vi.restoreAllMocks();
+    }
+  });
 });
 
 describe('大小上限', () => {

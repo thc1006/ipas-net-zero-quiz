@@ -679,6 +679,51 @@ describe('合併匯入的資料', () => {
   });
 });
 
+describe('同一份備份匯入第二次，中間答錯過', () => {
+  const MIN = 60_000;
+  const T = Date.parse('2026-11-04T00:00:00.000Z');
+  const at = (now: number) => vi.spyOn(Date, 'now').mockReturnValue(now);
+  const importBackup = (text: string) => {
+    const r = parseReviewImport(text);
+    if (!r.ok) throw new Error(r.reason);
+    return mergeReview(r);
+  };
+
+  it('時鐘都準：答錯的那一次留著，舊的連續答對次數不會回來', () => {
+    put(v1({ wrong: { 'gist-1': { streak: 1, last: T - 10 * MIN } } }));
+    at(T);
+    const backup = buildReviewExport(getReviewSnapshot(), new Date(T));
+    at(T + 10 * MIN);
+    recordReviewResults([{ id: 'gist-1', isCorrect: false, at: T + 10 * MIN }]);
+    at(T + 20 * MIN);
+    importBackup(backup);
+    __resetReviewStoreForTesting();
+    expect(wrongEntry(getReviewSnapshot(), 'gist-1')).toEqual({ streak: 0, last: T + 10 * MIN });
+  });
+
+  it('匯出的裝置時鐘快一小時：一樣留著答錯的那一次', () => {
+    // 那台裝置的 T+60 分匯出，備份裡記著它的 T+50 分連續答對一次
+    const backup = JSON.stringify({
+      app: 'ipas-net-zero-quiz',
+      schema: 1,
+      exportedAt: new Date(T + 60 * MIN).toISOString(),
+      stars: {},
+      wrong: { 'gist-1': { streak: 1, last: T + 50 * MIN } },
+    });
+    put(v1());
+    at(T);
+    importBackup(backup);
+    at(T + 10 * MIN);
+    recordReviewResults([{ id: 'gist-1', isCorrect: false, at: T + 10 * MIN }]);
+    expect(wrongEntry(getReviewSnapshot(), 'gist-1')).toEqual({ streak: 0, last: T + 10 * MIN });
+    // 再匯入時備份往前移 45 分，那一筆是 T+5 分，比答錯的 T+10 分舊（不是一樣新，不靠「一樣新留原本的」）
+    at(T + 15 * MIN);
+    importBackup(backup);
+    __resetReviewStoreForTesting();
+    expect(wrongEntry(getReviewSnapshot(), 'gist-1')).toEqual({ streak: 0, last: T + 10 * MIN });
+  });
+});
+
 describe('合併的題數', () => {
   it('回傳實際新增的題數：只是時間更新的不算新增', () => {
     put(v1({ stars: { a: 1 }, wrong: { b: { streak: 0, last: 1 } } }));
