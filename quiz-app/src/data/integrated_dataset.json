@@ -1542,7 +1542,7 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-11-02",
+        "valid_as_of": "2026-11-04",
         "sources": [
           "https://www.greentrade.org.tw/CBAM/search/EU"
         ],
@@ -1562,21 +1562,51 @@
         "evidence": [
           {
             "url": "https://www.greentrade.org.tw/CBAM/search/EU",
+            "quote": "本專頁係根據歐盟CBAM所列出之CN Code稅號前6碼與HS Code進行比對，並列舉符合相同前6碼之臺灣海關編碼產品清單。",
+            "supports_option": "B",
+            "note": "頁面說明由 https://www.greentrade.org.tw/api/v3/cbam/text 載入（說明開頭寫「以下資訊為截至2026年1月31最新資訊」）；2026-11-04 以 Chromium 開啟頁面，取頁面文字空白不計逐字比對確認。"
+          },
+          {
+            "url": "https://www.greentrade.org.tw/CBAM/search/EU",
+            "quote": "請輸入稅則號別(可鍵入2~11碼，例如：01、0101、0101110000等）",
+            "supports_option": "B",
+            "note": "查詢欄位的提示，在頁面的靜態 HTML 裡（placeholder）；2026-11-04 以 curl 取得頁面確認逐字相同。"
+          },
+          {
+            "url": "https://www.greentrade.org.tw/CBAM/search/EU",
+            "quote": "CN code 一串號碼共8碼，而CN code 前六碼與世界各國通用的稅號（HS Code）完全相同，6碼後之稅號編碼由各國針對產品做更細的分類以及用於定義稅金或優惠稅率而產生，故各國的產品稅號長度不相同，相同產品於各國稅則6碼之後亦會有所不同。",
+            "supports_option": "B",
+            "note": "頁面說明由 https://www.greentrade.org.tw/api/v3/cbam/text 載入（說明開頭寫「以下資訊為截至2026年1月31最新資訊」）；2026-11-04 以 Chromium 開啟頁面，取頁面文字空白不計逐字比對確認。"
+          },
+          {
+            "url": "https://www.greentrade.org.tw/CBAM/search/EU",
             "quote": "臺灣前6碼相同之海關編碼",
             "supports_option": "B"
           }
         ],
         "explanation_source": {
-          "date": "2026-07-15",
+          "date": "2026-11-04",
           "anchored_on": "https://www.greentrade.org.tw/CBAM/search/EU",
-          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）",
+          "previous_date": "2026-07-15"
         },
-        "source_correction_2026_11_02": "#143：綠色貿易資訊網把 CBAM 專區分成歐盟與英國兩區，歐盟的「CBAM納管產品查詢」從 /CBAM/search 搬到 /CBAM/search/EU（網站首頁的連結已改成新路徑），舊網址在 2026-10-01 季檢與 2026-11-02 重測都是 404，Wayback Machine 最後一次 200 的存檔是 2026-04-17。新網址用季檢的 check_url 實測回 200，不經轉址，頁名是「歐盟CBAM納管產品查詢」。引文「臺灣前6碼相同之海關編碼」仍逐字在新頁上。2026-11-02 也實測了查詢：頁面說明（網站由 /api/v3/cbam/text 載入）寫著「本專頁係根據歐盟CBAM所列出之CN Code稅號前6碼與HS Code進行比對」；輸入欄的提示是「請輸入稅則號別(可鍵入2~11碼，例如：01、0101、0101110000等）」，這段提示從 2023-06 的存檔起就沒有變，輸入 2 到 11 碼都會依臺灣海關編碼的前綴回傳結果（例如輸入 731815 回 2 筆，輸入完整的 73181510004 回 1 筆）。valid_as_of=2026-11-02 指本次內容查證日。"
+        "source_correction_2026_11_02": "#143：綠色貿易資訊網把 CBAM 專區分成歐盟與英國兩區，歐盟的「CBAM納管產品查詢」從 /CBAM/search 搬到 /CBAM/search/EU（網站首頁的連結已改成新路徑），舊網址在 2026-10-01 季檢與 2026-11-02 重測都是 404，Wayback Machine 最後一次 200 的存檔是 2026-04-17。新網址用季檢的 check_url 實測回 200，不經轉址，頁名是「歐盟CBAM納管產品查詢」。引文「臺灣前6碼相同之海關編碼」仍逐字在新頁上。2026-11-02 也實測了查詢：頁面說明（網站由 /api/v3/cbam/text 載入）寫著「本專頁係根據歐盟CBAM所列出之CN Code稅號前6碼與HS Code進行比對」；輸入欄的提示是「請輸入稅則號別(可鍵入2~11碼，例如：01、0101、0101110000等）」，這段提示從 2023-06 的存檔起就沒有變，輸入 2 到 11 碼都會依臺灣海關編碼的前綴回傳結果（例如輸入 731815 回 2 筆，輸入完整的 73181510004 回 1 筆）。valid_as_of=2026-11-02 指本次內容查證日。",
+        "answer_basis_review_2026_11_04": {
+          "issue": "#143",
+          "explanation_was": "引文指出查詢是以「臺灣前6碼相同之海關編碼」對應，也就是比對稅則號碼的前 6 碼。因此查詢輸入的是號碼前段、最多到第 6 碼，既不需要輸入全部號碼，也不會用到第 6 碼之後的碼數。四個選項中，只有以第 6 碼為上界的「前 2 ~ 6 碼」與引文一致。",
+          "why": "原解析說查詢「也不會用到第 6 碼之後的碼數」，與實測不符：查詢欄位的提示是「請輸入稅則號別(可鍵入2~11碼，例如：01、0101、0101110000等）」，輸入 731815 回 2 筆，輸入完整的 73181510004 回 1 筆（2026-11-02 實測），第 6 碼之後的碼數會用來篩選臺灣海關編碼。2026-07-14 的 citation_audit 說 A／C／D 都與引文矛盾，對 A 也說得太滿：輸入完整號碼一樣查得到。答案仍是 B：頁面說明寫明 CN 稅號前六碼與各國通用的 HS 稅號相同、6 碼之後各國不同，比對以前 6 碼進行，所以判斷是否納管只需要前段號碼，不必輸入全部號碼。",
+          "how_fixed": "補上頁面說明比對方式的兩句原文（supports_option B），解析改成只用這些引文寫，已用 tools/explanation_guard.py 檢查。valid_as_of=2026-11-04 指本次內容查證日。",
+          "explanation_rewritten_again": {
+            "was": "綠色貿易資訊網的查詢頁說明，CN 稅號的前六碼與各國通用的 HS 稅號相同，6 碼之後由各國自行細分，所以查詢是拿歐盟 CBAM 所列 CN 稅號的前 6 碼與 HS 稅號比對，列出「臺灣前6碼相同之海關編碼」。判斷產品是否納管，看的是稅則號碼的前 6 碼，輸入前段號碼即可，不必輸入全部號碼。四個選項中，只有以第 6 碼為上界的「前 2 ~ 6 碼」與這個比對方式一致。",
+            "why": "#143 審查指出 11-04 第一次改寫的解析仍說只有以第 6 碼為上界的選項與比對方式一致，沒有交代查詢欄位可以輸入 2 到 11 碼、輸入完整號碼一樣查得到，選項 B 的下限 2 也沒有出處。補上輸入欄的提示原文，解析寫明可輸入的範圍與比對只看前 6 碼。引文改成說明比對方式的那句排第一，畫面顯示的就是它（questions.ts 的 pickEvidence 只取第一則）。"
+          },
+          "valid_as_of_history": "原值是 2026-07-13，e07f6bb 改成 2026-11-02，這次改成 2026-11-04；source_correction_2026_11_02 結尾說的 valid_as_of=2026-11-02 是那一次的值。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
       ],
-      "explanation": "引文指出查詢是以「臺灣前6碼相同之海關編碼」對應，也就是比對稅則號碼的前 6 碼。因此查詢輸入的是號碼前段、最多到第 6 碼，既不需要輸入全部號碼，也不會用到第 6 碼之後的碼數。四個選項中，只有以第 6 碼為上界的「前 2 ~ 6 碼」與引文一致。"
+      "explanation": "綠色貿易資訊網的查詢欄位可以輸入 2 到 11 碼，但頁面說明，查詢是拿歐盟 CBAM 所列 CN 稅號的前 6 碼與 HS 稅號比對：CN 稅號的前六碼與各國通用的 HS 稅號相同，6 碼之後由各國自行細分。所以判斷產品是否納管，輸入前 2 到 6 碼就夠了，不必輸入全部號碼；多輸入的碼數只會縮小列出的臺灣海關編碼，不影響是否納管的比對。四個選項中，「前 2 ~ 6 碼」最符合查詢的方式。"
     },
     {
       "index": 28,
@@ -1984,7 +2014,8 @@
             "supports_option": "B"
           }
         ],
-        "source_correction_2026_11_02": "#143：綠色貿易資訊網把 CBAM 專區分成歐盟與英國兩區，歐盟的「CBAM納管產品查詢」從 /CBAM/search 搬到 /CBAM/search/EU（網站首頁的連結已改成新路徑），舊網址在 2026-10-01 季檢與 2026-11-02 重測都是 404，Wayback Machine 最後一次 200 的存檔是 2026-04-17。新網址用季檢的 check_url 實測回 200，不經轉址，頁名是「歐盟CBAM納管產品查詢」。引文「比對後無相符資料，該稅號目前不在CBAM納管範圍。」仍逐字在新頁上；頁面說明（網站由 /api/v3/cbam/text 載入）寫著「業者可在搜尋欄輸入出口產品的稅則號碼，則可與CBAM納管產品之相關產品列表清單進行比對」，答案 B 成立。valid_as_of=2026-11-02 指本次內容查證日。"
+        "source_correction_2026_11_02": "#143：綠色貿易資訊網把 CBAM 專區分成歐盟與英國兩區，歐盟的「CBAM納管產品查詢」從 /CBAM/search 搬到 /CBAM/search/EU（網站首頁的連結已改成新路徑），舊網址在 2026-10-01 季檢與 2026-11-02 重測都是 404，Wayback Machine 最後一次 200 的存檔是 2026-04-17。新網址用季檢的 check_url 實測回 200，不經轉址，頁名是「歐盟CBAM納管產品查詢」。引文「比對後無相符資料，該稅號目前不在CBAM納管範圍。」仍逐字在新頁上；頁面說明（網站由 /api/v3/cbam/text 載入）寫著「業者可在搜尋欄輸入出口產品的稅則號碼，則可與CBAM納管產品之相關產品列表清單進行比對」，答案 B 成立。valid_as_of=2026-11-02 指本次內容查證日。",
+        "valid_as_of_was": "2026-07-13"
       },
       "quality_flags": [
         "time_sensitive"
@@ -18945,12 +18976,12 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "國家自定貢獻（NDC）是各國根據自身情況，自願設定的溫室氣體減量目標。",
+      "explanation": "國家自定貢獻（NDC）是《巴黎協定》要求各締約方自己提出、通報並維持的減量貢獻；內容由各國依共同但有區別的責任、各自的能力與國情決定，並要反映可能的最高企圖心。所以是各國衡量自身能力後訂定減碳目標，不是由其他國家或歐盟代訂。",
       "metadata": {
         "original_id": "c2-150",
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-04",
         "sources": [
-          "https://unfccc.int/sites/default/files/english_paris_agreement.pdf",
+          "https://unfccc.int/sites/default/files/resource/english_paris_agreement.pdf",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
           "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
         ],
@@ -18962,14 +18993,27 @@
         },
         "evidence": [
           {
-            "url": "https://unfccc.int/sites/default/files/english_paris_agreement.pdf",
-            "quote": "reflect its highest possible ambition, reflecting its common but differentiated \nresponsibilities and respective capabilities, in the light of different national \ncircumstances."
+            "url": "https://unfccc.int/sites/default/files/resource/english_paris_agreement.pdf",
+            "quote": "Each Party's successive nationally determined contribution will represent a\nprogression beyond the Party's then current nationally determined contribution and\nreflect its highest possible ambition, reflecting its common but differentiated\nresponsibilities and respective capabilities, in the light of different national\ncircumstances.",
+            "supports_option": "C"
+          },
+          {
+            "url": "https://unfccc.int/sites/default/files/resource/english_paris_agreement.pdf",
+            "quote": "Each Party shall prepare, communicate and maintain successive nationally\ndetermined contributions that it intends to achieve.",
+            "supports_option": "C"
           }
         ],
         "citation_audit": {
           "date": "2026-07-14",
           "verdict": "citation_replaced",
           "detail": "原引用 https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020 經複驗判定不含本題主張；已換為 https://unfccc.int/sites/default/files/english_paris_agreement.pdf，該頁上的逐字引文已機械驗證存在且支持本題答案。"
+        },
+        "source_correction_2026_11_04": "#143：《巴黎協定》英文本的舊網址 https://unfccc.int/sites/default/files/english_paris_agreement.pdf 在 2026-10-01 季檢判定 404，2026-11-04 重測仍是 404（UNFCCC 網站自己的 Page not found 頁，不是 WAF 的挑戰頁）。UNFCCC 網站上的英文本現在放在 /sites/default/files/resource/english_paris_agreement.pdf：2026-11-04 用 Chromium 下載回 200、application/pdf，27 頁，標題 Paris Agreement English，sha256 4f3644bfc7058cf88d17b9de4a32f9e73111ac0275dfafdcf52d2f449ec2400f。原引文是第 4 條第 3 項的後半句，在新檔 pdftotext 的文字裡空白不計逐字比對仍在；改引第 4 條第 2 項與第 3 項的完整句子，讀者才看得出講的是各締約方自己的國家自定貢獻。原引文沒有 supports_option，UI 一直沒有顯示它（questions.ts 的 pickEvidence 只顯示 supports_option 等於答案的引文）。兩則新引文都支持答案 C：各締約方自己提出、通報並維持國家自定貢獻，並依各自的責任、能力與國情訂定，D 所說由歐盟代訂不成立。valid_as_of=2026-11-04 指本次內容查證日。",
+        "explanation_rewritten_2026_11_04": {
+          "issue": "#143",
+          "was": "國家自定貢獻（NDC）是各國根據自身情況，自願設定的溫室氣體減量目標。",
+          "why": "原解析說 NDC 是各國自願設定的目標，但新引文第 4 條第 2 項寫的是 Each Party shall prepare, communicate and maintain，提出 NDC 是義務，自己決定的是內容。照兩則引文改寫，答案 C 不變。第 3 項（含 respective capabilities）排第一，畫面顯示的就是它。",
+          "valid_as_of_was": "2026-07-13"
         }
       },
       "quality_flags": [

@@ -8,8 +8,8 @@
   "summary": {
     "main_tier1_questions": 966,
     "pool_tier1_questions": 140,
-    "total_evidence_records": 1180,
-    "primary_evidence_records": 1171,
+    "total_evidence_records": 1187,
+    "primary_evidence_records": 1178,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -5865,6 +5865,33 @@
       "tier1": true
     },
     {
+      "qid": "gist[27]",
+      "bank": "main",
+      "url": "https://www.greentrade.org.tw/CBAM/search/EU",
+      "host": "www.greentrade.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[27]",
+      "bank": "main",
+      "url": "https://www.greentrade.org.tw/CBAM/search/EU",
+      "host": "www.greentrade.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[27]",
+      "bank": "main",
+      "url": "https://www.greentrade.org.tw/CBAM/search/EU",
+      "host": "www.greentrade.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
       "qid": "gist[280]",
       "bank": "main",
       "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
@@ -6515,7 +6542,16 @@
     {
       "qid": "gist[343]",
       "bank": "main",
-      "url": "https://unfccc.int/sites/default/files/english_paris_agreement.pdf",
+      "url": "https://unfccc.int/sites/default/files/resource/english_paris_agreement.pdf",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[343]",
+      "bank": "main",
+      "url": "https://unfccc.int/sites/default/files/resource/english_paris_agreement.pdf",
       "host": "unfccc.int",
       "authority": "primary",
       "has_quote": true,
@@ -9575,6 +9611,24 @@
     {
       "qid": "pool-aig-intl-010",
       "bank": "pool",
+      "url": "https://sciencebasedtargets.org/corporate-net-zero",
+      "host": "sciencebasedtargets.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-010",
+      "bank": "pool",
+      "url": "https://sciencebasedtargets.org/news/the-sbti-releases-corporate-net-zero-standard-v2-0-to-accelerate-corporate-climate-action",
+      "host": "sciencebasedtargets.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-010",
+      "bank": "pool",
       "url": "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf",
       "host": "sciencebasedtargets.org",
       "authority": "primary",
@@ -9719,7 +9773,16 @@
     {
       "qid": "pool-aig-intl-025",
       "bank": "pool",
-      "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/article-64-mechanism/faqs-on-transitioning-cdm-activities-to-the-A6.4mechanism",
+      "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/article-6/article-64-pacm/CDM_transition/faqs",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-025",
+      "bank": "pool",
+      "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/paris-agreement-crediting-mechanism/CDM_transition",
       "host": "unfccc.int",
       "authority": "primary",
       "has_quote": true,
