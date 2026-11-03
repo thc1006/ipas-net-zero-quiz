@@ -894,3 +894,18 @@ test('提示在畫面上時捲到最底：頁尾整個在提示上方，連結�
   await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
   await expectNotCovered(page.locator('.app-footer'), '捲到最底的頁尾');
 });
+
+test('Pixel 7 字級特大：題目頁加星號再結束並返回首頁，首頁的頁尾下面不留提示的空白', async ({ page }) => {
+  await page.setViewportSize({ width: 412, height: 839 });
+  await gotoHome(page, undefined, 'xlarge');
+  await page.getByLabel('隨機出題順序').uncheck();
+  await startButton(page).click();
+  await star(page).click();
+  await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
+  expect(await page.locator('.app').evaluate((el) => parseFloat(getComputedStyle(el).paddingBottom))).toBeGreaterThan(0);
+  await page.getByRole('button', { name: /結束並返回首頁/ }).click();
+  await page.getByRole('dialog').getByRole('button', { name: '結束並返回', exact: true }).click();
+  await expect(page.getByRole('button', { name: /繼續測驗/ })).toBeVisible();
+  await expect(page.locator('.review-notice')).toBeEmpty();
+  expect(await page.locator('.app').evaluate((el) => getComputedStyle(el).paddingBottom)).toBe('0px');
+});
