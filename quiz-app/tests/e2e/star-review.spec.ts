@@ -909,3 +909,80 @@ test('Pixel 7 字級特大：題目頁加星號再結束並返回首頁，首頁
   await expect(page.locator('.review-notice')).toBeEmpty();
   expect(await page.locator('.app').evaluate((el) => getComputedStyle(el).paddingBottom)).toBe('0px');
 });
+
+/**
+ * 從頁尾往回按 Shift+Tab 到頁首，每一個拿到焦點的元素都不被頁首或提示整個蓋住（WCAG 2.4.11）；
+ * 放得下的要整個露出來。頁首是 sticky，捲到焦點的地方要停在它下面（html 的 scroll-padding-top）。
+ */
+async function shiftTabFromFooter(page: Page): Promise<string[]> {
+  await settleAnimations(page);
+  await page.locator('.app-footer a').last().focus();
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  const problems: string[] = [];
+  for (let i = 0; i < 60; i++) {
+    await page.keyboard.press('Shift+Tab');
+    const m = await page.evaluate(() => {
+      const el = document.activeElement;
+      if (!el || el === document.body) return null;
+      if (el.closest('.app-header') || el.matches('.skip-link')) return { stop: true as const };
+      let t: Element = el.closest('.option-item') ?? el;
+      if (t.getBoundingClientRect().height < 2) t = el.closest('label') ?? el.parentElement ?? el;
+      const r = t.getBoundingClientRect();
+      const header = document.querySelector('.app-header')!.getBoundingClientRect();
+      const n = document.querySelector('.review-notice')!.getBoundingClientRect();
+      // 沒被蓋住的範圍：頁首下面、提示的另一邊、視窗裡
+      let freeTop = Math.max(header.bottom, 0);
+      let freeBottom = window.innerHeight;
+      if (n.height > 0) {
+        if (n.top < window.innerHeight / 2) freeTop = Math.max(freeTop, n.bottom);
+        else freeBottom = Math.min(freeBottom, n.top);
+      }
+      return {
+        stop: false as const,
+        name: (el.getAttribute('aria-label') || t.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 20),
+        top: Math.round(r.top),
+        bottom: Math.round(r.bottom),
+        freeTop: Math.round(freeTop),
+        freeBottom: Math.round(freeBottom),
+      };
+    });
+    if (!m) continue;
+    if (m.stop) return problems;
+    const visible = Math.min(m.bottom, m.freeBottom) - Math.max(m.top, m.freeTop);
+    const fits = m.bottom - m.top <= m.freeBottom - m.freeTop;
+    const ok = fits ? m.top >= m.freeTop - 1 && m.bottom <= m.freeBottom + 1 : visible > 0;
+    if (!ok) problems.push(JSON.stringify(m));
+  }
+  throw new Error('按了 60 次 Shift+Tab 還沒回到頁首');
+}
+
+test.describe('用 Shift+Tab 往回走，焦點不被 sticky 頁首或提示蓋住（WCAG 2.4.11）', () => {
+  for (const { viewport, fontSize } of [
+    { viewport: { width: 412, height: 839 }, fontSize: 'xlarge' as const },
+    { viewport: { width: 1280, height: 720 }, fontSize: 'large' as const },
+    { viewport: { width: 390, height: 400 }, fontSize: 'normal' as const },
+    { viewport: { width: 320, height: 256 }, fontSize: 'normal' as const },
+  ]) {
+    const size = `${viewport.width}x${viewport.height} 字級 ${fontSize}`;
+    test(`題目頁加星號之後 ${size}`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await gotoHome(page, undefined, fontSize);
+      await page.getByLabel('隨機出題順序').uncheck();
+      await startButton(page).click();
+      await star(page).click();
+      await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
+      expect(await shiftTabFromFooter(page)).toEqual([]);
+    });
+
+    test(`設定頁有提示時 ${size}`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await page.addInitScript((key) => {
+        window.localStorage.setItem(key, JSON.stringify({ v: 99, seeded: true, stars: {}, wrong: {} }));
+      }, KEY);
+      await gotoHome(page, undefined, fontSize);
+      await page.getByRole('button', { name: '開啟設定' }).click();
+      await expect(page.locator('.review-notice')).toHaveText(/新版網站/);
+      expect(await shiftTabFromFooter(page)).toEqual([]);
+    });
+  }
+});

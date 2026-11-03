@@ -138,7 +138,7 @@
 }
 
 .question-stem {
-  scroll-margin-top: calc(var(--app-header-height, 64px) + 2rem); /* 固定的 header，加上題卡進場動畫的位移 */
+  scroll-margin-top: 2rem; /* 題卡進場動畫的位移；頁首由 html 的 scroll-padding-top 留 */
 }
 
 /* 選項項目 */
@@ -152,8 +152,8 @@
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast) var(--easing-standard);
-  /* 固定的 header 加提示 */
-  scroll-margin-top: calc(var(--app-header-height, 64px) + var(--font-size-sm) * 1.6 + var(--spacing-md) + var(--spacing-sm));
+  /* 鍵盤提示貼在頁首下面，選項要停在提示下面；頁首由 html 的 scroll-padding-top 留 */
+  scroll-margin-top: calc(var(--font-size-sm) * 1.6 + var(--spacing-md) + var(--spacing-sm));
   scroll-margin-bottom: 1px;
 }
 
