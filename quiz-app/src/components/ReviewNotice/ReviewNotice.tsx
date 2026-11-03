@@ -91,6 +91,8 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
       let coverTop = 0;
       const stay = fresh.current ? null : el.dataset.side === 'top' ? 'top' : 'bottom';
       fresh.current = false;
+      // 量原本的高度要先拿掉高度上限，裡面捲到的位置會跟著歸零：量完放回去，不然頁面一捲就跳回開頭
+      const scrolled = el.scrollTop;
       el.style.removeProperty('top');
       el.style.removeProperty('max-height');
       el.dataset.side = 'bottom';
@@ -119,17 +121,23 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
           el.dataset.side = 'top';
           el.style.top = `${headerBottom + gap}px`;
         }
+        el.scrollTop = scrolled;
         const r = el.getBoundingClientRect();
         if (side === 'top') coverTop = Math.max(0, Math.ceil(r.bottom - headerBottom));
         else coverBottom = Math.max(0, Math.ceil(viewportHeight - r.top));
       }
+      // 放不下、裡面要捲動時，鍵盤也要到得了：WebKit 的捲動區沒有 tabindex 就拿不到焦點。放得下就拿掉，
+      // 不多一個 Tab 停留點（焦點在它上面時先留著，等焦點離開）
+      if (text && el.scrollHeight > el.clientHeight + 1) el.tabIndex = 0;
+      else if (!text || document.activeElement !== el) el.removeAttribute('tabindex');
       root.style.setProperty('--review-notice-cover', `${coverBottom}px`);
       root.style.setProperty('--review-notice-cover-top', `${coverTop}px`);
       reserve.current = Math.max(reserve.current, coverBottom);
       root.style.setProperty('--review-notice-reserve', `${reserve.current}px`);
     };
-    // 新的提示（或換了畫面）照預設選邊
+    // 新的提示（或換了畫面）照預設選邊，從開頭讀起
     fresh.current = true;
+    el.scrollTop = 0;
     place();
     if (!text) return;
 

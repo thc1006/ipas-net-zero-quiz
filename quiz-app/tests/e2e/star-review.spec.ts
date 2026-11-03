@@ -1346,3 +1346,41 @@ test.describe('對話框裡用鍵盤移動焦點：頁首的補捲不碰對話�
     });
   }
 });
+
+// 提示被限制高度、裡面要捲動時，鍵盤也要捲得動它。chromium 與 Firefox 會讓捲動區拿得到焦點，WebKit 不會：沒有 tabindex
+// 就不在 Tab 順序裡（PracticeOptInDialog 的 optin-body 因此加了 tabIndex）。放得下的時候不留一個多餘的 Tab 停留點
+test('320x192 字級特大，新版資料的說明放不下：Tab 到得了提示、方向鍵捲得動；放得下之後不在 Tab 順序裡', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 192 });
+  await page.addInitScript((key) => {
+    window.localStorage.setItem(key, JSON.stringify({ v: 99, seeded: true, stars: {}, wrong: {} }));
+  }, KEY);
+  await gotoHome(page, undefined, 'xlarge');
+  const notice = page.locator('.review-notice');
+  await expect(notice).toHaveText(/新版網站/);
+  await nextFrames(page);
+  const size = await notice.evaluate((el) => ({ client: el.clientHeight, scroll: el.scrollHeight }));
+  expect(size.scroll, `前提：提示放不下，裡面要捲動 ${JSON.stringify(size)}`).toBeGreaterThan(size.client + 1);
+
+  let reached = false;
+  for (let i = 0; i < 80 && !reached; i++) {
+    await page.keyboard.press('Tab');
+    reached = await notice.evaluate((el) => document.activeElement === el);
+  }
+  expect(reached, '按 Tab 到不了提示').toBe(true);
+  // 按到底之後再按，捲動會傳到頁面；頁面一捲，提示重新選邊，捲到的位置不能因此回到開頭
+  // 三下的距離比要捲的多，等平滑捲動停在最底
+  for (let i = 0; i < 3; i++) await page.keyboard.press('ArrowDown');
+  await expect
+    .poll(() => notice.evaluate((el) => el.scrollHeight - el.clientHeight - el.scrollTop), '方向鍵捲不動提示')
+    .toBeLessThanOrEqual(1);
+  const read = await notice.evaluate((el) => el.scrollTop);
+  await page.evaluate(() => window.scrollBy(0, 5));
+  await nextFrames(page);
+  expect(await notice.evaluate((el) => el.scrollTop), '頁面捲動之後提示裡捲到的位置回到開頭').toBe(read);
+
+  await page.keyboard.press('Tab');
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await nextFrames(page);
+  expect(await notice.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeLessThanOrEqual(1);
+  await expect(notice).not.toHaveAttribute('tabindex');
+});

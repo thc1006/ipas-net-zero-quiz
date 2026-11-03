@@ -13,6 +13,8 @@
   max-width: 800px;
   margin: 0 auto;
   overflow-y: auto;
+  /* 限制高度、裡面捲到底時，捲動不傳到頁面 */
+  overscroll-behavior: contain;
 }
 
 .review-notice[data-side='top'] {
