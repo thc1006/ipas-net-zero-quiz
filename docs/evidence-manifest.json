@@ -8,8 +8,8 @@
   "summary": {
     "main_tier1_questions": 966,
     "pool_tier1_questions": 140,
-    "total_evidence_records": 1187,
-    "primary_evidence_records": 1178,
+    "total_evidence_records": 1192,
+    "primary_evidence_records": 1183,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -4238,8 +4238,17 @@
     {
       "qid": "gist[109]",
       "bank": "main",
-      "url": "https://www.iso.org/standard/94470.html",
-      "host": "www.iso.org",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[109]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+      "host": "usr.chu.edu.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -8675,8 +8684,17 @@
     {
       "qid": "gist[61]",
       "bank": "main",
-      "url": "https://www.iso.org/standard/43279.html",
-      "host": "www.iso.org",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[61]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+      "host": "usr.chu.edu.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -9863,8 +9881,17 @@
     {
       "qid": "pool-aig-intl_round1_rescued-intl-018",
       "bank": "pool",
-      "url": "https://www.bsigroup.com/en-GB/products-and-services/standards/iso-14068-1-carbon-neutrality-verification/",
-      "host": "www.bsigroup.com",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl_round1_rescued-intl-018",
+      "bank": "pool",
+      "url": "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q",
+      "host": "page.bsigroup.com",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -10322,8 +10349,17 @@
     {
       "qid": "pool-em-ipas_vocus_mock-007",
       "bank": "pool",
-      "url": "https://www.bsigroup.com/en-GB/products-and-services/standards/iso-14068-1-carbon-neutrality-verification/",
-      "host": "www.bsigroup.com",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-em-ipas_vocus_mock-007",
+      "bank": "pool",
+      "url": "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q",
+      "host": "page.bsigroup.com",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -10612,6 +10648,15 @@
       "bank": "pool",
       "url": "https://ghgprotocol.org/sites/default/files/standards/Scope3_Calculation_Guidance_0.pdf",
       "host": "ghgprotocol.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-em-ipas_vocus_mock-047",
+      "bank": "pool",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
       "authority": "primary",
       "has_quote": true,
       "tier1": true

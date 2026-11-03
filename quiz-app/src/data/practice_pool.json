@@ -462,7 +462,7 @@
         }
       ],
       "answer": "A",
-      "explanation": "ISO 14068-1 承襲並取代 PAS 2060；其核心是「減緩層級」：要求優先減少自身直接與間接排放、增加移除，抵換（碳權）僅用於處理採取上述行動後的剩餘排放 —— 此為正確敘述。其餘（並行可任選、僅規範產品、先買碳權再減排）均與標準不符。",
+      "explanation": "ISO 14068-1 承襲並取代 PAS 2060；其核心是「減緩層級」：要求優先減少自身直接與間接排放、增加移除，抵換（碳權）僅用於處理採取上述行動後的剩餘排放 —— 此為正確敘述。其餘（並行可任選、僅規範產品、先買碳權再減排）均與標準不符。ISO 14068-1 已被新版 ISO 14068 取代；ISO 官方頁註明新版只改了標題與編號，其餘內容相同，所以上述減緩層級在新版下不變。",
       "subject": null,
       "topic_tags": [
         "ISO 14068",
@@ -481,19 +481,27 @@
         "evidence": [
           {
             "url": "https://www.iso.org/standard/43279.html",
-            "quote": "This document establishes a hierarchy for carbon neutrality where GHG emission reductions (direct and indirect) and GHG removal enhancements within the value chain take priority over offsetting.",
+            "quote": "It focuses on quantifying, reducing, and offsetting carbon footprints, utilizing a hierarchical approach prioritizing direct and indirect GHG emission reductions and removal enhancements within the value chain over offsetting.",
             "supports_option": "A",
-            "verified_on": "2026-07-19",
-            "method": "ISO 14068-1:2023 Scope 逐字（獨立代理複驗）",
+            "verified_on": "2026-11-04",
+            "method": "以 2026-11-04 下載的 committee.iso.org/standard/43279.html（與 www.iso.org 同一份 ISO 目錄；www.iso.org 對程式回 403）轉成純文字，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
             "note": "減緩層級：減排/移除優先於抵換"
           },
           {
-            "url": "https://www.bsigroup.com/en-GB/products-and-services/standards/iso-14068-1-carbon-neutrality-verification/",
-            "quote": "This standard supersedes and builds on PAS 2060 which will be withdrawn in two years' time.",
+            "url": "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q",
+            "quote": "This standard supersedes and builds on PAS 2060 which will be withdrawn in two years’ time.",
             "supports_option": "A",
-            "verified_on": "2026-07-19",
-            "method": "BSI（PAS 2060 發行者）逐字",
+            "verified_on": "2026-11-04",
+            "method": "以 2026-11-04 下載的 BSI 頁面〈PAS 2060 to be withdrawn, what you should know〉轉成純文字，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
             "note": "BSI：ISO 14068-1 承襲並取代 PAS 2060 —— 佐證選項 A 複合主張之『承襲/取代』子句（『減排優先於抵換』子句由 evidence[0] 佐證）"
+          },
+          {
+            "url": "https://committee.iso.org/standard/14068",
+            "quote": "ISO 14068 specifies principles, requirements and guidance for achieving and demonstrating carbon neutrality. It provides a standardized approach to quantifying, reducing and offsetting the carbon footprint of organizations and products, including goods, services, buildings and events.\nISO 14068 establishes a hierarchy that prioritizes direct and indirect greenhouse gas emission reductions and removal enhancements within the value chain. Offsetting is used only to counterbalance the carbon footprint that remains after these actions. The standard also includes requirements for carbon neutrality commitments and claims.\nNote: this edition only contains a change to the title and number and the rest of the content is the same.",
+            "supports_option": "A",
+            "verified_on": "2026-11-04",
+            "method": "以 2026-11-04 下載的 ISO 目錄頁（ISO 14068:2026，What is ISO 14068? 一段）轉成純文字，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
+            "note": "新版頁面：減排與價值鏈內的移除增量優先於抵換；並註明新版只改標題與編號（佐證解析末句的版本狀態）。"
           }
         ],
         "answer_verification": {
@@ -501,12 +509,42 @@
           "verdict": "REWRITTEN_SINGLE_ANSWER",
           "note": "原四選項皆把『ISO 取代 PAS』配上一句假子句、且綁爭議撤回年份→無全對選項且觸發日期 gate。改寫四選項、移除爭議年份：以 ISO 14068-1 減緩層級（減排優先於抵換）為唯一正解，其餘三句均為可查證之錯誤敘述。",
           "method": "ISO 14068-1:2023 Scope 逐字"
+        },
+        "standard_replacement_check": {
+          "date": "2026-11-04",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023；ISO 目錄頁 https://committee.iso.org/standard/14068 註明新版只改標題與編號，其餘內容相同。依 docs/CONTENT-CURRENCY.md 的標準改版監控逐題重驗。",
+          "quote_replaced": [
+            {
+              "evidence": 0,
+              "url": "https://www.iso.org/standard/43279.html",
+              "was": "This document establishes a hierarchy for carbon neutrality where GHG emission reductions (direct and indirect) and GHG removal enhancements within the value chain take priority over offsetting.",
+              "method_was": "ISO 14068-1:2023 Scope 逐字（獨立代理複驗）",
+              "why": "這句原本依 ISO 14068-1:2023 的 Scope 逐字複驗，卻掛在 ISO 目錄的 43279 頁上；Wayback Machine 2025-07 到 2026-09 的 15 份狀態 200 的 43279 頁存檔都沒有這句，2026-11-04 的 committee.iso.org/standard/43279.html 也比對為 absent。改用 43279 頁上現有、意思相同的一句（與 pool-em-ipas_vocus_mock-047 的引文相同）。"
+            },
+            {
+              "evidence": 1,
+              "url_was": "https://www.bsigroup.com/en-GB/products-and-services/standards/iso-14068-1-carbon-neutrality-verification/",
+              "url": "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q",
+              "was": "This standard supersedes and builds on PAS 2060 which will be withdrawn in two years' time.",
+              "why": "BSI 的 ISO 14068-1 頁面（en-GB）已經沒有這句：2026-11-04 下載的頁面比對為 absent，頁上現在寫的是 Built from the principles of PAS 2060 開頭的介紹，Wayback Machine 2026-06-24、2026-08-12、2026-10-05 的存檔也都沒有。同一句話在 BSI 的〈PAS 2060 to be withdrawn, what you should know〉頁上，改引這一頁；頁上的撇號是 ’，引文照頁面寫。這個網址本題 sources 原本就列著。"
+            }
+          ],
+          "evidence_added": "evidence[2]：新版 ISO 14068 目錄頁的說明與版本註記，撐住解析末句。",
+          "explanation_appended": {
+            "text": "ISO 14068-1 已被新版 ISO 14068 取代；ISO 官方頁註明新版只改了標題與編號，其餘內容相同，所以上述減緩層級在新版下不變。",
+            "why": "選項與解析說 ISO 14068-1 承襲並取代 PAS 2060，卻沒說 ISO 14068-1 本身也已被取代，現在讀會以為它是現行標準。補一句版本狀態，斷言（ISO 14068-1、ISO 14068）都在題幹或引文裡，已用 tools/explanation_guard.py 檢查。題幹與選項沒有改。"
+          },
+          "sources_added": [
+            "https://committee.iso.org/standard/14068"
+          ],
+          "answer_check": "答案 A 不變：BSI 寫明 ISO 14068-1 承襲並取代 PAS 2060；ISO 頁寫明減排與移除增量優先於抵換，新版只改標題與編號。其餘三個選項在新版下一樣錯。"
         }
       },
       "sources": [
         "https://vocus.cc/article/6901a506fd89780001c2a960",
         "https://www.bsigroup.com/zh-TW/PAS-2060-Carbon-Neutral/",
-        "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q"
+        "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q",
+        "https://committee.iso.org/standard/14068"
       ],
       "quality_flags": [
         "time_sensitive"
@@ -2838,7 +2876,7 @@
         }
       ],
       "answer": "D",
-      "explanation": "ISO 14068-1:2023 的碳中和路徑要求**先在自身邊界內減量**，其次強化**移除**，僅針對技術／經濟上不可避免之**剩餘排放**才使用碳抵換，且優先採用**碳移除型**而非減量型額度。\n\n已移除原解析宣稱的條號與階層：原文寫「**§6.4** 確立 Mitigation Hierarchy：**Avoid → Reduce → Replace → Offset**」—— 這個條號與這四段式階層在本題引用的來源上**都找不到依據**（ISO 正文付費，無法從一手來源證實）。**寧可不寫條號，也不寫一個背不起來的條號。**",
+      "explanation": "ISO 14068-1:2023 的碳中和路徑要求**先在自身邊界內減量**，其次強化**移除**，僅針對技術／經濟上不可避免之**剩餘排放**才使用碳抵換，且優先採用**碳移除型**而非減量型額度。ISO 14068-1:2023 已被新版 ISO 14068 取代；ISO 官方頁註明新版只改了標題與編號，其餘內容相同，所以上述原則在新版下不變。\n\n已移除原解析宣稱的條號與階層：原文寫「**§6.4** 確立 Mitigation Hierarchy：**Avoid → Reduce → Replace → Offset**」—— 這個條號與這四段式階層在本題引用的來源上**都找不到依據**（ISO 正文付費，無法從一手來源證實）。**寧可不寫條號，也不寫一個背不起來的條號。**",
       "subject": null,
       "topic_tags": [
         "ISO 14068",
@@ -2867,12 +2905,30 @@
             "method": "AI 代理蒐證 + **機械逐字比對**（把代理所引的 URL 重新抓回來，確認引文逐字出現在頁面上）",
             "url": "https://www.iso.org/standard/43279.html",
             "url_backfilled_on": "2026-07-14"
+          },
+          {
+            "url": "https://committee.iso.org/standard/14068",
+            "quote": "ISO 14068 specifies principles, requirements and guidance for achieving and demonstrating carbon neutrality. It provides a standardized approach to quantifying, reducing and offsetting the carbon footprint of organizations and products, including goods, services, buildings and events.\nISO 14068 establishes a hierarchy that prioritizes direct and indirect greenhouse gas emission reductions and removal enhancements within the value chain. Offsetting is used only to counterbalance the carbon footprint that remains after these actions. The standard also includes requirements for carbon neutrality commitments and claims.\nNote: this edition only contains a change to the title and number and the rest of the content is the same.",
+            "supports_option": "D",
+            "verified_on": "2026-11-04",
+            "method": "2026-11-04 以 curl 取得 committee.iso.org/standard/14068，去掉標籤後空白不計逐字比對確認。"
           }
         ],
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "fixed",
           "what": "原解析宣稱「ISO 14068-1 §6.4 確立 Avoid→Reduce→Replace→Offset」——條號與階層在來源上均無依據。已移除該宣稱（未以另一個無法驗證的條號取代）。"
+        },
+        "standard_replacement_check": {
+          "date": "2026-11-04",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023；ISO 目錄頁 https://committee.iso.org/standard/14068 註明新版只改標題與編號，其餘內容相同。依 docs/CONTENT-CURRENCY.md 的標準改版監控逐題重驗。",
+          "how_verified": "引文在 2026-11-04 下載的 committee.iso.org/standard/43279.html（ISO 14068-1:2023 的目錄頁）上，quote_status 為 verbatim。題幹寫依 ISO 14068-1:2023，解析也只寫 2023 版的內容，沒有說它是現行版本。",
+          "answer_check": "答案 D 不變：新版內容與 2023 版相同，減量與移除仍優先於抵換。解析裡優先採用碳移除型而非減量型額度一句不在引文裡，ISO 正文付費，這次沒有查證，沿用原狀。",
+          "watch_note_was": "ISO/FDIS 14068 已進入 approval 階段、將取代 ISO 14068-1:2023；新版發布時需重驗本題。現行有效版本仍是 2023 版，答案未改動。",
+          "explanation_appended": {
+            "text": "ISO 14068-1:2023 已被新版 ISO 14068 取代；ISO 官方頁註明新版只改了標題與編號，其餘內容相同，所以上述原則在新版下不變。",
+            "why": "題幹與解析都寫 2023 版，沒說這一版已被取代；審查指出 intl-019 補了這句、mock-047 沒有。新增的 ISO 新版頁引文寫明減量與價值鏈內的移除增量優先、抵換只處理剩下的碳足跡，支持答案 D。"
+          }
         }
       },
       "sources": [
@@ -2882,7 +2938,7 @@
       "quality_flags": [
         "time_sensitive"
       ],
-      "_standard_replacement_watch": "ISO/FDIS 14068 已進入 approval 階段、將取代 ISO 14068-1:2023；新版發布時需重驗本題。現行有效版本仍是 2023 版，答案未改動。"
+      "_standard_replacement_watch": "ISO 14068:2026 已於 2026-09-11 發布並取代 ISO 14068-1:2023，ISO 官方頁註明新版只改標題與編號，其餘內容相同。2026-11-04 依新版官方頁重驗，答案未改動；題幹仍寫 2023 版。"
     },
     {
       "id": "pool-em-ipas_vocus_mock-048",
@@ -10200,7 +10256,7 @@
         }
       ],
       "answer": "B",
-      "explanation": "ISO 14068-1:2023 承襲並取代英國 PAS 2060，為首部國際碳中和標準；BSI（PAS 2060 之發行者）已宣布撤回 PAS 2060。故兩者關係為『ISO 14068-1 承襲並取代 PAS 2060』。",
+      "explanation": "ISO 14068-1:2023 承襲並取代英國 PAS 2060，為首部國際碳中和標準；BSI（PAS 2060 之發行者）已宣布撤回 PAS 2060。故兩者關係為『ISO 14068-1 承襲並取代 PAS 2060』。ISO 14068-1:2023 之後也已被新版 ISO 14068 取代；ISO 官方頁註明新版只改了標題與編號，其餘內容相同。",
       "subject": "考科一：淨零碳規劃管理基礎概論",
       "topic_tags": [
         "ISO 14068-1",
@@ -10248,18 +10304,49 @@
         ],
         "evidence": [
           {
-            "url": "https://www.bsigroup.com/en-GB/products-and-services/standards/iso-14068-1-carbon-neutrality-verification/",
-            "quote": "This standard supersedes and builds on PAS 2060 which will be withdrawn in two years' time.",
+            "url": "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q",
+            "quote": "This standard supersedes and builds on PAS 2060 which will be withdrawn in two years’ time.",
             "supports_option": "B",
-            "verified_on": "2026-07-19",
-            "method": "BSI（PAS 2060 發行者）逐字（獨立代理複驗）",
+            "verified_on": "2026-11-04",
+            "method": "以 2026-11-04 下載的 BSI 頁面〈PAS 2060 to be withdrawn, what you should know〉轉成純文字，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
             "note": "BSI：ISO 14068-1 承襲並取代 PAS 2060；只釘關係、不釘撤回年份"
+          },
+          {
+            "url": "https://committee.iso.org/standard/14068",
+            "quote": "ISO 14068 specifies principles, requirements and guidance for achieving and demonstrating carbon neutrality. It provides a standardized approach to quantifying, reducing and offsetting the carbon footprint of organizations and products, including goods, services, buildings and events.\nISO 14068 establishes a hierarchy that prioritizes direct and indirect greenhouse gas emission reductions and removal enhancements within the value chain. Offsetting is used only to counterbalance the carbon footprint that remains after these actions. The standard also includes requirements for carbon neutrality commitments and claims.\nNote: this edition only contains a change to the title and number and the rest of the content is the same.",
+            "verified_on": "2026-11-04",
+            "method": "以 2026-11-04 下載的 ISO 目錄頁（ISO 14068:2026，What is ISO 14068? 一段）轉成純文字，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
+            "note": "解析末句的出處（ISO 14068-1:2023 已由新版 ISO 14068 取代，新版只改標題與編號），不是答案依據，所以不帶 supports_option。答案 B 由 evidence[0] 佐證。"
           }
-        ]
+        ],
+        "standard_replacement_check": {
+          "date": "2026-11-04",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023；ISO 目錄頁 https://committee.iso.org/standard/14068 註明新版只改標題與編號，其餘內容相同。依 docs/CONTENT-CURRENCY.md 的標準改版監控逐題重驗。",
+          "quote_replaced": {
+            "evidence": 0,
+            "url_was": "https://www.bsigroup.com/en-GB/products-and-services/standards/iso-14068-1-carbon-neutrality-verification/",
+            "url": "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q",
+            "was": "This standard supersedes and builds on PAS 2060 which will be withdrawn in two years' time.",
+            "method_was": "BSI（PAS 2060 發行者）逐字（獨立代理複驗）",
+            "why": "BSI 的 ISO 14068-1 頁面（en-GB）已經沒有這句：2026-11-04 下載的頁面比對為 absent，頁上現在寫的是 Built from the principles of PAS 2060 開頭的介紹，Wayback Machine 2026-06-24、2026-08-12、2026-10-05 的存檔也都沒有。同一句話在 BSI 的〈PAS 2060 to be withdrawn, what you should know〉頁上，改引這一頁；頁上的撇號是 ’，引文照頁面寫。"
+          },
+          "evidence_added": "evidence[1]：新版 ISO 14068 目錄頁的說明與版本註記，撐住解析末句；答案 B 仍由 evidence[0] 佐證。",
+          "explanation_appended": {
+            "text": "ISO 14068-1:2023 之後也已被新版 ISO 14068 取代；ISO 官方頁註明新版只改了標題與編號，其餘內容相同。",
+            "why": "解析說 ISO 14068-1:2023 承襲並取代 PAS 2060、為首部國際碳中和標準，卻沒說它本身也已被取代，現在讀會以為它是現行標準。補一句版本狀態，斷言（ISO 14068-1、2023、ISO 14068）都在題幹或引文裡，已用 tools/explanation_guard.py 檢查。題幹與選項沒有改。"
+          },
+          "sources_added": [
+            "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q",
+            "https://committee.iso.org/standard/14068"
+          ],
+          "answer_check": "答案 B 不變：BSI 寫明 ISO 14068-1:2023 承襲並取代 PAS 2060；新版 ISO 14068 只改標題與編號，這層關係不變。"
+        }
       },
       "sources": [
         "https://www.iso.org/standard/43279.html",
-        "https://www.bsigroup.com/en-GB/standards/PAS-2060-carbon-neutrality/"
+        "https://www.bsigroup.com/en-GB/standards/PAS-2060-carbon-neutrality/",
+        "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q",
+        "https://committee.iso.org/standard/14068"
       ],
       "quality_flags": [
         "time_sensitive"

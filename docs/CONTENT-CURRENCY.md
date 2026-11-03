@@ -13,7 +13,7 @@
 - 每題 → `metadata.valid_as_of` + `metadata.sources[]`（一手來源，quarterly workflow 會 curl）
 
 > **`meta.content_review.last_review_date`（本輪窗口起點 `2026-07-13`）不代表「整份題庫已查證到那一天」。**
-> 本輪只實查了 **134 / 983** 題（含 **2026-07-20** 補查的 IFRS/ISSB/TCFD 那批；已查主題見 `meta.content_review.scope`），
+> 本輪只實查了 **135 / 983** 題（含 **2026-07-20** 補查的 IFRS/ISSB/TCFD 那批；已查主題見 `meta.content_review.scope`），
 > 未查題數記於 `not_reviewed_this_round_count`。這些數字皆由 `tools/sync_derived_counts.py` 依公式算、由 gate 釘死在資料上；
 > **這裡不再內嵌會漂的快照（原本的「12 題沿用 2026-01-23」「668 題未標」已刪）。**
 >
@@ -52,12 +52,12 @@
 | 臺灣 2030 NDC | 24 % ± 1 % | **28 % ± 2 %** | 2025-01-23 國家減碳新目標 |
 | 臺灣 2032 / 2035 NDC | — | 32 % ± 2 % / **38 % ± 2 %** | NDC 3.0（2025-11-07 公布） |
 | ISO 14064-1 使用階段間接排放 | Category 4 | **Category 5** | ISO 14064-1:2018 |
-| PAS 2060 | 現行 | **已撤回**，由 ISO 14068-1:2023 取代 | BSI |
+| PAS 2060 | 現行 | **已撤回**，由 ISO 14068-1:2023 取代（ISO 14068-1:2023 又在 2026-09-11 由 ISO 14068:2026 取代，見文末） | BSI |
 | 電力排碳係數（113 年度） | — | **0.474** kgCO₂e/kWh | 經濟部能源署 |
 | 碳費 | — | 2026-05 首徵；一般 300 元，優惠 A 50 / B 100；高碳洩漏係數 0.2 | 環境部 |
 
 一手來源已掛進 `metadata.sources[]`（EUR-Lex 合併版 `02023R0956-20251020`、Omnibus `32025R2083`、
-環境部氣候變遷署、全國法規資料庫、ISO）。**332 題**標記 `time_sensitive`，每一題都附一手來源 URL（沒有就過不了 gate）
+環境部氣候變遷署、全國法規資料庫、ISO）。**333 題**標記 `time_sensitive`，每一題都附一手來源 URL（沒有就過不了 gate）
 —— 這點很重要：quarterly workflow **只看得到有 URL 的題目**，修正前 569 題中有 535 題（94 %）對它完全隱形。
 
 ---
@@ -217,7 +217,7 @@ Art 22(1) 原文：
 **釘選之外的一切內容變動，目前沒有任何自動機制看得到：**
 
 - **EU 法規**（CBAM 的 Regulation 2023/956、Omnibus 2025/2083）
-- **ISO 標準**（14064-1、14067、14068-1 的改版）
+- **ISO 標準**（14064-1、14067、14068 的改版）
 - **國際準則**（SBTi、CDP、IFRS S1/S2、ISSA 5000）
 - **環境部的行政規則與公告**（費率、指定目標、納管範圍 —— 這些不在法規資料庫裡）
 
@@ -263,25 +263,69 @@ Cloudflare 的驗證頁回 403，本來就是 `BLOCKED`。認不出來的驗證�
 舊版用 `*)` catch-all 把 400/401/408/451/5xx/TLS/逾時全寫成 DEAD，而 issue 文案卻宣稱「只有 404/410/DNS 才算失效」—— 程式與說明不一致，就是在製造下一輪的喊狼來了。
 但**「內容再驗證」仍然只能靠人**（或一輪像這次的 LLM + 一手來源查證）。**排進行事曆，別等 workflow 提醒你。**
 
-## 標準改版監控：ISO/FDIS 14068 將取代 ISO 14068-1:2023
+## 標準改版監控：ISO 14068:2026 已取代 ISO 14068-1:2023
 
-**查核日：2026-08-27。現行有效版本仍是 ISO 14068-1:2023，題庫答案未因此改動。**
+**2026-11-04：觸發條件已成立。相關的 27 題裡，13 題重新查過引文與內容，答案都不必改；官方公告試題 11 題照規定不改；
+3 題的來源抓不到，沒有重驗（見下表）。**
 
-ISO 目錄顯示 **ISO/FDIS 14068《Climate change management — Carbon neutrality》** 已進入
-approval 階段（FDIS＝最終國際標準草案），並載明將取代 ISO 14068-1:2023。
+ISO 目錄（<https://committee.iso.org/standard/14068>；www.iso.org 對程式回 403，committee.iso.org 是同一份目錄）寫著：
 
-這與「連結還通」是兩件事：季排程只 curl URL 看是否 200，**偵測不到標準改版**。
-新版發布時，下列各題涉及的要求、條號與用語都需要重新確認（共 15 題，皆已標 `time_sensitive`）：
+- ISO 14068:2026《Climate change management — Carbon neutrality》，Edition 1，38 頁。
+  60.60 International Standard published 的日期是 2026-09-11。
+- ISO 14068-1:2023《Climate change management — Transition to net zero — Part 1: Carbon neutrality》，44 頁，
+  同一天（2026-09-11）進入 95.99 Withdrawal，頁上寫 New version available: ISO 14068:2026。
+- 新版頁上的註記：
 
-- 主題庫：`gist[24]`、`gist[72]`、`gist[78]`、`gist[109]`、`gist[137]`、`gist[147]`、
-  `gist[302]`、`gist[421]`、`gist[422]`、`gist[452]`、`gist[463]`
-- 練習池：`mock-007`、`mock-047`、`intl-019`、`intl_round1_rescued-intl-018`
+> Note: this edition only contains a change to the title and number and the rest of the content is the same.
 
-其中 `gist[452]`、`mock-047`、`intl-019` 先前**沒有標時效**，本次補標。
+我們沒有讀到兩版全文（ISO 正文付費；OBP 預覽要先同意使用條款，這次沒有拿來比對目次），
+所以「內容相同」依的是 ISO 這句官方註記。兩版頁數不同，頁上沒有說明原因。
 
-**觸發條件**：ISO/FDIS 14068 正式發布（狀態由 FDIS 轉為 published）。屆時應逐題重驗，
-而不是只更新日期 —— 條號與用語若變動，題幹與解析都要跟著改。
+### 怎麼重驗
 
-**刻意不做的事**：沒有把 `valid_as_of` 設成今天。今天只查證了「標準改版狀態」，
-並沒有逐題重驗這 15 題的內容；把日期改成今天等於宣稱已重驗，那是假的。
+清單不只看 2026-08-27 列的 15 題。這次用 JSON 解析整份題庫，主題庫讀 `metadata.evidence`、練習池讀
+`provenance.evidence`，連引文與備註一起找 14068 與 PAS 2060，共 46 題有命中。其中 19 題與這次改版無關：
+10 題是 CBAM 題，只在 `subject_corrected_2026_07_13.basis` 引用 iPAS 簡章的 L11205 科目名稱；
+9 題問的是 PAS 2060，或只在選項、引文裡提到 PAS 2060。
+
+其餘 27 題逐題做三件事：
+
+1. 重新下載每一則引文的來源，用 `tools/fetch_text.py` 的 `quote_status` 比對，再用只忽略空白的方式比一次。
+2. 確認答案只靠標準的內容。新版只改標題與編號，這種答案在新版下一樣成立。
+3. 看題幹、選項、解析有沒有把 2023 版寫成現行版本，或把舊標題當成現行標題。舊標題沒有出現在任何一題。
+
+重驗過的主題庫題目，`valid_as_of` 改成 2026-11-04；每一題在 `metadata.standard_replacement_check`
+（練習池在 `provenance.standard_replacement_check`）記下查了什麼、改了什麼。
+
+| 題目 | 結果 |
+| --- | --- |
+| `gist[24]`、`gist[302]`、`gist[72]` | 題幹寫 ISO 14068，正是新版的編號。引文在公版教材上逐字。重驗，沒有改內容 |
+| `gist[421]`、`gist[452]` | 寫 ISO 14068-1，問的是標準內容。引文逐字。重驗；`gist[452]` 的 `standard_replacement_watch` 改寫成已發布 |
+| `gist[147]`、`gist[463]` | CBAM 的碳價扣抵題，ISO 14068-1 只是碳中和宣告的代稱。引文在歐盟執委會 CBAM 問答上逐字。重驗，沒有改內容 |
+| `gist[109]` | 引的是新版在 ISO 目錄的頁面（94470），發布後頁面改寫，原引文已不在頁上。改引頁上現有的說明與公版教材，解析照新引文改寫，答案不變 |
+| `gist[61]` | 原本 15 題沒有它：題幹與解析沒寫 14068，答案卻靠 ISO 14068-1 的適用範圍。原引文是標準 Scope 的句子，卻掛在 43279 頁上，Wayback Machine 從 2025-07 到 2026-09 的 15 份狀態 200 的存檔都沒有這句。改引 ISO 目錄頁與公版教材，ISO 頁那則放在第一（教材那句單獨看像在說國家是碳中和主體），解析照兩則引文改寫；同一段適用範圍原文在 94470 頁 Wayback 2026-09-12 的存檔上，記在題目的查證紀錄。補標 `time_sensitive` |
+| `pool-em-ipas_vocus_mock-007` | 選項與解析說 ISO 14068-1 承襲並取代 PAS 2060，沒說它本身也已被取代。解析補一句版本狀態。兩則引文已不在所引的頁面上（43279 頁、BSI 的 ISO 14068-1 頁），換成 43279 頁現有的句子與 BSI 另一頁上的同一句，並加一則新版 ISO 頁的引文 |
+| `pool-aig-intl_round1_rescued-intl-018` | 解析說 ISO 14068-1:2023 承襲並取代 PAS 2060，同樣補一句版本狀態。BSI 引文換到現在有這句的頁面，加一則新版 ISO 頁的引文 |
+| `pool-em-ipas_vocus_mock-047` | 引文逐字。`_standard_replacement_watch` 改寫成已發布。題幹與解析寫 2023 版，和 `intl-019` 一樣補一句已被新版取代、只改標題與編號，並加一則 ISO 新版頁的引文。解析裡優先採用碳移除型額度一句不在引文裡，這次沒有查證 |
+| `pool-aig-intl-019` | 2026-11-02（#143）已處理。這次重新比對，兩則引文仍逐字，沒有再改 |
+| `gist[78]`、`gist[422]` | **沒有重驗。** 引文出自環境部《企業宣告碳中和指引》，enews.moenv.gov.tw 對程式回 403；Wayback Machine 2026-05-17 存檔的 PDF 上，兩則引文用 `quote_status` 比對都是 verbatim。題幹把指引的內容說成 ISO 14068 的要求，這是改版前就有的問題，需要另外決定怎麼改，所以日期不動 |
+| `gist[137]` | **沒有重驗。** 引文出自 ANSI 網站的 ISO 14068-1:2023 預覽本，現在回 403，Wayback Machine 也只存到 403。題幹寫明依 ISO 14068-1:2023 |
+| 官方公告試題 11 題：`S_IPAS_115_01_L11-q046` 到 `q050`、`S_IPAS_115_01_L12-q048`、`S_IPAS_115_02_L11-q044`、`q046`、`q048`、`q049`、`q050` | **不改。** 題幹、選項、答案取自官方 PDF。兩場考試（2026-05-16、2026-08-15）都在新版發布前，當時的現行版本就是 ISO 14068-1:2023；新版內容又相同，答案不受影響。這不是術語錯誤，所以也沒有加 `source_terminology_note` |
+
+### gate
+
+`quiz-app/src/data/standard-replacement-watch.test.ts`：
+
+- 找相關題目時，除了題幹、選項、解析，也看引文：引文網址是 ISO 目錄裡 ISO 14068 的頁面（43279、94470、14068），
+  或引文寫到 14068，就算相關，必須標 `time_sensitive`。原本只看題目文字，所以漏了 `gist[61]`：把它的
+  `time_sensitive` 拿掉，舊測試照樣綠，新測試轉紅。
+- 新增一條：題目上的改版備註（`standard_replacement_watch`、`_standard_replacement_watch`）必須寫已發布的
+  ISO 14068:2026，不能還寫 FDIS、將取代、approval 或「仍是」。
+
+這條 gate 只保證相關題目留在季排程的視野內，偵測不到 ISO 再次改版。下一次改版仍要有人看 ISO 目錄頁，照上面的方式逐題重驗。
+
+### 2026-08-27 的紀錄
+
+當時 ISO/FDIS 14068 在 approval 階段。列了 15 題，替 `gist[452]`、`mock-047`、`intl-019` 補標時效，
+並刻意不改 `valid_as_of`：那天只查了改版狀態，沒有逐題重驗內容。
 
