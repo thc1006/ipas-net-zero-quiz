@@ -70,14 +70,21 @@ test.describe('只出官方題目', () => {
         // 全部題目時說明是空的：它一直在畫面上（live region），但不佔高度
         const empty = await page.locator('#source-hint').evaluate((el) => [el.textContent, el.getBoundingClientRect().height]);
         expect(empty, '空的題目來源說明不該佔高度').toEqual(['', 0]);
-        // 也不能多出它前面那一段 flex 的 gap：「題目來源」那一格與「考科範圍」一樣高（說明本身高 0 也照樣多 4px）
-        const [subjectItem, sourceItem] = await Promise.all(
+        // 也不能多出它前面那一段 flex 的 gap：「題目來源」那一格與「考科範圍」一樣高（說明本身高 0 也照樣多 4px）。
+        // 兩格在同一次 evaluate 裡量：選單的高度跟著字型走，Noto Sans TC 載入前後 Chromium 差 7px、WebKit 差 0.5 到 3.5px。
+        // Chromium 通常到 load 事件之後才下載這些字型（WebKit 偶爾也是），goto 回來時還沒載完；分兩次量的話，
+        // 字型剛好在兩次中間載好，兩格就差這麼多
+        const items = await Promise.all(
           ['考科範圍', '題目來源'].map((label) =>
             page
               .locator('.config-item')
               .filter({ has: page.getByLabel(label) })
-              .evaluate((el) => el.getBoundingClientRect().height)
+              .elementHandle()
           )
+        );
+        const [subjectItem, sourceItem] = await page.evaluate(
+          (els) => els.map((el) => el!.getBoundingClientRect().height),
+          items
         );
         expect(Math.abs(sourceItem - subjectItem), '空的題目來源說明多出了一段間距').toBeLessThanOrEqual(0.5);
 
@@ -136,10 +143,14 @@ test.describe('只出官方題目', () => {
     expect(n).toBeGreaterThan(0);
     expect(n).toBeLessThan(100);
 
-    // 題數不夠的那一句自成一行、用警示色，不會黏在上一句後面看不出來
-    const first = (await page.getByText(/^可出 \d+ 題官方公告試題/).boundingBox())!;
-    const own = (await notice.boundingBox())!;
-    expect(own.y, '題數不夠的提醒應該另起一行').toBeGreaterThanOrEqual(first.y + first.height - 0.5);
+    // 題數不夠的那一句自成一行、用警示色，不會黏在上一句後面看不出來。
+    // 兩句在同一次 evaluate 裡量：題數的輸入框在視窗外，Firefox 打完字要到下一個 frame 才把游標捲進視窗（捲 98px），
+    // 分兩次 boundingBox() 量的話，這一捲可能落在兩次中間，上一句量到的是捲動前的位置
+    const [firstBottom, ownTop] = await notice.evaluate(
+      (own, first) => [first!.getBoundingClientRect().bottom, own.getBoundingClientRect().top],
+      await page.getByText(/^可出 \d+ 題官方公告試題/).elementHandle()
+    );
+    expect(ownTop, '題數不夠的提醒應該另起一行').toBeGreaterThanOrEqual(firstBottom - 0.5);
     const [color, warning, weight] = await notice.evaluate((el) => {
       const probe = document.body.appendChild(document.createElement('span'));
       probe.style.color = 'var(--color-warning-fg)';
