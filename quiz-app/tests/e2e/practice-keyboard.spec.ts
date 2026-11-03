@@ -435,6 +435,10 @@ test.describe('練習模式的鍵盤作答', () => {
         // sr-only 也算 visible、也在視窗內，要量得出一行字的高度
         expect((await outcome(page).boundingBox())!.height).toBeGreaterThanOrEqual(10);
 
+        // 按得快的話題卡的進場動畫還沒跑完，正確選項還在往上移（最多 20px）。量的是停下來的位置
+        await page.locator('.question-card').evaluate((el) =>
+          Promise.all(el.getAnimations().map((a) => a.finished.catch(() => undefined)))
+        );
         const m = await page.evaluate(() => {
           const rect = (selector: string) => document.querySelector(selector)!.getBoundingClientRect();
           const button = document.activeElement!.getBoundingClientRect();
