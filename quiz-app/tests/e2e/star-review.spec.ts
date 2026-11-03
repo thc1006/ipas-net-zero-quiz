@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
-import { test, expect, type Locator, type Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
+import { test, expect, stubVisitorCounter } from './fixtures';
 
 /**
  * 星號與待複習錯題（Discussion #1）。jsdom 沒有排版、焦點順序、跨分頁的 storage 事件，也沒有真的下載，
@@ -403,6 +404,8 @@ test.describe('星號與待複習錯題', () => {
 
     test(`高對比${name}：觸控點完，:hover 還留著時圖示看得見`, async ({ browser, baseURL }) => {
       const context = await browser.newContext({ baseURL, hasTouch: true, viewport: { width: 390, height: 800 } });
+      // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+      await stubVisitorCounter(context);
       const page = await context.newPage();
       await page.addInitScript(
         (darkMode) => window.localStorage.setItem('ipas-quiz-a11y', JSON.stringify({ highContrast: true, darkMode })),
@@ -465,6 +468,8 @@ test.describe('星號與待複習錯題', () => {
 
   test('寬螢幕的觸控裝置：按鈕也至少 44px', async ({ browser, baseURL }) => {
     const context = await browser.newContext({ baseURL, hasTouch: true, viewport: { width: 1024, height: 768 } });
+    // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+    await stubVisitorCounter(context);
     const page = await context.newPage();
     await gotoHome(page, { stars: [idOf(q1)] });
     expect(await page.evaluate(() => matchMedia('(pointer: coarse)').matches)).toBe(true);
@@ -590,6 +595,8 @@ test.describe('星號與待複習錯題', () => {
     });
 
     const fresh = await browser.newContext({ baseURL });
+    // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+    await stubVisitorCounter(fresh);
     const other = await fresh.newPage();
     await gotoHome(other, { stars: [idOf(q3)] });
     await other.getByRole('button', { name: '開啟設定' }).click();
@@ -778,6 +785,8 @@ test.describe('第一次加星號的提示不推動版面（Discussion #1）', (
   ]) {
     test(`${name}：加星號與取消都不移動星號、不捲動頁面，第二下點同一個位置就是取消`, async ({ browser, baseURL }) => {
       const context = await browser.newContext({ baseURL, hasTouch, viewport });
+      // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+      await stubVisitorCounter(context);
       const page = await context.newPage();
       await gotoHome(page);
       await page.getByLabel('隨機出題順序').uncheck();
@@ -833,6 +842,8 @@ test.describe('星號的提示不蓋住有焦點的題幹、選項與鍵盤提�
     for (const fontSize of ['normal', 'large', 'xlarge'] as const) {
       test(`${name}、字級 ${fontSize}：加星號之後用鍵盤作答、下一題、走過每一個選項`, async ({ browser, baseURL }) => {
         const context = await browser.newContext({ baseURL, viewport });
+        // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+        await stubVisitorCounter(context);
         const page = await context.newPage();
         await gotoHome(page, undefined, fontSize);
         await page.getByLabel('隨機出題順序').uncheck();
