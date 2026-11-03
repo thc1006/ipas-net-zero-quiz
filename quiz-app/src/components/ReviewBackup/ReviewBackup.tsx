@@ -31,6 +31,8 @@ const addedText = (c: ReviewMergeCount): string => `新增星號 ${c.stars} 題�
 
 const nothingAdded = (c: ReviewMergeCount): boolean => c.stars + c.wrong === 0;
 
+const UNREADABLE = '讀不到這個瀏覽器裡的紀錄，瀏覽器可能封鎖了網站資料。';
+
 /** 備份裡有幾題現在的題庫找不到。練習池載不到時不知道，回傳 null，不亂說 */
 async function unknownCount(data: ReviewBackupData): Promise<number | null> {
   if (!hasIdsOutsideMainBank([...Object.keys(data.stars), ...Object.keys(data.wrong)])) return 0;
@@ -73,7 +75,7 @@ export function ReviewBackup() {
     const current = getReviewSnapshot();
     // 讀不到不等於沒有：匯出一份空的備份還說「已匯出」，使用者會以為存好了
     if (current.access === 'unavailable') {
-      setMessage('沒有匯出：讀不到這個瀏覽器裡的紀錄，瀏覽器可能封鎖了網站資料。');
+      setMessage(`沒有匯出：${UNREADABLE}`);
       return;
     }
     const blob = new Blob([buildReviewExport(current, now)], { type: 'application/json' });
@@ -92,6 +94,11 @@ export function ReviewBackup() {
     e.target.value = ''; // 不清空的話，同一個檔案再選一次不會觸發 change
     if (!file) return;
     setMessage('');
+    // 讀不到現有的紀錄就存不進去：確認對話框會把備份裡每一題都算成新增，按了確定才說沒有匯入
+    if (getReviewSnapshot().access === 'unavailable') {
+      setMessage(`沒有匯入：${UNREADABLE}`);
+      return;
+    }
     const result = await readReviewImport(file);
     if (!result.ok) {
       setMessage(`沒有匯入：${result.reason}`);

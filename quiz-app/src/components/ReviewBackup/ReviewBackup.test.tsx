@@ -388,4 +388,23 @@ describe('網站資料被封鎖', () => {
       store = installRealLocalStorage();
     }
   });
+
+  it('匯入：不開確認、不說會新增幾題，直接說存不進去', async () => {
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      get() {
+        throw new DOMException('blocked', 'SecurityError');
+      },
+    });
+    try {
+      render(<ReviewBackup />);
+      choose(backup({ [allQuestions[0].id]: 1 }));
+      await waitFor(() =>
+        expect(status()).toHaveTextContent('沒有匯入：讀不到這個瀏覽器裡的紀錄，瀏覽器可能封鎖了網站資料。')
+      );
+      expect(screen.queryByRole('dialog')).toBeNull();
+    } finally {
+      store = installRealLocalStorage();
+    }
+  });
 });
