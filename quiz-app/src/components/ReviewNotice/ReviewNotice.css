@@ -1,5 +1,5 @@
 /* 排在文件流裡（ReviewNotice.tsx）：不固定、不 sticky，不蓋住任何東西。
-   按鈕引起的排在那一列下面（題卡、錯題卡裡），頁面的排在主內容最上面 */
+   按鈕引起的排在那一列下面（題卡、錯題卡裡），頁面的排在主內容最上面或最後面 */
 .review-notice {
   margin: 0 0 var(--spacing-md);
   padding: var(--spacing-sm) var(--spacing-md);
@@ -13,4 +13,9 @@
 .review-notice--page {
   max-width: 800px;
   margin-inline: auto;
+}
+
+/* 主內容最後面的：與上面頁面的內容隔開，下面就是頁尾 */
+.review-notice--end {
+  margin: var(--spacing-md) auto 0;
 }

@@ -257,7 +257,7 @@ export function wrongEntry(review: Pick<ReviewSnapshot, 'wrong'>, id: string): R
 }
 
 // 寫入失敗、資料毀損之類要告訴使用者的事。都不在 localStorage 裡，所以另外記一份。
-// 頁面的提示（排在主內容最上面）：
+// 頁面的提示（換畫面時已經有的排在主內容最上面，之後才出現的排在最後面，見 hooks/useReview.ts 的 usePageNotices）：
 let writeFailed = false;
 let recovered = false;
 let poolFailed = false;
@@ -271,6 +271,14 @@ let noticeSeq = 0;
 
 function setButtonNotice(button: string, notice: ReviewNotice): void {
   buttonNotices.set(button, { notice, seq: ++noticeSeq });
+}
+
+// 使用者按下去的寫入（星號、移出待複習、設定頁的清除與匯入）做過幾次。頁面的提示在這之後變了，就是按出來的：
+// 結果說在那顆按鈕下面或設定頁的狀態列，不加在頁面上（usePageNotices）
+let userWrites = 0;
+
+export function getUserWriteCount(): number {
+  return userWrites;
 }
 
 /** 頁面現在要告訴使用者什麼；一次一件，由重要到不重要 */
@@ -374,30 +382,33 @@ type WriteReport = 'page' | 'silent' | 'own';
  */
 function update(change: (data: ReviewData) => void, button: string | null = null, report: WriteReport = 'page'): boolean {
   if (button) buttonNotices.delete(button);
+  const byUser = button !== null || report === 'own';
+  if (byUser) userWrites += 1;
   const silent = !button && report !== 'page';
-  // onButton：頁面上已經說了只能讀取、不會儲存時，按鈕下面不再說一次
-  const fail = (onButton = true): false => {
+  // 按鈕按下去才發現的新版資料與搬不走的壞資料也說在那顆按鈕下面：頁面上已經說了的話，畫面那一層不重複
+  // （ReviewNotice.tsx 的 ButtonNotice）。使用者按的寫入一定通知：頁面才知道這次的變化是按出來的
+  const fail = (notice: ReviewNotice = 'write-failed'): false => {
     if (!silent) {
       if (!button) writeFailed = true;
-      else if (onButton) setButtonNotice(button, 'write-failed');
-      notify();
+      else setButtonNotice(button, notice);
     }
+    if (!silent || byUser) notify();
     return false;
   };
 
   const read = readRaw();
   if (!read.ok) return fail();
   const parsed = parseRaw(read.raw);
-  if (parsed.access === 'newer') return fail(false);
+  if (parsed.access === 'newer') return fail('newer');
   const { data } = parsed;
   const corrupt = parsed.access === 'corrupt';
   if (corrupt) {
     if (!quarantine(read.raw!)) {
       // 設定頁的寫入由那裡的狀態列說沒有存進去，頁面上不另外說
-      if (report === 'own') return false;
+      if (report === 'own') return fail();
       corruptStuck = true;
       if (silent) notify();
-      return fail(false);
+      return fail('corrupt-stuck');
     }
     corruptStuck = false;
     if (!button && report !== 'own') recovered = true;
@@ -607,5 +618,6 @@ export function __resetReviewStoreForTesting(): void {
   corruptStuck = false;
   buttonNotices.clear();
   noticeSeq = 0;
+  userWrites = 0;
   listeners.clear();
 }

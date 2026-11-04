@@ -1344,3 +1344,83 @@ test.describe('螢幕閱讀器：每一次的提示都念，看得到的提示�
     await expect(live).toHaveText(NOT_SAVED);
   });
 });
+
+// 頁面的說明只有換畫面時就知道的才排在主內容最上面。按按鈕才發現的（新版資料、搬不走的壞資料）排在那顆按鈕下面；
+// 沒有人按、別的分頁造成的（storage 事件）排在主內容最後面。兩種都不推動使用者正在看的東西上面的內容
+test.describe('之後才出現的說明不排在主內容最上面：上面的東西不動', () => {
+  for (const { name, text, newer } of [
+    { name: '別的分頁寫了新版資料、這個分頁沒收到 storage 事件', text: /新版網站寫入的/, newer: true },
+    { name: '別的分頁寫了讀不懂的資料、這個分頁搬不走', text: /不會儲存變更/, newer: false },
+  ]) {
+    test(`${name}：按星號時說明排在題卡標頭下面，星號不移動`, async ({ page, context }) => {
+      // 背景分頁被瀏覽器凍結時收不到 storage 事件
+      if (newer) await page.addInitScript(() => window.addEventListener('storage', (e) => e.stopImmediatePropagation(), true));
+      await gotoHome(page);
+      await page.getByLabel('隨機出題順序').uncheck();
+      await startButton(page).click();
+      await expect(page.locator('.question-card')).toBeVisible();
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await settleAnimations(page);
+      const other = await context.newPage();
+      await other.goto('/');
+      if (newer) {
+        await other.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 2, seeded: true, stars: {}, wrong: {} })), KEY);
+      } else {
+        await other.evaluate((key) => window.localStorage.setItem(key, '{broken'), KEY);
+        await failWritesFrom(page, `${KEY}:corrupt`);
+      }
+      await other.close();
+      await nextFrames(page);
+      const before = await starState(star(page));
+      await page.mouse.click(before.x, before.y);
+      await expect(page.locator('.review-notice', { hasText: text })).toBeVisible();
+      await nextFrames(page);
+      const after = await starState(star(page));
+      const info = JSON.stringify(after);
+      expect(sameSpot(after), `星號移動了 ${info}`).toEqual(sameSpot(before));
+      expect(after.hitIsStar, `點同一個位置點到的不是星號 ${info}`).toBe(true);
+      await expect(page.locator('.question-header + .review-notice')).toHaveText(text);
+      await expect(page.locator('.review-notice')).toHaveCount(1);
+      await expect(star(page)).toHaveAttribute('aria-pressed', 'false');
+      await expect(page.locator('.review-live')).toHaveText(text);
+    });
+  }
+
+  test('別的分頁寫了新版資料、這個分頁什麼都沒按：說明排在主內容最後面，收掉時上面也不動', async ({ page, context }) => {
+    await gotoHome(page);
+    await page.getByLabel('隨機出題順序').uncheck();
+    await startButton(page).click();
+    await expect(page.locator('.question-card')).toBeVisible();
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await settleAnimations(page);
+    const before = await starState(star(page));
+    const other = await context.newPage();
+    await other.goto('/');
+    await other.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 2, seeded: true, stars: {}, wrong: {} })), KEY);
+    const notice = page.locator('.review-notice', { hasText: /新版網站寫入的/ });
+    await expect(notice).toHaveCount(1);
+    await nextFrames(page);
+    const after = await starState(star(page));
+    expect(sameSpot(after), `星號移動了 ${JSON.stringify(after)}`).toEqual(sameSpot(before));
+    // 在主內容最後面：頁面自己的內容之後、頁尾之前
+    const where = await notice.evaluate((el) => {
+      const main = document.getElementById('main-content')!;
+      const content = main.querySelector('.quiz-page')!.getBoundingClientRect();
+      const footer = document.querySelector('.app-footer')!.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
+      return { last: main.lastElementChild === el, top: r.top, bottom: r.bottom, contentBottom: content.bottom, footerTop: footer.top };
+    });
+    const info = JSON.stringify(where);
+    expect(where.last, `不是主內容的最後一個 ${info}`).toBe(true);
+    expect(where.top, `在頁面內容之前 ${info}`).toBeGreaterThanOrEqual(where.contentBottom - 0.5);
+    expect(where.bottom, `在頁尾之後 ${info}`).toBeLessThanOrEqual(where.footerTop + 0.5);
+    await expect(page.locator('.review-live')).toHaveText(/新版網站寫入的/);
+
+    // 別的分頁把資料改回讀得懂的：說明收掉，上面一樣不動，live region 也清空
+    await other.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 1, seeded: true, stars: {}, wrong: {} })), KEY);
+    await expect(page.locator('.review-notice')).toHaveCount(0);
+    await nextFrames(page);
+    expect(sameSpot(await starState(star(page))), '說明收掉之後星號移動了').toEqual(sameSpot(before));
+    await expect(page.locator('.review-live')).toBeEmpty();
+  });
+});

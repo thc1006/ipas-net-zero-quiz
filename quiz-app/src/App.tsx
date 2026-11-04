@@ -13,7 +13,8 @@ import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { logger } from './utils/logger';
 import { REPO_URL } from './data/app-meta';
 import { DISCUSSIONS_URL, REPORT_URL } from './utils/feedback-url';
-import { ReviewAnnouncer, ReviewNotice } from './components/ReviewNotice/ReviewNotice';
+import { ReviewAnnouncer, ReviewNotice, TopNoticeContext } from './components/ReviewNotice/ReviewNotice';
+import { usePageNotices } from './hooks/useReview';
 import { isReviewSource, questionSourceNoun } from './utils/question-source';
 import { clearReviewNotices, seedReview } from './utils/review-storage';
 import { PAGE_LOAD_FAILED } from './utils/practice-pool';
@@ -48,6 +49,8 @@ function App() {
   // 在第一次 render 之前做：壞資料的說明排在主內容最上面，第一次畫就要在，不能等使用者開始操作才把內容往下推。
   // effect 裡做的話，提示的訂閱要等 passive effect 才接上，說明晚一次 render 才出現。重複呼叫不會重複寫入
   useState(seedReview);
+  // 在帶入之後：開站時已經有的說明（壞資料已另存、搬不走、新版資料）排在主內容最上面
+  const pageNotices = usePageNotices(currentView);
 
   // 星號與待複習錯題走自己的路徑（名單上有練習池題時才載入練習池，不看加強練習開了沒）。其他來源：
   // 若使用者已啟用「加強練習池」（settings toggle），自動把練習池題目混入抽題範圍
@@ -212,39 +215,43 @@ function App() {
             </button>
           </div>
         )}
-        <ReviewNotice />
-        <ErrorBoundary>
-          {currentView === 'home' && (
-            <HomePage
-              onStartQuiz={handleStartQuiz}
-              onResumeQuiz={handleResumeQuiz}
-            />
-          )}
+        <ReviewNotice notice={pageNotices.top} />
+        <TopNoticeContext.Provider value={pageNotices.top}>
+          <ErrorBoundary>
+            {currentView === 'home' && (
+              <HomePage
+                onStartQuiz={handleStartQuiz}
+                onResumeQuiz={handleResumeQuiz}
+              />
+            )}
 
-          {currentView === 'quiz' && quiz.currentQuestion && (
-            <QuizPage
-              quiz={quiz}
-              onFinish={handleFinishQuiz}
-              onAbort={handleAbortQuiz}
-            />
-          )}
+            {currentView === 'quiz' && quiz.currentQuestion && (
+              <QuizPage
+                quiz={quiz}
+                onFinish={handleFinishQuiz}
+                onAbort={handleAbortQuiz}
+              />
+            )}
 
-          {currentView === 'result' && lastResult && (
-            <ResultPage
-              result={lastResult}
-              onGoHome={handleGoHome}
-              onRetry={handleRetry}
-              retryNotice={retryNotice}
-            />
-          )}
+            {currentView === 'result' && lastResult && (
+              <ResultPage
+                result={lastResult}
+                onGoHome={handleGoHome}
+                onRetry={handleRetry}
+                retryNotice={retryNotice}
+              />
+            )}
 
-          {currentView === 'settings' && (
-            <SettingsPage
-              accessibility={accessibility}
-              onClose={handleCloseSettings}
-            />
-          )}
-        </ErrorBoundary>
+            {currentView === 'settings' && (
+              <SettingsPage
+                accessibility={accessibility}
+                onClose={handleCloseSettings}
+              />
+            )}
+          </ErrorBoundary>
+        </TopNoticeContext.Provider>
+        {/* 之後才出現、沒有人按的（別的分頁造成的）：排在頁面自己的內容之後，不推動使用者正在看的東西 */}
+        <ReviewNotice notice={pageNotices.end} event={pageNotices.endEvent} end />
       </main>
 
       {/* 頁尾 */}

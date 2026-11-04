@@ -11,6 +11,7 @@ import {
   getButtonNoticeEvent,
   getReviewNotice,
   getReviewSnapshot,
+  getUserWriteCount,
   isStarred,
   mergeReview,
   recordReviewResults,
@@ -286,8 +287,8 @@ describe('壞資料', () => {
     expect(store.get(REVIEW_STORAGE_KEY)).toBe('{not json');
     expect(store.has(REVIEW_CORRUPT_KEY)).toBe(false);
     expect(getReviewNotice()).toBe('corrupt-stuck');
-    // 頁面上已經說不會儲存：星號下面不再說一次
-    expect(getButtonNotice('star', 'a')).toBeNull();
+    // 按下去才發現的也說在那顆星號下面；頁面最上面已經說了的話，畫面那一層不重複（ReviewNotice.tsx）
+    expect(getButtonNotice('star', 'a')).toBe('corrupt-stuck');
   });
 
   it('removeItem 丟例外時不繼續寫：原始字串還在主 key 上', () => {
@@ -347,9 +348,9 @@ describe('新版資料（v 大於 1）', () => {
     expect(spy).not.toHaveBeenCalled();
     expect(store.get(REVIEW_STORAGE_KEY)).toBe(raw);
     expect(store.has(REVIEW_CORRUPT_KEY)).toBe(false);
-    // 頁面上已經說只能讀取：按鈕下面不再說一次
-    expect(getButtonNotice('star', 'x')).toBeNull();
-    expect(getButtonNotice('remove', 'b')).toBeNull();
+    // 按鈕下面也說；頁面最上面已經說了的話，畫面那一層不重複（ReviewNotice.tsx）
+    expect(getButtonNotice('star', 'x')).toBe('newer');
+    expect(getButtonNotice('remove', 'b')).toBe('newer');
   });
 
   it('形狀不認得的新版資料也不算壞資料：看不到內容，但照樣不動', () => {
@@ -1025,14 +1026,16 @@ describe('設定頁的清除與匯入：由設定頁自己的狀態列說，不�
     ['mergeReview', () => mergeReview({ stars: { x: 1 }, wrong: {} })],
   ];
 
-  it.each(writes)('%s 存不進去：回報失敗，頁面與按鈕都沒有提示，訂閱者不收到通知', (_, write) => {
+  it.each(writes)('%s 存不進去：回報失敗，頁面與按鈕都沒有提示；算一次使用者的寫入，通知一次', (_, write) => {
     put(v1({ stars: { a: 1 }, wrong: { b: { streak: 0, last: 1 } } }));
     failWrites();
     const listener = vi.fn();
     const off = subscribeReview(listener);
+    const before = getUserWriteCount();
     expect(write()).toBeFalsy();
     expect(getReviewNotice()).toBeNull();
-    expect(listener).not.toHaveBeenCalled();
+    expect(getUserWriteCount()).toBe(before + 1);
+    expect(listener).toHaveBeenCalledTimes(1);
     off();
   });
 
@@ -1058,6 +1061,25 @@ describe('設定頁的清除與匯入：由設定頁自己的狀態列說，不�
     restore();
     expect(write()).toBeTruthy();
     expect(getReviewNotice()).toBe('write-failed');
+  });
+});
+
+describe('使用者按下去的寫入次數（頁面的提示是不是按出來的）', () => {
+  it('星號、移出待複習、設定頁的清除與匯入才算；成功失敗都算；結束測驗與開站的帶入不算', () => {
+    expect(getUserWriteCount()).toBe(0);
+    setStar('a', true);
+    removeFromReview('a');
+    clearStars();
+    clearWrong();
+    mergeReview({ stars: {}, wrong: {} });
+    expect(getUserWriteCount()).toBe(5);
+    failWrites();
+    setStar('b', true);
+    expect(getUserWriteCount()).toBe(6);
+    recordReviewResults([{ id: 'x', isCorrect: false, at: 1 }]);
+    seedReview();
+    reportReviewPoolFailure();
+    expect(getUserWriteCount()).toBe(6);
   });
 });
 
