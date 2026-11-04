@@ -1536,3 +1536,44 @@ test('320x192 字級特大，新版資料的說明裡平滑捲動時頁面捲動
   await page.keyboard.press('ArrowDown');
   await reachesBottom('方向鍵', range);
 });
+
+// 提示有焦點的時候字收掉（另一個分頁把資料換成這一版讀得懂的，新版資料的說明就收掉）：沒有字就拿掉 tabindex，
+// 焦點掉到 body，下一個 Tab 從別的地方開始。改成先回到進提示之前有焦點的元素
+test('320x192 字級特大，Tab 到新版資料的說明之後說明收掉：焦點回到進提示之前的元素', async ({ page, context }) => {
+  await page.setViewportSize({ width: 320, height: 192 });
+  await page.addInitScript((key) => {
+    window.localStorage.setItem(key, JSON.stringify({ v: 99, seeded: true, stars: {}, wrong: {} }));
+  }, KEY);
+  await gotoHome(page, undefined, 'xlarge');
+  const notice = page.locator('.review-notice');
+  await expect(notice).toHaveText(/新版網站/);
+  await expect(notice, '前提：提示放不下，在 Tab 順序裡').toHaveAttribute('tabindex', '0');
+
+  let reached = false;
+  for (let i = 0; i < 80 && !reached; i++) {
+    await page.evaluate(() => {
+      (window as unknown as { __before: Element | null }).__before = document.activeElement;
+    });
+    await page.keyboard.press('Tab');
+    reached = await notice.evaluate((el) => document.activeElement === el);
+  }
+  expect(reached, '前提：按 Tab 到得了提示').toBe(true);
+
+  const other = await context.newPage();
+  await other.goto('/');
+  await other.evaluate((key) => {
+    window.localStorage.setItem(key, JSON.stringify({ v: 1, seeded: true, stars: {}, wrong: {} }));
+  }, KEY);
+  await expect(notice).toBeEmpty();
+  await nextFrames(page);
+  const focus = await page.evaluate(() => {
+    const before = (window as unknown as { __before: Element | null }).__before;
+    const active = document.activeElement;
+    return {
+      back: active !== null && active === before && active !== document.body,
+      active: `${active?.tagName}.${active?.className} ${(active?.textContent ?? '').trim().slice(0, 12)}`,
+      before: `${before?.tagName}.${before?.className} ${(before?.textContent ?? '').trim().slice(0, 12)}`,
+    };
+  });
+  expect(focus.back, `焦點沒有回到進提示之前的元素 ${JSON.stringify(focus)}`).toBe(true);
+});

@@ -60,6 +60,8 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
   const anchor = useRef<Element | null>(null);
   // anchor 換過（或重新按了同一個）之後還沒選過邊：這一次照預設選，不留在原本那一邊
   const fresh = useRef(true);
+  // 提示拿到焦點之前有焦點的元素：提示有焦點時字收掉，焦點回到這裡
+  const cameFrom = useRef<HTMLElement | null>(null);
   const root = document.documentElement;
 
   // 提示出現之前就要記：按下星號的那一下，提示還沒出現。換掉它的只有用鍵盤把焦點移到別的元素，或按了別的能按的東西：
@@ -86,6 +88,10 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
       pressed = null;
     };
     const onFocusIn = (e: FocusEvent) => {
+      if (e.target === ref.current) {
+        cameFrom.current = e.relatedTarget instanceof HTMLElement ? e.relatedTarget : null;
+        return;
+      }
       if (own(e.target) && (focusVisible(e.target) || anchor.current?.isConnected === false)) {
         anchor.current = e.target;
         fresh.current = true;
@@ -159,6 +165,8 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
       if (text && el.scrollHeight > el.clientHeight + 1) {
         if (el.getAttribute('tabindex') !== '0') el.tabIndex = 0;
       } else if (el.hasAttribute('tabindex') && (!text || document.activeElement !== el)) {
+        // 提示有焦點時字收掉（另一個分頁換了資料）：拿掉 tabindex 焦點會掉到 body，先回到進提示之前的元素
+        if (document.activeElement === el && cameFrom.current?.isConnected) cameFrom.current.focus();
         el.removeAttribute('tabindex');
       }
       reserve.current = Math.max(reserve.current, coverBottom);
