@@ -286,6 +286,25 @@ describe('測驗', () => {
 });
 
 describe('提示不跟到別的畫面', () => {
+  it('換題時 live region 清空，最後面別的分頁造成的那一段還看得到也一樣', async () => {
+    const [a, b] = scorable;
+    put([a.id, b.id]);
+    render(<App />);
+    await startDrill('review:starred');
+    await act(async () => {
+      store.set(REVIEW_STORAGE_KEY, JSON.stringify({ v: 2, seeded: true, stars: {}, wrong: {} }));
+      window.dispatchEvent(new StorageEvent('storage', { key: REVIEW_STORAGE_KEY }));
+    });
+    await waitFor(() => expect(live()).toHaveTextContent(/新版網站寫入的/));
+    const first = stem();
+    answer(scorable.find((q) => q.stem === first)!, true);
+    fireEvent.click(screen.getByRole('button', { name: /下一題/ }));
+    await waitFor(() => expect(stem()).not.toBe(first));
+    expect(document.querySelector('.review-notice--end')).toHaveTextContent(/新版網站寫入的/);
+    await new Promise((r) => setTimeout(r, 50));
+    expect(live()).toBeEmptyDOMElement();
+  });
+
   async function noQuestionsLeft() {
     const [a] = scorable;
     put([a.id]);

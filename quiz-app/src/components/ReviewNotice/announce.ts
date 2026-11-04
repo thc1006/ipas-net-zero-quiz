@@ -3,6 +3,7 @@
 //   第二題又存不進去、同一顆星號再按一次又存不進去，都要再念一次。
 // - 字記在說它的那個提示上（owner）。那個提示收掉（換題、換畫面、同一顆按鈕的下一次寫入成功）就清空，
 //   不留一句畫面上已經沒有的話；別的提示收掉不動它。
+// - 換題時一律清空（silence）：最後面別的分頁造成的那一段還在也一樣，念過的不留到下一題。
 let region: HTMLElement | null = null;
 let owner: object | null = null;
 let frame = 0;
@@ -28,6 +29,12 @@ export function announce(who: object, text: string): void {
 
 export function withdraw(who: object): void {
   if (owner !== who) return;
+  owner = null;
+  clear();
+}
+
+/** 換題時呼叫：不管是誰說的都清空。之後同一段提示的字沒有變就不再念 */
+export function silence(): void {
   owner = null;
   clear();
 }
