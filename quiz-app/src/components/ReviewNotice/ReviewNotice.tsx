@@ -8,7 +8,7 @@
 // 提示收掉或換邊時頁面變短，捲在最底下的話頁面會跟著跳。
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useReviewNotice } from '../../hooks/useReview';
-import { placeNotice } from './placement';
+import { placeNotice, type NoticeSide } from './placement';
 import './ReviewNotice.css';
 
 interface ReviewNoticeProps {
@@ -34,6 +34,21 @@ function box(node: Element): DOMRect {
   const r = node.getBoundingClientRect();
   if (r.height > 0) return r;
   return node.closest('label')?.getBoundingClientRect() ?? r;
+}
+
+/**
+ * 提示不限高度、放在底部時的位置。量的是一個看不見的複本，提示本身不動：拿掉它的 max-height 再放回去，
+ * 裡面捲到的位置會歸零，寫回 scrollTop 又會打斷還沒停的平滑捲動（WebKit 用方向鍵捲提示時停在半路）
+ */
+function naturalBox(el: HTMLElement): DOMRect {
+  const copy = el.cloneNode(true) as HTMLElement;
+  for (const name of ['role', 'aria-live', 'aria-atomic', 'tabindex', 'data-side', 'style']) copy.removeAttribute(name);
+  copy.setAttribute('aria-hidden', 'true');
+  copy.style.visibility = 'hidden';
+  el.after(copy);
+  const r = copy.getBoundingClientRect();
+  copy.remove();
+  return r;
 }
 
 export function ReviewNotice({ view }: ReviewNoticeProps) {
@@ -103,15 +118,13 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
       let coverTop = 0;
       const stay = fresh.current ? null : el.dataset.side === 'top' ? 'top' : 'bottom';
       fresh.current = false;
-      // 量原本的高度要先拿掉高度上限，裡面捲到的位置會跟著歸零：量完放回去，不然頁面一捲就跳回開頭
-      const scrolled = el.scrollTop;
-      el.style.removeProperty('top');
-      el.style.removeProperty('max-height');
-      el.dataset.side = 'bottom';
+      let side: NoticeSide = 'bottom';
+      let top = '';
+      let maxHeight = '';
+      const viewportHeight = window.innerHeight;
+      const headerBottom = Math.max(0, header?.getBoundingClientRect().bottom ?? 0);
       if (text) {
-        const viewportHeight = window.innerHeight;
-        const headerBottom = Math.max(0, header?.getBoundingClientRect().bottom ?? 0);
-        const natural = el.getBoundingClientRect();
+        const natural = naturalBox(el);
         const gap = Math.max(0, viewportHeight - natural.bottom);
         const target = anchor.current?.isConnected ? box(anchor.current) : null;
         // 讀得到的最少高度：兩行字加上下的 padding 與框線（box-sizing 是 border-box，max-height 含這些）
@@ -119,7 +132,7 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
         const line = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.6;
         const frame = ['paddingTop', 'paddingBottom', 'borderTopWidth', 'borderBottomWidth'] as const;
         const minHeight = Math.ceil(2 * line + frame.reduce((sum, k) => sum + (parseFloat(cs[k]) || 0), 0));
-        const { side, maxHeight } = placeNotice({
+        const placed = placeNotice({
           viewportHeight,
           headerBottom,
           gap,
@@ -128,24 +141,34 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
           anchor: target && target.height > 0 ? target : null,
           stay,
         });
-        if (maxHeight !== null) el.style.maxHeight = `${maxHeight}px`;
-        if (side === 'top') {
-          el.dataset.side = 'top';
-          el.style.top = `${headerBottom + gap}px`;
-        }
-        el.scrollTop = scrolled;
+        side = placed.side;
+        if (placed.maxHeight !== null) maxHeight = `${placed.maxHeight}px`;
+        if (side === 'top') top = `${headerBottom + gap}px`;
+      }
+      // 沒變的不寫：提示裡的捲動還沒停時，任何一次重寫都可能讓它停在半路
+      if (el.dataset.side !== side) el.dataset.side = side;
+      if (el.style.top !== top) el.style.top = top;
+      if (el.style.maxHeight !== maxHeight) el.style.maxHeight = maxHeight;
+      if (text) {
         const r = el.getBoundingClientRect();
         if (side === 'top') coverTop = Math.max(0, Math.ceil(r.bottom - headerBottom));
         else coverBottom = Math.max(0, Math.ceil(viewportHeight - r.top));
       }
       // 放不下、裡面要捲動時，鍵盤也要到得了：WebKit 的捲動區沒有 tabindex 就拿不到焦點。放得下就拿掉，
       // 不多一個 Tab 停留點（焦點在它上面時先留著，等焦點離開）
-      if (text && el.scrollHeight > el.clientHeight + 1) el.tabIndex = 0;
-      else if (!text || document.activeElement !== el) el.removeAttribute('tabindex');
-      root.style.setProperty('--review-notice-cover', `${coverBottom}px`);
-      root.style.setProperty('--review-notice-cover-top', `${coverTop}px`);
+      if (text && el.scrollHeight > el.clientHeight + 1) {
+        if (el.getAttribute('tabindex') !== '0') el.tabIndex = 0;
+      } else if (el.hasAttribute('tabindex') && (!text || document.activeElement !== el)) {
+        el.removeAttribute('tabindex');
+      }
       reserve.current = Math.max(reserve.current, coverBottom);
-      root.style.setProperty('--review-notice-reserve', `${reserve.current}px`);
+      for (const [name, px] of [
+        ['--review-notice-cover', coverBottom],
+        ['--review-notice-cover-top', coverTop],
+        ['--review-notice-reserve', reserve.current],
+      ] as const) {
+        if (root.style.getPropertyValue(name) !== `${px}px`) root.style.setProperty(name, `${px}px`);
+      }
     };
     // 新的提示（或換了畫面）照預設選邊，從開頭讀起
     fresh.current = true;

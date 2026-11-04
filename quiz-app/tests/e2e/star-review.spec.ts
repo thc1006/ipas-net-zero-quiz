@@ -1310,6 +1310,35 @@ test.describe('第一次加星號之後點不能按的地方或捲動：剛按�
     await context.close();
   });
 
+  // 提示在頁首下面時 top 是頁首的下緣加空隙，常是小數，讀回來的格式與寫進去的不同（chromium 把 65.296875px 讀成
+  // 65.2969px）。只是頁面捲動時照樣不能重寫：提示裡的捲動還沒停的話，重寫可能讓它停在半路
+  test('320x256 字級特大：提示在頁首下面、頁首的下緣不是整數 px，只是頁面捲動時不重寫提示', async ({ browser, baseURL }) => {
+    const context = await browser.newContext({ baseURL, hasTouch: true, viewport: { width: 320, height: 256 } });
+    // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+    await stubVisitorCounter(context);
+    const page = await context.newPage();
+    await starNearBottom(page, (x, y) => page.touchscreen.tap(x, y));
+    // 頁首的 padding 改了，ResizeObserver（量內容的大小）不會通知：送一個 scroll 事件讓提示照新的頁首放好
+    await page.locator('.app-header').evaluate((el: HTMLElement) => {
+      el.style.paddingBottom = '0.3px';
+      window.dispatchEvent(new Event('scroll'));
+    });
+    await nextFrames(page);
+    const state = await page.locator('.review-notice').evaluate(async (el) => {
+      const writes: string[] = [];
+      const observer = new MutationObserver((records) => records.forEach((m) => writes.push(`${m.attributeName}`)));
+      observer.observe(el, { attributes: true });
+      window.dispatchEvent(new Event('scroll'));
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      observer.disconnect();
+      return { side: el.dataset.side, top: el.style.top, writes };
+    });
+    expect(state.side, `前提：提示在頁首下面 ${JSON.stringify(state)}`).toBe('top');
+    expect(state.top, `前提：top 不是整數 px ${JSON.stringify(state)}`).toMatch(/\.\d/);
+    expect(state.writes, `只是頁面捲動也重寫了提示 ${JSON.stringify(state)}`).toEqual([]);
+    await context.close();
+  });
+
   // 題幹有 tabIndex=-1（鍵盤按下一題時焦點移到那裡），看起來是文字，點下去卻會拿到焦點。改之前它算成剛按的東西，
   // focusin 也把它當成有焦點的元素：390x400 字級特大第 10 題，提示從底部換到頁首下面，蓋住剛按的星號
   for (const { name, hasTouch } of [
@@ -1443,4 +1472,67 @@ test('320x192 字級特大，新版資料的說明放不下：Tab 到得了提�
   await nextFrames(page);
   expect(await notice.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeLessThanOrEqual(1);
   await expect(notice).not.toHaveAttribute('tabindex');
+});
+
+// 提示裡平滑捲動還沒停的時候，頁面捲動（或頁首、提示的大小改變）讓提示重新選邊。改之前選邊要先拿掉 max-height 量原本的高度、
+// 量完放回去再寫回 scrollTop，這一寫就把捲動停在半路：WebKit 用方向鍵捲提示，五次停在 21、1、0、9、14（要捲 21px）。
+// 什麼都沒變的時候也不寫提示的屬性與 html 的樣式
+test('320x192 字級特大，新版資料的說明裡平滑捲動時頁面捲動：捲動照樣到底，提示的屬性不被重寫', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 192 });
+  await page.addInitScript((key) => {
+    window.localStorage.setItem(key, JSON.stringify({ v: 99, seeded: true, stars: {}, wrong: {} }));
+  }, KEY);
+  await gotoHome(page, undefined, 'xlarge');
+  const notice = page.locator('.review-notice');
+  await expect(notice).toHaveText(/新版網站/);
+  await nextFrames(page);
+  // 只是頁面捲動：提示在哪一邊、多高都不變
+  const idle = await notice.evaluate(async (el) => {
+    const writes: string[] = [];
+    const observer = new MutationObserver((records) =>
+      records.forEach((m) => writes.push(`${(m.target as Element).tagName} ${m.attributeName}`))
+    );
+    observer.observe(el, { attributes: true });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
+    window.dispatchEvent(new Event('scroll'));
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    observer.disconnect();
+    return writes;
+  });
+  expect.soft(idle, '只是頁面捲動，提示的屬性或 html 的樣式也被重寫').toEqual([]);
+
+  // 提示裡一開始捲（第一個 scroll 事件）就送一個頁面的 scroll 事件：提示在下一個 frame 重新選邊，那時捲動還沒停
+  const arm = () =>
+    notice.evaluate(async (el) => {
+      const w = window as unknown as { __positions: number[]; __record?: () => void };
+      if (w.__record) el.removeEventListener('scroll', w.__record);
+      el.scrollTop = 0;
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      const positions: number[] = (w.__positions = []);
+      w.__record = () => positions.push(Math.round(el.scrollTop));
+      el.addEventListener('scroll', w.__record);
+      el.addEventListener('scroll', () => window.dispatchEvent(new Event('scroll')), { once: true });
+      return el.scrollHeight - el.clientHeight;
+    });
+  const reachesBottom = (how: string, range: number) =>
+    expect
+      .poll(
+        () =>
+          notice.evaluate((el, range) => {
+            const positions = (window as unknown as { __positions: number[] }).__positions;
+            return el.scrollTop >= range - 1 ? '到底' : `停在 ${el.scrollTop}，經過 ${positions.join(' ')}`;
+          }, range),
+        { message: `${how}：平滑捲動停在半路（要捲 ${range}px）`, timeout: 3000 }
+      )
+      .toBe('到底');
+
+  const range = await arm();
+  expect(range, '前提：提示放不下，裡面要捲動').toBeGreaterThan(1);
+  await notice.evaluate((el, top) => el.scrollTo({ top, behavior: 'smooth' }), range);
+  await reachesBottom('scrollTo smooth', range);
+
+  await notice.focus();
+  await arm();
+  await page.keyboard.press('ArrowDown');
+  await reachesBottom('方向鍵', range);
 });
