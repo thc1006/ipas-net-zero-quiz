@@ -1,4 +1,5 @@
 import type { Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 
 /**
@@ -200,4 +201,39 @@ test('換頁：訊息不跟著走，回來也不會再出現', async ({ page }) 
   await page.getByRole('button', { name: /返回/ }).first().click();
   await expect(page.locator('#source')).toBeVisible();
   await expect(page.getByRole('alert')).toHaveCount(0);
+});
+
+// 星號題的名單上有練習池題，開始時練習池才載不到：這一場先出主題庫的題目，說明排在題目頁最上面。
+// 載入失敗在開始的途中回報，題目頁晚一個 render 才換上來：中間那一次不能把它當成別的分頁造成的、排在首頁最後面
+test('星號題開始時練習池載不到：說明只在題目頁最上面，首頁的最後面一次都沒有出現', async ({ page }) => {
+  const readJson = (p: string) => JSON.parse(readFileSync(new URL(p, import.meta.url), 'utf-8'));
+  const bank = readJson('../../src/data/integrated_dataset.json').gist_items as { index: number }[];
+  const pool = readJson('../../src/data/practice_pool.json').items as { id: string }[];
+  await page.route(POOL_CHUNK, (route) => route.abort());
+  await page.addInitScript(
+    ({ value }) => {
+      window.localStorage.setItem('practice-pool-disclosure-seen', '1');
+      if (!window.localStorage.getItem('ipas-review-v1')) window.localStorage.setItem('ipas-review-v1', value);
+      const w = window as unknown as { __ends: string[] };
+      w.__ends = [];
+      document.addEventListener('DOMContentLoaded', () => {
+        new MutationObserver(() => {
+          const end = document.querySelector('.review-notice--end');
+          if (end) w.__ends.push(`${document.querySelector('.quiz-page') ? '題目頁' : '首頁'}：${end.textContent}`);
+        }).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+      });
+    },
+    {
+      value: JSON.stringify({ v: 1, seeded: true, stars: { [`gist-${bank[0].index}`]: 1, [pool[0].id]: 1 }, wrong: {} }),
+    }
+  );
+  await page.goto('/');
+  await page.getByLabel('題目來源').selectOption('review:starred');
+  await page.getByLabel('隨機出題順序').uncheck();
+  await page.getByRole('button', { name: /開始測驗/ }).click();
+  await expect(page.locator('.question-card')).toBeVisible();
+  await expect(page.locator('#main-content > .review-notice:not(.review-notice--end)')).toHaveText(/這一場先出主題庫/);
+  await page.waitForTimeout(300);
+  const ends = await page.evaluate(() => (window as unknown as { __ends: string[] }).__ends);
+  expect(ends, '練習池載不到的說明排到首頁的最後面').toEqual([]);
 });

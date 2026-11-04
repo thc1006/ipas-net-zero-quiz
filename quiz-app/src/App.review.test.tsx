@@ -232,6 +232,35 @@ describe('測驗', () => {
     expect(notices()).toHaveTextContent('');
   });
 
+  // 載入失敗在開始的途中回報，換到題目頁晚一個 render：中間那一次不能把它當成別的分頁造成的、排在首頁的最後面
+  it('練習池在開始時才載入失敗：說明只排在題目頁的最上面，首頁的最後面一次都沒有出現，只念一次', async () => {
+    const [q] = scorable;
+    put([q.id, 'pool-only']);
+    __setPracticePoolForTesting(buildFixturePool());
+    render(<App />);
+    await waitFor(() => expect(optionText('review:starred')).toBe('星號題（1 題）'));
+    const said: string[] = [];
+    const region = live();
+    new MutationObserver(() => said.push(region.textContent ?? '')).observe(region, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    });
+    const ends: string[] = [];
+    new MutationObserver(() => {
+      const end = document.querySelector('.review-notice--end');
+      if (end) ends.push(end.textContent ?? '');
+    }).observe(document.body, { childList: true, subtree: true, characterData: true });
+    vi.mocked(loadPracticePool).mockRejectedValueOnce(new Error('offline'));
+    await startDrill('review:starred');
+    await new Promise((r) => setTimeout(r, 100));
+    expect(document.querySelector('#main-content > .review-notice:not(.review-notice--end)')).toHaveTextContent(
+      /這一場先出主題庫/
+    );
+    expect(ends).toEqual([]);
+    expect(said.filter(Boolean)).toEqual([expect.stringMatching(/這一場先出主題庫/)]);
+  });
+
   it('回首頁就收掉練習池的提醒', async () => {
     const [q] = scorable;
     put([q.id, 'pool-only']);

@@ -4,6 +4,7 @@ import { useState, useSyncExternalStore } from 'react';
 import { PAGE_LOAD_FAILED } from '../utils/practice-pool';
 import {
   getButtonNoticeEvent,
+  getExternalChangeCount,
   getReviewNotice,
   getUserWriteCount,
   getReviewSnapshot,
@@ -55,28 +56,41 @@ interface PageNoticeState extends PageNotices {
   view: string;
   notice: ReviewNotice | null;
   writes: number;
+  external: number;
 }
 
 /**
  * 頁面的提示只有換畫面時（view 換了、開頁）已經有的才排在主內容最上面，之後到換畫面之前不增不減：
  * 使用者開始操作之後，它上面的東西不能再被推動，收掉也一樣（過時了也留到換畫面）。之後才出現的：
+ * - 別的分頁造成的（收到 storage 事件之後變的）：排在主內容最後面，不推動使用者正在看的東西；收掉時也只動它下面的頁尾。
+ *   使用者接著按了任何一顆會寫入的按鈕就收掉：那一次的結果說在那顆按鈕下面。
  * - 使用者按出來的（按星號才發現新版資料或搬不走的壞資料、設定頁的清除與匯入）：說在那顆按鈕下面或設定頁的狀態列，
  *   頁面上不加。
- * - 沒有人按、別的分頁造成的（storage 事件）：排在主內容最後面，不推動使用者正在看的東西；收掉時也只動它下面的頁尾。
- *   使用者接著按了任何一顆會寫入的按鈕就收掉：那一次的結果說在那顆按鈕下面。
+ * - 其他沒有人按的（開始測驗途中練習池載入失敗，題目頁晚一個 render 才換上來）：這個畫面不加，排在下一個畫面的最上面。
  */
 export function usePageNotices(view: string): PageNotices {
   const notice = useSyncExternalStore(subscribeReview, getReviewNotice);
   const writes = useSyncExternalStore(subscribeReview, getUserWriteCount);
-  const [state, setState] = useState<PageNoticeState>(() => ({ view, notice, writes, top: notice, end: null, endEvent: 0 }));
+  const external = useSyncExternalStore(subscribeReview, getExternalChangeCount);
+  const [state, setState] = useState<PageNoticeState>(() => ({
+    view,
+    notice,
+    writes,
+    external,
+    top: notice,
+    end: null,
+    endEvent: 0,
+  }));
   let next = state;
   if (view !== state.view) {
-    next = { view, notice, writes, top: notice, end: null, endEvent: state.endEvent };
+    next = { view, notice, writes, external, top: notice, end: null, endEvent: state.endEvent };
   } else if (writes !== state.writes) {
-    next = { ...state, notice, writes, end: null };
-  } else if (notice !== state.notice) {
+    next = { ...state, notice, writes, external, end: null };
+  } else if (notice !== state.notice && external !== state.external) {
     const end = notice === state.top ? null : notice;
-    next = { ...state, notice, end, endEvent: end ? state.endEvent + 1 : state.endEvent };
+    next = { ...state, notice, external, end, endEvent: end ? state.endEvent + 1 : state.endEvent };
+  } else if (notice !== state.notice || external !== state.external) {
+    next = { ...state, notice, external };
   }
   // render 時調整 state（React 文件的「props 變了就調整 state」）：這一次 render 就用新的，不多畫一次舊的
   if (next !== state) setState(next);

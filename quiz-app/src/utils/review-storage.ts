@@ -328,16 +328,27 @@ function notify(): void {
   listeners.forEach((listener) => listener());
 }
 
+// 收到幾次別的分頁改了這支 key 的 storage 事件。頁面的提示在這之後變了，就是別的分頁造成的：
+// 排在主內容最後面；其他沒有人按的變化排到下一個畫面的最上面（hooks/useReview.ts 的 usePageNotices）
+let externalChanges = 0;
+
+export function getExternalChangeCount(): number {
+  return externalChanges;
+}
+
+function onStorage(e: StorageEvent): void {
+  // e.key === null：另一個分頁呼叫 localStorage.clear()
+  if (e.key !== REVIEW_STORAGE_KEY && e.key !== null) return;
+  externalChanges += 1;
+  notify();
+}
+
 export function subscribeReview(listener: () => void): () => void {
-  const onStorage = (e: StorageEvent) => {
-    // e.key === null：另一個分頁呼叫 localStorage.clear()
-    if (e.key === REVIEW_STORAGE_KEY || e.key === null) listener();
-  };
+  if (listeners.size === 0) window.addEventListener('storage', onStorage);
   listeners.add(listener);
-  window.addEventListener('storage', onStorage);
   return () => {
     listeners.delete(listener);
-    window.removeEventListener('storage', onStorage);
+    if (listeners.size === 0) window.removeEventListener('storage', onStorage);
   };
 }
 
@@ -632,5 +643,7 @@ export function __resetReviewStoreForTesting(): void {
   buttonNotices.clear();
   noticeSeq = 0;
   userWrites = 0;
+  externalChanges = 0;
   listeners.clear();
+  window.removeEventListener('storage', onStorage);
 }

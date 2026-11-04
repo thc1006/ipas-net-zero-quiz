@@ -10,6 +10,7 @@ import {
   __resetReviewStoreForTesting,
   clearReviewNotices,
   getButtonNotice,
+  getExternalChangeCount,
   recordReviewResults,
   reportReviewPoolFailure,
   setStar,
@@ -319,6 +320,38 @@ describe('頁面的提示放在哪裡：換畫面時已經有的在最上面，�
     expect(shown('star-a')).toMatch(/沒有儲存/);
   });
 
+  it('沒有人按、也不是別的分頁造成的（開始途中練習池載入失敗）：這個畫面不加、不念，排在下一個畫面的最上面', async () => {
+    const { rerender } = render(<Page view="home" />);
+    const said = recordLive();
+    await act(async () => {
+      reportReviewPoolFailure();
+    });
+    await new Promise((r) => setTimeout(r, 50));
+    expect(shown('page')).toBe('');
+    expect(shown('end')).toBe('');
+    expect(said).toEqual([]);
+    await act(async () => rerender(<Page view="quiz" />));
+    expect(shown('page')).toMatch(/這一場先出主題庫/);
+    expect(shown('end')).toBe('');
+    await waitFor(() => expect(said).toEqual([expect.stringMatching(/這一場先出主題庫/)]));
+  });
+
+  it('別的分頁的 storage 事件之後變的才排在最後面；別的 key 的事件不算', () => {
+    render(<Page />);
+    act(() => {
+      reportReviewPoolFailure();
+    });
+    expect(shown('end')).toBe('');
+    // 別的分頁寫了新版資料：新版資料比練習池載入失敗重要，頁面現在要說的換成它，而且是事件之後變的
+    otherTab(v2);
+    expect(shown('end')).toMatch(NEWER);
+    // 不是這支 key 的事件不算
+    act(() => {
+      window.dispatchEvent(new StorageEvent('storage', { key: 'other' }));
+    });
+    expect(getExternalChangeCount()).toBe(1);
+  });
+
   it('最後面的那一段：使用者接著按了會寫入的按鈕就收掉，結果說在那顆按鈕下面', () => {
     render(<Page />);
     otherTab(v2);
@@ -456,10 +489,11 @@ describe('螢幕閱讀器', () => {
   });
 
   it('按鈕上的提示收掉時，不回頭再念頁面上那一句；新的一句才念', async () => {
-    render(<Page />);
+    const { rerender } = render(<Page view="home" />);
     const said = recordLive();
     await act(async () => {
       reportReviewPoolFailure();
+      rerender(<Page view="quiz" />);
     });
     await waitFor(() => expect(live()).toHaveTextContent('這一場先出主題庫'));
     await act(async () => {
