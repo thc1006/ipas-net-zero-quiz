@@ -13,6 +13,7 @@ import {
   getReviewSnapshot,
   getUserWriteCount,
   isStarred,
+  markStarHintSeen,
   mergeReview,
   recordReviewResults,
   removeFromReview,
@@ -927,10 +928,12 @@ describe('搬不走的壞資料', () => {
 describe('第一次加星號的提示', () => {
   const seen = 'ipas-review-star-hint-seen';
 
-  it('第一次加星號顯示在那顆星號上，記住已顯示過：取消再加不再顯示', () => {
+  it('第一次加星號顯示在那顆星號上；看到了（markStarHintSeen）才記住：取消再加不再顯示', () => {
     setStar('a', true);
     expect(getButtonNotice('star', 'a')).toBe('first-star');
     expect(getReviewNotice()).toBeNull();
+    expect(store.has(seen)).toBe(false);
+    markStarHintSeen();
     expect(store.get(seen)).toBe('1');
     setStar('a', false);
     expect(getButtonNotice('star', 'a')).toBeNull();
@@ -938,8 +941,19 @@ describe('第一次加星號的提示', () => {
     expect(getButtonNotice('star', 'a')).toBeNull();
   });
 
+  it('還沒看到（提示在視窗外）：下次加星號再說一次', () => {
+    setStar('a', true);
+    expect(getButtonNotice('star', 'a')).toBe('first-star');
+    setStar('c', true);
+    expect(getButtonNotice('star', 'c')).toBe('first-star');
+    setStar('a', false);
+    setStar('a', true);
+    expect(getButtonNotice('star', 'a')).toBe('first-star');
+  });
+
   it('重新整理之後（新的模組狀態）也不再顯示', async () => {
     setStar('a', true);
+    markStarHintSeen();
     vi.resetModules();
     const reloaded = await import('./review-storage');
     reloaded.setStar('b', true);
@@ -966,6 +980,7 @@ describe('按鈕上的提示', () => {
   it('別顆按鈕的寫入不收掉：第一張錯題卡的提示留著，按第三張的星號時它不動', () => {
     setStar('a', true);
     expect(getButtonNotice('star', 'a')).toBe('first-star');
+    markStarHintSeen();
     setStar('c', true);
     expect(getButtonNotice('star', 'a')).toBe('first-star');
     expect(getButtonNotice('star', 'c')).toBeNull();
@@ -1113,7 +1128,8 @@ describe('提示的優先序與清除', () => {
     store.set(REVIEW_STORAGE_KEY, '{broken');
     setStar('a', true);
     expect(getButtonNotice('star', 'a')).toBe('recovered');
-    expect(store.get('ipas-review-star-hint-seen')).toBe('1');
+    // 第一次加星號的提示沒有顯示，不算看過
+    expect(store.has('ipas-review-star-hint-seen')).toBe(false);
   });
 
   it('clearReviewNotices 收掉會過時的提示，訂閱者收到通知；沒有東西可收時不通知', () => {

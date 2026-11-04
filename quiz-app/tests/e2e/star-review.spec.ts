@@ -1037,7 +1037,7 @@ test.describe('320x256 字級特大（1280x1024 放大 400%）：說明看得到
     expectReadable(await readable(notice), '新版資料的說明');
   });
 
-  test('按星號存不進去：說明排在題卡標頭下面，星號不移動，捲過去整段讀得到', async ({ page }) => {
+  test('按星號存不進去：說明排在題卡標頭下面，捲到整段讀得到，星號還在畫面上', async ({ page }) => {
     await page.addInitScript((key) => {
       const set = Storage.prototype.setItem;
       Storage.prototype.setItem = function (k: string, v: string) {
@@ -1057,10 +1057,12 @@ test.describe('320x256 字級特大（1280x1024 放大 400%）：說明看得到
     const notice = page.locator('.question-header + .review-notice');
     await expect(notice).toHaveText('這次變更沒有儲存。瀏覽器可能封鎖了網站資料，或儲存空間已滿。');
     await expect(star(page)).toHaveAttribute('aria-pressed', 'false');
-    expect(sameSpot(await starState(star(page))), '星號移動了').toEqual(sameSpot(before));
-    await notice.evaluate((el) => el.scrollIntoView({ block: 'nearest' }));
+    // 沒有生效：捲到剛好看得到整段說明，不用使用者自己捲。星號跟著往上移，還在頁首下面
     await nextFrames(page);
-    expectReadable(await readable(notice), '存不進去的說明');
+    const m = await readable(notice);
+    expectReadable(m, '存不進去的說明');
+    const after = await starState(star(page));
+    expect(after.top, `星號被捲到頁首底下 ${JSON.stringify(after)}`).toBeGreaterThanOrEqual(m.headerBottom);
   });
 });
 
@@ -1423,4 +1425,70 @@ test.describe('之後才出現的說明不排在主內容最上面：上面的�
     expect(sameSpot(await starState(star(page))), '說明收掉之後星號移動了').toEqual(sameSpot(before));
     await expect(page.locator('.review-live')).toBeEmpty();
   });
+});
+
+// 結果頁的星號在視窗底部時，排在它下面的提示在視窗外。第一次加星號的提示要真的看到過才算看過；
+// 存不進去的說明一定要看得到：捲到剛好看得到（toggle 沒有生效，頁面動了也不會點錯），焦點不動
+test.describe('星號在視窗底部：提示在視窗外時', () => {
+  for (const { name, viewport, fontSize } of toggleViewports) {
+    test(`第一次加星號 ${name}：頁面不捲，提示沒看到就不算看過，下次再出現`, async ({ browser, baseURL }) => {
+      const context = await browser.newContext({ baseURL, viewport });
+      // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+      await stubVisitorCounter(context);
+      const page = await context.newPage();
+      await toResultWithWrongCards(page, fontSize);
+      const button = page.locator('.wrong-item').first().getByRole('button', { name: /加星號/ });
+      await toViewportBottom(button);
+      await settleAnimations(page);
+      const before = await starState(button);
+      await page.mouse.click(before.x, before.y);
+      const tip = page.locator('.wrong-item:first-child .wrong-stem-row + .review-notice');
+      await expect(tip).toHaveText(TIP);
+      await nextFrames(page);
+      await nextFrames(page);
+      expect(sameSpot(await starState(button)), '星號移動了').toEqual(sameSpot(before));
+      const seen = () => page.evaluate(() => window.localStorage.getItem('ipas-review-star-hint-seen'));
+      expect(await seen(), '提示大半在視窗外，卻算看過了').toBeNull();
+
+      // 取消再加：還沒看過，提示再出現一次
+      await page.mouse.click(before.x, before.y);
+      await expect(button).toHaveAttribute('aria-pressed', 'false');
+      await page.mouse.click(before.x, before.y);
+      await expect(tip).toHaveText(TIP);
+
+      // 捲過去看到了，才算看過
+      await tip.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+      await expect.poll(seen).toBe('1');
+      await context.close();
+    });
+
+    for (const way of ['滑鼠', 'Space'] as const) {
+      test(`存不進去 ${name}、${way}：捲到剛好看得到整段說明，焦點不動`, async ({ browser, baseURL }) => {
+        const context = await browser.newContext({ baseURL, viewport });
+        // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+        await stubVisitorCounter(context);
+        const page = await context.newPage();
+        await toResultWithWrongCards(page, fontSize);
+        const button = page.locator('.wrong-item').first().getByRole('button', { name: /加星號/ });
+        if (way === 'Space') await button.focus();
+        await toViewportBottom(button);
+        await settleAnimations(page);
+        await failWritesFrom(page, KEY);
+        const before = await starState(button);
+        if (way === 'Space') await page.keyboard.press('Space');
+        else await page.mouse.click(before.x, before.y);
+        const notice = page.locator('.wrong-item:first-child .wrong-stem-row + .review-notice');
+        await expect(notice).toHaveText(NOT_SAVED);
+        await expect(button).toHaveAttribute('aria-pressed', 'false');
+        await nextFrames(page);
+        const m = await readable(notice);
+        expectReadable(m, '存不進去的說明');
+        // 只捲需要的：說明的底邊貼著視窗底邊
+        expect(Math.abs(m.bottom - m.viewport), `捲過頭了 ${JSON.stringify(m)}`).toBeLessThanOrEqual(1);
+        if (way === 'Space') await expect(button).toBeFocused();
+        else expect(await page.evaluate(() => document.activeElement?.closest('.review-notice'))).toBeNull();
+        await context.close();
+      });
+    }
+  }
 });

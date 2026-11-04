@@ -476,13 +476,18 @@ export function setStar(id: string, starred: boolean): boolean {
     }
   }, button);
   if (saved && first) requestPersistence();
+  // 真的看到了才算看過（markStarHintSeen）：提示在視窗外的話，下次加星號再說一次
   if (saved && added && !readBool(STAR_HINT_SEEN_KEY)) {
-    writeBool(STAR_HINT_SEEN_KEY, true);
     // 「已另存」比較重要
     if (!buttonNotices.has(button)) setButtonNotice(button, 'first-star');
     notify();
   }
   return saved;
+}
+
+/** 第一次加星號的提示使用者看到了（ReviewNotice.tsx）：之後不再說 */
+export function markStarHintSeen(): void {
+  writeBool(STAR_HINT_SEEN_KEY, true);
 }
 
 /** 手動移出待複習；星號不動。記下時間：這一場已經答錯的話，結束測驗時不能加回來 */

@@ -5,9 +5,21 @@
 //   最上面，之後別的分頁造成的排在主內容最後面（hooks/useReview.ts 的 usePageNotices）。
 // 看得到的字是一般內容。螢幕閱讀器由 ReviewAnnouncer 念：插進頁面的 live region 不一定會念，
 // 所以用一個開頁就在、看不見的。每一次新的提示都念，字一樣也念；提示收掉時清空（announce.ts）。
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type RefObject,
+} from 'react';
 import { NOTICE_TEXT, useButtonNotice } from '../../hooks/useReview';
-import type { ReviewButton, ReviewNotice as Notice } from '../../utils/review-storage';
+import {
+  markStarHintSeen,
+  type ReviewButton,
+  type ReviewNotice as Notice,
+} from '../../utils/review-storage';
 import { announce, attachLiveRegion, withdraw } from './announce';
 import './ReviewNotice.css';
 
@@ -36,7 +48,9 @@ export function ReviewNotice({ notice, event, end = false }: ReviewNoticeProps) 
   const text = notice && NOTICE_TEXT[notice];
   useAnnounce(text, event ?? notice);
   if (!text) return null;
-  return <p className={`review-notice review-notice--page${end ? ' review-notice--end' : ''}`}>{text}</p>;
+  return (
+    <p className={`review-notice review-notice--page${end ? ' review-notice--end' : ''}`}>{text}</p>
+  );
 }
 
 interface ButtonNoticeProps {
@@ -47,17 +61,79 @@ interface ButtonNoticeProps {
 /** 現況（不是這一次寫入的結果）：主內容最上面已經說了，按鈕下面不再說一次 */
 const STATE_NOTICES: ReadonlySet<Notice> = new Set(['newer', 'corrupt-stuck']);
 
+/** 這一次按下去沒有生效：說明一定要看得到 */
+const FAILURES: ReadonlySet<Notice> = new Set(['write-failed', 'newer', 'corrupt-stuck']);
+
+/** 第一次加星號的提示露出多少才算看到 */
+const SEEN_RATIO = 0.75;
+
+/**
+ * 提示在視窗外時（按鈕在視窗底部，提示排在它下面）：
+ * - 沒有生效的（存不進去、新版資料、搬不走）：捲到剛好看得到（block: 'nearest'，html 的 scroll-padding-top 留給頁首）。
+ *   按鈕沒有切換，頁面動了第二下也不會切錯。焦點不動。在畫出來之前捲，不先畫一次在視窗外的。
+ * - 第一次加星號的提示：不捲（星號要留在指標底下），大半露出來才算看過；沒看到的話下次加星號再說一次。
+ */
+function useNoticeInView(
+  ref: RefObject<HTMLParagraphElement | null>,
+  notice: Notice | null,
+  seq: number | undefined
+): void {
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (el && notice && FAILURES.has(notice)) el.scrollIntoView({ block: 'nearest' });
+  }, [ref, notice, seq]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || notice !== 'first-star') return;
+    if (typeof IntersectionObserver === 'undefined') {
+      markStarHintSeen();
+      return;
+    }
+    // 頁首是 sticky，蓋在視窗最上面：被它蓋住的部分不算看到
+    const header =
+      parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--app-header-height')
+      ) || 0;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting && e.intersectionRatio >= SEEN_RATIO)) {
+          markStarHintSeen();
+          observer.disconnect();
+        }
+      },
+      { threshold: SEEN_RATIO, rootMargin: `-${header}px 0px 0px 0px` }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [ref, notice, seq]);
+}
+
 export function ButtonNotice({ button, questionId }: ButtonNoticeProps) {
   const event = useButtonNotice(button, questionId);
   const top = useContext(TopNoticeContext);
   const notice = event && !(STATE_NOTICES.has(event.notice) && event.notice === top) ? event : null;
+  const ref = useRef<HTMLParagraphElement>(null);
   useAnnounce(notice?.text ?? null, notice?.seq);
-  return notice ? <p className="review-notice">{notice.text}</p> : null;
+  useNoticeInView(ref, notice?.notice ?? null, notice?.seq);
+  return notice ? (
+    <p className="review-notice" ref={ref}>
+      {notice.text}
+    </p>
+  ) : null;
 }
 
 /** 字不經過 React：由 announce.ts 直接改，清空與放字才是兩次 DOM 變動 */
 export function ReviewAnnouncer() {
-  return <p ref={attachLiveRegion} className="review-live sr-only" role="status" aria-live="polite" aria-atomic="true" />;
+  return (
+    <p
+      ref={attachLiveRegion}
+      className="review-live sr-only"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    />
+  );
 }
 
 export default ReviewNotice;

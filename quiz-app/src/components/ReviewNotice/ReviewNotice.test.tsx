@@ -1,7 +1,7 @@
 // 星號與待複習的提示：排在文件流裡。按鈕引起的排在那顆按鈕的位置，其他的排在主內容最上面，開頁就在；
 // 螢幕閱讀器由一個開頁就在、看不見的 live region 念：每一次新的提示都念（字一樣也念），提示收掉時清空。
 import { useLayoutEffect } from 'react';
-import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { ButtonNotice, ReviewAnnouncer, ReviewNotice, TopNoticeContext } from './ReviewNotice';
 import { usePageNotices } from '../../hooks/useReview';
@@ -179,7 +179,8 @@ describe('頁面的提示放在哪裡：換畫面時已經有的在最上面，�
     store.set(REVIEW_STORAGE_KEY, '{broken');
     const set = localStorage.setItem;
     localStorage.setItem = (k: string, v: string) => {
-      if (k.startsWith(`${REVIEW_STORAGE_KEY}:corrupt`)) throw new DOMException('quota', 'QuotaExceededError');
+      if (k.startsWith(`${REVIEW_STORAGE_KEY}:corrupt`))
+        throw new DOMException('quota', 'QuotaExceededError');
       set(k, v);
     };
     try {
@@ -249,6 +250,92 @@ describe('頁面的提示放在哪裡：換畫面時已經有的在最上面，�
     rerender(<Page view="home" />);
     expect(shown('page')).toMatch(NEWER);
     expect(shown('end')).toBe('');
+  });
+});
+
+describe('提示在視窗外時', () => {
+  type Callback = (entries: { isIntersecting: boolean; intersectionRatio: number }[]) => void;
+  let observers: { callback: Callback; options: IntersectionObserverInit; disconnected: boolean }[];
+  const seen = () => store.get('ipas-review-star-hint-seen') ?? null;
+  const scroll = () => vi.mocked(Element.prototype.scrollIntoView);
+
+  beforeEach(() => {
+    observers = [];
+    vi.stubGlobal(
+      'IntersectionObserver',
+      class {
+        record: (typeof observers)[number];
+        constructor(callback: Callback, options: IntersectionObserverInit) {
+          this.record = { callback, options, disconnected: false };
+          observers.push(this.record);
+        }
+        observe() {}
+        disconnect() {
+          this.record.disconnected = true;
+        }
+      }
+    );
+    scroll().mockClear();
+  });
+  afterEach(() => vi.unstubAllGlobals());
+
+  it('第一次加星號：不捲動；大半露出來才算看過，露出一點不算', () => {
+    render(<Page />);
+    act(() => {
+      setStar('a', true);
+    });
+    expect(shown('star-a')).toBe(TIP);
+    expect(scroll()).not.toHaveBeenCalled();
+    expect(observers).toHaveLength(1);
+    expect(observers[0].options.threshold).toBe(0.75);
+    act(() => observers[0].callback([{ isIntersecting: true, intersectionRatio: 0.45 }]));
+    expect(seen()).toBeNull();
+    act(() => observers[0].callback([{ isIntersecting: true, intersectionRatio: 0.8 }]));
+    expect(seen()).toBe('1');
+    expect(observers[0].disconnected).toBe(true);
+  });
+
+  it('沒看到就收掉：不算看過，下次加星號再說一次', () => {
+    render(<Page />);
+    act(() => {
+      setStar('a', true);
+    });
+    act(() => {
+      setStar('a', false);
+    });
+    expect(observers[0].disconnected).toBe(true);
+    expect(seen()).toBeNull();
+    act(() => {
+      setStar('c', true);
+    });
+    expect(shown('star-c')).toBe(TIP);
+  });
+
+  it('存不進去：每一次都捲到剛好看得到（block: nearest），不動焦點', () => {
+    const set = localStorage.setItem;
+    localStorage.setItem = (k: string, v: string) => {
+      if (k === REVIEW_STORAGE_KEY) throw new DOMException('quota', 'QuotaExceededError');
+      set(k, v);
+    };
+    try {
+      render(<Page />);
+      const before = document.activeElement;
+      act(() => {
+        setStar('a', true);
+      });
+      expect(scroll()).toHaveBeenCalledTimes(1);
+      expect(scroll().mock.instances[0]).toBe(
+        screen.getByTestId('star-a').querySelector('.review-notice')
+      );
+      expect(scroll()).toHaveBeenCalledWith({ block: 'nearest' });
+      act(() => {
+        setStar('a', true);
+      });
+      expect(scroll()).toHaveBeenCalledTimes(2);
+      expect(document.activeElement).toBe(before);
+    } finally {
+      localStorage.setItem = set;
+    }
   });
 });
 
