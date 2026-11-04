@@ -3,7 +3,7 @@
 import { useLayoutEffect } from 'react';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, onTestFinished, vi } from 'vitest';
 import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
-import { ButtonNotice, EndNotice, ReviewAnnouncer, ReviewNotice, TopNoticeContext } from './ReviewNotice';
+import { ActionNotice, ButtonNotice, EndNotice, ReviewAnnouncer, ReviewNotice, TopNoticeContext } from './ReviewNotice';
 import { END_RESOLVED_TEXT, NOTICE_TEXT, usePageNotices } from '../../hooks/useReview';
 import {
   REVIEW_STORAGE_KEY,
@@ -300,6 +300,19 @@ describe('頁面的提示放在哪裡：換畫面時已經有的在最上面，�
     }
   });
 
+  it('最後面已經有一段，別的分頁改回來之後現況正好是最上面那一句：最後面改說現況，不留著過時的那一句', () => {
+    const { rerender } = render(<Page view="home" />);
+    act(() => {
+      reportReviewPoolFailure();
+    });
+    rerender(<Page view="quiz" />);
+    expect(shown('page')).toMatch(/這一場先出主題庫/);
+    otherTab(v2);
+    expect(shown('end')).toMatch(NEWER);
+    otherTab(v1);
+    expect(shown('end')).toMatch(/這一場先出主題庫/);
+  });
+
   it('最上面已經說了的，別的分頁又造成一次：最後面不重複', () => {
     store.set(REVIEW_STORAGE_KEY, v2);
     render(<Page />);
@@ -498,6 +511,19 @@ describe('提示在視窗外時', () => {
     expect(observers[0].disconnected).toBe(true);
   });
 
+  it('被 sticky 頁首蓋住的部分不算看到：rootMargin 扣掉頁首的高度', () => {
+    document.documentElement.style.setProperty('--app-header-height', '64px');
+    try {
+      render(<Page />);
+      act(() => {
+        setStar('a', true);
+      });
+      expect(observers[0].options.rootMargin).toBe('-64px 0px 0px 0px');
+    } finally {
+      document.documentElement.style.removeProperty('--app-header-height');
+    }
+  });
+
   it('沒看到就收掉：不算看過，下次加星號再說一次', () => {
     render(<Page />);
     act(() => {
@@ -527,7 +553,8 @@ describe('提示在視窗外時', () => {
       boxes = new Map();
       // jsdom 沒有排版：位置照測試給的，說明在畫出來時（layout effect）才有
       const rect = vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function (this: Element) {
-        const box = this.classList.contains('review-notice') ? boxes.get(NOTICE) : boxes.get(this);
+        const notice = this.classList.contains('review-notice') || this.classList.contains('action-notice');
+        const box = notice ? boxes.get(NOTICE) : boxes.get(this);
         return { top: box?.top ?? 0, bottom: box?.bottom ?? 0, height: (box?.bottom ?? 0) - (box?.top ?? 0) } as DOMRect;
       });
       const height = vi.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(520);
@@ -589,6 +616,47 @@ describe('提示在視窗外時', () => {
       press({ top: 500, bottom: 560.3 }, 440);
       expect(scrollBy()).toHaveBeenLastCalledWith(0, 41);
       press({ top: 500, bottom: 700 }, 90.7);
+      expect(scrollBy()).toHaveBeenLastCalledWith(0, 30);
+    });
+
+    it('第一次加星號的提示在視窗外：不捲（星號要留在指標底下）', () => {
+      restore();
+      boxes = new Map();
+      vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function (this: Element) {
+        return (this.classList.contains('review-notice') ? { top: 500, bottom: 560 } : { top: 440, bottom: 480 }) as DOMRect;
+      });
+      vi.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(520);
+      vi.spyOn(window, 'scrollBy').mockImplementation(() => undefined);
+      restore = () => vi.restoreAllMocks();
+      render(<Card />);
+      act(() => {
+        setStar('a', true);
+      });
+      expect(document.querySelector('.review-notice')).toHaveTextContent(TIP);
+      expect(scrollBy()).not.toHaveBeenCalled();
+    });
+
+    it('結果頁再測一次的說明（ActionNotice）也一樣：捲到看得到，按鈕不捲到頁首底下，每按一次都捲', () => {
+      boxes.set(NOTICE, { top: 500, bottom: 560 });
+      const { rerender } = render(
+        <div>
+          <div className="action-section">
+            <button type="button" data-testid="star">再測一次</button>
+          </div>
+          <ActionNotice text="沒有題目" seq={1} />
+        </div>
+      );
+      // 第一次畫的時候按鈕還沒有位置（jsdom，top 0 在頁首底下）：不捲
+      expect(scrollBy()).not.toHaveBeenCalled();
+      boxes.set(screen.getByTestId('star'), { top: 90, bottom: 130 });
+      rerender(
+        <div>
+          <div className="action-section">
+            <button type="button" data-testid="star">再測一次</button>
+          </div>
+          <ActionNotice text="沒有題目" seq={2} />
+        </div>
+      );
       expect(scrollBy()).toHaveBeenLastCalledWith(0, 30);
     });
 
