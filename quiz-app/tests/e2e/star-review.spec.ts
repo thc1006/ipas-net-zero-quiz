@@ -1309,6 +1309,66 @@ test.describe('第一次加星號之後點不能按的地方或捲動：剛按�
     expect(overlapsNotice(after), `觸控捲動之後提示蓋住星號 ${JSON.stringify(after)}`).toBe(false);
     await context.close();
   });
+
+  // 題幹有 tabIndex=-1（鍵盤按下一題時焦點移到那裡），看起來是文字，點下去卻會拿到焦點。改之前它算成剛按的東西，
+  // focusin 也把它當成有焦點的元素：390x400 字級特大第 10 題，提示從底部換到頁首下面，蓋住剛按的星號
+  for (const { name, hasTouch } of [
+    { name: '觸控', hasTouch: true },
+    { name: '滑鼠', hasTouch: false },
+  ]) {
+    test(`390x400 字級特大第 10 題，${name}：點題幹的文字，再點同一個位置就是取消星號`, async ({ browser, baseURL }) => {
+      const context = await browser.newContext({ baseURL, hasTouch, viewport: { width: 390, height: 400 } });
+      // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+      await stubVisitorCounter(context);
+      const page = await context.newPage();
+      const tap = (x: number, y: number) => (hasTouch ? page.touchscreen.tap(x, y) : page.mouse.click(x, y));
+      await gotoHome(page, undefined, 'xlarge');
+      await page.getByLabel('隨機出題順序').uncheck();
+      await startButton(page).click();
+      for (let i = 1; i < 10; i++) {
+        await page.locator('.option-item').first().click();
+        await page.getByRole('button', { name: /下一題/ }).click();
+      }
+      await expect(progress(page)).toHaveText(/^10 \//);
+      await settleAnimations(page);
+      // 星號在頁首下面 20px：提示在底部時不蓋住它，換到頁首下面就蓋住
+      await star(page).evaluate((el) => {
+        const headerBottom = document.querySelector('.app-header')!.getBoundingClientRect().bottom;
+        window.scrollBy(0, el.getBoundingClientRect().top - headerBottom - 20);
+      });
+      const before = await spotAndNotice(star(page));
+      await tap(before.x, before.y);
+      await expect(star(page)).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
+      await nextFrames(page);
+      const after = await spotAndNotice(star(page));
+      expect(overlapsNotice(after), `前提：加星號之後提示不蓋住星號 ${JSON.stringify(after)}`).toBe(false);
+
+      // 題幹看得到、提示沒蓋住的那一段的中間
+      const text = await page.locator('.question-stem').evaluate((el) => {
+        const r = el.getBoundingClientRect();
+        const n = document.querySelector('.review-notice')!.getBoundingClientRect();
+        let top = Math.max(r.top, document.querySelector('.app-header')!.getBoundingClientRect().bottom);
+        let bottom = Math.min(r.bottom, window.innerHeight);
+        if (n.top <= top + 2) top = Math.max(top, n.bottom);
+        else bottom = Math.min(bottom, n.top);
+        const x = r.left + 20;
+        const y = (top + bottom) / 2;
+        return { x, y, onStem: !!document.elementFromPoint(x, y)?.closest('.question-stem'), height: bottom - top };
+      });
+      // 前提：點得到題幹，而且它會把題幹當成要保護的元素時，提示換邊（題幹的下半在底部的提示後面）
+      expect(text.onStem && text.height > 4, `前提：點得到題幹 ${JSON.stringify(text)}`).toBe(true);
+      await tap(text.x, text.y);
+      await expect(page.locator('.question-stem')).toBeFocused();
+      await nextFrames(page);
+      const tapped = await spotAndNotice(star(page));
+      expect(overlapsNotice(tapped), `點了題幹之後提示蓋住星號 ${JSON.stringify(tapped)}`).toBe(false);
+      expect(tapped.hitIsTarget, `點同一個位置點到的不是星號 ${JSON.stringify(tapped)}`).toBe(true);
+      await tap(tapped.x, tapped.y);
+      await expect(star(page), '第二下點到的不是星號').toHaveAttribute('aria-pressed', 'false');
+      await context.close();
+    });
+  }
 });
 
 // 第一次造訪的加強練習池對話框是 role="dialog" 的 div，不是 <dialog>。在裡面用鍵盤移動焦點時，Header.tsx 的補捲不能對

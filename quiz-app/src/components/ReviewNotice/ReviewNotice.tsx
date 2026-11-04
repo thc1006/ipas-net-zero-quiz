@@ -16,8 +16,18 @@ interface ReviewNoticeProps {
   view?: string;
 }
 
-// 點一下要能指到的東西；點在空白或文字上就不算指著什麼
-const INTERACTIVE = 'button, a[href], input, select, textarea, label, summary, [tabindex]';
+// 點一下要能指到的東西；點在空白或文字上就不算指著什麼。tabindex 是負的（題幹）只是讓程式移焦點過去，
+// 看起來是文字，點了雖然會拿到焦點，也不算
+const INTERACTIVE = 'button, a[href], input, select, textarea, label, summary, [tabindex]:not([tabindex^="-"])';
+
+/** 焦點是不是用鍵盤移過去的（或鍵盤操作之後由程式移過去的）；不支援 :focus-visible 就當作是 */
+function focusVisible(node: Element): boolean {
+  try {
+    return node.matches(':focus-visible');
+  } catch {
+    return true;
+  }
+}
 
 /** 元素在視窗裡的位置。藏起來的 radio 沒有大小，看得到的是外面的 label（題目的選項） */
 function box(node: Element): DOMRect {
@@ -37,9 +47,11 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
   const fresh = useRef(true);
   const root = document.documentElement;
 
-  // 提示出現之前就要記：按下星號的那一下，提示還沒出現。換掉它的只有焦點移到別的元素，或按了別的能按的東西：
+  // 提示出現之前就要記：按下星號的那一下，提示還沒出現。換掉它的只有用鍵盤把焦點移到別的元素，或按了別的能按的東西：
   // 點在文字或空白上不算，觸控捲動也不算（從按鈕或選項上開始捲的話，瀏覽器送 pointercancel，不會有 pointerup），
-  // 所以按下時先記著，放開才換
+  // 所以按下時先記著，放開才換。點下去拿到的焦點由 pointerup 決定，focusin 只管 :focus-visible 的焦點：
+  // 點題幹的文字時題幹拿到焦點，但它不是剛按的東西。剛按的東西不見了、焦點移到取代它的元素時（移出待複習之後的
+  // 「已移出」、關掉對話框回到打開它的按鈕），就換成那個元素
   useEffect(() => {
     const own = (target: EventTarget | null): target is Element =>
       target instanceof Element && !ref.current?.contains(target);
@@ -59,7 +71,7 @@ export function ReviewNotice({ view }: ReviewNoticeProps) {
       pressed = null;
     };
     const onFocusIn = (e: FocusEvent) => {
-      if (own(e.target)) {
+      if (own(e.target) && (focusVisible(e.target) || anchor.current?.isConnected === false)) {
         anchor.current = e.target;
         fresh.current = true;
       }
