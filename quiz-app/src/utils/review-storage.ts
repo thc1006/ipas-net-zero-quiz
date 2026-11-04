@@ -303,6 +303,14 @@ export function getButtonNotice(button: ReviewButton, id: string): ReviewNotice 
   return getButtonNoticeEvent(button, id)?.notice ?? null;
 }
 
+/**
+ * 按鈕的提示屬於那顆按鈕所在的題卡：題卡換掉（換題）就收掉（ReviewNotice.tsx 的 ButtonNotice）。
+ * 留著的話，回到那一題時舊的提示又出現，存不進去的說明還會再捲一次、再念一次
+ */
+export function dismissButtonNotice(button: ReviewButton, id: string): void {
+  if (buttonNotices.delete(`${button}:${id}`)) notify();
+}
+
 /** 換頁、開新的一場時呼叫：一次性的提示不跟到別的畫面 */
 export function clearReviewNotices(): void {
   if (!writeFailed && !recovered && !poolFailed && buttonNotices.size === 0) return;

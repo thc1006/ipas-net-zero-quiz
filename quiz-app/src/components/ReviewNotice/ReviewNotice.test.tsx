@@ -1,7 +1,7 @@
 // 星號與待複習的提示：排在文件流裡。按鈕引起的排在那顆按鈕的位置，其他的排在主內容最上面，開頁就在；
 // 螢幕閱讀器由一個開頁就在、看不見的 live region 念：每一次新的提示都念（字一樣也念），提示收掉時清空。
 import { useLayoutEffect } from 'react';
-import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, onTestFinished, vi } from 'vitest';
 import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { ButtonNotice, ReviewAnnouncer, ReviewNotice, TopNoticeContext } from './ReviewNotice';
 import { usePageNotices } from '../../hooks/useReview';
@@ -9,6 +9,7 @@ import {
   REVIEW_STORAGE_KEY,
   __resetReviewStoreForTesting,
   clearReviewNotices,
+  getButtonNotice,
   recordReviewResults,
   reportReviewPoolFailure,
   setStar,
@@ -114,6 +115,100 @@ describe('看得到的提示', () => {
       clearReviewNotices();
     });
     expect(document.querySelectorAll('.review-notice')).toHaveLength(0);
+  });
+
+  describe('按鈕的提示屬於那張題卡：題卡換掉就收掉，回到那一題時不再出現', () => {
+    /** QuizPage.tsx 的 <QuestionCard key={currentQuestion.id}>：換題時整張題卡換掉 */
+    function Quiz({ id }: { id: string }) {
+      return (
+        <TopNoticeContext.Provider value={null}>
+          <ReviewAnnouncer />
+          <div key={id} data-testid="card">
+            <ButtonNotice button="star" questionId={id} />
+            <ButtonNotice button="remove" questionId={id} />
+          </div>
+        </TopNoticeContext.Provider>
+      );
+    }
+
+    it('存不進去之後下一題、上一題：不再出現、不捲動、不再念', async () => {
+      const set = localStorage.setItem;
+      localStorage.setItem = (k: string, v: string) => {
+        if (k === REVIEW_STORAGE_KEY) throw new DOMException('quota', 'QuotaExceededError');
+        set(k, v);
+      };
+      try {
+        const { rerender } = render(<Quiz id="q1" />);
+        const said = recordLive();
+        await act(async () => {
+          setStar('q1', true);
+        });
+        await waitFor(() => expect(said.filter(Boolean)).toHaveLength(1));
+        const scrolls = vi.mocked(Element.prototype.scrollIntoView).mock.calls.length;
+        await act(async () => rerender(<Quiz id="q2" />));
+        await act(async () => rerender(<Quiz id="q1" />));
+        await new Promise((r) => setTimeout(r, 50));
+        expect(shown('card')).toBe('');
+        expect(vi.mocked(Element.prototype.scrollIntoView).mock.calls.length).toBe(scrolls);
+        expect(said.filter(Boolean)).toHaveLength(1);
+        expect(getButtonNotice('star', 'q1')).toBeNull();
+      } finally {
+        localStorage.setItem = set;
+      }
+    });
+
+    it('第一次加星號的提示：換題就收掉，沒看到不算看過，回來不再出現；下次加星號再說', () => {
+      // 一直沒有露出來（IntersectionObserver 從不回報）
+      vi.stubGlobal(
+        'IntersectionObserver',
+        class {
+          observe() {}
+          disconnect() {}
+        }
+      );
+      onTestFinished(() => {
+        vi.unstubAllGlobals();
+      });
+      const { rerender } = render(<Quiz id="q1" />);
+      act(() => {
+        setStar('q1', true);
+      });
+      expect(shown('card')).toBe(TIP);
+      rerender(<Quiz id="q2" />);
+      rerender(<Quiz id="q1" />);
+      expect(shown('card')).toBe('');
+      expect(store.get('ipas-review-star-hint-seen') ?? null).toBeNull();
+      act(() => {
+        setStar('q1', false);
+      });
+      act(() => {
+        setStar('q1', true);
+      });
+      expect(shown('card')).toBe(TIP);
+    });
+
+    it('別張題卡的提示不受影響', () => {
+      const { rerender } = render(
+        <>
+          <Quiz id="q1" />
+          <div data-testid="other">
+            <ButtonNotice button="star" questionId="c" />
+          </div>
+        </>
+      );
+      act(() => {
+        setStar('c', true);
+      });
+      rerender(
+        <>
+          <Quiz id="q2" />
+          <div data-testid="other">
+            <ButtonNotice button="star" questionId="c" />
+          </div>
+        </>
+      );
+      expect(shown('other')).toBe(TIP);
+    });
   });
 
   it('新版資料：第一次畫出來就在，不是等 effect 才插進來', () => {

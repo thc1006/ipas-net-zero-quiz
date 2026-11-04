@@ -1116,6 +1116,46 @@ test('Pixel 7 字級特大：加星號之後換題、結束並返回首頁，都
   expect(Math.abs(gap.belowFooter), `頁尾下面留了空白 ${JSON.stringify(gap)}`).toBeLessThan(1);
 });
 
+// 按鈕的提示屬於那張題卡：換題就收掉。留著的話，按上一題回到那一題時舊的說明又出現，存不進去的還會捲過去，
+// 把有焦點的上一題捲出視窗
+for (const failing of [false, true]) {
+  test(`按星號${failing ? '存不進去' : ''}之後換題，再按上一題回來：舊的提示不再出現，有焦點的上一題還在視窗裡`, async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 420 });
+    await gotoHome(page);
+    if (failing) await failWritesFrom(page, KEY);
+    await page.getByLabel('隨機出題順序').uncheck();
+    await startButton(page).click();
+    await expect(page.locator('.question-card')).toBeVisible();
+    await page.locator('.option-item').first().click();
+    await page.getByRole('button', { name: /下一題/ }).click();
+    await expect(progress(page)).toHaveText(/^2 \//);
+    await star(page).click();
+    await expect(page.locator('.question-header + .review-notice')).toHaveText(failing ? NOT_SAVED : TIP);
+    await page.locator('.option-item').first().click();
+    await page.getByRole('button', { name: /下一題/ }).click();
+    await expect(progress(page)).toHaveText(/^3 \//);
+    await expect(page.locator('.review-notice')).toHaveCount(0);
+    const prev = page.getByRole('button', { name: /上一題/ });
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await nextFrames(page);
+    await prev.focus();
+    await page.keyboard.press('Enter');
+    await expect(progress(page)).toHaveText(/^2 \//);
+    await settleAnimations(page);
+    await nextFrames(page);
+    const m = await prev.evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      const header = document.querySelector('.app-header')!.getBoundingClientRect();
+      return { top: r.top, bottom: r.bottom, headerBottom: header.bottom, viewport: window.innerHeight };
+    });
+    const info = JSON.stringify(m);
+    expect(m.bottom, `上一題被捲出視窗 ${info}`).toBeLessThanOrEqual(m.viewport);
+    expect(m.top, `上一題被捲到頁首底下 ${info}`).toBeGreaterThanOrEqual(m.headerBottom);
+    await expect(prev).toBeFocused();
+    await expect(page.locator('.review-notice')).toHaveCount(0);
+  });
+}
+
 /** 有焦點的元素沒有被頁首或星號的提示蓋住（WCAG 2.4.11）：與兩者都不重疊，也在視窗裡 */
 async function expectNotCovered(target: Locator, where: string): Promise<void> {
   const m = await target.evaluate((el) => {

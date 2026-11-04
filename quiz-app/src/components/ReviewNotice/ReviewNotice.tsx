@@ -1,6 +1,7 @@
 // 星號與待複習錯題要告訴使用者的事（Discussion #1）。都排在文件流裡，不蓋住任何東西，也不移動焦點：
 // - ButtonNotice：星號、移出待複習按下去引起的（第一次加星號、沒有儲存、按下去才發現的新版資料與搬不走的壞資料），
 //   排在那顆按鈕那一列的正下方。它上面的東西都不動，按鈕不會從指標底下移走，第二下點同一個位置還是那顆按鈕。
+//   它屬於那張題卡：換題、換畫面就收掉。
 // - ReviewNotice：頁面的（新版資料、壞資料、練習池載入失敗、結束測驗時沒有儲存）。換畫面時已經有的排在主內容
 //   最上面，之後別的分頁造成的排在主內容最後面（hooks/useReview.ts 的 usePageNotices）。
 // 看得到的字是一般內容。螢幕閱讀器由 ReviewAnnouncer 念：插進頁面的 live region 不一定會念，
@@ -16,6 +17,7 @@ import {
 } from 'react';
 import { NOTICE_TEXT, useButtonNotice } from '../../hooks/useReview';
 import {
+  dismissButtonNotice,
   markStarHintSeen,
   type ReviewButton,
   type ReviewNotice as Notice,
@@ -114,6 +116,8 @@ export function ButtonNotice({ button, questionId }: ButtonNoticeProps) {
   const top = useContext(TopNoticeContext);
   const notice = event && !(STATE_NOTICES.has(event.notice) && event.notice === top) ? event : null;
   const ref = useRef<HTMLParagraphElement>(null);
+  // 題卡換掉（換題）時收掉：回到那一題時不再出現，不再捲、不再念
+  useEffect(() => () => dismissButtonNotice(button, questionId), [button, questionId]);
   useAnnounce(notice?.text ?? null, notice?.seq);
   useNoticeInView(ref, notice?.notice ?? null, notice?.seq);
   return notice ? (
