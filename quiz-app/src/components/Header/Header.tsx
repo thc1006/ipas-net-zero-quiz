@@ -32,12 +32,17 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
   // html 的 scroll-padding-top 讓 Tab、Shift+Tab 捲到的地方停在頁首下面（App.css）。Firefox 只在焦點不完全在視窗裡時才捲，
   // 判斷時不扣 scroll-padding：一半在頁首底下的控制項不會捲出來。用鍵盤移動焦點時補捲一次。
   // 對話框不管：它們蓋在頁首上面、自己捲動（多半是 role="dialog" 的 div，不是 <dialog>），scroll-padding-top 跟它們無關
+  // 補捲排在下一個 frame。下一個按鍵或按下指標之前還沒跑到的就不跑：那時候頁面可能已經被別的東西捲過，
+  // 例如按星號存不進去時捲出來的說明（ReviewNotice.tsx）。沒有新的畫面要畫時 WebKit 會把 frame 延後，
+  // 實測 focus() 之後 200ms 才跑，把已經捲出來的說明又捲回視窗外
   useEffect(() => {
+    let frame = 0;
     const onFocusIn = (e: FocusEvent) => {
       const target = e.target;
       if (!(target instanceof Element)) return;
       if (target.closest('.app-header, dialog, [role="dialog"], [role="alertdialog"], [aria-modal="true"]')) return;
-      requestAnimationFrame(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
         if (document.activeElement !== target || !target.matches(':focus-visible')) return;
         // 藏起來的 radio、checkbox 沒有大小，看得到的是外面的 label
         const shown = target.getBoundingClientRect().height > 0 ? target : (target.closest('label') ?? target);
@@ -45,8 +50,17 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
         if (shown.getBoundingClientRect().top < limit - 1) shown.scrollIntoView({ block: 'nearest' });
       });
     };
+    const cancel = () => cancelAnimationFrame(frame);
     document.addEventListener('focusin', onFocusIn);
-    return () => document.removeEventListener('focusin', onFocusIn);
+    // capture：Tab 的 keydown 在焦點移動（focusin）之前，取消的是上一次的，不是這一次的
+    document.addEventListener('keydown', cancel, true);
+    document.addEventListener('pointerdown', cancel, true);
+    return () => {
+      cancel();
+      document.removeEventListener('focusin', onFocusIn);
+      document.removeEventListener('keydown', cancel, true);
+      document.removeEventListener('pointerdown', cancel, true);
+    };
   }, []);
 
   return (

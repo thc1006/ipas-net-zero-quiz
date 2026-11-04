@@ -1,11 +1,14 @@
 // Header：回報問題（GitHub issue）與討論區（GitHub Discussions）是兩個分開、各自有名稱的入口
-import { afterEach, describe, expect, it } from 'vitest';
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { Header } from './Header';
 import { useAccessibility } from '../../hooks/useAccessibility';
 import { DISCUSSIONS_URL, REPORT_URL } from '../../utils/feedback-url';
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+});
 
 function HeaderHarness() {
   const accessibility = useAccessibility();
@@ -47,4 +50,31 @@ describe('Header 的回報問題與討論區', () => {
     expect(screen.getByRole('button', { name: '開啟設定' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /切換(深色|淺色)模式/ })).toBeInTheDocument();
   });
+});
+
+describe('鍵盤移動焦點之後的補捲', () => {
+  function Page() {
+    return (
+      <>
+        <HeaderHarness />
+        <button type="button">頁面上的按鈕</button>
+      </>
+    );
+  }
+
+  for (const [name, act] of [
+    ['按鍵', () => fireEvent.keyDown(document.body, { key: ' ' })],
+    ['按下指標', () => fireEvent.pointerDown(document.body)],
+  ] as const) {
+    it(`下一個${name}之前還沒跑到的就不跑：頁面可能已經被別的東西捲過`, () => {
+      const request = vi.spyOn(window, 'requestAnimationFrame').mockReturnValue(7);
+      const cancel = vi.spyOn(window, 'cancelAnimationFrame');
+      render(<Page />);
+      fireEvent.focusIn(screen.getByRole('button', { name: '頁面上的按鈕' }));
+      expect(request).toHaveBeenCalledTimes(1);
+      cancel.mockClear();
+      act();
+      expect(cancel).toHaveBeenCalledWith(7);
+    });
+  }
 });
