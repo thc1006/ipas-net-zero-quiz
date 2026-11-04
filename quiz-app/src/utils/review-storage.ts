@@ -72,6 +72,15 @@ export type ReviewNotice =
 /** 會引起提示的按鈕：每一題的星號與移出待複習 */
 export type ReviewButton = 'star' | 'remove';
 
+/**
+ * 按鈕上的一次提示。seq 每次都不同：同一句話再說一次（同一顆按鈕又存不進去）也是新的一次，
+ * 螢幕閱讀器要再念
+ */
+export interface ReviewButtonNotice {
+  notice: ReviewNotice;
+  seq: number;
+}
+
 export interface ReviewResult {
   id: string;
   isCorrect: boolean;
@@ -257,8 +266,12 @@ let corruptStuck = false;
 // 按鈕引起的提示（排在那顆按鈕那一列下面），key 是「按鈕:題目 id」。只有同一顆按鈕的下一次寫入換掉它，
 // 別的按鈕與頁面的寫入都不動它：它收掉時下面的東西往上移，剛按的按鈕若在它下面就從指標底下移走。
 // 同樣的理由，按鈕的寫入也不動頁面的提示
-const buttonNotices = new Map<string, ReviewNotice>();
-let lastButton: string | null = null;
+const buttonNotices = new Map<string, ReviewButtonNotice>();
+let noticeSeq = 0;
+
+function setButtonNotice(button: string, notice: ReviewNotice): void {
+  buttonNotices.set(button, { notice, seq: ++noticeSeq });
+}
 
 /** 頁面現在要告訴使用者什麼；一次一件，由重要到不重要 */
 export function getReviewNotice(): ReviewNotice | null {
@@ -272,14 +285,14 @@ export function getReviewNotice(): ReviewNotice | null {
   return null;
 }
 
-/** 這顆按鈕上次按下去要說的話 */
-export function getButtonNotice(button: ReviewButton, id: string): ReviewNotice | null {
+/** 這顆按鈕上次按下去的那一次提示；同一次回傳同一個物件（useSyncExternalStore 比的是身分） */
+export function getButtonNoticeEvent(button: ReviewButton, id: string): ReviewButtonNotice | null {
   return buttonNotices.get(`${button}:${id}`) ?? null;
 }
 
-/** 最近按的那顆按鈕上的提示（螢幕閱讀器念的） */
-export function getLatestButtonNotice(): ReviewNotice | null {
-  return lastButton === null ? null : (buttonNotices.get(lastButton) ?? null);
+/** 這顆按鈕上次按下去要說的話 */
+export function getButtonNotice(button: ReviewButton, id: string): ReviewNotice | null {
+  return getButtonNoticeEvent(button, id)?.notice ?? null;
 }
 
 /** 換頁、開新的一場時呼叫：一次性的提示不跟到別的畫面 */
@@ -360,16 +373,13 @@ type WriteReport = 'page' | 'silent' | 'own';
  * button 是按下去引起這次寫入的按鈕（「star:題目 id」），要說的話記在它上面；沒有就看 report。
  */
 function update(change: (data: ReviewData) => void, button: string | null = null, report: WriteReport = 'page'): boolean {
-  if (button) {
-    buttonNotices.delete(button);
-    lastButton = button;
-  }
+  if (button) buttonNotices.delete(button);
   const silent = !button && report !== 'page';
   // onButton：頁面上已經說了只能讀取、不會儲存時，按鈕下面不再說一次
   const fail = (onButton = true): false => {
     if (!silent) {
       if (!button) writeFailed = true;
-      else if (onButton) buttonNotices.set(button, 'write-failed');
+      else if (onButton) setButtonNotice(button, 'write-failed');
       notify();
     }
     return false;
@@ -408,7 +418,7 @@ function update(change: (data: ReviewData) => void, button: string | null = null
   // 寫得進去就是又能儲存了（例如另一個分頁清出空間、重寫了這支 key）
   corruptStuck = false;
   if (button) {
-    if (corrupt) buttonNotices.set(button, 'recovered');
+    if (corrupt) setButtonNotice(button, 'recovered');
   } else if (!silent) {
     writeFailed = false;
     if (!corrupt) recovered = false;
@@ -458,7 +468,7 @@ export function setStar(id: string, starred: boolean): boolean {
   if (saved && added && !readBool(STAR_HINT_SEEN_KEY)) {
     writeBool(STAR_HINT_SEEN_KEY, true);
     // 「已另存」比較重要
-    if (!buttonNotices.has(button)) buttonNotices.set(button, 'first-star');
+    if (!buttonNotices.has(button)) setButtonNotice(button, 'first-star');
     notify();
   }
   return saved;
@@ -596,6 +606,6 @@ export function __resetReviewStoreForTesting(): void {
   poolFailed = false;
   corruptStuck = false;
   buttonNotices.clear();
-  lastButton = null;
+  noticeSeq = 0;
   listeners.clear();
 }

@@ -1306,3 +1306,41 @@ test('設定頁清除星號存不進去：只在設定頁自己的狀態列說�
   expect.soft(await liveSaid(page), 'live region 又念了一次').toEqual([]);
   expect(await clear.evaluate((el) => ({ top: el.getBoundingClientRect().top, scrollY: window.scrollY }))).toEqual(before);
 });
+
+const NOT_SAVED = '這次變更沒有儲存。瀏覽器可能封鎖了網站資料，或儲存空間已滿。';
+
+test.describe('螢幕閱讀器：每一次的提示都念，看得到的提示收掉時 live region 也清空', () => {
+  test('題目頁存不進去兩次，一樣的字：念兩次；同一顆再按一次也念；換題時清空', async ({ page }) => {
+    await page.addInitScript((key) => {
+      const set = Storage.prototype.setItem;
+      Storage.prototype.setItem = function (k: string, v: string) {
+        if (k === key) throw new DOMException('quota', 'QuotaExceededError');
+        set.call(this, k, v);
+      };
+    }, KEY);
+    await gotoHome(page);
+    await page.getByLabel('隨機出題順序').uncheck();
+    await startButton(page).click();
+    await expect(page.locator('.question-card')).toBeVisible();
+    await recordLive(page);
+    const live = page.locator('.review-live');
+
+    await star(page).click();
+    await expect(page.locator('.question-header + .review-notice')).toHaveText(NOT_SAVED);
+    await expect(live).toHaveText(NOT_SAVED);
+
+    await page.locator('.option-item').first().click();
+    await page.getByRole('button', { name: /下一題/ }).click();
+    await expect(progress(page)).toHaveText(/^2 \//);
+    await expect(page.locator('.review-notice')).toHaveCount(0);
+    await expect.soft(live, '看得到的提示收掉了，live region 還留著那一句').toBeEmpty();
+
+    await star(page).click();
+    await expect(page.locator('.question-header + .review-notice')).toHaveText(NOT_SAVED);
+    await expect.poll(async () => (await liveSaid(page)).filter((t) => t === NOT_SAVED).length, '第二題的同一句沒有念').toBe(2);
+
+    await star(page).click();
+    await expect.poll(async () => (await liveSaid(page)).filter((t) => t === NOT_SAVED).length, '同一顆再按一次沒有念').toBe(3);
+    await expect(live).toHaveText(NOT_SAVED);
+  });
+});

@@ -8,7 +8,7 @@ import {
   clearStars,
   clearWrong,
   getButtonNotice,
-  getLatestButtonNotice,
+  getButtonNoticeEvent,
   getReviewNotice,
   getReviewSnapshot,
   isStarred,
@@ -1002,16 +1002,19 @@ describe('按鈕上的提示', () => {
     expect(getReviewNotice()).toBeNull();
   });
 
-  it('最近一次按的那顆按鈕上的提示（給螢幕閱讀器念）', () => {
-    expect(getLatestButtonNotice()).toBeNull();
-    setStar('a', true);
-    expect(getLatestButtonNotice()).toBe('first-star');
-    setStar('c', true);
-    expect(getLatestButtonNotice()).toBeNull();
-    recordReviewResults([{ id: 'c', isCorrect: false, at: 1 }]);
+  it('每一次提示都是新的一次（給螢幕閱讀器再念）：同一顆按鈕同一句話也換；沒有變動時同一個物件', () => {
     failWrites();
-    removeFromReview('c');
-    expect(getLatestButtonNotice()).toBe('write-failed');
+    setStar('a', true);
+    const first = getButtonNoticeEvent('star', 'a');
+    expect(first?.notice).toBe('write-failed');
+    expect(getButtonNoticeEvent('star', 'a')).toBe(first);
+    setStar('a', true);
+    const second = getButtonNoticeEvent('star', 'a');
+    expect(second?.notice).toBe('write-failed');
+    expect(second?.seq).not.toBe(first?.seq);
+    setStar('c', true);
+    expect(getButtonNoticeEvent('star', 'a')).toBe(second);
+    expect(getButtonNoticeEvent('star', 'c')?.seq).not.toBe(second?.seq);
   });
 });
 
@@ -1029,7 +1032,6 @@ describe('設定頁的清除與匯入：由設定頁自己的狀態列說，不�
     const off = subscribeReview(listener);
     expect(write()).toBeFalsy();
     expect(getReviewNotice()).toBeNull();
-    expect(getLatestButtonNotice()).toBeNull();
     expect(listener).not.toHaveBeenCalled();
     off();
   });
@@ -1121,7 +1123,6 @@ describe('提示的優先序與清除', () => {
     expect(getReviewNotice()).toBeNull();
     expect(getButtonNotice('star', 'b')).toBeNull();
     expect(getButtonNotice('remove', 'b')).toBeNull();
-    expect(getLatestButtonNotice()).toBeNull();
     restore();
     off();
   });

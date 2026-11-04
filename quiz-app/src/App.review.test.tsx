@@ -91,11 +91,12 @@ describe('開站', () => {
     expect(wrongEntry(getReviewSnapshot(), q.id)).toEqual({ streak: 0, last: 5 });
   });
 
-  it('壞資料開站時就搬走，並告訴使用者', () => {
+  it('壞資料開站時就搬走，並告訴使用者', async () => {
     store.set(REVIEW_STORAGE_KEY, '{broken');
     render(<App />);
     expect(store.get('ipas-review-v1:corrupt')).toBe('{broken');
-    expect(live()).toHaveTextContent('星號與待複習紀錄無法讀取，原始內容已另存，清單從空的開始。');
+    // 下一個 frame 才放字（announce.ts）
+    await waitFor(() => expect(live()).toHaveTextContent('星號與待複習紀錄無法讀取，原始內容已另存，清單從空的開始。'));
     // 排在主內容最上面
     expect(document.querySelector('#main-content > .review-notice')).toHaveTextContent('原始內容已另存');
   });
@@ -505,7 +506,7 @@ describe('找得到練習入口', () => {
     expect(a.id).not.toBe(b.id);
     const star = screen.getByRole('button', { name: '加星號' });
     fireEvent.click(star);
-    expect(live()).toHaveTextContent('已加星號，首頁「題目來源」選「星號題」可以反覆練習。');
+    await waitFor(() => expect(live()).toHaveTextContent('已加星號，首頁「題目來源」選「星號題」可以反覆練習。'));
     // 排在題卡標頭那一列（星號所在）的正下方
     expect(document.querySelector('.question-header + .review-notice')).toHaveTextContent(
       '已加星號，首頁「題目來源」選「星號題」可以反覆練習。'
@@ -529,7 +530,7 @@ describe('寫入失敗', () => {
     const star = screen.getByRole('button', { name: '加星號' });
     fireEvent.click(star);
     expect(star).toHaveAttribute('aria-pressed', 'true');
-    expect(live()).toHaveTextContent(/沒有儲存/);
+    await waitFor(() => expect(live()).toHaveTextContent(/沒有儲存/));
     expect(document.querySelector('.question-header + .review-notice')).toHaveTextContent(/沒有儲存/);
   });
 

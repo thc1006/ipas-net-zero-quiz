@@ -4,14 +4,26 @@
 // - ReviewNotice：其他的（新版資料、壞資料、練習池載入失敗、結束測驗時沒有儲存），排在主內容最上面。
 //   多半開頁或換畫面時就在，使用者開始操作之後不會再把內容往下推。
 // 看得到的字是一般內容。螢幕閱讀器由 ReviewAnnouncer 念：插進頁面的 live region 不一定會念，
-// 所以用一個開頁就在、看不見的，每一句新的提示念一次。
-import { useEffect, useRef, useState } from 'react';
-import { useButtonNotice, useLatestButtonNotice, useReviewNotice } from '../../hooks/useReview';
+// 所以用一個開頁就在、看不見的。每一次新的提示都念，字一樣也念；提示收掉時清空（announce.ts）。
+import { useEffect, useState } from 'react';
+import { useButtonNotice, useReviewNotice } from '../../hooks/useReview';
 import type { ReviewButton } from '../../utils/review-storage';
+import { announce, attachLiveRegion, withdraw } from './announce';
 import './ReviewNotice.css';
+
+/** 這一次的提示念給螢幕閱讀器：event 換了就是新的一次；收掉或換成下一次時清空 */
+function useAnnounce(text: string | null, event: unknown): void {
+  const [owner] = useState(() => ({}));
+  useEffect(() => {
+    if (!text) return;
+    announce(owner, text);
+    return () => withdraw(owner);
+  }, [owner, text, event]);
+}
 
 export function ReviewNotice() {
   const text = useReviewNotice();
+  useAnnounce(text, text);
   return text ? <p className="review-notice review-notice--page">{text}</p> : null;
 }
 
@@ -21,30 +33,14 @@ interface ButtonNoticeProps {
 }
 
 export function ButtonNotice({ button, questionId }: ButtonNoticeProps) {
-  const text = useButtonNotice(button, questionId);
-  return text ? <p className="review-notice">{text}</p> : null;
+  const notice = useButtonNotice(button, questionId);
+  useAnnounce(notice?.text ?? null, notice?.seq);
+  return notice ? <p className="review-notice">{notice.text}</p> : null;
 }
 
+/** 字不經過 React：由 announce.ts 直接改，清空與放字才是兩次 DOM 變動 */
 export function ReviewAnnouncer() {
-  const page = useReviewNotice();
-  const latest = useLatestButtonNotice();
-  const [said, setSaid] = useState('');
-  const seen = useRef<{ page: string | null; latest: string | null }>({ page: null, latest: null });
-
-  // 新出現的那一句才念；念過的收掉時清空，不回頭再念還在的那一句，下次同一句出現時才念得到
-  useEffect(() => {
-    const before = seen.current;
-    seen.current = { page, latest };
-    if (latest && latest !== before.latest) setSaid(latest);
-    else if (page && page !== before.page) setSaid(page);
-    else if (said && said !== page && said !== latest) setSaid('');
-  }, [page, latest, said]);
-
-  return (
-    <p className="review-live sr-only" role="status" aria-live="polite" aria-atomic="true">
-      {said}
-    </p>
-  );
+  return <p ref={attachLiveRegion} className="review-live sr-only" role="status" aria-live="polite" aria-atomic="true" />;
 }
 
 export default ReviewNotice;

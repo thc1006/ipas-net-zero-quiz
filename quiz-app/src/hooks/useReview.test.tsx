@@ -74,7 +74,7 @@ describe('useReviewNotice、useButtonNotice', () => {
     return <p role="status">{useReviewNotice()}</p>;
   }
   function Star() {
-    return <p role="status">{useButtonNotice('star', 'x')}</p>;
+    return <p role="status">{useButtonNotice('star', 'x')?.text}</p>;
   }
 
   it('按星號寫入失敗時，那顆星號上說沒有儲存；同一顆的下一次成功後收掉', () => {

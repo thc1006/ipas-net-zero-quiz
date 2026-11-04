@@ -1,8 +1,8 @@
 // 星號與待複習的提示：排在文件流裡。按鈕引起的排在那顆按鈕的位置，其他的排在主內容最上面，開頁就在；
-// 螢幕閱讀器由一個開頁就在、看不見的 live region 念，每一句只念一次。
+// 螢幕閱讀器由一個開頁就在、看不見的 live region 念：每一次新的提示都念（字一樣也念），提示收掉時清空。
 import { useLayoutEffect } from 'react';
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { act, cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { ButtonNotice, ReviewAnnouncer, ReviewNotice } from './ReviewNotice';
 import {
   REVIEW_STORAGE_KEY,
@@ -146,7 +146,7 @@ describe('螢幕閱讀器', () => {
     await act(async () => {
       setStar('a', true);
     });
-    expect(said).toEqual([TIP]);
+    await waitFor(() => expect(said).toEqual([TIP]));
     expect(live()).toBe(region);
   });
 
@@ -156,9 +156,11 @@ describe('螢幕閱讀器', () => {
     await act(async () => {
       reportReviewPoolFailure();
     });
+    await waitFor(() => expect(live()).toHaveTextContent('這一場先出主題庫'));
     await act(async () => {
       setStar('a', true);
     });
+    await waitFor(() => expect(live()).toHaveTextContent(TIP));
     await act(async () => {
       setStar('a', false);
     });
@@ -171,6 +173,68 @@ describe('螢幕閱讀器', () => {
     await act(async () => {
       render(<Page />);
     });
-    expect(live()).toHaveTextContent(/新版網站寫入的/);
+    await waitFor(() => expect(live()).toHaveTextContent(/新版網站寫入的/));
+  });
+
+  describe('存不進去', () => {
+    const NOT_SAVED = '這次變更沒有儲存。瀏覽器可能封鎖了網站資料，或儲存空間已滿。';
+    let restore: () => void;
+    beforeEach(() => {
+      const set = localStorage.setItem;
+      localStorage.setItem = (k: string, v: string) => {
+        if (k === REVIEW_STORAGE_KEY) throw new DOMException('quota', 'QuotaExceededError');
+        set(k, v);
+      };
+      restore = () => {
+        localStorage.setItem = set;
+      };
+    });
+    afterEach(() => restore());
+
+    it('一樣的字再說一次也念：先清空，下一個 frame 再放字', async () => {
+      render(<Page />);
+      const said = recordLive();
+      await act(async () => {
+        setStar('a', true);
+      });
+      await waitFor(() => expect(said).toEqual([NOT_SAVED]));
+      await act(async () => {
+        setStar('a', true);
+      });
+      await waitFor(() => expect(said).toEqual([NOT_SAVED, '', NOT_SAVED]));
+      await act(async () => {
+        setStar('c', true);
+      });
+      await waitFor(() => expect(said).toEqual([NOT_SAVED, '', NOT_SAVED, '', NOT_SAVED]));
+    });
+
+    it('看得到的那一句收掉（換畫面、同一顆的下一次成功）時清空；別顆的收掉不動它', async () => {
+      render(<Page />);
+      await act(async () => {
+        setStar('a', true);
+      });
+      await waitFor(() => expect(live()).toHaveTextContent(NOT_SAVED));
+      await act(async () => {
+        clearReviewNotices();
+      });
+      expect(live()).toBeEmptyDOMElement();
+
+      await act(async () => {
+        setStar('a', true);
+        setStar('c', true);
+      });
+      await waitFor(() => expect(live()).toHaveTextContent(NOT_SAVED));
+      restore();
+      // a 的提示收掉，念的是 c 的：不清空
+      await act(async () => {
+        setStar('a', false);
+      });
+      expect(shown('star-a')).toBe('');
+      expect(live()).toHaveTextContent(NOT_SAVED);
+      await act(async () => {
+        setStar('c', false);
+      });
+      expect(live()).toBeEmptyDOMElement();
+    });
   });
 });
