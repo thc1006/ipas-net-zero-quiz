@@ -3,9 +3,12 @@
 import { useSyncExternalStore } from 'react';
 import { PAGE_LOAD_FAILED } from '../utils/practice-pool';
 import {
+  getButtonNotice,
+  getLatestButtonNotice,
   getReviewNotice,
   getReviewSnapshot,
   subscribeReview,
+  type ReviewButton,
   type ReviewNotice,
   type ReviewSnapshot,
 } from '../utils/review-storage';
@@ -23,8 +26,20 @@ export function useReview(): ReviewSnapshot {
   return useSyncExternalStore(subscribeReview, getReviewSnapshot);
 }
 
-/** 現在要告訴使用者的那一句話；沒有就是 null */
+/** 頁面現在要告訴使用者的那一句話；沒有就是 null */
 export function useReviewNotice(): string | null {
   const notice = useSyncExternalStore(subscribeReview, getReviewNotice);
+  return notice && NOTICE_TEXT[notice];
+}
+
+/** 這顆按鈕上次按下去要說的話；沒有就是 null */
+export function useButtonNotice(button: ReviewButton, id: string): string | null {
+  const notice = useSyncExternalStore(subscribeReview, () => getButtonNotice(button, id));
+  return notice && NOTICE_TEXT[notice];
+}
+
+/** 最近按的那顆按鈕上的那一句話 */
+export function useLatestButtonNotice(): string | null {
+  const notice = useSyncExternalStore(subscribeReview, getLatestButtonNotice);
   return notice && NOTICE_TEXT[notice];
 }

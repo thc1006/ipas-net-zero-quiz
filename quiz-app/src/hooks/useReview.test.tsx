@@ -1,7 +1,7 @@
 // useReview：useSyncExternalStore 訂閱星號與待複習錯題
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, render, renderHook, screen } from '@testing-library/react';
-import { useReview, useReviewNotice } from './useReview';
+import { useButtonNotice, useReview, useReviewNotice } from './useReview';
 import {
   REVIEW_STORAGE_KEY,
   __resetReviewStoreForTesting,
@@ -69,14 +69,17 @@ describe('useReview', () => {
   });
 });
 
-describe('useReviewNotice', () => {
+describe('useReviewNotice、useButtonNotice', () => {
   function Region() {
     return <p role="status">{useReviewNotice()}</p>;
   }
+  function Star() {
+    return <p role="status">{useButtonNotice('star', 'x')}</p>;
+  }
 
-  it('寫入失敗時說沒有儲存；成功後收掉', () => {
+  it('按星號寫入失敗時，那顆星號上說沒有儲存；同一顆的下一次成功後收掉', () => {
     store.set('ipas-review-star-hint-seen', '1');
-    render(<Region />);
+    render(<Star />);
     expect(screen.getByRole('status')).toHaveTextContent('');
     const set = localStorage.setItem;
     localStorage.setItem = () => {

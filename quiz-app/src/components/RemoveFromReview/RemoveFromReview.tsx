@@ -1,6 +1,7 @@
 // 手動移出待複習；題卡（答案揭曉後）與結果頁錯題卡共用，順便說還差幾次移出。
 import { useEffect, useRef, useState } from 'react';
 import { useReview } from '../../hooks/useReview';
+import { ButtonNotice } from '../ReviewNotice/ReviewNotice';
 import {
   REVIEW_REMOVE_STREAK,
   removeFromReview,
@@ -49,17 +50,20 @@ export function RemoveFromReview({ questionId, answeredCorrectly, label }: Remov
 
   const progress = progressText(entry, answeredCorrectly);
   return (
-    <div className="review-remove">
-      {progress && <span className="review-remove__progress">{progress}</span>}
-      <button
-        type="button"
-        className="btn btn-secondary"
-        aria-label={label}
-        onClick={() => setRemoved(removeFromReview(questionId))}
-      >
-        移出待複習
-      </button>
-    </div>
+    <>
+      <div className="review-remove">
+        {progress && <span className="review-remove__progress">{progress}</span>}
+        <button
+          type="button"
+          className="btn btn-secondary"
+          aria-label={label}
+          onClick={() => setRemoved(removeFromReview(questionId))}
+        >
+          移出待複習
+        </button>
+      </div>
+      <ButtonNotice button="remove" questionId={questionId} />
+    </>
   );
 }
 

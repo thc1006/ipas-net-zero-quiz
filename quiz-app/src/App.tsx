@@ -1,5 +1,5 @@
 // 主應用程式元件
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { ReviewPoolUnavailableError, useQuiz } from './hooks/useQuiz';
 import { useAccessibility } from './hooks/useAccessibility';
 import { usePracticeMode } from './hooks/usePracticeMode';
@@ -13,7 +13,7 @@ import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { logger } from './utils/logger';
 import { REPO_URL } from './data/app-meta';
 import { DISCUSSIONS_URL, REPORT_URL } from './utils/feedback-url';
-import { ReviewNotice } from './components/ReviewNotice/ReviewNotice';
+import { ReviewAnnouncer, ReviewNotice } from './components/ReviewNotice/ReviewNotice';
 import { isReviewSource, questionSourceNoun } from './utils/question-source';
 import { clearReviewNotices, seedReview } from './utils/review-storage';
 import { PAGE_LOAD_FAILED } from './utils/practice-pool';
@@ -44,8 +44,9 @@ function App() {
     clearReviewNotices();
   }, []);
 
-  // 舊的作答統計帶入待複習錯題：一個瀏覽器只做一次，開站時就做，題目來源選單才數得到
-  useEffect(() => {
+  // 舊的作答統計帶入待複習錯題：一個瀏覽器只做一次，開站時就做，題目來源選單才數得到。
+  // 在畫出來之前做：壞資料的說明排在主內容最上面，第一次畫就要在，不能等使用者開始操作才把內容往下推
+  useLayoutEffect(() => {
     seedReview();
   }, []);
 
@@ -175,6 +176,9 @@ function App() {
 
   return (
     <div className="app">
+      {/* 星號與待複習的提示由這裡念給螢幕閱讀器：開頁就在，看不見 */}
+      <ReviewAnnouncer />
+
       {/* 跳過連結（無障礙） */}
       <a href="#main-content" className="skip-link">
         跳到主要內容
@@ -209,7 +213,7 @@ function App() {
             </button>
           </div>
         )}
-        <ReviewNotice view={currentView} />
+        <ReviewNotice />
         <ErrorBoundary>
           {currentView === 'home' && (
             <HomePage

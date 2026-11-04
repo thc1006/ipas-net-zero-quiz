@@ -13,6 +13,7 @@ import { buildFeedbackUrl } from '../../utils/feedback-url';
 import { useAllQuestionStats } from '../../hooks/useQuestionStats';
 import { renderMarkdown } from '../../utils/render-markdown';
 import { StarButton } from '../StarButton/StarButton';
+import { ButtonNotice } from '../ReviewNotice/ReviewNotice';
 import { RemoveFromReview } from '../RemoveFromReview/RemoveFromReview';
 import './QuestionCard.css';
 
@@ -248,6 +249,7 @@ export function QuestionCard({
           </a>
         </span>
       </header>
+      <ButtonNotice button="star" questionId={question.id} />
 
       {/* 練習池來源 banner — 主題庫題不顯示 */}
       {question.provenance && (

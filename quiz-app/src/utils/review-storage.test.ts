@@ -7,6 +7,8 @@ import {
   __resetReviewStoreForTesting,
   clearStars,
   clearWrong,
+  getButtonNotice,
+  getLatestButtonNotice,
   getReviewNotice,
   getReviewSnapshot,
   isStarred,
@@ -164,17 +166,18 @@ describe('寫入', () => {
     expect(stored()).toMatchObject({ stars: { b: expect.any(Number) }, wrong: { x: { streak: 0, last: 5 } } });
   });
 
-  it('setItem 丟例外：回傳 false，快照不變，通知使用者；下一次成功就收掉', () => {
+  it('setItem 丟例外：回傳 false，快照不變，在按下的那顆星號上通知使用者；同一顆的下一次成功就收掉', () => {
     const restore = failWrites();
     const listener = vi.fn();
     const off = subscribeReview(listener);
     expect(setStar('a', true)).toBe(false);
     expect(isStarred(getReviewSnapshot(), 'a')).toBe(false);
-    expect(getReviewNotice()).toBe('write-failed');
+    expect(getButtonNotice('star', 'a')).toBe('write-failed');
+    expect(getReviewNotice()).toBeNull();
     expect(listener).toHaveBeenCalled();
     restore();
     expect(setStar('a', true)).toBe(true);
-    expect(getReviewNotice()).not.toBe('write-failed');
+    expect(getButtonNotice('star', 'a')).not.toBe('write-failed');
     off();
   });
 
@@ -185,7 +188,7 @@ describe('寫入', () => {
     };
     expect(setStar('a', true)).toBe(false);
     expect(spy).not.toHaveBeenCalled();
-    expect(getReviewNotice()).toBe('write-failed');
+    expect(getButtonNotice('star', 'a')).toBe('write-failed');
   });
 });
 
@@ -265,12 +268,15 @@ describe('壞資料', () => {
     expect(store.get(REVIEW_CORRUPT_KEY)).toBe('{not json');
     expect(Object.keys(stored().stars)).toEqual(['a']);
     expect(getReviewSnapshot().access).toBe('ok');
-    expect(getReviewNotice()).toBe('recovered');
-    // 下一次使用者的寫入成功就收掉；開站時的帶入不算
+    // 是按星號才發現的：說在那顆星號下面，不加在頁面最上面
+    expect(getButtonNotice('star', 'a')).toBe('recovered');
+    expect(getReviewNotice()).toBeNull();
+    // 同一顆的下一次寫入成功就收掉；開站時的帶入、別顆星號都不算
     seedReview();
-    expect(getReviewNotice()).toBe('recovered');
     setStar('b', true);
-    expect(getReviewNotice()).not.toBe('recovered');
+    expect(getButtonNotice('star', 'a')).toBe('recovered');
+    setStar('a', false);
+    expect(getButtonNotice('star', 'a')).toBeNull();
   });
 
   it('搬不出去時（配額用完）一個字都不動，回傳 false：讀不懂的資料不能被覆寫', () => {
@@ -280,6 +286,8 @@ describe('壞資料', () => {
     expect(store.get(REVIEW_STORAGE_KEY)).toBe('{not json');
     expect(store.has(REVIEW_CORRUPT_KEY)).toBe(false);
     expect(getReviewNotice()).toBe('corrupt-stuck');
+    // 頁面上已經說不會儲存：星號下面不再說一次
+    expect(getButtonNotice('star', 'a')).toBeNull();
   });
 
   it('removeItem 丟例外時不繼續寫：原始字串還在主 key 上', () => {
@@ -339,6 +347,9 @@ describe('新版資料（v 大於 1）', () => {
     expect(spy).not.toHaveBeenCalled();
     expect(store.get(REVIEW_STORAGE_KEY)).toBe(raw);
     expect(store.has(REVIEW_CORRUPT_KEY)).toBe(false);
+    // 頁面上已經說只能讀取：按鈕下面不再說一次
+    expect(getButtonNotice('star', 'x')).toBeNull();
+    expect(getButtonNotice('remove', 'b')).toBeNull();
   });
 
   it('形狀不認得的新版資料也不算壞資料：看不到內容，但照樣不動', () => {
@@ -915,14 +926,15 @@ describe('搬不走的壞資料', () => {
 describe('第一次加星號的提示', () => {
   const seen = 'ipas-review-star-hint-seen';
 
-  it('第一次加星號顯示，記住已顯示過：取消再加不再顯示', () => {
+  it('第一次加星號顯示在那顆星號上，記住已顯示過：取消再加不再顯示', () => {
     setStar('a', true);
-    expect(getReviewNotice()).toBe('first-star');
+    expect(getButtonNotice('star', 'a')).toBe('first-star');
+    expect(getReviewNotice()).toBeNull();
     expect(store.get(seen)).toBe('1');
     setStar('a', false);
-    expect(getReviewNotice()).toBeNull();
+    expect(getButtonNotice('star', 'a')).toBeNull();
     setStar('a', true);
-    expect(getReviewNotice()).toBeNull();
+    expect(getButtonNotice('star', 'a')).toBeNull();
   });
 
   it('重新整理之後（新的模組狀態）也不再顯示', async () => {
@@ -930,27 +942,83 @@ describe('第一次加星號的提示', () => {
     vi.resetModules();
     const reloaded = await import('./review-storage');
     reloaded.setStar('b', true);
-    expect(reloaded.getReviewNotice()).toBeNull();
+    expect(reloaded.getButtonNotice('star', 'b')).toBeNull();
   });
 
   it('存不進去時不顯示：星號沒有加上', () => {
     failWrites((k) => k === REVIEW_STORAGE_KEY);
     setStar('a', true);
-    expect(getReviewNotice()).toBe('write-failed');
+    expect(getButtonNotice('star', 'a')).toBe('write-failed');
     expect(store.has(seen)).toBe(false);
   });
 
   it('取消星號不算', () => {
     put(v1({ stars: { a: 1 } }));
     setStar('a', false);
+    expect(getButtonNotice('star', 'a')).toBeNull();
+  });
+});
+
+// 按鈕引起的提示排在那顆按鈕那一列下面（ReviewNotice.tsx）。收掉時它下面的東西往上移：別的按鈕的寫入收掉它的話，
+// 排在它下面的那顆剛按的按鈕就從指標底下移走。所以只有同一顆按鈕的下一次寫入、換畫面、新的一場才收掉
+describe('按鈕上的提示', () => {
+  it('別顆按鈕的寫入不收掉：第一張錯題卡的提示留著，按第三張的星號時它不動', () => {
+    setStar('a', true);
+    expect(getButtonNotice('star', 'a')).toBe('first-star');
+    setStar('c', true);
+    expect(getButtonNotice('star', 'a')).toBe('first-star');
+    expect(getButtonNotice('star', 'c')).toBeNull();
+    put(v1({ stars: { a: 1, c: 1 }, wrong: { c: { streak: 0, last: 1 } } }));
+    expect(removeFromReview('c')).toBe(true);
+    expect(getButtonNotice('star', 'a')).toBe('first-star');
+  });
+
+  it('每一顆按鈕記自己的：兩顆都存不進去，兩顆下面都說', () => {
+    failWrites();
+    setStar('a', true);
+    setStar('c', true);
+    removeFromReview('a');
+    expect(getButtonNotice('star', 'a')).toBe('write-failed');
+    expect(getButtonNotice('star', 'c')).toBe('write-failed');
+    // 移出待複習是另一顆按鈕：沒有東西可移出時也照樣寫一次，存不進去就說
+    expect(getButtonNotice('remove', 'a')).toBe('write-failed');
     expect(getReviewNotice()).toBeNull();
+  });
+
+  it('頁面上的提示不被按鈕的寫入收掉：排在最上面，收掉的話剛按的按鈕會往上移', () => {
+    store.set(REVIEW_STORAGE_KEY, '{broken');
+    seedReview();
+    expect(getReviewNotice()).toBe('recovered');
+    expect(setStar('a', true)).toBe(true);
+    expect(getReviewNotice()).toBe('recovered');
+    const restore = failWrites();
+    expect(recordReviewResults([{ id: 'x', isCorrect: false, at: 1 }])).toBeNull();
+    expect(getReviewNotice()).toBe('write-failed');
+    restore();
+    expect(setStar('b', true)).toBe(true);
+    expect(getReviewNotice()).toBe('write-failed');
+    // 不是按鈕引起的寫入照舊：成功就收掉
+    expect(recordReviewResults([{ id: 'x', isCorrect: false, at: 2 }])).not.toBeNull();
+    expect(getReviewNotice()).toBeNull();
+  });
+
+  it('最近一次按的那顆按鈕上的提示（給螢幕閱讀器念）', () => {
+    expect(getLatestButtonNotice()).toBeNull();
+    setStar('a', true);
+    expect(getLatestButtonNotice()).toBe('first-star');
+    setStar('c', true);
+    expect(getLatestButtonNotice()).toBeNull();
+    recordReviewResults([{ id: 'c', isCorrect: false, at: 1 }]);
+    failWrites();
+    removeFromReview('c');
+    expect(getLatestButtonNotice()).toBe('write-failed');
   });
 });
 
 describe('提示的優先序與清除', () => {
   it('新版資料最重要：寫入失敗時也說只能讀取', () => {
     store.set(REVIEW_STORAGE_KEY, JSON.stringify({ v: 2 }));
-    setStar('a', true);
+    clearStars();
     expect(getReviewNotice()).toBe('newer');
   });
 
@@ -959,17 +1027,25 @@ describe('提示的優先序與清除', () => {
     seedReview();
     expect(getReviewNotice()).toBe('recovered');
     failWrites();
-    setStar('a', true);
+    recordReviewResults([{ id: 'x', isCorrect: false, at: 1 }]);
     expect(getReviewNotice()).toBe('write-failed');
   });
 
-  it('練習池的提醒排在寫入失敗之後，第一次加星號的提示排最後', () => {
+  it('練習池的提醒排在寫入失敗之後；按鈕上的提示另外記，不擠掉頁面上的', () => {
     reportReviewPoolFailure();
     setStar('a', true);
     expect(getReviewNotice()).toBe('pool-failed');
+    expect(getButtonNotice('star', 'a')).toBe('first-star');
     failWrites();
-    setStar('b', true);
+    clearStars();
     expect(getReviewNotice()).toBe('write-failed');
+  });
+
+  it('同一顆按鈕：「已另存」比第一次加星號的提示重要', () => {
+    store.set(REVIEW_STORAGE_KEY, '{broken');
+    setStar('a', true);
+    expect(getButtonNotice('star', 'a')).toBe('recovered');
+    expect(store.get('ipas-review-star-hint-seen')).toBe('1');
   });
 
   it('clearReviewNotices 收掉會過時的提示，訂閱者收到通知；沒有東西可收時不通知', () => {
@@ -985,15 +1061,25 @@ describe('提示的優先序與清除', () => {
     off();
   });
 
-  it('寫入失敗與第一次加星號的提示也收得掉', () => {
+  it('寫入失敗與第一次加星號的提示也收得掉，按鈕上的也一起', () => {
+    const listener = vi.fn();
+    const off = subscribeReview(listener);
     setStar('a', true);
+    listener.mockClear();
     clearReviewNotices();
-    expect(getReviewNotice()).toBeNull();
+    expect(getButtonNotice('star', 'a')).toBeNull();
+    expect(listener).toHaveBeenCalledTimes(1);
     const restore = failWrites();
     setStar('b', true);
+    removeFromReview('b');
+    clearStars();
     clearReviewNotices();
     expect(getReviewNotice()).toBeNull();
+    expect(getButtonNotice('star', 'b')).toBeNull();
+    expect(getButtonNotice('remove', 'b')).toBeNull();
+    expect(getLatestButtonNotice()).toBeNull();
     restore();
+    off();
   });
 
   it('收不掉現況：新版資料、搬不走的壞資料還是要說', () => {
@@ -1091,6 +1177,16 @@ describe('改過 id 的題目：讀的時候算到現在的 id（與作答統計
 });
 
 describe('搬不走的壞資料，之後別的分頁修好了', () => {
+  it('別的分頁重寫成讀得懂的資料：不等這邊寫入就收掉「目前不會儲存變更」，按星號時頁面最上面不會少一段', () => {
+    store.set(REVIEW_STORAGE_KEY, '{broken');
+    const restore = failWrites((k) => k.startsWith(REVIEW_CORRUPT_KEY));
+    seedReview();
+    expect(getReviewNotice()).toBe('corrupt-stuck');
+    restore();
+    put(v1());
+    expect(getReviewNotice()).toBeNull();
+  });
+
   it('這邊的寫入成功就收掉「目前不會儲存變更」', () => {
     store.set(REVIEW_STORAGE_KEY, '{broken');
     const restore = failWrites((k) => k.startsWith(REVIEW_CORRUPT_KEY));

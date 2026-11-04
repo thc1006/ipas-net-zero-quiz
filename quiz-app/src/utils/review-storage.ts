@@ -60,7 +60,7 @@ export interface ReviewSnapshot {
   wrong: ReviewWrong;
 }
 
-/** 要告訴使用者的事；畫面上的文字在 hooks/useReview.ts */
+/** 要告訴使用者的事；畫面上的文字在 hooks/useReview.ts，放在哪裡見 components/ReviewNotice */
 export type ReviewNotice =
   | 'newer'
   | 'corrupt-stuck'
@@ -68,6 +68,9 @@ export type ReviewNotice =
   | 'recovered'
   | 'pool-failed'
   | 'first-star';
+
+/** 會引起提示的按鈕：每一題的星號與移出待複習 */
+export type ReviewButton = 'star' | 'remove';
 
 export interface ReviewResult {
   id: string;
@@ -244,32 +247,48 @@ export function wrongEntry(review: Pick<ReviewSnapshot, 'wrong'>, id: string): R
   return hasOwn(review.wrong, id) ? review.wrong[id] : undefined;
 }
 
-// 寫入失敗、資料毀損之類要告訴使用者的事。都不在 localStorage 裡，所以另外記一份
+// 寫入失敗、資料毀損之類要告訴使用者的事。都不在 localStorage 裡，所以另外記一份。
+// 頁面的提示（排在主內容最上面）：
 let writeFailed = false;
 let recovered = false;
 let poolFailed = false;
-let firstStar = false;
 // 壞資料搬不走：這是現況，不是一次性的提示，clearReviewNotices 收不掉
 let corruptStuck = false;
+// 按鈕引起的提示（排在那顆按鈕那一列下面），key 是「按鈕:題目 id」。只有同一顆按鈕的下一次寫入換掉它，
+// 別的按鈕與頁面的寫入都不動它：它收掉時下面的東西往上移，剛按的按鈕若在它下面就從指標底下移走。
+// 同樣的理由，按鈕的寫入也不動頁面的提示
+const buttonNotices = new Map<string, ReviewNotice>();
+let lastButton: string | null = null;
 
-/** 這個分頁現在要告訴使用者什麼；一次一件，由重要到不重要 */
+/** 頁面現在要告訴使用者什麼；一次一件，由重要到不重要 */
 export function getReviewNotice(): ReviewNotice | null {
-  if (getReviewSnapshot().access === 'newer') return 'newer';
-  if (corruptStuck) return 'corrupt-stuck';
+  const { access } = getReviewSnapshot();
+  if (access === 'newer') return 'newer';
+  // 別的分頁把資料重寫成讀得懂的，就不再是「不會儲存」：不等這邊寫入，按星號時頁面最上面才不會少一段
+  if (corruptStuck && access === 'corrupt') return 'corrupt-stuck';
   if (writeFailed) return 'write-failed';
   if (recovered) return 'recovered';
   if (poolFailed) return 'pool-failed';
-  if (firstStar) return 'first-star';
   return null;
+}
+
+/** 這顆按鈕上次按下去要說的話 */
+export function getButtonNotice(button: ReviewButton, id: string): ReviewNotice | null {
+  return buttonNotices.get(`${button}:${id}`) ?? null;
+}
+
+/** 最近按的那顆按鈕上的提示（螢幕閱讀器念的） */
+export function getLatestButtonNotice(): ReviewNotice | null {
+  return lastButton === null ? null : (buttonNotices.get(lastButton) ?? null);
 }
 
 /** 換頁、開新的一場時呼叫：一次性的提示不跟到別的畫面 */
 export function clearReviewNotices(): void {
-  if (!writeFailed && !recovered && !poolFailed && !firstStar) return;
+  if (!writeFailed && !recovered && !poolFailed && buttonNotices.size === 0) return;
   writeFailed = false;
   recovered = false;
   poolFailed = false;
-  firstStar = false;
+  buttonNotices.clear();
   notify();
 }
 
@@ -330,12 +349,19 @@ function seedFromStats(data: ReviewData): void {
 
 /**
  * 所有寫入的唯一入口：重讀、處理壞資料、帶入舊統計、套用變動、寫回。
+ * button 是按下去引起這次寫入的按鈕（「star:題目 id」），要說的話記在它上面；沒有就記在頁面上。
  * silent 用在使用者沒有動手的寫入（開站時帶入舊統計），失敗不打擾使用者，下次再試。
  */
-function update(change: (data: ReviewData) => void, silent = false): boolean {
-  const fail = (): false => {
+function update(change: (data: ReviewData) => void, button: string | null = null, silent = false): boolean {
+  if (button) {
+    buttonNotices.delete(button);
+    lastButton = button;
+  }
+  // onButton：頁面上已經說了只能讀取、不會儲存時，按鈕下面不再說一次
+  const fail = (onButton = true): false => {
     if (!silent) {
-      writeFailed = true;
+      if (!button) writeFailed = true;
+      else if (onButton) buttonNotices.set(button, 'write-failed');
       notify();
     }
     return false;
@@ -344,17 +370,17 @@ function update(change: (data: ReviewData) => void, silent = false): boolean {
   const read = readRaw();
   if (!read.ok) return fail();
   const parsed = parseRaw(read.raw);
-  if (parsed.access === 'newer') return fail();
+  if (parsed.access === 'newer') return fail(false);
   const { data } = parsed;
   const corrupt = parsed.access === 'corrupt';
   if (corrupt) {
     if (!quarantine(read.raw!)) {
       corruptStuck = true;
       if (silent) notify();
-      return fail();
+      return fail(false);
     }
     corruptStuck = false;
-    recovered = true;
+    if (!button) recovered = true;
     // 畫面說從空的開始，就真的從空的開始：壞資料裡可能記著使用者清空過，舊統計不再帶入
     data.seeded = true;
   }
@@ -371,9 +397,10 @@ function update(change: (data: ReviewData) => void, silent = false): boolean {
   }
   // 寫得進去就是又能儲存了（例如另一個分頁清出空間、重寫了這支 key）
   corruptStuck = false;
-  if (!silent) {
+  if (button) {
+    if (corrupt) buttonNotices.set(button, 'recovered');
+  } else if (!silent) {
     writeFailed = false;
-    firstStar = false;
     if (!corrupt) recovered = false;
   }
   notify();
@@ -405,6 +432,7 @@ function requestPersistence(): void {
 
 /** 加或取消星號。傳的是使用者要的結果，不是切換：另一個分頁剛改過時，切換會切反 */
 export function setStar(id: string, starred: boolean): boolean {
+  const button = `star:${id}`;
   let added = false;
   let first = false;
   const saved = update((data) => {
@@ -415,11 +443,12 @@ export function setStar(id: string, starred: boolean): boolean {
       first = Object.keys(data.stars).length === 0;
       data.stars[id] = Date.now();
     }
-  });
+  }, button);
   if (saved && first) requestPersistence();
   if (saved && added && !readBool(STAR_HINT_SEEN_KEY)) {
     writeBool(STAR_HINT_SEEN_KEY, true);
-    firstStar = true;
+    // 「已另存」比較重要
+    if (!buttonNotices.has(button)) buttonNotices.set(button, 'first-star');
     notify();
   }
   return saved;
@@ -431,7 +460,7 @@ export function removeFromReview(id: string): boolean {
     if (!(id in data.wrong)) return;
     delete data.wrong[id];
     data.removed[id] = Date.now();
-  });
+  }, `remove:${id}`);
 }
 
 export function clearStars(): boolean {
@@ -450,7 +479,7 @@ export function clearWrong(): boolean {
 
 /** 開站時呼叫一次；已經帶入過就什麼都不寫 */
 export function seedReview(): boolean {
-  return update(() => undefined, true);
+  return update(() => undefined, null, true);
 }
 
 /**
@@ -540,7 +569,8 @@ export function __resetReviewStoreForTesting(): void {
   writeFailed = false;
   recovered = false;
   poolFailed = false;
-  firstStar = false;
   corruptStuck = false;
+  buttonNotices.clear();
+  lastButton = null;
   listeners.clear();
 }

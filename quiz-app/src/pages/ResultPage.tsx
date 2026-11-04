@@ -11,6 +11,7 @@ import { SourceBreakdown } from '../components/SourceBreakdown/SourceBreakdown';
 import type { QuizResult, QuizQuestion } from '../types/quiz';
 import { BankSimilarQuestionItem } from '../components/BankSimilarQuestionItem/BankSimilarQuestionItem';
 import { StarButton } from '../components/StarButton/StarButton';
+import { ButtonNotice } from '../components/ReviewNotice/ReviewNotice';
 import { RemoveFromReview } from '../components/RemoveFromReview/RemoveFromReview';
 import { buildFeedbackUrl } from '../utils/feedback-url';
 import { selectWeakQuestions } from '../utils/question-stats-storage';
@@ -397,6 +398,7 @@ export function ResultPage({ result, onGoHome, onRetry, retryNotice = null }: Re
                         </span>
                       </a>
                     </div>
+                    <ButtonNotice button="star" questionId={qid} />
                     {/* role="list"：Safari 的 VoiceOver 不把 list-style: none 的 ul 念成清單 */}
                     <ul className="wrong-options" role="list" aria-label="選項">
                       {question.options.map((option) => {

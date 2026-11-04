@@ -1,10 +1,9 @@
 /* App 主要樣式 */
 
 /* 頁首是 sticky，蓋在頁面上面。Tab、Shift+Tab 與 scrollIntoView 捲到的地方要停在它下面（WCAG 2.4.11）：
-   頁首的高度由 Header.tsx 量出來；提示放在頁首下面時再加上它蓋住的高度（ReviewNotice.tsx）。
-   各元素的 scroll-margin-top 只寫自己額外要留的空間，不再加頁首 */
+   頁首的高度由 Header.tsx 量出來。各元素的 scroll-margin-top 只寫自己額外要留的空間，不再加頁首 */
 html {
-  scroll-padding-top: calc(var(--app-header-height, 64px) + var(--review-notice-cover-top, 0px));
+  scroll-padding-top: var(--app-header-height, 64px);
 }
 
 .app {

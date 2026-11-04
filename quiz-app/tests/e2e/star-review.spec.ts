@@ -135,6 +135,23 @@ const starContrast = (locator: Locator) =>
     return (hi + 0.05) / (lo + 0.05);
   });
 
+/**
+ * 主內容第一次出現時，星號與待複習的說明在不在（init script）：開頁就有的說明要第一次畫出來就在，
+ * 不能等使用者開始操作才把內容往下推
+ */
+const recordFirstPaint = (page: Page) =>
+  page.addInitScript(() => {
+    const w = window as unknown as { __firstPaint?: string };
+    new MutationObserver((_, observer) => {
+      const main = document.getElementById('main-content');
+      if (main && main.children.length > 0) {
+        w.__firstPaint = main.querySelector('.review-notice')?.textContent ?? '';
+        observer.disconnect();
+      }
+    }).observe(document, { childList: true, subtree: true });
+  });
+const firstPaint = (page: Page) => page.evaluate(() => (window as unknown as { __firstPaint?: string }).__firstPaint);
+
 /** 選來源、不隨機（順序才固定）、開始 */
 async function startDrill(page: Page, value: string, mode: 'practice' | 'exam' = 'practice') {
   await source(page).selectOption(value);
@@ -159,7 +176,7 @@ test.describe('星號與待複習錯題', () => {
     await star(page).click();
     await expect(star(page)).toHaveAttribute('aria-pressed', 'true');
     await expect(star(page).locator('path')).toHaveAttribute('fill', 'currentColor');
-    const hint = page.getByRole('status').filter({ hasText: '已加星號，首頁「題目來源」選「星號題」可以反覆練習。' });
+    const hint = page.locator('.review-notice', { hasText: '已加星號，首頁「題目來源」選「星號題」可以反覆練習。' });
     await expect(hint).toBeVisible();
 
     await page.reload();
@@ -331,18 +348,11 @@ test.describe('星號與待複習錯題', () => {
     await page.getByLabel('隨機出題順序').uncheck();
     await startButton(page).click();
     await star(page).click();
-    const notice = page.getByRole('status').filter({ hasText: '這次變更沒有儲存' });
-    await expect(notice).toBeVisible();
+    // 說在星號那一列（題卡標頭）的正下方，螢幕閱讀器也念得到
+    await expect(page.locator('.question-header + .review-notice')).toHaveText(/這次變更沒有儲存/);
+    await expect(page.locator('.review-notice')).toBeVisible();
+    await expect(page.locator('.review-live')).toHaveText(/這次變更沒有儲存/);
     await expect(star(page)).toHaveAttribute('aria-pressed', 'false');
-
-    // 往下捲之後還看得到，不會被 sticky 的 header 蓋住
-    await page.setViewportSize({ width: 390, height: 500 });
-    await page.evaluate(() => window.scrollTo(0, 400));
-    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100);
-    const header = (await page.locator('.app-header').boundingBox())!;
-    const box = (await notice.boundingBox())!;
-    expect(box.y, '說明被 header 蓋住').toBeGreaterThanOrEqual(header.y + header.height);
-    expect(box.y + box.height).toBeLessThanOrEqual(500);
   });
 
   test('壞資料：原始內容搬到 :corrupt，畫面上有說明，之後照常使用', async ({ page }) => {
@@ -352,8 +362,11 @@ test.describe('星號與待複習錯題', () => {
         window.localStorage.setItem(key, '{broken');
       }
     }, KEY);
+    await recordFirstPaint(page);
     await gotoHome(page);
-    await expect(page.getByRole('status').filter({ hasText: '原始內容已另存' })).toBeVisible();
+    await expect(page.locator('#main-content > .review-notice')).toHaveText(/原始內容已另存/);
+    expect(await firstPaint(page), '說明不是第一次畫出來就在').toMatch(/原始內容已另存/);
+    await expect(page.locator('.review-live')).toHaveText(/原始內容已另存/);
     expect(await page.evaluate((key) => window.localStorage.getItem(`${key}:corrupt`), KEY)).toBe('{broken');
     expect(await stored(page)).toMatchObject({ stars: {}, wrong: {} });
   });
@@ -770,45 +783,310 @@ test.describe('星號與待複習錯題', () => {
 const settleAnimations = (page: Page) =>
   page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))));
 
-/** 星號在視窗裡的位置與頁面捲動量 */
-const starSpot = (page: Page) =>
-  star(page).evaluate((el) => {
+/** 等兩個 frame */
+const nextFrames = (page: Page) =>
+  page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+
+const TIP = '已加星號，首頁「題目來源」選「星號題」可以反覆練習。';
+
+/**
+ * 星號在視窗裡的位置與頁面捲動量、點它的中間點到的是不是它；每一個提示是不是排在文件流裡，
+ * 與星號、有焦點的元素重不重疊
+ */
+const starState = (button: Locator) =>
+  button.evaluate((el) => {
     const r = el.getBoundingClientRect();
-    return { x: r.left + r.width / 2, y: r.top + r.height / 2, top: r.top, left: r.left, scrollY: window.scrollY };
+    const x = r.left + r.width / 2;
+    const y = r.top + r.height / 2;
+    const hit = document.elementFromPoint(x, y);
+    const active = document.activeElement;
+    const focus = active && active !== document.body ? active.getBoundingClientRect() : null;
+    const overlap = (a: DOMRect, b: DOMRect) => a.top < b.bottom && a.bottom > b.top && a.left < b.right && a.right > b.left;
+    return {
+      x,
+      y,
+      top: r.top,
+      left: r.left,
+      scrollY: window.scrollY,
+      hitIsStar: hit !== null && el.contains(hit),
+      notices: [...document.querySelectorAll('.review-notice')].map((n) => {
+        const box = n.getBoundingClientRect();
+        return {
+          position: getComputedStyle(n).position,
+          overStar: overlap(box, r),
+          overFocus: focus !== null && overlap(box, focus),
+        };
+      }),
+    };
   });
 
-test.describe('第一次加星號的提示不推動版面（Discussion #1）', () => {
-  for (const { name, viewport, hasTouch } of [
-    { name: '桌面', viewport: { width: 1280, height: 720 }, hasTouch: false },
-    { name: '1024px 觸控', viewport: { width: 1024, height: 768 }, hasTouch: true },
-    { name: '412px 觸控（Pixel 7 的寬度）', viewport: { width: 412, height: 839 }, hasTouch: true },
-  ]) {
-    test(`${name}：加星號與取消都不移動星號、不捲動頁面，第二下點同一個位置就是取消`, async ({ browser, baseURL }) => {
-      const context = await browser.newContext({ baseURL, hasTouch, viewport });
+type StarState = Awaited<ReturnType<typeof starState>>;
+const sameSpot = (s: StarState) => ({ top: s.top, left: s.left, scrollY: s.scrollY });
+
+/** 把元素捲到視窗底部上方 20px */
+const toViewportBottom = (target: Locator) =>
+  target.evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    window.scrollBy(0, r.bottom - (window.innerHeight - 20));
+  });
+
+/**
+ * 題目頁捲回最上面（開始按鈕在首頁下方，換到題目頁時還捲在那裡）；星號在視窗底部上方 20px 以下的話
+ * （320x256 字級特大），捲到那裡
+ */
+async function starInView(page: Page): Promise<void> {
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const box = await star(page).boundingBox();
+  if (box!.y + box!.height > page.viewportSize()!.height - 20) await toViewportBottom(star(page));
+}
+
+type Way = '滑鼠' | '觸控' | 'Space' | 'Enter';
+const ways: Way[] = ['滑鼠', '觸控', 'Space', 'Enter'];
+
+/**
+ * 用同一種方式按兩下星號：第一下加星號（每次都先當作沒看過提示，提示才會出現），第二下在同一個位置取消。
+ * 星號不移動、頁面不捲動、提示排在 row 那一列的正下方、在文件流裡、不與星號或有焦點的元素重疊
+ */
+async function toggleTwice(page: Page, button: Locator, way: Way, row: string): Promise<void> {
+  await page.evaluate(() => window.localStorage.removeItem('ipas-review-star-hint-seen'));
+  const keyboard = way === 'Space' || way === 'Enter';
+  if (keyboard) await button.focus();
+  await settleAnimations(page);
+  const before = await starState(button);
+  const press = async () => {
+    if (way === '滑鼠') await page.mouse.click(before.x, before.y);
+    else if (way === '觸控') await page.touchscreen.tap(before.x, before.y);
+    else await page.keyboard.press(way);
+  };
+
+  await press();
+  await expect(button, `${way}：第一下沒有加上星號`).toHaveAttribute('aria-pressed', 'true');
+  const tip = page.locator(`${row} + .review-notice`);
+  await expect(tip).toHaveText(TIP);
+  await expect(tip).toBeVisible();
+  await settleAnimations(page);
+  const after = await starState(button);
+  const info = `${way} ${JSON.stringify(after)}`;
+  expect(sameSpot(after), `星號移動了 ${info}`).toEqual(sameSpot(before));
+  expect(after.hitIsStar, `點同一個位置點到的不是星號 ${info}`).toBe(true);
+  expect(after.notices.map((n) => n.position), `提示不在文件流裡 ${info}`).toEqual(['static']);
+  expect(after.notices.filter((n) => n.overStar || n.overFocus), `提示與星號或焦點重疊 ${info}`).toEqual([]);
+  if (keyboard) await expect(button).toBeFocused();
+
+  await press();
+  await expect(button, `${way}：第二下沒有取消星號`).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('.review-notice')).toHaveCount(0);
+  await settleAnimations(page);
+  expect(sameSpot(await starState(button)), `${way}：取消之後星號移動了`).toEqual(sameSpot(before));
+  if (keyboard) await expect(button).toBeFocused();
+}
+
+const toggleViewports = [
+  { name: '1280x720', viewport: { width: 1280, height: 720 }, fontSize: 'normal' as const },
+  { name: 'Pixel 7 的大小', viewport: { width: 412, height: 839 }, fontSize: 'normal' as const },
+  // 1280x1024 放大 400%
+  { name: '320x256 字級特大', viewport: { width: 320, height: 256 }, fontSize: 'xlarge' as const },
+];
+
+/** 三題待複習錯題都答錯，到結果頁：錯題卡上的星號都還沒按過 */
+async function toResultWithWrongCards(page: Page, fontSize: 'normal' | 'large' | 'xlarge'): Promise<void> {
+  const qs = [q1, q2, q3];
+  await gotoHome(page, { wrong: Object.fromEntries(qs.map((q) => [idOf(q), { streak: 0, last: 1 }])) }, fontSize);
+  await startDrill(page, 'review:wrong');
+  for (let i = 0; i < qs.length; i++) {
+    const text = await stem(page).textContent();
+    await answer(page, qs.find((q) => q.stem === text)!, false);
+    if (i < qs.length - 1) await page.getByRole('button', { name: /下一題/ }).click();
+  }
+  await page.getByRole('button', { name: /完成測驗/ }).click();
+  await expect(page.locator('.wrong-item')).toHaveCount(3);
+  await settleAnimations(page);
+}
+
+// 提示排在文件流裡，排在按下去的那顆星號那一列的下面：上面的東西都不動，星號不從指標底下移走。
+// 之前固定在視窗邊上、猜哪一邊不會蓋住剛按的東西，五輪複審每一輪都找到新的情形（Discussion #1）
+test.describe('星號的提示排在那一列下面：加星號與取消都不移動星號，第二下在同一個位置就是取消', () => {
+  for (const { name, viewport, fontSize } of toggleViewports) {
+    test(`題目頁 ${name}：滑鼠、觸控、空白鍵、Enter`, async ({ browser, baseURL }) => {
+      const context = await browser.newContext({ baseURL, hasTouch: true, viewport });
       // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
       await stubVisitorCounter(context);
       const page = await context.newPage();
-      await gotoHome(page);
+      await gotoHome(page, undefined, fontSize);
       await page.getByLabel('隨機出題順序').uncheck();
       await startButton(page).click();
       await expect(page.locator('.question-card')).toBeVisible();
-      await settleAnimations(page);
-      const tap = (x: number, y: number) => (hasTouch ? page.touchscreen.tap(x, y) : page.mouse.click(x, y));
+      await starInView(page);
+      for (const way of ways) await toggleTwice(page, star(page), way, '.question-header');
+      await context.close();
+    });
 
-      const before = await starSpot(page);
-      await tap(before.x, before.y);
-      await expect(star(page)).toHaveAttribute('aria-pressed', 'true');
-      await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
-      await settleAnimations(page);
-      expect(await starSpot(page), '第一次加星號之後').toEqual(before);
-
-      await tap(before.x, before.y);
-      await expect(star(page), '第二下點到的不是星號').toHaveAttribute('aria-pressed', 'false');
-      await settleAnimations(page);
-      expect(await starSpot(page), '取消星號之後').toEqual(before);
+    test(`結果頁的錯題卡、星號在視窗底部 ${name}：滑鼠、觸控、空白鍵、Enter`, async ({ browser, baseURL }) => {
+      const context = await browser.newContext({ baseURL, hasTouch: true, viewport });
+      // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+      await stubVisitorCounter(context);
+      const page = await context.newPage();
+      await toResultWithWrongCards(page, fontSize);
+      const button = page.locator('.wrong-item').first().getByRole('button', { name: /加星號/ });
+      await toViewportBottom(button);
+      const start = await button.boundingBox();
+      // 前提：結果頁夠高，星號捲得到視窗底部上方 20px（WebKit 與 Firefox 的捲動量有小數，差 1px 以內）
+      expect(Math.abs(start!.y + start!.height - (viewport.height - 20)), `前提：星號在視窗底部上方 20px ${JSON.stringify(start)}`).toBeLessThanOrEqual(1.5);
+      for (const way of ways) await toggleTwice(page, button, way, '.wrong-item:first-child .wrong-stem-row');
       await context.close();
     });
   }
+});
+
+// 提示收掉時它下面的東西往上移：別張卡的星號不能收掉它，不然排在它下面、剛按的那顆星號就從指標底下移走
+test('結果頁 Pixel 7：第一張錯題卡的提示還在時按第二張的星號，第二張的星號不移動，提示留著', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ baseURL, hasTouch: true, viewport: { width: 412, height: 839 } });
+  // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+  await stubVisitorCounter(context);
+  const page = await context.newPage();
+  await toResultWithWrongCards(page, 'normal');
+  const cards = page.locator('.wrong-item');
+  const first = cards.nth(0).getByRole('button', { name: /加星號/ });
+  const second = cards.nth(1).getByRole('button', { name: /加星號/ });
+  await first.click();
+  await expect(cards.nth(0).locator('.wrong-stem-row + .review-notice')).toHaveText(TIP);
+  await toViewportBottom(second);
+  await settleAnimations(page);
+  const before = await starState(second);
+  await page.touchscreen.tap(before.x, before.y);
+  await expect(second).toHaveAttribute('aria-pressed', 'true');
+  await settleAnimations(page);
+  const after = await starState(second);
+  expect(sameSpot(after), `第二張的星號移動了 ${JSON.stringify(after)}`).toEqual(sameSpot(before));
+  await expect(cards.nth(0).locator('.wrong-stem-row + .review-notice')).toHaveText(TIP);
+  await page.touchscreen.tap(before.x, before.y);
+  await expect(second, '第二下點到的不是星號').toHaveAttribute('aria-pressed', 'false');
+  await context.close();
+});
+
+test('螢幕閱讀器：開頁就有一個看不見的 live region，第一次加星號時它的字只換一次；看得到的提示不是 live region', async ({ page }) => {
+  await gotoHome(page);
+  const live = page.locator('.review-live');
+  await expect(live).toHaveAttribute('role', 'status');
+  await expect(live).toHaveAttribute('aria-live', 'polite');
+  await expect(live).toBeEmpty();
+  await live.evaluate((el) => {
+    const w = window as unknown as { __said: string[]; __live: Element };
+    w.__said = [];
+    w.__live = el;
+    new MutationObserver(() => w.__said.push(el.textContent ?? '')).observe(el, { childList: true, characterData: true, subtree: true });
+  });
+  await page.getByLabel('隨機出題順序').uncheck();
+  await startButton(page).click();
+  await star(page).click();
+  await expect(page.locator('.review-notice')).toHaveText(TIP);
+  await nextFrames(page);
+  const result = await page.evaluate(() => {
+    const w = window as unknown as { __said: string[]; __live: Element };
+    const r = w.__live.getBoundingClientRect();
+    return {
+      said: w.__said,
+      same: document.querySelector('.review-live') === w.__live,
+      hidden: r.width <= 1 && r.height <= 1,
+      shownIsLive: !!document.querySelector('.review-notice')!.closest('[aria-live], [role="status"], [role="alert"]'),
+    };
+  });
+  expect(result.said).toEqual([TIP]);
+  expect(result.same, '換了畫面，live region 被換成另一個元素').toBe(true);
+  expect(result.hidden, 'live region 看得到').toBe(true);
+  expect(result.shownIsLive, '看得到的提示自己是 live region').toBe(false);
+});
+
+/** 提示整個在頁首下面、視窗裡，排在文件流裡，字沒有被裁掉 */
+const readable = (notice: Locator) =>
+  notice.evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    const header = document.querySelector('.app-header')!.getBoundingClientRect();
+    return {
+      top: Math.round(r.top),
+      bottom: Math.round(r.bottom),
+      headerBottom: Math.round(header.bottom),
+      viewport: window.innerHeight,
+      position: getComputedStyle(el).position,
+      clipped: el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1,
+    };
+  });
+
+function expectReadable(m: Awaited<ReturnType<typeof readable>>, what: string): void {
+  const info = `${what} ${JSON.stringify(m)}`;
+  expect(m.position, `不在文件流裡 ${info}`).toBe('static');
+  expect(m.clipped, `字被裁掉 ${info}`).toBe(false);
+  expect(m.top, `在頁首底下 ${info}`).toBeGreaterThanOrEqual(m.headerBottom);
+  expect(m.bottom, `超出視窗 ${info}`).toBeLessThanOrEqual(m.viewport);
+}
+
+test.describe('320x256 字級特大（1280x1024 放大 400%）：說明看得到、整段讀得到', () => {
+  test.use({ viewport: { width: 320, height: 256 } });
+
+  test('新版資料：第一次畫出來就排在主內容最上面，不等開始操作才把內容往下推', async ({ page }) => {
+    await page.addInitScript((key) => {
+      window.localStorage.setItem(key, JSON.stringify({ v: 99, seeded: true, stars: {}, wrong: {} }));
+    }, KEY);
+    await recordFirstPaint(page);
+    await gotoHome(page, undefined, 'xlarge');
+    const notice = page.locator('#main-content > .review-notice');
+    await expect(notice).toHaveText(/新版網站寫入的/);
+    expect(await firstPaint(page), '說明不是第一次畫出來就在').toMatch(/新版網站寫入的/);
+    expectReadable(await readable(notice), '新版資料的說明');
+  });
+
+  test('按星號存不進去：說明排在題卡標頭下面，星號不移動，捲過去整段讀得到', async ({ page }) => {
+    await page.addInitScript((key) => {
+      const set = Storage.prototype.setItem;
+      Storage.prototype.setItem = function (k: string, v: string) {
+        if (k === key) throw new DOMException('quota', 'QuotaExceededError');
+        set.call(this, k, v);
+      };
+    }, KEY);
+    await gotoHome(page, undefined, 'xlarge');
+    await page.getByLabel('隨機出題順序').uncheck();
+    await startButton(page).click();
+    await expect(page.locator('.question-card')).toBeVisible();
+    await settleAnimations(page);
+    await starInView(page);
+    const before = await starState(star(page));
+    expect(before.hitIsStar, `前提：星號在畫面上 ${JSON.stringify(before)}`).toBe(true);
+    await page.mouse.click(before.x, before.y);
+    const notice = page.locator('.question-header + .review-notice');
+    await expect(notice).toHaveText('這次變更沒有儲存。瀏覽器可能封鎖了網站資料，或儲存空間已滿。');
+    await expect(star(page)).toHaveAttribute('aria-pressed', 'false');
+    expect(sameSpot(await starState(star(page))), '星號移動了').toEqual(sameSpot(before));
+    await notice.evaluate((el) => el.scrollIntoView({ block: 'nearest' }));
+    await nextFrames(page);
+    expectReadable(await readable(notice), '存不進去的說明');
+  });
+});
+
+test('Pixel 7 字級特大：加星號之後換題、結束並返回首頁，都不留提示的空白', async ({ page }) => {
+  await page.setViewportSize({ width: 412, height: 839 });
+  await gotoHome(page, undefined, 'xlarge');
+  await page.getByLabel('隨機出題順序').uncheck();
+  await startButton(page).click();
+  await star(page).click();
+  await expect(page.locator('.question-header + .review-notice')).toHaveText(TIP);
+
+  // 下一題的題卡：標頭下面直接是題幹
+  await page.locator('.option-item').first().click();
+  await page.getByRole('button', { name: /下一題/ }).click();
+  await expect(progress(page)).toHaveText(/^2 \//);
+  await expect(page.locator('.review-notice')).toHaveCount(0);
+
+  await page.getByRole('button', { name: /結束並返回首頁/ }).click();
+  await page.getByRole('dialog').getByRole('button', { name: '結束並返回', exact: true }).click();
+  await expect(page.getByRole('button', { name: /繼續測驗/ })).toBeVisible();
+  await expect(page.locator('.review-notice')).toHaveCount(0);
+  const gap = await page.evaluate(() => ({
+    appPadding: getComputedStyle(document.querySelector('.app')!).paddingBottom,
+    belowFooter:
+      document.documentElement.scrollHeight - window.scrollY - document.querySelector('.app-footer')!.getBoundingClientRect().bottom,
+  }));
+  expect(gap.appPadding).toBe('0px');
+  expect(Math.abs(gap.belowFooter), `頁尾下面留了空白 ${JSON.stringify(gap)}`).toBeLessThan(1);
 });
 
 /** 有焦點的元素沒有被頁首或星號的提示蓋住（WCAG 2.4.11）：與兩者都不重疊，也在視窗裡 */
@@ -816,31 +1094,30 @@ async function expectNotCovered(target: Locator, where: string): Promise<void> {
   const m = await target.evaluate((el) => {
     const r = el.getBoundingClientRect();
     const header = document.querySelector('.app-header')!.getBoundingClientRect();
-    const notice = document.querySelector('.review-notice')!.getBoundingClientRect();
     return {
       top: r.top,
       bottom: r.bottom,
       headerBottom: header.bottom,
-      noticeTop: notice.top,
-      noticeBottom: notice.bottom,
-      noticeHeight: notice.height,
+      notices: [...document.querySelectorAll('.review-notice')].map((n) => {
+        const b = n.getBoundingClientRect();
+        return { top: b.top, bottom: b.bottom };
+      }),
       viewport: window.innerHeight,
     };
   });
   const info = `${where} ${JSON.stringify(m)}`;
-  expect(m.noticeHeight, `提示要在畫面上 ${info}`).toBeGreaterThan(0);
   expect(m.top, `被頁首蓋住 ${info}`).toBeGreaterThanOrEqual(m.headerBottom);
-  expect(m.top < m.noticeBottom && m.bottom > m.noticeTop, `被提示蓋住 ${info}`).toBe(false);
+  expect(m.notices.some((n) => m.top < n.bottom && m.bottom > n.top), `被提示蓋住 ${info}`).toBe(false);
   expect(m.bottom, `在視窗外 ${info}`).toBeLessThanOrEqual(m.viewport);
 }
 
-test.describe('星號的提示不蓋住有焦點的題幹、選項與鍵盤提示（WCAG 2.4.11）', () => {
+test.describe('加星號之後用鍵盤作答、下一題：焦點不被頁首或提示蓋住，下一題的題幹在頁首下面（WCAG 2.4.11）', () => {
   for (const { name, viewport } of [
     { name: '桌面', viewport: { width: 1280, height: 720 } },
     { name: 'Pixel 7 的大小', viewport: { width: 412, height: 839 } },
   ]) {
     for (const fontSize of ['normal', 'large', 'xlarge'] as const) {
-      test(`${name}、字級 ${fontSize}：加星號之後用鍵盤作答、下一題、走過每一個選項`, async ({ browser, baseURL }) => {
+      test(`${name}、字級 ${fontSize}：走過每一個選項、作答、下一題`, async ({ browser, baseURL }) => {
         const context = await browser.newContext({ baseURL, viewport });
         // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
         await stubVisitorCounter(context);
@@ -850,7 +1127,7 @@ test.describe('星號的提示不蓋住有焦點的題幹、選項與鍵盤提�
         await startButton(page).click();
         await expect(page.locator('.question-card')).toBeVisible();
         await star(page).click();
-        await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
+        await expect(page.locator('.review-notice')).toHaveText(TIP);
 
         const options = page.locator('.question-options input[type="radio"]');
         const walkOptions = async (question: string) => {
@@ -883,35 +1160,8 @@ test.describe('星號的提示不蓋住有焦點的題幹、選項與鍵盤提�
   }
 });
 
-test('提示在畫面上時捲到最底：頁尾整個在提示上方，連結不被蓋住', async ({ page }) => {
-  await page.setViewportSize({ width: 412, height: 839 });
-  await gotoHome(page, undefined, 'xlarge');
-  await page.getByLabel('隨機出題順序').uncheck();
-  await startButton(page).click();
-  await star(page).click();
-  await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
-  await page.locator('.app-footer a').last().focus();
-  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
-  await expectNotCovered(page.locator('.app-footer'), '捲到最底的頁尾');
-});
-
-test('Pixel 7 字級特大：題目頁加星號再結束並返回首頁，首頁的頁尾下面不留提示的空白', async ({ page }) => {
-  await page.setViewportSize({ width: 412, height: 839 });
-  await gotoHome(page, undefined, 'xlarge');
-  await page.getByLabel('隨機出題順序').uncheck();
-  await startButton(page).click();
-  await star(page).click();
-  await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
-  expect(await page.locator('.app').evaluate((el) => parseFloat(getComputedStyle(el).paddingBottom))).toBeGreaterThan(0);
-  await page.getByRole('button', { name: /結束並返回首頁/ }).click();
-  await page.getByRole('dialog').getByRole('button', { name: '結束並返回', exact: true }).click();
-  await expect(page.getByRole('button', { name: /繼續測驗/ })).toBeVisible();
-  await expect(page.locator('.review-notice')).toBeEmpty();
-  expect(await page.locator('.app').evaluate((el) => getComputedStyle(el).paddingBottom)).toBe('0px');
-});
-
 /**
- * 從頁尾往回按 Shift+Tab 到頁首，每一個拿到焦點的元素都不被頁首或提示整個蓋住（WCAG 2.4.11）；
+ * 從頁尾往回按 Shift+Tab 到頁首，每一個拿到焦點的元素都不被頁首整個蓋住（WCAG 2.4.11）；
  * 放得下的要整個露出來。頁首是 sticky，捲到焦點的地方要停在它下面（html 的 scroll-padding-top）。
  */
 async function shiftTabFromFooter(page: Page): Promise<string[]> {
@@ -922,7 +1172,7 @@ async function shiftTabFromFooter(page: Page): Promise<string[]> {
   for (let i = 0; i < 60; i++) {
     await page.keyboard.press('Shift+Tab');
     // Header.tsx 在焦點移動後的下一個 frame 才補捲（Firefox），等兩個 frame 再量
-    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+    await nextFrames(page);
     const m = await page.evaluate(() => {
       const el = document.activeElement;
       if (!el || el === document.body) return null;
@@ -931,21 +1181,13 @@ async function shiftTabFromFooter(page: Page): Promise<string[]> {
       if (t.getBoundingClientRect().height < 2) t = el.closest('label') ?? el.parentElement ?? el;
       const r = t.getBoundingClientRect();
       const header = document.querySelector('.app-header')!.getBoundingClientRect();
-      const n = document.querySelector('.review-notice')!.getBoundingClientRect();
-      // 沒被蓋住的範圍：頁首下面、提示的另一邊、視窗裡
-      let freeTop = Math.max(header.bottom, 0);
-      let freeBottom = window.innerHeight;
-      if (n.height > 0) {
-        if (n.top < window.innerHeight / 2) freeTop = Math.max(freeTop, n.bottom);
-        else freeBottom = Math.min(freeBottom, n.top);
-      }
       return {
         stop: false as const,
         name: (el.getAttribute('aria-label') || t.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 20),
         top: Math.round(r.top),
         bottom: Math.round(r.bottom),
-        freeTop: Math.round(freeTop),
-        freeBottom: Math.round(freeBottom),
+        freeTop: Math.round(Math.max(header.bottom, 0)),
+        freeBottom: window.innerHeight,
       };
     });
     if (!m) continue;
@@ -958,7 +1200,7 @@ async function shiftTabFromFooter(page: Page): Promise<string[]> {
   throw new Error('按了 60 次 Shift+Tab 還沒回到頁首');
 }
 
-test.describe('用 Shift+Tab 往回走，焦點不被 sticky 頁首或提示蓋住（WCAG 2.4.11）', () => {
+test.describe('用 Shift+Tab 往回走，焦點不被 sticky 頁首蓋住（WCAG 2.4.11）', () => {
   for (const { viewport, fontSize } of [
     { viewport: { width: 412, height: 839 }, fontSize: 'xlarge' as const },
     { viewport: { width: 1280, height: 720 }, fontSize: 'large' as const },
@@ -972,7 +1214,7 @@ test.describe('用 Shift+Tab 往回走，焦點不被 sticky 頁首或提示蓋�
       await page.getByLabel('隨機出題順序').uncheck();
       await startButton(page).click();
       await star(page).click();
-      await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
+      await expect(page.locator('.review-notice')).toHaveText(TIP);
       expect(await shiftTabFromFooter(page)).toEqual([]);
     });
 
@@ -985,417 +1227,6 @@ test.describe('用 Shift+Tab 往回走，焦點不被 sticky 頁首或提示蓋�
       await page.getByRole('button', { name: '開啟設定' }).click();
       await expect(page.locator('.review-notice')).toHaveText(/新版網站/);
       expect(await shiftTabFromFooter(page)).toEqual([]);
-    });
-  }
-});
-
-/** 元素與提示在視窗裡的位置；提示空的時候 notice 是 null */
-const spotAndNotice = (target: Locator) =>
-  target.evaluate((el) => {
-    const r = el.getBoundingClientRect();
-    const n = document.querySelector('.review-notice')!.getBoundingClientRect();
-    const x = r.left + r.width / 2;
-    const y = r.top + r.height / 2;
-    const hit = document.elementFromPoint(x, y);
-    return {
-      x,
-      y,
-      top: r.top,
-      bottom: r.bottom,
-      left: r.left,
-      scrollY: window.scrollY,
-      viewport: window.innerHeight,
-      notice: n.height > 0 ? { top: n.top, bottom: n.bottom } : null,
-      hitIsTarget: hit !== null && el.contains(hit),
-    };
-  });
-
-type Spot = Awaited<ReturnType<typeof spotAndNotice>>;
-const overlapsNotice = (s: Spot) => s.notice !== null && s.top < s.notice.bottom && s.bottom > s.notice.top;
-const sameSpot = (s: Spot) => ({ top: s.top, left: s.left, scrollY: s.scrollY });
-
-/** 把元素捲到視窗底部上方 20px：提示放在底部的話正好蓋住它 */
-const toViewportBottom = (target: Locator) =>
-  target.evaluate((el) => {
-    const r = el.getBoundingClientRect();
-    window.scrollBy(0, r.bottom - (window.innerHeight - 20));
-  });
-
-const resultViewports = [
-  { name: 'Pixel 7', viewport: { width: 412, height: 839 }, hasTouch: true, fontSize: 'normal' as const },
-  { name: 'Pixel 7 字級特大', viewport: { width: 412, height: 839 }, hasTouch: true, fontSize: 'xlarge' as const },
-  { name: '桌面', viewport: { width: 1280, height: 720 }, hasTouch: false, fontSize: 'normal' as const },
-  { name: '390x400 字級大', viewport: { width: 390, height: 400 }, hasTouch: true, fontSize: 'large' as const },
-];
-
-/** 三題待複習錯題都答錯，到結果頁：錯題卡上的星號都還沒按過 */
-async function toResultWithWrongCards(page: Page, fontSize: 'normal' | 'large' | 'xlarge'): Promise<void> {
-  const qs = [q1, q2, q3];
-  await gotoHome(page, { wrong: Object.fromEntries(qs.map((q) => [idOf(q), { streak: 0, last: 1 }])) }, fontSize);
-  await startDrill(page, 'review:wrong');
-  for (let i = 0; i < qs.length; i++) {
-    const text = await stem(page).textContent();
-    await answer(page, qs.find((q) => q.stem === text)!, false);
-    if (i < qs.length - 1) await page.getByRole('button', { name: /下一題/ }).click();
-  }
-  await page.getByRole('button', { name: /完成測驗/ }).click();
-  await expect(page.locator('.wrong-item')).toHaveCount(3);
-  await settleAnimations(page);
-}
-
-test.describe('第一次加星號的提示不蓋住剛按的星號：星號在視窗下方時（WCAG 2.4.11）', () => {
-  for (const { name, viewport, hasTouch, fontSize } of resultViewports) {
-    test(`結果頁 ${name}：點下去不移動、不被蓋住，第二下點同一個位置就是取消`, async ({ browser, baseURL }) => {
-      const context = await browser.newContext({ baseURL, hasTouch, viewport });
-      // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
-      await stubVisitorCounter(context);
-      const page = await context.newPage();
-      await toResultWithWrongCards(page, fontSize);
-      const button = page.locator('.wrong-item').first().getByRole('button', { name: /加星號/ });
-      await toViewportBottom(button);
-      const before = await spotAndNotice(button);
-      // WebKit 與 Firefox 的捲動量有小數，差 1px 以內
-      expect(Math.abs(before.bottom - (viewport.height - 20)), `前提：星號在視窗底部上方 20px ${JSON.stringify(before)}`).toBeLessThanOrEqual(1.5);
-      const tap = (x: number, y: number) => (hasTouch ? page.touchscreen.tap(x, y) : page.mouse.click(x, y));
-
-      await tap(before.x, before.y);
-      await expect(button).toHaveAttribute('aria-pressed', 'true');
-      await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
-      const after = await spotAndNotice(button);
-      const info = JSON.stringify(after);
-      expect(sameSpot(after), `星號移動了 ${info}`).toEqual(sameSpot(before));
-      expect(overlapsNotice(after), `提示蓋住星號 ${info}`).toBe(false);
-      expect(after.hitIsTarget, `點同一個位置點到的不是星號 ${info}`).toBe(true);
-
-      await tap(before.x, before.y);
-      await expect(button, '第二下點到的不是星號').toHaveAttribute('aria-pressed', 'false');
-      expect(sameSpot(await spotAndNotice(button)), '取消之後').toEqual(sameSpot(before));
-      await context.close();
-    });
-
-    test(`結果頁 ${name}：用鍵盤按空白鍵加星號，有焦點的星號不被提示蓋住`, async ({ browser, baseURL }) => {
-      const context = await browser.newContext({ baseURL, viewport });
-      // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
-      await stubVisitorCounter(context);
-      const page = await context.newPage();
-      await toResultWithWrongCards(page, fontSize);
-      const button = page.locator('.wrong-item').first().getByRole('button', { name: /加星號/ });
-      await button.focus();
-      await toViewportBottom(button);
-      const before = await spotAndNotice(button);
-      await page.keyboard.press('Space');
-      await expect(button).toHaveAttribute('aria-pressed', 'true');
-      await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
-      await expect(button).toBeFocused();
-      const after = await spotAndNotice(button);
-      const info = JSON.stringify(after);
-      expect(sameSpot(after), `星號移動了 ${info}`).toEqual(sameSpot(before));
-      expect(overlapsNotice(after), `提示蓋住有焦點的星號 ${info}`).toBe(false);
-      await context.close();
-    });
-  }
-
-  // 400% 縮放的 1280x1024 是 320x256：題卡的星號在 header 與進度條下面，已經在視窗下半
-  for (const { viewport, fontSize } of [
-    { viewport: { width: 320, height: 256 }, fontSize: 'xlarge' as const },
-    { viewport: { width: 320, height: 256 }, fontSize: 'normal' as const },
-    { viewport: { width: 640, height: 360 }, fontSize: 'xlarge' as const },
-    { viewport: { width: 390, height: 400 }, fontSize: 'xlarge' as const },
-  ]) {
-    test(`題目頁 ${viewport.width}x${viewport.height} 字級 ${fontSize}：點下去不被蓋住，第二下點同一個位置就是取消`, async ({
-      browser,
-      baseURL,
-    }) => {
-      const context = await browser.newContext({ baseURL, hasTouch: true, viewport });
-      // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
-      await stubVisitorCounter(context);
-      const page = await context.newPage();
-      await gotoHome(page, undefined, fontSize);
-      await page.getByLabel('隨機出題順序').uncheck();
-      await startButton(page).click();
-      await expect(page.locator('.question-card')).toBeVisible();
-      await settleAnimations(page);
-      await page.evaluate(() => window.scrollTo(0, 0));
-      const button = star(page);
-      const start = await spotAndNotice(button);
-      if (start.bottom > viewport.height - 20) await toViewportBottom(button);
-      const before = await spotAndNotice(button);
-
-      await page.touchscreen.tap(before.x, before.y);
-      await expect(button).toHaveAttribute('aria-pressed', 'true');
-      await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
-      const after = await spotAndNotice(button);
-      const info = JSON.stringify(after);
-      expect(sameSpot(after), `星號移動了 ${info}`).toEqual(sameSpot(before));
-      expect(overlapsNotice(after), `提示蓋住星號 ${info}`).toBe(false);
-      expect(after.hitIsTarget, `點同一個位置點到的不是星號 ${info}`).toBe(true);
-
-      await page.touchscreen.tap(before.x, before.y);
-      await expect(button, '第二下點到的不是星號').toHaveAttribute('aria-pressed', 'false');
-      await context.close();
-    });
-  }
-});
-
-/** 用鍵盤作答第一個選項、按下一題，直到第 n 題；焦點停在題幹（tabIndex=-1），它就是提示不能蓋住的元素 */
-async function keyboardToQuestion(page: Page, n: number): Promise<void> {
-  for (let i = 1; i < n; i++) {
-    await page.locator('.question-feedback-link').focus();
-    await page.keyboard.press('Tab');
-    await page.keyboard.press('Enter');
-    await expect(page.getByRole('button', { name: /下一題/ })).toBeFocused();
-    await page.keyboard.press('Enter');
-    await expect(progress(page)).toHaveText(new RegExp(String.raw`^${i + 1} /`));
-    await expect(page.locator('.question-stem')).toBeFocused();
-  }
-}
-
-/**
- * 從現在的位置一路往下捲（每次 4px，等兩個 frame），記下每一格的提示與焦點：
- * 提示讀得到的高度（clientHeight 扣掉 padding）、兩行字的高度、整段字的高度、在哪一邊，
- * 焦點在頁首下面、視窗裡的長度，其中沒被提示蓋住的長度，與有沒有和提示重疊
- */
-const scrollSamples = (page: Page, distance: number) =>
-  page.evaluate(async (distance) => {
-    const n = document.querySelector<HTMLElement>('.review-notice')!;
-    const header = document.querySelector('.app-header')!;
-    const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-    const length = (a: { top: number; bottom: number }, top: number, bottom: number) =>
-      Math.max(0, Math.min(a.bottom, bottom) - Math.max(a.top, top));
-    const rows = [];
-    const start = window.scrollY;
-    for (let y = start; y < start + distance; y += 4) {
-      window.scrollTo(0, y);
-      await frame();
-      const cs = getComputedStyle(n);
-      const padding = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
-      const focus = document.activeElement!.getBoundingClientRect();
-      const nr = n.getBoundingClientRect();
-      const headerBottom = Math.max(0, header.getBoundingClientRect().bottom);
-      rows.push({
-        scrollY: Math.round(window.scrollY),
-        side: n.dataset.side,
-        readable: n.clientHeight - padding,
-        twoLines: 2 * parseFloat(cs.lineHeight),
-        content: n.scrollHeight - padding,
-        focusHeight: Math.round(focus.height),
-        room: Math.round(window.innerHeight - headerBottom),
-        inView: Math.round(length(focus, headerBottom, window.innerHeight)),
-        shown: Math.round(length(focus, headerBottom, window.innerHeight) - length(focus, Math.max(nr.top, headerBottom), nr.bottom)),
-        overlap: focus.top < nr.bottom && focus.bottom > nr.top,
-      });
-    }
-    return rows;
-  }, distance);
-
-// 400% 縮放的 1280x1024 是 320x256：鍵盤按下一題之後焦點在題幹，第 10 題的題幹加上兩行提示就超過頁首下面的空間（字級特大與大時
-// 題幹本身就比它高），提示放哪一邊都會碰到題幹。
-// 改之前提示的高度上限算成 0，字整個看不到（存不進去的說明一直留著，也一樣看不到）
-test.describe('焦點在比視窗還高的題幹上，一路往下捲：提示讀得到，題幹不被整個蓋住，不無故換邊', () => {
-  for (const fontSize of ['xlarge', 'large', 'normal'] as const) {
-    test(`320x256 字級 ${fontSize}：第 10 題`, async ({ page }) => {
-      await page.setViewportSize({ width: 320, height: 256 });
-      await gotoHome(page, undefined, fontSize);
-      await page.getByLabel('隨機出題順序').uncheck();
-      await startButton(page).click();
-      await star(page).click();
-      await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
-      await keyboardToQuestion(page, 10);
-      await settleAnimations(page);
-      const rows = await scrollSamples(page, 320);
-      expect(rows).toHaveLength(80);
-      // 前提：題幹加上兩行提示就放不進頁首下面的空間，提示放哪一邊都會碰到題幹
-      const premise = JSON.stringify(rows[0]);
-      expect(rows[0].focusHeight + rows[0].twoLines, `前提：第 10 題的題幹加兩行提示比可用的高度高 ${premise}`).toBeGreaterThan(rows[0].room);
-
-      const unreadable = rows.filter((r) => r.readable < Math.min(r.twoLines, r.content) - 1);
-      expect(unreadable, '提示讀不到兩行').toEqual([]);
-      // 捲到題幹整個在頁首上面之後就不算
-      expect(rows.filter((r) => r.inView > 0 && r.shown <= 0), '題幹整個被蓋住').toEqual([]);
-      // 捲動中換邊只能是換過去就不再碰到題幹
-      const flips = rows.flatMap((r, i) => (i > 0 && r.side !== rows[i - 1].side ? [[rows[i - 1], r]] : []));
-      expect(flips.filter(([before, after]) => !before.overlap || after.overlap), '捲動時無故換邊').toEqual([]);
-    });
-  }
-});
-
-/** 等兩個 frame：提示在 requestAnimationFrame 裡重新選邊（WebKit 觸控點完之後約 0.3 秒才跑下一個 frame） */
-const nextFrames = (page: Page) =>
-  page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
-
-/** 題卡上一個點下去不會指到任何東西的點：不在能按、能拿到焦點的元素上，也不在頁首或提示底下 */
-const inertSpotOnCard = (page: Page) =>
-  page.locator('.question-card').evaluate((card) => {
-    const header = document.querySelector('.app-header')!.getBoundingClientRect();
-    const r = card.getBoundingClientRect();
-    for (let y = Math.min(r.bottom, window.innerHeight) - 4; y > Math.max(r.top, header.bottom) + 4; y -= 4) {
-      for (let x = r.left + 4; x < r.right - 4; x += 4) {
-        const hit = document.elementFromPoint(x, y);
-        if (hit && card.contains(hit) && !hit.closest('button, a[href], input, select, textarea, label, summary, [tabindex]')) {
-          return { x, y };
-        }
-      }
-    }
-    return null;
-  });
-
-// 點完星號之後點一下不能按的地方，或從選項上開始的觸控捲動：提示是星號引起的，不能因為這樣就換回底部蓋住它。
-// 改之前 pointerdown 落在不能按的東西上，要保護的元素就變成沒有，提示回到底部
-test.describe('第一次加星號之後點不能按的地方或捲動：剛按的星號照樣不被提示蓋住', () => {
-  /** 320x256 字級特大，題卡的星號捲到視窗底部上方 20px，點下去加星號；提示換到頁首下面 */
-  async function starNearBottom(page: Page, tap: (x: number, y: number) => Promise<void>) {
-    await gotoHome(page, undefined, 'xlarge');
-    await page.getByLabel('隨機出題順序').uncheck();
-    await startButton(page).click();
-    await expect(page.locator('.question-card')).toBeVisible();
-    await settleAnimations(page);
-    await page.evaluate(() => window.scrollTo(0, 0));
-    await toViewportBottom(star(page));
-    const before = await spotAndNotice(star(page));
-    await tap(before.x, before.y);
-    await expect(star(page)).toHaveAttribute('aria-pressed', 'true');
-    await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
-    await nextFrames(page);
-    const after = await spotAndNotice(star(page));
-    expect(overlapsNotice(after), `前提：加星號之後提示不蓋住星號 ${JSON.stringify(after)}`).toBe(false);
-  }
-
-  for (const { name, hasTouch } of [
-    { name: '觸控', hasTouch: true },
-    { name: '滑鼠', hasTouch: false },
-  ]) {
-    test(`320x256 字級特大，${name}：點題卡的空白處、捲動一下，再點同一個位置就是取消星號`, async ({ browser, baseURL }) => {
-      const context = await browser.newContext({ baseURL, hasTouch, viewport: { width: 320, height: 256 } });
-      // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
-      await stubVisitorCounter(context);
-      const page = await context.newPage();
-      const tap = (x: number, y: number) => (hasTouch ? page.touchscreen.tap(x, y) : page.mouse.click(x, y));
-      await starNearBottom(page, tap);
-
-      const inert = await inertSpotOnCard(page);
-      expect(inert, '前提：題卡上找得到點下去不會指到任何東西的點').not.toBeNull();
-      await tap(inert!.x, inert!.y);
-      await nextFrames(page);
-      const tapped = await spotAndNotice(star(page));
-      expect(overlapsNotice(tapped), `點了空白處之後提示蓋住星號 ${JSON.stringify(tapped)}`).toBe(false);
-
-      await page.evaluate(() => window.scrollBy(0, -1));
-      await nextFrames(page);
-      const scrolled = await spotAndNotice(star(page));
-      expect(overlapsNotice(scrolled), `捲動之後提示蓋住星號 ${JSON.stringify(scrolled)}`).toBe(false);
-      expect(scrolled.hitIsTarget, `點同一個位置點到的不是星號 ${JSON.stringify(scrolled)}`).toBe(true);
-      await tap(scrolled.x, scrolled.y);
-      await expect(star(page), '第二下點到的不是星號').toHaveAttribute('aria-pressed', 'false');
-      await context.close();
-    });
-  }
-
-  // 觸控捲動從選項（label）開始時，瀏覽器先送 pointerdown，開始捲動時送 pointercancel，不會有 pointerup 與 click。
-  // Playwright 在 Firefox 與 WebKit 做不出真的觸控捲動，直接送這兩個事件；選項在視窗外，算成它的話提示就回到底部
-  test('320x256 字級特大：從選項開始的觸控捲動（pointerdown 再 pointercancel），提示照樣不蓋住星號', async ({ browser, baseURL }) => {
-    const context = await browser.newContext({ baseURL, hasTouch: true, viewport: { width: 320, height: 256 } });
-    // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
-    await stubVisitorCounter(context);
-    const page = await context.newPage();
-    await starNearBottom(page, (x, y) => page.touchscreen.tap(x, y));
-    await page.locator('.option-item').first().evaluate((label) => {
-      const init = { bubbles: true, cancelable: true, composed: true, pointerId: 41, pointerType: 'touch', isPrimary: true };
-      label.dispatchEvent(new PointerEvent('pointerdown', init));
-      label.dispatchEvent(new PointerEvent('pointercancel', { ...init, cancelable: false }));
-      window.scrollBy(0, -1);
-    });
-    await nextFrames(page);
-    const after = await spotAndNotice(star(page));
-    expect(overlapsNotice(after), `觸控捲動之後提示蓋住星號 ${JSON.stringify(after)}`).toBe(false);
-    await context.close();
-  });
-
-  // 提示在頁首下面時 top 是頁首的下緣加空隙，常是小數，讀回來的格式與寫進去的不同（chromium 把 65.296875px 讀成
-  // 65.2969px）。只是頁面捲動時照樣不能重寫：提示裡的捲動還沒停的話，重寫可能讓它停在半路
-  test('320x256 字級特大：提示在頁首下面、頁首的下緣不是整數 px，只是頁面捲動時不重寫提示', async ({ browser, baseURL }) => {
-    const context = await browser.newContext({ baseURL, hasTouch: true, viewport: { width: 320, height: 256 } });
-    // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
-    await stubVisitorCounter(context);
-    const page = await context.newPage();
-    await starNearBottom(page, (x, y) => page.touchscreen.tap(x, y));
-    // 頁首的 padding 改了，ResizeObserver（量內容的大小）不會通知：送一個 scroll 事件讓提示照新的頁首放好
-    await page.locator('.app-header').evaluate((el: HTMLElement) => {
-      el.style.paddingBottom = '0.3px';
-      window.dispatchEvent(new Event('scroll'));
-    });
-    await nextFrames(page);
-    const state = await page.locator('.review-notice').evaluate(async (el) => {
-      const writes: string[] = [];
-      const observer = new MutationObserver((records) => records.forEach((m) => writes.push(`${m.attributeName}`)));
-      observer.observe(el, { attributes: true });
-      window.dispatchEvent(new Event('scroll'));
-      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-      observer.disconnect();
-      return { side: el.dataset.side, top: el.style.top, writes };
-    });
-    expect(state.side, `前提：提示在頁首下面 ${JSON.stringify(state)}`).toBe('top');
-    expect(state.top, `前提：top 不是整數 px ${JSON.stringify(state)}`).toMatch(/\.\d/);
-    expect(state.writes, `只是頁面捲動也重寫了提示 ${JSON.stringify(state)}`).toEqual([]);
-    await context.close();
-  });
-
-  // 題幹有 tabIndex=-1（鍵盤按下一題時焦點移到那裡），看起來是文字，點下去卻會拿到焦點。改之前它算成剛按的東西，
-  // focusin 也把它當成有焦點的元素：390x400 字級特大第 10 題，提示從底部換到頁首下面，蓋住剛按的星號
-  for (const { name, hasTouch } of [
-    { name: '觸控', hasTouch: true },
-    { name: '滑鼠', hasTouch: false },
-  ]) {
-    test(`390x400 字級特大第 10 題，${name}：點題幹的文字，再點同一個位置就是取消星號`, async ({ browser, baseURL }) => {
-      const context = await browser.newContext({ baseURL, hasTouch, viewport: { width: 390, height: 400 } });
-      // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
-      await stubVisitorCounter(context);
-      const page = await context.newPage();
-      const tap = (x: number, y: number) => (hasTouch ? page.touchscreen.tap(x, y) : page.mouse.click(x, y));
-      await gotoHome(page, undefined, 'xlarge');
-      await page.getByLabel('隨機出題順序').uncheck();
-      await startButton(page).click();
-      for (let i = 1; i < 10; i++) {
-        await page.locator('.option-item').first().click();
-        await page.getByRole('button', { name: /下一題/ }).click();
-      }
-      await expect(progress(page)).toHaveText(/^10 \//);
-      await settleAnimations(page);
-      // 星號在頁首下面 20px：提示在底部時不蓋住它，換到頁首下面就蓋住
-      await star(page).evaluate((el) => {
-        const headerBottom = document.querySelector('.app-header')!.getBoundingClientRect().bottom;
-        window.scrollBy(0, el.getBoundingClientRect().top - headerBottom - 20);
-      });
-      const before = await spotAndNotice(star(page));
-      await tap(before.x, before.y);
-      await expect(star(page)).toHaveAttribute('aria-pressed', 'true');
-      await expect(page.locator('.review-notice')).toHaveText(/已加星號/);
-      await nextFrames(page);
-      const after = await spotAndNotice(star(page));
-      expect(overlapsNotice(after), `前提：加星號之後提示不蓋住星號 ${JSON.stringify(after)}`).toBe(false);
-
-      // 題幹看得到、提示沒蓋住的那一段的中間
-      const text = await page.locator('.question-stem').evaluate((el) => {
-        const r = el.getBoundingClientRect();
-        const n = document.querySelector('.review-notice')!.getBoundingClientRect();
-        let top = Math.max(r.top, document.querySelector('.app-header')!.getBoundingClientRect().bottom);
-        let bottom = Math.min(r.bottom, window.innerHeight);
-        if (n.top <= top + 2) top = Math.max(top, n.bottom);
-        else bottom = Math.min(bottom, n.top);
-        const x = r.left + 20;
-        const y = (top + bottom) / 2;
-        return { x, y, onStem: !!document.elementFromPoint(x, y)?.closest('.question-stem'), height: bottom - top };
-      });
-      // 前提：點得到題幹，而且它會把題幹當成要保護的元素時，提示換邊（題幹的下半在底部的提示後面）
-      expect(text.onStem && text.height > 4, `前提：點得到題幹 ${JSON.stringify(text)}`).toBe(true);
-      await tap(text.x, text.y);
-      await expect(page.locator('.question-stem')).toBeFocused();
-      await nextFrames(page);
-      const tapped = await spotAndNotice(star(page));
-      expect(overlapsNotice(tapped), `點了題幹之後提示蓋住星號 ${JSON.stringify(tapped)}`).toBe(false);
-      expect(tapped.hitIsTarget, `點同一個位置點到的不是星號 ${JSON.stringify(tapped)}`).toBe(true);
-      await tap(tapped.x, tapped.y);
-      await expect(star(page), '第二下點到的不是星號').toHaveAttribute('aria-pressed', 'false');
-      await context.close();
     });
   }
 });
@@ -1436,144 +1267,3 @@ test.describe('對話框裡用鍵盤移動焦點：頁首的補捲不碰對話�
   }
 });
 
-// 提示被限制高度、裡面要捲動時，鍵盤也要捲得動它。chromium 與 Firefox 會讓捲動區拿得到焦點，WebKit 不會：沒有 tabindex
-// 就不在 Tab 順序裡（PracticeOptInDialog 的 optin-body 因此加了 tabIndex）。放得下的時候不留一個多餘的 Tab 停留點
-test('320x192 字級特大，新版資料的說明放不下：Tab 到得了提示、方向鍵捲得動；放得下之後不在 Tab 順序裡', async ({ page }) => {
-  await page.setViewportSize({ width: 320, height: 192 });
-  await page.addInitScript((key) => {
-    window.localStorage.setItem(key, JSON.stringify({ v: 99, seeded: true, stars: {}, wrong: {} }));
-  }, KEY);
-  await gotoHome(page, undefined, 'xlarge');
-  const notice = page.locator('.review-notice');
-  await expect(notice).toHaveText(/新版網站/);
-  await nextFrames(page);
-  const size = await notice.evaluate((el) => ({ client: el.clientHeight, scroll: el.scrollHeight }));
-  expect(size.scroll, `前提：提示放不下，裡面要捲動 ${JSON.stringify(size)}`).toBeGreaterThan(size.client + 1);
-
-  let reached = false;
-  for (let i = 0; i < 80 && !reached; i++) {
-    await page.keyboard.press('Tab');
-    reached = await notice.evaluate((el) => document.activeElement === el);
-  }
-  expect(reached, '按 Tab 到不了提示').toBe(true);
-  // 按到底之後再按，捲動會傳到頁面；頁面一捲，提示重新選邊，捲到的位置不能因此回到開頭
-  // 三下的距離比要捲的多，等平滑捲動停在最底
-  for (let i = 0; i < 3; i++) await page.keyboard.press('ArrowDown');
-  await expect
-    .poll(() => notice.evaluate((el) => el.scrollHeight - el.clientHeight - el.scrollTop), '方向鍵捲不動提示')
-    .toBeLessThanOrEqual(1);
-  const read = await notice.evaluate((el) => el.scrollTop);
-  await page.evaluate(() => window.scrollBy(0, 5));
-  await nextFrames(page);
-  expect(await notice.evaluate((el) => el.scrollTop), '頁面捲動之後提示裡捲到的位置回到開頭').toBe(read);
-
-  await page.keyboard.press('Tab');
-  await page.setViewportSize({ width: 1280, height: 720 });
-  await nextFrames(page);
-  expect(await notice.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeLessThanOrEqual(1);
-  await expect(notice).not.toHaveAttribute('tabindex');
-});
-
-// 提示裡平滑捲動還沒停的時候，頁面捲動（或頁首、提示的大小改變）讓提示重新選邊。改之前選邊要先拿掉 max-height 量原本的高度、
-// 量完放回去再寫回 scrollTop，這一寫就把捲動停在半路：WebKit 用方向鍵捲提示，五次停在 21、1、0、9、14（要捲 21px）。
-// 什麼都沒變的時候也不寫提示的屬性與 html 的樣式
-test('320x192 字級特大，新版資料的說明裡平滑捲動時頁面捲動：捲動照樣到底，提示的屬性不被重寫', async ({ page }) => {
-  await page.setViewportSize({ width: 320, height: 192 });
-  await page.addInitScript((key) => {
-    window.localStorage.setItem(key, JSON.stringify({ v: 99, seeded: true, stars: {}, wrong: {} }));
-  }, KEY);
-  await gotoHome(page, undefined, 'xlarge');
-  const notice = page.locator('.review-notice');
-  await expect(notice).toHaveText(/新版網站/);
-  await nextFrames(page);
-  // 只是頁面捲動：提示在哪一邊、多高都不變
-  const idle = await notice.evaluate(async (el) => {
-    const writes: string[] = [];
-    const observer = new MutationObserver((records) =>
-      records.forEach((m) => writes.push(`${(m.target as Element).tagName} ${m.attributeName}`))
-    );
-    observer.observe(el, { attributes: true });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
-    window.dispatchEvent(new Event('scroll'));
-    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-    observer.disconnect();
-    return writes;
-  });
-  expect.soft(idle, '只是頁面捲動，提示的屬性或 html 的樣式也被重寫').toEqual([]);
-
-  // 提示裡一開始捲（第一個 scroll 事件）就送一個頁面的 scroll 事件：提示在下一個 frame 重新選邊，那時捲動還沒停
-  const arm = () =>
-    notice.evaluate(async (el) => {
-      const w = window as unknown as { __positions: number[]; __record?: () => void };
-      if (w.__record) el.removeEventListener('scroll', w.__record);
-      el.scrollTop = 0;
-      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-      const positions: number[] = (w.__positions = []);
-      w.__record = () => positions.push(Math.round(el.scrollTop));
-      el.addEventListener('scroll', w.__record);
-      el.addEventListener('scroll', () => window.dispatchEvent(new Event('scroll')), { once: true });
-      return el.scrollHeight - el.clientHeight;
-    });
-  const reachesBottom = (how: string, range: number) =>
-    expect
-      .poll(
-        () =>
-          notice.evaluate((el, range) => {
-            const positions = (window as unknown as { __positions: number[] }).__positions;
-            return el.scrollTop >= range - 1 ? '到底' : `停在 ${el.scrollTop}，經過 ${positions.join(' ')}`;
-          }, range),
-        { message: `${how}：平滑捲動停在半路（要捲 ${range}px）`, timeout: 3000 }
-      )
-      .toBe('到底');
-
-  const range = await arm();
-  expect(range, '前提：提示放不下，裡面要捲動').toBeGreaterThan(1);
-  await notice.evaluate((el, top) => el.scrollTo({ top, behavior: 'smooth' }), range);
-  await reachesBottom('scrollTo smooth', range);
-
-  await notice.focus();
-  await arm();
-  await page.keyboard.press('ArrowDown');
-  await reachesBottom('方向鍵', range);
-});
-
-// 提示有焦點的時候字收掉（另一個分頁把資料換成這一版讀得懂的，新版資料的說明就收掉）：沒有字就拿掉 tabindex，
-// 焦點掉到 body，下一個 Tab 從別的地方開始。改成先回到進提示之前有焦點的元素
-test('320x192 字級特大，Tab 到新版資料的說明之後說明收掉：焦點回到進提示之前的元素', async ({ page, context }) => {
-  await page.setViewportSize({ width: 320, height: 192 });
-  await page.addInitScript((key) => {
-    window.localStorage.setItem(key, JSON.stringify({ v: 99, seeded: true, stars: {}, wrong: {} }));
-  }, KEY);
-  await gotoHome(page, undefined, 'xlarge');
-  const notice = page.locator('.review-notice');
-  await expect(notice).toHaveText(/新版網站/);
-  await expect(notice, '前提：提示放不下，在 Tab 順序裡').toHaveAttribute('tabindex', '0');
-
-  let reached = false;
-  for (let i = 0; i < 80 && !reached; i++) {
-    await page.evaluate(() => {
-      (window as unknown as { __before: Element | null }).__before = document.activeElement;
-    });
-    await page.keyboard.press('Tab');
-    reached = await notice.evaluate((el) => document.activeElement === el);
-  }
-  expect(reached, '前提：按 Tab 到得了提示').toBe(true);
-
-  const other = await context.newPage();
-  await other.goto('/');
-  await other.evaluate((key) => {
-    window.localStorage.setItem(key, JSON.stringify({ v: 1, seeded: true, stars: {}, wrong: {} }));
-  }, KEY);
-  await expect(notice).toBeEmpty();
-  await nextFrames(page);
-  const focus = await page.evaluate(() => {
-    const before = (window as unknown as { __before: Element | null }).__before;
-    const active = document.activeElement;
-    return {
-      back: active !== null && active === before && active !== document.body,
-      active: `${active?.tagName}.${active?.className} ${(active?.textContent ?? '').trim().slice(0, 12)}`,
-      before: `${before?.tagName}.${before?.className} ${(before?.textContent ?? '').trim().slice(0, 12)}`,
-    };
-  });
-  expect(focus.back, `焦點沒有回到進提示之前的元素 ${JSON.stringify(focus)}`).toBe(true);
-});

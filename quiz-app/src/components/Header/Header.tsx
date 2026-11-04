@@ -36,7 +36,7 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
     const onFocusIn = (e: FocusEvent) => {
       const target = e.target;
       if (!(target instanceof Element)) return;
-      if (target.closest('.app-header, .review-notice, dialog, [role="dialog"], [role="alertdialog"], [aria-modal="true"]')) return;
+      if (target.closest('.app-header, dialog, [role="dialog"], [role="alertdialog"], [aria-modal="true"]')) return;
       requestAnimationFrame(() => {
         if (document.activeElement !== target || !target.matches(':focus-visible')) return;
         // 藏起來的 radio、checkbox 沒有大小，看得到的是外面的 label

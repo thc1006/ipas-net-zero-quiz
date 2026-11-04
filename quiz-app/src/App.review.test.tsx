@@ -55,7 +55,14 @@ function answer(q: QuizQuestion, right: boolean) {
 const finish = () => fireEvent.click(screen.getByRole('button', { name: /完成測驗/ }));
 const retry = () => screen.findByRole('button', { name: /再測一次/ });
 const stem = () => document.querySelector('.question-stem p')?.textContent;
-const notices = () => document.querySelector('.review-notice')!;
+/** 畫面上每一個星號與待複習的提示的字（排在文件流裡，可能不只一個，沒有的時候一個元素都沒有） */
+const notices = () => {
+  const all = document.createElement('div');
+  all.textContent = [...document.querySelectorAll('.review-notice')].map((n) => n.textContent).join('');
+  return all;
+};
+/** 螢幕閱讀器念的：開頁就在、看不見的 live region */
+const live = () => document.querySelector('.review-live')!;
 
 beforeEach(() => {
   store = installRealLocalStorage();
@@ -88,8 +95,9 @@ describe('開站', () => {
     store.set(REVIEW_STORAGE_KEY, '{broken');
     render(<App />);
     expect(store.get('ipas-review-v1:corrupt')).toBe('{broken');
-    expect(notices()).toHaveAttribute('role', 'status');
-    expect(notices()).toHaveTextContent('星號與待複習紀錄無法讀取，原始內容已另存，清單從空的開始。');
+    expect(live()).toHaveTextContent('星號與待複習紀錄無法讀取，原始內容已另存，清單從空的開始。');
+    // 排在主內容最上面
+    expect(document.querySelector('#main-content > .review-notice')).toHaveTextContent('原始內容已另存');
   });
 
   it('壞資料太大、搬不走：開站就說，不是等到按星號才知道', () => {
@@ -497,8 +505,11 @@ describe('找得到練習入口', () => {
     expect(a.id).not.toBe(b.id);
     const star = screen.getByRole('button', { name: '加星號' });
     fireEvent.click(star);
-    expect(notices()).toHaveAttribute('role', 'status');
-    expect(notices()).toHaveTextContent('已加星號，首頁「題目來源」選「星號題」可以反覆練習。');
+    expect(live()).toHaveTextContent('已加星號，首頁「題目來源」選「星號題」可以反覆練習。');
+    // 排在題卡標頭那一列（星號所在）的正下方
+    expect(document.querySelector('.question-header + .review-notice')).toHaveTextContent(
+      '已加星號，首頁「題目來源」選「星號題」可以反覆練習。'
+    );
     fireEvent.click(star);
     expect(notices()).toHaveTextContent('');
     fireEvent.click(star);
@@ -518,8 +529,29 @@ describe('寫入失敗', () => {
     const star = screen.getByRole('button', { name: '加星號' });
     fireEvent.click(star);
     expect(star).toHaveAttribute('aria-pressed', 'true');
-    expect(notices()).toHaveAttribute('role', 'status');
-    expect(notices()).toHaveTextContent(/沒有儲存/);
+    expect(live()).toHaveTextContent(/沒有儲存/);
+    expect(document.querySelector('.question-header + .review-notice')).toHaveTextContent(/沒有儲存/);
+  });
+
+  it('結果頁：星號與移出待複習存不進去，說在那張錯題卡裡、那顆按鈕那一列的下面', async () => {
+    const [q] = scorable;
+    put([], { [q.id]: { streak: 0, last: 1 } });
+    render(<App />);
+    await startDrill('review:wrong');
+    answer(q, false);
+    finish();
+    await retry();
+    localStorage.setItem = () => {
+      throw new DOMException('quota', 'QuotaExceededError');
+    };
+    const underStar = () => document.querySelector('.wrong-item .wrong-stem-row + .review-notice');
+    fireEvent.click(screen.getByRole('button', { name: '第 1 題加星號' }));
+    expect(underStar()).toHaveTextContent(/沒有儲存/);
+    fireEvent.click(screen.getByRole('button', { name: '第 1 題移出待複習' }));
+    expect(document.querySelector('.wrong-item .review-remove + .review-notice')).toHaveTextContent(/沒有儲存/);
+    // 星號下面那一句還在：別顆按鈕的寫入不收掉它
+    expect(underStar()).toHaveTextContent(/沒有儲存/);
+    expect(document.querySelector('#main-content > .review-notice')).toBeNull();
   });
 
   it('作答紀錄存不進去：結果頁上看得到', async () => {
