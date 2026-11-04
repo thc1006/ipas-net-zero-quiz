@@ -8,8 +8,8 @@
   "summary": {
     "main_tier1_questions": 966,
     "pool_tier1_questions": 140,
-    "total_evidence_records": 1192,
-    "primary_evidence_records": 1183,
+    "total_evidence_records": 1196,
+    "primary_evidence_records": 1187,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -7352,8 +7352,35 @@
     {
       "qid": "gist[422]",
       "bank": "main",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[422]",
+      "bank": "main",
       "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
       "host": "enews.moenv.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[422]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+      "host": "usr.chu.edu.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[422]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+      "host": "usr.chu.edu.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -8893,6 +8920,15 @@
       "bank": "main",
       "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
       "host": "enews.moenv.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[78]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+      "host": "usr.chu.edu.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true

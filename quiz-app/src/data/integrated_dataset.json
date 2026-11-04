@@ -4670,8 +4670,9 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-05",
         "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
           "https://www.iso.org/standard/43279.html"
         ],
@@ -4685,6 +4686,14 @@
         },
         "evidence": [
           {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "ISO-14068-1 碳中和路徑要求：企業透過溫室氣體減排應同時增加移除，逐漸減少對碳抵換的依賴性。碳中和路徑應有短期(5至10年)與長期(至少20年)目標",
+            "supports_option": "D",
+            "verified_on": "2026-11-05",
+            "method": "以 2026-11-05 下載的 iPAS 公版教材 PDF（328201936.pdf，sha256 0fa1b5362b9e9456e7d2…）第 164 頁，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
+            "note": "教材這頁標明 Ref: ISO-14068-1 2023：長期目標至少 20 年。"
+          },
+          {
             "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
             "quote": "短 期減量目標（5 至10 年）和長期淨零目標（20 年）",
             "supports_option": "D",
@@ -4692,21 +4701,29 @@
           }
         ],
         "explanation_source": {
-          "date": "2026-07-15",
-          "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
-          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+          "date": "2026-11-05",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+          "why": "原解析只依環境部指引寫成；改以公版教材第 164 頁的 ISO-14068-1 碳中和路徑要求為據重寫，指引的同一期程留作補充，經 explanation_guard 檢查無引文外斷言。",
+          "was": {
+            "date": "2026-07-15",
+            "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
+            "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+          }
         },
         "standard_replacement_check": {
-          "date": "2026-11-04",
+          "date": "2026-11-05",
           "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023，依 docs/CONTENT-CURRENCY.md 的標準改版監控重驗。",
           "quote_check": "引文所在的環境部檔案（enews.moenv.gov.tw DisplayFile.aspx?FileID=5EC3EAB117C5B3C3）對程式回 403。Wayback Machine 2026-05-17 的存檔是 19 頁的 PDF（sha256 166a921a9242f138e967a81d3624b9853dad7b001e4869973571bc92088e30e5），用 tools/fetch_text.py 的 quote_status 比對，引文是 verbatim。",
-          "not_reverified": "題幹把這份環境部指引的內容說成是 ISO 14068 的要求，這是改版前就有的問題，與這次改版無關，需要另外決定怎麼改，所以這次不算重驗完成，valid_as_of 不動。"
+          "not_reverified_was": "題幹把這份環境部指引的內容說成是 ISO 14068 的要求，這是改版前就有的問題，與這次改版無關，需要另外決定怎麼改，所以這次不算重驗完成，valid_as_of 不動。",
+          "how_verified": "2026-11-05 重新下載公版教材 PDF，第 164 頁的引文 quote_status 為 verbatim。之前懷疑題幹把環境部指引的內容說成 ISO 14068 的要求。複查後不是：iPAS 公版教材第 164 頁（標明 Ref: ISO-14068-1 2023）把路徑目標列為 ISO-14068-1 的要求，第 173 到 175 頁把碳中和報告與宣告的要項列在 ISO14068 的標題下，環境部指引也寫明企業宣告碳中和應符合 ISO 14068-1 等國際標準作法。題幹與答案都不用改，只把教材的引文放到最前面，解析改以教材為據。",
+          "answer_check": "答案 D 不變：教材寫長期目標至少 20 年；新版 ISO 14068 只改標題與編號，內容相同。",
+          "explanation_was": "依環境部《企業宣告碳中和指引》，短期減量目標為5至10年，長期淨零目標為20年，故長期目標為20年。"
         }
       },
       "quality_flags": [
         "time_sensitive"
       ],
-      "explanation": "依環境部《企業宣告碳中和指引》，短期減量目標為5至10年，長期淨零目標為20年，故長期目標為20年。"
+      "explanation": "iPAS 公版教材整理的 ISO 14068 碳中和路徑要求：碳中和路徑要有短期（5 至 10 年）與長期（至少 20 年）目標，所以長期目標至少 20 年。環境部《企業宣告碳中和指引》寫的是短期減量目標 5 至 10 年、長期淨零目標 20 年。"
     },
     {
       "index": 79,
@@ -23103,13 +23120,15 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "依環境部《企業宣告碳中和指引》，碳中和公開揭露應包含碳足跡量化方法、減量措施及用於抵換之減量額度來源。",
+      "explanation": "iPAS 公版教材整理的 ISO 14068 碳中和報告要項，包括碳足跡量化的方法學、報告期間溫室氣體排放減量與移除提升的說明、產生抵換碳權的計畫與使用的碳額度（註冊登錄處與碳權序號）；碳中和宣告應參考或連結這份報告為基礎。所以宣告的依據要涵蓋碳足跡量化方法、減量措施與碳權來源。環境部《企業宣告碳中和指引》列的公開揭露項目也包括這三類。題幹寫的 ISO 14068‑1 已由新版 ISO 14068 取代，ISO 官方頁註明新版只改了標題與編號，其餘內容相同。",
       "metadata": {
         "original_id": "c2-229",
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-05",
         "sources": [
           "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
-          "https://www.iso.org/standard/43279.html"
+          "https://www.iso.org/standard/43279.html",
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+          "https://committee.iso.org/standard/14068"
         ],
         "subject_corrected_2026_07_13": {
           "from": "考科2",
@@ -23125,26 +23144,58 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
-          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。",
+          "superseded": "2026-11-05 解析已改以公版教材第 174、175 頁的引文重寫，這個結論針對的是舊解析。"
         },
         "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "碳足跡量化資訊排除理由，碳足跡量化的方法學及選擇的理由 • 對先前報告期間所選用的量化方法學變動所涉的解釋與理由 • GHG排放與移除係數使用的相關佐證資料與文件化資訊 • 量化GHG排放與移除準確性之不確定性衝擊 • 報告期間GHG排放減量與移除提升的說明，包括如何達成、是否符合碳中和管理計畫，或是否符合國家與國際氣候政策目標 • 碳抵換與GHG計畫，包括計畫形式、方法學以產生抵換碳權 • 使用的碳額度，包括註冊登錄處與形式，相關碳權序號",
+            "supports_option": "C",
+            "verified_on": "2026-11-05",
+            "method": "以 2026-11-05 下載的 iPAS 公版教材 PDF（328201936.pdf，sha256 0fa1b5362b9e9456e7d2…）第 174 頁，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
+            "note": "教材的 ISO14068 碳中和報告（2/2）：量化方法學、減量的說明、抵換碳權與碳額度的來源都是報告要項。"
+          },
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "碳中和宣告應參考或連結碳中和報告為基礎",
+            "supports_option": "C",
+            "verified_on": "2026-11-05",
+            "method": "以 2026-11-05 下載的 iPAS 公版教材 PDF（328201936.pdf，sha256 0fa1b5362b9e9456e7d2…）第 175 頁，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
+            "note": "教材的 ISO14068 碳中和達成宣告：宣告應參考或連結碳中和報告為基礎。"
+          },
           {
             "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
             "quote": "（四）主體邊界的原始溫室氣體排放量，包括排放量計算方式 及是否經查驗機構查證等。 （五）主體邊界內執行的溫室氣體減量、或增加溫室氣體移除 量之措施與量化結果。 （六）減量後剩餘擬採取抵換之溫室氣體淨排放量，以及占總 排放量的比例 。 （七）用於抵換之溫室氣體減量額度來源，包括減量額度核發 機構（註冊處）、減量專案來源之專案名稱、專案編號、 專案項目的類型與地點、專案執行單位、參與單位、移 除增量或減量發生年份、以及是否經查驗機構查證等。",
             "supports_option": "C",
             "note": "第十五輪：代理查、我親自複核逐字。"
+          },
+          {
+            "url": "https://committee.iso.org/standard/14068",
+            "quote": "ISO 14068 specifies principles, requirements and guidance for achieving and demonstrating carbon neutrality. It provides a standardized approach to quantifying, reducing and offsetting the carbon footprint of organizations and products, including goods, services, buildings and events.\nISO 14068 establishes a hierarchy that prioritizes direct and indirect greenhouse gas emission reductions and removal enhancements within the value chain. Offsetting is used only to counterbalance the carbon footprint that remains after these actions. The standard also includes requirements for carbon neutrality commitments and claims.\nNote: this edition only contains a change to the title and number and the rest of the content is the same.",
+            "verified_on": "2026-11-05",
+            "method": "以 2026-11-05 下載的 ISO 目錄頁（ISO 14068:2026，What is ISO 14068? 一段）轉成純文字，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
+            "note": "解析末句的出處（題幹寫的 ISO 14068-1 已由新版 ISO 14068 取代，新版只改標題與編號），不是答案依據，所以不帶 supports_option。"
           }
         ],
         "explanation_source": {
-          "date": "2026-07-15",
-          "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
-          "why": "第十五輪：查證後補一手釘句。"
+          "date": "2026-11-05",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+          "why": "原解析只依環境部指引寫成；改以公版教材第 174、175 頁的 ISO14068 碳中和報告與宣告要項為據重寫，指引的公開揭露項目留作補充，經 explanation_guard 檢查無引文外斷言。",
+          "was": {
+            "date": "2026-07-15",
+            "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
+            "why": "第十五輪：查證後補一手釘句。"
+          }
         },
         "standard_replacement_check": {
-          "date": "2026-11-04",
+          "date": "2026-11-05",
           "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023，依 docs/CONTENT-CURRENCY.md 的標準改版監控重驗。",
           "quote_check": "引文所在的環境部檔案（enews.moenv.gov.tw DisplayFile.aspx?FileID=5EC3EAB117C5B3C3）對程式回 403。Wayback Machine 2026-05-17 的存檔是 19 頁的 PDF（sha256 166a921a9242f138e967a81d3624b9853dad7b001e4869973571bc92088e30e5），用 tools/fetch_text.py 的 quote_status 比對，引文是 verbatim。",
-          "not_reverified": "題幹把這份環境部指引的內容說成是 ISO 14068 的要求，這是改版前就有的問題，與這次改版無關，需要另外決定怎麼改，所以這次不算重驗完成，valid_as_of 不動。"
+          "not_reverified_was": "題幹把這份環境部指引的內容說成是 ISO 14068 的要求，這是改版前就有的問題，與這次改版無關，需要另外決定怎麼改，所以這次不算重驗完成，valid_as_of 不動。",
+          "how_verified": "2026-11-05 重新下載公版教材 PDF，第 174、175 頁的引文 quote_status 為 verbatim；ISO 目錄頁同日比對為 verbatim。之前懷疑題幹把環境部指引的內容說成 ISO 14068 的要求。複查後不是：iPAS 公版教材第 164 頁（標明 Ref: ISO-14068-1 2023）把路徑目標列為 ISO-14068-1 的要求，第 173 到 175 頁把碳中和報告與宣告的要項列在 ISO14068 的標題下，環境部指引也寫明企業宣告碳中和應符合 ISO 14068-1 等國際標準作法。題幹與答案都不用改，只把教材的引文放到最前面，解析改以教材為據。",
+          "answer_check": "答案 C 不變：教材列的報告要項含量化方法學、減量說明與碳權來源，宣告以報告為基礎；新版只改標題與編號。",
+          "explanation_was": "依環境部《企業宣告碳中和指引》，碳中和公開揭露應包含碳足跡量化方法、減量措施及用於抵換之減量額度來源。"
         }
       },
       "quality_flags": [
