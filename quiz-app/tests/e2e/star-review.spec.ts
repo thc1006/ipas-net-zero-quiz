@@ -781,7 +781,7 @@ test.describe('星號與待複習錯題', () => {
   });
 });
 
-/** 題卡進場的動畫跑完：量位置之前要等，不然量到的是 transform 途中的位置 */
+/** 進場的淡入跑完：量位置與點擊之前要等 */
 const settleAnimations = (page: Page) =>
   page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))));
 
@@ -922,6 +922,29 @@ test.describe('星號的提示排在那一列下面：加星號與取消都不�
       for (const way of ways) await toggleTwice(page, star(page), way, '.question-header');
       await context.close();
     });
+
+    // 開始按鈕在首頁下方，換到題目頁時頁面還捲在那裡。Firefox 在題卡進場動畫途中選的 scroll anchor 是導覽列
+    // （排在提示下面），一直用到下一次捲動：提示一插進來，整頁往上捲，星號跑到頁首底下。starInView 會先捲回最上面，看不到這個情形
+    if (viewport.height >= 720) {
+      for (const way of ['滑鼠', '觸控', 'Space'] as Way[]) {
+        test(`題目頁 ${name}、開始之後沒有捲動過：${way}`, async ({ browser, baseURL }) => {
+          const context = await browser.newContext({ baseURL, hasTouch: true, viewport });
+          // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+          await stubVisitorCounter(context);
+          const page = await context.newPage();
+          await gotoHome(page, undefined, fontSize);
+          await page.getByLabel('隨機出題順序').uncheck();
+          await startButton(page).click();
+          await expect(page.locator('.question-card')).toBeVisible();
+          await settleAnimations(page);
+          const start = await starState(star(page));
+          expect(start.scrollY, `前提：頁面不在最上面 ${JSON.stringify(start)}`).toBeGreaterThan(0);
+          expect(start.hitIsStar, `前提：星號在畫面上 ${JSON.stringify(start)}`).toBe(true);
+          await toggleTwice(page, star(page), way, '.question-header');
+          await context.close();
+        });
+      }
+    }
 
     test(`結果頁的錯題卡、星號在視窗底部 ${name}：滑鼠、觸控、空白鍵、Enter`, async ({ browser, baseURL }) => {
       const context = await browser.newContext({ baseURL, hasTouch: true, viewport });

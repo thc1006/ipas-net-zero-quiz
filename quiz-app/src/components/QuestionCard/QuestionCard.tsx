@@ -181,8 +181,10 @@ export function QuestionCard({
     }
   }, [question, isLoadingAI]);
 
+  // 進場只淡入，不用 transform 位移：Firefox 選 scroll anchor 時跳過有 transform 的題卡，選到排在提示下面的導覽列，
+  // 一直用到下一次捲動。之後在題卡裡插進提示（星號的提示、存不進去的說明），整頁就往上捲，剛按的星號跑到頁首底下
   return (
-    <article className="question-card card animate-slide-up">
+    <article className="question-card card animate-fade-in">
       {/* 題目標頭 */}
       <header className="question-header">
         <span className="question-number">第 {questionNumber} 題</span>
