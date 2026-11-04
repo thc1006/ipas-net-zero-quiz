@@ -150,6 +150,23 @@ export function ButtonNotice({ button, questionId }: ButtonNoticeProps) {
   ) : null;
 }
 
+/**
+ * 結果頁再測一次沒有開始的說明（名單空了、練習池載不到）。與按鈕引起的提示同一套：排在按鈕那一列下面，
+ * 每按一次都念（字一樣也念），在視窗外時捲出來，剛按的按鈕不捲到頁首底下
+ */
+export function ActionNotice({ text, seq }: { text: string; seq: number }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  useAnnounce(text, seq);
+  useLayoutEffect(() => {
+    if (ref.current) revealBelowButton(ref.current);
+  }, [seq]);
+  return (
+    <p className="action-notice" ref={ref}>
+      {text}
+    </p>
+  );
+}
+
 /** 字不經過 React：由 announce.ts 直接改，清空與放字才是兩次 DOM 變動 */
 export function ReviewAnnouncer() {
   return (

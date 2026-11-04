@@ -11,7 +11,7 @@ import { SourceBreakdown } from '../components/SourceBreakdown/SourceBreakdown';
 import type { QuizResult, QuizQuestion } from '../types/quiz';
 import { BankSimilarQuestionItem } from '../components/BankSimilarQuestionItem/BankSimilarQuestionItem';
 import { StarButton } from '../components/StarButton/StarButton';
-import { ButtonNotice } from '../components/ReviewNotice/ReviewNotice';
+import { ActionNotice, ButtonNotice } from '../components/ReviewNotice/ReviewNotice';
 import { RemoveFromReview } from '../components/RemoveFromReview/RemoveFromReview';
 import { buildFeedbackUrl } from '../utils/feedback-url';
 import { selectWeakQuestions } from '../utils/question-stats-storage';
@@ -30,8 +30,8 @@ interface ResultPageProps {
   result: QuizResult;
   onGoHome: () => void;
   onRetry: () => void;
-  /** 再測一次沒有題目時的說明（星號與待複習錯題的名單可能已經空了） */
-  retryNotice?: string | null;
+  /** 再測一次沒有題目時的說明（星號與待複習錯題的名單可能已經空了）；seq 每按一次就換 */
+  retryNotice?: { text: string; seq: number } | null;
 }
 
 // 解析可能含多段（#121 新增了不少帶條文引文的長解析）。用常數避免每次 render 重建 RegExp，
@@ -617,11 +617,6 @@ export function ResultPage({ result, onGoHome, onRetry, retryNotice = null }: Re
         </section>
       )}
 
-      {/* live region 一直在畫面上，內容換了螢幕閱讀器才會念 */}
-      <p className="action-notice" role="status" aria-live="polite" aria-atomic="true">
-        {retryNotice}
-      </p>
-
       {/* 操作按鈕 */}
       <section className="action-section">
         <button className="btn btn-secondary" onClick={handleExport}>
@@ -637,6 +632,8 @@ export function ResultPage({ result, onGoHome, onRetry, retryNotice = null }: Re
           返回首頁
         </button>
       </section>
+      {/* 與按鈕引起的提示同一套：排在那一列下面，上面的按鈕不動 */}
+      {retryNotice && <ActionNotice text={retryNotice.text} seq={retryNotice.seq} />}
     </div>
   );
 }

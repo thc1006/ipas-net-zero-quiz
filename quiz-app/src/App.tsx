@@ -37,7 +37,12 @@ function App() {
   const accessibility = useAccessibility();
   const practiceMode = usePracticeMode();
   // 再測一次沒有題目時的說明（星號與待複習錯題的名單可能已經空了）
-  const [retryNotice, setRetryNotice] = useState<string | null>(null);
+  // seq 每按一次就換：字一樣也再念一次（ReviewNotice.tsx 的 ActionNotice）
+  const [retryNotice, setRetryNotice] = useState<{ text: string; seq: number } | null>(null);
+  const sayRetry = useCallback(
+    (text: string) => setRetryNotice((prev) => ({ text, seq: (prev?.seq ?? 0) + 1 })),
+    []
+  );
 
   // 提示是給當下這個畫面的：換頁就收掉，不跟到別的畫面（開始失敗的訊息由下面換頁時的 effect 收掉）
   const clearNotices = useCallback(() => {
@@ -157,12 +162,12 @@ function App() {
     // 等練習池的時候換了頁或切了加強練習池：這一次是取消了，不是名單空了
     if (scope !== startScope.current || !isReviewSource(source)) return;
     if (outcome === 'empty') {
-      setRetryNotice(`目前沒有${questionSourceNoun(source)}可以再測一次，回首頁可以選其他題目來源。`);
+      sayRetry(`目前沒有${questionSourceNoun(source)}可以再測一次，回首頁可以選其他題目來源。`);
     } else if (outcome === 'pool-unavailable') {
       // 名單上還有題目，只是練習池載不到：不能說名單空了
-      setRetryNotice(`${PAGE_LOAD_FAILED}${RESULT_LOST_ON_RELOAD}`);
+      sayRetry(`${PAGE_LOAD_FAILED}${RESULT_LOST_ON_RELOAD}`);
     }
-  }, [startOrFail, lastResult]);
+  }, [startOrFail, lastResult, sayRetry]);
 
   // 開啟設定
   const handleOpenSettings = useCallback(() => {

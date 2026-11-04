@@ -67,7 +67,7 @@ beforeEach(() => {
 
 afterEach(cleanup);
 
-const renderPage = (retryNotice?: string | null) =>
+const renderPage = (retryNotice?: { text: string; seq: number } | null) =>
   render(<ResultPage result={result} onGoHome={() => {}} onRetry={() => {}} retryNotice={retryNotice} />);
 
 describe('結果頁', () => {
@@ -161,13 +161,15 @@ describe('結果頁', () => {
     expect(screen.getByText('答錯的題目已進待複習，首頁「題目來源」選「待複習錯題」可以練。')).toBeInTheDocument();
   });
 
-  it('再測一次的說明放在 live region：平常是空的，有內容時念得出來', () => {
+  it('再測一次的說明排在按鈕那一列下面，不是 live region；平常一個元素都沒有', () => {
     const { rerender } = renderPage();
-    const region = document.querySelector('.action-notice')!;
-    expect(region).toHaveAttribute('role', 'status');
-    expect(region).toHaveTextContent('');
-    rerender(<ResultPage result={result} onGoHome={() => {}} onRetry={() => {}} retryNotice="沒有題目" />);
-    expect(document.querySelector('.action-notice')).toBe(region);
-    expect(region).toHaveTextContent('沒有題目');
+    expect(document.querySelector('.action-notice')).toBeNull();
+    rerender(
+      <ResultPage result={result} onGoHome={() => {}} onRetry={() => {}} retryNotice={{ text: '沒有題目', seq: 1 }} />
+    );
+    const notice = document.querySelector('.action-notice')!;
+    expect(notice).toHaveTextContent('沒有題目');
+    expect(notice.previousElementSibling).toHaveClass('action-section');
+    expect(notice.closest('[aria-live], [role="status"], [role="alert"]')).toBeNull();
   });
 });

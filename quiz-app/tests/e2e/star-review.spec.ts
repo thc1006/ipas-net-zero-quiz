@@ -213,7 +213,7 @@ test.describe('星號與待複習錯題', () => {
     await expect(page.getByText('這場有 1 題移出。')).toBeVisible();
 
     await page.getByRole('button', { name: /再測一次/ }).click();
-    await expect(page.getByText('目前沒有待複習錯題可以再測一次，回首頁可以選其他題目來源。')).toBeVisible();
+    await expect(page.locator('.action-notice')).toHaveText('目前沒有待複習錯題可以再測一次，回首頁可以選其他題目來源。');
     await expect(page.locator('.question-card')).toHaveCount(0);
 
     await page.getByRole('button', { name: /返回首頁/ }).click();
@@ -1637,4 +1637,37 @@ test.describe('星號在視窗底部：提示在視窗外時', () => {
       });
     }
   }
+});
+
+// 再測一次沒有題目的說明與按鈕引起的提示同一套：排在按鈕那一列下面，按鈕不動；每按一次都念，字一樣也念
+test('結果頁名單空了再測一次：說明排在按鈕那一列下面，再測一次不移動；按兩次念兩次', async ({ page }) => {
+  await gotoHome(page, { wrong: { [idOf(q1)]: { streak: 0, last: 1 } } });
+  await startDrill(page, 'review:wrong');
+  await answer(page, q1, false);
+  await page.getByRole('button', { name: '移出待複習' }).click();
+  await expect(page.getByText('已移出待複習')).toBeVisible();
+  await page.getByRole('button', { name: /完成測驗/ }).click();
+  const again = page.getByRole('button', { name: /再測一次/ });
+  await again.scrollIntoViewIfNeeded();
+  await settleAnimations(page);
+  await recordLive(page);
+  const spot = () =>
+    again.evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      return { top: r.top, scrollY: window.scrollY, hit: hit !== null && el.contains(hit), x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    });
+  const before = await spot();
+  const EMPTY = '目前沒有待複習錯題可以再測一次，回首頁可以選其他題目來源。';
+  await page.mouse.click(before.x, before.y);
+  const notice = page.locator('.action-section + .action-notice');
+  await expect(notice).toHaveText(EMPTY);
+  await nextFrames(page);
+  const after = await spot();
+  expect(after, `再測一次移動了 ${JSON.stringify({ before, after })}`).toEqual(before);
+  await expect.poll(() => liveSaid(page)).toEqual([EMPTY]);
+  await page.mouse.click(before.x, before.y);
+  await expect.poll(() => liveSaid(page)).toEqual([EMPTY, '', EMPTY]);
+  await expect(page.locator('.action-notice')).toHaveCount(1);
+  expect(await spot()).toEqual(before);
 });

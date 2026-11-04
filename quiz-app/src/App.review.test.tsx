@@ -169,6 +169,34 @@ describe('測驗', () => {
     expect(screen.getByText('1 / 1')).toBeInTheDocument();
   });
 
+  it('再測一次沒有題目：說明排在按鈕那一列下面，每按一次都念，字一樣也念', async () => {
+    const [a] = scorable;
+    put([a.id]);
+    render(<App />);
+    await startDrill('review:starred');
+    finish();
+    await retry();
+    act(() => {
+      setStar(a.id, false);
+    });
+    const said: string[] = [];
+    const region = live();
+    new MutationObserver(() => said.push(region.textContent ?? '')).observe(region, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    });
+    const EMPTY = '目前沒有星號題可以再測一次，回首頁可以選其他題目來源。';
+    fireEvent.click(await retry());
+    await waitFor(() => expect(said.filter(Boolean)).toEqual([EMPTY]));
+    const notice = document.querySelector('.action-notice')!;
+    expect(notice).toHaveTextContent(EMPTY);
+    expect(notice.previousElementSibling).toHaveClass('action-section');
+    fireEvent.click(await retry());
+    await waitFor(() => expect(said.filter(Boolean)).toEqual([EMPTY, EMPTY]));
+    expect(document.querySelectorAll('.action-notice')).toHaveLength(1);
+  });
+
   it('再測一次成功之後，上一次沒題目的說明不留著', async () => {
     const [a, b] = scorable;
     put([a.id]);
@@ -188,7 +216,7 @@ describe('測驗', () => {
     await waitFor(() => expect(document.querySelector('.question-card')).not.toBeNull());
     finish();
     await retry();
-    expect(document.querySelector('.action-notice')).toHaveTextContent('');
+    expect(document.querySelector('.action-notice')).toBeNull();
   });
 
   it('加強練習池啟用時：只出名單上的題，不混其他練習池題', async () => {
@@ -329,7 +357,7 @@ describe('提示不跟到別的畫面', () => {
     await startDrill('review:starred');
     finish();
     await retry();
-    expect(document.querySelector('.action-notice')).toHaveTextContent('');
+    expect(document.querySelector('.action-notice')).toBeNull();
   });
 
   it('App 記得的狀態也清掉：從設定頁回到有結果的畫面之前就收掉', async () => {
@@ -343,7 +371,7 @@ describe('提示不跟到別的畫面', () => {
     await startDrill('review:starred');
     finish();
     await retry();
-    expect(document.querySelector('.action-notice')).toHaveTextContent('');
+    expect(document.querySelector('.action-notice')).toBeNull();
   });
 
   it('寫入失敗的提示：換頁就收掉', async () => {
@@ -488,7 +516,7 @@ describe('等練習池的時候使用者走開', () => {
     release(fixture);
     await settle();
 
-    expect(document.querySelector('.action-notice')).toHaveTextContent('');
+    expect(document.querySelector('.action-notice')).toBeNull();
     expect(screen.getByRole('button', { name: /再測一次/ })).toBeInTheDocument();
   });
 });
