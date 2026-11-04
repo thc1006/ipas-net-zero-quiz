@@ -23,6 +23,7 @@ import {
   type ReviewNotice as Notice,
 } from '../../utils/review-storage';
 import { announce, attachLiveRegion, withdraw } from './announce';
+import { headerHeight, revealBelowButton } from './reveal';
 import './ReviewNotice.css';
 
 /** 這一次的提示念給螢幕閱讀器：event 換了就是新的一次；收掉或換成下一次時清空 */
@@ -96,7 +97,7 @@ const SEEN_RATIO = 0.75;
 
 /**
  * 提示在視窗外時（按鈕在視窗底部，提示排在它下面）：
- * - 沒有生效的（存不進去、新版資料、搬不走）：捲到剛好看得到（block: 'nearest'，html 的 scroll-padding-top 留給頁首）。
+ * - 沒有生效的（存不進去、新版資料、搬不走）：捲到看得到，剛按的按鈕不捲到頁首底下（revealBelowButton）。
  *   按鈕沒有切換，頁面動了第二下也不會切錯。焦點不動。在畫出來之前捲，不先畫一次在視窗外的。
  * - 第一次加星號的提示：不捲（星號要留在指標底下），大半露出來才算看過；沒看到的話下次加星號再說一次。
  */
@@ -107,7 +108,7 @@ function useNoticeInView(
 ): void {
   useLayoutEffect(() => {
     const el = ref.current;
-    if (el && notice && FAILURES.has(notice)) el.scrollIntoView({ block: 'nearest' });
+    if (el && notice && FAILURES.has(notice)) revealBelowButton(el);
   }, [ref, notice, seq]);
 
   useEffect(() => {
@@ -118,10 +119,7 @@ function useNoticeInView(
       return;
     }
     // 頁首是 sticky，蓋在視窗最上面：被它蓋住的部分不算看到
-    const header =
-      parseFloat(
-        getComputedStyle(document.documentElement).getPropertyValue('--app-header-height')
-      ) || 0;
+    const header = headerHeight();
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting && e.intersectionRatio >= SEEN_RATIO)) {

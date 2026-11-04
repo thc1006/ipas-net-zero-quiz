@@ -514,31 +514,108 @@ describe('提示在視窗外時', () => {
     expect(shown('star-c')).toBe(TIP);
   });
 
-  it('存不進去：每一次都捲到剛好看得到（block: nearest），不動焦點', () => {
-    const set = localStorage.setItem;
-    localStorage.setItem = (k: string, v: string) => {
-      if (k === REVIEW_STORAGE_KEY) throw new DOMException('quota', 'QuotaExceededError');
-      set(k, v);
-    };
-    try {
-      render(<Page />);
-      const before = document.activeElement;
-      act(() => {
-        setStar('a', true);
+  describe('存不進去：捲到看得到，剛按的按鈕不捲到頁首底下', () => {
+    let restore: () => void;
+    let boxes: Map<Element, { top: number; bottom: number }>;
+    const scrollBy = () => vi.mocked(window.scrollBy);
+    beforeEach(() => {
+      const set = localStorage.setItem;
+      localStorage.setItem = (k: string, v: string) => {
+        if (k === REVIEW_STORAGE_KEY) throw new DOMException('quota', 'QuotaExceededError');
+        set(k, v);
+      };
+      boxes = new Map();
+      // jsdom 沒有排版：位置照測試給的，說明在畫出來時（layout effect）才有
+      const rect = vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function (this: Element) {
+        const box = this.classList.contains('review-notice') ? boxes.get(NOTICE) : boxes.get(this);
+        return { top: box?.top ?? 0, bottom: box?.bottom ?? 0, height: (box?.bottom ?? 0) - (box?.top ?? 0) } as DOMRect;
       });
-      expect(scroll()).toHaveBeenCalledTimes(1);
-      expect(scroll().mock.instances[0]).toBe(
-        screen.getByTestId('star-a').querySelector('.review-notice')
+      const height = vi.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(520);
+      vi.spyOn(window, 'scrollBy').mockImplementation(() => undefined);
+      document.documentElement.style.setProperty('--app-header-height', '60px');
+      restore = () => {
+        localStorage.setItem = set;
+        rect.mockRestore();
+        height.mockRestore();
+        scrollBy().mockRestore();
+        document.documentElement.style.removeProperty('--app-header-height');
+      };
+    });
+    afterEach(() => restore());
+    const NOTICE = document.createElement('p');
+
+    /** 題卡標頭那一列（兩顆按鈕），下面是那顆星號的提示 */
+    function Card() {
+      return (
+        <div>
+          <div className="row">
+            <button type="button" data-testid="star">星號</button>
+            <button type="button" data-testid="flag">回報</button>
+          </div>
+          <ButtonNotice button="star" questionId="a" />
+        </div>
       );
-      expect(scroll()).toHaveBeenCalledWith({ block: 'nearest' });
+    }
+    const press = (notice: { top: number; bottom: number }, star: number, focused?: 'flag') => {
+      boxes.set(NOTICE, notice);
+      boxes.set(screen.getByTestId('star'), { top: star, bottom: star + 40 });
+      boxes.set(screen.getByTestId('flag'), { top: star + 30, bottom: star + 70 });
+      if (focused) screen.getByTestId(focused).focus();
       act(() => {
         setStar('a', true);
       });
-      expect(scroll()).toHaveBeenCalledTimes(2);
+    };
+
+    it('放得下：捲到說明的底邊貼著視窗底邊，每一次都捲，不動焦點', () => {
+      render(<Card />);
+      const before = document.activeElement;
+      press({ top: 500, bottom: 560 }, 440);
+      expect(scrollBy()).toHaveBeenCalledTimes(1);
+      expect(scrollBy()).toHaveBeenLastCalledWith(0, 40);
+      press({ top: 500, bottom: 560 }, 440);
+      expect(scrollBy()).toHaveBeenCalledTimes(2);
       expect(document.activeElement).toBe(before);
-    } finally {
-      localStorage.setItem = set;
-    }
+      expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+    });
+
+    it('放不下：星號停在頁首下緣，說明露出放得下的部分', () => {
+      render(<Card />);
+      press({ top: 500, bottom: 700 }, 90);
+      expect(scrollBy()).toHaveBeenLastCalledWith(0, 30);
+    });
+
+    it('小數取整數：說明那邊多捲不到 1px 貼齊視窗底邊，星號那邊少捲不到 1px 不碰到頁首', () => {
+      render(<Card />);
+      press({ top: 500, bottom: 560.3 }, 440);
+      expect(scrollBy()).toHaveBeenLastCalledWith(0, 41);
+      press({ top: 500, bottom: 700 }, 90.7);
+      expect(scrollBy()).toHaveBeenLastCalledWith(0, 30);
+    });
+
+    it('星號已經在頁首底下：不再往下捲', () => {
+      render(<Card />);
+      press({ top: 500, bottom: 700 }, 50);
+      expect(scrollBy()).not.toHaveBeenCalled();
+    });
+
+    it('那一列裡有焦點的按鈕優先：它比較低，就以它為準', () => {
+      render(<Card />);
+      press({ top: 500, bottom: 700 }, 70, 'flag');
+      // 回報的 top 是 100，頁首 60：最多捲 40
+      expect(scrollBy()).toHaveBeenLastCalledWith(0, 40);
+    });
+
+    it('已經整段看得到：不捲', () => {
+      render(<Card />);
+      press({ top: 300, bottom: 360 }, 240);
+      expect(scrollBy()).not.toHaveBeenCalled();
+    });
+
+    it('說明在頁首底下：往上捲到頁首下緣', () => {
+      render(<Card />);
+      press({ top: 20, bottom: 80 }, -20);
+      expect(scrollBy()).toHaveBeenLastCalledWith(0, -40);
+    });
   });
 
 });

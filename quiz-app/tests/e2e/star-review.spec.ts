@@ -1599,7 +1599,7 @@ test.describe('星號在視窗底部：提示在視窗外時', () => {
     });
 
     for (const way of ['滑鼠', 'Space'] as const) {
-      test(`存不進去 ${name}、${way}：捲到剛好看得到整段說明，焦點不動`, async ({ browser, baseURL }) => {
+      test(`存不進去 ${name}、${way}：捲到看得到說明，星號不捲到頁首底下，焦點不動`, async ({ browser, baseURL }) => {
         const context = await browser.newContext({ baseURL, viewport });
         // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
         await stubVisitorCounter(context);
@@ -1618,9 +1618,19 @@ test.describe('星號在視窗底部：提示在視窗外時', () => {
         await expect(button).toHaveAttribute('aria-pressed', 'false');
         await nextFrames(page);
         const m = await readable(notice);
-        expectReadable(m, '存不進去的說明');
-        // 只捲需要的：說明的底邊貼著視窗底邊
-        expect(Math.abs(m.bottom - m.viewport), `捲過頭了 ${JSON.stringify(m)}`).toBeLessThanOrEqual(1);
+        const starTop = (await starState(button)).top;
+        const info = JSON.stringify({ ...m, starTop });
+        // 剛按的星號不捲到頁首底下（焦點看得到優先）
+        expect(starTop, `星號被捲到頁首底下 ${info}`).toBeGreaterThanOrEqual(m.headerBottom - 1);
+        if (m.bottom - starTop <= m.viewport - m.headerBottom) {
+          // 放得下：整段看得到，只捲需要的，說明的底邊貼著視窗底邊
+          expectReadable(m, '存不進去的說明');
+          expect(Math.abs(m.bottom - m.viewport), `捲過頭了 ${info}`).toBeLessThanOrEqual(1);
+        } else {
+          // 放不下（320x256 字級特大，題幹那一列比視窗高）：捲到星號停在頁首下緣為止，說明露出放得下的部分
+          // （Firefox 的字比較寬，那一列更高，說明可能一點都露不出來）
+          expect(starTop - m.headerBottom, `沒有捲到星號停在頁首下緣 ${info}`).toBeLessThanOrEqual(1);
+        }
         if (way === 'Space') await expect(button).toBeFocused();
         else expect(await page.evaluate(() => document.activeElement?.closest('.review-notice'))).toBeNull();
         await context.close();
