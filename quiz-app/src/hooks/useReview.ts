@@ -13,7 +13,7 @@ import {
   type ReviewSnapshot,
 } from '../utils/review-storage';
 
-const NOTICE_TEXT: Record<ReviewNotice, string> = {
+export const NOTICE_TEXT: Record<ReviewNotice, string> = {
   newer: '星號與待複習紀錄是新版網站寫入的，目前的版本只能讀取，變更不會儲存。請重新整理頁面更新。',
   'corrupt-stuck': '星號與待複習紀錄無法讀取，儲存空間也不夠另存原始內容，所以目前不會儲存變更。請清出瀏覽器空間後重新載入。',
   'write-failed': '這次變更沒有儲存。瀏覽器可能封鎖了網站資料，或儲存空間已滿。',

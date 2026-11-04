@@ -318,6 +318,25 @@ describe('清除', () => {
   });
 });
 
+describe('讀不懂的紀錄', () => {
+  it('清除時搬到另一個位置、清單從空的開始：狀態列說出來', () => {
+    store.set(REVIEW_STORAGE_KEY, '{broken');
+    render(<ReviewBackup />);
+    fireEvent.click(screen.getByRole('button', { name: /清除星號/ }));
+    fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: '確定清除' }));
+    expect(status()).toHaveTextContent('星號與待複習紀錄無法讀取，原始內容已另存，清單從空的開始。已清除星號。');
+    expect(store.get(`${REVIEW_STORAGE_KEY}:corrupt`)).toBe('{broken');
+  });
+
+  it('匯入時也一樣', async () => {
+    store.set(REVIEW_STORAGE_KEY, '{broken');
+    render(<ReviewBackup />);
+    choose(backup({ add: 3 }));
+    fireEvent.click(within(await screen.findByRole('dialog')).getByRole('button', { name: '確定合併' }));
+    expect(status()).toHaveTextContent(/^星號與待複習紀錄無法讀取，原始內容已另存，清單從空的開始。已合併：新增星號 1 題/);
+  });
+});
+
 describe('新版資料', () => {
   it('清除與匯入都不寫，說的是這個版本只能讀取', async () => {
     const raw = JSON.stringify({ v: 2, stars: { a: 1 }, wrong: {} });

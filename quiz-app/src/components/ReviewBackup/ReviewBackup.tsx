@@ -2,7 +2,7 @@
 // 匯入先檢查、再顯示題數，確認後才合併；清除與「清除作答統計」共用確認對話框，兩邊互不影響。
 import { useRef, useState } from 'react';
 import { allQuestions, hasIdsOutsideMainBank } from '../../data/questions';
-import { useReview } from '../../hooks/useReview';
+import { NOTICE_TEXT } from '../../hooks/useReview';
 import { loadPracticePool } from '../../utils/practice-pool';
 import {
   clearStars,
@@ -59,15 +59,10 @@ function importBody({ data, adds, unknown }: Extract<Pending, { kind: 'import' }
 }
 
 export function ReviewBackup() {
-  const review = useReview();
   const [message, setMessage] = useState('');
   const [pending, setPending] = useState<Pending | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const importRef = useRef<HTMLButtonElement>(null);
-  const notSaved =
-    review.access === 'newer'
-      ? '這份紀錄是新版網站寫入的，目前的版本只能讀取。'
-      : '瀏覽器沒有存進去，可能封鎖了網站資料或儲存空間已滿。';
 
   const handleExport = () => {
     const now = new Date();
@@ -110,18 +105,27 @@ export function ReviewBackup() {
     setPending({ kind: 'import', data: result, adds: previewMerge(result), unknown });
   };
 
+  // 清除與匯入的結果都只在下面的狀態列說：不另外加星號的提示，螢幕閱讀器也只念這一列。
+  // 寫入之前重讀：另一個分頁剛寫的新版資料或壞資料，這裡可能還沒收到 storage 事件
   const confirm = () => {
     if (!pending) return;
     setPending(null);
+    const { access } = getReviewSnapshot();
+    const notSaved =
+      access === 'newer'
+        ? '這份紀錄是新版網站寫入的，目前的版本只能讀取。'
+        : '瀏覽器沒有存進去，可能封鎖了網站資料或儲存空間已滿。';
+    // 讀不懂的紀錄在寫入時搬到另一個位置，清單從空的開始：寫進去了就要說
+    const recovered = access === 'corrupt' ? NOTICE_TEXT.recovered : '';
     if (pending.kind === 'import') {
       const added = mergeReview(pending.data);
       if (!added) setMessage(`沒有匯入：${notSaved}`);
-      else if (nothingAdded(added)) setMessage('沒有新增：備份裡的題目都已經在清單裡。');
-      else setMessage(`已合併：${addedText(added)}。`);
+      else if (nothingAdded(added)) setMessage(`${recovered}沒有新增：備份裡的題目都已經在清單裡。`);
+      else setMessage(`${recovered}已合併：${addedText(added)}。`);
     } else if (pending.kind === 'clear-stars') {
-      setMessage(clearStars() ? '已清除星號。' : `沒有清除：${notSaved}`);
+      setMessage(clearStars() ? `${recovered}已清除星號。` : `沒有清除：${notSaved}`);
     } else {
-      setMessage(clearWrong() ? '已清除待複習錯題。' : `沒有清除：${notSaved}`);
+      setMessage(clearWrong() ? `${recovered}已清除待複習錯題。` : `沒有清除：${notSaved}`);
     }
   };
 

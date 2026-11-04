@@ -1269,3 +1269,40 @@ test.describe('對話框裡用鍵盤移動焦點：頁首的補捲不碰對話�
   }
 });
 
+/** live region 從現在起每一次變動之後的字（init script 之外另外裝） */
+const recordLive = (page: Page) =>
+  page.locator('.review-live').evaluate((el) => {
+    const w = window as unknown as { __said: string[] };
+    w.__said = [];
+    new MutationObserver(() => w.__said.push(el.textContent ?? '')).observe(el, { childList: true, characterData: true, subtree: true });
+  });
+const liveSaid = (page: Page) => page.evaluate(() => (window as unknown as { __said: string[] }).__said.slice());
+
+/** 這個分頁之後的 setItem 寫這支 key 都丟例外（儲存空間滿了） */
+const failWritesFrom = (page: Page, prefix: string) =>
+  page.evaluate((p) => {
+    const set = Storage.prototype.setItem;
+    Storage.prototype.setItem = function (k: string, v: string) {
+      if (k.startsWith(p)) throw new DOMException('quota', 'QuotaExceededError');
+      set.call(this, k, v);
+    };
+  }, prefix);
+
+test('設定頁清除星號存不進去：只在設定頁自己的狀態列說，不加星號的提示、不從 live region 再念一次', async ({ page }) => {
+  await gotoHome(page, { stars: [idOf(q1)] });
+  await page.getByRole('button', { name: '開啟設定' }).click();
+  const clear = page.getByRole('button', { name: '清除星號' });
+  await clear.scrollIntoViewIfNeeded();
+  await settleAnimations(page);
+  await recordLive(page);
+  await failWritesFrom(page, KEY);
+  const before = await clear.evaluate((el) => ({ top: el.getBoundingClientRect().top, scrollY: window.scrollY }));
+  await clear.click();
+  await page.getByRole('button', { name: '確定清除' }).click();
+  await expect(page.locator('.review-backup__status')).toHaveText(/^沒有清除/);
+  await nextFrames(page);
+  await nextFrames(page);
+  await expect.soft(page.locator('.review-notice'), '加了星號的提示').toHaveCount(0);
+  expect.soft(await liveSaid(page), 'live region 又念了一次').toEqual([]);
+  expect(await clear.evaluate((el) => ({ top: el.getBoundingClientRect().top, scrollY: window.scrollY }))).toEqual(before);
+});

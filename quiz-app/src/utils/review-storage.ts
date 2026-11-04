@@ -348,15 +348,23 @@ function seedFromStats(data: ReviewData): void {
 }
 
 /**
- * 所有寫入的唯一入口：重讀、處理壞資料、帶入舊統計、套用變動、寫回。
- * button 是按下去引起這次寫入的按鈕（「star:題目 id」），要說的話記在它上面；沒有就記在頁面上。
- * silent 用在使用者沒有動手的寫入（開站時帶入舊統計），失敗不打擾使用者，下次再試。
+ * 寫入是誰引起的、要說的話放在哪裡：
+ * - page：結束測驗時記錄作答，記在頁面上
+ * - silent：使用者沒有動手（開站時帶入舊統計），失敗不打擾使用者，下次再試
+ * - own：設定頁的清除與匯入，由呼叫端在自己的狀態列說，這裡不記任何提示
  */
-function update(change: (data: ReviewData) => void, button: string | null = null, silent = false): boolean {
+type WriteReport = 'page' | 'silent' | 'own';
+
+/**
+ * 所有寫入的唯一入口：重讀、處理壞資料、帶入舊統計、套用變動、寫回。
+ * button 是按下去引起這次寫入的按鈕（「star:題目 id」），要說的話記在它上面；沒有就看 report。
+ */
+function update(change: (data: ReviewData) => void, button: string | null = null, report: WriteReport = 'page'): boolean {
   if (button) {
     buttonNotices.delete(button);
     lastButton = button;
   }
+  const silent = !button && report !== 'page';
   // onButton：頁面上已經說了只能讀取、不會儲存時，按鈕下面不再說一次
   const fail = (onButton = true): false => {
     if (!silent) {
@@ -375,12 +383,14 @@ function update(change: (data: ReviewData) => void, button: string | null = null
   const corrupt = parsed.access === 'corrupt';
   if (corrupt) {
     if (!quarantine(read.raw!)) {
+      // 設定頁的寫入由那裡的狀態列說沒有存進去，頁面上不另外說
+      if (report === 'own') return false;
       corruptStuck = true;
       if (silent) notify();
       return fail(false);
     }
     corruptStuck = false;
-    if (!button) recovered = true;
+    if (!button && report !== 'own') recovered = true;
     // 畫面說從空的開始，就真的從空的開始：壞資料裡可能記著使用者清空過，舊統計不再帶入
     data.seeded = true;
   }
@@ -463,23 +473,34 @@ export function removeFromReview(id: string): boolean {
   }, `remove:${id}`);
 }
 
+// 設定頁的清除與匯入：成功、失敗、原本的資料讀不懂而另存，都由設定頁自己的狀態列說（ReviewBackup.tsx），
+// 不記頁面或按鈕的提示，螢幕閱讀器也只念那一列
+
 export function clearStars(): boolean {
-  return update((data) => {
-    data.stars = dict();
-  });
+  return update(
+    (data) => {
+      data.stars = dict();
+    },
+    null,
+    'own'
+  );
 }
 
 export function clearWrong(): boolean {
-  return update((data) => {
-    const now = Date.now();
-    for (const id of Object.keys(data.wrong)) data.removed[id] = now;
-    data.wrong = dict();
-  });
+  return update(
+    (data) => {
+      const now = Date.now();
+      for (const id of Object.keys(data.wrong)) data.removed[id] = now;
+      data.wrong = dict();
+    },
+    null,
+    'own'
+  );
 }
 
 /** 開站時呼叫一次；已經帶入過就什麼都不寫 */
 export function seedReview(): boolean {
-  return update(() => undefined, null, true);
+  return update(() => undefined, null, 'silent');
 }
 
 /**
@@ -543,16 +564,20 @@ export function previewMerge(incoming: Pick<ReviewSnapshot, 'stars' | 'wrong'>):
  */
 export function mergeReview(incoming: Pick<ReviewSnapshot, 'stars' | 'wrong'>): ReviewMergeCount | null {
   const count: ReviewMergeCount = { stars: 0, wrong: 0 };
-  const saved = update((data) => {
-    for (const [id, at] of Object.entries(incoming.stars)) {
-      if (!(id in data.stars)) count.stars += 1;
-      if (!(id in data.stars) || at > data.stars[id]) data.stars[id] = at;
-    }
-    for (const [id, entry] of Object.entries(incoming.wrong)) {
-      if (!(id in data.wrong)) count.wrong += 1;
-      if (!(id in data.wrong) || entry.last > data.wrong[id].last) data.wrong[id] = entry;
-    }
-  });
+  const saved = update(
+    (data) => {
+      for (const [id, at] of Object.entries(incoming.stars)) {
+        if (!(id in data.stars)) count.stars += 1;
+        if (!(id in data.stars) || at > data.stars[id]) data.stars[id] = at;
+      }
+      for (const [id, entry] of Object.entries(incoming.wrong)) {
+        if (!(id in data.wrong)) count.wrong += 1;
+        if (!(id in data.wrong) || entry.last > data.wrong[id].last) data.wrong[id] = entry;
+      }
+    },
+    null,
+    'own'
+  );
   return saved ? count : null;
 }
 

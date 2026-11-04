@@ -1015,6 +1015,50 @@ describe('按鈕上的提示', () => {
   });
 });
 
+describe('設定頁的清除與匯入：由設定頁自己的狀態列說，不留提示', () => {
+  const writes: [string, () => unknown][] = [
+    ['clearStars', () => clearStars()],
+    ['clearWrong', () => clearWrong()],
+    ['mergeReview', () => mergeReview({ stars: { x: 1 }, wrong: {} })],
+  ];
+
+  it.each(writes)('%s 存不進去：回報失敗，頁面與按鈕都沒有提示，訂閱者不收到通知', (_, write) => {
+    put(v1({ stars: { a: 1 }, wrong: { b: { streak: 0, last: 1 } } }));
+    failWrites();
+    const listener = vi.fn();
+    const off = subscribeReview(listener);
+    expect(write()).toBeFalsy();
+    expect(getReviewNotice()).toBeNull();
+    expect(getLatestButtonNotice()).toBeNull();
+    expect(listener).not.toHaveBeenCalled();
+    off();
+  });
+
+  it.each(writes)('%s 遇到搬不走的壞資料：一個字都不動，不記成頁面上的「目前不會儲存」', (_, write) => {
+    store.set(REVIEW_STORAGE_KEY, '{broken');
+    failWrites((k) => k.startsWith(REVIEW_CORRUPT_KEY));
+    expect(write()).toBeFalsy();
+    expect(store.get(REVIEW_STORAGE_KEY)).toBe('{broken');
+    expect(getReviewNotice()).toBeNull();
+  });
+
+  it.each(writes)('%s 遇到壞資料：搬到 :corrupt 之後寫入，頁面上不加「已另存」', (_, write) => {
+    store.set(REVIEW_STORAGE_KEY, '{broken');
+    expect(write()).toBeTruthy();
+    expect(store.get(REVIEW_CORRUPT_KEY)).toBe('{broken');
+    expect(getReviewSnapshot().access).toBe('ok');
+    expect(getReviewNotice()).toBeNull();
+  });
+
+  it.each(writes)('%s 不收掉頁面上已經有的提示（結束測驗時沒有儲存）', (_, write) => {
+    const restore = failWrites();
+    recordReviewResults([{ id: 'y', isCorrect: false, at: 1 }]);
+    restore();
+    expect(write()).toBeTruthy();
+    expect(getReviewNotice()).toBe('write-failed');
+  });
+});
+
 describe('提示的優先序與清除', () => {
   it('新版資料最重要：寫入失敗時也說只能讀取', () => {
     store.set(REVIEW_STORAGE_KEY, JSON.stringify({ v: 2 }));
@@ -1037,7 +1081,7 @@ describe('提示的優先序與清除', () => {
     expect(getReviewNotice()).toBe('pool-failed');
     expect(getButtonNotice('star', 'a')).toBe('first-star');
     failWrites();
-    clearStars();
+    recordReviewResults([{ id: 'x', isCorrect: false, at: 1 }]);
     expect(getReviewNotice()).toBe('write-failed');
   });
 
