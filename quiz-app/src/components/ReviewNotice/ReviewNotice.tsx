@@ -16,6 +16,7 @@ import {
   type RefObject,
 } from 'react';
 import { END_RESOLVED_TEXT, NOTICE_TEXT, useButtonNotice, type PageEnd } from '../../hooks/useReview';
+import { useKeepHeight } from '../../hooks/useKeepHeight';
 import {
   dismissButtonNotice,
   markStarHintSeen,
@@ -55,21 +56,8 @@ export function ReviewNotice({ notice }: { notice: Notice | null }) {
 export function EndNotice({ end }: { end: PageEnd | null }) {
   const text = end && (end.resolved ? END_RESOLVED_TEXT : NOTICE_TEXT[end.notice]);
   const ref = useRef<HTMLParagraphElement>(null);
-  const tallest = useRef(0);
   useAnnounce(text, text);
-  // 每次畫完量一次，記下最高的：下一次換成短的字時 min-height 已經在了，中間不會先變矮一次
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) {
-      tallest.current = 0;
-      return;
-    }
-    const height = el.getBoundingClientRect().height;
-    if (height > tallest.current) {
-      tallest.current = height;
-      el.style.minHeight = `${height}px`;
-    }
-  }, [text]);
+  useKeepHeight(ref);
   if (!text) return null;
   return (
     <p

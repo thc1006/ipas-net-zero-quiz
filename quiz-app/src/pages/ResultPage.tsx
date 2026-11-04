@@ -101,6 +101,9 @@ export function ResultPage({ result, onGoHome, onRetry, retryNotice = null }: Re
     () => answers.filter((a) => a.isCorrect === false),
     [answers]
   );
+  const stillListed = wrongAnswers.some((a) => wrongEntry(review, a.questionId));
+  // 錯題區的說明有沒有，在畫出來時就定了（見下面錯題列表）
+  const [reviewHintShown] = useState(stillListed);
 
   // 先查當次快照，再退回靜態題庫。前者才涵蓋練習池題 ——
   // getQuestionById() 的索引只由主題庫組成。
@@ -331,10 +334,13 @@ export function ResultPage({ result, onGoHome, onRetry, retryNotice = null }: Re
             錯誤題目 ({wrongAnswers.length} 題)
           </h2>
 
-          {/* 手動移出或存不進去時，這句話就不對了，所以看清單上有沒有 */}
-          {wrongAnswers.some((a) => wrongEntry(review, a.questionId)) && (
+          {/* 存不進去時這句話就不對了，所以看清單上有沒有。有沒有這一段在畫出來時就定了：之後都移出了（手動移出、
+              別的分頁清除）改說已經不在清單上，不收掉，下面的錯題卡才不會往上移 */}
+          {reviewHintShown && (
             <p className="wrong-review-hint">
-              答錯的題目已進待複習，首頁「題目來源」選「待複習錯題」可以練。
+              {stillListed
+                ? '答錯的題目已進待複習，首頁「題目來源」選「待複習錯題」可以練。'
+                : '這幾題都已不在待複習清單上。'}
             </p>
           )}
 
@@ -437,7 +443,7 @@ export function ResultPage({ result, onGoHome, onRetry, retryNotice = null }: Re
                       </span>
                     </div>
 
-                    <RemoveFromReview questionId={qid} label={`第 ${index + 1} 題移出待複習`} />
+                    <RemoveFromReview questionId={qid} label={`第 ${index + 1} 題移出待複習`} keepRow />
 
                     {question.explanation && (
                       <section className="wrong-explanation" aria-label="題庫解析">

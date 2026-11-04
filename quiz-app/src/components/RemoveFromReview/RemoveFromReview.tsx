@@ -1,6 +1,7 @@
 // 手動移出待複習；題卡（答案揭曉後）與結果頁錯題卡共用，順便說還差幾次移出。
 import { useEffect, useRef, useState } from 'react';
 import { useReview } from '../../hooks/useReview';
+import { useKeepHeight } from '../../hooks/useKeepHeight';
 import { ButtonNotice } from '../ReviewNotice/ReviewNotice';
 import {
   REVIEW_REMOVE_STREAK,
@@ -27,31 +28,51 @@ interface RemoveFromReviewProps {
   answeredCorrectly?: boolean;
   /** 同一頁有好幾顆時要分得出題目（結果頁的錯題卡）；要包含看得到的「移出待複習」 */
   label?: string;
+  /**
+   * 結果頁的錯題卡：有沒有這一列在畫出來時就定了。別的分頁把題目移出時不消失、不變矮，改說已經不在清單上：
+   * 消失的話它下面的錯題卡全部往上移
+   */
+  keepRow?: boolean;
 }
 
-export function RemoveFromReview({ questionId, answeredCorrectly, label }: RemoveFromReviewProps) {
+export function RemoveFromReview({ questionId, answeredCorrectly, label, keepRow = false }: RemoveFromReviewProps) {
   const entry = wrongEntry(useReview(), questionId);
   const [removed, setRemoved] = useState(false);
+  const [listed] = useState(() => entry !== undefined);
   const doneRef = useRef<HTMLParagraphElement>(null);
+  const rowRef = useRef<HTMLDivElement>(null);
+  useKeepHeight(rowRef, questionId, keepRow);
 
   // 按鈕消失時焦點會掉回 body，鍵盤使用者要從頁首重新走一次
   useEffect(() => {
     if (removed) doneRef.current?.focus();
   }, [removed]);
 
+  // 畫出來時不在清單上的，之後別的分頁加進來也不加一列：加了它下面的錯題卡全部往下移
+  if (keepRow && !listed) return null;
   if (!entry) {
-    if (!removed) return null;
+    if (removed) {
+      return (
+        <p ref={doneRef} className="review-remove__done" tabIndex={-1}>
+          已移出待複習
+        </p>
+      );
+    }
+    if (!keepRow) return null;
+    // 與有按鈕時是同一個元素（同一個位置、同一種標籤），min-height 留著
     return (
-      <p ref={doneRef} className="review-remove__done" tabIndex={-1}>
-        已移出待複習
-      </p>
+      <>
+        <div ref={rowRef} className="review-remove">
+          <span className="review-remove__progress">已不在待複習清單上</span>
+        </div>
+      </>
     );
   }
 
   const progress = progressText(entry, answeredCorrectly);
   return (
     <>
-      <div className="review-remove">
+      <div ref={rowRef} className="review-remove">
         {progress && <span className="review-remove__progress">{progress}</span>}
         <button
           type="button"

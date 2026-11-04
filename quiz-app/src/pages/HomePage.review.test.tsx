@@ -231,3 +231,33 @@ describe('題目來源：星號題與待複習錯題', () => {
     expect(screen.getByTestId('practice-pool-tip')).toHaveTextContent('這一場不會混入練習池');
   });
 });
+
+// 別的分頁改了星號或待複習錯題，題數說明的字跟著換。變短的話它下面的開始測驗往上移；使用者自己換來源才從頭量
+describe('題數說明到使用者換選項之前不變矮', () => {
+  it('別的分頁清掉星號：說明換成「還沒有星號題」，高度留著；換來源才從頭量', () => {
+    put(s1.slice(0, 3).map((q) => q.id));
+    // jsdom 沒有排版：照字數給高度
+    const rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      return { height: (this.textContent ?? '').length } as DOMRect;
+    });
+    try {
+      render(<HomePage onStartQuiz={() => {}} />);
+      choose('review:starred');
+      const tall = (hint().textContent ?? '').length;
+      expect(hint().style.minHeight).toBe(`${tall}px`);
+      act(() => {
+        put([]);
+        window.dispatchEvent(new StorageEvent('storage', { key: REVIEW_STORAGE_KEY }));
+      });
+      expect(hint()).toHaveTextContent(/還沒有星號題/);
+      expect((hint().textContent ?? '').length).toBeLessThan(tall);
+      expect(hint().style.minHeight).toBe(`${tall}px`);
+      choose('review:wrong');
+      const now = (hint().textContent ?? '').length;
+      expect(now).toBeLessThan(tall);
+      expect(hint().style.minHeight).toBe(`${now}px`);
+    } finally {
+      rect.mockRestore();
+    }
+  });
+});

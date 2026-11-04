@@ -1,6 +1,6 @@
 // 結果頁錯題卡上的星號與移出待複習；再測一次沒有題目時的說明
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { ResultPage } from './ResultPage';
 import {
   REVIEW_STORAGE_KEY,
@@ -159,6 +159,29 @@ describe('結果頁', () => {
     put({}, { q1: { streak: 0, last: 1 } });
     renderPage();
     expect(screen.getByText('答錯的題目已進待複習，首頁「題目來源」選「待複習錯題」可以練。')).toBeInTheDocument();
+  });
+
+  it('別的分頁清掉待複習錯題：錯題區的說明與移出那一列都留著，改說已經不在清單上；畫出來時沒有的之後也不加', () => {
+    put({}, { q1: { streak: 0, last: 1 } });
+    renderPage();
+    const otherTab = (wrong: object) =>
+      act(() => {
+        put({}, wrong);
+        window.dispatchEvent(new StorageEvent('storage', { key: REVIEW_STORAGE_KEY }));
+      });
+    otherTab({});
+    expect(screen.getByText('這幾題都已不在待複習清單上。')).toBeInTheDocument();
+    expect(within(card()).getByText('已不在待複習清單上')).toBeInTheDocument();
+    expect(within(card()).queryByRole('button', { name: /移出待複習/ })).toBeNull();
+    otherTab({ q1: { streak: 0, last: 1 } });
+    expect(screen.getByText(/答錯的題目已進待複習/)).toBeInTheDocument();
+    cleanup();
+
+    put({}, {});
+    renderPage();
+    otherTab({ q1: { streak: 0, last: 1 } });
+    expect(screen.queryByText(/已進待複習/)).toBeNull();
+    expect(within(card()).queryByRole('button', { name: /移出待複習/ })).toBeNull();
   });
 
   it('再測一次的說明排在按鈕那一列下面，不是 live region；平常一個元素都沒有', () => {

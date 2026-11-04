@@ -1671,3 +1671,41 @@ test('結果頁名單空了再測一次：說明排在按鈕那一列下面，�
   await expect(page.locator('.action-notice')).toHaveCount(1);
   expect(await spot()).toEqual(before);
 });
+
+// 別的分頁改了名單：畫面上的一段跟著換字，但不消失、不變矮，下面的東西才不會往上移到使用者正要按的地方
+test.describe('別的分頁改了名單：下面的按鈕不移動', () => {
+  test('結果頁：別的分頁清掉待複習錯題，移出那幾列留著、改說已經不在清單上，第三張卡的星號不動', async ({ page, context }) => {
+    await toResultWithWrongCards(page, 'normal');
+    const third = page.locator('.wrong-item').nth(2).getByRole('button', { name: /加星號/ });
+    await third.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+    await nextFrames(page);
+    const before = await starState(third);
+    const other = await context.newPage();
+    await other.goto('/');
+    await other.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 1, seeded: true, stars: {}, wrong: {} })), KEY);
+    await expect(page.getByRole('button', { name: /移出待複習/ })).toHaveCount(0);
+    await nextFrames(page);
+    const after = await starState(third);
+    expect(sameSpot(after), `第三張卡的星號移動了 ${JSON.stringify({ before, after })}`).toEqual(sameSpot(before));
+    await expect(page.locator('.review-remove', { hasText: '已不在待複習清單上' })).toHaveCount(3);
+    await expect(page.locator('.wrong-review-hint')).toHaveText('這幾題都已不在待複習清單上。');
+  });
+
+  test('首頁：選了星號題、別的分頁清掉星號，題數說明換字但不變矮，開始測驗不動', async ({ page, context }) => {
+    await gotoHome(page, { stars: [q1, q2, q3].map(idOf) });
+    await source(page).selectOption('review:starred');
+    await page.locator('#count').fill('10');
+    await page.locator('#count').blur();
+    await expect(page.locator('#source-hint')).toContainText('本次會出 3 題');
+    await startButton(page).scrollIntoViewIfNeeded();
+    await nextFrames(page);
+    const spot = () => startButton(page).evaluate((el) => ({ top: el.getBoundingClientRect().top, scrollY: window.scrollY }));
+    const before = await spot();
+    const other = await context.newPage();
+    await other.goto('/');
+    await other.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 1, seeded: true, stars: {}, wrong: {} })), KEY);
+    await expect(page.locator('#source-hint')).toHaveText(/還沒有星號題/);
+    await nextFrames(page);
+    expect(await spot(), '開始測驗移動了').toEqual(before);
+  });
+});

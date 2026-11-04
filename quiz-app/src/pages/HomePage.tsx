@@ -1,10 +1,11 @@
 // 首頁元件 - 測驗配置與開始
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { allQuestions, getSourceCandidates, stats } from '../data/questions';
 import { PRACTICE_POOL_COUNTS } from '../data/practice-pool-counts';
 import { defaultConfig } from '../hooks/useQuiz';
 import { usePracticeMode } from '../hooks/usePracticeMode';
 import { useReviewQuestions } from '../hooks/useReviewQuestions';
+import { useKeepHeight } from '../hooks/useKeepHeight';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
 import { PracticePoolHistogram } from '../components/PracticePoolHistogram/PracticePoolHistogram';
 import { readBool, writeBool } from '../utils/local-storage';
@@ -185,6 +186,10 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
 
   const countHintId = 'count-hint';
   const sourceHintId = 'source-hint';
+  // 別的分頁改了星號或待複習錯題時，題數說明的字跟著換。變短的話它下面的開始測驗往上移：
+  // 使用者自己換來源、題數、加強練習池，或練習池載完之前不變矮
+  const sourceHintRef = useRef<HTMLParagraphElement>(null);
+  useKeepHeight(sourceHintRef, `${source}|${parsedQuestionCount}|${practiceMode.enabled}|${reviewLoading}`);
 
   return (
     <div className="home-page animate-fade-in">
@@ -396,6 +401,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
             </select>
             {/* live region 一直在畫面上，內容換了螢幕閱讀器才會念 */}
             <p
+              ref={sourceHintRef}
               id={sourceHintId}
               className="config-item__hint"
               role="status"

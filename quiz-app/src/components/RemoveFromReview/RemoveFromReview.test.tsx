@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { RemoveFromReview } from './RemoveFromReview';
 import {
@@ -112,5 +112,56 @@ describe('RemoveFromReview', () => {
       recordReviewResults([{ id: 'q1', isCorrect: false, at: Date.now() + 1000 }]);
     });
     expect(button()).toBeInTheDocument();
+  });
+});
+
+// 結果頁的錯題卡：有哪幾列在畫出來時就定了。別的分頁把題目移出時那一列不消失、不變矮，改說已經不在清單上，
+// 不然它下面的錯題卡全部往上移
+describe('RemoveFromReview keepRow（結果頁）', () => {
+  const otherTab = (wrong: object) =>
+    act(() => {
+      put({}, wrong);
+      window.dispatchEvent(new StorageEvent('storage', { key: REVIEW_STORAGE_KEY }));
+    });
+
+  it('別的分頁移出：那一列留著、沒有按鈕，說已經不在待複習清單上，高度不變', () => {
+    put({}, { q1: { streak: 1, last: 1 } });
+    // jsdom 沒有排版：有按鈕的那一列 48，只有字的 20
+    const rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      return { height: this.querySelector('button') ? 48 : 20 } as DOMRect;
+    });
+    try {
+      const { container } = render(<RemoveFromReview questionId="q1" keepRow />);
+      const row = container.querySelector('.review-remove') as HTMLElement;
+      expect(row.style.minHeight).toBe('48px');
+      otherTab({});
+      expect(button()).toBeNull();
+      expect(container.querySelector('.review-remove')).toBe(row);
+      expect(row).toHaveTextContent('已不在待複習清單上');
+      expect(row.style.minHeight).toBe('48px');
+    } finally {
+      rect.mockRestore();
+    }
+  });
+
+  it('畫出來時不在清單上的：之後也不加一列', () => {
+    put({}, {});
+    const { container } = render(<RemoveFromReview questionId="q1" keepRow />);
+    otherTab({ q1: { streak: 0, last: 1 } });
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it('題卡上（沒有 keepRow）照舊：別的分頁移出就消失', () => {
+    put({}, { q1: { streak: 0, last: 1 } });
+    const { container } = render(<RemoveFromReview questionId="q1" />);
+    otherTab({});
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it('按下去移出的照舊說已移出', () => {
+    put({}, { q1: { streak: 0, last: 1 } });
+    render(<RemoveFromReview questionId="q1" keepRow />);
+    fireEvent.click(button()!);
+    expect(screen.getByText('已移出待複習')).toBeInTheDocument();
   });
 });
