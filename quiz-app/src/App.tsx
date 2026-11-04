@@ -1,5 +1,5 @@
 // 主應用程式元件
-import { useState, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { ReviewPoolUnavailableError, useQuiz } from './hooks/useQuiz';
 import { useAccessibility } from './hooks/useAccessibility';
 import { usePracticeMode } from './hooks/usePracticeMode';
@@ -45,10 +45,9 @@ function App() {
   }, []);
 
   // 舊的作答統計帶入待複習錯題：一個瀏覽器只做一次，開站時就做，題目來源選單才數得到。
-  // 在畫出來之前做：壞資料的說明排在主內容最上面，第一次畫就要在，不能等使用者開始操作才把內容往下推
-  useLayoutEffect(() => {
-    seedReview();
-  }, []);
+  // 在第一次 render 之前做：壞資料的說明排在主內容最上面，第一次畫就要在，不能等使用者開始操作才把內容往下推。
+  // effect 裡做的話，提示的訂閱要等 passive effect 才接上，說明晚一次 render 才出現。重複呼叫不會重複寫入
+  useState(seedReview);
 
   // 星號與待複習錯題走自己的路徑（名單上有練習池題時才載入練習池，不看加強練習開了沒）。其他來源：
   // 若使用者已啟用「加強練習池」（settings toggle），自動把練習池題目混入抽題範圍

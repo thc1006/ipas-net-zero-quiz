@@ -136,8 +136,8 @@ const starContrast = (locator: Locator) =>
   });
 
 /**
- * 主內容第一次出現時，星號與待複習的說明在不在（init script）：開頁就有的說明要第一次畫出來就在，
- * 不能等使用者開始操作才把內容往下推
+ * 主內容第一次畫出來時，星號與待複習的說明在不在（init script）：開頁就有的說明要第一次畫出來就在，
+ * 不能等使用者開始操作才把內容往下推。主內容一出現就排一個 requestAnimationFrame，在畫之前量
  */
 const recordFirstPaint = (page: Page) =>
   page.addInitScript(() => {
@@ -145,8 +145,10 @@ const recordFirstPaint = (page: Page) =>
     new MutationObserver((_, observer) => {
       const main = document.getElementById('main-content');
       if (main && main.children.length > 0) {
-        w.__firstPaint = main.querySelector('.review-notice')?.textContent ?? '';
         observer.disconnect();
+        requestAnimationFrame(() => {
+          w.__firstPaint = main.querySelector('.review-notice')?.textContent ?? '';
+        });
       }
     }).observe(document, { childList: true, subtree: true });
   });
