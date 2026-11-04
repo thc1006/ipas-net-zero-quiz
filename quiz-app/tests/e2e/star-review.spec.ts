@@ -1373,6 +1373,7 @@ test('設定頁清除星號存不進去：只在設定頁自己的狀態列說�
 });
 
 const NOT_SAVED = '這次變更沒有儲存。瀏覽器可能封鎖了網站資料，或儲存空間已滿。';
+const END_RESOLVED = '已經讀到另一個分頁的變更，星號與待複習紀錄又能儲存了。';
 
 test.describe('螢幕閱讀器：每一次的提示都念，看得到的提示收掉時 live region 也清空', () => {
   test('題目頁存不進去兩次，一樣的字：念兩次；同一顆再按一次也念；換題時清空', async ({ page }) => {
@@ -1481,12 +1482,84 @@ test.describe('之後才出現的說明不排在主內容最上面：上面的�
     expect(where.bottom, `在頁尾之後 ${info}`).toBeLessThanOrEqual(where.footerTop + 0.5);
     await expect(page.locator('.review-live')).toHaveText(/新版網站寫入的/);
 
-    // 別的分頁把資料改回讀得懂的：說明收掉，上面一樣不動，live region 也清空
+    // 別的分頁把資料改回讀得懂的：不收掉，改說已經恢復，上面一樣不動，live region 念恢復的那一句
     await other.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 1, seeded: true, stars: {}, wrong: {} })), KEY);
-    await expect(page.locator('.review-notice')).toHaveCount(0);
+    await expect(notice).toHaveCount(0);
+    await expect(page.locator('.review-notice--end')).toHaveText(END_RESOLVED);
     await nextFrames(page);
-    expect(sameSpot(await starState(star(page))), '說明收掉之後星號移動了').toEqual(sameSpot(before));
-    await expect(page.locator('.review-live')).toBeEmpty();
+    expect(sameSpot(await starState(star(page))), '改說已經恢復之後星號移動了').toEqual(sameSpot(before));
+    await expect(page.locator('.review-live')).toHaveText(END_RESOLVED);
+  });
+
+  // 最後面那一段收掉或變矮時，捲到最底的頁面跟著變短，瀏覽器把捲動位置往上拉，上面的東西全部往下移
+  test('結果頁捲到最底：別的分頁寫了新版資料又改回來，最後面那一段不變矮，再測一次不移動', async ({ page, context }) => {
+    // 這個寬度新版資料的說明折成兩行，恢復的那一句一行
+    await page.setViewportSize({ width: 600, height: 700 });
+    const qs = [q1, q2, q3];
+    const wrong = Object.fromEntries(qs.map((q) => [idOf(q), { streak: 0, last: 1 }]));
+    await toResultWithWrongCards(page, 'normal');
+    const other = await context.newPage();
+    await other.goto('/');
+    const write = (v: number) =>
+      other.evaluate(
+        ({ key, raw }) => window.localStorage.setItem(key, raw),
+        { key: KEY, raw: JSON.stringify({ v, seeded: true, stars: {}, wrong }) }
+      );
+    await write(2);
+    await expect(page.locator('.review-notice--end')).toHaveText(/新版網站寫入的/);
+    const measureEnd = () =>
+      page.locator('.review-notice--end').evaluate((el) => {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        return { box: el.getBoundingClientRect().height, text: range.getBoundingClientRect().height };
+      });
+    const tall = await measureEnd();
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await nextFrames(page);
+    const retry = page.getByRole('button', { name: /再測一次/ });
+    const spot = () =>
+      retry.evaluate((el) => {
+        const r = el.getBoundingClientRect();
+        const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+        return { top: r.top, scrollY: window.scrollY, hit: hit !== null && el.contains(hit) };
+      });
+    const before = await spot();
+    await write(1);
+    await expect(page.locator('.review-notice', { hasText: /新版網站寫入的/ })).toHaveCount(0);
+    await nextFrames(page);
+    const after = await spot();
+    expect(after, `再測一次移動了 ${JSON.stringify({ before, after })}`).toEqual(before);
+    await expect(page.locator('.review-notice--end')).toHaveText(END_RESOLVED);
+    const short = await measureEnd();
+    const sizes = JSON.stringify({ tall, short });
+    // 前提：恢復的那一句至少少一行，不然這個測試量不到變矮
+    expect(short.text, `前提：恢復的那一句比較矮 ${sizes}`).toBeLessThan(tall.text - 10);
+    expect(short.box, `最後面那一段變矮了 ${sizes}`).toBeGreaterThanOrEqual(tall.box - 0.5);
+    // 換畫面就拿掉
+    await page.getByRole('button', { name: /回首頁/ }).first().click();
+    await expect(page.locator('.review-notice')).toHaveCount(0);
+  });
+
+  test('設定頁捲到最底、最後面有別的分頁造成的說明：清除星號之後，清除星號那顆按鈕不移動', async ({ page, context }) => {
+    await gotoHome(page, { stars: [idOf(q1)] });
+    await page.getByRole('button', { name: '開啟設定' }).click();
+    const clear = page.getByRole('button', { name: '清除星號' });
+    await expect(clear).toBeVisible();
+    const other = await context.newPage();
+    await other.goto('/');
+    await other.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 2, seeded: true, stars: {}, wrong: {} })), KEY);
+    await expect(page.locator('.review-notice--end')).toHaveText(/新版網站寫入的/);
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await nextFrames(page);
+    const spot = () => clear.evaluate((el) => ({ top: el.getBoundingClientRect().top, scrollY: window.scrollY }));
+    const before = await spot();
+    await clear.click();
+    await page.getByRole('button', { name: '確定清除' }).click();
+    await expect(page.locator('.review-backup__status')).toHaveText(/新版網站寫入的/);
+    await nextFrames(page);
+    const after = await spot();
+    expect(after, `清除星號移動了 ${JSON.stringify({ before, after })}`).toEqual(before);
+    await expect(page.locator('.review-notice--end')).toHaveText(/新版網站寫入的/);
   });
 });
 

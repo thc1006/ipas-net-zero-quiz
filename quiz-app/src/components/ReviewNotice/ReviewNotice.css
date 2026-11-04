@@ -19,3 +19,9 @@
 .review-notice--end {
   margin: var(--spacing-md) auto 0;
 }
+
+/* 最後面那一段說的事已經不成立：改說已經恢復 */
+.review-notice--resolved {
+  border-left-color: var(--color-success-fg);
+  background: var(--color-success-bg);
+}

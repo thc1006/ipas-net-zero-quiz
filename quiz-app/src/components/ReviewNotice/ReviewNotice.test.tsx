@@ -3,8 +3,8 @@
 import { useLayoutEffect } from 'react';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, onTestFinished, vi } from 'vitest';
 import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
-import { ButtonNotice, ReviewAnnouncer, ReviewNotice, TopNoticeContext } from './ReviewNotice';
-import { usePageNotices } from '../../hooks/useReview';
+import { ButtonNotice, EndNotice, ReviewAnnouncer, ReviewNotice, TopNoticeContext } from './ReviewNotice';
+import { END_RESOLVED_TEXT, NOTICE_TEXT, usePageNotices } from '../../hooks/useReview';
 import {
   REVIEW_STORAGE_KEY,
   __resetReviewStoreForTesting,
@@ -34,7 +34,7 @@ afterEach(cleanup);
 
 /** App.tsx 的排法：頁面的提示排在最上面或最後面，按鈕的排在按鈕那裡 */
 function Page({ view = 'quiz' }: { view?: string }) {
-  const { top, end, endEvent } = usePageNotices(view);
+  const { top, end } = usePageNotices(view);
   return (
     <TopNoticeContext.Provider value={top}>
       <ReviewAnnouncer />
@@ -51,13 +51,15 @@ function Page({ view = 'quiz' }: { view?: string }) {
         <ButtonNotice button="remove" questionId="a" />
       </div>
       <div data-testid="end">
-        <ReviewNotice notice={end} event={endEvent} end />
+        <EndNotice end={end} />
       </div>
     </TopNoticeContext.Provider>
   );
 }
 
 const live = () => document.querySelector('.review-live')!;
+/** 新版資料那一句的字數（jsdom 沒有排版，量高度的測試照字數給） */
+const NOTICE_NEWER_LENGTH = () => NOTICE_TEXT.newer.length;
 const shown = (testId: string) => screen.getByTestId(testId).textContent;
 
 /** live region 每一次變動之後的字 */
@@ -249,13 +251,61 @@ describe('頁面的提示放在哪裡：換畫面時已經有的在最上面，�
     expect(shown('end')).toBe('');
   });
 
-  it('別的分頁造成的（storage 事件）排在最後面，最上面不加；改回來時收掉', () => {
+  it('別的分頁造成的（storage 事件）排在最後面，最上面不加；改回來時不收掉，改說已經恢復', () => {
     render(<Page />);
     otherTab(v2);
     expect(shown('page')).toBe('');
     expect(shown('end')).toMatch(NEWER);
     expect(document.querySelector('.review-notice--end')).not.toBeNull();
     otherTab(v1);
+    expect(shown('end')).toBe(END_RESOLVED_TEXT);
+    expect(document.querySelector('.review-notice--end')).toHaveClass('review-notice--resolved');
+    // 又寫了新版資料：再說一次
+    otherTab(v2);
+    expect(shown('end')).toMatch(NEWER);
+    expect(document.querySelector('.review-notice--end')).not.toHaveClass('review-notice--resolved');
+  });
+
+  it('最後面那一段到換畫面之前不變矮：改說已經恢復時保留它最高時的高度，換畫面才拿掉', () => {
+    // jsdom 沒有排版：照字數給高度，新版資料的說明比恢復的那一句長
+    const rect = vi
+      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+      .mockImplementation(function (this: HTMLElement) {
+        return { height: (this.textContent ?? '').length, width: 100 } as DOMRect;
+      });
+    try {
+      const { rerender } = render(<Page view="quiz" />);
+      otherTab(v2);
+      const end = () => document.querySelector<HTMLElement>('.review-notice--end')!;
+      const tall = NOTICE_NEWER_LENGTH();
+      expect(end().style.minHeight).toBe(`${tall}px`);
+      otherTab(v1);
+      expect(shown('end')).toBe(END_RESOLVED_TEXT);
+      expect(END_RESOLVED_TEXT.length).toBeLessThan(tall);
+      expect(end().style.minHeight).toBe(`${tall}px`);
+      rerender(<Page view="home" />);
+      expect(document.querySelector('.review-notice--end')).toBeNull();
+      // 新的畫面從頭量
+      otherTab(v2);
+      otherTab(v1);
+      expect(end().style.minHeight).toBe(`${tall}px`);
+      rerender(<Page view="result" />);
+      store.set(REVIEW_STORAGE_KEY, v1);
+      act(() => {
+        reportReviewPoolFailure();
+      });
+      expect(document.querySelector('.review-notice--end')).toBeNull();
+    } finally {
+      rect.mockRestore();
+    }
+  });
+
+  it('最上面已經說了的，別的分頁又造成一次：最後面不重複', () => {
+    store.set(REVIEW_STORAGE_KEY, v2);
+    render(<Page />);
+    otherTab(v1);
+    otherTab(v2);
+    expect(shown('page')).toMatch(NEWER);
     expect(shown('end')).toBe('');
   });
 
@@ -352,15 +402,40 @@ describe('頁面的提示放在哪裡：換畫面時已經有的在最上面，�
     expect(getExternalChangeCount()).toBe(1);
   });
 
-  it('最後面的那一段：使用者接著按了會寫入的按鈕就收掉，結果說在那顆按鈕下面', () => {
+  it('最後面的那一段：使用者接著按了會寫入的按鈕也不收掉，那一次的結果說在那顆按鈕下面', () => {
     render(<Page />);
     otherTab(v2);
     expect(shown('end')).toMatch(NEWER);
     act(() => {
       setStar('c', true);
     });
-    expect(shown('end')).toBe('');
+    expect(shown('end')).toMatch(NEWER);
     expect(shown('star-c')).toMatch(NEWER);
+  });
+
+  it('最後面說搬不走的壞資料，按星號時寫得進去了（別的分頁清出空間）：改說已經恢復', () => {
+    render(<Page />);
+    const set = localStorage.setItem;
+    localStorage.setItem = (k: string, v: string) => {
+      if (k.startsWith(`${REVIEW_STORAGE_KEY}:corrupt`)) throw new DOMException('quota', 'QuotaExceededError');
+      set(k, v);
+    };
+    try {
+      store.set(REVIEW_STORAGE_KEY, '{broken');
+      act(() => {
+        setStar('a', true);
+      });
+      // 別的分頁先寫了讀得懂的、又寫了一次讀不懂的：這邊收到事件，現況是「目前不會儲存」
+      otherTab(v1);
+      otherTab('{broken again');
+      expect(shown('end')).toMatch(/不會儲存變更/);
+    } finally {
+      localStorage.setItem = set;
+    }
+    act(() => {
+      setStar('a', true);
+    });
+    expect(shown('end')).toBe(END_RESOLVED_TEXT);
   });
 
   it('最上面的到換畫面之前不增不減：過時了也留著，換畫面才依現況重排', () => {
@@ -465,6 +540,7 @@ describe('提示在視窗外時', () => {
       localStorage.setItem = set;
     }
   });
+
 });
 
 describe('螢幕閱讀器', () => {
@@ -507,18 +583,26 @@ describe('螢幕閱讀器', () => {
     expect(live()).toBeEmptyDOMElement();
   });
 
-  it('別的分頁造成、排在最後面的也念；收掉時清空', async () => {
+  it('別的分頁造成、排在最後面的也念；改說已經恢復時念恢復的那一句，再出現時再念', async () => {
     render(<Page />);
-    act(() => {
-      store.set(REVIEW_STORAGE_KEY, JSON.stringify({ v: 2 }));
-      window.dispatchEvent(new StorageEvent('storage', { key: REVIEW_STORAGE_KEY }));
-    });
+    const said = recordLive();
+    const otherTabWrites = (raw: string | null) =>
+      act(async () => {
+        if (raw === null) store.delete(REVIEW_STORAGE_KEY);
+        else store.set(REVIEW_STORAGE_KEY, raw);
+        window.dispatchEvent(new StorageEvent('storage', { key: REVIEW_STORAGE_KEY }));
+      });
+    await otherTabWrites(JSON.stringify({ v: 2 }));
     await waitFor(() => expect(live()).toHaveTextContent(/新版網站寫入的/));
-    act(() => {
-      store.delete(REVIEW_STORAGE_KEY);
-      window.dispatchEvent(new StorageEvent('storage', { key: REVIEW_STORAGE_KEY }));
-    });
-    expect(live()).toBeEmptyDOMElement();
+    await otherTabWrites(null);
+    await waitFor(() => expect(live()).toHaveTextContent(END_RESOLVED_TEXT));
+    await otherTabWrites(JSON.stringify({ v: 2 }));
+    await waitFor(() => expect(live()).toHaveTextContent(/新版網站寫入的/));
+    expect(said.filter(Boolean)).toEqual([
+      expect.stringMatching(/新版網站寫入的/),
+      END_RESOLVED_TEXT,
+      expect.stringMatching(/新版網站寫入的/),
+    ]);
   });
 
   it('開頁就在的提示也念一次', async () => {

@@ -11,7 +11,7 @@ import {
   getButtonNoticeEvent,
   getReviewNotice,
   getReviewSnapshot,
-  getUserWriteCount,
+  getExternalChangeCount,
   isStarred,
   markStarHintSeen,
   mergeReview,
@@ -1041,17 +1041,12 @@ describe('設定頁的清除與匯入：由設定頁自己的狀態列說，不�
     ['mergeReview', () => mergeReview({ stars: { x: 1 }, wrong: {} })],
   ];
 
-  it.each(writes)('%s 存不進去：回報失敗，頁面與按鈕都沒有提示；算一次使用者的寫入，通知一次', (_, write) => {
+  it.each(writes)('%s 存不進去：回報失敗，頁面與按鈕都沒有提示', (_, write) => {
     put(v1({ stars: { a: 1 }, wrong: { b: { streak: 0, last: 1 } } }));
     failWrites();
-    const listener = vi.fn();
-    const off = subscribeReview(listener);
-    const before = getUserWriteCount();
     expect(write()).toBeFalsy();
     expect(getReviewNotice()).toBeNull();
-    expect(getUserWriteCount()).toBe(before + 1);
-    expect(listener).toHaveBeenCalledTimes(1);
-    off();
+    expect(getButtonNotice('star', 'a')).toBeNull();
   });
 
   it.each(writes)('%s 遇到搬不走的壞資料：一個字都不動，不記成頁面上的「目前不會儲存」', (_, write) => {
@@ -1079,22 +1074,33 @@ describe('設定頁的清除與匯入：由設定頁自己的狀態列說，不�
   });
 });
 
-describe('使用者按下去的寫入次數（頁面的提示是不是按出來的）', () => {
-  it('星號、移出待複習、設定頁的清除與匯入才算；成功失敗都算；結束測驗與開站的帶入不算', () => {
-    expect(getUserWriteCount()).toBe(0);
+describe('別的分頁改了幾次（頁面的提示是不是別的分頁造成的）', () => {
+  it('這支 key 與 localStorage.clear()（key 是 null）的 storage 事件才算，一個事件算一次，不管有幾個訂閱者', () => {
+    const offA = subscribeReview(() => undefined);
+    const offB = subscribeReview(() => undefined);
+    expect(getExternalChangeCount()).toBe(0);
+    window.dispatchEvent(new StorageEvent('storage', { key: REVIEW_STORAGE_KEY }));
+    window.dispatchEvent(new StorageEvent('storage', { key: null }));
+    window.dispatchEvent(new StorageEvent('storage', { key: 'other' }));
+    expect(getExternalChangeCount()).toBe(2);
+    offA();
+    window.dispatchEvent(new StorageEvent('storage', { key: REVIEW_STORAGE_KEY }));
+    expect(getExternalChangeCount()).toBe(3);
+    offB();
+  });
+
+  it('這個分頁自己的寫入、按鈕、結束測驗、開站的帶入、練習池載入失敗都不算', () => {
+    const off = subscribeReview(() => undefined);
     setStar('a', true);
     removeFromReview('a');
     clearStars();
     clearWrong();
     mergeReview({ stars: {}, wrong: {} });
-    expect(getUserWriteCount()).toBe(5);
-    failWrites();
-    setStar('b', true);
-    expect(getUserWriteCount()).toBe(6);
     recordReviewResults([{ id: 'x', isCorrect: false, at: 1 }]);
     seedReview();
     reportReviewPoolFailure();
-    expect(getUserWriteCount()).toBe(6);
+    expect(getExternalChangeCount()).toBe(0);
+    off();
   });
 });
 

@@ -273,14 +273,6 @@ function setButtonNotice(button: string, notice: ReviewNotice): void {
   buttonNotices.set(button, { notice, seq: ++noticeSeq });
 }
 
-// 使用者按下去的寫入（星號、移出待複習、設定頁的清除與匯入）做過幾次。頁面的提示在這之後變了，就是按出來的：
-// 結果說在那顆按鈕下面或設定頁的狀態列，不加在頁面上（usePageNotices）
-let userWrites = 0;
-
-export function getUserWriteCount(): number {
-  return userWrites;
-}
-
 /** 頁面現在要告訴使用者什麼；一次一件，由重要到不重要 */
 export function getReviewNotice(): ReviewNotice | null {
   const { access } = getReviewSnapshot();
@@ -401,17 +393,15 @@ type WriteReport = 'page' | 'silent' | 'own';
  */
 function update(change: (data: ReviewData) => void, button: string | null = null, report: WriteReport = 'page'): boolean {
   if (button) buttonNotices.delete(button);
-  const byUser = button !== null || report === 'own';
-  if (byUser) userWrites += 1;
   const silent = !button && report !== 'page';
   // 按鈕按下去才發現的新版資料與搬不走的壞資料也說在那顆按鈕下面：頁面上已經說了的話，畫面那一層不重複
-  // （ReviewNotice.tsx 的 ButtonNotice）。使用者按的寫入一定通知：頁面才知道這次的變化是按出來的
+  // （ReviewNotice.tsx 的 ButtonNotice）
   const fail = (notice: ReviewNotice = 'write-failed'): false => {
     if (!silent) {
       if (!button) writeFailed = true;
       else setButtonNotice(button, notice);
+      notify();
     }
-    if (!silent || byUser) notify();
     return false;
   };
 
@@ -642,7 +632,6 @@ export function __resetReviewStoreForTesting(): void {
   corruptStuck = false;
   buttonNotices.clear();
   noticeSeq = 0;
-  userWrites = 0;
   externalChanges = 0;
   listeners.clear();
   window.removeEventListener('storage', onStorage);

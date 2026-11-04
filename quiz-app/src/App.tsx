@@ -13,7 +13,7 @@ import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { logger } from './utils/logger';
 import { REPO_URL } from './data/app-meta';
 import { DISCUSSIONS_URL, REPORT_URL } from './utils/feedback-url';
-import { ReviewAnnouncer, ReviewNotice, TopNoticeContext } from './components/ReviewNotice/ReviewNotice';
+import { EndNotice, ReviewAnnouncer, ReviewNotice, TopNoticeContext } from './components/ReviewNotice/ReviewNotice';
 import { usePageNotices } from './hooks/useReview';
 import { isReviewSource, questionSourceNoun } from './utils/question-source';
 import { clearReviewNotices, seedReview } from './utils/review-storage';
@@ -250,8 +250,8 @@ function App() {
             )}
           </ErrorBoundary>
         </TopNoticeContext.Provider>
-        {/* 之後才出現、沒有人按的（別的分頁造成的）：排在頁面自己的內容之後，不推動使用者正在看的東西 */}
-        <ReviewNotice notice={pageNotices.end} event={pageNotices.endEvent} end />
+        {/* 之後才出現、別的分頁造成的：排在頁面自己的內容之後，不推動使用者正在看的東西；到換畫面之前不收掉、不變矮 */}
+        <EndNotice end={pageNotices.end} />
       </main>
 
       {/* 頁尾 */}

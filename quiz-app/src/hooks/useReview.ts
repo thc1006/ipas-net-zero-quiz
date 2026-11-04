@@ -6,7 +6,6 @@ import {
   getButtonNoticeEvent,
   getExternalChangeCount,
   getReviewNotice,
-  getUserWriteCount,
   getReviewSnapshot,
   subscribeReview,
   type ReviewButton,
@@ -43,56 +42,61 @@ export function useButtonNotice(
 }
 
 /**
- * 頁面的提示放在哪裡。top 排在主內容最上面，end 排在主內容最後面（頁面自己的內容之後、頁尾之前）；
- * endEvent 每次有新的 end 就換（螢幕閱讀器再念）。
+ * 主內容最後面那一段說的事已經不成立時（別的分頁改回讀得懂的資料、又能寫入了）改說這一句。
+ * 那一段在換畫面之前不收掉：收掉的話，捲到最底的頁面跟著變短，瀏覽器把捲動位置往上拉，整頁往下移
  */
+export const END_RESOLVED_TEXT = '已經讀到另一個分頁的變更，星號與待複習紀錄又能儲存了。';
+
+/** 主內容最後面那一段：說的是哪一件事，那件事是不是已經不成立了 */
+export interface PageEnd {
+  notice: ReviewNotice;
+  resolved: boolean;
+}
+
+/** 頁面的提示放在哪裡。top 排在主內容最上面，end 排在主內容最後面（頁面自己的內容之後、頁尾之前） */
 export interface PageNotices {
   top: ReviewNotice | null;
-  end: ReviewNotice | null;
-  endEvent: number;
+  end: PageEnd | null;
 }
 
 interface PageNoticeState extends PageNotices {
   view: string;
   notice: ReviewNotice | null;
-  writes: number;
   external: number;
+}
+
+/** 頁面現在要說的換了：最後面那一段怎麼變。只增不減，到換畫面為止 */
+function nextEnd(state: PageNoticeState, notice: ReviewNotice | null, fromOtherTab: boolean): PageEnd | null {
+  const { end, top } = state;
+  // 不成立了：改說已經恢復，不收掉
+  if (notice === null) return end && { notice: end.notice, resolved: true };
+  // 別的分頁造成的才加；最上面已經說了的不再說一次，已經有的那一段改說現況
+  if (fromOtherTab && (notice !== top || end)) return { notice, resolved: false };
+  return end;
 }
 
 /**
  * 頁面的提示只有換畫面時（view 換了、開頁）已經有的才排在主內容最上面，之後到換畫面之前不增不減：
  * 使用者開始操作之後，它上面的東西不能再被推動，收掉也一樣（過時了也留到換畫面）。之後才出現的：
- * - 別的分頁造成的（收到 storage 事件之後變的）：排在主內容最後面，不推動使用者正在看的東西；收掉時也只動它下面的頁尾。
- *   使用者接著按了任何一顆會寫入的按鈕就收掉：那一次的結果說在那顆按鈕下面。
+ * - 別的分頁造成的（收到 storage 事件之後變的）：排在主內容最後面，不推動使用者正在看的東西。到換畫面之前也不收掉、
+ *   不變矮（ReviewNotice.tsx 的 EndNotice）：說的事不成立了就改說已經恢復。
  * - 使用者按出來的（按星號才發現新版資料或搬不走的壞資料、設定頁的清除與匯入）：說在那顆按鈕下面或設定頁的狀態列，
  *   頁面上不加。
  * - 其他沒有人按的（開始測驗途中練習池載入失敗，題目頁晚一個 render 才換上來）：這個畫面不加，排在下一個畫面的最上面。
  */
 export function usePageNotices(view: string): PageNotices {
   const notice = useSyncExternalStore(subscribeReview, getReviewNotice);
-  const writes = useSyncExternalStore(subscribeReview, getUserWriteCount);
   const external = useSyncExternalStore(subscribeReview, getExternalChangeCount);
-  const [state, setState] = useState<PageNoticeState>(() => ({
-    view,
-    notice,
-    writes,
-    external,
-    top: notice,
-    end: null,
-    endEvent: 0,
-  }));
+  const [state, setState] = useState<PageNoticeState>(() => ({ view, notice, external, top: notice, end: null }));
   let next = state;
   if (view !== state.view) {
-    next = { view, notice, writes, external, top: notice, end: null, endEvent: state.endEvent };
-  } else if (writes !== state.writes) {
-    next = { ...state, notice, writes, external, end: null };
-  } else if (notice !== state.notice && external !== state.external) {
-    const end = notice === state.top ? null : notice;
-    next = { ...state, notice, external, end, endEvent: end ? state.endEvent + 1 : state.endEvent };
-  } else if (notice !== state.notice || external !== state.external) {
-    next = { ...state, notice, external };
+    next = { view, notice, external, top: notice, end: null };
+  } else if (notice !== state.notice) {
+    next = { ...state, notice, external, end: nextEnd(state, notice, external !== state.external) };
+  } else if (external !== state.external) {
+    next = { ...state, external };
   }
   // render 時調整 state（React 文件的「props 變了就調整 state」）：這一次 render 就用新的，不多畫一次舊的
   if (next !== state) setState(next);
-  return { top: next.top, end: next.end, endEvent: next.endEvent };
+  return { top: next.top, end: next.end };
 }
