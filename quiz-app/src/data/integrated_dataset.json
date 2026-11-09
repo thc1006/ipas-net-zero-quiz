@@ -26,10 +26,10 @@
         "carbon_neutrality",
         "ISSB_IFRS_TCFD"
       ],
-      "reverified_count": 134,
+      "reverified_count": 135,
       "total_questions": 983,
-      "time_sensitive_count": 332,
-      "not_reviewed_this_round_count": 849,
+      "time_sensitive_count": 333,
+      "not_reviewed_this_round_count": 848,
       "carried_over_count": 198,
       "known_unresolved": [
         {
@@ -1366,7 +1366,7 @@
       "explanation": "依 iPAS 公版教材的 ISO 14068 碳中和執行步驟，承諾之後的首要操作步驟為選定碳中和標的並界定範疇邊界（設定基線），其餘步驟在其後。",
       "metadata": {
         "original_id": "c1-024",
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-04",
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "https://www.iso.org/standard/43279.html"
@@ -1394,6 +1394,12 @@
           "date": "2026-07-15",
           "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "why": "第十五輪：查證後補一手釘句。"
+        },
+        "standard_replacement_check": {
+          "date": "2026-11-04",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023；ISO 目錄頁 https://committee.iso.org/standard/14068 註明新版只改標題與編號，其餘內容相同。依 docs/CONTENT-CURRENCY.md 的標準改版監控逐題重驗。",
+          "how_verified": "引文在 2026-11-04 下載的公版教材 PDF（328201936.pdf）上，quote_status 為 verbatim。題幹與解析寫的是 ISO 14068，正是新版的編號，沒有把 2023 版寫成現行版本。",
+          "answer_check": "教材的 ISO 14068 碳中和執行步驟以選定標的、界定範疇邊界為先，答案 D 成立；新版內容與 2023 版相同，步驟不變。"
         }
       },
       "quality_flags": [
@@ -1542,9 +1548,9 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-04",
         "sources": [
-          "https://www.greentrade.org.tw/CBAM/search"
+          "https://www.greentrade.org.tw/CBAM/search/EU"
         ],
         "_legacy_pipeline_metadata": {
           "answer_verified": true,
@@ -1561,21 +1567,52 @@
         },
         "evidence": [
           {
-            "url": "https://www.greentrade.org.tw/CBAM/search",
+            "url": "https://www.greentrade.org.tw/CBAM/search/EU",
+            "quote": "本專頁係根據歐盟CBAM所列出之CN Code稅號前6碼與HS Code進行比對，並列舉符合相同前6碼之臺灣海關編碼產品清單。",
+            "supports_option": "B",
+            "note": "頁面說明由 https://www.greentrade.org.tw/api/v3/cbam/text 載入（說明開頭寫「以下資訊為截至2026年1月31最新資訊」）；2026-11-04 以 Chromium 開啟頁面，取頁面文字空白不計逐字比對確認。"
+          },
+          {
+            "url": "https://www.greentrade.org.tw/CBAM/search/EU",
+            "quote": "請輸入稅則號別(可鍵入2~11碼，例如：01、0101、0101110000等）",
+            "supports_option": "B",
+            "note": "查詢欄位的提示，在頁面的靜態 HTML 裡（placeholder）；2026-11-04 以 curl 取得頁面確認逐字相同。"
+          },
+          {
+            "url": "https://www.greentrade.org.tw/CBAM/search/EU",
+            "quote": "CN code 一串號碼共8碼，而CN code 前六碼與世界各國通用的稅號（HS Code）完全相同，6碼後之稅號編碼由各國針對產品做更細的分類以及用於定義稅金或優惠稅率而產生，故各國的產品稅號長度不相同，相同產品於各國稅則6碼之後亦會有所不同。",
+            "supports_option": "B",
+            "note": "頁面說明由 https://www.greentrade.org.tw/api/v3/cbam/text 載入（說明開頭寫「以下資訊為截至2026年1月31最新資訊」）；2026-11-04 以 Chromium 開啟頁面，取頁面文字空白不計逐字比對確認。"
+          },
+          {
+            "url": "https://www.greentrade.org.tw/CBAM/search/EU",
             "quote": "臺灣前6碼相同之海關編碼",
             "supports_option": "B"
           }
         ],
         "explanation_source": {
-          "date": "2026-07-15",
-          "anchored_on": "https://www.greentrade.org.tw/CBAM/search",
-          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）"
+          "date": "2026-11-04",
+          "anchored_on": "https://www.greentrade.org.tw/CBAM/search/EU",
+          "why": "本題原本**沒有任何解析**（全庫 420 題如此）。此解析**只用該題已經過機械驗證的逐字引文**寫成 —— 不引入任何引文以外的條號、標準編號、附錄、百分比、年份或數量。（`tools/explanation_guard.py` 逐則強制檢查；違反者一律退件、不寫入。）",
+          "previous_date": "2026-07-15"
+        },
+        "source_correction_2026_11_02": "#143：綠色貿易資訊網把 CBAM 專區分成歐盟與英國兩區，歐盟的「CBAM納管產品查詢」從 /CBAM/search 搬到 /CBAM/search/EU（網站首頁的連結已改成新路徑），舊網址在 2026-10-01 季檢與 2026-11-02 重測都是 404，Wayback Machine 最後一次 200 的存檔是 2026-04-17。新網址用季檢的 check_url 實測回 200，不經轉址，頁名是「歐盟CBAM納管產品查詢」。引文「臺灣前6碼相同之海關編碼」仍逐字在新頁上。2026-11-02 也實測了查詢：頁面說明（網站由 /api/v3/cbam/text 載入）寫著「本專頁係根據歐盟CBAM所列出之CN Code稅號前6碼與HS Code進行比對」；輸入欄的提示是「請輸入稅則號別(可鍵入2~11碼，例如：01、0101、0101110000等）」，這段提示從 2023-06 的存檔起就沒有變，輸入 2 到 11 碼都會依臺灣海關編碼的前綴回傳結果（例如輸入 731815 回 2 筆，輸入完整的 73181510004 回 1 筆）。valid_as_of=2026-11-02 指本次內容查證日。",
+        "answer_basis_review_2026_11_04": {
+          "issue": "#143",
+          "explanation_was": "引文指出查詢是以「臺灣前6碼相同之海關編碼」對應，也就是比對稅則號碼的前 6 碼。因此查詢輸入的是號碼前段、最多到第 6 碼，既不需要輸入全部號碼，也不會用到第 6 碼之後的碼數。四個選項中，只有以第 6 碼為上界的「前 2 ~ 6 碼」與引文一致。",
+          "why": "原解析說查詢「也不會用到第 6 碼之後的碼數」，與實測不符：查詢欄位的提示是「請輸入稅則號別(可鍵入2~11碼，例如：01、0101、0101110000等）」，輸入 731815 回 2 筆，輸入完整的 73181510004 回 1 筆（2026-11-02 實測），第 6 碼之後的碼數會用來篩選臺灣海關編碼。2026-07-14 的 citation_audit 說 A／C／D 都與引文矛盾，對 A 也說得太滿：輸入完整號碼一樣查得到。答案仍是 B：頁面說明寫明 CN 稅號前六碼與各國通用的 HS 稅號相同、6 碼之後各國不同，比對以前 6 碼進行，所以判斷是否納管只需要前段號碼，不必輸入全部號碼。",
+          "how_fixed": "補上頁面說明比對方式的兩句原文（supports_option B），解析改成只用這些引文寫，已用 tools/explanation_guard.py 檢查。valid_as_of=2026-11-04 指本次內容查證日。",
+          "explanation_rewritten_again": {
+            "was": "綠色貿易資訊網的查詢頁說明，CN 稅號的前六碼與各國通用的 HS 稅號相同，6 碼之後由各國自行細分，所以查詢是拿歐盟 CBAM 所列 CN 稅號的前 6 碼與 HS 稅號比對，列出「臺灣前6碼相同之海關編碼」。判斷產品是否納管，看的是稅則號碼的前 6 碼，輸入前段號碼即可，不必輸入全部號碼。四個選項中，只有以第 6 碼為上界的「前 2 ~ 6 碼」與這個比對方式一致。",
+            "why": "#143 審查指出 11-04 第一次改寫的解析仍說只有以第 6 碼為上界的選項與比對方式一致，沒有交代查詢欄位可以輸入 2 到 11 碼、輸入完整號碼一樣查得到，選項 B 的下限 2 也沒有出處。補上輸入欄的提示原文，解析寫明可輸入的範圍與比對只看前 6 碼。引文改成說明比對方式的那句排第一，畫面顯示的就是它（questions.ts 的 pickEvidence 只取第一則）。"
+          },
+          "valid_as_of_history": "原值是 2026-07-13，e07f6bb 改成 2026-11-02，這次改成 2026-11-04；source_correction_2026_11_02 結尾說的 valid_as_of=2026-11-02 是那一次的值。"
         }
       },
       "quality_flags": [
         "time_sensitive"
       ],
-      "explanation": "引文指出查詢是以「臺灣前6碼相同之海關編碼」對應，也就是比對稅則號碼的前 6 碼。因此查詢輸入的是號碼前段、最多到第 6 碼，既不需要輸入全部號碼，也不會用到第 6 碼之後的碼數。四個選項中，只有以第 6 碼為上界的「前 2 ~ 6 碼」與引文一致。"
+      "explanation": "綠色貿易資訊網的查詢欄位可以輸入 2 到 11 碼，但頁面說明，查詢是拿歐盟 CBAM 所列 CN 稅號的前 6 碼與 HS 稅號比對：CN 稅號的前六碼與各國通用的 HS 稅號相同，6 碼之後由各國自行細分。所以判斷產品是否納管，輸入前 2 到 6 碼就夠了，不必輸入全部號碼；多輸入的碼數只會縮小列出的臺灣海關編碼，不影響是否納管的比對。四個選項中，「前 2 ~ 6 碼」最符合查詢的方式。"
     },
     {
       "index": 28,
@@ -1951,9 +1988,9 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-02",
         "sources": [
-          "https://www.greentrade.org.tw/CBAM/search"
+          "https://www.greentrade.org.tw/CBAM/search/EU"
         ],
         "deduped_from": [
           "gist[560]"
@@ -1978,11 +2015,13 @@
         },
         "evidence": [
           {
-            "url": "https://www.greentrade.org.tw/CBAM/search",
+            "url": "https://www.greentrade.org.tw/CBAM/search/EU",
             "quote": "比對後無相符資料，該稅號目前不在CBAM納管範圍。",
             "supports_option": "B"
           }
-        ]
+        ],
+        "source_correction_2026_11_02": "#143：綠色貿易資訊網把 CBAM 專區分成歐盟與英國兩區，歐盟的「CBAM納管產品查詢」從 /CBAM/search 搬到 /CBAM/search/EU（網站首頁的連結已改成新路徑），舊網址在 2026-10-01 季檢與 2026-11-02 重測都是 404，Wayback Machine 最後一次 200 的存檔是 2026-04-17。新網址用季檢的 check_url 實測回 200，不經轉址，頁名是「歐盟CBAM納管產品查詢」。引文「比對後無相符資料，該稅號目前不在CBAM納管範圍。」仍逐字在新頁上；頁面說明（網站由 /api/v3/cbam/text 載入）寫著「業者可在搜尋欄輸入出口產品的稅則號碼，則可與CBAM納管產品之相關產品列表清單進行比對」，答案 B 成立。valid_as_of=2026-11-02 指本次內容查證日。",
+        "valid_as_of_was": "2026-07-13"
       },
       "quality_flags": [
         "time_sensitive"
@@ -3555,17 +3594,30 @@
           "verification_date": "2026-01-23",
           "_why_moved": "這些欄位的「名字」宣稱了一件它們做不到的事。搬到這裡不是為了藏起來，而是為了讓任何人（包括未來的維護者、包括 AI）不可能再把它們誤當成品質證據。詳見 meta.metadata_honesty_note 與 DATA-PROVENANCE.md。"
         },
+        "valid_as_of": "2026-11-04",
         "prior_answer": "C",
         "answer_ambiguity_note": "已於 2026-07-19 改題幹（C 個人生活方式→建築）解除歧義；依 ISO 14068-1 Scope，唯『國家』非主體，答案＝國家。",
         "sources": [
-          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf"
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/500712036.pdf",
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+          "https://committee.iso.org/standard/14068"
         ],
         "evidence": [
           {
-            "url": "https://www.iso.org/standard/43279.html",
-            "quote": "It is applicable to a wide range of subjects such as organizations (including companies, local authorities and financial institutions) and products (goods or services, including buildings and events). It is not intended to be used for territories (such as regions, countries, states or cities)",
+            "url": "https://committee.iso.org/standard/14068",
+            "quote": "ISO 14068 specifies principles, requirements and guidance for achieving and demonstrating carbon neutrality. It provides a standardized approach to quantifying, reducing and offsetting the carbon footprint of organizations and products, including goods, services, buildings and events.",
             "supports_option": "B",
-            "note": "ISO 14068-1:2023 Scope：主體＝組織＋產品（含建築、活動）；不適用於領域（含國家）"
+            "verified_on": "2026-11-04",
+            "method": "以 2026-11-04 下載的 ISO 目錄頁（ISO 14068:2026，What is ISO 14068? 一段）轉成純文字，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
+            "note": "新版 ISO 14068 處理組織與產品（含商品、服務、建築與活動）的碳足跡：商品、建築、組織都是主體，國家不是。"
+          },
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "碳中和主體可以是國家與地區(註：非ISO14068/PAS2060範疇)， 組織、商品等實體或服務和事件等活動",
+            "supports_option": "B",
+            "verified_on": "2026-11-04",
+            "method": "以 2026-11-04 下載的公版教材 PDF 第 145 頁，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。同日以 pdftoppm 繪出教材第 155 頁目視確認：圖上把國家整體排放量、部門別排放量、城市/區域排放量標為非屬 14068-1 與 PAS2060 範疇，組織/機構、產品、建築物、活動/服務排放量標為範疇內（圖上文字抽不成逐字）。",
+            "note": "教材原句：國家與地區可以是碳中和主體，但註明不屬 ISO 14068／PAS 2060 的範疇；支持的是本題以標準為準的答案。"
           }
         ],
         "found_by": "r3-no-source-audit",
@@ -3579,11 +3631,27 @@
           "date": "2026-07-19",
           "verdict": "supported",
           "detail": "ISO 14068-1:2023 Scope：主體為組織與產品（含建築、活動）；明文不適用於領域（regions/countries/states/cities）。故四選項中僅『國家』非主體。"
+        },
+        "standard_replacement_check": {
+          "date": "2026-11-04",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023；ISO 目錄頁 https://committee.iso.org/standard/14068 註明新版只改標題與編號，其餘內容相同。依 docs/CONTENT-CURRENCY.md 的標準改版監控逐題重驗。",
+          "quote_replaced": {
+            "url": "https://www.iso.org/standard/43279.html",
+            "was": "It is applicable to a wide range of subjects such as organizations (including companies, local authorities and financial institutions) and products (goods or services, including buildings and events). It is not intended to be used for territories (such as regions, countries, states or cities)",
+            "note_was": "ISO 14068-1:2023 Scope：主體＝組織＋產品（含建築、活動）；不適用於領域（含國家）",
+            "why": "這句原本依 ISO 14068-1:2023 的 Scope 逐字複驗（見 answer_verification.method），卻掛在 ISO 目錄的 43279 頁上。Wayback Machine 2025-07 到 2026-09 的15 份狀態 200 的 43279 頁存檔都沒有這句，2026-11-04 的 committee.iso.org/standard/43279.html 也比對為 absent。新版 ISO 14068 出版中的目錄頁（Wayback 2026-09-12）有同一句，發布後的頁面已改寫。改引頁上現有的說明與公版教材。"
+          },
+          "flags_added": "time_sensitive：本題答案靠 ISO 14068 的適用範圍，2026-08-27 列的 15 題漏了它（題幹與解析沒有寫 14068）。補標時效、設 valid_as_of；standard-replacement-watch.test.ts 也改成連引文一起看。",
+          "answer_check": "答案 B 不變：新版官方頁寫明 ISO 14068 處理組織與產品（含商品、服務、建築與活動）；教材註明國家與地區不屬 ISO 14068 的範疇，第 155 頁的圖也把國家整體排放量標為範疇外。ISO 14068 的適用範圍原文（It is not intended to be used for territories (such as regions, countries, states or cities)）在 ISO 目錄 94470 頁 Wayback Machine 2026-09-12 的存檔上逐字確認（https://web.archive.org/web/20260912090110/https://www.iso.org/standard/94470.html），發布後的頁面已改寫、沒有這句；題庫的引文分級不收存檔網址，所以記在這裡，不當引文。",
+          "review_fix_2026_11_04": "審查指出畫面顯示的第一則引文是教材那句「碳中和主體可以是國家與地區(註：非ISO14068/PAS2060範疇)」，題幹沒限定標準，字面上像在說國家是碳中和主體，和答案相反；解析裡 region／country／state／city 的說法也只剩已換掉的舊引文撐著。改把 ISO 新版頁那則放在第一，解析照兩則現行引文改寫。",
+          "explanation_was": "碳中和標準的主體範圍限於「組織」與「產品」（產品包含商品與服務，並涵蓋建築、活動）；「國家」屬於領域（region／country／state／city）層級，明文不在主體範圍內，故本題答案為國家。"
         }
       },
-      "quality_flags": [],
+      "quality_flags": [
+        "time_sensitive"
+      ],
       "_correction_note": "2026-07-19：**改題幹、答案由 null 改為 B（國家）。** 原題 B（國家）與 C（個人生活方式）皆非碳中和主體範圍→兩正解（曾撤答案）。把 C 換成 ISO 14068-1 明文列舉的主體『建築』，使唯一非主體者為『國家』。依 ISO 14068-1:2023 Scope 逐字。",
-      "explanation": "碳中和標準的主體範圍限於「組織」與「產品」（產品包含商品與服務，並涵蓋建築、活動）；「國家」屬於領域（region／country／state／city）層級，明文不在主體範圍內，故本題答案為國家。"
+      "explanation": "ISO 14068 處理的是組織與產品的碳中和，產品包含商品、服務、建築與活動；教材也註明國家與地區不屬 ISO 14068／PAS 2060 的範疇。所以四個選項中，商品、建築、組織都在碳中和標準的主體範圍內，國家不在。"
     },
     {
       "index": 62,
@@ -4262,7 +4330,7 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-04",
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "https://www.iso.org/standard/43279.html"
@@ -4287,6 +4355,12 @@
           "date": "2026-07-15",
           "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+        },
+        "standard_replacement_check": {
+          "date": "2026-11-04",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023；ISO 目錄頁 https://committee.iso.org/standard/14068 註明新版只改標題與編號，其餘內容相同。依 docs/CONTENT-CURRENCY.md 的標準改版監控逐題重驗。",
+          "how_verified": "引文在 2026-11-04 下載的公版教材 PDF（328201936.pdf）上，quote_status 為 verbatim。題幹寫的是 ISO 14068，正是新版的編號。",
+          "answer_check": "教材寫明 B2C 應涵蓋全生命週期，答案 C 成立；新版內容與 2023 版相同。"
         }
       },
       "quality_flags": [
@@ -4596,8 +4670,9 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-05",
         "sources": [
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
           "https://www.iso.org/standard/43279.html"
         ],
@@ -4611,6 +4686,14 @@
         },
         "evidence": [
           {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "ISO-14068-1 碳中和路徑要求：企業透過溫室氣體減排應同時增加移除，逐漸減少對碳抵換的依賴性。碳中和路徑應有短期(5至10年)與長期(至少20年)目標",
+            "supports_option": "D",
+            "verified_on": "2026-11-05",
+            "method": "以 2026-11-05 下載的 iPAS 公版教材 PDF（328201936.pdf，sha256 0fa1b5362b9e9456e7d2…）第 164 頁，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
+            "note": "教材這頁標明 Ref: ISO-14068-1 2023：長期目標至少 20 年。"
+          },
+          {
             "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
             "quote": "短 期減量目標（5 至10 年）和長期淨零目標（20 年）",
             "supports_option": "D",
@@ -4618,15 +4701,29 @@
           }
         ],
         "explanation_source": {
-          "date": "2026-07-15",
-          "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
-          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+          "date": "2026-11-05",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+          "why": "原解析只依環境部指引寫成；改以公版教材第 164 頁的 ISO-14068-1 碳中和路徑要求為據重寫，指引的同一期程留作補充，經 explanation_guard 檢查無引文外斷言。",
+          "was": {
+            "date": "2026-07-15",
+            "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
+            "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+          }
+        },
+        "standard_replacement_check": {
+          "date": "2026-11-05",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023，依 docs/CONTENT-CURRENCY.md 的標準改版監控重驗。",
+          "quote_check": "引文所在的環境部檔案（enews.moenv.gov.tw DisplayFile.aspx?FileID=5EC3EAB117C5B3C3）對程式回 403。Wayback Machine 2026-05-17 的存檔是 19 頁的 PDF（sha256 166a921a9242f138e967a81d3624b9853dad7b001e4869973571bc92088e30e5），用 tools/fetch_text.py 的 quote_status 比對，引文是 verbatim。",
+          "not_reverified_was": "題幹把這份環境部指引的內容說成是 ISO 14068 的要求，這是改版前就有的問題，與這次改版無關，需要另外決定怎麼改，所以這次不算重驗完成，valid_as_of 不動。",
+          "how_verified": "2026-11-05 重新下載公版教材 PDF，第 164 頁的引文 quote_status 為 verbatim。之前懷疑題幹把環境部指引的內容說成 ISO 14068 的要求。複查後不是：iPAS 公版教材第 164 頁（標明 Ref: ISO-14068-1 2023）把路徑目標列為 ISO-14068-1 的要求，第 173 到 175 頁把碳中和報告與宣告的要項列在 ISO14068 的標題下，環境部指引也寫明企業宣告碳中和應符合 ISO 14068-1 等國際標準作法。題幹與答案都不用改，只把教材的引文放到最前面，解析改以教材為據。",
+          "answer_check": "答案 D 不變：教材寫長期目標至少 20 年；新版 ISO 14068 只改標題與編號，內容相同。",
+          "explanation_was": "依環境部《企業宣告碳中和指引》，短期減量目標為5至10年，長期淨零目標為20年，故長期目標為20年。"
         }
       },
       "quality_flags": [
         "time_sensitive"
       ],
-      "explanation": "依環境部《企業宣告碳中和指引》，短期減量目標為5至10年，長期淨零目標為20年，故長期目標為20年。"
+      "explanation": "iPAS 公版教材整理的 ISO 14068 碳中和路徑要求：碳中和路徑要有短期（5 至 10 年）與長期（至少 20 年）目標，所以長期目標至少 20 年。環境部《企業宣告碳中和指引》寫的是短期減量目標 5 至 10 年、長期淨零目標 20 年。"
     },
     {
       "index": 79,
@@ -6428,9 +6525,10 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-04",
         "sources": [
-          "https://www.iso.org/standard/94470.html",
+          "https://committee.iso.org/standard/14068",
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "https://www.iso.org/standard/43279.html"
         ],
         "_legacy_pipeline_metadata": {
@@ -6443,22 +6541,47 @@
         },
         "evidence": [
           {
-            "url": "https://www.iso.org/standard/94470.html",
-            "quote": "It is not intended to be used for territories (such as regions, countries, states or cities), including signatories to the United Nations Framework Convention on Climate Change (UNFCCC) when reporting national outcomes",
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "碳中和主體可以是國家與地區(註：非ISO14068/PAS2060範疇)， 組織、商品等實體或服務和事件等活動",
             "supports_option": "A",
-            "note": "第十四輪：依使用者的一手來源調研，補上經機械比對的逐字引文（verbatim）。"
+            "verified_on": "2026-11-04",
+            "method": "以 2026-11-04 下載的公版教材 PDF 第 145 頁，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。同日以 pdftoppm 繪出教材第 155 頁目視確認：圖上把國家整體排放量、部門別排放量、城市/區域排放量標為非屬 14068-1 與 PAS2060 範疇，組織/機構、產品、建築物、活動/服務排放量標為範疇內（圖上文字抽不成逐字）。",
+            "note": "教材註明國家與地區不屬 ISO 14068 的範疇。"
+          },
+          {
+            "url": "https://committee.iso.org/standard/14068",
+            "quote": "ISO 14068 specifies principles, requirements and guidance for achieving and demonstrating carbon neutrality. It provides a standardized approach to quantifying, reducing and offsetting the carbon footprint of organizations and products, including goods, services, buildings and events.",
+            "supports_option": "A",
+            "verified_on": "2026-11-04",
+            "method": "以 2026-11-04 下載的 ISO 目錄頁（ISO 14068:2026，What is ISO 14068? 一段）轉成純文字，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
+            "note": "新版 ISO 14068 處理組織與產品（含商品、服務、建築與活動）的碳足跡，B、C、D 都在範圍內。"
           }
         ],
         "explanation_source": {
-          "date": "2026-07-15",
-          "anchored_on": "https://www.iso.org/standard/94470.html",
-          "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+          "date": "2026-11-04",
+          "anchored_on": "https://committee.iso.org/standard/14068",
+          "why": "原解析依 ISO 目錄頁上的標準摘要寫成，新版發布後那段摘要已不在頁上；改用頁上現有的說明與公版教材的註記重寫，經 explanation_guard 檢查無引文外斷言。"
+        },
+        "standard_replacement_check": {
+          "date": "2026-11-04",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023；ISO 目錄頁 https://committee.iso.org/standard/14068 註明新版只改標題與編號，其餘內容相同。依 docs/CONTENT-CURRENCY.md 的標準改版監控逐題重驗。",
+          "quote_replaced": {
+            "url": "https://www.iso.org/standard/94470.html",
+            "was": "It is not intended to be used for territories (such as regions, countries, states or cities), including signatories to the United Nations Framework Convention on Climate Change (UNFCCC) when reporting national outcomes",
+            "why": "94470 是新版 ISO 14068 在 ISO 目錄的編號，現在轉到 committee.iso.org/standard/14068（www.iso.org 對程式回 403）。2026-09-11 發布後，目錄頁的 Abstract 換成 What is ISO 14068? 的說明，這句已不在頁上，2026-11-04 下載的頁面比對為 absent。Wayback Machine 2026-09-12 的 www.iso.org/standard/94470.html 存檔（ISO 14068，Edition 1, 2026，60.00 出版中）還有這句，可見它是新版標準摘要的原文，只是現在的官方頁看不到。改引頁上現有的說明與公版教材。"
+          },
+          "explanation_replaced": {
+            "was": "依ISO官方標準摘要，本標準不適用於領土（區域、國家、州或城市），包括UNFCCC締約方申報國家成果；故國家整體排放不在其適用範圍。",
+            "why": "原解析以 ISO 官方標準摘要為依據，那段摘要已不在官方頁上，改寫成現有引文撐得住的說法，結論不變。已用 tools/explanation_guard.py 檢查。"
+          },
+          "sources_changed": "metadata.sources 的 https://www.iso.org/standard/94470.html 換成 https://committee.iso.org/standard/14068，並加上公版教材 PDF。",
+          "answer_check": "答案 A 不變：新版只改標題與編號，適用範圍仍是組織與產品；教材第 155 頁的圖也把國家整體排放量標為非屬 14068-1 與 PAS2060 範疇。"
         }
       },
       "quality_flags": [
         "time_sensitive"
       ],
-      "explanation": "依ISO官方標準摘要，本標準不適用於領土（區域、國家、州或城市），包括UNFCCC締約方申報國家成果；故國家整體排放不在其適用範圍。"
+      "explanation": "ISO 官方頁說明，ISO 14068 處理的是組織與產品（含商品、服務、建築與活動）的碳足跡；公版教材也註明國家與地區不屬 ISO 14068 的範疇。產品、建築物與組織排放都在適用範圍內，國家整體排放則不在，故答案為國家整體排放。"
     },
     {
       "index": 110,
@@ -8605,7 +8728,7 @@
       "original_section": "考科1",
       "exam_subject": "考科1",
       "metadata": {
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-04",
         "sources": [
           "https://taxation-customs.ec.europa.eu/document/download/013fa763-5dce-4726-a204-69fec04d5ce2_en",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
@@ -8632,6 +8755,12 @@
           "date": "2026-07-15",
           "anchored_on": "https://taxation-customs.ec.europa.eu/document/download/013fa763-5dce-4726-a204-69fec04d5ce2_en",
           "why": "解析只用該逐字引文寫成，經 explanation_guard 檢查無引文外斷言。"
+        },
+        "standard_replacement_check": {
+          "date": "2026-11-04",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023；ISO 目錄頁 https://committee.iso.org/standard/14068 註明新版只改標題與編號，其餘內容相同。依 docs/CONTENT-CURRENCY.md 的標準改版監控逐題重驗。",
+          "how_verified": "引文在 2026-11-04 下載的歐盟執委會 CBAM 問答 PDF 上，quote_status 為 verbatim。題幹與解析的 PAS 2060／ISO 14068-1 指的是自願性的碳中和宣告，答案取決於 CBAM 的碳價扣抵規定，與 ISO 14068 的版本無關。",
+          "answer_check": "答案 A 不變：可扣抵的是原產國實際支付、未經退稅或補償的碳價，為碳中和宣告註銷的自願性碳權不是這種碳價。"
         }
       },
       "quality_flags": [
@@ -16672,7 +16801,7 @@
       "explanation": "依 iPAS 公版教材的 ISO 14068 碳中和執行步驟，首要步驟為界定範疇邊界並設定基線。",
       "metadata": {
         "original_id": "c2-109",
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-04",
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "https://www.iso.org/standard/43279.html"
@@ -16700,6 +16829,12 @@
           "date": "2026-07-15",
           "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "why": "第十五輪：查證後補一手釘句。"
+        },
+        "standard_replacement_check": {
+          "date": "2026-11-04",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023；ISO 目錄頁 https://committee.iso.org/standard/14068 註明新版只改標題與編號，其餘內容相同。依 docs/CONTENT-CURRENCY.md 的標準改版監控逐題重驗。",
+          "how_verified": "引文在 2026-11-04 下載的公版教材 PDF（328201936.pdf）上，quote_status 為 verbatim。題幹與解析寫的是 ISO 14068，正是新版的編號，沒有把 2023 版寫成現行版本。",
+          "answer_check": "教材的 ISO 14068 碳中和執行步驟以選定標的、界定範疇邊界為先，答案 A 成立；新版內容與 2023 版相同，步驟不變。"
         }
       },
       "quality_flags": [
@@ -18943,12 +19078,12 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "國家自定貢獻（NDC）是各國根據自身情況，自願設定的溫室氣體減量目標。",
+      "explanation": "國家自定貢獻（NDC）是《巴黎協定》要求各締約方自己提出、通報並維持的減量貢獻；內容由各國依共同但有區別的責任、各自的能力與國情決定，並要反映可能的最高企圖心。所以是各國衡量自身能力後訂定減碳目標，不是由其他國家或歐盟代訂。",
       "metadata": {
         "original_id": "c2-150",
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-04",
         "sources": [
-          "https://unfccc.int/sites/default/files/english_paris_agreement.pdf",
+          "https://unfccc.int/sites/default/files/resource/english_paris_agreement.pdf",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R2083",
           "https://www.cca.gov.tw/affairs/response-policies/carbon-reduction-targets/25352.html"
         ],
@@ -18960,14 +19095,27 @@
         },
         "evidence": [
           {
-            "url": "https://unfccc.int/sites/default/files/english_paris_agreement.pdf",
-            "quote": "reflect its highest possible ambition, reflecting its common but differentiated \nresponsibilities and respective capabilities, in the light of different national \ncircumstances."
+            "url": "https://unfccc.int/sites/default/files/resource/english_paris_agreement.pdf",
+            "quote": "Each Party's successive nationally determined contribution will represent a\nprogression beyond the Party's then current nationally determined contribution and\nreflect its highest possible ambition, reflecting its common but differentiated\nresponsibilities and respective capabilities, in the light of different national\ncircumstances.",
+            "supports_option": "C"
+          },
+          {
+            "url": "https://unfccc.int/sites/default/files/resource/english_paris_agreement.pdf",
+            "quote": "Each Party shall prepare, communicate and maintain successive nationally\ndetermined contributions that it intends to achieve.",
+            "supports_option": "C"
           }
         ],
         "citation_audit": {
           "date": "2026-07-14",
           "verdict": "citation_replaced",
           "detail": "原引用 https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020 經複驗判定不含本題主張；已換為 https://unfccc.int/sites/default/files/english_paris_agreement.pdf，該頁上的逐字引文已機械驗證存在且支持本題答案。"
+        },
+        "source_correction_2026_11_04": "#143：《巴黎協定》英文本的舊網址 https://unfccc.int/sites/default/files/english_paris_agreement.pdf 在 2026-10-01 季檢判定 404，2026-11-04 重測仍是 404（UNFCCC 網站自己的 Page not found 頁，不是 WAF 的挑戰頁）。UNFCCC 網站上的英文本現在放在 /sites/default/files/resource/english_paris_agreement.pdf：2026-11-04 用 Chromium 下載回 200、application/pdf，27 頁，標題 Paris Agreement English，sha256 4f3644bfc7058cf88d17b9de4a32f9e73111ac0275dfafdcf52d2f449ec2400f。原引文是第 4 條第 3 項的後半句，在新檔 pdftotext 的文字裡空白不計逐字比對仍在；改引第 4 條第 2 項與第 3 項的完整句子，讀者才看得出講的是各締約方自己的國家自定貢獻。原引文沒有 supports_option，UI 一直沒有顯示它（questions.ts 的 pickEvidence 只顯示 supports_option 等於答案的引文）。兩則新引文都支持答案 C：各締約方自己提出、通報並維持國家自定貢獻，並依各自的責任、能力與國情訂定，D 所說由歐盟代訂不成立。valid_as_of=2026-11-04 指本次內容查證日。",
+        "explanation_rewritten_2026_11_04": {
+          "issue": "#143",
+          "was": "國家自定貢獻（NDC）是各國根據自身情況，自願設定的溫室氣體減量目標。",
+          "why": "原解析說 NDC 是各國自願設定的目標，但新引文第 4 條第 2 項寫的是 Each Party shall prepare, communicate and maintain，提出 NDC 是義務，自己決定的是內容。照兩則引文改寫，答案 C 不變。第 3 項（含 respective capabilities）排第一，畫面顯示的就是它。",
+          "valid_as_of_was": "2026-07-13"
         }
       },
       "quality_flags": [
@@ -22900,7 +23048,7 @@
       "explanation": "依 ISO 14068-1／PAS 2060，碳中和標的為組織、產品、建築物、活動或服務等實體；國家與地區等宏觀彙總則非其範疇。部門別排放量屬宏觀彙總、非 ISO 14068-1 之碳中和標的，因此不屬於其範疇。",
       "metadata": {
         "original_id": "c2-228",
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-04",
         "sources": [
           "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
           "https://www.iso.org/standard/43279.html"
@@ -22934,6 +23082,12 @@
           "verdict": "CORRECT",
           "note": "完整「屬範疇（組織/產品/建築物/活動）vs 非屬（國家整體/部門別/城市區域）」二分位於公版教材 p.155 圖表，圖表文字無法乾淨抽取為逐字（代理已 render 該頁視覺確認建築物在範疇內、部門別在範疇外）。可抽取逐字僅能釘住 A、B 在範疇內＋國家/地區宏觀彙總非範疇；C 建築物 vs D 部門別 的決定性依據為該圖。答案 D（部門別排放量，屬宏觀彙總、非 ISO14068-1 標的）成立。",
           "method": "代理 render 圖表視覺確認＋我機械驗證可抽取逐字"
+        },
+        "standard_replacement_check": {
+          "date": "2026-11-04",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023；ISO 目錄頁 https://committee.iso.org/standard/14068 註明新版只改標題與編號，其餘內容相同。依 docs/CONTENT-CURRENCY.md 的標準改版監控逐題重驗。",
+          "how_verified": "引文在 2026-11-04 下載的公版教材 PDF 第 145 頁，quote_status 為 verbatim。同日以 pdftoppm 繪出教材第 155 頁目視確認：圖上把國家整體排放量、部門別排放量、城市/區域排放量標為非屬 14068-1 與 PAS2060 範疇，組織/機構、產品、建築物、活動/服務排放量標為範疇內（圖上文字抽不成逐字）。題幹寫 ISO 14068-1，問的是適用範圍，沒有說它是現行版本。",
+          "answer_check": "答案 D（部門別排放量）不變：新版內容與 2023 版相同，教材圖上部門別排放量在範疇外，組織、產品、建築物在範疇內。"
         }
       },
       "quality_flags": [
@@ -22966,13 +23120,15 @@
       "source": "gist",
       "original_section": "未分類",
       "exam_subject": "考科1",
-      "explanation": "依環境部《企業宣告碳中和指引》，碳中和公開揭露應包含碳足跡量化方法、減量措施及用於抵換之減量額度來源。",
+      "explanation": "iPAS 公版教材整理的 ISO 14068 碳中和報告要項，包括碳足跡量化的方法學、報告期間溫室氣體排放減量與移除提升的說明、產生抵換碳權的計畫與使用的碳額度（註冊登錄處與碳權序號）；碳中和宣告應參考或連結這份報告為基礎。所以宣告的依據要涵蓋碳足跡量化方法、減量措施與碳權來源。環境部《企業宣告碳中和指引》列的公開揭露項目也包括這三類。題幹寫的 ISO 14068‑1 已由新版 ISO 14068 取代，ISO 官方頁註明新版只改了標題與編號，其餘內容相同。",
       "metadata": {
         "original_id": "c2-229",
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-05",
         "sources": [
           "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
-          "https://www.iso.org/standard/43279.html"
+          "https://www.iso.org/standard/43279.html",
+          "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+          "https://committee.iso.org/standard/14068"
         ],
         "subject_corrected_2026_07_13": {
           "from": "考科2",
@@ -22988,20 +23144,58 @@
         "explanation_audit": {
           "date": "2026-07-14",
           "verdict": "unsupported",
-          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。"
+          "what": "解析裡有主張在被引用的來源上**找不到依據**（不是錯，但也沒有依據）。未改動解析 —— 「來源沒提到」不等於「講錯了」。",
+          "superseded": "2026-11-05 解析已改以公版教材第 174、175 頁的引文重寫，這個結論針對的是舊解析。"
         },
         "evidence": [
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "碳足跡量化資訊排除理由，碳足跡量化的方法學及選擇的理由 • 對先前報告期間所選用的量化方法學變動所涉的解釋與理由 • GHG排放與移除係數使用的相關佐證資料與文件化資訊 • 量化GHG排放與移除準確性之不確定性衝擊 • 報告期間GHG排放減量與移除提升的說明，包括如何達成、是否符合碳中和管理計畫，或是否符合國家與國際氣候政策目標 • 碳抵換與GHG計畫，包括計畫形式、方法學以產生抵換碳權 • 使用的碳額度，包括註冊登錄處與形式，相關碳權序號",
+            "supports_option": "C",
+            "verified_on": "2026-11-05",
+            "method": "以 2026-11-05 下載的 iPAS 公版教材 PDF（328201936.pdf，sha256 0fa1b5362b9e9456e7d2…）第 174 頁，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
+            "note": "教材的 ISO14068 碳中和報告（2/2）：量化方法學、減量的說明、抵換碳權與碳額度的來源都是報告要項。"
+          },
+          {
+            "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+            "quote": "碳中和宣告應參考或連結碳中和報告為基礎",
+            "supports_option": "C",
+            "verified_on": "2026-11-05",
+            "method": "以 2026-11-05 下載的 iPAS 公版教材 PDF（328201936.pdf，sha256 0fa1b5362b9e9456e7d2…）第 175 頁，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
+            "note": "教材的 ISO14068 碳中和達成宣告：宣告應參考或連結碳中和報告為基礎。"
+          },
           {
             "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
             "quote": "（四）主體邊界的原始溫室氣體排放量，包括排放量計算方式 及是否經查驗機構查證等。 （五）主體邊界內執行的溫室氣體減量、或增加溫室氣體移除 量之措施與量化結果。 （六）減量後剩餘擬採取抵換之溫室氣體淨排放量，以及占總 排放量的比例 。 （七）用於抵換之溫室氣體減量額度來源，包括減量額度核發 機構（註冊處）、減量專案來源之專案名稱、專案編號、 專案項目的類型與地點、專案執行單位、參與單位、移 除增量或減量發生年份、以及是否經查驗機構查證等。",
             "supports_option": "C",
             "note": "第十五輪：代理查、我親自複核逐字。"
+          },
+          {
+            "url": "https://committee.iso.org/standard/14068",
+            "quote": "ISO 14068 specifies principles, requirements and guidance for achieving and demonstrating carbon neutrality. It provides a standardized approach to quantifying, reducing and offsetting the carbon footprint of organizations and products, including goods, services, buildings and events.\nISO 14068 establishes a hierarchy that prioritizes direct and indirect greenhouse gas emission reductions and removal enhancements within the value chain. Offsetting is used only to counterbalance the carbon footprint that remains after these actions. The standard also includes requirements for carbon neutrality commitments and claims.\nNote: this edition only contains a change to the title and number and the rest of the content is the same.",
+            "verified_on": "2026-11-05",
+            "method": "以 2026-11-05 下載的 ISO 目錄頁（ISO 14068:2026，What is ISO 14068? 一段）轉成純文字，用 tools/fetch_text.py 的 quote_status 比對為 verbatim。",
+            "note": "解析末句的出處（題幹寫的 ISO 14068-1 已由新版 ISO 14068 取代，新版只改標題與編號），不是答案依據，所以不帶 supports_option。"
           }
         ],
         "explanation_source": {
-          "date": "2026-07-15",
-          "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
-          "why": "第十五輪：查證後補一手釘句。"
+          "date": "2026-11-05",
+          "anchored_on": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+          "why": "原解析只依環境部指引寫成；改以公版教材第 174、175 頁的 ISO14068 碳中和報告與宣告要項為據重寫，指引的公開揭露項目留作補充，經 explanation_guard 檢查無引文外斷言。",
+          "was": {
+            "date": "2026-07-15",
+            "anchored_on": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
+            "why": "第十五輪：查證後補一手釘句。"
+          }
+        },
+        "standard_replacement_check": {
+          "date": "2026-11-05",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023，依 docs/CONTENT-CURRENCY.md 的標準改版監控重驗。",
+          "quote_check": "引文所在的環境部檔案（enews.moenv.gov.tw DisplayFile.aspx?FileID=5EC3EAB117C5B3C3）對程式回 403。Wayback Machine 2026-05-17 的存檔是 19 頁的 PDF（sha256 166a921a9242f138e967a81d3624b9853dad7b001e4869973571bc92088e30e5），用 tools/fetch_text.py 的 quote_status 比對，引文是 verbatim。",
+          "not_reverified_was": "題幹把這份環境部指引的內容說成是 ISO 14068 的要求，這是改版前就有的問題，與這次改版無關，需要另外決定怎麼改，所以這次不算重驗完成，valid_as_of 不動。",
+          "how_verified": "2026-11-05 重新下載公版教材 PDF，第 174、175 頁的引文 quote_status 為 verbatim；ISO 目錄頁同日比對為 verbatim。之前懷疑題幹把環境部指引的內容說成 ISO 14068 的要求。複查後不是：iPAS 公版教材第 164 頁（標明 Ref: ISO-14068-1 2023）把路徑目標列為 ISO-14068-1 的要求，第 173 到 175 頁把碳中和報告與宣告的要項列在 ISO14068 的標題下，環境部指引也寫明企業宣告碳中和應符合 ISO 14068-1 等國際標準作法。題幹與答案都不用改，只把教材的引文放到最前面，解析改以教材為據。",
+          "answer_check": "答案 C 不變：教材列的報告要項含量化方法學、減量說明與碳權來源，宣告以報告為基礎；新版只改標題與編號。",
+          "explanation_was": "依環境部《企業宣告碳中和指引》，碳中和公開揭露應包含碳足跡量化方法、減量措施及用於抵換之減量額度來源。"
         }
       },
       "quality_flags": [
@@ -24477,9 +24671,17 @@
             "sem_reverify": "第十八輪語意複核（代理判定＋我逐批抽樣複核）：引文語意釘得住現行答案"
           }
         ],
-        "standard_replacement_watch": "ISO/FDIS 14068（Climate change management — Carbon neutrality）已進入 approval 階段，將取代 ISO 14068-1:2023。新版發布時，本題涉及的要求與條號需重新確認。註：現行有效版本仍是 ISO 14068-1:2023，本題答案未因此改動。",
-        "valid_as_of": "2026-07-16",
-        "valid_as_of_basis": "採用本題 evidence 的 verified_on（第十八輪語意複核）作為內容查證日，而不是補標旗標的今天 —— 今天只查證了 ISO 標準的改版狀態，並未重驗本題內容。"
+        "standard_replacement_watch": "ISO 14068:2026 已於 2026-09-11 發布並取代 ISO 14068-1:2023，ISO 官方頁註明新版只改標題與編號，其餘內容相同。2026-11-04 依新版官方頁重驗，答案未改動。",
+        "valid_as_of": "2026-11-04",
+        "valid_as_of_basis": "2026-11-04 依標準改版監控逐題重驗（見 standard_replacement_check），以重驗日作為內容查證日。",
+        "standard_replacement_check": {
+          "date": "2026-11-04",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023；ISO 目錄頁 https://committee.iso.org/standard/14068 註明新版只改標題與編號，其餘內容相同。依 docs/CONTENT-CURRENCY.md 的標準改版監控逐題重驗。",
+          "how_verified": "引文在 2026-11-04 下載的公版教材 PDF（328201936.pdf）上，quote_status 為 verbatim。解析寫的是 PAS 2060 或 ISO 14068-1 的碳中和管理計畫，沒有說哪一版是現行版本。",
+          "answer_check": "答案 A 不變：新版內容與 2023 版相同。",
+          "watch_note_was": "ISO/FDIS 14068（Climate change management — Carbon neutrality）已進入 approval 階段，將取代 ISO 14068-1:2023。新版發布時，本題涉及的要求與條號需重新確認。註：現行有效版本仍是 ISO 14068-1:2023，本題答案未因此改動。",
+          "valid_as_of_basis_was": "採用本題 evidence 的 verified_on（第十八輪語意複核）作為內容查證日，而不是補標旗標的今天 —— 今天只查證了 ISO 標準的改版狀態，並未重驗本題內容。"
+        }
       },
       "quality_flags": [
         "time_sensitive"
@@ -25023,7 +25225,7 @@
       "explanation": "依歐盟執委會 CBAM 問答，可扣抵者為原產國實際支付且未經退稅補償之碳價；為 PAS 2060／ISO 14068 碳中和宣告而註銷的自願性碳權並非實際支付之碳價，故無法符合 CBAM 抵減碳關稅。",
       "metadata": {
         "original_id": "c2-270",
-        "valid_as_of": "2026-07-13",
+        "valid_as_of": "2026-11-04",
         "sources": [
           "https://taxation-customs.ec.europa.eu/document/download/013fa763-5dce-4726-a204-69fec04d5ce2_en",
           "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020",
@@ -25053,6 +25255,12 @@
           "date": "2026-07-15",
           "anchored_on": "https://taxation-customs.ec.europa.eu/document/download/013fa763-5dce-4726-a204-69fec04d5ce2_en",
           "why": "第十五輪：查證後補一手釘句，過 explanation_guard。"
+        },
+        "standard_replacement_check": {
+          "date": "2026-11-04",
+          "trigger": "ISO 14068:2026 於 2026-09-11 發布並取代 ISO 14068-1:2023；ISO 目錄頁 https://committee.iso.org/standard/14068 註明新版只改標題與編號，其餘內容相同。依 docs/CONTENT-CURRENCY.md 的標準改版監控逐題重驗。",
+          "how_verified": "引文在 2026-11-04 下載的歐盟執委會 CBAM 問答 PDF 上，quote_status 為 verbatim。題幹與解析的 PAS 2060／ISO 14068-1 指的是自願性的碳中和宣告，答案取決於 CBAM 的碳價扣抵規定，與 ISO 14068 的版本無關。",
+          "answer_check": "答案 D 不變：可扣抵的是原產國實際支付、未經退稅或補償的碳價，為碳中和宣告註銷的自願性碳權不是這種碳價。"
         }
       },
       "quality_flags": [

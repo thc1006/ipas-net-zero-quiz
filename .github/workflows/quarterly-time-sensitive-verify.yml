@@ -160,11 +160,16 @@ jobs:
           # DEAD_DNS 就永遠不會觸發，網域真的停用也不會開 issue，而且測試照樣全綠。
           # 事實上這支 glue 測試一寫出來，第一次跑就抓到 resolve_dns_status 的
           # 「單一 resolver 說 NXDOMAIN 就升級」的漏洞（見該檔註解）。
+          #
+          # check_url 也會用 curl -D / -o 留下 header 與 body，交給 detect_challenge 認 WAF 驗證頁：
+          # unfccc.int（Imperva）連不存在的頁面都回 200、EUR-Lex（AWS WAF）回 202 驗證頁，
+          # 只看 http_code 會把它們算成 OK。驗證頁改判 BLOCKED（只警告，不開 issue）。
+          #
+          # xargs 子行程要用的函式與變數由 check-url.sh 自己 export（清單緊鄰定義，
+          # 並由 check-url.test.sh 用同樣的 xargs 跑過）。先前清單寫在這裡，新增 helper
+          # 時漏掉一個，子行程裡就是 command not found，而 step 照樣是綠的。
           # shellcheck source=.github/scripts/check-url.sh
           . .github/scripts/check-url.sh
-
-          export -f check_url classify_url_status status_icon resolve_dns_status dig_status url_host
-          export CURL_BIN HTTP_UA
 
           # 並行 4 worker，全部寫進同一個被重導的檔案。
           #
@@ -225,9 +230,9 @@ jobs:
               '',
               '| 分類 | 判定條件 | 本次 |',
               '|---|---|---|',
-              `| \`OK\` | 2xx / 3xx（**含 202 Accepted** —— EUR-Lex 正常回這個） | ${o.ok_count} |`,
+              `| \`OK\` | 2xx / 3xx，而且拿到的不是 WAF 驗證頁 | ${o.ok_count} |`,
               `| \`UNREACHABLE_DNS\` | curl exit 6，但**沒有**兩個 resolver 確認 NXDOMAIN —— 可能只是 resolver 抖動 | ${o.dns_count} |`,
-              `| \`BLOCKED\` | 401 / 403 / 405 / 429 / 451 —— WAF 擋 Actions runner，站台活著 | ${o.blocked_count} |`,
+              `| \`BLOCKED\` | 401 / 403 / 405 / 429 / 451，或 2xx / 3xx 但拿到的是 WAF 驗證頁（EUR-Lex 的 AWS WAF、unfccc.int 的 Imperva）：站台活著，內容沒驗到 | ${o.blocked_count} |`,
               `| \`RETRYABLE\` | 408 / 425 / 500 / 502 / 503 / 504 —— 伺服器暫時性問題，不是連結壞掉 | ${o.retryable_count} |`,
               `| \`UNREACHABLE_*\`（非 DNS） | curl exit ≠ 0（7=connect、28=timeout、35/60=TLS） | ${o.unreachable_count} |`,
               `| \`OTHER\` | 其餘 HTTP 碼 —— 明示列出，**不靜默歸成 DEAD** | ${o.other_count} |`,
@@ -243,7 +248,7 @@ jobs:
               '1. 確認 source 是**搬家**還是**內容本身被撤**。死鏈有時代表「標準被廢止」而不只是',
               '   「網址變了」—— 例：IAASB 那筆 404 是因為 **ISAE 3410 將於 2026-12-15 由 ISSA 5000 取代**。',
               '2. 比對題目選項是否仍與最新 source 一致。',
-              '3. 不一致 → 修正答案 + 更新 `metadata.verification_date` + 附新 source URL（實測 2xx/3xx）。',
+              '3. 不一致 → 修正答案 + 更新 `metadata.verification_date` + 附新 source URL（實測 2xx/3xx，而且拿到的是內容本身，不是 WAF 驗證頁）。',
               '4. 找不到替代且內容確已失效 → 移除題目（同步更新 `_meta.totals` + `practice-pool-counts.ts`）。',
               '',
               '> 這個 workflow **只驗連結還通不通，驗不出內容變了**。一個回 200 的網址，內容照樣',
@@ -342,11 +347,11 @@ jobs:
             echo ""
             echo "| 分類 | 判定條件 | 數量 | 開 issue？ |"
             echo "|---|---|---:|---|"
-            echo "| OK | 2xx / 3xx（含 202 Accepted） | ${{ steps.curl.outputs.ok_count }} | — |"
+            echo "| OK | 2xx / 3xx，且不是 WAF 驗證頁 | ${{ steps.curl.outputs.ok_count }} | 否 |"
             echo "| DEAD | 404 / 410 | ${{ steps.curl.outputs.dead_count }} | **是** |"
             echo "| DEAD_DNS | curl exit 6 **且** 兩個獨立 resolver 都回 NXDOMAIN | ${{ steps.curl.outputs.dead_dns_count }} | **是** |"
             echo "| UNREACHABLE_DNS | curl exit 6，但未經兩個 resolver 確認（可能只是抖動） | ${{ steps.curl.outputs.dns_count }} | 否 |"
-            echo "| BLOCKED | 401/403/405/429/451（WAF，站台活著） | ${{ steps.curl.outputs.blocked_count }} | 否 |"
+            echo "| BLOCKED | 401/403/405/429/451，或 2xx/3xx 但拿到的是 WAF 驗證頁（站台活著，內容沒驗到） | ${{ steps.curl.outputs.blocked_count }} | 否 |"
             echo "| RETRYABLE | 408/425/500/502/503/504（伺服器暫時性） | ${{ steps.curl.outputs.retryable_count }} | 否 |"
             echo "| UNREACHABLE_*（非 DNS） | curl exit≠0（7/28/35/60） | ${{ steps.curl.outputs.unreachable_count }} | 否 |"
             echo "| OTHER | 其餘 HTTP 碼（明示，不靜默歸成 DEAD） | ${{ steps.curl.outputs.other_count }} | 否 |"

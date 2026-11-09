@@ -160,6 +160,21 @@ else
   echo '  ✗ 沒有產生 failures.tsv'
 fi
 
+# -----------------------------------------------------------------------------
+# Case 4：check-url.sh 實際的 7 欄輸出（第 7 欄是認出的 WAF）。
+# WAF 驗證頁是 BLOCKED 配 2xx：不算 OK，也不算失效（不開 issue）。
+# -----------------------------------------------------------------------------
+OUT=$(run_case 'WAF 驗證頁：BLOCKED 配 2xx，不算 OK 也不算失效' \
+  'BLOCKED\thttps://eur-lex.example\tid1\t202\t0\t\taws-waf\n'\
+'BLOCKED\thttps://unfccc.example\tid2\t200\t0\t\timperva\n'\
+'OK\thttps://ok.example\tid3\t200\t0\t\t\n'\
+'DEAD\thttps://dead.example\tid4\t404\t0\t\t\n')
+check_rc0
+expect_kv "$OUT" blocked_count 2
+expect_kv "$OUT" ok_count      1
+expect_kv "$OUT" fail_count    1
+expect_kv "$OUT" total_count   4
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 「什麼算失效」只能有一個定義

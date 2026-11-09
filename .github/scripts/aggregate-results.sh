@@ -11,7 +11,8 @@
 # 用法：
 #   aggregate_results <results.tsv> <github_output_file>
 #
-# results.tsv 欄位：category \t url \t ids \t http_code \t curl_exit
+# results.tsv 欄位：category \t url \t ids \t http_code \t curl_exit \t dns \t waf
+# （check-url.sh 的輸出；這裡只用第 1 欄分類）
 
 set -uo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

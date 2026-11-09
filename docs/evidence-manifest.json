@@ -8,8 +8,8 @@
   "summary": {
     "main_tier1_questions": 966,
     "pool_tier1_questions": 140,
-    "total_evidence_records": 1178,
-    "primary_evidence_records": 1169,
+    "total_evidence_records": 1196,
+    "primary_evidence_records": 1187,
     "secondary_evidence_records": 9,
     "unknown_evidence_records": 0
   },
@@ -4238,8 +4238,17 @@
     {
       "qid": "gist[109]",
       "bank": "main",
-      "url": "https://www.iso.org/standard/94470.html",
-      "host": "www.iso.org",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[109]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+      "host": "usr.chu.edu.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -5858,7 +5867,34 @@
     {
       "qid": "gist[27]",
       "bank": "main",
-      "url": "https://www.greentrade.org.tw/CBAM/search",
+      "url": "https://www.greentrade.org.tw/CBAM/search/EU",
+      "host": "www.greentrade.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[27]",
+      "bank": "main",
+      "url": "https://www.greentrade.org.tw/CBAM/search/EU",
+      "host": "www.greentrade.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[27]",
+      "bank": "main",
+      "url": "https://www.greentrade.org.tw/CBAM/search/EU",
+      "host": "www.greentrade.org.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[27]",
+      "bank": "main",
+      "url": "https://www.greentrade.org.tw/CBAM/search/EU",
       "host": "www.greentrade.org.tw",
       "authority": "primary",
       "has_quote": true,
@@ -6515,7 +6551,16 @@
     {
       "qid": "gist[343]",
       "bank": "main",
-      "url": "https://unfccc.int/sites/default/files/english_paris_agreement.pdf",
+      "url": "https://unfccc.int/sites/default/files/resource/english_paris_agreement.pdf",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[343]",
+      "bank": "main",
+      "url": "https://unfccc.int/sites/default/files/resource/english_paris_agreement.pdf",
       "host": "unfccc.int",
       "authority": "primary",
       "has_quote": true,
@@ -6569,7 +6614,7 @@
     {
       "qid": "gist[34]",
       "bank": "main",
-      "url": "https://www.greentrade.org.tw/CBAM/search",
+      "url": "https://www.greentrade.org.tw/CBAM/search/EU",
       "host": "www.greentrade.org.tw",
       "authority": "primary",
       "has_quote": true,
@@ -7307,8 +7352,35 @@
     {
       "qid": "gist[422]",
       "bank": "main",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[422]",
+      "bank": "main",
       "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
       "host": "enews.moenv.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[422]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+      "host": "usr.chu.edu.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[422]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+      "host": "usr.chu.edu.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -8639,8 +8711,17 @@
     {
       "qid": "gist[61]",
       "bank": "main",
-      "url": "https://www.iso.org/standard/43279.html",
-      "host": "www.iso.org",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[61]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+      "host": "usr.chu.edu.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -8839,6 +8920,15 @@
       "bank": "main",
       "url": "https://enews.moenv.gov.tw/DisplayFile.aspx?FileID=5EC3EAB117C5B3C3",
       "host": "enews.moenv.gov.tw",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "gist[78]",
+      "bank": "main",
+      "url": "https://usr.chu.edu.tw/var/file/81/1081/img/1034/328201936.pdf",
+      "host": "usr.chu.edu.tw",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -9575,6 +9665,24 @@
     {
       "qid": "pool-aig-intl-010",
       "bank": "pool",
+      "url": "https://sciencebasedtargets.org/corporate-net-zero",
+      "host": "sciencebasedtargets.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-010",
+      "bank": "pool",
+      "url": "https://sciencebasedtargets.org/news/the-sbti-releases-corporate-net-zero-standard-v2-0-to-accelerate-corporate-climate-action",
+      "host": "sciencebasedtargets.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-010",
+      "bank": "pool",
       "url": "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf",
       "host": "sciencebasedtargets.org",
       "authority": "primary",
@@ -9638,6 +9746,15 @@
     {
       "qid": "pool-aig-intl-019",
       "bank": "pool",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-019",
+      "bank": "pool",
       "url": "https://www.iso.org/standard/43279.html",
       "host": "www.iso.org",
       "authority": "primary",
@@ -9692,6 +9809,15 @@
     {
       "qid": "pool-aig-intl-024",
       "bank": "pool",
+      "url": "https://files.sciencebasedtargets.org/production/files/Above-and-Beyond-Report-on-BVCM.pdf",
+      "host": "files.sciencebasedtargets.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-024",
+      "bank": "pool",
       "url": "https://sciencebasedtargets.org/resources/files/Net-Zero-Standard.pdf",
       "host": "sciencebasedtargets.org",
       "authority": "primary",
@@ -9701,7 +9827,16 @@
     {
       "qid": "pool-aig-intl-025",
       "bank": "pool",
-      "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/article-64-mechanism/faqs-on-transitioning-cdm-activities-to-the-A6.4mechanism",
+      "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/article-6/article-64-pacm/CDM_transition/faqs",
+      "host": "unfccc.int",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl-025",
+      "bank": "pool",
+      "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/paris-agreement-crediting-mechanism/CDM_transition",
       "host": "unfccc.int",
       "authority": "primary",
       "has_quote": true,
@@ -9782,8 +9917,17 @@
     {
       "qid": "pool-aig-intl_round1_rescued-intl-018",
       "bank": "pool",
-      "url": "https://www.bsigroup.com/en-GB/products-and-services/standards/iso-14068-1-carbon-neutrality-verification/",
-      "host": "www.bsigroup.com",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-aig-intl_round1_rescued-intl-018",
+      "bank": "pool",
+      "url": "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q",
+      "host": "page.bsigroup.com",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -10241,8 +10385,17 @@
     {
       "qid": "pool-em-ipas_vocus_mock-007",
       "bank": "pool",
-      "url": "https://www.bsigroup.com/en-GB/products-and-services/standards/iso-14068-1-carbon-neutrality-verification/",
-      "host": "www.bsigroup.com",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-em-ipas_vocus_mock-007",
+      "bank": "pool",
+      "url": "https://page.bsigroup.com/l/73472/2024-04-18/2c5zv8q",
+      "host": "page.bsigroup.com",
       "authority": "primary",
       "has_quote": true,
       "tier1": true
@@ -10531,6 +10684,15 @@
       "bank": "pool",
       "url": "https://ghgprotocol.org/sites/default/files/standards/Scope3_Calculation_Guidance_0.pdf",
       "host": "ghgprotocol.org",
+      "authority": "primary",
+      "has_quote": true,
+      "tier1": true
+    },
+    {
+      "qid": "pool-em-ipas_vocus_mock-047",
+      "bank": "pool",
+      "url": "https://committee.iso.org/standard/14068",
+      "host": "committee.iso.org",
       "authority": "primary",
       "has_quote": true,
       "tier1": true

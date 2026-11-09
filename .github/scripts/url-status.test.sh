@@ -28,10 +28,10 @@ check() {
   fi
 }
 
-echo '── OK：2xx / 3xx 一律視為活著 ─────────────────────────────'
+echo '-- OK：2xx / 3xx，且不是 WAF 驗證頁（驗證頁見下方 WAF 段）'
 check 200 0 OK
 check 201 0 OK
-check 202 0 OK '← EUR-Lex 正常回這個；舊版只收 200，把它判成失效'
+check 202 0 OK '← 狀態碼本身不是驗證頁的證據；EUR-Lex 的 202 靠 x-amzn-waf-action 認出來'
 check 204 0 OK
 check 206 0 OK
 check 301 0 OK
@@ -260,6 +260,151 @@ if [ -z "$missing" ]; then
 else
   fail=$((fail + 1))
   printf '  ✗ 這些分類 classify 吐得出來，卻不在 ALL_STATUS_CATEGORIES 裡：%s\n' "$missing"
+fi
+
+
+# -----------------------------------------------------------------------------
+# WAF 驗證頁：狀態碼是 2xx，內容卻不是那一頁。
+#
+# 2026-11-04 實測（與 check-url.sh 相同的 curl 旗標）：
+#   - EUR-Lex 的 10 個網址全回 202，header 帶 x-amzn-waf-action: challenge，
+#     body 是 AWS WAF 的 challenge.js。先前文件說「EUR-Lex 正常回 202」，其實是驗證頁。
+#   - unfccc.int 的首頁、一個不存在的路徑、清單裡的兩頁都回 200：212 bytes 的
+#     Incapsula JS 驗證頁，或 iframe 的 "Request unsuccessful. Incapsula incident ID"。
+#     不存在的頁面也是 200，所以 unfccc.int 的死連結一律被報成 OK。
+# 驗證頁證明不了那一頁還在，也證明不了它不在：站台活著、內容沒驗到，所以是 BLOCKED。
+# -----------------------------------------------------------------------------
+echo '-- WAF 驗證頁：2xx / 3xx 也不算 OK，改判 BLOCKED（只警告，不開 issue）'
+check_waf() {
+  local http="$1" waf="$2" expected="$3" note="${4:-}" got
+  got="$(classify_url_status "$http" 0 '' "$waf")"
+  if [ "$got" = "$expected" ]; then pass=$((pass + 1)); else
+    fail=$((fail + 1))
+    printf '  ✗ http=%-4s waf=%-10s 期望 %-10s 實得 %-10s %s\n' "$http" "$waf" "$expected" "$got" "$note"
+  fi
+}
+check_waf 200 imperva BLOCKED '← unfccc.int 的 Incapsula 驗證頁'
+check_waf 202 aws-waf BLOCKED '← EUR-Lex 的 AWS WAF challenge'
+check_waf 302 imperva BLOCKED '← 3xx 原本也算 OK，同樣不能放行'
+check_waf 200 ''      OK      '← 沒有驗證頁的跡象就照狀態碼'
+check_waf 404 imperva DEAD    '← 只改「原本會是 OK」的那些，不動其他分類'
+check_waf 403 aws-waf BLOCKED
+if [ "$(classify_url_status 000 28 '' aws-waf)" = 'UNREACHABLE_TIMEOUT' ]; then pass=$((pass + 1)); else
+  fail=$((fail + 1)); echo '  ✗ curl 失敗時 exit code 仍要優先於驗證頁判定'
+fi
+
+# detect_challenge <header 檔> <body 檔>：讀 curl -D 與 -o 寫下的檔案，印出廠商名或空字串。
+# fixture 一律寫成檔案，跟 check-url.sh 實際餵給它的形式一樣（header 用 CRLF）。
+CH="$TMPDIR_T/challenge"; mkdir -p "$CH"
+fx() { printf '%b' "$2" > "$CH/$1.h"; printf '%b' "$3" > "$CH/$1.b"; }
+expect_waf() {
+  local name="$1" want="$2" note="${3:-}" got
+  got=$(detect_challenge "$CH/$name.h" "$CH/$name.b")
+  if [ "$got" = "$want" ]; then pass=$((pass + 1)); else
+    fail=$((fail + 1))
+    printf '  ✗ detect_challenge %-22s 期望 %-10s 實得 %-10s %s\n' "$name" "${want:-<空>}" "${got:-<空>}" "$note"
+  fi
+}
+
+# 實測的 Incapsula JS 驗證頁（unfccc.int，212 bytes，逐字）
+IMPERVA_JS='<html><head><META NAME="robots" CONTENT="noindex,nofollow"><script src="/_Incapsula_Resource?SWJIYLWA=5074a744e2e3d891814e9a2dace20bd4,719d34d31c8e3a6e6fffd425f7e032f3"></script><body></body></html>'
+# 實測的 Incapsula 擋頁（unfccc.int）。incident ID、xinfo 與用戶端 IP 換成假值，結構照抄。
+IMPERVA_IFRAME='<html style="height:100%"><head><META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></head><body style="margin:0px;height:100%"><iframe id="main-iframe" src="/_Incapsula_Resource?SWUDNSAI=31&xinfo=1-2-0%200NNN&incident_id=000-111&edet=12&cinfo=04000000&rpinfo=0&cip=192.0.2.1&mth=GET" frameborder=0 width="100%" height="100%" marginheight="0px" marginwidth="0px">Request unsuccessful. Incapsula incident ID: 000-111</iframe></body></html>'
+IMPERVA_HDR='HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nCache-Control: no-cache, no-store\r\nX-Iinfo: 1-2-0 0CNN RT(1 2) q(0 -1 -1 -1) r(0 -1)\r\nSet-Cookie: visid_incap_1=x; path=/\r\nSet-Cookie: incap_ses_1_1=y; path=/\r\n\r\n'
+
+echo '-- detect_challenge：AWS WAF（認 header，不認狀態碼）'
+fx aws-challenge 'HTTP/1.1 202 Accepted\r\nServer: CloudFront\r\nx-amzn-waf-action: challenge\r\nContent-Type: text/html; charset=UTF-8\r\nAccess-Control-Expose-Headers: x-amzn-waf-action\r\n\r\n' \
+  '<!DOCTYPE html><html><head><script src="https://x.token.awswaf.com/x/y/challenge.js"></script></head><body><div id="challenge-container"></div></body></html>'
+expect_waf aws-challenge aws-waf '← EUR-Lex 實測的 header 組合'
+fx aws-captcha 'HTTP/2 405\r\nx-amzn-waf-action: captcha\r\ncontent-type: text/html\r\n\r\n' '<html></html>'
+expect_waf aws-captcha aws-waf
+fx aws-case 'HTTP/1.1 202 Accepted\r\nX-Amzn-Waf-Action:   Challenge\r\n\r\n' ''
+expect_waf aws-case aws-waf '← header 名稱不分大小寫（HTTP/1.1 不保證小寫）'
+# 必須不命中：EUR-Lex 連正常回應都可能帶這個 CORS header，它的「值」提到 x-amzn-waf-action
+fx aws-expose 'HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nAccess-Control-Expose-Headers: x-amzn-waf-action\r\n\r\n' \
+  '<html><body><h1>Regulation (EU) 2023/956</h1></body></html>'
+expect_waf aws-expose '' '← 只認 header 名稱，不認別的 header 的值'
+fx aws-prefixed 'HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nX-Original-X-Amzn-Waf-Action: challenge\r\n\r\n' '<html><body><p>ok</p></body></html>'
+expect_waf aws-prefixed '' '← header 名稱要整個相同，不能只是別的名稱的結尾'
+fx plain-202 'HTTP/1.1 202 Accepted\r\nContent-Type: text/html\r\n\r\n' '<html><body><p>Your request has been accepted.</p></body></html>'
+expect_waf plain-202 '' '← 202 本身不是驗證頁的證據'
+
+echo '-- detect_challenge：Imperva / Incapsula（header 分不出來，只能認 body 的結構）'
+# X-Iinfo、visid_incap_、X-CDN: Imperva 在正常內容頁上也都有（ifrs.org、moi.gov.tw 實測），不能拿來判斷。
+fx imperva-js "$IMPERVA_HDR" "$IMPERVA_JS"
+expect_waf imperva-js imperva '← 實測 212 bytes，逐字'
+fx imperva-iframe "$IMPERVA_HDR" "$IMPERVA_IFRAME"
+expect_waf imperva-iframe imperva '← 實測的 Request unsuccessful 擋頁'
+fx imperva-multiline 'HTTP/1.1 200 OK\r\ncontent-type: text/html; charset=utf-8\r\n\r\n' \
+  '<HTML>\r\n<HEAD>\r\n<META NAME="robots" CONTENT="noindex,nofollow">\r\n<SCRIPT SRC="/_Incapsula_Resource?SWJIYLWA=abc">\r\n</SCRIPT>\r\n</HEAD>\r\n<BODY>\r\n</BODY>\r\n</HTML>\r\n'
+expect_waf imperva-multiline imperva '← 換行、大小寫、多一個 </head> 都不影響'
+# 必須不命中：經 Imperva 的正常內容頁，body 結尾也有 _Incapsula_Resource 的 script。
+# 這段照 ifrs.org 實測的結尾寫（真頁面在 64 KiB 之後，這裡縮成小頁，才落在讀取範圍內）。
+fx imperva-real-page "$IMPERVA_HDR" \
+  '<html><head><title>IFRS S2</title></head><body><h1>IFRS S2 Climate-related Disclosures</h1><p>Content.</p><script type="text/javascript" src="/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=14&cb=172250363" async></script></body></html>'
+expect_waf imperva-real-page '' '← 正常頁也會被注入這支 script，光看字串會誤判'
+fx imperva-pdf 'HTTP/1.1 200 OK\r\nContent-Type: application/pdf\r\nX-CDN: Imperva\r\nX-Iinfo: 1-2-3 NNNY CT(1 2 0)\r\nSet-Cookie: visid_incap_1=x; path=/\r\nSet-Cookie: incap_ses_1_1=y; path=/\r\n\r\n' \
+  '%PDF-1.7\n%\xe2\xe3\xcf\xd3\n1 0 obj\n<< /Type /Catalog >>\nendobj\n%%EOF\n'
+expect_waf imperva-pdf '' '← unfccc.int 的 PDF 實測就是這樣經 Imperva 送來的'
+fx mentions-incapsula 'HTTP/2 200\r\ncontent-type: text/html; charset=utf-8\r\n\r\n' \
+  '<html><body><h1>Why does my scraper see a blank page?</h1><p>The server answers 200 with <code>&lt;script src="/_Incapsula_Resource?SWJIYLWA=abc"&gt;&lt;/script&gt;&lt;body&gt;&lt;/body&gt;</code>, or with an iframe that says Request unsuccessful. Incapsula incident ID: 123-456.</p></body></html>'
+expect_waf mentions-incapsula '' '← 文章提到 Incapsula 不等於驗證頁'
+# 純文字檔（例如 raw.githubusercontent.com 上的說明）逐字貼了驗證頁的 HTML：不是 HTML 回應就不看 body
+fx plain-text-sample 'HTTP/2 200\r\ncontent-type: text/plain; charset=utf-8\r\n\r\n' "$IMPERVA_JS"
+expect_waf plain-text-sample '' '← 只有 text/html 的回應才看 body'
+
+echo '-- detect_challenge：Anubis（預設對驗證頁與拒絕頁都回 200，也沒有專屬 header）'
+# anubis.techaro.lol 實測：真頁面與不存在的路徑都回 200 的驗證頁。結構照抄，值換成假的。
+fx anubis 'HTTP/2 200\r\ncontent-type: text/html; charset=utf-8\r\nset-cookie: techaro.lol-anubis-cookie-verification-1=x; Path=/\r\n\r\n' \
+  '<!doctype html><html lang="en"><head><title>Making sure you&#39;re not a bot!</title><meta name="robots" content="noindex,nofollow"><script id="anubis_version" type="application/json">"v1.28.3"\n</script><script id="anubis_challenge" type="application/json">{"rules":{"algorithm":"metarefresh","difficulty":1}}\n</script></head><body id="top"><main><h1 id="title" class="centered-div">Making sure you&#39;re not a bot!</h1></main></body></html>'
+expect_waf anubis anubis '← anubis.techaro.lol 實測的結構'
+fx mentions-anubis 'HTTP/2 200\r\ncontent-type: text/html; charset=utf-8\r\n\r\n' \
+  '<html><body><p>Anubis pages carry <code>&lt;script id="anubis_challenge" type="application/json"&gt;</code>. This site is protected by Anubis.</p></body></html>'
+expect_waf mentions-anubis '' '← 文章提到 Anubis 不等於驗證頁'
+
+echo '-- detect_challenge：只看最後一個回應（curl -L 會把每一跳的 header 都寫進 -D 檔）'
+fx hop-final-challenge 'HTTP/1.1 301 Moved Permanently\r\nLocation: /eli/reg/2023/956/oj\r\nContent-Type: text/html\r\n\r\nHTTP/1.1 202 Accepted\r\nx-amzn-waf-action: challenge\r\nContent-Type: text/html\r\n\r\n' ''
+expect_waf hop-final-challenge aws-waf
+fx hop-early-header 'HTTP/1.1 302 Found\r\nLocation: /real\r\nx-amzn-waf-action: challenge\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n' \
+  '<html><body><p>Real content.</p></body></html>'
+expect_waf hop-early-header '' '← 前一跳的 header 不算數'
+# 前一跳是 text/html 的轉址頁，最後一跳是純文字：content-type 也只看最後一跳
+fx hop-early-ctype 'HTTP/1.1 301 Moved Permanently\r\nLocation: /raw.txt\r\nContent-Type: text/html\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n' "$IMPERVA_JS"
+expect_waf hop-early-ctype '' '← content-type 也只看最後一跳'
+
+echo '-- detect_challenge：body 只讀前 64 KiB'
+# 驗證頁都很小（實測 212 / 851 / 2038 bytes）；整份 body 可能是好幾 MB 的 PDF。
+pad=$(printf '%65536s' '')
+fx past-cap "$IMPERVA_HDR" "<!--${pad}-->$IMPERVA_JS"
+expect_waf past-cap '' '← 第 64 KiB 之後的內容不讀'
+pad=$(printf '%65000s' '')
+fx within-cap "$IMPERVA_HDR" "<!--${pad}-->$IMPERVA_JS"
+expect_waf within-cap imperva '← 對照組：落在 64 KiB 之內就讀得到'
+
+echo '-- detect_challenge：檔案不在、或在 set -euo pipefail 底下沒命中，都不能出錯'
+# curl 連不上時 -D / -o 的檔案可能根本沒建立
+got=$(detect_challenge "$CH/nope.h" "$CH/nope.b" 2>&1; printf 'rc=%s' "$?")
+if [ "$got" = 'rc=0' ]; then pass=$((pass + 1)); else
+  fail=$((fail + 1)); printf '  ✗ 檔案不存在時應安靜地印空字串並 exit 0，實得 %s\n' "$got"
+fi
+# 呼叫端（workflow）是 set -euo pipefail：沒命中時 grep 回 1，若漏到函式外，整個 step 會當場結束
+got=$(
+  set -euo pipefail
+  v=$(detect_challenge "$CH/plain-202.h" "$CH/plain-202.b")
+  echo "SURVIVED:$v"
+)
+if [ "$got" = 'SURVIVED:' ]; then pass=$((pass + 1)); else
+  fail=$((fail + 1)); printf '  ✗ set -euo pipefail 之下沒命中就讓 shell 中止了（輸出：%s）\n' "$(printf '%q' "$got")"
+fi
+# header 說是 text/html，body 檔卻不存在（-o 的檔案是收到第一筆 body 才建立，收完 header 就斷線時不會有）
+printf '%b' 'HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n' > "$CH/no-body.h"
+got=$(
+  set -euo pipefail
+  v=$(detect_challenge "$CH/no-body.h" "$CH/no-body.b" 2>&1)
+  echo "SURVIVED:$v"
+)
+if [ "$got" = 'SURVIVED:' ]; then pass=$((pass + 1)); else
+  fail=$((fail + 1)); printf '  ✗ body 檔不存在時應安靜地印空字串（輸出：%s）\n' "$(printf '%q' "$got")"
 fi
 
 echo

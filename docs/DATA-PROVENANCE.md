@@ -104,7 +104,7 @@ manifest 不只記「我還原了什麼」，也記「我**沒有**還原什麼�
 | `DEAD` | HTTP **404 / 410** | |
 | `DEAD_DNS` | curl exit 6，**且** 1.1.1.1 與 8.8.8.8 **兩個獨立 resolver 都回 NXDOMAIN** | |
 | `UNREACHABLE_DNS` | curl exit 6，但未經兩個 resolver 確認（可能只是 resolver 抖動） | |
-| `BLOCKED` | 401 / 403 / 405 / 429 / 451（WAF 擋 runner，站台活著） | |
+| `BLOCKED` | 401 / 403 / 405 / 429 / 451（WAF 擋 runner，站台活著）；或 2xx / 3xx 但拿到的是 WAF 驗證頁（內容沒驗到） | |
 | `RETRYABLE` | 408 / 425 / 5xx（伺服器暫時性問題） | |
 | `UNREACHABLE_*` | curl exit ≠ 0（7=connect、28=timeout、35/60=TLS） | |
 | `OTHER` | 其餘 HTTP 碼 —— **明示列出，絕不靜默歸成 DEAD** | |

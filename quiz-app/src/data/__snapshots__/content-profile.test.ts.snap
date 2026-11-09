@@ -167,6 +167,11 @@ exports[`語料輪廓（換題庫時用 -u 重新產生） > 棘輪與反空轉�
     "what": "AI 照抄偵測的全庫測試：題庫與練習池有選項的題目超過 1000 題（反空轉，#148）",
     "where": "utils/generated-question.test.ts",
   },
+  {
+    "semantics": "依語料重設",
+    "what": "改過版的標準（ISO 14068）：相關題目超過 5 題、題目上的改版備註超過 2 則（反空轉）",
+    "where": "data/standard-replacement-watch.test.ts",
+  },
 ]
 `;
 
@@ -202,7 +207,7 @@ exports[`語料輪廓（換題庫時用 -u 重新產生） > 題庫規模與分�
   },
   "品質旗標": {
     "主題庫使用次數": {
-      "time_sensitive": 332,
+      "time_sensitive": 333,
     },
     "練習池使用次數": {
       "low_confidence": 3,
