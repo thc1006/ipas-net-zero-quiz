@@ -1,4 +1,5 @@
-import { test, expect, type Locator, type Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 /**
  * 回報問題（GitHub issue）與討論區（GitHub Discussions）分成兩個入口：頁首、設定頁的「關於」與頁尾各有一組。

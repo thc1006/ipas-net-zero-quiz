@@ -1,4 +1,5 @@
-import { test, expect, type Locator, type Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 /**
  * 小視窗上對話框比視窗高時，上緣與按鈕會跑到畫面外，遮罩又不能捲，只剩按旁邊的遮罩一條路。

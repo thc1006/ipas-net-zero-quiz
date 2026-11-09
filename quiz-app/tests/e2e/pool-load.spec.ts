@@ -1,4 +1,5 @@
-import { test, expect, type Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 /**
  * 練習池是另一個 chunk，部署新版後舊分頁載不到舊檔名，網路斷線時也載不到。

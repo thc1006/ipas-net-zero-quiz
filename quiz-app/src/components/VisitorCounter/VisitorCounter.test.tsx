@@ -3,31 +3,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import { VisitorCounter } from './VisitorCounter';
 
-const ABACUS_URL = /abacus\.jasoncameron\.dev/;
-const COUNTERAPI_URL = /api\.counterapi\.dev/;
-
 function mockFetchAbacusOk(value = 42) {
   return vi.fn().mockResolvedValue({
     ok: true,
     status: 200,
     json: async () => ({ value }),
   });
-}
-
-function mockFetchAbacusFailThenCounterapiOk(count = 99) {
-  return vi.fn().mockImplementation((url: string) => {
-    if (ABACUS_URL.test(url)) {
-      return Promise.resolve({ ok: false, status: 500 });
-    }
-    if (COUNTERAPI_URL.test(url)) {
-      return Promise.resolve({ ok: true, status: 200, json: async () => ({ count }) });
-    }
-    return Promise.reject(new Error('unexpected url'));
-  });
-}
-
-function mockFetchAllFail() {
-  return vi.fn().mockResolvedValue({ ok: false, status: 503 });
 }
 
 describe('VisitorCounter', () => {
@@ -49,16 +30,10 @@ describe('VisitorCounter', () => {
     });
   });
 
-  it('falls back to counterapi.dev when Abacus 5xx', async () => {
-    vi.stubGlobal('fetch', mockFetchAbacusFailThenCounterapiOk(99));
-    render(<VisitorCounter namespace="test-ns2" counterKey="visits" />);
-    await waitFor(() => {
-      expect(screen.getByLabelText(/訪客人次：99/)).toBeInTheDocument();
-    });
-  });
-
-  it('renders nothing when both providers fail', async () => {
-    vi.stubGlobal('fetch', mockFetchAllFail());
+  // 原本的備援 counterapi.dev 的 v1 已停用（回 410），v2 要帶 API key，靜態網站放不了
+  it('Abacus 失敗時不顯示，也不改連其他計數服務', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: false, status: 503 });
+    vi.stubGlobal('fetch', fetchMock);
     const { container } = render(
       <VisitorCounter namespace="test-ns3" counterKey="visits" />
     );
@@ -66,6 +41,9 @@ describe('VisitorCounter', () => {
       // After loading completes, container should be empty (returns null)
       expect(container.querySelector('.visitor-counter')).toBeNull();
     });
+    expect(fetchMock.mock.calls.map(([url]) => url)).toEqual([
+      'https://abacus.jasoncameron.dev/hit/test-ns3/visits',
+    ]);
   });
 
   it('sessionStorage 讀不到（封鎖網站資料）時照常顯示', async () => {

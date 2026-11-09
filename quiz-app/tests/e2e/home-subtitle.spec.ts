@@ -1,4 +1,5 @@
-import { test, expect, devices, type Page, type Locator } from '@playwright/test';
+import { devices, type Page, type Locator } from '@playwright/test';
+import { test, expect, stubVisitorCounter } from './fixtures';
 
 /**
  * 首頁副標「iPAS 淨零碳規劃管理師（初級）考古題線上測驗」在窄螢幕、大字級與文字縮放下的排版。
@@ -626,6 +627,8 @@ test.describe('首頁副標', () => {
     test.setTimeout(180_000);
     const device = browserName === 'webkit' ? devices['iPhone 14'] : devices['Pixel 7'];
     const context = await browser.newContext({ ...device, baseURL: testInfo.project.use.baseURL });
+    // 自己開的 context 沒有經過 fixtures.ts 的 test，計數器要自己擋
+    await stubVisitorCounter(context);
     try {
       const page = await context.newPage();
       await gotoHome(page);

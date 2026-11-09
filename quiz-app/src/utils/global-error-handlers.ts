@@ -1,7 +1,7 @@
 // 全域 error handlers — 補捕 React ErrorBoundary 抓不到的錯誤類型：
 // - 非同步 setState / event handler 內 throw
 // - Promise rejection 沒被 .catch
-// - 第三方 script (puter.js / abacus / counterapi) 拋的 error
+// - 第三方 script (puter.js / abacus) 拋的 error
 //
 // 接到後一律 logger.error 上報，落入 ring buffer + console.error（DEV 直接顯示）。
 //

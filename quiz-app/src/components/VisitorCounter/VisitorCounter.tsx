@@ -1,5 +1,7 @@
 // 訪客計數器元件
-// 以 Abacus (jasoncameron.dev) 為主，counterapi.dev 為備援；皆失敗時不顯示。
+// 以 Abacus (jasoncameron.dev) 計數；失敗時不顯示。
+// 原本的備援 counterapi.dev 已拿掉：v1 停用（回 410），v2 每個請求都要帶 API key，靜態網站放不了；
+// 而且它是另一個計數器，數字本來就和 Abacus 不同。
 import { useEffect, useRef, useState } from 'react';
 import { readSessionFlag, writeSessionFlag } from '../../utils/local-storage';
 import './VisitorCounter.css';
@@ -9,13 +11,6 @@ interface VisitorCounterProps {
   namespace?: string;
   /** 計數器 key */
   counterKey?: string;
-}
-
-type Provider = 'abacus' | 'counterapi';
-
-interface ProviderResult {
-  count: number;
-  provider: Provider;
 }
 
 /**
@@ -34,7 +29,7 @@ async function fromAbacus(
   key: string,
   bump: boolean,
   signal: AbortSignal
-): Promise<ProviderResult> {
+): Promise<number> {
   const endpoint = bump ? 'hit' : 'get';
   const url = `https://abacus.jasoncameron.dev/${endpoint}/${encodeURIComponent(ns)}/${encodeURIComponent(key)}`;
   const res = await fetch(url, { signal });
@@ -47,22 +42,7 @@ async function fromAbacus(
   }
   const data = (await res.json()) as { value?: number };
   if (typeof data.value !== 'number') throw new Error('abacus malformed');
-  return { count: data.value, provider: 'abacus' };
-}
-
-async function fromCounterApi(
-  ns: string,
-  key: string,
-  bump: boolean,
-  signal: AbortSignal
-): Promise<ProviderResult> {
-  const endpoint = bump ? 'up' : 'get';
-  const url = `https://api.counterapi.dev/v1/${encodeURIComponent(ns)}/${encodeURIComponent(key)}/${endpoint}`;
-  const res = await fetch(url, { signal });
-  if (!res.ok) throw new Error(`counterapi ${res.status}`);
-  const data = (await res.json()) as { count?: number };
-  if (typeof data.count !== 'number') throw new Error('counterapi malformed');
-  return { count: data.count, provider: 'counterapi' };
+  return data.value;
 }
 
 export function VisitorCounter({
@@ -91,14 +71,9 @@ export function VisitorCounter({
 
     const run = async () => {
       try {
-        const result = await fromAbacus(namespace, counterKey, shouldBump, ac.signal).catch(
-          (err) => {
-            if (isAbortError(err)) throw err;
-            return fromCounterApi(namespace, counterKey, shouldBump, ac.signal);
-          }
-        );
+        const value = await fromAbacus(namespace, counterKey, shouldBump, ac.signal);
         if (!isMountedRef.current) return;
-        setCount(result.count);
+        setCount(value);
         if (shouldBump) writeSessionFlag(sessionKey);
       } catch (err: unknown) {
         if (isAbortError(err)) return;

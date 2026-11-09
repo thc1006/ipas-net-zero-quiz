@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 /**
  * Settings 頁的跨瀏覽器 smoke（chromium + firefox + webkit）。
