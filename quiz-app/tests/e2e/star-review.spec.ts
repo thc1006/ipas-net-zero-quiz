@@ -1848,7 +1848,7 @@ test.describe('移出待複習那一列：別的分頁改了名單，下面的�
     ['按鈕只有 6px 露在視窗底邊上面', 'bottom'],
     ['按鈕一半在頁首底下', 'header'],
   ] as const) {
-    test(`結果頁：用 Tab 走到第二張卡的移出待複習，用滾輪捲到${where}，別的分頁清掉名單：頁面不捲`, async ({ page, context }) => {
+    test(`結果頁：用 Tab 走到第二張卡的移出待複習，捲到${where}，別的分頁清掉名單：頁面不捲`, async ({ page, context }) => {
       await page.setViewportSize({ width: 1280, height: 720 });
       await toResultWithWrongCards(page, 'normal');
       const remove = page.locator('.wrong-item').nth(1).getByRole('button', { name: /移出待複習/ });
@@ -1857,15 +1857,14 @@ test.describe('移出待複習那一列：別的分頁改了名單，下面的�
       }
       await expect(remove).toBeFocused();
       await nextFrames(page);
-      const dy = await remove.evaluate((el, edge) => {
+      // 使用者自己捲（焦點不動）。用 scrollBy 不用滾輪：WebKit 忙的時候滾輪晚到，量 before 之後才捲
+      await remove.evaluate((el, edge) => {
         const r = el.getBoundingClientRect();
         const header = document.querySelector('header')!.getBoundingClientRect().bottom;
-        return Math.round(edge === 'bottom' ? r.top - (document.documentElement.clientHeight - 6) : r.top - (header - r.height / 2));
+        window.scrollBy(0, Math.round(edge === 'bottom' ? r.top - (document.documentElement.clientHeight - 6) : r.top - (header - r.height / 2)));
       }, edge);
-      await page.mouse.move(640, 360);
-      await page.mouse.wheel(0, dy);
-      await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
-      await page.waitForTimeout(300);
+      await nextFrames(page);
+      await expect(remove, '前提：焦點還在移出待複習上').toBeFocused();
       const before = await page.evaluate(() => window.scrollY);
       await writeWrong({ context }, []);
       const row = page.locator('.wrong-item').nth(1).locator('.review-remove');
