@@ -1916,3 +1916,38 @@ test('結果頁 375px：別的分頁清掉待複習錯題，錯題區的說明�
   expect(await textHeight(), '前提：換的那一句比較矮').toBeLessThan(tall - 10);
   expect(await spot(), '第一張卡的星號移動了').toEqual(before);
 });
+
+test('視窗轉成橫向：最後面那一段留著的高度照新的寬度重新量，不留直向時的空白', async ({ page, context }) => {
+  // 這個寬度新版資料的說明折成兩行，恢復的那一句一行
+  await page.setViewportSize({ width: 600, height: 900 });
+  await gotoHome(page);
+  await page.getByLabel('隨機出題順序').uncheck();
+  await startButton(page).click();
+  await expect(page.locator('.question-card')).toBeVisible();
+  const other = await context.newPage();
+  await other.goto('/');
+  const write = (v: number) =>
+    other.evaluate(({ key, raw }) => window.localStorage.setItem(key, raw), { key: KEY, raw: JSON.stringify({ v, seeded: true, stars: {}, wrong: {} }) });
+  const end = page.locator('.review-notice--end');
+  // content：拿掉 min-height 量一次（量完放回去）
+  const measure = () =>
+    end.evaluate((el: HTMLElement) => {
+      const box = el.getBoundingClientRect().height;
+      const kept = el.style.minHeight;
+      el.style.minHeight = '';
+      const content = el.getBoundingClientRect().height;
+      el.style.minHeight = kept;
+      return { box, content };
+    });
+  await write(2);
+  await expect(end).toHaveText(/新版網站寫入的/);
+  await write(1);
+  await expect(end).toHaveText(END_RESOLVED);
+  await nextFrames(page);
+  const portrait = await measure();
+  expect(portrait.box, `前提：直向時留著新版資料那一句的高度 ${JSON.stringify(portrait)}`).toBeGreaterThan(portrait.content + 10);
+  await page.setViewportSize({ width: 900, height: 600 });
+  await nextFrames(page);
+  const landscape = await measure();
+  expect(landscape.box, `橫向還留著直向的高度 ${JSON.stringify({ portrait, landscape })}`).toBeLessThan(landscape.content + 1);
+});
