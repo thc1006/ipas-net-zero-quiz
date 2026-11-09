@@ -40,11 +40,20 @@ const optionText = (value: string) =>
   within(source()).getAllByRole('option').find((o) => (o as HTMLOptionElement).value === value)?.textContent;
 
 /** 選一個來源開始，等題卡出現 */
+/**
+ * 等題卡出現，再讓它的 effect 跑完：useSyncExternalStore 在 effect 裡才訂閱，
+ * 訂閱前按星號，寫入通知不到它，畫面要等訂閱時比對快照才跟上（機器忙的時候這條測試偶爾紅）
+ */
+async function quizShown() {
+  await waitFor(() => expect(document.querySelector('.question-card')).not.toBeNull());
+  await act(async () => {});
+}
+
 async function startDrill(value: string) {
   fireEvent.change(source(), { target: { value } });
   fireEvent.click(screen.getByRole('checkbox', { name: /隨機出題順序/ }));
   fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
-  await waitFor(() => expect(document.querySelector('.question-card')).not.toBeNull());
+  await quizShown();
 }
 
 function answer(q: QuizQuestion, right: boolean) {
@@ -134,7 +143,7 @@ describe('測驗', () => {
     answer(q, true);
     finish();
     fireEvent.click(await retry());
-    await waitFor(() => expect(document.querySelector('.question-card')).not.toBeNull());
+    await quizShown();
     // 第一場答對過：這一場作答之前不顯示，答完才依這次的結果說
     expect(screen.queryByText('這場結束會移出')).toBeNull();
     answer(q, true);
@@ -213,7 +222,7 @@ describe('測驗', () => {
       setStar(b.id, true);
     });
     fireEvent.click(await retry());
-    await waitFor(() => expect(document.querySelector('.question-card')).not.toBeNull());
+    await quizShown();
     finish();
     await retry();
     expect(document.querySelector('.action-notice')).toBeNull();
@@ -256,7 +265,7 @@ describe('測驗', () => {
     fireEvent.click(screen.getByRole('checkbox', { name: /隨機出題順序/ }));
     fireEvent.change(source(), { target: { value: 'all' } });
     fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
-    await waitFor(() => expect(document.querySelector('.question-card')).not.toBeNull());
+    await quizShown();
     expect(notices()).toHaveTextContent('');
   });
 
@@ -308,7 +317,7 @@ describe('測驗', () => {
     await waitFor(() => expect(loadPracticePool).toHaveBeenCalledTimes(1));
     fireEvent.change(source(), { target: { value: 'official' } });
     fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
-    await waitFor(() => expect(document.querySelector('.question-card')).not.toBeNull());
+    await quizShown();
     expect(loadPracticePool).toHaveBeenCalledTimes(1);
   });
 });
@@ -548,7 +557,7 @@ describe('結束測驗時存不進去的提示', () => {
   it('再測一次，新的一場就收掉', async () => {
     await finishUnsaved();
     fireEvent.click(await retry());
-    await waitFor(() => expect(document.querySelector('.question-card')).not.toBeNull());
+    await quizShown();
     expect(notices()).toHaveTextContent('');
   });
 });
@@ -561,7 +570,7 @@ describe('第一次加星號的提示不跟到結果頁', () => {
     fireEvent.click(screen.getByRole('checkbox', { name: /隨機出題順序/ }));
     fireEvent.change(screen.getByLabelText('題數'), { target: { value: '1' } });
     fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
-    await waitFor(() => expect(document.querySelector('.question-card')).not.toBeNull());
+    await quizShown();
     fireEvent.click(screen.getByRole('button', { name: '加星號' }));
     expect(notices()).toHaveTextContent(/已加星號/);
     answer(q, true);
@@ -578,7 +587,7 @@ describe('找得到練習入口', () => {
     render(<App />);
     fireEvent.click(screen.getByRole('checkbox', { name: /隨機出題順序/ }));
     fireEvent.click(screen.getByRole('button', { name: /開始測驗/ }));
-    await waitFor(() => expect(document.querySelector('.question-card')).not.toBeNull());
+    await quizShown();
     expect(a.id).not.toBe(b.id);
     const star = screen.getByRole('button', { name: '加星號' });
     fireEvent.click(star);
