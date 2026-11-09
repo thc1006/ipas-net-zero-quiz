@@ -12,6 +12,9 @@ interface Kept {
 const kept = new Set<Kept>();
 let width = 0;
 let landscape = false;
+// 使用者在設定頁換了字級（useAccessibility 寫在 html 的 data-font-size）：折行與行高都換了，跟換視窗寬度一樣從頭量。
+// 其他設定（深色、高對比、色覺模式）只換顏色，不影響高度
+let fontSize: MutationObserver | null = null;
 
 /**
  * 從現在的內容重新量每一段。先全部清掉、再全部量、最後全部寫回：
@@ -41,18 +44,24 @@ function track(k: Kept): () => void {
     width = window.innerWidth;
     landscape = window.innerWidth > window.innerHeight;
     window.addEventListener('resize', onResize);
+    fontSize = new MutationObserver(remeasure);
+    fontSize.observe(document.documentElement, { attributes: true, attributeFilter: ['data-font-size'] });
   }
   kept.add(k);
   return () => {
     kept.delete(k);
-    if (kept.size === 0) window.removeEventListener('resize', onResize);
+    if (kept.size > 0) return;
+    window.removeEventListener('resize', onResize);
+    fontSize?.disconnect();
+    fontSize = null;
   };
 }
 
 /**
  * 每次畫完量一次，記下最高的設成 min-height：之後換成比較短的內容時 min-height 已經在了，中間不會先變矮一次。
  * 元素不在了、scope 換了（換了一件事要說、使用者換了選項）就從頭量。
- * 視窗寬度換了、橫向直向互換時也從現在的內容重新量：折行不同，留著的是另一個寬度的高度，空白可能有好幾行。
+ * 視窗寬度換了、橫向直向互換、使用者換了字級時也從現在的內容重新量：折行不同，留著的是另一個寬度、另一個字級的高度，
+ * 空白可能有好幾行。
  */
 export function useKeepHeight(ref: RefObject<HTMLElement | null>, scope: unknown = null): void {
   const self = useRef<Kept>({ el: null, tallest: 0 });

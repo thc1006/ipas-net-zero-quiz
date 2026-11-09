@@ -78,6 +78,50 @@ describe('useKeepHeight', () => {
     expect(line().style.minHeight).toBe('20px');
   });
 
+  describe('使用者換了字級（設定頁，html 的 data-font-size）', () => {
+    const root = document.documentElement;
+    afterEach(() => {
+      root.removeAttribute('data-font-size');
+      root.removeAttribute('data-theme');
+    });
+    const setAttr = (name: string, value: string) =>
+      act(async () => {
+        root.setAttribute(name, value);
+      });
+
+    it('從現在的內容重新量：字級變小時不留著大字級的高度', async () => {
+      root.setAttribute('data-font-size', 'xlarge');
+      natural = 60;
+      const { rerender } = render(<Line text="長" />);
+      natural = 20;
+      rerender(<Line text="短" />);
+      expect(line().style.minHeight).toBe('60px');
+      await setAttr('data-font-size', 'normal');
+      expect(line().style.minHeight).toBe('20px');
+    });
+
+    it('只換顏色（深色、高對比、色覺模式）：不重新量', async () => {
+      natural = 60;
+      const { rerender } = render(<Line text="長" />);
+      natural = 20;
+      rerender(<Line text="短" />);
+      await setAttr('data-theme', 'dark');
+      await setAttr('data-high-contrast', 'true');
+      await setAttr('data-cvd-mode', 'protanopia');
+      expect(line().style.minHeight).toBe('60px');
+      root.removeAttribute('data-high-contrast');
+      root.removeAttribute('data-cvd-mode');
+    });
+
+    it('最後一段拿掉之後不再看字級', async () => {
+      const disconnect = vi.spyOn(MutationObserver.prototype, 'disconnect');
+      natural = 60;
+      const { unmount } = render(<Line text="長" />);
+      unmount();
+      expect(disconnect).toHaveBeenCalledTimes(1);
+    });
+  });
+
   it('拿掉之後不再聽 resize', () => {
     const remove = vi.spyOn(window, 'removeEventListener');
     natural = 60;

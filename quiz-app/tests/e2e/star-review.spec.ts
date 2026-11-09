@@ -1951,3 +1951,31 @@ test('視窗轉成橫向：最後面那一段留著的高度照新的寬度重�
   const landscape = await measure();
   expect(landscape.box, `橫向還留著直向的高度 ${JSON.stringify({ portrait, landscape })}`).toBeLessThan(landscape.content + 1);
 });
+
+test('設定頁把字級從特大換回標準：留著的高度照新的字級重新量，不留特大時的空白', async ({ page, context }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await gotoHome(page, undefined, 'xlarge');
+  await page.getByRole('button', { name: '開啟設定' }).click();
+  const other = await context.newPage();
+  await other.goto('/');
+  await other.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 2, seeded: true, stars: {}, wrong: {} })), KEY);
+  await other.close();
+  const end = page.locator('.review-notice--end');
+  await expect(end).toHaveText(/新版網站寫入的/);
+  await nextFrames(page);
+  const measure = () =>
+    end.evaluate((el: HTMLElement) => {
+      const box = el.getBoundingClientRect().height;
+      const kept = el.style.minHeight;
+      el.style.minHeight = '';
+      const content = el.getBoundingClientRect().height;
+      el.style.minHeight = kept;
+      return { box, content };
+    });
+  const xlarge = await measure();
+  await page.locator('select').filter({ hasText: '特大' }).selectOption('normal');
+  await nextFrames(page);
+  const normal = await measure();
+  expect(normal.content, `前提：標準字級比較矮 ${JSON.stringify({ xlarge, normal })}`).toBeLessThan(xlarge.content - 10);
+  expect(normal.box, `還留著特大時的高度 ${JSON.stringify({ xlarge, normal })}`).toBeLessThan(normal.content + 1);
+});
