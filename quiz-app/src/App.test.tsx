@@ -228,6 +228,24 @@ describe('App', () => {
       expect(screen.queryByRole('alert')).not.toBeInTheDocument();
     });
 
+    it('關閉之後焦點回到按下開始的按鈕，不掉回 body；中間按過再試一次也一樣', async () => {
+      poolBroken.value = true;
+      render(<App />);
+      const start = screen.getByRole('button', { name: /開始/ });
+      start.focus();
+      fireEvent.click(start);
+      const retry = within(await screen.findByRole('alert')).getByRole('button', { name: '再試一次' });
+      await waitFor(() => expect(retry).toHaveFocus());
+      // 再試一次也失敗：訊息換一個新的，焦點在新的再試一次上
+      fireEvent.click(retry);
+      await waitFor(() =>
+        expect(within(screen.getByRole('alert')).getByRole('button', { name: '再試一次' })).toHaveFocus()
+      );
+      fireEvent.click(within(screen.getByRole('alert')).getByRole('button', { name: '關閉' }));
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /開始/ })).toHaveFocus();
+    });
+
     it('換頁時訊息收起，回來也不再出現', async () => {
       poolBroken.value = true;
       render(<App />);

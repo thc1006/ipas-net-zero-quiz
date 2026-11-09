@@ -31,6 +31,8 @@ function App() {
   const [lastResult, setLastResult] = useState<QuizResult | null>(null);
   const [startFailed, setStartFailed] = useState(false);
   const startFailedRef = useRef<HTMLDivElement>(null);
+  // 按下開始的那個元素（首頁的開始測驗、結果頁的再測一次）：按關閉時焦點回到這裡，不掉回 body
+  const startOpener = useRef<HTMLElement | null>(null);
   const lastStartConfig = useRef<QuizConfig | null>(null);
 
   const quiz = useQuiz();
@@ -103,6 +105,9 @@ function App() {
   const startOrFail = useCallback(
     async (config: QuizConfig): Promise<'started' | 'empty' | 'pool-unavailable' | 'failed'> => {
       lastStartConfig.current = config;
+      // 訊息裡的再試一次不算：它跟著訊息一起拿掉
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && !startFailedRef.current?.contains(active)) startOpener.current = active;
       setStartFailed(false);
       try {
         const started = await launchQuiz(config);
@@ -226,7 +231,13 @@ function App() {
             <button className="btn btn-secondary" onClick={() => window.location.reload()}>
               重新載入
             </button>
-            <button className="btn btn-secondary" onClick={() => setStartFailed(false)}>
+            <button
+              className="btn btn-secondary"
+              onClick={() => {
+                setStartFailed(false);
+                if (startOpener.current?.isConnected) startOpener.current.focus();
+              }}
+            >
               關閉
             </button>
           </div>
