@@ -31,6 +31,7 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
 
   // html 的 scroll-padding-top 讓 Tab、Shift+Tab 捲到的地方停在頁首下面（App.css）。Firefox 只在焦點不完全在視窗裡時才捲，
   // 判斷時不扣 scroll-padding：一半在頁首底下的控制項不會捲出來。用鍵盤移動焦點時補捲一次。
+  // 視窗底邊也一樣：Firefox 與 WebKit 往下 Tab 時，一部分在視窗下面的控制項有時不捲（main 上就有，差 2 到 36px）
   // 對話框不管：它們蓋在頁首上面、自己捲動（多半是 role="dialog" 的 div，不是 <dialog>），scroll-padding-top 跟它們無關
   // 補捲排在下一個 frame。下一個按鍵或按下指標之前還沒跑到的就不跑：那時候頁面可能已經被別的東西捲過，
   // 例如按星號存不進去時捲出來的說明（ReviewNotice.tsx）。沒有新的畫面要畫時 WebKit 會把 frame 延後，
@@ -47,7 +48,9 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
         // 藏起來的 radio、checkbox 沒有大小，看得到的是外面的 label
         const shown = target.getBoundingClientRect().height > 0 ? target : (target.closest('label') ?? target);
         const limit = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
-        if (shown.getBoundingClientRect().top < limit - 1) shown.scrollIntoView({ block: 'nearest' });
+        const box = shown.getBoundingClientRect();
+        const below = box.bottom > document.documentElement.clientHeight + 1;
+        if (box.top < limit - 1 || below) shown.scrollIntoView({ block: 'nearest' });
       });
     };
     const cancel = () => cancelAnimationFrame(frame);

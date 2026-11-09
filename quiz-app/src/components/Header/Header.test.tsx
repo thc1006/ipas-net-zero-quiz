@@ -130,8 +130,10 @@ describe('鍵盤移動焦點之後的補捲', () => {
         return selector === ':focus-visible' ? visible : matches.call(this, selector);
       });
       vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(
-        () => ({ top, height: 40 }) as DOMRect
+        () => ({ top, bottom: top + 40, height: 40 }) as DOMRect
       );
+      // jsdom 沒有排版：視窗高 600
+      vi.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(600);
       vi.mocked(Element.prototype.scrollIntoView).mockClear();
       render(<Page />);
     }
@@ -143,6 +145,22 @@ describe('鍵盤移動焦點之後的補捲', () => {
       expect(Element.prototype.scrollIntoView).toHaveBeenCalledTimes(1);
       expect(vi.mocked(Element.prototype.scrollIntoView).mock.instances[0]).toBe(button());
       expect(Element.prototype.scrollIntoView).toHaveBeenCalledWith({ block: 'nearest' });
+    });
+
+    it('焦點一部分在視窗底邊下面（Firefox、WebKit 往下 Tab 時只捲到一部分露出來）：捲到剛好露出來', () => {
+      setup();
+      top = 575;
+      focusAndRun();
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalledTimes(1);
+      expect(vi.mocked(Element.prototype.scrollIntoView).mock.instances[0]).toBe(button());
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalledWith({ block: 'nearest' });
+    });
+
+    it('下緣差不到 1px（位置有小數）：不捲', () => {
+      setup();
+      top = 560.5;
+      focusAndRun();
+      expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
     });
 
     it('同一個 frame 裡焦點走了又回來：只補捲一次（新的排進來時取消舊的）', () => {
