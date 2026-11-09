@@ -80,4 +80,19 @@ describe('題卡', () => {
     renderCard(true);
     expect(screen.queryByRole('button', { name: '移出待複習' })).toBeNull();
   });
+
+  // 有沒有那一列在那一題畫出來時就定了：上一題、下一題在兩道答過的題目之間換時，照新的那一題重新定
+  it('答過的兩題之間換題：那一列照新的那一題的名單畫，不沿用上一題的', () => {
+    inWrong(0);
+    const q2: QuizQuestion = { ...question, id: 'q2', stem: '另一題' };
+    const card = (q: QuizQuestion) => (
+      <QuestionCard question={q} questionNumber={1} selectedAnswer="B" showAnswer onSelectAnswer={() => {}} />
+    );
+    const { rerender, container } = render(card(question));
+    expect(screen.getByRole('button', { name: '移出待複習' })).toBeInTheDocument();
+    rerender(card(q2));
+    expect(container.querySelector('.review-remove')).toBeNull();
+    rerender(card(question));
+    expect(screen.getByRole('button', { name: '移出待複習' })).toBeInTheDocument();
+  });
 });

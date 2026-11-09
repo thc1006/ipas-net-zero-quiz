@@ -443,7 +443,7 @@ export function ResultPage({ result, onGoHome, onRetry, retryNotice = null }: Re
                       </span>
                     </div>
 
-                    <RemoveFromReview questionId={qid} label={`第 ${index + 1} 題移出待複習`} keepRow />
+                    <RemoveFromReview questionId={qid} label={`第 ${index + 1} 題移出待複習`} />
 
                     {question.explanation && (
                       <section className="wrong-explanation" aria-label="題庫解析">

@@ -1799,3 +1799,93 @@ test.describe('換畫面時從最上面開始：別的分頁的說明排到最�
     await context.close();
   });
 });
+
+// 移出待複習那一列：有沒有這一列在畫出來時就定了，之後名單變了只在同一個元素裡換字，高度留在最高的時候，
+// 焦點留在那一列（Discussion #1）
+test.describe('移出待複習那一列：別的分頁改了名單，下面的東西不動，焦點不掉回 body', () => {
+  const writeWrong = async ({ context }: { context: BrowserContext }, ids: string[]) => {
+    const other = await context.newPage();
+    await other.goto('/');
+    const raw = JSON.stringify({ v: 1, seeded: true, stars: {}, wrong: Object.fromEntries(ids.map((id) => [id, { streak: 0, last: 2 }])) });
+    await other.evaluate(({ key, raw }) => window.localStorage.setItem(key, raw), { key: KEY, raw });
+    await other.close();
+  };
+  const spot = (target: Locator) =>
+    target.evaluate((el) => ({ top: el.getBoundingClientRect().top, scrollY: window.scrollY }));
+  const active = (page: Page) =>
+    page.evaluate(() => {
+      const el = document.activeElement!;
+      return `${el.tagName}${el.closest('.review-remove') ? ' in row' : ''}:${(el.textContent ?? '').trim()}`;
+    });
+
+  test('結果頁：用鍵盤移出第一題，別的分頁加回來又移出：第二張卡不動，焦點跟著那一列換上來的按鈕與字', async ({ page, context }) => {
+    await toResultWithWrongCards(page, 'normal');
+    const first = page.locator('.wrong-item').first();
+    const remove = first.getByRole('button', { name: /移出待複習/ });
+    await remove.focus();
+    await page.keyboard.press('Enter');
+    await expect(first.getByText('已移出待複習')).toBeFocused();
+    // 第一張卡的那一列在視窗上半，第二張卡在它下面
+    await first.getByText('已移出待複習').evaluate((el) => window.scrollBy(0, el.getBoundingClientRect().top - 200));
+    await nextFrames(page);
+    const second = page.locator('.wrong-item').nth(1);
+    const before = await spot(second);
+    await writeWrong({ context }, [q1, q2, q3].map(idOf));
+    await expect(remove).toHaveCount(1);
+    await nextFrames(page);
+    expect(await spot(second), '加回來之後第二張卡移動了').toEqual(before);
+    expect(await active(page), '加回來之後焦點不在那一列的按鈕上').toBe('BUTTON in row:移出待複習');
+    await writeWrong({ context }, [q2, q3].map(idOf));
+    await expect(remove).toHaveCount(0);
+    await nextFrames(page);
+    expect(await spot(second), '又移出之後第二張卡移動了').toEqual(before);
+    expect(await active(page), '又移出之後焦點不在那一列').toBe('P in row:已移出待複習');
+  });
+
+  test('題目頁練習模式：答完之後別的分頁把這一題移出又加回來：那一列留著換字，下一題不動', async ({ page, context }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await gotoHome(page, { wrong: Object.fromEntries([q1, q2, q3].map((q) => [idOf(q), { streak: 0, last: 1 }])) });
+    await startDrill(page, 'review:wrong');
+    const text = await stem(page).textContent();
+    const current = [q1, q2, q3].find((x) => x.stem === text)!;
+    await answer(page, current, false);
+    const row = page.locator('.question-card .review-remove');
+    await expect(row.getByRole('button', { name: '移出待複習' })).toBeVisible();
+    const next = page.getByRole('button', { name: /下一題/ });
+    await row.evaluate((el) => window.scrollBy(0, el.getBoundingClientRect().top - 150));
+    await settleAnimations(page);
+    const before = await spot(next);
+    await writeWrong({ context }, [q1, q2, q3].filter((x) => x !== current).map(idOf));
+    await expect(row).toHaveText('已不在待複習清單上');
+    await nextFrames(page);
+    expect(await spot(next), '移出之後下一題移動了').toEqual(before);
+    await writeWrong({ context }, [q1, q2, q3].map(idOf));
+    await expect(row.getByRole('button', { name: '移出待複習' })).toBeVisible();
+    await nextFrames(page);
+    expect(await spot(next), '加回來之後下一題移動了').toEqual(before);
+  });
+
+  test('題目頁練習模式：答完的題目不在名單上，別的分頁把它加進來：這一題不加一列，下一題不動；換題之後照名單畫', async ({ page, context }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await gotoHome(page);
+    await page.getByLabel('隨機出題順序').uncheck();
+    await startButton(page).click();
+    await expect(page.locator('.question-card')).toBeVisible();
+    const text = await stem(page).textContent();
+    const current = bank.find((x) => x.stem === text)!;
+    await answer(page, current, false);
+    const next = page.getByRole('button', { name: /下一題/ });
+    await page.locator('.question-options').evaluate((el) => window.scrollBy(0, el.getBoundingClientRect().bottom - 200));
+    await settleAnimations(page);
+    const before = await spot(next);
+    await writeWrong({ context }, [idOf(current)]);
+    await expect.poll(async () => (await stored(page)).wrong[idOf(current)]).toBeTruthy();
+    await nextFrames(page);
+    await expect(page.locator('.question-card .review-remove')).toHaveCount(0);
+    expect(await spot(next), '下一題移動了').toEqual(before);
+    // 下一題、上一題回來：重新畫，這時在名單上
+    await next.click();
+    await page.getByRole('button', { name: /上一題/ }).click();
+    await expect(page.locator('.question-card .review-remove').getByRole('button', { name: '移出待複習' })).toBeVisible();
+  });
+});

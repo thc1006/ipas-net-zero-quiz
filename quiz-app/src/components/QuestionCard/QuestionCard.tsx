@@ -302,9 +302,10 @@ export function QuestionCard({
         ))}
       </div>
 
-      {/* 待複習的狀態也是答案揭曉後才顯示：考試模式整場都看不到 */}
+      {/* 待複習的狀態也是答案揭曉後才顯示：考試模式整場都看不到。有沒有這一列在這一題畫出來時就定了，換題時重新畫 */}
       {showAnswer && (
         <RemoveFromReview
+          key={question.id}
           questionId={question.id}
           answeredCorrectly={selectedAnswer === question.answer}
         />

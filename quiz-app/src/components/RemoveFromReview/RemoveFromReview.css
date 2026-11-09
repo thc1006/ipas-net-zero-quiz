@@ -13,7 +13,7 @@
   color: var(--color-text-secondary);
 }
 
+/* 排在那一列裡（與按鈕同一個位置） */
 .review-remove__done {
-  margin: var(--spacing-sm) 0;
-  text-align: right;
+  margin: 0;
 }

@@ -1,5 +1,5 @@
 // 手動移出待複習；題卡（答案揭曉後）與結果頁錯題卡共用，順便說還差幾次移出。
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useReview } from '../../hooks/useReview';
 import { useKeepHeight } from '../../hooks/useKeepHeight';
 import { ButtonNotice } from '../ReviewNotice/ReviewNotice';
@@ -28,61 +28,79 @@ interface RemoveFromReviewProps {
   answeredCorrectly?: boolean;
   /** 同一頁有好幾顆時要分得出題目（結果頁的錯題卡）；要包含看得到的「移出待複習」 */
   label?: string;
-  /**
-   * 結果頁的錯題卡：有沒有這一列在畫出來時就定了。別的分頁把題目移出時不消失、不變矮，改說已經不在清單上：
-   * 消失的話它下面的錯題卡全部往上移
-   */
-  keepRow?: boolean;
 }
 
-export function RemoveFromReview({ questionId, answeredCorrectly, label, keepRow = false }: RemoveFromReviewProps) {
+/**
+ * 有沒有這一列在畫出來時就定了（結果頁的錯題卡、題卡上答案揭曉的那一題；題卡換題時重新畫）。之後名單變了
+ * （按下去移出、別的分頁移出或加回來）都在同一個元素裡換字，高度留在它最高的時候：一列冒出來、消失或變矮，
+ * 它下面的東西全部移動，使用者正要按的按鈕從指標底下移走。畫出來時不在清單上的，之後被加進來也不加一列。
+ */
+export function RemoveFromReview({ questionId, answeredCorrectly, label }: RemoveFromReviewProps) {
   const entry = wrongEntry(useReview(), questionId);
   const [removed, setRemoved] = useState(false);
   const [listed] = useState(() => entry !== undefined);
-  const doneRef = useRef<HTMLParagraphElement>(null);
   const rowRef = useRef<HTMLDivElement>(null);
-  useKeepHeight(rowRef, questionId, keepRow);
+  // 這一列裡最後拿到焦點的元素；焦點離開這一列就清掉
+  const focused = useRef<HTMLElement | null>(null);
+  // 按下去移出了：焦點跟到已移出那一行（滑鼠點的、按鈕沒有拿到焦點的瀏覽器也一樣）
+  const removing = useRef(false);
+  useKeepHeight(rowRef, questionId);
 
-  // 按鈕消失時焦點會掉回 body，鍵盤使用者要從頁首重新走一次
-  useEffect(() => {
-    if (removed) doneRef.current?.focus();
-  }, [removed]);
+  // 有焦點的元素換掉了（按鈕換成字、字換成按鈕）：焦點掉回 body，鍵盤使用者要從頁首重新走一次。
+  // 移到這一列換上來的那一個；在畫出來之前移，同一個位置
+  useLayoutEffect(() => {
+    const row = rowRef.current;
+    const last = focused.current;
+    const active = document.activeElement;
+    const lost = last !== null && !last.isConnected && (!active || active === document.body);
+    if (!row || !(removing.current || lost)) return;
+    removing.current = false;
+    row.querySelector<HTMLElement>('button, [tabindex="-1"]')?.focus({ preventScroll: true });
+  });
 
-  // 畫出來時不在清單上的，之後別的分頁加進來也不加一列：加了它下面的錯題卡全部往下移
-  if (keepRow && !listed) return null;
-  if (!entry) {
-    if (removed) {
-      return (
-        <p ref={doneRef} className="review-remove__done" tabIndex={-1}>
-          已移出待複習
-        </p>
-      );
-    }
-    if (!keepRow) return null;
-    // 與有按鈕時是同一個元素（同一個位置、同一種標籤），min-height 留著
-    return (
-      <>
-        <div ref={rowRef} className="review-remove">
-          <span className="review-remove__progress">已不在待複習清單上</span>
-        </div>
-      </>
-    );
-  }
-
-  const progress = progressText(entry, answeredCorrectly);
+  if (!listed) return null;
+  const progress = entry && progressText(entry, answeredCorrectly);
   return (
     <>
-      <div ref={rowRef} className="review-remove">
-        {progress && <span className="review-remove__progress">{progress}</span>}
-        <button
-          type="button"
-          className="btn btn-secondary"
-          aria-label={label}
-          onClick={() => setRemoved(removeFromReview(questionId))}
-        >
-          移出待複習
-        </button>
+      <div
+        ref={rowRef}
+        className="review-remove"
+        onFocus={(e) => {
+          focused.current = e.target;
+        }}
+        onBlur={(e) => {
+          // 元素被換掉時不會走到這裡（拿掉的元素的事件不會傳到 React）：這裡是使用者自己把焦點移走
+          if (!e.currentTarget.contains(e.relatedTarget)) focused.current = null;
+        }}
+      >
+        {entry ? (
+          <>
+            {progress && <span className="review-remove__progress">{progress}</span>}
+            <button
+              type="button"
+              className="btn btn-secondary"
+              aria-label={label}
+              onClick={() => {
+                const done = removeFromReview(questionId);
+                removing.current = done;
+                setRemoved(done);
+              }}
+            >
+              移出待複習
+            </button>
+          </>
+        ) : removed ? (
+          <p className="review-remove__done" tabIndex={-1}>
+            已移出待複習
+          </p>
+        ) : (
+          // 焦點從按鈕換過來時要停得住
+          <span className="review-remove__progress" tabIndex={-1}>
+            已不在待複習清單上
+          </span>
+        )}
       </div>
+      {/* 存不進去的說明到換題、換畫面之前都在：別的分頁把同一題移出了也一樣 */}
       <ButtonNotice button="remove" questionId={questionId} />
     </>
   );
