@@ -2127,3 +2127,42 @@ test.describe('首頁：別的分頁停用加強練習池，說明卡與徽章�
     });
   }
 });
+
+// 說明卡的開關從實心換成框線（btn-primary 換成 btn-secondary），.btn 的 transition 還沒跑完時邊框比較粗：畫完當下量到的
+// 比最後的高 2px（Firefox 4px）。跑完之後要照最後的高度留著，不多留空白
+for (const [name, how] of [
+  ['別的分頁啟用', 'other'],
+  ['這個分頁自己按啟用', 'self'],
+] as const) {
+  test(`首頁：${name}加強練習池，說明卡長高之後不多留按鈕 transition 的高度`, async ({ page, context }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.addInitScript(() => {
+      if (window.sessionStorage.getItem('seeded')) return;
+      window.sessionStorage.setItem('seeded', '1');
+      window.localStorage.setItem('practice-pool-enabled', '0');
+      window.localStorage.setItem('practice-pool-ai-opt-in', '1');
+    });
+    await gotoHome(page);
+    await settleAnimations(page);
+    if (how === 'other') {
+      const other = await context.newPage();
+      await other.goto('/');
+      await other.evaluate(() => window.localStorage.setItem('practice-pool-enabled', '1'));
+      await other.close();
+    } else {
+      await page.getByRole('button', { name: '啟用加強練習池' }).click();
+    }
+    await expect(page.getByRole('button', { name: '停用加強練習池' })).toBeVisible();
+    await settleAnimations(page);
+    await nextFrames(page);
+    const tip = await page.getByTestId('practice-pool-tip').evaluate((el: HTMLElement) => {
+      const box = el.getBoundingClientRect().height;
+      const kept = el.style.minHeight;
+      el.style.minHeight = '';
+      const content = el.getBoundingClientRect().height;
+      el.style.minHeight = kept;
+      return { box, content };
+    });
+    expect(tip.box, `說明卡比內容高 ${JSON.stringify(tip)}`).toBeLessThan(tip.content + 0.5);
+  });
+}

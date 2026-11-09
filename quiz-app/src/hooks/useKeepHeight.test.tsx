@@ -260,6 +260,63 @@ describe('useKeepHeight', () => {
       }
     }
 
+    // 畫完量的時候也一樣：說明卡的開關從實心換成框線（btn-primary 換成 btn-secondary），邊框的 transition 還沒跑完，
+    // 量到的比最後的高 2px（Firefox 4px）
+    describe('畫完量到的是 transition 還沒跑完的高度', () => {
+      const grown = (transitional: number) => {
+        natural = 60;
+        const view = render(<Line text="短" />);
+        expect(line().style.minHeight).toBe('60px');
+        const t = animation(true);
+        running = [t.a];
+        natural = transitional;
+        view.rerender(<Line text="長" />);
+        expect(line().style.minHeight, '當下量到的是 transition 還沒跑完的高度').toBe(`${transitional}px`);
+        running = [];
+        return { ...view, t };
+      };
+
+      it('跑完之後照最後的高度留著', async () => {
+        const { t } = grown(70);
+        natural = 66;
+        await act(async () => t.end());
+        expect(line().style.minHeight).toBe('66px');
+      });
+
+      it('跑完之後的高度比之前留著的矮：留著之前的', async () => {
+        const { t } = grown(62);
+        natural = 58;
+        await act(async () => t.end());
+        expect(line().style.minHeight).toBe('60px');
+      });
+
+      it('中間又畫過一次、內容一樣（例如練習池載完）：照樣照最後的高度留著', async () => {
+        const { t, rerender } = grown(70);
+        rerender(<Line text="長" />);
+        natural = 66;
+        await act(async () => t.end());
+        expect(line().style.minHeight).toBe('66px');
+      });
+
+      it('中間內容換了（別的分頁又改了）：不動，寧可多留幾 px', async () => {
+        const { t, rerender } = grown(70);
+        natural = 40;
+        rerender(<Line text="又換了" />);
+        expect(line().style.minHeight).toBe('70px');
+        await act(async () => t.end());
+        expect(line().style.minHeight).toBe('70px');
+      });
+
+      it('中間換了寬度、已經照新的寬度量過：不動，不留回之前那個寬度的高度', async () => {
+        const { t } = grown(70);
+        natural = 50;
+        resize(740, 800);
+        expect(line().style.minHeight).toBe('50px');
+        await act(async () => t.end());
+        expect(line().style.minHeight).toBe('50px');
+      });
+    });
+
     it('不是 transition 的動畫（進場動畫、一直轉的圖示）不等', async () => {
       shortened();
       const t = animation(false);

@@ -40,17 +40,27 @@ function remeasure(): HTMLElement[] {
   return shown.map((k) => k.el);
 }
 
-// 換了寬度或字級時，這幾段裡的按鈕照 .btn 的 transition: all 慢慢換 min-height、padding、字級（觸控大小在 640px
-// 上下是 44 與 40，global.css）：當下量到的是舊的值，十列就多留 40px。等這幾段裡正在跑的 transition 都結束（或被取消），
+/**
+ * 這幾段裡（含裡面的按鈕）正在跑的 CSS transition。按鈕是 .btn 的 transition: all（global.css），量的當下還是舊的
+ * min-height、padding、邊框。進場動畫這類 CSS animation 不算
+ */
+function transitions(els: HTMLElement[]): Animation[] {
+  return els
+    .flatMap((el) => ('getAnimations' in el ? el.getAnimations({ subtree: true }) : []))
+    .filter((a) => 'transitionProperty' in a);
+}
+
+/** 都結束或被取消 */
+const settled = (running: Animation[]) => Promise.allSettled(running.map((a) => a.finished));
+
+// 換了寬度或字級時，按鈕的觸控大小在 640px 上下是 44 與 40：當下量到的是舊的值，十列就多留 40px。等 transition 跑完，
 // 照最後的版面再量一次。又換了一次寬度或字級時，前一次的等待作廢：之後別的分頁讓內容變短，留著的高度不能被它量掉
 let settling = 0;
 function remeasureSettled(): void {
   const mine = ++settling;
-  const running = remeasure()
-    .flatMap((el) => ('getAnimations' in el ? el.getAnimations({ subtree: true }) : []))
-    .filter((a) => 'transitionProperty' in a);
+  const running = transitions(remeasure());
   if (running.length === 0) return;
-  void Promise.allSettled(running.map((a) => a.finished)).then(() => {
+  void settled(running).then(() => {
     if (mine === settling) remeasure();
   });
 }
@@ -107,8 +117,22 @@ export function useKeepHeight(ref: RefObject<HTMLElement | null>, scope: unknown
     }
     const height = el.getBoundingClientRect().height;
     if (height > k.tallest) {
+      const before = k.tallest;
       k.tallest = height;
       el.style.minHeight = `${height}px`;
+      // 按鈕換了樣式時量到的是 transition 還沒跑完的高度（說明卡的開關從實心換成框線，邊框從粗慢慢變 1px，多 2 到 4px）。
+      // 跑完之後照最後的版面再算，不低於之前留著的。中間內容換了（別的分頁又改了）或重新量過就不動：寧可多留幾 px，
+      // 不讓下面的東西移動。只是又畫了一次、內容一樣（例如練習池載完）照樣算
+      const running = transitions([el]);
+      if (running.length > 0) {
+        const content = el.className + el.innerHTML;
+        void settled(running).then(() => {
+          if (k.tallest !== height || el.className + el.innerHTML !== content) return;
+          el.style.minHeight = `${before}px`;
+          k.tallest = el.getBoundingClientRect().height;
+          el.style.minHeight = `${k.tallest}px`;
+        });
+      }
     }
   });
 
