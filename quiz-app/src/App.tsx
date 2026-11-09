@@ -102,12 +102,16 @@ function App() {
   // 練習池是另一個 chunk：斷線時載不到，部署新版後舊分頁也載不到舊檔名，要告訴使用者。
   // 星號題與待複習錯題載不到練習池時（pool-unavailable）不顯示「再試一次」：這個頁面不會再載入（utils/review-pool.ts），
   // 首頁的選單與說明會跟著改，結果頁由再測一次說明。
+  // 失敗的訊息按關閉時焦點回到按下開始的按鈕（startOpener）。訊息裡的再試一次自己說不要記：它跟著訊息一起拿掉。
+  // 用滑鼠按的按鈕不拿焦點的瀏覽器（macOS 的 Safari 與 Firefox）這時有焦點的是 body，不記，留著上一次記下的
   const startOrFail = useCallback(
-    async (config: QuizConfig): Promise<'started' | 'empty' | 'pool-unavailable' | 'failed'> => {
+    async (
+      config: QuizConfig,
+      fromMessage = false
+    ): Promise<'started' | 'empty' | 'pool-unavailable' | 'failed'> => {
       lastStartConfig.current = config;
-      // 訊息裡的再試一次不算：它跟著訊息一起拿掉
       const active = document.activeElement;
-      if (active instanceof HTMLElement && !startFailedRef.current?.contains(active)) startOpener.current = active;
+      if (!fromMessage && active instanceof HTMLElement && active !== document.body) startOpener.current = active;
       setStartFailed(false);
       try {
         const started = await launchQuiz(config);
@@ -223,7 +227,7 @@ function App() {
             </p>
             <button
               className="btn btn-primary"
-              onClick={() => lastStartConfig.current && handleStartQuiz(lastStartConfig.current)}
+              onClick={() => lastStartConfig.current && startOrFail(lastStartConfig.current, true)}
               autoFocus
             >
               再試一次

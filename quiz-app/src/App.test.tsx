@@ -246,6 +246,23 @@ describe('App', () => {
       expect(screen.getByRole('button', { name: /開始/ })).toHaveFocus();
     });
 
+    // macOS 的 Safari 與 Firefox 用滑鼠按按鈕不給它焦點：先點過空白的地方，按開始時有焦點的是 body
+    it('按開始時焦點在 body：不記成 body，關閉之後焦點回到上一次記下的按鈕', async () => {
+      poolBroken.value = true;
+      render(<App />);
+      const start = screen.getByRole('button', { name: /開始/ });
+      start.focus();
+      fireEvent.click(start);
+      fireEvent.click(within(await screen.findByRole('alert')).getByRole('button', { name: '關閉' }));
+      expect(start).toHaveFocus();
+      start.blur();
+      expect(document.activeElement, '前提：焦點在 body').toBe(document.body);
+      fireEvent.click(start);
+      fireEvent.click(within(await screen.findByRole('alert')).getByRole('button', { name: '關閉' }));
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+      expect(start).toHaveFocus();
+    });
+
     it('換頁時訊息收起，回來也不再出現', async () => {
       poolBroken.value = true;
       render(<App />);
