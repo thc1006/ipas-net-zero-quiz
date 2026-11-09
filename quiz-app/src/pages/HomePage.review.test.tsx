@@ -260,4 +260,74 @@ describe('題數說明到使用者換選項之前不變矮', () => {
       rect.mockRestore();
     }
   });
+
+  // 使用者自己換了會改說明的選項：從頭量，不留著上一個選項的高度（每一種都要，只看來源的話其他幾種留下空白）
+  describe('使用者自己換選項：從頭量', () => {
+    let rect: { mockRestore: () => void };
+    beforeEach(() => {
+      // jsdom 沒有排版：照字數給高度；練習池載入中的那一句當作很高
+      rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+        const text = this.textContent ?? '';
+        return { height: text.includes('正在載入') ? 500 : text.length } as DOMRect;
+      });
+    });
+    afterEach(() => rect.mockRestore());
+    const shrank = (tall: number) => {
+      const now = (hint().textContent ?? '').length;
+      expect(now, '前提：換了之後說明比較短').toBeLessThan(tall);
+      expect(hint().style.minHeight).toBe(`${now}px`);
+    };
+    const subject = (value: string) => fireEvent.change(screen.getByLabelText('考科範圍'), { target: { value } });
+
+    it('考科範圍', () => {
+      put([...s1.slice(0, 3), ...s2.slice(0, 30)].map((q) => q.id));
+      render(<HomePage onStartQuiz={() => {}} />);
+      choose('review:starred');
+      subject('考科1');
+      expect(hint()).toHaveTextContent('本次會出 3 題');
+      const tall = (hint().textContent ?? '').length;
+      expect(hint().style.minHeight).toBe(`${tall}px`);
+      subject('考科2');
+      shrank(tall);
+    });
+
+    it('題數', () => {
+      put(s1.slice(0, 3).map((q) => q.id));
+      render(<HomePage onStartQuiz={() => {}} />);
+      choose('review:starred');
+      expect(hint()).toHaveTextContent('本次會出 3 題');
+      const tall = (hint().textContent ?? '').length;
+      fireEvent.change(screen.getByLabelText('題數'), { target: { value: '2' } });
+      shrank(tall);
+    });
+
+    it('加強練習池', () => {
+      localStorage.setItem('practice-pool-enabled', '1');
+      localStorage.setItem('practice-pool-ai-opt-in', '1');
+      __setPracticePoolForTesting(buildFixturePool());
+      render(<HomePage onStartQuiz={() => {}} />);
+      choose('official');
+      expect(hint()).toHaveTextContent('加強練習池在這個模式不會混入');
+      const tall = (hint().textContent ?? '').length;
+      fireEvent.click(screen.getByRole('button', { name: '停用加強練習池' }));
+      expect(hint()).not.toHaveTextContent('加強練習池');
+      shrank(tall);
+    });
+
+    it('練習池載入完', async () => {
+      const fixture = buildFixturePool();
+      let resolve!: (p: typeof fixture) => void;
+      vi.mocked(loadPracticePool).mockImplementationOnce(() => new Promise((r) => { resolve = r; }));
+      put([fixture.items[0].id]);
+      render(<HomePage onStartQuiz={() => {}} />);
+      choose('review:starred');
+      expect(hint()).toHaveTextContent('正在載入');
+      expect(hint().style.minHeight).toBe('500px');
+      await act(async () => {
+        resolve(fixture);
+      });
+      await waitFor(() => expect(hint()).toHaveTextContent('可出 1 題'));
+      shrank(500);
+    });
+  });
 });

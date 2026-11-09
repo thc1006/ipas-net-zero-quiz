@@ -187,9 +187,12 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   const countHintId = 'count-hint';
   const sourceHintId = 'source-hint';
   // 別的分頁改了星號或待複習錯題時，題數說明的字跟著換。變短的話它下面的開始測驗往上移：
-  // 使用者自己換來源、題數、加強練習池，或練習池載完之前不變矮
+  // 使用者自己換來源、考科範圍、題數、加強練習池，或練習池載完之前不變矮
   const sourceHintRef = useRef<HTMLParagraphElement>(null);
-  useKeepHeight(sourceHintRef, `${source}|${parsedQuestionCount}|${practiceMode.enabled}|${reviewLoading}`);
+  useKeepHeight(
+    sourceHintRef,
+    `${source}|${config.subject}|${parsedQuestionCount}|${practiceMode.enabled}|${reviewLoading}`
+  );
 
   return (
     <div className="home-page animate-fade-in">
