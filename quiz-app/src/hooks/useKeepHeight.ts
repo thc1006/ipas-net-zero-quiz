@@ -13,8 +13,17 @@ const kept = new Set<Kept>();
 let width = 0;
 let landscape = false;
 // 使用者在設定頁換了字級（useAccessibility 寫在 html 的 data-font-size）：折行與行高都換了，跟換視窗寬度一樣從頭量。
-// 其他設定（深色、高對比、色覺模式）只換顏色，不影響高度
+// 其他設定（深色、高對比、色覺模式）只換顏色，不影響高度。useAccessibility 每換一個設定（包括系統換成深色）都把
+// data-font-size 照原來的值再寫一次，所以比對值，不是有寫就量
 let fontSize: MutationObserver | null = null;
+let shownFont: string | null = null;
+
+function onFontSize(): void {
+  const now = document.documentElement.getAttribute('data-font-size');
+  if (now === shownFont) return;
+  shownFont = now;
+  remeasure();
+}
 
 /**
  * 從現在的內容重新量每一段。先全部清掉、再全部量、最後全部寫回：
@@ -44,7 +53,8 @@ function track(k: Kept): () => void {
     width = window.innerWidth;
     landscape = window.innerWidth > window.innerHeight;
     window.addEventListener('resize', onResize);
-    fontSize = new MutationObserver(remeasure);
+    shownFont = document.documentElement.getAttribute('data-font-size');
+    fontSize = new MutationObserver(onFontSize);
     fontSize.observe(document.documentElement, { attributes: true, attributeFilter: ['data-font-size'] });
   }
   kept.add(k);

@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, render } from '@testing-library/react';
 import { useRef } from 'react';
 import { useKeepHeight } from './useKeepHeight';
+import { useAccessibility } from './useAccessibility';
 
 // jsdom 沒有排版：高度照測試給的，視窗寬度改 innerWidth、innerHeight
 let natural = 0;
@@ -111,6 +112,70 @@ describe('useKeepHeight', () => {
       expect(line().style.minHeight).toBe('60px');
       root.removeAttribute('data-high-contrast');
       root.removeAttribute('data-cvd-mode');
+    });
+
+    // useAccessibility 每換一個設定都把四個屬性重寫一次，data-font-size 寫的是同一個值也會有 MutationObserver 的紀錄
+    describe('走真的設定路徑（useAccessibility）', () => {
+      let a11y: ReturnType<typeof useAccessibility>;
+      function Settings({ text }: { text: string }) {
+        a11y = useAccessibility();
+        return <Line text={text} />;
+      }
+      afterEach(() => {
+        localStorage.clear();
+        root.removeAttribute('data-high-contrast');
+        root.removeAttribute('data-cvd-mode');
+      });
+      const shortened = async () => {
+        natural = 60;
+        const view = render(<Settings text="長" />);
+        await act(async () => {});
+        natural = 20;
+        view.rerender(<Settings text="短" />);
+        expect(line().style.minHeight).toBe('60px');
+      };
+
+      it('頁首切換深色模式：字級沒換，不重新量', async () => {
+        await shortened();
+        await act(async () => a11y.toggleDarkMode());
+        expect(root.getAttribute('data-theme'), '前提：真的換成深色').toBe('dark');
+        expect(line().style.minHeight).toBe('60px');
+      });
+
+      it('高對比、色覺模式：不重新量', async () => {
+        await shortened();
+        await act(async () => a11y.toggleHighContrast());
+        await act(async () => a11y.setCvdMode('protanopia'));
+        expect(root.getAttribute('data-cvd-mode'), '前提：真的換了').toBe('protanopia');
+        expect(line().style.minHeight).toBe('60px');
+      });
+
+      it('系統換成深色（使用者沒有存過設定，跟著系統）：不重新量', async () => {
+        const handlers: ((e: MediaQueryListEvent) => void)[] = [];
+        vi.spyOn(window, 'matchMedia').mockImplementation(
+          (query: string) =>
+            ({
+              matches: false,
+              media: query,
+              addEventListener: (_: string, h: (e: MediaQueryListEvent) => void) => handlers.push(h),
+              removeEventListener: () => {},
+            }) as unknown as MediaQueryList
+        );
+        await shortened();
+        expect(handlers.length, '前提：useAccessibility 聽了系統的深色設定').toBeGreaterThan(0);
+        await act(async () => handlers.forEach((h) => h({ matches: true } as MediaQueryListEvent)));
+        expect(root.getAttribute('data-theme'), '前提：真的跟著系統換成深色').toBe('dark');
+        expect(line().style.minHeight).toBe('60px');
+      });
+
+      it('換字級：重新量', async () => {
+        await shortened();
+        await act(async () => a11y.setFontSize('xlarge'));
+        expect(line().style.minHeight).toBe('20px');
+        natural = 10;
+        await act(async () => a11y.setFontSize('normal'));
+        expect(line().style.minHeight).toBe('10px');
+      });
     });
 
     it('最後一段拿掉之後不再看字級', async () => {

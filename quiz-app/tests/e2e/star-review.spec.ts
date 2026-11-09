@@ -1979,3 +1979,36 @@ test('設定頁把字級從特大換回標準：留著的高度照新的字級�
   expect(normal.content, `前提：標準字級比較矮 ${JSON.stringify({ xlarge, normal })}`).toBeLessThan(xlarge.content - 10);
   expect(normal.box, `還留著特大時的高度 ${JSON.stringify({ xlarge, normal })}`).toBeLessThan(normal.content + 1);
 });
+
+// useAccessibility 每換一個設定都把 data-font-size 照原來的值再寫一次：只換顏色時不能當成換了字級，把留著的高度量掉
+test.describe('首頁：別的分頁停用加強練習池之後換深色模式，題數說明留著的高度不變，開始測驗不動', () => {
+  for (const way of ['頁首的按鈕', '系統換成深色'] as const) {
+    test(way, async ({ page, context }) => {
+      await page.emulateMedia({ colorScheme: 'light' });
+      await page.addInitScript(() => {
+        if (window.sessionStorage.getItem('seeded')) return;
+        window.sessionStorage.setItem('seeded', '1');
+        window.localStorage.setItem('practice-pool-enabled', '1');
+        window.localStorage.setItem('practice-pool-ai-opt-in', '1');
+      });
+      await gotoHome(page);
+      await source(page).selectOption('official');
+      const hint = page.locator('#source-hint');
+      await expect(hint).toContainText('加強練習池在這個模式不會混入');
+      const other = await context.newPage();
+      await other.goto('/');
+      await other.evaluate(() => window.localStorage.setItem('practice-pool-enabled', '0'));
+      await other.close();
+      await expect(hint).not.toContainText('加強練習池');
+      await nextFrames(page);
+      const spot = () => startButton(page).evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+      const kept = () => hint.evaluate((el: HTMLElement) => el.style.minHeight);
+      const before = { start: await spot(), kept: await kept() };
+      if (way === '頁首的按鈕') await page.getByRole('button', { name: '切換深色模式' }).click();
+      else await page.emulateMedia({ colorScheme: 'dark' });
+      await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+      await nextFrames(page);
+      expect({ start: await spot(), kept: await kept() }, '開始測驗移動了').toEqual(before);
+    });
+  }
+});
