@@ -261,6 +261,39 @@ describe('題數說明到使用者換選項之前不變矮', () => {
     }
   });
 
+  it('別的分頁停用加強練習池：說明少一句，高度留著；這個分頁自己停用才從頭量', () => {
+    localStorage.setItem('practice-pool-enabled', '1');
+    localStorage.setItem('practice-pool-ai-opt-in', '1');
+    __setPracticePoolForTesting(buildFixturePool());
+    const rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      return { height: (this.textContent ?? '').length } as DOMRect;
+    });
+    const otherTab = (value: string) =>
+      act(() => {
+        store.set('practice-pool-enabled', value);
+        window.dispatchEvent(new StorageEvent('storage', { key: 'practice-pool-enabled' }));
+      });
+    try {
+      render(<HomePage onStartQuiz={() => {}} />);
+      choose('official');
+      expect(hint()).toHaveTextContent('加強練習池在這個模式不會混入');
+      const tall = (hint().textContent ?? '').length;
+      otherTab('0');
+      expect(screen.getByRole('button', { name: '啟用加強練習池' })).toBeInTheDocument();
+      expect(hint()).not.toHaveTextContent('加強練習池');
+      expect(hint().style.minHeight).toBe(`${tall}px`);
+      otherTab('1');
+      expect(hint().style.minHeight).toBe(`${tall}px`);
+      // 這個分頁自己按：照現在的內容從頭量
+      fireEvent.click(screen.getByRole('button', { name: '停用加強練習池' }));
+      const now = (hint().textContent ?? '').length;
+      expect(now).toBeLessThan(tall);
+      expect(hint().style.minHeight).toBe(`${now}px`);
+    } finally {
+      rect.mockRestore();
+    }
+  });
+
   // 使用者自己換了會改說明的選項：從頭量，不留著上一個選項的高度（每一種都要，只看來源的話其他幾種留下空白）
   describe('使用者自己換選項：從頭量', () => {
     let rect: { mockRestore: () => void };

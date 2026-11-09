@@ -107,14 +107,19 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
     setOptInDialogOpen(true);
   }, [practiceMode.hasOptedIn]);
 
+  // 這個分頁自己切換加強練習池的次數：題數說明從頭量。別的分頁切換的（storage 事件）不算，說明換字但不變矮
+  const [poolToggles, setPoolToggles] = useState(0);
+
   const handlePracticeToggle = useCallback(() => {
     if (practiceMode.enabled) {
       practiceMode.disable();
+      setPoolToggles((n) => n + 1);
       return;
     }
     if (practiceMode.hasOptedIn) {
       // 已揭露過，直接啟用不再彈 dialog
       practiceMode.enable();
+      setPoolToggles((n) => n + 1);
       return;
     }
     setOptInDialogOpen(true);
@@ -123,6 +128,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   const handleAcceptOptIn = useCallback(() => {
     writeBool(DISCLOSURE_SEEN_KEY, true);
     practiceMode.acceptOptIn();
+    setPoolToggles((n) => n + 1);
     setOptInDialogOpen(false);
   }, [practiceMode]);
 
@@ -186,12 +192,12 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
 
   const countHintId = 'count-hint';
   const sourceHintId = 'source-hint';
-  // 別的分頁改了星號或待複習錯題時，題數說明的字跟著換。變短的話它下面的開始測驗往上移：
-  // 使用者自己換來源、考科範圍、題數、加強練習池，或練習池載完之前不變矮
+  // 別的分頁改了星號、待複習錯題或加強練習池時，題數說明的字跟著換。變短的話它下面的開始測驗往上移：
+  // 使用者自己換來源、考科範圍、題數、在這個分頁切換加強練習池，或練習池載完之前不變矮
   const sourceHintRef = useRef<HTMLParagraphElement>(null);
   useKeepHeight(
     sourceHintRef,
-    `${source}|${config.subject}|${parsedQuestionCount}|${practiceMode.enabled}|${reviewLoading}`
+    `${source}|${config.subject}|${parsedQuestionCount}|${poolToggles}|${reviewLoading}`
   );
 
   return (
