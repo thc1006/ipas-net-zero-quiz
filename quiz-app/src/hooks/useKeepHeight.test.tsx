@@ -187,6 +187,91 @@ describe('useKeepHeight', () => {
     });
   });
 
+  // 換了寬度或字級時，按鈕的 min-height、padding、字級照 .btn 的 transition: all 慢慢換（觸控大小在 640px 上下是 44 與 40）：
+  // 當下量到的是舊的值。jsdom 沒有 getAnimations，這裡給它
+  describe('重新量的時候這幾段裡還有 transition 在跑', () => {
+    const root = document.documentElement;
+    let running: Animation[];
+    const getAnimations = vi.fn((_?: GetAnimationsOptions) => running);
+    beforeEach(() => {
+      running = [];
+      getAnimations.mockClear();
+      Object.defineProperty(HTMLElement.prototype, 'getAnimations', { configurable: true, value: getAnimations });
+    });
+    afterEach(() => {
+      delete (HTMLElement.prototype as Partial<HTMLElement>).getAnimations;
+      root.removeAttribute('data-font-size');
+    });
+    const animation = (transition: boolean) => {
+      let end = () => {};
+      let cancel = () => {};
+      const finished = new Promise<void>((resolve, reject) => {
+        end = resolve;
+        cancel = () => reject(new DOMException('canceled', 'AbortError'));
+      });
+      finished.catch(() => {});
+      const a = (transition ? { transitionProperty: 'min-height', finished } : { animationName: 'fade', finished }) as unknown as Animation;
+      return { a, end, cancel };
+    };
+    const shortened = () => {
+      natural = 60;
+      const view = render(<Line text="長" />);
+      natural = 20;
+      view.rerender(<Line text="短" />);
+      expect(line().style.minHeight).toBe('60px');
+      return view;
+    };
+    const triggers = {
+      換了寬度: () => resize(740, 800),
+      換了字級: () => act(async () => root.setAttribute('data-font-size', 'large')),
+    };
+
+    for (const [name, trigger] of Object.entries(triggers)) {
+      for (const how of ['跑完', '被取消'] as const) {
+        it(`${name}：transition ${how}之後照最後的版面再量一次`, async () => {
+          shortened();
+          const t = animation(true);
+          running = [t.a];
+          natural = 24;
+          await trigger();
+          expect(line().style.minHeight, '當下量到的是 transition 還沒跑完的高度').toBe('24px');
+          running = [];
+          natural = 20;
+          await act(async () => (how === '跑完' ? t.end() : t.cancel()));
+          expect(line().style.minHeight).toBe('20px');
+          // 按鈕在這一段裡面
+          expect(getAnimations).toHaveBeenCalledWith({ subtree: true });
+        });
+      }
+    }
+
+    it('不是 transition 的動畫（進場動畫、一直轉的圖示）不等', async () => {
+      shortened();
+      const t = animation(false);
+      running = [t.a];
+      natural = 24;
+      resize(740, 800);
+      natural = 20;
+      await act(async () => t.end());
+      expect(line().style.minHeight).toBe('24px');
+    });
+
+    it('等的時候又換了寬度：前一次的 transition 跑完不再量（之後別的分頁讓它變短，留著的高度不能被量掉）', async () => {
+      shortened();
+      const t = animation(true);
+      running = [t.a];
+      natural = 24;
+      resize(740, 800);
+      running = [];
+      natural = 22;
+      resize(800, 900);
+      expect(line().style.minHeight).toBe('22px');
+      natural = 20;
+      await act(async () => t.end());
+      expect(line().style.minHeight).toBe('22px');
+    });
+  });
+
   it('拿掉之後不再聽 resize', () => {
     const remove = vi.spyOn(window, 'removeEventListener');
     natural = 60;

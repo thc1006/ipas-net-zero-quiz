@@ -22,20 +22,36 @@ function onFontSize(): void {
   const now = document.documentElement.getAttribute('data-font-size');
   if (now === shownFont) return;
   shownFont = now;
-  remeasure();
+  remeasureSettled();
 }
 
 /**
  * 從現在的內容重新量每一段。先全部清掉、再全部量、最後全部寫回：
  * 一段一段做的話每量一段都要重新排版一次（寫回上一段的 min-height 之後才量下一段），上百段時一次 resize 要排版上百次
  */
-function remeasure(): void {
+function remeasure(): HTMLElement[] {
   const shown = [...kept].filter((k): k is Kept & { el: HTMLElement } => k.el !== null);
   for (const k of shown) k.el.style.minHeight = '';
   const heights = shown.map((k) => k.el.getBoundingClientRect().height);
   shown.forEach((k, i) => {
     k.tallest = heights[i];
     k.el.style.minHeight = `${heights[i]}px`;
+  });
+  return shown.map((k) => k.el);
+}
+
+// 換了寬度或字級時，這幾段裡的按鈕照 .btn 的 transition: all 慢慢換 min-height、padding、字級（觸控大小在 640px
+// 上下是 44 與 40，global.css）：當下量到的是舊的值，十列就多留 40px。等這幾段裡正在跑的 transition 都結束（或被取消），
+// 照最後的版面再量一次。又換了一次寬度或字級時，前一次的等待作廢：之後別的分頁讓內容變短，留著的高度不能被它量掉
+let settling = 0;
+function remeasureSettled(): void {
+  const mine = ++settling;
+  const running = remeasure()
+    .flatMap((el) => ('getAnimations' in el ? el.getAnimations({ subtree: true }) : []))
+    .filter((a) => 'transitionProperty' in a);
+  if (running.length === 0) return;
+  void Promise.allSettled(running.map((a) => a.finished)).then(() => {
+    if (mine === settling) remeasure();
   });
 }
 
@@ -45,7 +61,7 @@ function onResize(): void {
   if (window.innerWidth === width && turned === landscape) return;
   width = window.innerWidth;
   landscape = turned;
-  remeasure();
+  remeasureSettled();
 }
 
 function track(k: Kept): () => void {

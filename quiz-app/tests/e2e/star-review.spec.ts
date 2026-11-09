@@ -1987,6 +1987,36 @@ test('視窗轉成橫向：最後面那一段留著的高度照新的寬度重�
   expect(landscape.box, `橫向還留著直向的高度 ${JSON.stringify({ portrait, landscape })}`).toBeLessThan(landscape.content + 1);
 });
 
+// 按鈕的 min-height 在 640px 以下是 44、以上是 40，.btn 有 transition: all：resize 當下量到的是 transition 還沒跑完的
+// 44。要等它跑完再量，不然每一列移出待複習多留 4px
+for (const [name, from, to] of [
+  ['640x360 換成 1280x720', { width: 640, height: 360 }, { width: 1280, height: 720 }],
+  ['Pixel 7 直向轉橫向', { width: 412, height: 839 }, { width: 839, height: 412 }],
+] as const) {
+  test(`結果頁 ${name}：移出待複習那幾列照按鈕換完之後的高度留著，不多留空白`, async ({ page }) => {
+    await page.setViewportSize(from);
+    await toResultWithWrongCards(page, 'normal');
+    const rows = () =>
+      page.locator('.review-remove').evaluateAll((els: HTMLElement[]) =>
+        els.map((el) => {
+          const box = el.getBoundingClientRect().height;
+          const kept = el.style.minHeight;
+          el.style.minHeight = '';
+          const content = el.getBoundingClientRect().height;
+          el.style.minHeight = kept;
+          return Math.round((box - content) * 10) / 10;
+        })
+      );
+    const button = page.locator('.review-remove button').first();
+    expect(await button.evaluate((el) => getComputedStyle(el).minHeight), '前提：窄的時候按鈕 44px').toBe('44px');
+    await page.setViewportSize(to);
+    await expect.poll(() => button.evaluate((el) => getComputedStyle(el).minHeight), '前提：寬的時候按鈕 40px').toBe('40px');
+    await settleAnimations(page);
+    await nextFrames(page);
+    expect(await rows(), '每一列比內容多留的高度').toEqual([0, 0, 0]);
+  });
+}
+
 test('設定頁把字級從特大換回標準：留著的高度照新的字級重新量，不留特大時的空白', async ({ page, context }) => {
   await page.setViewportSize({ width: 375, height: 667 });
   await gotoHome(page, undefined, 'xlarge');
