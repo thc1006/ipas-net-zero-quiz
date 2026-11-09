@@ -85,4 +85,62 @@ describe('useKeepHeight', () => {
     unmount();
     expect(remove).toHaveBeenCalledWith('resize', expect.any(Function));
   });
+
+  it('好幾段：只聽一個 resize，先全部清掉、再全部量、最後全部寫回（量的時候沒有一段還撐著）', () => {
+    const add = vi.spyOn(window, 'addEventListener');
+    const remove = vi.spyOn(window, 'removeEventListener');
+    natural = 60;
+    const { rerender, unmount } = render(
+      <>
+        {[1, 2, 3, 4].map((i) => (
+          <Line key={i} text="長" />
+        ))}
+      </>
+    );
+    const resizeCalls = (spy: typeof add) => spy.mock.calls.filter(([type]) => type === 'resize').length;
+    expect(resizeCalls(add)).toBe(1);
+    natural = 20;
+    rerender(
+      <>
+        {[1, 2, 3, 4].map((i) => (
+          <Line key={i} text="短" />
+        ))}
+      </>
+    );
+    const lines = [...document.querySelectorAll('p')];
+    expect(lines.map((p) => p.style.minHeight)).toEqual(['60px', '60px', '60px', '60px']);
+    // 量的時候每一段的 min-height 都已經清掉：清一段、量一段、寫一段的話，量第二段時第一段已經寫回去
+    const seen: string[][] = [];
+    vi.mocked(HTMLElement.prototype.getBoundingClientRect).mockImplementation(function (this: HTMLElement) {
+      seen.push(lines.map((p) => p.style.minHeight));
+      const min = parseFloat(this.style.minHeight) || 0;
+      return { height: Math.max(natural, min) } as DOMRect;
+    });
+    resize(740, 800);
+    expect(seen).toEqual([['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]);
+    expect(lines.map((p) => p.style.minHeight)).toEqual(['20px', '20px', '20px', '20px']);
+    unmount();
+    expect(resizeCalls(remove)).toBe(1);
+  });
+
+  it('一段拿掉、其他段還在：還在的照樣在視窗寬度換了時重新量', () => {
+    natural = 60;
+    const { rerender } = render(
+      <>
+        <Line key="a" text="長" />
+        <Line key="b" text="長" />
+      </>
+    );
+    natural = 20;
+    const kept = document.querySelectorAll('p')[1];
+    rerender(
+      <>
+        <Line key="b" text="短" />
+      </>
+    );
+    expect(line()).toBe(kept);
+    expect(line().style.minHeight).toBe('60px');
+    resize(740, 800);
+    expect(line().style.minHeight).toBe('20px');
+  });
 });
