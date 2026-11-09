@@ -1889,3 +1889,30 @@ test.describe('移出待複習那一列：別的分頁改了名單，下面的�
     await expect(page.locator('.question-card .review-remove').getByRole('button', { name: '移出待複習' })).toBeVisible();
   });
 });
+
+test('結果頁 375px：別的分頁清掉待複習錯題，錯題區的說明兩行換成一行但不變矮，第一張卡的星號不動', async ({ page, context }) => {
+  await page.setViewportSize({ width: 375, height: 700 });
+  await toResultWithWrongCards(page, 'normal');
+  const hint = page.locator('.wrong-review-hint');
+  await hint.evaluate((el) => window.scrollBy(0, el.getBoundingClientRect().top - 150));
+  await nextFrames(page);
+  const firstStar = page.locator('.wrong-item').first().getByRole('button', { name: /加星號/ });
+  const spot = () => firstStar.evaluate((el) => ({ top: el.getBoundingClientRect().top, scrollY: window.scrollY }));
+  const textHeight = () =>
+    hint.evaluate((el) => {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      return range.getBoundingClientRect().height;
+    });
+  const tall = await textHeight();
+  const before = await spot();
+  const other = await context.newPage();
+  await other.goto('/');
+  await other.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 1, seeded: true, stars: {}, wrong: {} })), KEY);
+  await other.close();
+  await expect(hint).toHaveText('這幾題都已不在待複習清單上。');
+  await nextFrames(page);
+  // 前提：換的那一句少一行，不然量不到變矮
+  expect(await textHeight(), '前提：換的那一句比較矮').toBeLessThan(tall - 10);
+  expect(await spot(), '第一張卡的星號移動了').toEqual(before);
+});

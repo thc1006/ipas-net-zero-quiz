@@ -184,6 +184,28 @@ describe('結果頁', () => {
     expect(within(card()).queryByRole('button', { name: /移出待複習/ })).toBeNull();
   });
 
+  it('別的分頁清掉待複習錯題：錯題區的說明換字但不變矮（窄螢幕上兩行換成一行，下面的錯題卡往上移）', () => {
+    put({}, { q1: { streak: 0, last: 1 } });
+    // jsdom 沒有排版：照字數給高度
+    const rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      return { height: (this.textContent ?? '').length } as DOMRect;
+    });
+    try {
+      renderPage();
+      const hint = document.querySelector('.wrong-review-hint') as HTMLElement;
+      const tall = (hint.textContent ?? '').length;
+      act(() => {
+        put({}, {});
+        window.dispatchEvent(new StorageEvent('storage', { key: REVIEW_STORAGE_KEY }));
+      });
+      expect(hint).toHaveTextContent('這幾題都已不在待複習清單上。');
+      expect((hint.textContent ?? '').length).toBeLessThan(tall);
+      expect(hint.style.minHeight).toBe(`${tall}px`);
+    } finally {
+      rect.mockRestore();
+    }
+  });
+
   it('再測一次的說明排在按鈕那一列下面，不是 live region；平常一個元素都沒有', () => {
     const { rerender } = renderPage();
     expect(document.querySelector('.action-notice')).toBeNull();
