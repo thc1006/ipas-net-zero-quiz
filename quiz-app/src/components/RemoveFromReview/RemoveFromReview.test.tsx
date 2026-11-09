@@ -202,6 +202,32 @@ describe('別的分頁改了名單：那一列留著、高度不變，焦點留�
     expect(document.activeElement).toBe(document.body);
   });
 
+  it('焦點在按鈕上時切到別的分頁去移出：回來時焦點在那一列的字上，不掉回 body', () => {
+    put({}, { q1: { streak: 0, last: 1 } });
+    const { container } = render(<RemoveFromReview questionId="q1" />);
+    const btn = button()!;
+    btn.focus();
+    // 視窗失去焦點時瀏覽器在按鈕上發 blur、focusout，relatedTarget 是 null，document.activeElement 還是按鈕
+    fireEvent.focusOut(btn, { relatedTarget: null });
+    expect(btn).toHaveFocus();
+    otherTab({});
+    expect(row(container).querySelector('[tabindex="-1"]')).toHaveFocus();
+  });
+
+  it('使用者點了頁面上沒有焦點的地方（焦點回到 body，relatedTarget 也是 null）：別的分頁移出時不把焦點拉回那一列', () => {
+    put({}, { q1: { streak: 0, last: 1 } });
+    render(<RemoveFromReview questionId="q1" />);
+    const btn = button()!;
+    btn.focus();
+    let during: Element | null = null;
+    btn.addEventListener('blur', () => (during = document.activeElement), { once: true });
+    btn.blur();
+    // 這種 blur 發生時焦點已經不在按鈕上：與視窗失去焦點分得開
+    expect(during).toBe(document.body);
+    otherTab({});
+    expect(document.activeElement).toBe(document.body);
+  });
+
   it('按鈕被換掉的同時別的元素拿到焦點（同一次畫面更新裡的 autoFocus）：不搶回來', () => {
     put({}, { q1: { streak: 0, last: 1 } });
     // 名單空了才出現、自己拿焦點的輸入框，排在那一列前面：它先拿到焦點，那一列的 layout effect 才跑

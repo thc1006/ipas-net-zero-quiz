@@ -40,7 +40,7 @@ export function RemoveFromReview({ questionId, answeredCorrectly, label }: Remov
   const [removed, setRemoved] = useState(false);
   const [listed] = useState(() => entry !== undefined);
   const rowRef = useRef<HTMLDivElement>(null);
-  // 這一列裡最後拿到焦點的元素；焦點離開這一列就清掉
+  // 這一列裡最後拿到焦點的元素；焦點離開這一列就清掉（視窗失去焦點不算）
   const focused = useRef<HTMLElement | null>(null);
   // 按下去移出了：焦點跟到已移出那一行（滑鼠點的、按鈕沒有拿到焦點的瀏覽器也一樣）
   const removing = useRef(false);
@@ -69,7 +69,9 @@ export function RemoveFromReview({ questionId, answeredCorrectly, label }: Remov
           focused.current = e.target;
         }}
         onBlur={(e) => {
-          // 元素被換掉時不會走到這裡（拿掉的元素的事件不會傳到 React）：這裡是使用者自己把焦點移走
+          // 元素被換掉時不會走到這裡（拿掉的元素的事件不會傳到 React）：這裡是使用者自己把焦點移走。
+          // 切到別的分頁、別的視窗時也有 blur，但焦點還在這個元素上：這時候別的分頁移出，回來要停在這一列
+          if (document.activeElement === e.target) return;
           if (!e.currentTarget.contains(e.relatedTarget)) focused.current = null;
         }}
       >
