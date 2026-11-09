@@ -1,5 +1,5 @@
 // 主應用程式元件
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { ReviewPoolUnavailableError, useQuiz } from './hooks/useQuiz';
 import { useAccessibility } from './hooks/useAccessibility';
 import { usePracticeMode } from './hooks/usePracticeMode';
@@ -79,6 +79,17 @@ function App() {
     cancelPendingStart();
     startScope.current++;
   }, [currentView, practiceMode.enabled, cancelPendingStart]);
+
+  // 換畫面時捲到最上面，在畫出來之前；開頁時不捲（重新整理時瀏覽器自己還原捲動位置）。不捲的話新畫面從舊的捲動位置
+  // 開始，比較短時被夾在最底：題卡可能開在視窗外，而且 Chromium 的 scroll anchoring 這時的錨點是 main（舊畫面的節點
+  // 拿掉了，新的還沒排版過），夾住的那一段它一直想捲回去，之後頁面一變長（別的分頁的說明排到最後面）就捲過去，整頁往上移。
+  // 捲動位置是 0 時 Chromium 不選錨點
+  const shownView = useRef(currentView);
+  useLayoutEffect(() => {
+    if (shownView.current === currentView) return;
+    shownView.current = currentView;
+    window.scrollTo(0, 0);
+  }, [currentView]);
 
   // 開始按鈕在頁面下方，訊息在頁首：捲上來才看得到。WebKit 的 autoFocus 不會捲
   useEffect(() => {

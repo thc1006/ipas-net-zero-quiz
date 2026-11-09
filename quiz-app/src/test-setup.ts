@@ -16,8 +16,9 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
 });
 
-// jsdom 沒有 scrollIntoView
+// jsdom 沒有 scrollIntoView；window.scrollTo 只印出 Not implemented
 Element.prototype.scrollIntoView = vi.fn();
+window.scrollTo = vi.fn() as typeof window.scrollTo;
 
 // Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {

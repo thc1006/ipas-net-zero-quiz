@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import type { Locator, Page } from '@playwright/test';
+import type { BrowserContext, Locator, Page } from '@playwright/test';
 import { test, expect, stubVisitorCounter } from './fixtures';
 
 /**
@@ -923,8 +923,9 @@ test.describe('星號的提示排在那一列下面：加星號與取消都不�
       await context.close();
     });
 
-    // 開始按鈕在首頁下方，換到題目頁時頁面還捲在那裡。Firefox 在題卡進場動畫途中選的 scroll anchor 是導覽列
-    // （排在提示下面），一直用到下一次捲動：提示一插進來，整頁往上捲，星號跑到頁首底下。starInView 會先捲回最上面，看不到這個情形
+    // 開始按鈕在首頁下方。從前換到題目頁時頁面還捲在那裡：Firefox 在題卡進場動畫途中選的 scroll anchor 是導覽列
+    // （排在提示下面），一直用到下一次捲動，提示一插進來整頁往上捲，星號跑到頁首底下。現在換畫面時捲到最上面；
+    // 這裡照使用者的操作走（不先捲），starInView 會先捲回最上面，看不到開始之後的捲動位置
     if (viewport.height >= 720) {
       for (const way of ['滑鼠', '觸控', 'Space'] as Way[]) {
         test(`題目頁 ${name}、開始之後沒有捲動過：${way}`, async ({ browser, baseURL }) => {
@@ -938,7 +939,7 @@ test.describe('星號的提示排在那一列下面：加星號與取消都不�
           await expect(page.locator('.question-card')).toBeVisible();
           await settleAnimations(page);
           const start = await starState(star(page));
-          expect(start.scrollY, `前提：頁面不在最上面 ${JSON.stringify(start)}`).toBeGreaterThan(0);
+          expect(start.scrollY, `換畫面時沒有捲到最上面 ${JSON.stringify(start)}`).toBe(0);
           expect(start.hitIsStar, `前提：星號在畫面上 ${JSON.stringify(start)}`).toBe(true);
           await toggleTwice(page, star(page), way, '.question-header');
           await context.close();
@@ -1707,5 +1708,94 @@ test.describe('別的分頁改了名單：下面的按鈕不移動', () => {
     await expect(page.locator('#source-hint')).toHaveText(/還沒有星號題/);
     await nextFrames(page);
     expect(await spot(), '開始測驗移動了').toEqual(before);
+  });
+});
+
+// 換畫面時從最上面開始。之前捲動位置留著：新畫面比較短時被夾在最底，Chromium 的 scroll anchoring 還記著舊畫面的位置，
+// 之後頁面一變長（別的分頁的說明排到最後面）就捲回去，整頁往上移：開始測驗之後選項 B 往上 54，點下去選到 C
+test.describe('換畫面時從最上面開始：別的分頁的說明排到最後面時，畫面上的東西不動', () => {
+  /** 下一次主內容換掉之後、畫出來之前的捲動位置（MutationObserver 之後的第一個 requestAnimationFrame） */
+  const watchSwap = (page: Page, selector: string) =>
+    page.evaluate((selector) => {
+      const w = window as unknown as { __swapScrollY?: number };
+      delete w.__swapScrollY;
+      const main = document.getElementById('main-content')!;
+      const observer = new MutationObserver(() => {
+        if (!main.querySelector(selector)) return;
+        observer.disconnect();
+        requestAnimationFrame(() => {
+          w.__swapScrollY = window.scrollY;
+        });
+      });
+      observer.observe(main, { childList: true, subtree: true });
+    }, selector);
+  const swapScrollY = (page: Page) =>
+    page.waitForFunction(() => (window as unknown as { __swapScrollY?: number }).__swapScrollY !== undefined).then(() =>
+      page.evaluate(() => (window as unknown as { __swapScrollY?: number }).__swapScrollY)
+    );
+  const writeNewer = async ({ page, context }: { page: Page; context: BrowserContext }) => {
+    const other = await context.newPage();
+    await other.goto('/');
+    await other.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 2, seeded: true, stars: {}, wrong: {} })), KEY);
+    await other.close();
+    await expect(page.locator('.review-notice--end')).toHaveCount(1);
+    await nextFrames(page);
+  };
+  const spot = (target: Locator) =>
+    target.evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      return { top: r.top, scrollY: window.scrollY, x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    });
+
+  test('開始測驗（開始按鈕在首頁下方）：題目頁第一次畫出來就在最上面；之後別的分頁寫了新版資料，選項 B 不動，點同一個位置選到 B', async ({ page, context }) => {
+    await gotoHome(page);
+    await page.getByLabel('測驗模式').selectOption('exam');
+    await page.getByLabel('隨機出題順序').uncheck();
+    await startButton(page).scrollIntoViewIfNeeded();
+    expect(await page.evaluate(() => window.scrollY), '前提：開始按鈕在首頁下方').toBeGreaterThan(100);
+    await watchSwap(page, '.question-card');
+    await startButton(page).click();
+    expect.soft(await swapScrollY(page), '題目頁第一次畫出來時不在最上面').toBe(0);
+    await settleAnimations(page);
+    const optionB = page.getByTestId('option-B');
+    const before = await spot(optionB);
+    await writeNewer({ page, context });
+    expect(await spot(optionB), '選項 B 移動了').toEqual(before);
+    await page.mouse.click(before.x, before.y);
+    await expect(page.getByRole('radio', { name: /^B:/ })).toBeChecked();
+  });
+
+  test('結果頁捲到最底按回首頁：首頁第一次畫出來就在最上面；之後別的分頁寫了新版資料，開始測驗不動', async ({ page, context }) => {
+    await toResultWithWrongCards(page, 'normal');
+    const home = page.locator('.action-section').getByRole('button', { name: /首頁/ });
+    await home.scrollIntoViewIfNeeded();
+    await watchSwap(page, '.home-page');
+    await home.click();
+    expect.soft(await swapScrollY(page), '首頁第一次畫出來時不在最上面').toBe(0);
+    await settleAnimations(page);
+    await startButton(page).scrollIntoViewIfNeeded();
+    await nextFrames(page);
+    const before = await spot(startButton(page));
+    await writeNewer({ page, context });
+    expect(await spot(startButton(page)), '開始測驗移動了').toEqual(before);
+  });
+
+  test('Pixel 7 橫向點開始測驗：星號在視窗裡、在頁首下面', async ({ browser, baseURL }) => {
+    const context = await browser.newContext({ baseURL, hasTouch: true, viewport: { width: 839, height: 412 } });
+    await stubVisitorCounter(context);
+    const page = await context.newPage();
+    await gotoHome(page);
+    await page.getByLabel('隨機出題順序').uncheck();
+    await startButton(page).tap();
+    await expect(page.locator('.question-card')).toBeVisible();
+    await settleAnimations(page);
+    const where = await star(page).evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      return { top: r.top, bottom: r.bottom, header: document.querySelector('header')!.getBoundingClientRect().bottom, scrollY: window.scrollY };
+    });
+    const info = JSON.stringify(where);
+    expect(where.top, `星號在頁首底下 ${info}`).toBeGreaterThanOrEqual(where.header);
+    expect(where.bottom, `星號在視窗下面 ${info}`).toBeLessThanOrEqual(412);
+    await context.close();
   });
 });

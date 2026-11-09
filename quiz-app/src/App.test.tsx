@@ -136,6 +136,31 @@ describe('App', () => {
     expect(screen.getByText(/^外觀$/)).toBeInTheDocument();
   });
 
+  // 新畫面比較短時捲動位置被夾在最底，Chromium 的 scroll anchoring 記著舊畫面的位置，頁面一變長就捲回去（E2E 量位置）
+  it('換畫面時捲到最上面；開頁時與沒有換畫面時不捲', async () => {
+    const scrollTo = vi.mocked(window.scrollTo);
+    scrollTo.mockClear();
+    render(<App />);
+    expect(scrollTo).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByLabelText(/開啟設定/));
+    expect(scrollTo).toHaveBeenCalledTimes(1);
+    expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
+    fireEvent.click(screen.getByRole('button', { name: /返回首頁/ }));
+    expect(scrollTo).toHaveBeenCalledTimes(2);
+    // 抽不到題目時留在首頁：不捲
+    fireEvent.change(screen.getByLabelText('題目來源'), { target: { value: 'official' } });
+    sourceEmpty.value = true;
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    await act(async () => {});
+    expect(document.querySelector('.question-card')).toBeNull();
+    expect(scrollTo).toHaveBeenCalledTimes(2);
+    sourceEmpty.value = false;
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+    expect(scrollTo).toHaveBeenCalledTimes(3);
+    expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
+  });
+
   it('starts quiz from HomePage and lands on QuizPage', async () => {
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: /開始/ }));
