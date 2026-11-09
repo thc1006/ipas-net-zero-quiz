@@ -114,6 +114,21 @@ describe('useKeepHeight', () => {
       root.removeAttribute('data-cvd-mode');
     });
 
+    it('開始看的時候記下現在的字級：沒有段落時換了字級，之後照同一個值再寫一次不重新量', async () => {
+      root.setAttribute('data-font-size', 'normal');
+      natural = 60;
+      const first = render(<Line text="長" />);
+      await setAttr('data-font-size', 'normal');
+      first.unmount();
+      // 沒有段落在看的時候換成特大
+      root.setAttribute('data-font-size', 'xlarge');
+      const { rerender } = render(<Line text="長" />);
+      natural = 20;
+      rerender(<Line text="短" />);
+      await setAttr('data-font-size', 'xlarge');
+      expect(line().style.minHeight).toBe('60px');
+    });
+
     // useAccessibility 每換一個設定都把四個屬性重寫一次，data-font-size 寫的是同一個值也會有 MutationObserver 的紀錄
     describe('走真的設定路徑（useAccessibility）', () => {
       let a11y: ReturnType<typeof useAccessibility>;
