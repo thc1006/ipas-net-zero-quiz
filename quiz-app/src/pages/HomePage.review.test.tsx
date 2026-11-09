@@ -355,6 +355,18 @@ describe('題數說明到使用者換選項之前不變矮', () => {
       expect(badges().style.minHeight).toBe(`${shown(badges())}px`);
     });
 
+    it('頁首的徽章：在揭露對話框按同意（這個分頁自己啟用）也從頭量', () => {
+      localStorage.removeItem('practice-pool-ai-opt-in');
+      render(<HomePage onStartQuiz={() => {}} />);
+      const tall = shown(badges());
+      fireEvent.click(screen.getByRole('button', { name: '啟用加強練習池' }));
+      fireEvent.click(screen.getByRole('button', { name: /我已了解/ }));
+      expect(screen.getByRole('button', { name: '停用加強練習池' })).toBeInTheDocument();
+      const now = shown(badges());
+      expect(now, '前提：啟用之後徽章的字比較短').toBeLessThan(tall);
+      expect(badges().style.minHeight).toBe(`${now}px`);
+    });
+
     it('說明卡：使用者換題目來源、打開又收起抽題分布，從頭量', () => {
       localStorage.setItem('practice-pool-enabled', '1');
       render(<HomePage onStartQuiz={() => {}} />);
@@ -363,6 +375,9 @@ describe('題數說明到使用者換選項之前不變矮', () => {
       details.open = true;
       fireEvent(details, new Event('toggle'));
       expect(shown(tip()), '前提：打開之後比較高').toBeGreaterThan(closed);
+      // 打開的時候頁面又畫了一次（例如改題數）：量到的是打開的高度
+      fireEvent.change(document.getElementById('count')!, { target: { value: '5' } });
+      expect(tip().style.minHeight, '前提：留著打開的高度').toBe(`${shown(tip())}px`);
       details.open = false;
       fireEvent(details, new Event('toggle'));
       expect(tip().style.minHeight).toBe(`${closed}px`);

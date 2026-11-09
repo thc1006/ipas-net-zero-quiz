@@ -256,6 +256,17 @@ describe('鍵盤移動焦點之後的補捲', () => {
       expect(Element.prototype.scrollIntoView).toHaveBeenCalledTimes(1);
     });
 
+    it('Tab 之後、重設之前又按了別的鍵（Enter 換畫面時程式移動焦點）：不算', () => {
+      setup();
+      top = -10;
+      button().blur();
+      tab();
+      fireEvent.keyDown(document.body, { key: 'Enter' });
+      button().focus();
+      runFrames();
+      expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+    });
+
     it('Ctrl、Alt、Meta 加 Tab（切換瀏覽器分頁、視窗）、其他按鍵：不算', () => {
       setup();
       top = -10;

@@ -6,10 +6,14 @@ import { useAccessibility } from './useAccessibility';
 
 // jsdom 沒有排版：高度照測試給的，視窗寬度改 innerWidth、innerHeight
 let natural = 0;
-function Line({ text, scope = null }: { text: string; scope?: unknown }) {
+function Line({ text, scope = null, className }: { text: string; scope?: unknown; className?: string }) {
   const ref = useRef<HTMLParagraphElement>(null);
   useKeepHeight(ref, scope);
-  return <p ref={ref}>{text}</p>;
+  return (
+    <p ref={ref} className={className}>
+      {text}
+    </p>
+  );
 }
 const line = () => document.querySelector('p') as HTMLElement;
 const resize = (width: number, height: number) =>
@@ -303,6 +307,14 @@ describe('useKeepHeight', () => {
         natural = 40;
         rerender(<Line text="又換了" />);
         expect(line().style.minHeight).toBe('70px');
+        await act(async () => t.end());
+        expect(line().style.minHeight).toBe('70px');
+      });
+
+      it('中間只換了這一段自己的 class（樣式換了，高度可能跟著換）：不動', async () => {
+        const { t, rerender } = grown(70);
+        rerender(<Line text="長" className="另一種" />);
+        natural = 66;
         await act(async () => t.end());
         expect(line().style.minHeight).toBe('70px');
       });
