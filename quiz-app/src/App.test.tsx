@@ -161,6 +161,21 @@ describe('App', () => {
     expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
   });
 
+  it('換畫面時在畫出來之前捲（layout effect）：比新畫面的 effect 早', () => {
+    const scrollTo = vi.mocked(window.scrollTo);
+    render(<App />);
+    fireEvent.click(screen.getByLabelText(/開啟設定/));
+    scrollTo.mockClear();
+    // 首頁一畫出來就在 effect 裡讀「看過揭露 dialog 沒有」
+    const getItem = vi.spyOn(localStorage, 'getItem');
+    fireEvent.click(screen.getByRole('button', { name: /返回首頁/ }));
+    const read = getItem.mock.calls.findIndex(([key]) => key === 'practice-pool-disclosure-seen');
+    expect(read).toBeGreaterThanOrEqual(0);
+    expect(scrollTo).toHaveBeenCalledTimes(1);
+    expect(scrollTo.mock.invocationCallOrder[0]).toBeLessThan(getItem.mock.invocationCallOrder[read]);
+    getItem.mockRestore();
+  });
+
   it('starts quiz from HomePage and lands on QuizPage', async () => {
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: /開始/ }));

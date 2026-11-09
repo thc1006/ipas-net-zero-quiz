@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { RemoveFromReview } from './RemoveFromReview';
+import { useReview } from '../../hooks/useReview';
 import {
   REVIEW_STORAGE_KEY,
   __resetReviewStoreForTesting,
@@ -199,6 +200,24 @@ describe('別的分頁改了名單：那一列留著、高度不變，焦點留�
     (document.activeElement as HTMLElement).blur();
     otherTab({});
     expect(document.activeElement).toBe(document.body);
+  });
+
+  it('按鈕被換掉的同時別的元素拿到焦點（同一次畫面更新裡的 autoFocus）：不搶回來', () => {
+    put({}, { q1: { streak: 0, last: 1 } });
+    // 名單空了才出現、自己拿焦點的輸入框，排在那一列前面：它先拿到焦點，那一列的 layout effect 才跑
+    function Other() {
+      const gone = wrongEntry(useReview(), 'q1') === undefined;
+      return gone ? <input aria-label="別的" autoFocus /> : null;
+    }
+    render(
+      <>
+        <Other />
+        <RemoveFromReview questionId="q1" />
+      </>
+    );
+    button()!.focus();
+    otherTab({});
+    expect(screen.getByRole('textbox', { name: '別的' })).toHaveFocus();
   });
 
   it('存不進去的說明：別的分頁把同一題移出之後還在，焦點留在那一列', () => {
