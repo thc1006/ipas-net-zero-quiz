@@ -1842,6 +1842,41 @@ test.describe('移出待複習那一列：別的分頁改了名單，下面的�
     expect(await active(page), '又移出之後焦點不在那一列').toBe('P in row:已移出待複習');
   });
 
+  // 那一列換掉按鈕時用 focus({ preventScroll: true }) 把焦點放回去。頁首的補捲只管按鍵移過去的焦點，不能把這一次當成
+  // Tab，把一部分在視窗底邊下面、或在頁首底下的那一列捲出來
+  for (const [where, edge] of [
+    ['按鈕只有 6px 露在視窗底邊上面', 'bottom'],
+    ['按鈕一半在頁首底下', 'header'],
+  ] as const) {
+    test(`結果頁：用 Tab 走到第二張卡的移出待複習，用滾輪捲到${where}，別的分頁清掉名單：頁面不捲`, async ({ page, context }) => {
+      await page.setViewportSize({ width: 1280, height: 720 });
+      await toResultWithWrongCards(page, 'normal');
+      const remove = page.locator('.wrong-item').nth(1).getByRole('button', { name: /移出待複習/ });
+      for (let i = 0; i < 80 && !(await remove.evaluate((el) => el === document.activeElement)); i++) {
+        await page.keyboard.press('Tab');
+      }
+      await expect(remove).toBeFocused();
+      await nextFrames(page);
+      const dy = await remove.evaluate((el, edge) => {
+        const r = el.getBoundingClientRect();
+        const header = document.querySelector('header')!.getBoundingClientRect().bottom;
+        return Math.round(edge === 'bottom' ? r.top - (document.documentElement.clientHeight - 6) : r.top - (header - r.height / 2));
+      }, edge);
+      await page.mouse.move(640, 360);
+      await page.mouse.wheel(0, dy);
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+      await page.waitForTimeout(300);
+      const before = await page.evaluate(() => window.scrollY);
+      await writeWrong({ context }, []);
+      const row = page.locator('.wrong-item').nth(1).locator('.review-remove');
+      await expect(row).toHaveText('已不在待複習清單上');
+      await expect(row.getByText('已不在待複習清單上'), '前提：焦點放回那一列').toBeFocused();
+      await nextFrames(page);
+      await page.waitForTimeout(200);
+      expect(await page.evaluate(() => window.scrollY), '頁面捲動了').toBe(before);
+    });
+  }
+
   test('題目頁練習模式：答完之後別的分頁把這一題移出又加回來：那一列留著換字，下一題不動', async ({ page, context }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await gotoHome(page, { wrong: Object.fromEntries([q1, q2, q3].map((q) => [idOf(q), { streak: 0, last: 1 }])) });

@@ -53,6 +53,9 @@ describe('Header 的回報問題與討論區', () => {
 });
 
 describe('鍵盤移動焦點之後的補捲', () => {
+  // 焦點移動之前的那一下 Tab：瀏覽器在 keydown 的同一個 task 裡移動焦點
+  const tab = (init: KeyboardEventInit = {}) =>
+    fireEvent.keyDown(document.activeElement ?? document.body, { key: 'Tab', ...init });
   function Page() {
     return (
       <>
@@ -70,6 +73,7 @@ describe('鍵盤移動焦點之後的補捲', () => {
       const request = vi.spyOn(window, 'requestAnimationFrame').mockReturnValue(7);
       const cancel = vi.spyOn(window, 'cancelAnimationFrame');
       render(<Page />);
+      tab();
       fireEvent.focusIn(screen.getByRole('button', { name: '頁面上的按鈕' }));
       expect(request).toHaveBeenCalledTimes(1);
       cancel.mockClear();
@@ -89,6 +93,7 @@ describe('鍵盤移動焦點之後的補捲', () => {
       render(<Page />);
       const button = screen.getByRole('button', { name: '頁面上的按鈕' });
       button.addEventListener(type, (e) => e.stopPropagation());
+      tab();
       fireEvent.focusIn(button);
       cancel.mockClear();
       if (type === 'keydown') fireEvent.keyDown(button, { key: ' ' });
@@ -107,8 +112,9 @@ describe('鍵盤移動焦點之後的補捲', () => {
       frames.clear();
       pending.forEach((f) => f(0));
     };
-    const focusAndRun = () => {
+    const focusAndRun = (init?: KeyboardEventInit) => {
       button().blur();
+      tab(init);
       button().focus();
       runFrames();
     };
@@ -169,6 +175,7 @@ describe('鍵盤移動焦點之後的補捲', () => {
       const other = document.createElement('button');
       document.body.append(other);
       try {
+        tab();
         button().focus();
         other.focus();
         button().focus();
@@ -188,9 +195,73 @@ describe('鍵盤移動焦點之後的補捲', () => {
       focusAndRun();
       visible = true;
       button().blur();
+      tab();
       button().focus();
       button().blur();
       runFrames();
+      expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+    });
+
+    it('Shift+Tab：一樣補捲', () => {
+      setup();
+      top = -10;
+      focusAndRun({ shiftKey: true });
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalledTimes(1);
+    });
+
+    it('方向鍵在 radio 之間移動焦點：一樣補捲', () => {
+      setup();
+      for (const key of ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']) {
+        top = key === 'ArrowDown' || key === 'ArrowRight' ? 575 : -10;
+        focusAndRun({ key });
+      }
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalledTimes(4);
+    });
+
+    // 別的分頁改了名單時 RemoveFromReview 用 focus({ preventScroll: true }) 把焦點放回那一列；視窗拿回焦點時瀏覽器把
+    // 焦點還給原來的元素（Chromium 有視窗時）。都不是使用者移動焦點，頁面不能捲
+    it('不是按鍵移過去的焦點（程式呼叫 focus、視窗拿回焦點）：上緣在頁首底下、下緣在視窗底邊下面都不捲', () => {
+      setup();
+      for (const at of [-10, 575]) {
+        top = at;
+        button().blur();
+        window.dispatchEvent(new FocusEvent('focus'));
+        button().focus();
+        runFrames();
+      }
+      expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+    });
+
+    it('按了 Tab、焦點在之後的 task 才移動：不算按鍵移過去的', async () => {
+      setup();
+      top = -10;
+      button().blur();
+      tab();
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      button().focus();
+      runFrames();
+      expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+    });
+
+    // 瀏覽器在 keydown 的 listener 跑完之後先跑 microtask，再移動焦點：重設不能排在 microtask
+    it('keydown 之後的 microtask 跑完才移動焦點：照樣補捲', async () => {
+      setup();
+      top = -10;
+      button().blur();
+      tab();
+      await Promise.resolve();
+      await Promise.resolve();
+      button().focus();
+      runFrames();
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalledTimes(1);
+    });
+
+    it('Ctrl、Alt、Meta 加 Tab（切換瀏覽器分頁、視窗）、其他按鍵：不算', () => {
+      setup();
+      top = -10;
+      for (const init of [{ ctrlKey: true }, { altKey: true }, { metaKey: true }, { key: 'Enter' }, { key: ' ' }]) {
+        focusAndRun(init);
+      }
       expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
     });
   });

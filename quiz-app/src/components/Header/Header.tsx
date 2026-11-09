@@ -10,6 +10,9 @@ interface HeaderProps {
   accessibility: ReturnType<typeof useAccessibility>;
 }
 
+/** 會移動焦點的按鍵：Tab（含 Shift+Tab）、radio 之間的方向鍵 */
+const FOCUS_KEYS = new Set(['Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
+
 export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps) {
   const { settings, toggleDarkMode } = accessibility;
   const headerRef = useRef<HTMLElement>(null);
@@ -33,14 +36,23 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
   // 判斷時不扣 scroll-padding：一半在頁首底下的控制項不會捲出來。用鍵盤移動焦點時補捲一次。
   // 視窗底邊也一樣：Firefox 與 WebKit 往下 Tab 時，一部分在視窗下面的控制項有時不捲（main 上就有，差 2 到 36px）
   // 對話框不管：它們蓋在頁首上面、自己捲動（多半是 role="dialog" 的 div，不是 <dialog>），scroll-padding-top 跟它們無關
+  // 只補捲按鍵移過去的焦點（Tab、Shift+Tab、方向鍵在 radio 之間）：瀏覽器在 keydown 的同一個 task 裡移動焦點。
+  // 程式呼叫的 focus（別的分頁改了名單時 RemoveFromReview 用 preventScroll 把焦點放回那一列）、視窗拿回焦點時瀏覽器
+  // 把焦點還給原來的元素，都不是使用者移動焦點，頁面不能捲。加 Ctrl、Alt、Meta 的是切換瀏覽器分頁或視窗
   // 補捲排在下一個 frame。下一個按鍵或按下指標之前還沒跑到的就不跑：那時候頁面可能已經被別的東西捲過，
   // 例如按星號存不進去時捲出來的說明（ReviewNotice.tsx）。沒有新的畫面要畫時 WebKit 會把 frame 延後，
   // 實測 focus() 之後 200ms 才跑，把已經捲出來的說明又捲回視窗外
   useEffect(() => {
     let frame = 0;
+    let keyMove = false;
+    const onKeyDown = (e: KeyboardEvent) => {
+      cancelAnimationFrame(frame);
+      keyMove = FOCUS_KEYS.has(e.key) && !e.ctrlKey && !e.altKey && !e.metaKey;
+      if (keyMove) setTimeout(() => (keyMove = false));
+    };
     const onFocusIn = (e: FocusEvent) => {
       const target = e.target;
-      if (!(target instanceof Element)) return;
+      if (!keyMove || !(target instanceof Element)) return;
       if (target.closest('.app-header, dialog, [role="dialog"], [role="alertdialog"], [aria-modal="true"]')) return;
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
@@ -55,13 +67,13 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
     };
     const cancel = () => cancelAnimationFrame(frame);
     document.addEventListener('focusin', onFocusIn);
-    // capture：Tab 的 keydown 在焦點移動（focusin）之前，取消的是上一次的，不是這一次的
-    document.addEventListener('keydown', cancel, true);
+    // capture：Tab 的 keydown 在焦點移動（focusin）之前，取消的是上一次的，不是這一次的；頁面上的元素攔下來也聽得到
+    document.addEventListener('keydown', onKeyDown, true);
     document.addEventListener('pointerdown', cancel, true);
     return () => {
       cancel();
       document.removeEventListener('focusin', onFocusIn);
-      document.removeEventListener('keydown', cancel, true);
+      document.removeEventListener('keydown', onKeyDown, true);
       document.removeEventListener('pointerdown', cancel, true);
     };
   }, []);
