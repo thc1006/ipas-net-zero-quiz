@@ -199,6 +199,13 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
     sourceHintRef,
     `${source}|${config.subject}|${parsedQuestionCount}|${poolToggles}|${reviewLoading}`
   );
+  // 加強練習池的說明卡與頁首的徽章也是：別的分頁切換加強練習池時換字（說明卡拿掉抽題分布），變矮的話下面的題目來源與
+  // 開始測驗往上移。這個分頁自己切換、換來源（說明跟著換）、打開或收起抽題分布時從頭量。考科範圍只換抽題分布裡的數字
+  const [detailsToggles, setDetailsToggles] = useState(0);
+  const poolTipRef = useRef<HTMLElement>(null);
+  useKeepHeight(poolTipRef, `${source}|${poolToggles}|${detailsToggles}`);
+  const badgesRef = useRef<HTMLDivElement>(null);
+  useKeepHeight(badgesRef, poolToggles);
 
   return (
     <div className="home-page animate-fade-in">
@@ -213,7 +220,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           <span className="hero-subtitle__phrase">（初級）</span>
           <span className="hero-subtitle__phrase">考古題線上測驗</span>
         </p>
-        <div className="stats-badges">
+        <div className="stats-badges" ref={badgesRef}>
           <span className="badge badge-success">
             <span className="material-icons sm">quiz</span>
             {stats.total} 題
@@ -317,6 +324,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
 
         return (
           <section
+            ref={poolTipRef}
             className={`practice-pool-tip card ${modifierClass}`}
             data-testid="practice-pool-tip"
             aria-labelledby="practice-pool-tip-heading"
@@ -333,7 +341,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
               <p className="practice-pool-tip__desc">{desc}</p>
               {/* 抽題分布畫的是主題庫加練習池；只出官方題目時抽題範圍不是這個，不顯示 */}
               {enabled && source === 'all' && (
-                <details className="practice-pool-tip__details">
+                <details className="practice-pool-tip__details" onToggle={() => setDetailsToggles((n) => n + 1)}>
                   <summary className="practice-pool-tip__details-summary">
                     查看抽題分布
                   </summary>

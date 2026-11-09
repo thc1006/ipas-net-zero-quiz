@@ -294,6 +294,85 @@ describe('題數說明到使用者換選項之前不變矮', () => {
     }
   });
 
+  // 加強練習池的說明卡與頁首的徽章也一樣：別的分頁切換加強練習池時換字但不變矮，題目來源與下面的開始測驗不動
+  describe('加強練習池的說明卡與頁首的徽章', () => {
+    // jsdom 沒有排版。說明卡照看得到的列數給高度（標題、說明、按鈕、抽題分布的每一列；收起來的 <details> 只算 summary），
+    // 其他照字數
+    const shown = (el: Element): number =>
+      el.matches('[data-testid="practice-pool-tip"]')
+        ? [...el.querySelectorAll('h3, p, summary, button, li')].filter((e) => {
+            const details = e.closest('details');
+            return !details || details.open || e.tagName === 'SUMMARY';
+          }).length * 20
+        : (el.textContent ?? '').length;
+    let rect: { mockRestore: () => void };
+    beforeEach(() => {
+      localStorage.setItem('practice-pool-ai-opt-in', '1');
+      __setPracticePoolForTesting(buildFixturePool());
+      rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+        return { height: shown(this) } as DOMRect;
+      });
+    });
+    afterEach(() => rect.mockRestore());
+    const otherTab = (value: string) =>
+      act(() => {
+        store.set('practice-pool-enabled', value);
+        window.dispatchEvent(new StorageEvent('storage', { key: 'practice-pool-enabled' }));
+      });
+    const tip = () => screen.getByTestId('practice-pool-tip');
+    const badges = () => document.querySelector('.stats-badges') as HTMLElement;
+    const toggle = (name: '啟用加強練習池' | '停用加強練習池') => fireEvent.click(screen.getByRole('button', { name }));
+
+    it('說明卡：別的分頁停用，抽題分布與說明換掉，高度留著；這個分頁自己按啟用、停用才從頭量', () => {
+      localStorage.setItem('practice-pool-enabled', '1');
+      render(<HomePage onStartQuiz={() => {}} />);
+      const tall = shown(tip());
+      expect(tip().style.minHeight).toBe(`${tall}px`);
+      otherTab('0');
+      expect(screen.getByRole('button', { name: '啟用加強練習池' })).toBeInTheDocument();
+      expect(shown(tip()), '前提：停用之後說明卡比較短').toBeLessThan(tall);
+      expect(tip().style.minHeight).toBe(`${tall}px`);
+      otherTab('1');
+      otherTab('0');
+      expect(tip().style.minHeight).toBe(`${tall}px`);
+      toggle('啟用加強練習池');
+      toggle('停用加強練習池');
+      const now = shown(tip());
+      expect(tip().style.minHeight).toBe(`${now}px`);
+    });
+
+    it('頁首的徽章：別的分頁啟用，徽章的字換短，高度留著；這個分頁自己切換才從頭量', () => {
+      localStorage.setItem('practice-pool-enabled', '0');
+      render(<HomePage onStartQuiz={() => {}} />);
+      const tall = shown(badges());
+      expect(badges().style.minHeight).toBe(`${tall}px`);
+      otherTab('1');
+      expect(screen.getByRole('button', { name: '停用加強練習池' })).toBeInTheDocument();
+      expect(shown(badges()), '前提：啟用之後徽章的字比較短').toBeLessThan(tall);
+      expect(badges().style.minHeight).toBe(`${tall}px`);
+      toggle('停用加強練習池');
+      toggle('啟用加強練習池');
+      expect(badges().style.minHeight).toBe(`${shown(badges())}px`);
+    });
+
+    it('說明卡：使用者換題目來源、打開又收起抽題分布，從頭量', () => {
+      localStorage.setItem('practice-pool-enabled', '1');
+      render(<HomePage onStartQuiz={() => {}} />);
+      const closed = shown(tip());
+      const details = tip().querySelector('details')!;
+      details.open = true;
+      fireEvent(details, new Event('toggle'));
+      expect(shown(tip()), '前提：打開之後比較高').toBeGreaterThan(closed);
+      details.open = false;
+      fireEvent(details, new Event('toggle'));
+      expect(tip().style.minHeight).toBe(`${closed}px`);
+      choose('official');
+      const official = shown(tip());
+      expect(official, '前提：只出官方題目時說明卡比較短').toBeLessThan(closed);
+      expect(tip().style.minHeight).toBe(`${official}px`);
+    });
+  });
+
   // 使用者自己換了會改說明的選項：從頭量，不留著上一個選項的高度（每一種都要，只看來源的話其他幾種留下空白）
   describe('使用者自己換選項：從頭量', () => {
     let rect: { mockRestore: () => void };

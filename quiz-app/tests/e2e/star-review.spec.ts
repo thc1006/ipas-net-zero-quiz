@@ -2077,3 +2077,54 @@ test.describe('首頁：別的分頁停用加強練習池之後換深色模式�
     });
   }
 });
+
+// 別的分頁停用加強練習池：首頁的說明卡拿掉抽題分布、頁首的徽章換字（Firefox 412 寬時徽章從兩行變一行），變矮的話下面的
+// 題目來源與開始測驗往上移。高度留著，這個分頁自己切換才從頭量
+test.describe('首頁：別的分頁停用加強練習池，說明卡與徽章不變矮，題目來源與開始測驗不動', () => {
+  for (const viewport of [
+    { width: 1280, height: 720 },
+    { width: 412, height: 839 },
+  ]) {
+    test(`${viewport.width}x${viewport.height}`, async ({ page, context }) => {
+      await page.setViewportSize(viewport);
+      await page.addInitScript(() => {
+        if (window.sessionStorage.getItem('seeded')) return;
+        window.sessionStorage.setItem('seeded', '1');
+        window.localStorage.setItem('practice-pool-enabled', '1');
+        window.localStorage.setItem('practice-pool-ai-opt-in', '1');
+      });
+      await gotoHome(page);
+      await expect(page.locator('.practice-pool-tip__details')).toBeVisible();
+      await settleAnimations(page);
+      await source(page).focus();
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await nextFrames(page);
+      const spot = () =>
+        page.evaluate(() => ({
+          source: document.getElementById('source')!.getBoundingClientRect().top,
+          start: [...document.querySelectorAll('button')].find((b) => /開始測驗/.test(b.textContent ?? ''))!.getBoundingClientRect().top,
+          scrollY: window.scrollY,
+        }));
+      const before = await spot();
+      const other = await context.newPage();
+      await other.goto('/');
+      await other.evaluate(() => window.localStorage.setItem('practice-pool-enabled', '0'));
+      await other.close();
+      await expect(page.getByRole('button', { name: '啟用加強練習池' })).toBeVisible();
+      await expect(page.locator('.practice-pool-tip__details'), '前提：抽題分布拿掉了').toHaveCount(0);
+      await nextFrames(page);
+      expect(await spot(), '題目來源或開始測驗移動了').toEqual(before);
+      await expect(source(page)).toBeFocused();
+      // 這個分頁自己按啟用、停用：照現在的內容從頭量，不留著啟用時的高度
+      await page.getByRole('button', { name: '啟用加強練習池' }).click();
+      await page.getByRole('button', { name: '停用加強練習池' }).click();
+      await nextFrames(page);
+      const tip = await page.getByTestId('practice-pool-tip').evaluate((el: HTMLElement) => {
+        const box = el.getBoundingClientRect().height;
+        el.style.minHeight = '';
+        return { box, content: el.getBoundingClientRect().height };
+      });
+      expect(tip.box, `自己停用之後還留著啟用時的高度 ${JSON.stringify(tip)}`).toBeLessThan(tip.content + 1);
+    });
+  }
+});
