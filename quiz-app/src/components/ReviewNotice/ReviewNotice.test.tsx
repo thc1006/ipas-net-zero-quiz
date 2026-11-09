@@ -684,6 +684,14 @@ describe('提示在視窗外時', () => {
       press({ top: 20, bottom: 80 }, -20);
       expect(scrollBy()).toHaveBeenLastCalledWith(0, -40);
     });
+
+    it('說明在頁首底下、位置有小數：往上多捲不到 1px，上緣不留在頁首底下', () => {
+      render(<Card />);
+      press({ top: 20.5, bottom: 80.5 }, -19.5);
+      expect(scrollBy()).toHaveBeenLastCalledWith(0, -40);
+      press({ top: 20.4, bottom: 80.4 }, -19.6);
+      expect(scrollBy()).toHaveBeenLastCalledWith(0, -40);
+    });
   });
 
 });
