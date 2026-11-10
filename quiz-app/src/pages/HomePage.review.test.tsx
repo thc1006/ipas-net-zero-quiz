@@ -486,6 +486,7 @@ describe('只出官方題目：首頁不隨加強練習池啟用與否改變', (
       expect(screen.getByTestId('practice-pool-tip')).toHaveTextContent('加強練習池不論有沒有啟用，這一場都不會混入');
       // 首頁上切換加強練習池的按鈕（說明卡、頁首的徽章）在這個模式都不出現：按了也不影響這一場
       expect(screen.queryByRole('button', { name: /加強練習/ })).toBeNull();
+      expect(within(screen.getByTestId('practice-pool-tip')).queryAllByRole('button')).toEqual([]);
       cleanup();
     }
   });
