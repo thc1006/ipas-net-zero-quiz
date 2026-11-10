@@ -42,21 +42,25 @@ export function Header({ onOpenSettings, onGoHome, accessibility }: HeaderProps)
   // 補捲排在下一個 frame。下一個按鍵或按下指標之前還沒跑到的就不跑：那時候頁面可能已經被別的東西捲過，
   // 例如按星號存不進去時捲出來的說明（ReviewNotice.tsx）。沒有新的畫面要畫時 WebKit 會把 frame 延後，
   // 實測 focus() 之後 200ms 才跑，把已經捲出來的說明又捲回視窗外
+  // WebKit 用方向鍵在原生的 radio 群組裡移動焦點時（考試模式的選項），新的 radio 不算 :focus-visible，自己也不捲：
+  // 方向鍵移到的 radio 不看 :focus-visible
   useEffect(() => {
     let frame = 0;
-    let keyMove = false;
+    // 移動焦點的那一個按鍵，沒有是空字串
+    let keyMove = '';
     const onKeyDown = (e: KeyboardEvent) => {
       cancelAnimationFrame(frame);
-      keyMove = FOCUS_KEYS.has(e.key) && !e.ctrlKey && !e.altKey && !e.metaKey;
-      if (keyMove) setTimeout(() => (keyMove = false));
+      keyMove = FOCUS_KEYS.has(e.key) && !e.ctrlKey && !e.altKey && !e.metaKey ? e.key : '';
+      if (keyMove) setTimeout(() => (keyMove = ''));
     };
     const onFocusIn = (e: FocusEvent) => {
       const target = e.target;
       if (!keyMove || !(target instanceof Element)) return;
       if (target.closest('.app-header, dialog, [role="dialog"], [role="alertdialog"], [aria-modal="true"]')) return;
+      const arrowRadio = keyMove !== 'Tab' && target.matches('input[type="radio"]');
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        if (document.activeElement !== target || !target.matches(':focus-visible')) return;
+        if (document.activeElement !== target || !(arrowRadio || target.matches(':focus-visible'))) return;
         // 藏起來的 radio、checkbox 沒有大小，看得到的是外面的 label
         const shown = target.getBoundingClientRect().height > 0 ? target : (target.closest('label') ?? target);
         const limit = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;

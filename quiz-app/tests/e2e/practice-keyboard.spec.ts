@@ -560,4 +560,28 @@ test.describe('練習模式的鍵盤作答', () => {
     await expect(page.getByText('第 2 題')).toBeVisible();
     await expect(page.locator('.question-stem')).not.toBeFocused();
   });
+
+  // 考試模式是原生的 radio 群組。WebKit 用方向鍵移過去的 radio 不算 :focus-visible，自己也不捲：
+  // 640x360 時移到的選項被頁首或視窗底邊蓋住 34px
+  for (const [width, height] of [[640, 360], [360, 640], [320, 256]]) {
+    test(`考試模式 ${width}x${height}：方向鍵移到的選項在 header 下面、視窗之內`, async ({ page }) => {
+      await page.setViewportSize({ width, height });
+      await startQuiz(page, 'exam');
+      await tabIntoOptions(page);
+      const moved = async (i: number, way: string) => {
+        await expect(options(page).nth(i)).toBeFocused();
+        // 補捲排在下一個 frame
+        await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+        await expectBelowHeader(page, page.locator('.option-item').nth(i), `往${way}到第 ${i + 1} 個選項`);
+      };
+      for (let i = 1; i < 4; i++) {
+        await page.keyboard.press('ArrowDown');
+        await moved(i, '下');
+      }
+      for (let i = 2; i >= 0; i--) {
+        await page.keyboard.press('ArrowUp');
+        await moved(i, '上');
+      }
+    });
+  }
 });

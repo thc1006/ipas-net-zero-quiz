@@ -61,6 +61,7 @@ describe('鍵盤移動焦點之後的補捲', () => {
       <>
         <HeaderHarness />
         <button type="button">頁面上的按鈕</button>
+        <input type="radio" name="選項" aria-label="頁面上的 radio" />
       </>
     );
   }
@@ -216,6 +217,44 @@ describe('鍵盤移動焦點之後的補捲', () => {
         focusAndRun({ key });
       }
       expect(Element.prototype.scrollIntoView).toHaveBeenCalledTimes(4);
+    });
+
+    // WebKit 用方向鍵在原生的 radio 群組裡移動焦點（考試模式的選項）時，新的 radio 不算 :focus-visible，也不捲：
+    // 640x360 時選項被頁首或視窗底邊蓋住 34px
+    it('方向鍵移到的 radio 不是 :focus-visible（WebKit 原生的 radio 群組）：照樣補捲', () => {
+      setup();
+      visible = false;
+      const radio = screen.getByRole('radio', { name: '頁面上的 radio' });
+      for (const key of ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']) {
+        top = key === 'ArrowDown' || key === 'ArrowRight' ? 575 : -10;
+        radio.blur();
+        fireEvent.keyDown(document.body, { key });
+        radio.focus();
+        runFrames();
+      }
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalledTimes(4);
+      expect(vi.mocked(Element.prototype.scrollIntoView).mock.instances).toEqual([radio, radio, radio, radio]);
+    });
+
+    it('不是 :focus-visible：Tab 移到的 radio、方向鍵移到的不是 radio、radio 的焦點已經換走，都不捲', () => {
+      setup();
+      top = -10;
+      visible = false;
+      const radio = screen.getByRole('radio', { name: '頁面上的 radio' });
+      radio.blur();
+      tab();
+      radio.focus();
+      runFrames();
+      button().blur();
+      fireEvent.keyDown(document.body, { key: 'ArrowDown' });
+      button().focus();
+      runFrames();
+      radio.blur();
+      fireEvent.keyDown(document.body, { key: 'ArrowDown' });
+      radio.focus();
+      radio.blur();
+      runFrames();
+      expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
     });
 
     // 別的分頁改了名單時 RemoveFromReview 用 focus({ preventScroll: true }) 把焦點放回那一列；視窗拿回焦點時瀏覽器把
