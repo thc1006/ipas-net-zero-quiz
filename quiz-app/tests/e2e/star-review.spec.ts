@@ -2045,25 +2045,21 @@ test('設定頁把字級從特大換回標準：留著的高度照新的字級�
 });
 
 // useAccessibility 每換一個設定都把 data-font-size 照原來的值再寫一次：只換顏色時不能當成換了字級，把留著的高度量掉
-test.describe('首頁：別的分頁停用加強練習池之後換深色模式，題數說明留著的高度不變，開始測驗不動', () => {
+test.describe('首頁：別的分頁清掉星號之後換深色模式，題數說明留著的高度不變，開始測驗不動', () => {
   for (const way of ['頁首的按鈕', '系統換成深色'] as const) {
     test(way, async ({ page, context }) => {
       await page.emulateMedia({ colorScheme: 'light' });
-      await page.addInitScript(() => {
-        if (window.sessionStorage.getItem('seeded')) return;
-        window.sessionStorage.setItem('seeded', '1');
-        window.localStorage.setItem('practice-pool-enabled', '1');
-        window.localStorage.setItem('practice-pool-ai-opt-in', '1');
-      });
-      await gotoHome(page);
-      await source(page).selectOption('official');
+      await gotoHome(page, { stars: [q1, q2, q3].map(idOf) });
+      await source(page).selectOption('review:starred');
+      await page.locator('#count').fill('10');
+      await page.locator('#count').blur();
       const hint = page.locator('#source-hint');
-      await expect(hint).toContainText('加強練習池在這個模式不會混入');
+      await expect(hint).toContainText('本次會出 3 題');
       const other = await context.newPage();
       await other.goto('/');
-      await other.evaluate(() => window.localStorage.setItem('practice-pool-enabled', '0'));
+      await other.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 1, seeded: true, stars: {}, wrong: {} })), KEY);
       await other.close();
-      await expect(hint).not.toContainText('加強練習池');
+      await expect(hint).toHaveText(/還沒有星號題/);
       await nextFrames(page);
       const spot = () => startButton(page).evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
       const kept = () => hint.evaluate((el: HTMLElement) => el.style.minHeight);
@@ -2124,6 +2120,48 @@ test.describe('首頁：別的分頁停用加強練習池，說明卡與徽章�
         return { box, content: el.getBoundingClientRect().height };
       });
       expect(tip.box, `自己停用之後還留著啟用時的高度 ${JSON.stringify(tip)}`).toBeLessThan(tip.content + 1);
+    });
+  }
+});
+
+// 只出官方題目時加強練習池一題都不混入，首頁上的東西不隨它啟用與否改變。之前別的分頁啟用時題數說明多一句（長 19.2），
+// 停用時說明卡換成比較長的說明（長 22.4），下面的開始測驗往下移，指標底下的開始測驗跑掉；捲到最底時題目來源也移動
+test.describe('首頁只出官方題目：別的分頁啟用、停用加強練習池，題目來源與開始測驗不動', () => {
+  for (const where of ['最上面', '最底'] as const) {
+    test(`1280x1000 捲在${where}`, async ({ page, context }) => {
+      await page.setViewportSize({ width: 1280, height: 1000 });
+      await page.addInitScript(() => {
+        if (window.sessionStorage.getItem('seeded')) return;
+        window.sessionStorage.setItem('seeded', '1');
+        window.localStorage.setItem('practice-pool-enabled', '0');
+        window.localStorage.setItem('practice-pool-ai-opt-in', '1');
+      });
+      await gotoHome(page);
+      const sources = await source(page).evaluate((el: HTMLSelectElement) => [...el.options].map((o) => o.value));
+      for (const value of ['official', sources.find((v) => v.startsWith('exam:'))!, sources.find((v) => v.startsWith('sample:'))!]) {
+        await source(page).selectOption(value);
+        await settleAnimations(page);
+        await source(page).focus();
+        await page.evaluate((top) => window.scrollTo(0, top ? 0 : document.documentElement.scrollHeight), where === '最上面');
+        await nextFrames(page);
+        const spot = () =>
+          page.evaluate(() => ({
+            source: document.getElementById('source')!.getBoundingClientRect().top,
+            start: [...document.querySelectorAll('button')].find((b) => /開始測驗/.test(b.textContent ?? ''))!.getBoundingClientRect().top,
+            scrollY: window.scrollY,
+          }));
+        const before = await spot();
+        for (const to of ['1', '0']) {
+          const other = await context.newPage();
+          await other.goto('/');
+          await other.evaluate((v) => window.localStorage.setItem('practice-pool-enabled', v), to);
+          await other.close();
+          await expect.poll(() => page.evaluate(() => window.localStorage.getItem('practice-pool-enabled'))).toBe(to);
+          await nextFrames(page);
+          expect(await spot(), `${value}：別的分頁改成 ${to} 之後題目來源或開始測驗移動了`).toEqual(before);
+          await expect(source(page)).toBeFocused();
+        }
+      }
     });
   }
 });

@@ -87,6 +87,9 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   const source = config.questionSource ?? 'all';
   const review = useReviewQuestions(config.subject);
   const reviewSelected = isReviewSource(source);
+  // 只出官方題目（全部官方題目、某一場公告試題、某一版參考樣題）：加強練習池一題都不混入，首頁上的東西都不隨它啟用與否
+  // 改變。別的分頁切換時說明卡、題數說明、頁首的徽章換字或長高的話，下面的題目來源與開始測驗會移動
+  const officialOnly = source !== 'all' && !reviewSelected;
   const sourceAvailable = useMemo(() => {
     if (source === 'all') return null;
     return isReviewSource(source)
@@ -107,7 +110,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
     setOptInDialogOpen(true);
   }, [practiceMode.hasOptedIn]);
 
-  // 這個分頁自己切換加強練習池的次數：題數說明從頭量。別的分頁切換的（storage 事件）不算，說明換字但不變矮
+  // 這個分頁自己切換加強練習池的次數：說明卡與徽章從頭量。別的分頁切換的（storage 事件）不算，換字但不變矮
   const [poolToggles, setPoolToggles] = useState(0);
 
   const handlePracticeToggle = useCallback(() => {
@@ -192,20 +195,18 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
 
   const countHintId = 'count-hint';
   const sourceHintId = 'source-hint';
-  // 別的分頁改了星號、待複習錯題或加強練習池時，題數說明的字跟著換。變短的話它下面的開始測驗往上移：
-  // 使用者自己換來源、考科範圍、題數、在這個分頁切換加強練習池，或練習池載完之前不變矮
+  // 別的分頁改了星號或待複習錯題時，題數說明的字跟著換。變短的話它下面的開始測驗往上移：
+  // 使用者自己換來源、考科範圍、題數，或練習池載完之前不變矮
   const sourceHintRef = useRef<HTMLParagraphElement>(null);
-  useKeepHeight(
-    sourceHintRef,
-    `${source}|${config.subject}|${parsedQuestionCount}|${poolToggles}|${reviewLoading}`
-  );
+  useKeepHeight(sourceHintRef, `${source}|${config.subject}|${parsedQuestionCount}|${reviewLoading}`);
   // 加強練習池的說明卡與頁首的徽章也是：別的分頁切換加強練習池時換字（說明卡拿掉抽題分布），變矮的話下面的題目來源與
-  // 開始測驗往上移。這個分頁自己切換、換來源（說明跟著換）、打開或收起抽題分布時從頭量。考科範圍只換抽題分布裡的數字
+  // 開始測驗往上移。這個分頁自己切換、換來源（說明跟著換，只出官方題目時徽章收起來）、打開或收起抽題分布時從頭量。
+  // 考科範圍只換抽題分布裡的數字
   const [detailsToggles, setDetailsToggles] = useState(0);
   const poolTipRef = useRef<HTMLElement>(null);
   useKeepHeight(poolTipRef, `${source}|${poolToggles}|${detailsToggles}`);
   const badgesRef = useRef<HTMLDivElement>(null);
-  useKeepHeight(badgesRef, poolToggles);
+  useKeepHeight(badgesRef, `${poolToggles}|${officialOnly}`);
 
   return (
     <div className="home-page animate-fade-in">
@@ -231,7 +232,8 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           <span className="badge badge-info">
             考科二 {stats.subject2} 題
           </span>
-          {practiceMode.enabled ? (
+          {/* 只出官方題目時不放：切換加強練習池不影響這一場（說明卡說明），也不隨它的狀態換字 */}
+          {officialOnly ? null : practiceMode.enabled ? (
             <button
               type="button"
               className="badge badge-warning badge-button"
@@ -284,22 +286,28 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
 
       {/* 加強練習池 tip card — 隨啟用狀態切換內容，避免突然消失造成困惑 */}
       {(() => {
-        const { enabled, hasOptedIn } = practiceMode;
+        const { hasOptedIn } = practiceMode;
+        // 只出官方題目時照沒啟用的樣子畫（圖示、樣式），不放開關
+        const enabled = practiceMode.enabled && !officialOnly;
         let title: string;
         let desc: string;
         let ctaLabel: string;
         let ctaIcon: string;
         let modifierClass: string;
 
-        if (enabled) {
+        if (officialOnly) {
+          // 只出官方題目時練習池不混入（#128）：說的是啟用、沒啟用都對的話
+          title = '加強練習池在這個模式不混入';
+          desc = `目前的題目來源只出${questionSourceNoun(source)}，加強練習池不論有沒有啟用，這一場都不會混入。題目來源選「全部題目」時，可以在這裡啟用或停用這 ${PRACTICE_POOL_COUNTS.total} 題（${PRACTICE_POOL_COUNTS.externalMock} 模擬 + ${PRACTICE_POOL_COUNTS.aiGenerated} AI 產題）。`;
+          ctaLabel = '';
+          ctaIcon = '';
+          modifierClass = '';
+        } else if (enabled) {
           title = '加強練習池已啟用';
-          // 只出官方題目時練習池不混入（#128），這裡不能再說「下一場會混入」
           desc =
             source === 'all'
               ? `下一場測驗會額外混入 ${PRACTICE_POOL_COUNTS.total} 題（${PRACTICE_POOL_COUNTS.externalMock} 模擬 + ${PRACTICE_POOL_COUNTS.aiGenerated} AI 產題；每題附來源徽章）。`
-              : reviewSelected
-                ? reviewPoolNote
-                : `目前的題目來源只出${questionSourceNoun(source)}，這一場不會混入練習池；題目來源選「全部題目」時，才會額外混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
+              : reviewPoolNote;
           ctaLabel = '停用加強練習';
           ctaIcon = 'remove_circle_outline';
           modifierClass = 'practice-pool-tip--enabled';
@@ -308,9 +316,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           desc =
             source === 'all'
               ? `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章），啟用後下一場練習會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`
-              : reviewSelected
-                ? reviewPoolNote
-                : `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章）。目前的題目來源只出${questionSourceNoun(source)}，啟用後這一場也不會混入；題目來源選「全部題目」時才會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
+              : reviewPoolNote;
           ctaLabel = `啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習`;
           ctaIcon = 'add_circle_outline';
           modifierClass = '';
@@ -353,14 +359,16 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
                   </div>
                 </details>
               )}
-              <button
-                type="button"
-                className={`btn ${enabled ? 'btn-secondary' : 'btn-primary'} practice-pool-tip__cta`}
-                onClick={handlePracticeToggle}
-              >
-                <span className="material-icons sm">{ctaIcon}</span>
-                {ctaLabel}
-              </button>
+              {!officialOnly && (
+                <button
+                  type="button"
+                  className={`btn ${enabled ? 'btn-secondary' : 'btn-primary'} practice-pool-tip__cta`}
+                  onClick={handlePracticeToggle}
+                >
+                  <span className="material-icons sm">{ctaIcon}</span>
+                  {ctaLabel}
+                </button>
+              )}
             </div>
           </section>
         );
@@ -443,7 +451,6 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
                       {questionSourceNoun(source)}，本次會出 {sourceAvailable} 題。
                     </span>
                   )}
-                  {practiceMode.enabled && !reviewSelected && <span>加強練習池在這個模式不會混入。</span>}
                 </>
               )}
               {reviewSelected && review.poolFailed && (

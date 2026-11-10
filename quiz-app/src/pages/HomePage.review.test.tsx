@@ -223,12 +223,12 @@ describe('題目來源：星號題與待複習錯題', () => {
     expect(screen.getByTestId('practice-pool-tip')).not.toHaveTextContent('這一場不會混入練習池');
   });
 
-  it('官方來源的說明一字不變', () => {
+  it('官方來源：題數說明不提加強練習池，說明卡說這個模式不混入', () => {
     localStorage.setItem('practice-pool-enabled', '1');
     render(<HomePage onStartQuiz={() => {}} />);
     choose('official');
-    expect(hint()).toHaveTextContent('加強練習池在這個模式不會混入');
-    expect(screen.getByTestId('practice-pool-tip')).toHaveTextContent('這一場不會混入練習池');
+    expect(hint()).not.toHaveTextContent('加強練習池');
+    expect(screen.getByTestId('practice-pool-tip')).toHaveTextContent('加強練習池不論有沒有啟用，這一場都不會混入');
   });
 });
 
@@ -253,39 +253,6 @@ describe('題數說明到使用者換選項之前不變矮', () => {
       expect((hint().textContent ?? '').length).toBeLessThan(tall);
       expect(hint().style.minHeight).toBe(`${tall}px`);
       choose('review:wrong');
-      const now = (hint().textContent ?? '').length;
-      expect(now).toBeLessThan(tall);
-      expect(hint().style.minHeight).toBe(`${now}px`);
-    } finally {
-      rect.mockRestore();
-    }
-  });
-
-  it('別的分頁停用加強練習池：說明少一句，高度留著；這個分頁自己停用才從頭量', () => {
-    localStorage.setItem('practice-pool-enabled', '1');
-    localStorage.setItem('practice-pool-ai-opt-in', '1');
-    __setPracticePoolForTesting(buildFixturePool());
-    const rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
-      return { height: (this.textContent ?? '').length } as DOMRect;
-    });
-    const otherTab = (value: string) =>
-      act(() => {
-        store.set('practice-pool-enabled', value);
-        window.dispatchEvent(new StorageEvent('storage', { key: 'practice-pool-enabled' }));
-      });
-    try {
-      render(<HomePage onStartQuiz={() => {}} />);
-      choose('official');
-      expect(hint()).toHaveTextContent('加強練習池在這個模式不會混入');
-      const tall = (hint().textContent ?? '').length;
-      otherTab('0');
-      expect(screen.getByRole('button', { name: '啟用加強練習池' })).toBeInTheDocument();
-      expect(hint()).not.toHaveTextContent('加強練習池');
-      expect(hint().style.minHeight).toBe(`${tall}px`);
-      otherTab('1');
-      expect(hint().style.minHeight).toBe(`${tall}px`);
-      // 這個分頁自己按：照現在的內容從頭量
-      fireEvent.click(screen.getByRole('button', { name: '停用加強練習池' }));
       const now = (hint().textContent ?? '').length;
       expect(now).toBeLessThan(tall);
       expect(hint().style.minHeight).toBe(`${now}px`);
@@ -367,6 +334,19 @@ describe('題數說明到使用者換選項之前不變矮', () => {
       expect(badges().style.minHeight).toBe(`${now}px`);
     });
 
+    it('頁首的徽章：換成只出官方題目（切換的徽章收起來）、再換回全部題目，從頭量', () => {
+      localStorage.setItem('practice-pool-enabled', '0');
+      render(<HomePage onStartQuiz={() => {}} />);
+      const all = shown(badges());
+      expect(badges().style.minHeight).toBe(`${all}px`);
+      choose('official');
+      const official = shown(badges());
+      expect(official, '前提：只出官方題目時徽章少一個').toBeLessThan(all);
+      expect(badges().style.minHeight).toBe(`${official}px`);
+      choose('all');
+      expect(badges().style.minHeight).toBe(`${all}px`);
+    });
+
     it('說明卡：使用者換題目來源、打開又收起抽題分布，從頭量', () => {
       localStorage.setItem('practice-pool-enabled', '1');
       render(<HomePage onStartQuiz={() => {}} />);
@@ -428,19 +408,6 @@ describe('題數說明到使用者換選項之前不變矮', () => {
       shrank(tall);
     });
 
-    it('加強練習池', () => {
-      localStorage.setItem('practice-pool-enabled', '1');
-      localStorage.setItem('practice-pool-ai-opt-in', '1');
-      __setPracticePoolForTesting(buildFixturePool());
-      render(<HomePage onStartQuiz={() => {}} />);
-      choose('official');
-      expect(hint()).toHaveTextContent('加強練習池在這個模式不會混入');
-      const tall = (hint().textContent ?? '').length;
-      fireEvent.click(screen.getByRole('button', { name: '停用加強練習池' }));
-      expect(hint()).not.toHaveTextContent('加強練習池');
-      shrank(tall);
-    });
-
     it('練習池載入完', async () => {
       const fixture = buildFixturePool();
       let resolve!: (p: typeof fixture) => void;
@@ -456,5 +423,81 @@ describe('題數說明到使用者換選項之前不變矮', () => {
       await waitFor(() => expect(hint()).toHaveTextContent('可出 1 題'));
       shrank(500);
     });
+  });
+});
+
+// 只出官方題目時加強練習池一題都不混入：首頁上的東西（說明卡、題數說明、頁首的徽章）都不隨它啟用與否改變。
+// 別的分頁切換時這裡換字、長高的話，下面的題目來源與開始測驗會移動，指標下面的開始測驗跑掉
+describe('只出官方題目：首頁不隨加強練習池啟用與否改變', () => {
+  const page = () => document.querySelector('.home-page')!.outerHTML;
+  const officialSources = () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    const values = within(source()).getAllByRole('option').map((o) => (o as HTMLOptionElement).value);
+    cleanup();
+    return ['official', values.find((v) => v.startsWith('exam:'))!, values.find((v) => v.startsWith('sample:'))!];
+  };
+  const pool = (enabled: string | null, optedIn: string | null) => {
+    for (const [key, value] of [
+      ['practice-pool-enabled', enabled],
+      ['practice-pool-ai-opt-in', optedIn],
+    ] as const) {
+      if (value === null) store.delete(key);
+      else store.set(key, value);
+    }
+  };
+  const otherTab = (enabled: string | null, optedIn: string | null) =>
+    act(() => {
+      pool(enabled, optedIn);
+      window.dispatchEvent(new StorageEvent('storage', { key: 'practice-pool-enabled' }));
+    });
+  // 啟用、同意過但沒啟用、還沒同意
+  const states = [
+    ['1', '1'],
+    ['0', '1'],
+    [null, null],
+  ] as const;
+
+  it('三種官方來源都是：啟用、沒啟用、還沒同意，畫出來的首頁一樣', () => {
+    for (const value of officialSources()) {
+      const shown = states.map(([enabled, optedIn]) => {
+        pool(enabled, optedIn);
+        render(<HomePage onStartQuiz={() => {}} />);
+        choose(value);
+        const html = page();
+        cleanup();
+        return html;
+      });
+      expect(shown[1], `${value}：沒啟用`).toBe(shown[0]);
+      expect(shown[2], `${value}：還沒同意`).toBe(shown[0]);
+    }
+  });
+
+  it('別的分頁停用、啟用、撤回同意：首頁一個字都不換；說明卡說這個模式不混入', () => {
+    __setPracticePoolForTesting(buildFixturePool());
+    for (const value of officialSources()) {
+      pool('1', '1');
+      render(<HomePage onStartQuiz={() => {}} />);
+      choose(value);
+      const before = page();
+      for (const [enabled, optedIn] of [['0', '1'], ['1', '1'], [null, null], ['1', '1']] as const) {
+        otherTab(enabled, optedIn);
+        expect(page(), `${value}：別的分頁改成 ${enabled}/${optedIn}`).toBe(before);
+      }
+      expect(screen.getByTestId('practice-pool-tip')).toHaveTextContent('加強練習池不論有沒有啟用，這一場都不會混入');
+      // 首頁上切換加強練習池的按鈕（說明卡、頁首的徽章）在這個模式都不出現：按了也不影響這一場
+      expect(screen.queryByRole('button', { name: /加強練習/ })).toBeNull();
+      cleanup();
+    }
+  });
+
+  it('換回全部題目：說明卡與徽章照加強練習池的狀態畫，可以切換', () => {
+    pool('1', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    choose('official');
+    choose('all');
+    expect(screen.getByTestId('practice-pool-tip')).toHaveTextContent('下一場測驗會額外混入');
+    fireEvent.click(screen.getByRole('button', { name: '停用加強練習池' }));
+    expect(screen.getByRole('button', { name: '啟用加強練習池' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /啟用 \+\d+ 題加強練習/ })).toBeInTheDocument();
   });
 });
