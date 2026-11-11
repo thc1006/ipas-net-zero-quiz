@@ -15,7 +15,8 @@ const USER_INPUT = ['wheel', 'touchmove', 'keydown', 'pointerdown'];
 
 /**
  * 回傳 hold(el)：在改 state 的事件裡呼叫，這個元件下一次畫完（layout effect，還沒畫到畫面上）時把 el 捲回原來的位置。
- * reveal：之後再捲到頁首下面、視窗之內（設定頁換字級時頁首自己也變高，原來的位置可能在頁首底下）。
+ * reveal：之後再捲到頁首下面、視窗之內（設定頁換字級時頁首自己也變高，原來的位置可能在頁首底下；首頁的開關換了樣式自己
+ * 變高，在視窗底邊的話下緣超出）。
  * 要排在會改高度的 layout effect（useKeepHeight）後面：它們先改好 min-height 再量
  */
 export function useHoldPosition(reveal = false): (el: Element | null | undefined) => void {

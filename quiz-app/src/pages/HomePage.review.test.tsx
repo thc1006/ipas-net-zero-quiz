@@ -645,11 +645,12 @@ describe('使用者換了控制項：正在操作的那一個不移動', () => {
   beforeEach(() => {
     localStorage.setItem('practice-pool-ai-opt-in', '1');
     __setPracticePoolForTesting(buildFixturePool());
-    scrollY = 1000;
+    scrollY = 0;
     scrollBy = vi.fn((_x: number, y: number) => {
       scrollY += y;
     });
     vi.stubGlobal('scrollBy', scrollBy);
+    Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 100000 });
     rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
       const t = top(this);
       return { top: t, height: natural(this), bottom: t + natural(this) } as DOMRect;
@@ -658,6 +659,7 @@ describe('使用者換了控制項：正在操作的那一個不移動', () => {
   afterEach(() => {
     rect.mockRestore();
     vi.unstubAllGlobals();
+    Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 0 });
   });
 
   /** 換之前與之後：控制項的位置、上面那一段的高度 */
@@ -731,6 +733,20 @@ describe('使用者換了控制項：正在操作的那一個不移動', () => {
     );
     expect(after.above, '前提：說明卡換了高度').not.toBe(before.above);
     expect(after.top).toBe(before.top);
+  });
+
+  // 開關換了字自己變高（字級特大時框線換成實心高 2px）：在視窗底邊的話留在原來的位置之後下緣超出，再捲到露出來
+  it('說明卡的開關在視窗底邊、按下去之後自己變高：上緣留著，再捲到下緣露出來', () => {
+    localStorage.setItem('practice-pool-enabled', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    const cta = within(tipEl()!).getByRole('button');
+    const before = cta.getBoundingClientRect();
+    Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: before.bottom });
+    fireEvent.click(cta);
+    const after = cta.getBoundingClientRect();
+    expect(after.height, '前提：開關變高').toBeGreaterThan(before.height);
+    expect(after.bottom).toBe(before.bottom);
+    expect(scrollBy).toHaveBeenLastCalledWith(0, after.height - before.height);
   });
 
   it('沒有重畫（值沒變）：記下的位置不留到之後別的原因重畫才捲', async () => {

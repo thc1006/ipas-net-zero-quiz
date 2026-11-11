@@ -132,8 +132,9 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   // 與開關往上移（焦點可能在抽題分布上），說明卡底下留空白
   const poolDescRef = useRef<HTMLParagraphElement>(null);
   useKeepHeight(poolDescRef, `${source}|${poolToggles}`);
-  // 使用者換了控制項，上面的說明卡、題數說明跟著換高度：正在操作的那一個留在原來的位置。排在 useKeepHeight 後面
-  const hold = useHoldPosition();
+  // 使用者換了控制項，上面的說明卡、題數說明跟著換高度：正在操作的那一個留在原來的位置。排在 useKeepHeight 後面。
+  // 控制項自己也可能變高（字級特大時說明卡的開關從實心換成框線高 2px），在視窗底邊的話再捲到露出來
+  const hold = useHoldPosition(true);
   // 打開揭露對話框的開關：按同意時說明卡換字，開關留在原來的位置
   const dialogOpener = useRef<HTMLElement | null>(null);
 

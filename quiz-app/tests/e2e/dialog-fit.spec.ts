@@ -301,17 +301,23 @@ test('清除作答統計對話框：每個尺寸、每個字級都在畫面內',
 });
 
 // 說明卡的開關在視窗底邊或頁首下面時用鍵盤打開對話框，按同意或暫不啟用關閉：焦點回到開關，整顆在頁首下面、視窗之內。
-// 之前交給 focus() 自己捲：按同意之後說明卡長高（多一列抽題分布），開關被推到視窗底邊下面，Firefox 不捲（差 8px）
+// 之前交給 focus() 自己捲：按同意之後說明卡長高（多一列抽題分布），開關被推到視窗底邊下面，Firefox 不捲（差 8px）。
+// 字級特大時開關從實心換成框線高 2px：留在原來的位置之後下緣超出視窗底邊（WebKit 839x412 差 1.8px），要再露出來
 for (const [width, height] of [
   [640, 360],
   [839, 412],
 ]) {
   for (const where of ['bottom', 'top'] as const) {
     for (const how of ['accept', 'decline'] as const) {
-      test(`${width}x${height} 開關在${where === 'bottom' ? '視窗底邊' : '頁首下面'}，${how === 'accept' ? '按同意' : '暫不啟用'}：焦點回到開關，看得到`, async ({ page }) => {
+      for (const fontSize of ['normal', 'xlarge'] as const) {
+      test(`${width}x${height} ${fontSize === 'xlarge' ? '字級特大 ' : ''}開關在${where === 'bottom' ? '視窗底邊' : '頁首下面'}，${how === 'accept' ? '按同意' : '暫不啟用'}：焦點回到開關，看得到`, async ({ page }) => {
         await page.setViewportSize({ width, height });
-        await page.addInitScript(() => window.localStorage.setItem('practice-pool-disclosure-seen', '1'));
+        await page.addInitScript((size) => {
+          window.localStorage.setItem('practice-pool-disclosure-seen', '1');
+          window.localStorage.setItem('ipas-quiz-a11y', JSON.stringify({ fontSize: size }));
+        }, fontSize);
         await page.goto('/');
+        await expect(page.locator('html')).toHaveAttribute('data-font-size', fontSize);
         const cta = page.locator('.practice-pool-tip__cta');
         await cta.focus();
         await cta.evaluate((el, where) => {
@@ -329,6 +335,8 @@ for (const [width, height] of [
         }
         await expect(page.getByRole('dialog')).toHaveCount(0);
         await expect(cta).toBeFocused();
+        // 開關的 transition（換樣式）跑完再量
+        await page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))));
         await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
         const m = await cta.evaluate((el) => ({
           top: el.getBoundingClientRect().top,
@@ -339,6 +347,7 @@ for (const [width, height] of [
         expect(m.top, `被頁首蓋住 ${JSON.stringify(m)}`).toBeGreaterThanOrEqual(m.header - 0.5);
         expect(m.bottom, `在視窗外 ${JSON.stringify(m)}`).toBeLessThanOrEqual(m.viewport + 0.5);
       });
+      }
     }
   }
 }
