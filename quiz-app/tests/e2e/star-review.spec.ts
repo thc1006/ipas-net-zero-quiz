@@ -2124,6 +2124,61 @@ test.describe('首頁：別的分頁停用加強練習池，說明卡與徽章�
   }
 });
 
+// 別的分頁啟用加強練習池時說明卡加上抽題分布那一列（30.4），下面的題目來源與開始測驗往下移。有沒有這一列在首頁畫出來時、
+// 這個分頁自己切換時才定
+test.describe('首頁：別的分頁啟用加強練習池，不加抽題分布那一列，題目來源與開始測驗不動', () => {
+  for (const viewport of [
+    { width: 1280, height: 720 },
+    { width: 412, height: 839 },
+  ]) {
+    for (const where of ['最上面', '最底'] as const) {
+      test(`${viewport.width}x${viewport.height} 捲在${where}`, async ({ page, context }) => {
+        await page.setViewportSize(viewport);
+        await page.addInitScript(() => {
+          if (window.sessionStorage.getItem('seeded')) return;
+          window.sessionStorage.setItem('seeded', '1');
+          window.localStorage.setItem('practice-pool-enabled', '0');
+          window.localStorage.setItem('practice-pool-ai-opt-in', '1');
+        });
+        await gotoHome(page);
+        await settleAnimations(page);
+        await source(page).focus();
+        await page.evaluate((top) => window.scrollTo(0, top ? 0 : document.documentElement.scrollHeight), where === '最上面');
+        await nextFrames(page);
+        const spot = () =>
+          page.evaluate(() => ({
+            source: document.getElementById('source')!.getBoundingClientRect().top,
+            start: [...document.querySelectorAll('button')].find((b) => /開始測驗/.test(b.textContent ?? ''))!.getBoundingClientRect().top,
+            scrollY: window.scrollY,
+            tip: document.querySelector('[data-testid="practice-pool-tip"]')!.getBoundingClientRect().height,
+            badges: document.querySelector('.stats-badges')!.getBoundingClientRect().height,
+          }));
+        const before = await spot();
+        const other = await context.newPage();
+        await other.goto('/');
+        await other.evaluate(() => window.localStorage.setItem('practice-pool-enabled', '1'));
+        await other.close();
+        const tip = page.getByTestId('practice-pool-tip');
+        await expect(tip.getByRole('button')).toHaveText(/停用加強練習/);
+        await settleAnimations(page);
+        await nextFrames(page);
+        const after = await spot();
+        // Firefox 412 寬時頁首的徽章換字從一行變兩行（已知，不在這裡處理）：下面的東西只移那麼多
+        const badgeGrowth = after.badges - before.badges;
+        if (badgeGrowth === 0) expect(after, '題目來源或開始測驗移動了').toEqual(before);
+        else expect(after.source + after.scrollY - (before.source + before.scrollY), JSON.stringify({ before, after })).toBeCloseTo(badgeGrowth, 1);
+        expect(after.tip, '說明卡長高了').toBe(before.tip);
+        await expect(page.locator('.practice-pool-tip__details'), '別的分頁啟用時加了抽題分布那一列').toHaveCount(0);
+        await expect(source(page)).toBeFocused();
+        // 這個分頁自己停用再啟用：照現在的狀態加上那一列
+        await tip.getByRole('button').click();
+        await tip.getByRole('button').click();
+        await expect(page.locator('.practice-pool-tip__details')).toBeVisible();
+      });
+    }
+  }
+});
+
 // 只出官方題目時加強練習池一題都不混入，首頁上的東西不隨它啟用與否改變。之前別的分頁啟用時題數說明多一句（長 19.2），
 // 停用時說明卡換成比較長的說明（長 22.4），下面的開始測驗往下移，指標底下的開始測驗跑掉；捲到最底時題目來源也移動
 test.describe('首頁只出官方題目：別的分頁啟用、停用加強練習池，題目來源與開始測驗不動', () => {

@@ -366,6 +366,73 @@ describe('題數說明到使用者換選項之前不變矮', () => {
       expect(official, '前提：只出官方題目時說明卡比較短').toBeLessThan(closed);
       expect(tip().style.minHeight).toBe(`${official}px`);
     });
+
+    // 抽題分布那一列：有沒有這一列在首頁畫出來時、這個分頁自己切換或換題目來源時才定。別的分頁啟用時加一列的話，
+    // 說明卡長高，下面的題目來源與開始測驗往下移
+    describe('抽題分布那一列', () => {
+      const row = () => tip().querySelector('details');
+      const tipButton = () => within(tip()).getByRole('button');
+
+      it('別的分頁啟用：不加那一列，說明與開關照啟用的畫，開關按了有用', () => {
+        localStorage.setItem('practice-pool-enabled', '0');
+        render(<HomePage onStartQuiz={() => {}} />);
+        expect(row()).toBeNull();
+        const before = shown(tip());
+        otherTab('1');
+        expect(tip()).toHaveTextContent('加強練習池已啟用');
+        expect(tipButton()).toHaveTextContent('停用加強練習');
+        expect(row(), '別的分頁啟用時加了抽題分布那一列').toBeNull();
+        expect(shown(tip())).toBe(before);
+        fireEvent.click(tipButton());
+        expect(localStorage.getItem('practice-pool-enabled')).toBe('0');
+        expect(tipButton()).toHaveTextContent('啟用 +');
+      });
+
+      it('別的分頁啟用之後：這個分頁自己停用再啟用、重新畫首頁、換題目來源再換回來，都照現在的狀態加上那一列', () => {
+        localStorage.setItem('practice-pool-enabled', '0');
+        render(<HomePage onStartQuiz={() => {}} />);
+        otherTab('1');
+        expect(row(), '前提').toBeNull();
+        toggle('停用加強練習池');
+        toggle('啟用加強練習池');
+        expect(row()).not.toBeNull();
+        cleanup();
+
+        localStorage.setItem('practice-pool-enabled', '0');
+        render(<HomePage onStartQuiz={() => {}} />);
+        otherTab('1');
+        cleanup();
+        render(<HomePage onStartQuiz={() => {}} />);
+        expect(row()).not.toBeNull();
+        cleanup();
+
+        localStorage.setItem('practice-pool-enabled', '0');
+        render(<HomePage onStartQuiz={() => {}} />);
+        otherTab('1');
+        choose('official');
+        choose('all');
+        expect(row()).not.toBeNull();
+      });
+
+      it('別的分頁停用：那一列拿掉、高度留著；之後別的分頁再啟用也不加回來', () => {
+        localStorage.setItem('practice-pool-enabled', '1');
+        render(<HomePage onStartQuiz={() => {}} />);
+        expect(row(), '前提').not.toBeNull();
+        const tall = shown(tip());
+        otherTab('0');
+        expect(row()).toBeNull();
+        expect(tip().style.minHeight).toBe(`${tall}px`);
+        otherTab('1');
+        expect(tip()).toHaveTextContent('加強練習池已啟用');
+        expect(tipButton()).toHaveTextContent('停用加強練習');
+        expect(row(), '別的分頁再啟用時把那一列加回來').toBeNull();
+        expect(tip().style.minHeight).toBe(`${tall}px`);
+        // 這個分頁自己按：照現在的狀態
+        toggle('停用加強練習池');
+        toggle('啟用加強練習池');
+        expect(row()).not.toBeNull();
+      });
+    });
   });
 
   // 使用者自己換了會改說明的選項：從頭量，不留著上一個選項的高度（每一種都要，只看來源的話其他幾種留下空白）

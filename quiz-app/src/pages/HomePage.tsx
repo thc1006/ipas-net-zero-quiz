@@ -207,6 +207,17 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   useKeepHeight(poolTipRef, `${source}|${poolToggles}|${detailsToggles}`);
   const badgesRef = useRef<HTMLDivElement>(null);
   useKeepHeight(badgesRef, `${poolToggles}|${officialOnly}`);
+  // 說明卡的抽題分布那一列（主題庫加練習池，只有全部題目時有）：有沒有這一列在首頁畫出來時、這個分頁自己切換或換題目
+  // 來源時才定。別的分頁啟用時加一列的話說明卡長高 30.4，下面的題目來源與開始測驗往下移；到下一次畫首頁或這個分頁自己
+  // 切換時才出現。別的分頁停用時拿掉（抽題分布不再對），說明卡留著高度，之後別的分頁再啟用也不加回來
+  const distributionScope = `${source}|${poolToggles}`;
+  const distributionNow = practiceMode.enabled && source === 'all';
+  const [distribution, setDistribution] = useState({ scope: distributionScope, shown: distributionNow });
+  const showDistribution =
+    distribution.scope === distributionScope ? distribution.shown && distributionNow : distributionNow;
+  if (distribution.scope !== distributionScope || distribution.shown !== showDistribution) {
+    setDistribution({ scope: distributionScope, shown: showDistribution });
+  }
 
   return (
     <div className="home-page animate-fade-in">
@@ -345,8 +356,8 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
                 {title}
               </h3>
               <p className="practice-pool-tip__desc">{desc}</p>
-              {/* 抽題分布畫的是主題庫加練習池；只出官方題目時抽題範圍不是這個，不顯示 */}
-              {enabled && source === 'all' && (
+              {/* 抽題分布畫的是主題庫加練習池；只出官方題目時抽題範圍不是這個，不顯示。別的分頁啟用時不加（見上面） */}
+              {showDistribution && (
                 <details className="practice-pool-tip__details" onToggle={() => setDetailsToggles((n) => n + 1)}>
                   <summary className="practice-pool-tip__details-summary">
                     查看抽題分布
