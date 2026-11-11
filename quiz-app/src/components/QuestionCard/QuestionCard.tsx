@@ -1,5 +1,5 @@
 // QuestionCard 元件 - 顯示單一題目和選項
-import { useCallback, useId, useMemo, useState } from 'react';
+import { useCallback, useId, useMemo, useRef, useState } from 'react';
 import type { QuizQuestion, QuizOption } from '../../types/quiz';
 import { explainQuestion, type AIResponse } from '../../utils/ai-helper';
 import { AnswerEvidence } from '../AnswerEvidence/AnswerEvidence';
@@ -122,6 +122,9 @@ export function QuestionCard({
     [showAnswer, onSelectAnswer]
   );
 
+  // 考試模式：這一次的焦點是方向鍵在原生的 radio 群組裡移過去的（keydown 的同一個 task 裡）
+  const arrowMove = useRef(false);
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>, optionKey: string) => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -131,19 +134,44 @@ export function QuestionCard({
         return;
       }
       const step = ARROW_STEP[e.key];
-      if (!onKeyboardAnswered || !step) return;
-      e.preventDefault();
-      // 加 Alt／Ctrl／Meta 也要攔下：WebKit 照樣點下一個選項，放行就直接交卷。代價是焦點在選項上時 Alt+左 不能上一頁
-      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      if (!step) return;
       const inputs = Array.from(
         e.currentTarget.closest('[role="radiogroup"]')?.querySelectorAll('input') ?? []
       );
-      const next = inputs[(inputs.indexOf(e.currentTarget) + step + inputs.length) % inputs.length];
+      const to = inputs.indexOf(e.currentTarget) + step;
+      const next = inputs[(to + inputs.length) % inputs.length];
+      if (!onKeyboardAnswered) {
+        // 考試模式交給原生的 radio 群組（移動並選取），移過去的選項在 focus 時捲出來（handleExamFocus）。
+        // WebKit 的群組頭尾不接：在最後一個按往下（第一個按往上）不處理，頁面跟著捲。頭尾這裡自己接，跟 Chromium、
+        // Firefox 一樣移到另一頭並選取。加 Alt／Ctrl／Meta 的照舊交給瀏覽器
+        if (e.altKey || e.ctrlKey || e.metaKey) return;
+        if (to >= 0 && to < inputs.length) {
+          arrowMove.current = true;
+          setTimeout(() => (arrowMove.current = false));
+          return;
+        }
+        e.preventDefault();
+        next.focus({ preventScroll: true });
+        handleOptionClick(next.value);
+        next.closest('.option-item')?.scrollIntoView({ block: 'nearest' });
+        return;
+      }
+      e.preventDefault();
+      // 加 Alt／Ctrl／Meta 也要攔下：WebKit 照樣點下一個選項，放行就直接交卷。代價是焦點在選項上時 Alt+左 不能上一頁
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
       setMovedTo(next.value);
       next.focus({ preventScroll: true });
     },
     [handleOptionClick, onKeyboardAnswered]
   );
+
+  // 考試模式用方向鍵移過去的選項在同一個 frame 捲出來：瀏覽器自己只捲 radio（高度 0）那一條線（WebKit 不捲），
+  // 頁首的補捲要等下一個 frame（WebKit 沒有新畫面時晚到 100ms 上下）
+  const handleExamFocus = useCallback((e: React.FocusEvent<HTMLDivElement>) => {
+    if (!arrowMove.current) return;
+    arrowMove.current = false;
+    e.target.closest('.option-item')?.scrollIntoView({ block: 'nearest' });
+  }, []);
 
   // 提示只給鍵盤：滑鼠點選項時選項也會拿到焦點，那一下不能閃出提示
   // radio 高度 0，瀏覽器只保一條線進視窗，整個選項可能還在固定的 header 底下
@@ -284,7 +312,7 @@ export function QuestionCard({
         className="question-options"
         role="radiogroup"
         aria-labelledby={labelId}
-        onFocus={onKeyboardAnswered && handleOptionsFocus}
+        onFocus={onKeyboardAnswered ? handleOptionsFocus : handleExamFocus}
         onBlur={onKeyboardAnswered && handleOptionsBlur}
       >
         {question.options.map((option) => (

@@ -584,4 +584,67 @@ test.describe('練習模式的鍵盤作答', () => {
       }
     });
   }
+
+  // 按鍵之後的第一個 frame 量：選項要在同一個 frame 就露出來。之前 Chromium 與 Firefox 自己只捲 radio（高度 0）那一條線，
+  // 下一個 frame 才由頁首補捲；WebKit 不捲，要等頁首的補捲（沒有新畫面時晚到 100ms 上下）。WebKit 的 radio 群組在頭尾
+  // 不接：在最後一個按往下（第一個按往上）焦點不動、頁面捲 45 到 76px。Chromium 與 Firefox 頭尾相接
+  for (const [width, height] of [[640, 360], [839, 412]]) {
+    test(`考試模式 ${width}x${height}：方向鍵移到的選項第一個 frame 就在頁首下面、視窗之內，頭尾相接`, async ({ page }) => {
+      await page.setViewportSize({ width, height });
+      await startQuiz(page, 'exam');
+      await tabIntoOptions(page);
+      const steps: [string, number][] = [
+        ['ArrowDown', 1],
+        ['ArrowDown', 2],
+        ['ArrowDown', 3],
+        ['ArrowDown', 0],
+        ['ArrowUp', 3],
+        ['ArrowUp', 2],
+        ['ArrowRight', 3],
+        ['ArrowRight', 0],
+        ['ArrowLeft', 3],
+        ['ArrowUp', 2],
+        ['ArrowUp', 1],
+        ['ArrowUp', 0],
+      ];
+      for (const [key, to] of steps) {
+        // 每個 frame 看一次焦點；換了之後的第一個 frame 記下選項的位置
+        await page.evaluate(() => {
+          const w = window as unknown as { __first: Promise<unknown> };
+          const from = document.activeElement;
+          const start = performance.now();
+          w.__first = new Promise((resolve) => {
+            const tick = () => {
+              const a = document.activeElement as HTMLInputElement;
+              if (a !== from) {
+                const box = a.closest('.option-item')!.getBoundingClientRect();
+                resolve({
+                  value: a.value,
+                  top: box.top,
+                  bottom: box.bottom,
+                  header: document.querySelector('.app-header')!.getBoundingClientRect().bottom,
+                  viewport: document.documentElement.clientHeight,
+                });
+              } else if (performance.now() - start > 1000) resolve({ value: '焦點沒有移動' });
+              else requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          });
+        });
+        await page.keyboard.press(key);
+        const m = (await page.evaluate(() => (window as unknown as { __first: Promise<unknown> }).__first)) as {
+          value: string;
+          top: number;
+          bottom: number;
+          header: number;
+          viewport: number;
+        };
+        const where = `${key} 到 ${KEYS[to]} ${JSON.stringify(m)}`;
+        expect(m.value, where).toBe(KEYS[to]);
+        expect(m.top, where).toBeGreaterThanOrEqual(m.header - 0.5);
+        expect(m.bottom, where).toBeLessThanOrEqual(m.viewport + 0.5);
+        await expect(page.locator('.question-options input:checked')).toHaveValue(KEYS[to]);
+      }
+    });
+  }
 });
