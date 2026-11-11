@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { test, expect } from './fixtures';
 
 /**
@@ -166,4 +166,118 @@ test.describe('只出官方題目', () => {
     await expect(page.locator('.progress-info > span').first()).toHaveText(`1 / ${n}`);
     await expect(page.getByText(/年第.+次官方公告試題/)).toBeVisible();
   });
+});
+
+/** 控制項的上緣、頁首下緣、視窗高度與捲動位置，一次量 */
+const spot = (control: Locator) =>
+  control.evaluate((el) => ({
+    top: el.getBoundingClientRect().top,
+    bottom: el.getBoundingClientRect().bottom,
+    header: document.querySelector('.app-header')!.getBoundingClientRect().bottom,
+    viewport: document.documentElement.clientHeight,
+    scrollY: window.scrollY,
+  }));
+
+/** 把控制項捲到頁首下面（top）或視窗底邊（bottom） */
+const place = (control: Locator, where: 'top' | 'bottom') =>
+  control.evaluate((el, where) => {
+    const box = el.getBoundingClientRect();
+    const header = document.querySelector('.app-header')!.getBoundingClientRect().bottom;
+    window.scrollBy(0, where === 'top' ? box.top - (header + 2) : box.bottom - (document.documentElement.clientHeight - 2));
+  }, where);
+
+/** 進場動畫與按鈕的 transition 跑完，再等兩個 frame */
+const nextFrames = (page: Page) =>
+  page
+    .evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))))
+    .then(() => page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))));
+
+// 使用者換了首頁的控制項，上面的說明卡、題數說明跟著長高或變矮（只出官方題目時說明卡換字、拿掉開關與抽題分布，
+// 長高 29px 或變矮 64px）。正在操作的控制項要留在原來的位置：之前 WebKit 1280x720 選全部官方題目時題目來源從 66 移到 10
+// （頁首底下），Pixel 7 字級特大時說明卡長高 29px，題目來源被推到視窗底邊下面 19px。操作的當下就捲回去，等畫完再量
+test.describe('首頁：換了控制項之後上面的內容長高或變矮，正在操作的控制項不移動', () => {
+  for (const { name, viewport, fontSize, pool, where } of [
+    { name: '1280x720 加強練習池啟用 頁首下面', viewport: { width: 1280, height: 720 }, fontSize: undefined, pool: true, where: 'top' },
+    { name: '640x360 頁首下面', viewport: { width: 640, height: 360 }, fontSize: undefined, pool: false, where: 'top' },
+    { name: '412x839 字級特大 加強練習池啟用 視窗底邊', viewport: { width: 412, height: 839 }, fontSize: 'xlarge', pool: true, where: 'bottom' },
+    { name: '412x839 字級特大 頁首下面', viewport: { width: 412, height: 839 }, fontSize: 'xlarge', pool: false, where: 'top' },
+  ] as const) {
+    test(`題目來源 ${name}`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await page.addInitScript((pool) => {
+        window.localStorage.setItem('practice-pool-ai-opt-in', '1');
+        window.localStorage.setItem('practice-pool-enabled', pool ? '1' : '0');
+      }, pool);
+      await gotoHome(page, fontSize);
+      const source = page.getByLabel('題目來源');
+      const card = page.getByTestId('practice-pool-tip');
+      let changed = 0;
+      for (const value of ['official', 'all', 'review:starred', 'all']) {
+        await source.focus();
+        await place(source, where);
+        await nextFrames(page);
+        const before = await spot(source);
+        // 說明卡變矮時頁面要往上捲回去：捲動位置要夠（換回全部題目是長高，往下捲一定捲得到）
+        if (value !== 'all') expect(before.scrollY, '前提：捲得回去').toBeGreaterThan(80);
+        const cardBefore = (await card.boundingBox())!.height;
+        await source.selectOption(value);
+        await nextFrames(page);
+        const after = await spot(source);
+        if (Math.abs((await card.boundingBox())!.height - cardBefore) > 1) changed++;
+        expect(Math.abs(after.top - before.top), `換成 ${value}：題目來源移動了 ${JSON.stringify({ before, after })}`).toBeLessThanOrEqual(1);
+      }
+      // 反空轉：上面的說明卡真的換過高度
+      expect(changed).toBeGreaterThan(0);
+    });
+  }
+
+  test('題數 412x839：題數超過可出的題數，上面的題數說明多一行，題數不移動', async ({ page }) => {
+    await page.setViewportSize({ width: 412, height: 839 });
+    await gotoHome(page);
+    const options = await page.getByLabel('題目來源').evaluate((el: HTMLSelectElement) => [...el.options].map((o) => o.value));
+    await page.getByLabel('題目來源').selectOption(options.find((v) => v.startsWith('sample:'))!);
+    const count = page.locator('#count');
+    const hint = page.locator('#source-hint');
+    // 預設的題數已經超過可出的題數，先打一個放得下的
+    for (const value of ['5', '50', '5', '60']) {
+      await count.focus();
+      await place(count, 'top');
+      await nextFrames(page);
+      const before = await spot(count);
+      const hintBefore = (await hint.boundingBox())!.height;
+      await count.fill(value);
+      await nextFrames(page);
+      const after = await spot(count);
+      expect(Math.abs((await hint.boundingBox())!.height - hintBefore), '前提：題數說明換了高度').toBeGreaterThan(1);
+      expect(Math.abs(after.top - before.top), `打 ${value}：題數移動了 ${JSON.stringify({ before, after })}`).toBeLessThanOrEqual(1);
+    }
+  });
+
+  for (const how of ['click', 'dialog'] as const) {
+    test(`加強練習池的開關 640x360 在視窗底邊${how === 'dialog' ? '，第一次啟用時按對話框的同意' : ''}：說明卡換字、加上或拿掉抽題分布，開關不移動`, async ({ page }) => {
+      await page.setViewportSize({ width: 640, height: 360 });
+      if (how === 'click') await page.addInitScript(() => window.localStorage.setItem('practice-pool-ai-opt-in', '1'));
+      await gotoHome(page);
+      const cta = page.locator('.practice-pool-tip__cta');
+      for (const label of how === 'click' ? [/^add_circle_outline啟用/, /^remove_circle_outline停用/] : [/了解並啟用/]) {
+        await expect(cta).toHaveText(label);
+        await cta.focus();
+        await place(cta, 'bottom');
+        await nextFrames(page);
+        const before = await spot(cta);
+        expect(before.bottom, '前提：開關在視窗底邊').toBeGreaterThan(before.viewport - 3);
+        const cardBefore = (await page.getByTestId('practice-pool-tip').boundingBox())!.height;
+        if (how === 'click') await cta.click();
+        else {
+          await page.keyboard.press('Enter');
+          await page.getByRole('button', { name: /我已了解/ }).click();
+        }
+        await nextFrames(page);
+        const after = await spot(cta);
+        const card = (await page.getByTestId('practice-pool-tip').boundingBox())!.height;
+        expect(Math.abs(card - cardBefore), '前提：說明卡換了高度').toBeGreaterThan(1);
+        expect(Math.abs(after.top - before.top), `開關移動了 ${JSON.stringify({ before, after })}`).toBeLessThanOrEqual(1);
+      }
+    });
+  }
 });

@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import type { useAccessibility } from '../hooks/useAccessibility';
 import { usePracticeMode } from '../hooks/usePracticeMode';
+import { useHoldPosition } from '../hooks/useHoldPosition';
 import { usePracticePool } from '../hooks/usePracticePool';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
 import { ConfirmDialog } from '../components/ConfirmDialog/ConfirmDialog';
@@ -31,6 +32,8 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
   const [optInOpen, setOptInOpen] = useState(false);
   // Refs #64：清除作答統計確認 dialog（取代 window.confirm，與 quiz-abort-dialog 同 pattern）
   const [clearStatsConfirmOpen, setClearStatsConfirmOpen] = useState(false);
+  // 換字級時頁首與上面的內容跟著變高或變矮：字體大小的選單留在原來的位置，被變高的頁首蓋到時再往下露出來
+  const holdFontSelect = useHoldPosition(true);
 
   const onTogglePractice = () => {
     if (practiceMode.enabled) {
@@ -97,9 +100,10 @@ export function SettingsPage({ accessibility, onClose }: SettingsPageProps) {
           </div>
           <select
             value={settings.fontSize}
-            onChange={(e) =>
-              setFontSize(e.target.value as 'normal' | 'large' | 'xlarge')
-            }
+            onChange={(e) => {
+              holdFontSelect(e.currentTarget);
+              setFontSize(e.target.value as 'normal' | 'large' | 'xlarge');
+            }}
           >
             <option value="normal">標準</option>
             <option value="large">大</option>

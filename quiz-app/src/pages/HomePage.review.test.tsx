@@ -569,3 +569,129 @@ describe('只出官方題目：首頁不隨加強練習池啟用與否改變', (
     expect(screen.getByRole('button', { name: /啟用 \+\d+ 題加強練習/ })).toBeInTheDocument();
   });
 });
+
+// 使用者換了首頁的控制項，上面的說明卡、題數說明跟著換高度：正在操作的那一個留在原來的位置（捲動位置跟著補）。
+// jsdom 沒有排版：照文件流排一個假的版面。徽章、說明卡、題數說明的高度是字數（min-height 留著的話取大的），
+// 說明卡的開關貼在說明卡內容的底下，考科範圍與題目來源排在說明卡下面，題數排在題數說明下面
+describe('使用者換了控制項：正在操作的那一個不移動', () => {
+  let scrollY: number;
+  let scrollBy: ReturnType<typeof vi.fn>;
+  let rect: { mockRestore: () => void };
+  const natural = (el: Element | null) => (el?.textContent ?? '').length;
+  const kept = (el: HTMLElement | null) => Math.max(natural(el), parseFloat(el?.style.minHeight ?? '') || 0);
+  const tipEl = () => document.querySelector<HTMLElement>('[data-testid="practice-pool-tip"]');
+  const top = (el: HTMLElement): number => {
+    const badges = 100 + kept(document.querySelector('.stats-badges'));
+    if (el.closest('.stats-badges')) return 100 - scrollY;
+    if (el.closest('[data-testid="practice-pool-tip"]')) return badges + natural(tipEl()) - scrollY;
+    const below = badges + kept(tipEl()) + 50;
+    if (el.id === 'count') return below + 30 + kept(document.getElementById('source-hint')) - scrollY;
+    return below - scrollY;
+  };
+  beforeEach(() => {
+    localStorage.setItem('practice-pool-ai-opt-in', '1');
+    __setPracticePoolForTesting(buildFixturePool());
+    scrollY = 1000;
+    scrollBy = vi.fn((_x: number, y: number) => {
+      scrollY += y;
+    });
+    vi.stubGlobal('scrollBy', scrollBy);
+    rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      const t = top(this);
+      return { top: t, height: natural(this), bottom: t + natural(this) } as DOMRect;
+    });
+  });
+  afterEach(() => {
+    rect.mockRestore();
+    vi.unstubAllGlobals();
+  });
+
+  /** 換之前與之後：控制項的位置、上面那一段的高度 */
+  const measure = (el: HTMLElement, above: () => HTMLElement | null, act: () => void) => {
+    const before = { top: el.getBoundingClientRect().top, above: natural(above()) };
+    act();
+    return { before, after: { top: el.getBoundingClientRect().top, above: natural(above()) } };
+  };
+
+  it('題目來源：說明卡變矮、長高（只出官方題目、換回全部題目），題目來源不移動', () => {
+    localStorage.setItem('practice-pool-enabled', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    for (const value of ['official', 'all', 'review:starred', 'all']) {
+      const { before, after } = measure(source(), tipEl, () => choose(value));
+      expect(after.above, `${value}：前提，說明卡換了高度`).not.toBe(before.above);
+      expect(after.top, value).toBe(before.top);
+    }
+  });
+
+  // 說明卡留著最高的高度（換考科範圍不從頭量）：從字比較少的考科打開抽題分布，換成全部時說明卡長高
+  it('考科範圍：打開的抽題分布換了數字、說明卡長高，考科範圍不移動', () => {
+    localStorage.setItem('practice-pool-enabled', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    const subject = screen.getByLabelText('考科範圍') as HTMLSelectElement;
+    fireEvent.change(subject, { target: { value: '考科1' } });
+    const details = tipEl()!.querySelector('details')!;
+    details.open = true;
+    fireEvent(details, new Event('toggle'));
+    for (const value of ['all']) {
+      const { before, after } = measure(subject, tipEl, () => fireEvent.change(subject, { target: { value } }));
+      expect(after.above, `${value}：前提，說明卡換了高度`).not.toBe(before.above);
+      expect(after.top, value).toBe(before.top);
+    }
+  });
+
+  it('題數：題數說明多一句、少一句，題數不移動', () => {
+    render(<HomePage onStartQuiz={() => {}} />);
+    // 參考樣題只有十題上下：題數超過時說明多一句
+    choose([...source().options].find((o) => o.value.startsWith('sample:'))!.value);
+    const count = screen.getByLabelText('題數') as HTMLInputElement;
+    for (const value of ['5', '100', '5']) {
+      const { before, after } = measure(count, () => hint(), () => fireEvent.change(count, { target: { value } }));
+      expect(after.above, `${value}：前提，題數說明換了高度`).not.toBe(before.above);
+      expect(after.top, value).toBe(before.top);
+    }
+  });
+
+  it('說明卡的開關、頁首的徽章、揭露對話框的同意：說明卡換字，按下去的那一個不移動', () => {
+    localStorage.setItem('practice-pool-enabled', '0');
+    render(<HomePage onStartQuiz={() => {}} />);
+    const cta = () => within(tipEl()!).getByRole('button');
+    for (let i = 0; i < 2; i++) {
+      const el = cta();
+      const { before, after } = measure(el, tipEl, () => fireEvent.click(el));
+      expect(after.above, '前提：說明卡換了高度').not.toBe(before.above);
+      expect(after.top).toBe(before.top);
+    }
+    // 頁首的徽章：上面沒有會變的東西，不捲
+    scrollBy.mockClear();
+    fireEvent.click(screen.getByRole('button', { name: '啟用加強練習池' }));
+    expect(scrollBy).not.toHaveBeenCalled();
+    cleanup();
+
+    localStorage.removeItem('practice-pool-ai-opt-in');
+    localStorage.setItem('practice-pool-enabled', '0');
+    render(<HomePage onStartQuiz={() => {}} />);
+    const opener = cta();
+    fireEvent.click(opener);
+    const { before, after } = measure(opener, tipEl, () =>
+      fireEvent.click(screen.getByRole('button', { name: /我已了解/ }))
+    );
+    expect(after.above, '前提：說明卡換了高度').not.toBe(before.above);
+    expect(after.top).toBe(before.top);
+  });
+
+  it('沒有重畫（值沒變）：記下的位置不留到之後別的原因重畫才捲', async () => {
+    localStorage.setItem('practice-pool-enabled', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    // 值一樣的 change 事件：React 不重畫
+    fireEvent.change(source(), { target: { value: 'all' } });
+    await new Promise((r) => setTimeout(r));
+    scrollBy.mockClear();
+    // 別的分頁停用：說明卡換字，這不是使用者操作，不捲
+    act(() => {
+      store.set('practice-pool-enabled', '0');
+      window.dispatchEvent(new StorageEvent('storage', { key: 'practice-pool-enabled' }));
+    });
+    expect(screen.getByRole('button', { name: '啟用加強練習池' })).toBeInTheDocument();
+    expect(scrollBy).not.toHaveBeenCalled();
+  });
+});

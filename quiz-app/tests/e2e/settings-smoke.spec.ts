@@ -58,3 +58,49 @@ test.describe('Settings 跨瀏覽器 smoke', () => {
       .toBe('#0288d1');
   });
 });
+
+// 換字級時頁首與上面的內容跟著變高或變矮，字體大小的選單會移動：之前選單捲到頁首下面時換大字級，選單被變高的頁首與
+// 上面的內容推到頁首底下或視窗底邊下面（三個引擎都是）。換的當下捲回原來的位置，頁首變高蓋到的話再往下露出來
+test.describe('換字級：字體大小的選單留在原來的位置，不被頁首蓋住、不跑出視窗', () => {
+  for (const viewport of [
+    { width: 1280, height: 720 },
+    { width: 412, height: 839 },
+    { width: 640, height: 360 },
+  ]) {
+    for (const where of ['top', 'bottom'] as const) {
+      test(`${viewport.width}x${viewport.height} 選單在${where === 'top' ? '頁首下面' : '視窗底邊'}`, async ({ page }) => {
+        await page.setViewportSize(viewport);
+        await gotoSettings(page);
+        const select = page.locator('.setting-item select').first();
+        await expect(select).toHaveValue('normal');
+        for (const size of ['large', 'xlarge', 'large', 'normal', 'xlarge', 'normal']) {
+          await select.focus();
+          const before = await select.evaluate((el, where) => {
+            const box = el.getBoundingClientRect();
+            const header = document.querySelector('.app-header')!.getBoundingClientRect().bottom;
+            window.scrollBy(0, where === 'top' ? box.top - (header + 2) : box.bottom - (document.documentElement.clientHeight - 2));
+            return { top: el.getBoundingClientRect().top, scrollY: window.scrollY };
+          }, where);
+          await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+          await select.selectOption(size);
+          await expect(page.locator('html')).toHaveAttribute('data-font-size', size);
+          // 按鈕的 transition 跑完之後（padding 跟著字級慢慢變）再量
+          await page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))));
+          await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+          const m = await select.evaluate((el) => ({
+            top: el.getBoundingClientRect().top,
+            bottom: el.getBoundingClientRect().bottom,
+            header: document.querySelector('.app-header')!.getBoundingClientRect().bottom,
+            viewport: document.documentElement.clientHeight,
+          }));
+          const where2 = `換成 ${size} ${JSON.stringify({ before, m })}`;
+          expect(m.top, `被頁首蓋住 ${where2}`).toBeGreaterThanOrEqual(m.header - 0.5);
+          expect(m.bottom, `在視窗外 ${where2}`).toBeLessThanOrEqual(m.viewport + 0.5);
+          // 沒有被頁首或視窗底邊擋住時留在原來的位置。捲在最上面時換小字級，上面變矮，頁面捲不回去
+          const blocked = m.top <= m.header + 1 || m.bottom >= m.viewport - 1 || (before.scrollY < 1 && m.top < before.top);
+          if (!blocked) expect(Math.abs(m.top - before.top), `移動了 ${where2}`).toBeLessThanOrEqual(1);
+        }
+      });
+    }
+  }
+});

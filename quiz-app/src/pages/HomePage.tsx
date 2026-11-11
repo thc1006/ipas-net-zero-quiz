@@ -6,6 +6,7 @@ import { defaultConfig } from '../hooks/useQuiz';
 import { usePracticeMode } from '../hooks/usePracticeMode';
 import { useReviewQuestions } from '../hooks/useReviewQuestions';
 import { useKeepHeight } from '../hooks/useKeepHeight';
+import { useHoldPosition } from '../hooks/useHoldPosition';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
 import { PracticePoolHistogram } from '../components/PracticePoolHistogram/PracticePoolHistogram';
 import { readBool, writeBool } from '../utils/local-storage';
@@ -113,7 +114,27 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   // 這個分頁自己切換加強練習池的次數：說明卡與徽章從頭量。別的分頁切換的（storage 事件）不算，換字但不變矮
   const [poolToggles, setPoolToggles] = useState(0);
 
-  const handlePracticeToggle = useCallback(() => {
+  const countHintId = 'count-hint';
+  const sourceHintId = 'source-hint';
+  // 別的分頁改了星號或待複習錯題時，題數說明的字跟著換。變短的話它下面的開始測驗往上移：
+  // 使用者自己換來源、考科範圍、題數，或練習池載完之前不變矮
+  const sourceHintRef = useRef<HTMLParagraphElement>(null);
+  useKeepHeight(sourceHintRef, `${source}|${config.subject}|${parsedQuestionCount}|${reviewLoading}`);
+  // 加強練習池的說明卡與頁首的徽章也是：別的分頁切換加強練習池時換字（說明卡拿掉抽題分布），變矮的話下面的題目來源與
+  // 開始測驗往上移。這個分頁自己切換、換來源（說明跟著換，只出官方題目時徽章收起來）、打開或收起抽題分布時從頭量。
+  // 考科範圍只換抽題分布裡的數字
+  const [detailsToggles, setDetailsToggles] = useState(0);
+  const poolTipRef = useRef<HTMLElement>(null);
+  useKeepHeight(poolTipRef, `${source}|${poolToggles}|${detailsToggles}`);
+  const badgesRef = useRef<HTMLDivElement>(null);
+  useKeepHeight(badgesRef, `${poolToggles}|${officialOnly}`);
+  // 使用者換了控制項，上面的說明卡、題數說明跟著換高度：正在操作的那一個留在原來的位置。排在 useKeepHeight 後面
+  const hold = useHoldPosition();
+  // 打開揭露對話框的開關：按同意時說明卡換字，開關留在原來的位置
+  const dialogOpener = useRef<HTMLElement | null>(null);
+
+  const handlePracticeToggle = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    hold(e.currentTarget);
     if (practiceMode.enabled) {
       practiceMode.disable();
       setPoolToggles((n) => n + 1);
@@ -125,15 +146,17 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
       setPoolToggles((n) => n + 1);
       return;
     }
+    dialogOpener.current = e.currentTarget;
     setOptInDialogOpen(true);
-  }, [practiceMode]);
+  }, [practiceMode, hold]);
 
   const handleAcceptOptIn = useCallback(() => {
+    hold(dialogOpener.current);
     writeBool(DISCLOSURE_SEEN_KEY, true);
     practiceMode.acceptOptIn();
     setPoolToggles((n) => n + 1);
     setOptInDialogOpen(false);
-  }, [practiceMode]);
+  }, [practiceMode, hold]);
 
   const handleDeclineOptIn = useCallback(() => {
     writeBool(DISCLOSURE_SEEN_KEY, true);
@@ -143,21 +166,24 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   const handleSubjectChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       const value = e.target.value as ExamSubject | 'all';
+      hold(e.currentTarget);
       setConfig((prev) => ({ ...prev, subject: value }));
     },
-    []
+    [hold]
   );
 
   const handleSourceChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as QuestionSource;
+    hold(e.currentTarget);
     setConfig((prev) => ({ ...prev, questionSource: value }));
-  }, []);
+  }, [hold]);
 
   const handleCountChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      hold(e.currentTarget);
       setQuestionCountInput(e.target.value);
     },
-    []
+    [hold]
   );
 
   // 失焦時把合法輸入正規化（去前後空白、去前導零、超過 100 夾為 100），
@@ -193,20 +219,6 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
     onStartQuiz({ ...config, questionCount: parsedQuestionCount });
   }, [config, onStartQuiz, parsedQuestionCount]);
 
-  const countHintId = 'count-hint';
-  const sourceHintId = 'source-hint';
-  // 別的分頁改了星號或待複習錯題時，題數說明的字跟著換。變短的話它下面的開始測驗往上移：
-  // 使用者自己換來源、考科範圍、題數，或練習池載完之前不變矮
-  const sourceHintRef = useRef<HTMLParagraphElement>(null);
-  useKeepHeight(sourceHintRef, `${source}|${config.subject}|${parsedQuestionCount}|${reviewLoading}`);
-  // 加強練習池的說明卡與頁首的徽章也是：別的分頁切換加強練習池時換字（說明卡拿掉抽題分布），變矮的話下面的題目來源與
-  // 開始測驗往上移。這個分頁自己切換、換來源（說明跟著換，只出官方題目時徽章收起來）、打開或收起抽題分布時從頭量。
-  // 考科範圍只換抽題分布裡的數字
-  const [detailsToggles, setDetailsToggles] = useState(0);
-  const poolTipRef = useRef<HTMLElement>(null);
-  useKeepHeight(poolTipRef, `${source}|${poolToggles}|${detailsToggles}`);
-  const badgesRef = useRef<HTMLDivElement>(null);
-  useKeepHeight(badgesRef, `${poolToggles}|${officialOnly}`);
   // 說明卡的抽題分布那一列（主題庫加練習池，只有全部題目時有）：有沒有這一列在首頁畫出來時、這個分頁自己切換或換題目
   // 來源時才定。別的分頁啟用時加一列的話說明卡長高 30.4，下面的題目來源與開始測驗往下移；到下一次畫首頁或這個分頁自己
   // 切換時才出現。別的分頁停用時拿掉（抽題分布不再對），說明卡留著高度，之後別的分頁再啟用也不加回來
