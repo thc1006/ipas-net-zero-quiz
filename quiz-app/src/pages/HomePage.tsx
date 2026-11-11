@@ -128,6 +128,10 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   useKeepHeight(poolTipRef, `${source}|${poolToggles}|${detailsToggles}`);
   const badgesRef = useRef<HTMLDivElement>(null);
   useKeepHeight(badgesRef, `${poolToggles}|${officialOnly}`);
+  // 說明卡的說明本身也留著：別的分頁停用時抽題分布留在原地（見下面），說明換成比較短的一句，不留高度的話下面的抽題分布
+  // 與開關往上移（焦點可能在抽題分布上），說明卡底下留空白
+  const poolDescRef = useRef<HTMLParagraphElement>(null);
+  useKeepHeight(poolDescRef, `${source}|${poolToggles}`);
   // 使用者換了控制項，上面的說明卡、題數說明跟著換高度：正在操作的那一個留在原來的位置。排在 useKeepHeight 後面
   const hold = useHoldPosition();
   // 打開揭露對話框的開關：按同意時說明卡換字，開關留在原來的位置
@@ -221,15 +225,19 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
 
   // 說明卡的抽題分布那一列（主題庫加練習池，只有全部題目時有）：有沒有這一列在首頁畫出來時、這個分頁自己切換或換題目
   // 來源時才定。別的分頁啟用時加一列的話說明卡長高 30.4，下面的題目來源與開始測驗往下移；到下一次畫首頁或這個分頁自己
-  // 切換時才出現。別的分頁停用時拿掉（抽題分布不再對），說明卡留著高度，之後別的分頁再啟用也不加回來
+  // 切換時才出現。
+  // 別的分頁停用時也不拿掉：焦點在那一列時會掉回 body，打開著的話說明卡留下 210 到 263px 的空白。留在原地（staleDistribution）：
+  // 同一個 <details>，焦點與打開的狀態都不動，抽題分布的內容不換（換字會換行數，說明卡變高或留空白）；前面的說明換成
+  // 「別的分頁停用、下面的抽題分布不適用」，那一列換成「停用前的抽題分布」。這兩句不比啟用時的長，說明卡不變高。
+  // 之後別的分頁再啟用就換回現在的字
   const distributionScope = `${source}|${poolToggles}`;
   const distributionNow = practiceMode.enabled && source === 'all';
   const [distribution, setDistribution] = useState({ scope: distributionScope, shown: distributionNow });
-  const showDistribution =
-    distribution.scope === distributionScope ? distribution.shown && distributionNow : distributionNow;
-  if (distribution.scope !== distributionScope || distribution.shown !== showDistribution) {
+  const showDistribution = distribution.scope === distributionScope ? distribution.shown : distributionNow;
+  if (distribution.scope !== distributionScope) {
     setDistribution({ scope: distributionScope, shown: showDistribution });
   }
+  const staleDistribution = showDistribution && !practiceMode.enabled;
 
   return (
     <div className="home-page animate-fade-in">
@@ -334,6 +342,13 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           ctaLabel = '停用加強練習';
           ctaIcon = 'remove_circle_outline';
           modifierClass = 'practice-pool-tip--enabled';
+        } else if (staleDistribution) {
+          // 抽題分布還留著（別的分頁停用）：先說它為什麼不適用
+          title = '想多練？啟用加強練習池';
+          desc = '加強練習池已在別的分頁停用，下面的抽題分布不適用。';
+          ctaLabel = hasOptedIn ? `啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習` : `了解並啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習`;
+          ctaIcon = 'add_circle_outline';
+          modifierClass = '';
         } else if (hasOptedIn) {
           title = '想多練？啟用加強練習池';
           desc =
@@ -367,12 +382,14 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
               <h3 id="practice-pool-tip-heading" className="practice-pool-tip__title">
                 {title}
               </h3>
-              <p className="practice-pool-tip__desc">{desc}</p>
+              <p ref={poolDescRef} className="practice-pool-tip__desc">
+                {desc}
+              </p>
               {/* 抽題分布畫的是主題庫加練習池；只出官方題目時抽題範圍不是這個，不顯示。別的分頁啟用時不加（見上面） */}
               {showDistribution && (
                 <details className="practice-pool-tip__details" onToggle={() => setDetailsToggles((n) => n + 1)}>
                   <summary className="practice-pool-tip__details-summary">
-                    查看抽題分布
+                    {staleDistribution ? '停用前的抽題分布' : '查看抽題分布'}
                   </summary>
                   <div className="practice-pool-tip__details-content">
                     <PracticePoolHistogram

@@ -2106,7 +2106,7 @@ test.describe('首頁：別的分頁停用加強練習池，說明卡與徽章�
       await other.evaluate(() => window.localStorage.setItem('practice-pool-enabled', '0'));
       await other.close();
       await expect(page.getByRole('button', { name: '啟用加強練習池' })).toBeVisible();
-      await expect(page.locator('.practice-pool-tip__details'), '前提：抽題分布拿掉了').toHaveCount(0);
+      await expect(page.locator('.practice-pool-tip__details summary'), '前提：抽題分布換成停用前的').toHaveText('停用前的抽題分布');
       await nextFrames(page);
       expect(await spot(), '題目來源或開始測驗移動了').toEqual(before);
       await expect(source(page)).toBeFocused();
@@ -2121,6 +2121,78 @@ test.describe('首頁：別的分頁停用加強練習池，說明卡與徽章�
       });
       expect(tip.box, `自己停用之後還留著啟用時的高度 ${JSON.stringify(tip)}`).toBeLessThan(tip.content + 1);
     });
+  }
+});
+
+// 別的分頁停用加強練習池時，之前把抽題分布那一列拿掉：焦點在「查看抽題分布」上時掉回 body；打開著的話說明卡留下
+// 210 到 263px 的空白。現在那一列留在原地，換成說停用前、已不適用的字，說明卡說別的分頁停用了：焦點不動、不留空白、
+// 下面的東西不動。之後別的分頁再啟用，換回現在的字，一樣不動。最窄最大字級的 320 寬特大也要放得下（字不比啟用時的長；
+// 抽題分布的內容不換，WebKit 320 寬特大時標題折成兩行，換成短的字會少一行、留 25.6px 空白）
+test.describe('首頁：別的分頁停用加強練習池，抽題分布那一列留在原地換成停用前的，焦點不掉、不留空白', () => {
+  for (const { viewport, fontSize } of [
+    { viewport: { width: 1280, height: 720 }, fontSize: undefined },
+    { viewport: { width: 412, height: 839 }, fontSize: undefined },
+    { viewport: { width: 320, height: 640 }, fontSize: 'xlarge' },
+    { viewport: { width: 640, height: 360 }, fontSize: 'xlarge' },
+  ] as const) {
+    for (const open of [false, true]) {
+      test(`${viewport.width}x${viewport.height}${fontSize ? ' 字級特大' : ''} 抽題分布${open ? '打開' : '收著'}`, async ({ page, context }) => {
+        await page.setViewportSize(viewport);
+        await page.addInitScript(() => {
+          if (window.sessionStorage.getItem('seeded')) return;
+          window.sessionStorage.setItem('seeded', '1');
+          window.localStorage.setItem('practice-pool-enabled', '1');
+          window.localStorage.setItem('practice-pool-ai-opt-in', '1');
+        });
+        await gotoHome(page, undefined, fontSize);
+        const summary = page.locator('.practice-pool-tip__details summary');
+        await expect(summary).toHaveText('查看抽題分布');
+        await summary.focus();
+        if (open) await page.keyboard.press('Enter');
+        await expect(page.locator('.practice-pool-tip__details')).toHaveJSProperty('open', open);
+        await settleAnimations(page);
+        await nextFrames(page);
+        const look = () =>
+          page.evaluate(() => {
+            const tip = document.querySelector<HTMLElement>('[data-testid="practice-pool-tip"]')!;
+            const box = tip.getBoundingClientRect().height;
+            const kept = tip.style.minHeight;
+            tip.style.minHeight = '';
+            const content = tip.getBoundingClientRect().height;
+            tip.style.minHeight = kept;
+            return {
+              summary: document.querySelector('.practice-pool-tip__details summary')!.getBoundingClientRect().top + window.scrollY,
+              source: document.getElementById('source')!.getBoundingClientRect().top + window.scrollY,
+              start: [...document.querySelectorAll('button')].find((b) => /開始測驗/.test(b.textContent ?? ''))!.getBoundingClientRect().top + window.scrollY,
+              box,
+              content,
+            };
+          });
+        const before = await look();
+        // 前提只擋大的空白：字級特大時開關的 transition 還在跑就量到，WebKit 偶爾進場時就留 0.5 到 1px，跟這裡要驗的無關
+        expect(before.box, '前提：說明卡沒有空白').toBeLessThan(before.content + 2.5);
+        for (const to of ['0', '1']) {
+          const other = await context.newPage();
+          await other.goto('/');
+          await other.evaluate((v) => window.localStorage.setItem('practice-pool-enabled', v), to);
+          await other.close();
+          await expect(summary).toHaveText(to === '0' ? '停用前的抽題分布' : '查看抽題分布');
+          await expect(page.getByTestId('practice-pool-tip')).toContainText(
+            to === '0' ? '加強練習池已在別的分頁停用' : '加強練習池已啟用'
+          );
+          await settleAnimations(page);
+          await nextFrames(page);
+          const after = await look();
+          await expect(summary, `別的分頁改成 ${to}：焦點掉了`).toBeFocused();
+          await expect(page.locator('.practice-pool-tip__details')).toHaveJSProperty('open', open);
+          // 開關從框線換成實心（btn-secondary 換成 btn-primary）時字級特大的高度差 1 到 2px，留著不讓下面移動（useKeepHeight）
+          expect(after.box, `別的分頁改成 ${to}：說明卡留下空白 ${JSON.stringify(after)}`).toBeLessThan(after.content + 2.5);
+          // Firefox 412 寬時頁首的徽章換字從一行變兩行（已知，不在這裡處理）：只比說明卡裡面與下面差多少
+          const shift = (a: typeof before) => [a.source - a.summary, a.start - a.source, a.box];
+          expect(shift(after), `別的分頁改成 ${to}：說明卡變高、變矮或下面的東西移動 ${JSON.stringify({ before, after })}`).toEqual(shift(before));
+        }
+      });
+    }
   }
 });
 

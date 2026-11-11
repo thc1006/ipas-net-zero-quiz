@@ -290,14 +290,13 @@ describe('題數說明到使用者換選項之前不變矮', () => {
     const badges = () => document.querySelector('.stats-badges') as HTMLElement;
     const toggle = (name: '啟用加強練習池' | '停用加強練習池') => fireEvent.click(screen.getByRole('button', { name }));
 
-    it('說明卡：別的分頁停用，抽題分布與說明換掉，高度留著；這個分頁自己按啟用、停用才從頭量', () => {
+    it('說明卡：別的分頁停用，說明換掉、抽題分布留著，高度留著；這個分頁自己按啟用、停用才從頭量（拿掉抽題分布）', () => {
       localStorage.setItem('practice-pool-enabled', '1');
       render(<HomePage onStartQuiz={() => {}} />);
       const tall = shown(tip());
       expect(tip().style.minHeight).toBe(`${tall}px`);
       otherTab('0');
       expect(screen.getByRole('button', { name: '啟用加強練習池' })).toBeInTheDocument();
-      expect(shown(tip()), '前提：停用之後說明卡比較短').toBeLessThan(tall);
       expect(tip().style.minHeight).toBe(`${tall}px`);
       otherTab('1');
       otherTab('0');
@@ -305,6 +304,7 @@ describe('題數說明到使用者換選項之前不變矮', () => {
       toggle('啟用加強練習池');
       toggle('停用加強練習池');
       const now = shown(tip());
+      expect(now, '前提：自己停用之後沒有抽題分布，說明卡比較短').toBeLessThan(tall);
       expect(tip().style.minHeight).toBe(`${now}px`);
     });
 
@@ -414,23 +414,77 @@ describe('題數說明到使用者換選項之前不變矮', () => {
         expect(row()).not.toBeNull();
       });
 
-      it('別的分頁停用：那一列拿掉、高度留著；之後別的分頁再啟用也不加回來', () => {
+      // 別的分頁停用：那一列不拿掉（焦點在上面時掉回 body，打開時說明卡留下一大塊空白），換成說停用前、已不適用的字，
+      // 說明卡說別的分頁停用了。字都要是真的；高度一樣，下面的東西不動
+      const summary = () => row()!.querySelector('summary')!;
+
+      it.each([
+        ['收著', false],
+        ['打開', true],
+      ])('別的分頁停用（抽題分布%s）：那一列留著、換成停用前的抽題分布，焦點留在上面，說明卡不變高也不留空白', (_, open) => {
         localStorage.setItem('practice-pool-enabled', '1');
         render(<HomePage onStartQuiz={() => {}} />);
-        expect(row(), '前提').not.toBeNull();
+        if (open) {
+          row()!.open = true;
+          fireEvent(row()!, new Event('toggle'));
+        }
+        summary().focus();
+        const tall = shown(tip());
+        const desc = tip().querySelector<HTMLElement>('.practice-pool-tip__desc')!;
+        const descTall = shown(desc);
+        otherTab('0');
+        expect(row(), '那一列被拿掉').not.toBeNull();
+        // 說明換成比較短的一句，高度留著：下面的抽題分布與開關不往上移
+        expect(shown(desc), '前提：停用的說明比較短').toBeLessThan(descTall);
+        expect(desc.style.minHeight).toBe(`${descTall}px`);
+        expect(row()!.open).toBe(open);
+        expect(summary()).toHaveFocus();
+        expect(summary()).toHaveTextContent(/^停用前的抽題分布$/);
+        expect(tip()).toHaveTextContent('加強練習池已在別的分頁停用，下面的抽題分布不適用。');
+        expect(tip()).not.toHaveTextContent('加強練習池已啟用');
+        // 抽題分布的內容不換（換字會換行數）：前面的說明與那一列說它不適用
+        expect(row()!.querySelector('[data-testid="pool-histogram"]')).not.toBeNull();
+        expect(within(tip()).getByRole('button')).toHaveTextContent('啟用 +');
+        // 不變高也不留空白
+        expect(shown(tip())).toBe(tall);
+        expect(tip().style.minHeight).toBe(`${tall}px`);
+      });
+
+      it('之後別的分頁再啟用：換回現在的抽題分布，字照啟用的說，焦點與高度不動', () => {
+        localStorage.setItem('practice-pool-enabled', '1');
+        render(<HomePage onStartQuiz={() => {}} />);
+        row()!.open = true;
+        fireEvent(row()!, new Event('toggle'));
+        summary().focus();
         const tall = shown(tip());
         otherTab('0');
-        expect(row()).toBeNull();
-        expect(tip().style.minHeight).toBe(`${tall}px`);
         otherTab('1');
+        expect(summary()).toHaveFocus();
+        expect(row()!.open).toBe(true);
+        expect(summary()).toHaveTextContent(/^查看抽題分布$/);
         expect(tip()).toHaveTextContent('加強練習池已啟用');
+        expect(tip()).not.toHaveTextContent('停用前');
+        expect(tip()).not.toHaveTextContent('已在別的分頁停用');
         expect(tipButton()).toHaveTextContent('停用加強練習');
-        expect(row(), '別的分頁再啟用時把那一列加回來').toBeNull();
+        expect(shown(tip())).toBe(tall);
         expect(tip().style.minHeight).toBe(`${tall}px`);
-        // 這個分頁自己按：照現在的狀態
-        toggle('停用加強練習池');
+      });
+
+      it('停用前的抽題分布：這個分頁自己收起來從頭量；自己啟用照現在的狀態；換題目來源再換回來就沒有那一列', () => {
+        localStorage.setItem('practice-pool-enabled', '1');
+        render(<HomePage onStartQuiz={() => {}} />);
+        row()!.open = true;
+        fireEvent(row()!, new Event('toggle'));
+        otherTab('0');
+        row()!.open = false;
+        fireEvent(row()!, new Event('toggle'));
+        expect(tip().style.minHeight, '收起來之後照現在的內容量').toBe(`${shown(tip())}px`);
         toggle('啟用加強練習池');
-        expect(row()).not.toBeNull();
+        expect(summary()).toHaveTextContent(/^查看抽題分布$/);
+        otherTab('0');
+        choose('official');
+        choose('all');
+        expect(row(), '停用中換來源再換回來').toBeNull();
       });
     });
   });
