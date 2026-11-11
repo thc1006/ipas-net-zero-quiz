@@ -103,6 +103,25 @@ describe('ConfirmDialog', () => {
     expect(opener).toHaveFocus();
   });
 
+  // 開著時後面的頁面捲得動：原按鈕已經捲到視窗外，焦點放回去之後捲最少的距離，focus 自己不捲
+  it('關閉時原按鈕在視窗外：焦點放回去，捲到下緣貼視窗底邊', () => {
+    Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 720 });
+    const scrollBy = vi.fn();
+    vi.stubGlobal('scrollBy', scrollBy);
+    try {
+      const { opener, cancel } = openDialog();
+      opener.getBoundingClientRect = () => ({ top: 800, bottom: 840, height: 40 }) as DOMRect;
+      const focus = vi.spyOn(opener, 'focus');
+      fireEvent.click(cancel);
+      expect(opener).toHaveFocus();
+      expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+      expect(scrollBy).toHaveBeenCalledExactlyOnceWith(0, 120);
+    } finally {
+      vi.unstubAllGlobals();
+      Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 0 });
+    }
+  });
+
   it('點背景取消，點內容不關', () => {
     const { dialog } = openDialog();
     fireEvent.click(screen.getByText('不能復原'));

@@ -1,5 +1,6 @@
 // 主應用程式元件
 import { useState, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { flushSync } from 'react-dom';
 import { ReviewPoolUnavailableError, useQuiz } from './hooks/useQuiz';
 import { useAccessibility } from './hooks/useAccessibility';
 import { usePracticeMode } from './hooks/usePracticeMode';
@@ -18,6 +19,7 @@ import { usePageNotices } from './hooks/useReview';
 import { isReviewSource, questionSourceNoun } from './utils/question-source';
 import { clearReviewNotices, seedReview } from './utils/review-storage';
 import { PAGE_LOAD_FAILED } from './utils/practice-pool';
+import { returnFocus } from './utils/reveal-focus';
 import type { QuizConfig, QuizResult } from './types/quiz';
 import './App.css';
 
@@ -102,7 +104,8 @@ function App() {
   // 練習池是另一個 chunk：斷線時載不到，部署新版後舊分頁也載不到舊檔名，要告訴使用者。
   // 星號題與待複習錯題載不到練習池時（pool-unavailable）不顯示「再試一次」：這個頁面不會再載入（utils/review-pool.ts），
   // 首頁的選單與說明會跟著改，結果頁由再測一次說明。
-  // 失敗的訊息按關閉時焦點回到按下開始的按鈕（startOpener）。訊息裡的再試一次自己說不要記：它跟著訊息一起拿掉。
+  // 失敗的訊息按關閉時焦點回到按下開始的按鈕（startOpener），捲到看得到：訊息在頁首下面，按鈕在頁面下方。
+  // 訊息裡的再試一次自己說不要記：它跟著訊息一起拿掉。
   // 用滑鼠按的按鈕不拿焦點的瀏覽器（macOS 的 Safari 與 Firefox）這時有焦點的是 body，不記，留著上一次記下的
   const startOrFail = useCallback(
     async (
@@ -238,8 +241,9 @@ function App() {
             <button
               className="btn btn-secondary"
               onClick={() => {
-                setStartFailed(false);
-                if (startOpener.current?.isConnected) startOpener.current.focus();
+                // 先拿掉訊息再量：訊息還在時按鈕的位置多了訊息的高度
+                flushSync(() => setStartFailed(false));
+                returnFocus(startOpener.current);
               }}
             >
               關閉

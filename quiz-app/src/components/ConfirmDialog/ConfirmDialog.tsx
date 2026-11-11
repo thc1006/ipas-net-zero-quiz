@@ -2,6 +2,7 @@
 // 連按兩下 Enter 不會誤清。aria-modal 要名符其實：Tab 出不去，關閉後焦點回到打開它的按鈕。
 // 內文接到 aria-describedby：焦點直接落在取消，沒有它的話螢幕閱讀器只念標題與「取消」，題數與警告都聽不到。
 import { useEffect, useId, useRef, type ReactNode } from 'react';
+import { returnFocus } from '../../utils/reveal-focus';
 
 interface ConfirmDialogProps {
   title: string;
@@ -21,7 +22,8 @@ export function ConfirmDialog({ title, children, confirmLabel, onConfirm, onCanc
   useEffect(() => {
     const opener = document.activeElement as HTMLElement | null;
     cancelRef.current?.focus();
-    return () => opener?.focus();
+    // 開著時後面的頁面照樣捲得動（滾輪、觸控）：打開它的按鈕可能已經在視窗外
+    return () => returnFocus(opener);
   }, []);
 
   useEffect(() => {

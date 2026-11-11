@@ -72,6 +72,29 @@ describe('PracticeOptInDialog', () => {
     });
   });
 
+  // 按同意之後說明卡長高，打開它的按鈕被推到視窗底邊下面：焦點放回去之後捲最少的距離，focus 自己不捲
+  it('關閉時焦點回到打開它的按鈕；在視窗外時捲到下緣貼視窗底邊', () => {
+    Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 360 });
+    const scrollBy = vi.fn();
+    vi.stubGlobal('scrollBy', scrollBy);
+    const opener = document.createElement('button');
+    document.body.append(opener);
+    try {
+      opener.focus();
+      const { rerender } = render(<PracticeOptInDialog open onAccept={() => {}} onDecline={() => {}} />);
+      opener.getBoundingClientRect = () => ({ top: 322, bottom: 366, height: 44 }) as DOMRect;
+      const focus = vi.spyOn(opener, 'focus');
+      rerender(<PracticeOptInDialog open={false} onAccept={() => {}} onDecline={() => {}} />);
+      expect(opener).toHaveFocus();
+      expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+      expect(scrollBy).toHaveBeenCalledExactlyOnceWith(0, 6);
+    } finally {
+      opener.remove();
+      vi.unstubAllGlobals();
+      Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 0 });
+    }
+  });
+
   describe('開啟時把對話框捲到按鈕', () => {
     // jsdom 不排版，scrollTop 寫了讀回來還是 0，所以看有沒有寫到對話框上
     afterEach(() => vi.restoreAllMocks());

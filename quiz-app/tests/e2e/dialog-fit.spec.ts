@@ -299,3 +299,46 @@ test('清除作答統計對話框：每個尺寸、每個字級都在畫面內',
 
   expect(await offscreenParts(page, '.settings-confirm-dialog')).toEqual([]);
 });
+
+// 說明卡的開關在視窗底邊或頁首下面時用鍵盤打開對話框，按同意或暫不啟用關閉：焦點回到開關，整顆在頁首下面、視窗之內。
+// 之前交給 focus() 自己捲：按同意之後說明卡長高（多一列抽題分布），開關被推到視窗底邊下面，Firefox 不捲（差 8px）
+for (const [width, height] of [
+  [640, 360],
+  [839, 412],
+]) {
+  for (const where of ['bottom', 'top'] as const) {
+    for (const how of ['accept', 'decline'] as const) {
+      test(`${width}x${height} 開關在${where === 'bottom' ? '視窗底邊' : '頁首下面'}，${how === 'accept' ? '按同意' : '暫不啟用'}：焦點回到開關，看得到`, async ({ page }) => {
+        await page.setViewportSize({ width, height });
+        await page.addInitScript(() => window.localStorage.setItem('practice-pool-disclosure-seen', '1'));
+        await page.goto('/');
+        const cta = page.locator('.practice-pool-tip__cta');
+        await cta.focus();
+        await cta.evaluate((el, where) => {
+          const box = el.getBoundingClientRect();
+          const header = document.querySelector('.app-header')!.getBoundingClientRect().bottom;
+          window.scrollBy(0, where === 'top' ? box.top - (header + 2) : box.bottom - (document.documentElement.clientHeight - 2));
+        }, where);
+        await page.keyboard.press('Enter');
+        await expect(page.getByRole('dialog', { name: '啟用加強練習池' })).toBeVisible();
+        if (how === 'accept') {
+          await page.keyboard.press('Tab');
+          await page.keyboard.press('Enter');
+        } else {
+          await page.keyboard.press('Escape');
+        }
+        await expect(page.getByRole('dialog')).toHaveCount(0);
+        await expect(cta).toBeFocused();
+        await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+        const m = await cta.evaluate((el) => ({
+          top: el.getBoundingClientRect().top,
+          bottom: el.getBoundingClientRect().bottom,
+          header: document.querySelector('.app-header')!.getBoundingClientRect().bottom,
+          viewport: document.documentElement.clientHeight,
+        }));
+        expect(m.top, `被頁首蓋住 ${JSON.stringify(m)}`).toBeGreaterThanOrEqual(m.header - 0.5);
+        expect(m.bottom, `在視窗外 ${JSON.stringify(m)}`).toBeLessThanOrEqual(m.viewport + 0.5);
+      });
+    }
+  }
+}

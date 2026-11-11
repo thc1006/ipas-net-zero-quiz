@@ -246,6 +246,31 @@ describe('App', () => {
       expect(screen.getByRole('button', { name: /開始/ })).toHaveFocus();
     });
 
+    // 開始按鈕在頁面下方、訊息在最上面：焦點放回去之後捲最少的距離。要等訊息拿掉之後才量，訊息還在時按鈕低了訊息的高度
+    it('關閉之後開始按鈕在視窗下面：訊息拿掉之後才量，下緣捲到視窗底邊，focus 自己不捲', async () => {
+      poolBroken.value = true;
+      Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 720 });
+      const scrollBy = vi.fn();
+      vi.stubGlobal('scrollBy', scrollBy);
+      try {
+        render(<App />);
+        const start = screen.getByRole('button', { name: /開始/ });
+        start.getBoundingClientRect = () => {
+          const top = screen.queryByRole('alert') ? 900 : 810;
+          return { top, bottom: top + 40, height: 40 } as DOMRect;
+        };
+        start.focus();
+        fireEvent.click(start);
+        const focus = vi.spyOn(start, 'focus');
+        fireEvent.click(within(await screen.findByRole('alert')).getByRole('button', { name: '關閉' }));
+        expect(start).toHaveFocus();
+        expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+        expect(scrollBy).toHaveBeenCalledExactlyOnceWith(0, 130);
+      } finally {
+        Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 0 });
+      }
+    });
+
     // macOS 的 Safari 與 Firefox 用滑鼠按按鈕不給它焦點：先點過空白的地方，按開始時有焦點的是 body
     it('按開始時焦點在 body：不記成 body，關閉之後焦點回到上一次記下的按鈕', async () => {
       poolBroken.value = true;
