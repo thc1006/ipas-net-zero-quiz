@@ -10,10 +10,10 @@ function headerBottom(): number {
 
 /**
  * 捲最少的距離，讓 el 露在頁首下面、視窗之內（block: 'nearest' 的捲法，頁首蓋住的那一段不算）。
- * 比可用的高度高時上緣貼頁首：焦點看得到優先（WCAG 2.4.11）。頁首裡的元素不捲（它一直在畫面上）
+ * 比可用的高度高時上緣貼頁首：焦點看得到優先（WCAG 2.4.11）。頁首裡的元素不捲（它一直在畫面上）。回傳捲了多少
  */
-export function revealBelowHeader(el: Element): void {
-  if (el.closest('.app-header')) return;
+export function revealBelowHeader(el: Element): number {
+  if (el.closest('.app-header')) return 0;
   // 藏起來的 radio 沒有大小，看得到的是外面的 label
   const shown = el.getBoundingClientRect().height > 0 ? el : (el.closest('label') ?? el);
   const top = headerBottom();
@@ -23,6 +23,7 @@ export function revealBelowHeader(el: Element): void {
   const by =
     box.top < top ? Math.floor(box.top - top) : overflow > 0 ? Math.min(Math.ceil(overflow), Math.floor(box.top - top)) : 0;
   if (by !== 0) window.scrollBy(0, by);
+  return by;
 }
 
 /** 焦點放回 el（不在畫面上、拿不到焦點就不動），再捲到看得到 */

@@ -37,6 +37,10 @@ describe('returnFocus：程式放回焦點之後捲最少的距離', () => {
     button.getBoundingClientRect = () => rect(20.5, 40);
     returnFocus(button);
     expect(scrollBy).toHaveBeenCalledWith(0, -44);
+    // 回傳捲了多少（useHoldPosition 拿來改記下的位置）
+    expect(revealBelowHeader(button)).toBe(-44);
+    button.getBoundingClientRect = () => rect(100, 40);
+    expect(revealBelowHeader(button)).toBe(0);
   });
 
   it('比可用的高度高：上緣貼頁首，不捲到下緣', () => {

@@ -35,9 +35,9 @@ export function useHoldPosition(reveal = false): (el: Element | null | undefined
       if (!h.el.isConnected) return;
       const by = Math.round(h.el.getBoundingClientRect().top - h.top);
       if (by !== 0) window.scrollBy(0, by);
-      if (!reveal) return;
-      revealBelowHeader(h.el);
-      h.top = h.el.getBoundingClientRect().top;
+      // 捲出來的距離從記下的位置扣掉，不再量一次版面：在這裡多量一次時，WebKit 之後在題目頁按上一題，scroll anchoring
+      // 不補、上一題被推到視窗外（round 12 的 probe-k，原因沒查清楚，拿掉這一次量就恢復）
+      if (reveal) h.top -= revealBelowHeader(h.el);
     };
     settle();
     // 上面的按鈕（.btn 的 transition: all）換字級時字與 padding 慢慢變，上面的內容在這 0.2 秒裡一直換高度，Firefox 的
