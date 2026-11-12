@@ -128,10 +128,26 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   useKeepHeight(poolTipRef, `${source}|${poolToggles}|${detailsToggles}`);
   const badgesRef = useRef<HTMLDivElement>(null);
   useKeepHeight(badgesRef, `${poolToggles}|${officialOnly}`);
-  // 說明卡的說明本身也留著：別的分頁停用時抽題分布留在原地（見下面），說明換成比較短的一句，不留高度的話下面的抽題分布
-  // 與開關往上移（焦點可能在抽題分布上），說明卡底下留空白
+  // 說明卡的抽題分布那一列（主題庫加練習池，只有全部題目時有）：有沒有這一列在首頁畫出來時、這個分頁自己切換或換題目
+  // 來源時才定。別的分頁啟用時加一列的話說明卡長高 30.4，下面的題目來源與開始測驗往下移；到下一次畫首頁或這個分頁自己
+  // 切換時才出現。
+  // 別的分頁停用時也不拿掉：焦點在那一列時會掉回 body，打開著的話說明卡留下 210 到 263px 的空白。留在原地（staleDistribution）：
+  // 同一個 <details>，焦點與打開的狀態都不動，抽題分布的內容不換（換字會換行數，說明卡變高或留空白）；前面的說明換成
+  // 「別的分頁停用、下面的抽題分布不適用」，那一列換成「停用前的抽題分布」。這兩句不比啟用時的長，說明卡不變高。
+  // 之後別的分頁再啟用就換回現在的字
+  const distributionScope = `${source}|${poolToggles}`;
+  const distributionNow = practiceMode.enabled && source === 'all';
+  const [distribution, setDistribution] = useState({ scope: distributionScope, shown: distributionNow });
+  const showDistribution = distribution.scope === distributionScope ? distribution.shown : distributionNow;
+  if (distribution.scope !== distributionScope) {
+    setDistribution({ scope: distributionScope, shown: showDistribution });
+  }
+  const staleDistribution = showDistribution && !practiceMode.enabled;
+  // 說明卡的說明本身也留著：別的分頁停用時抽題分布留在原地（上面），說明換成比較短的一句，不留高度的話下面的抽題分布
+  // 與開關往上移（焦點可能在抽題分布上），說明卡底下留空白。沒有那一列時不留（每次切換都從頭量）：說明變矮的那一截讓給
+  // 開關換樣式時 transition 多出來的 2 到 4px，說明卡不必長高再等 transition 跑完縮回來（WebKit 在機器忙時偶爾沒縮回來）
   const poolDescRef = useRef<HTMLParagraphElement>(null);
-  useKeepHeight(poolDescRef, `${source}|${poolToggles}`);
+  useKeepHeight(poolDescRef, `${source}|${poolToggles}|${showDistribution || practiceMode.enabled}`);
   // 使用者換了控制項，上面的說明卡、題數說明跟著換高度：正在操作的那一個留在原來的位置。排在 useKeepHeight 後面。
   // 控制項自己也可能變高（字級特大時說明卡的開關從實心換成框線高 2px），在視窗底邊的話再捲到露出來
   const hold = useHoldPosition(true);
@@ -223,22 +239,6 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
     if (parsedQuestionCount === null) return;
     onStartQuiz({ ...config, questionCount: parsedQuestionCount });
   }, [config, onStartQuiz, parsedQuestionCount]);
-
-  // 說明卡的抽題分布那一列（主題庫加練習池，只有全部題目時有）：有沒有這一列在首頁畫出來時、這個分頁自己切換或換題目
-  // 來源時才定。別的分頁啟用時加一列的話說明卡長高 30.4，下面的題目來源與開始測驗往下移；到下一次畫首頁或這個分頁自己
-  // 切換時才出現。
-  // 別的分頁停用時也不拿掉：焦點在那一列時會掉回 body，打開著的話說明卡留下 210 到 263px 的空白。留在原地（staleDistribution）：
-  // 同一個 <details>，焦點與打開的狀態都不動，抽題分布的內容不換（換字會換行數，說明卡變高或留空白）；前面的說明換成
-  // 「別的分頁停用、下面的抽題分布不適用」，那一列換成「停用前的抽題分布」。這兩句不比啟用時的長，說明卡不變高。
-  // 之後別的分頁再啟用就換回現在的字
-  const distributionScope = `${source}|${poolToggles}`;
-  const distributionNow = practiceMode.enabled && source === 'all';
-  const [distribution, setDistribution] = useState({ scope: distributionScope, shown: distributionNow });
-  const showDistribution = distribution.scope === distributionScope ? distribution.shown : distributionNow;
-  if (distribution.scope !== distributionScope) {
-    setDistribution({ scope: distributionScope, shown: showDistribution });
-  }
-  const staleDistribution = showDistribution && !practiceMode.enabled;
 
   return (
     <div className="home-page animate-fade-in">

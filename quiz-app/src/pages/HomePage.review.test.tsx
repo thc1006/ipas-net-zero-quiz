@@ -450,6 +450,24 @@ describe('題數說明到使用者換選項之前不變矮', () => {
         expect(tip().style.minHeight).toBe(`${tall}px`);
       });
 
+      // 沒有那一列時（首頁畫出來時沒啟用）說明不留高度：說明變矮的那一截讓給開關換樣式時 transition 多出來的 2 到 4px，
+      // 說明卡不必長高再靠 transition 跑完縮回來（WebKit 在機器忙時偶爾沒縮回來，下面移 2px）
+      it('沒有那一列（畫出來時沒啟用），別的分頁啟用：說明照現在的字量，不留高度；說明卡照舊留著', () => {
+        localStorage.setItem('practice-pool-enabled', '0');
+        render(<HomePage onStartQuiz={() => {}} />);
+        const desc = tip().querySelector<HTMLElement>('.practice-pool-tip__desc')!;
+        const tall = shown(desc);
+        const card = tip().style.minHeight;
+        otherTab('1');
+        expect(row(), '前提').toBeNull();
+        expect(shown(desc), '前提：啟用的說明比較短').toBeLessThan(tall);
+        expect(desc.style.minHeight).toBe(`${shown(desc)}px`);
+        expect(tip().style.minHeight).toBe(card);
+        // 再停用：一樣照現在的字
+        otherTab('0');
+        expect(desc.style.minHeight).toBe(`${shown(desc)}px`);
+      });
+
       it('之後別的分頁再啟用：換回現在的抽題分布，字照啟用的說，焦點與高度不動', () => {
         localStorage.setItem('practice-pool-enabled', '1');
         render(<HomePage onStartQuiz={() => {}} />);
