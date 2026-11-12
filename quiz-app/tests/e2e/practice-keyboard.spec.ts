@@ -608,11 +608,17 @@ test.describe('練習模式的鍵盤作答', () => {
         ['ArrowUp', 0],
       ];
       for (const [key, to] of steps) {
-        // 每個 frame 看一次焦點；換了之後的第一個 frame 記下選項的位置
-        await page.evaluate(() => {
+        // 每個 frame 看一次焦點；換了之後的第一個 frame 記下選項的位置。按之前就整個看得到的選項，頁面不捲
+        // （之前頭尾相接時照選項的 scroll-margin-top 捲，那是練習模式留給提示的空間：640x360 捲了 41 到 47px）
+        await page.evaluate((to) => {
           const w = window as unknown as { __first: Promise<unknown> };
           const from = document.activeElement;
           const start = performance.now();
+          const pre = document.querySelectorAll('.option-item')[to].getBoundingClientRect();
+          const shown =
+            pre.top >= document.querySelector('.app-header')!.getBoundingClientRect().bottom &&
+            pre.bottom <= document.documentElement.clientHeight;
+          const y = window.scrollY;
           w.__first = new Promise((resolve) => {
             const tick = () => {
               const a = document.activeElement as HTMLInputElement;
@@ -624,13 +630,14 @@ test.describe('練習模式的鍵盤作答', () => {
                   bottom: box.bottom,
                   header: document.querySelector('.app-header')!.getBoundingClientRect().bottom,
                   viewport: document.documentElement.clientHeight,
+                  scrolled: shown ? window.scrollY - y : 0,
                 });
               } else if (performance.now() - start > 1000) resolve({ value: '焦點沒有移動' });
               else requestAnimationFrame(tick);
             };
             requestAnimationFrame(tick);
           });
-        });
+        }, to);
         await page.keyboard.press(key);
         const m = (await page.evaluate(() => (window as unknown as { __first: Promise<unknown> }).__first)) as {
           value: string;
@@ -638,11 +645,13 @@ test.describe('練習模式的鍵盤作答', () => {
           bottom: number;
           header: number;
           viewport: number;
+          scrolled: number;
         };
         const where = `${key} 到 ${KEYS[to]} ${JSON.stringify(m)}`;
         expect(m.value, where).toBe(KEYS[to]);
         expect(m.top, where).toBeGreaterThanOrEqual(m.header - 0.5);
         expect(m.bottom, where).toBeLessThanOrEqual(m.viewport + 0.5);
+        expect(Math.abs(m.scrolled), where).toBeLessThanOrEqual(0.5);
         await expect(page.locator('.question-options input:checked')).toHaveValue(KEYS[to]);
       }
     });

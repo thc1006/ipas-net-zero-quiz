@@ -4,6 +4,13 @@ import { act, render, screen, fireEvent, isInaccessible } from '@testing-library
 import { QuestionCard } from './QuestionCard';
 import type { QuizQuestion } from '../../types/quiz';
 import { getQuestionById } from '../../data/questions';
+import { revealBelowHeader } from '../../utils/reveal-focus';
+
+// 考試模式的選項由 revealBelowHeader 捲出來（扣頁首、不照練習模式留給提示的 scroll-margin-top）
+vi.mock('../../utils/reveal-focus', async (load) => ({
+  ...(await load<typeof import('../../utils/reveal-focus')>()),
+  revealBelowHeader: vi.fn(() => 0),
+}));
 
 const mockQuestion: QuizQuestion = {
   id: 'test-1',
@@ -309,15 +316,17 @@ describe('QuestionCard 元件', () => {
       radios[from].focus();
       const focus = vi.spyOn(radios[to], 'focus');
       const scroll = vi.mocked(Element.prototype.scrollIntoView);
+      const reveal = vi.mocked(revealBelowHeader);
       scroll.mockClear();
+      reveal.mockClear();
 
       expect(fireEvent.keyDown(radios[from], { key })).toBe(false);
 
       expect(radios[to]).toHaveFocus();
       expect(focus).toHaveBeenCalledWith({ preventScroll: true });
       expect(onSelectAnswer).toHaveBeenCalledExactlyOnceWith(mockQuestion.options[to].key);
-      expect(scroll.mock.contexts).toEqual([radios[to].closest('.option-item')]);
-      expect(scroll).toHaveBeenCalledWith({ block: 'nearest' });
+      expect(reveal.mock.calls).toEqual([[radios[to].closest('.option-item')]]);
+      expect(scroll).not.toHaveBeenCalled();
     });
 
     it.each(['altKey', 'ctrlKey', 'metaKey'])('頭尾加 %s：交給瀏覽器', (modifier) => {
@@ -336,14 +345,14 @@ describe('QuestionCard 元件', () => {
     it('方向鍵之後同一個 task 裡移過去的選項捲出來；下一個 task 才移的、Tab 移過去的不捲', async () => {
       render(<QuestionCard question={mockQuestion} questionNumber={1} onSelectAnswer={vi.fn()} />);
       const radios = screen.getAllByRole('radio');
-      const scroll = vi.mocked(Element.prototype.scrollIntoView);
+      const scroll = vi.mocked(revealBelowHeader);
       radios[0].focus();
       scroll.mockClear();
 
       fireEvent.keyDown(radios[0], { key: 'ArrowDown' });
       act(() => radios[1].focus());
-      expect(scroll.mock.contexts).toEqual([radios[1].closest('.option-item')]);
-      expect(scroll).toHaveBeenCalledWith({ block: 'nearest' });
+      expect(scroll.mock.calls).toEqual([[radios[1].closest('.option-item')]]);
+      expect(vi.mocked(Element.prototype.scrollIntoView)).not.toHaveBeenCalled();
 
       // 一次按鍵只捲一次：之後同一個 task 裡又移的不算
       act(() => radios[2].focus());

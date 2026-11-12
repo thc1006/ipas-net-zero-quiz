@@ -15,6 +15,7 @@ import { renderMarkdown } from '../../utils/render-markdown';
 import { StarButton } from '../StarButton/StarButton';
 import { ButtonNotice } from '../ReviewNotice/ReviewNotice';
 import { RemoveFromReview } from '../RemoveFromReview/RemoveFromReview';
+import { revealBelowHeader } from '../../utils/reveal-focus';
 import './QuestionCard.css';
 
 export interface QuestionCardProps {
@@ -153,7 +154,7 @@ export function QuestionCard({
         e.preventDefault();
         next.focus({ preventScroll: true });
         handleOptionClick(next.value);
-        next.closest('.option-item')?.scrollIntoView({ block: 'nearest' });
+        revealBelowHeader(next.closest('.option-item')!);
         return;
       }
       e.preventDefault();
@@ -166,11 +167,12 @@ export function QuestionCard({
   );
 
   // 考試模式用方向鍵移過去的選項在同一個 frame 捲出來：瀏覽器自己只捲 radio（高度 0）那一條線（WebKit 不捲），
-  // 頁首的補捲要等下一個 frame（WebKit 沒有新畫面時晚到 100ms 上下）
+  // 頁首的補捲要等下一個 frame（WebKit 沒有新畫面時晚到 100ms 上下）。不用 scrollIntoView：選項的 scroll-margin-top
+  // 是練習模式留給提示的，考試模式沒有提示，整個看得到的選項也會被捲下來 41 到 47px（640x360）
   const handleExamFocus = useCallback((e: React.FocusEvent<HTMLDivElement>) => {
     if (!arrowMove.current) return;
     arrowMove.current = false;
-    e.target.closest('.option-item')?.scrollIntoView({ block: 'nearest' });
+    revealBelowHeader(e.target.closest('.option-item')!);
   }, []);
 
   // 提示只給鍵盤：滑鼠點選項時選項也會拿到焦點，那一下不能閃出提示
