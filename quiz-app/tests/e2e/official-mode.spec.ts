@@ -231,6 +231,29 @@ test.describe('首頁：換了控制項之後上面的內容長高或變矮，�
     });
   }
 
+  // 一路來回換（全部官方題目、全部題目各 6 次）：說明卡每次差的高度有小數，WebKit 的捲動位置只留整數、小數捨去。
+  // 誤差不能一次一次累積，題目來源一直在原來的位置（1px 以內）、不超出視窗底邊
+  test('題目來源 412x839 字級特大 視窗底邊：來回換 12 次，題目來源一直留在原來的位置', async ({ page }) => {
+    await page.setViewportSize({ width: 412, height: 839 });
+    await page.addInitScript(() => {
+      window.localStorage.setItem('practice-pool-ai-opt-in', '1');
+      window.localStorage.setItem('practice-pool-enabled', '1');
+    });
+    await gotoHome(page, 'xlarge');
+    const source = page.getByLabel('題目來源');
+    await source.focus();
+    await place(source, 'bottom');
+    await nextFrames(page);
+    const start = await spot(source);
+    for (let i = 0; i < 12; i++) {
+      await source.selectOption(i % 2 ? 'all' : 'official');
+      await nextFrames(page);
+      const now = await spot(source);
+      expect(Math.abs(now.top - start.top), `第 ${i + 1} 次之後題目來源移動了 ${JSON.stringify({ start, now })}`).toBeLessThanOrEqual(1);
+      expect(now.bottom, `第 ${i + 1} 次之後超出視窗底邊 ${JSON.stringify(now)}`).toBeLessThanOrEqual(now.viewport + 0.5);
+    }
+  });
+
   test('題數 412x839：題數超過可出的題數，上面的題數說明多一行，題數不移動', async ({ page }) => {
     await page.setViewportSize({ width: 412, height: 839 });
     await gotoHome(page);

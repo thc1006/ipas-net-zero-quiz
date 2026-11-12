@@ -28,11 +28,16 @@ export function useHoldPosition(reveal = false): (el: Element | null | undefined
     const h = held.current;
     if (!h) return;
     held.current = null;
+    // 捲動量取整數：WebKit 的捲動位置只留整數，小數在畫出來時捨去，差 0.8 的捲動一次都沒捲到，一路換下去就一路往同一邊
+    // 偏（Pixel 7 字級特大用方向鍵換題目來源，換到後來超出視窗底邊）。四捨五入各引擎都一樣，誤差在 0.5 以內、有正有負。
+    // 被頁首蓋到或超出視窗底邊、捲出來之後，之後的 frame 留在捲出來的位置：不然每個 frame 先捲回去再捲出來，來回跳
     const settle = () => {
       if (!h.el.isConnected) return;
-      const by = h.el.getBoundingClientRect().top - h.top;
+      const by = Math.round(h.el.getBoundingClientRect().top - h.top);
       if (by !== 0) window.scrollBy(0, by);
-      if (reveal) revealBelowHeader(h.el);
+      if (!reveal) return;
+      revealBelowHeader(h.el);
+      h.top = h.el.getBoundingClientRect().top;
     };
     settle();
     // 上面的按鈕（.btn 的 transition: all）換字級時字與 padding 慢慢變，上面的內容在這 0.2 秒裡一直換高度，Firefox 的

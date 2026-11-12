@@ -67,6 +67,20 @@ describe('useHoldPosition', () => {
     }
   });
 
+  // WebKit 的捲動位置只留整數（小數捨去，畫出來時才捨）：差 0.8 的捲動一次都沒捲到，一路往同一邊偏
+  it('上面每次差小數：捲整數（四捨五入），來回換的誤差不累積', () => {
+    scrollBy.mockImplementation((_x: number, y: number) => {
+      scrollY = Math.trunc(scrollY + y);
+    });
+    render(<Harness heights={[500, 539.2, 500, 528.8, 500, 539.2, 500, 528.8, 500]} />);
+    const start = button(/^換/).getBoundingClientRect().top;
+    for (let i = 0; i < 8; i++) {
+      fireEvent.click(button(/^換/));
+      expect(Math.abs(button(/^換/).getBoundingClientRect().top - start), `第 ${i + 1} 次`).toBeLessThanOrEqual(0.5);
+    }
+    for (const [, y] of scrollBy.mock.calls) expect(Number.isInteger(y), `捲了小數 ${y}`).toBe(true);
+  });
+
   it('沒有移動：不捲', () => {
     render(<Harness />);
     fireEvent.click(button(/^換/));
@@ -167,6 +181,26 @@ describe('useHoldPosition', () => {
       frame();
       await act(async () => finish());
       expect(scrollBy).not.toHaveBeenCalled();
+    });
+
+    // 字級換大時選單也慢慢變高：每個 frame 超出視窗底邊一點，捲出來之後留在那裡，不先捲回去再捲出來（來回跳）
+    it('reveal：transition 跑的時候捲出來之後不再捲回去', async () => {
+      Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 500 - 300 + 41 });
+      render(<Harness reveal />);
+      fireEvent.click(button(/^換/));
+      // 按鈕在 200 到 240，視窗到 241；變高 3px（上面一樣）：超出 2px
+      const box = vi.mocked(HTMLElement.prototype.getBoundingClientRect);
+      const base = box.getMockImplementation()!;
+      box.mockImplementation(function (this: HTMLElement) {
+        const r = base.call(this);
+        return this.matches('.app-header') ? r : ({ top: r.top, bottom: r.bottom + 3, height: 43 } as DOMRect);
+      });
+      frame();
+      expect(scrollBy.mock.calls).toEqual([[0, 2]]);
+      frame();
+      frame();
+      await act(async () => finish());
+      expect(scrollBy.mock.calls, '捲出來之後又捲回去').toEqual([[0, 2]]);
     });
 
     it('中間又換了一次：前一次的不再捲', async () => {
