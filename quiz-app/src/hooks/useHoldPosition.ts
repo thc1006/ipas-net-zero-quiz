@@ -8,18 +8,20 @@ import { revealBelowHeader } from '../utils/reveal-focus';
 interface Held {
   el: Element;
   top: number;
+  reveal: boolean;
 }
 
 /** 使用者自己捲動或按鍵：之後的補捲作廢 */
 const USER_INPUT = ['wheel', 'touchmove', 'keydown', 'pointerdown'];
 
 /**
- * 回傳 hold(el)：在改 state 的事件裡呼叫，這個元件下一次畫完（layout effect，還沒畫到畫面上）時把 el 捲回原來的位置。
- * reveal：之後再捲到頁首下面、視窗之內（設定頁換字級時頁首自己也變高，原來的位置可能在頁首底下；首頁的開關換了樣式自己
- * 變高，在視窗底邊的話下緣超出）。
+ * 回傳 hold(el, reveal)：在改 state 的事件裡呼叫，這個元件下一次畫完（layout effect，還沒畫到畫面上）時把 el 捲回原來的位置。
+ * reveal（沒給就用 hook 的）：之後再捲到頁首下面、視窗之內（設定頁換字級時頁首自己也變高，原來的位置可能在頁首底下；首頁的
+ * 開關換了樣式自己變高，在視窗底邊的話下緣超出）。只在需要的地方開：首頁換題目來源時也開的話，WebKit 之後在題目頁按上一題，
+ * scroll anchoring 不補、上一題被推到視窗外（round 12 的 probe-k，只出官方題目那一段；原因沒查清楚，不開就恢復）。
  * 要排在會改高度的 layout effect（useKeepHeight）後面：它們先改好 min-height 再量
  */
-export function useHoldPosition(reveal = false): (el: Element | null | undefined) => void {
+export function useHoldPosition(reveal = false): (el: Element | null | undefined, reveal?: boolean) => void {
   const held = useRef<Held | null>(null);
   // 每記一次加一：等 transition 的補捲只做最後一次的
   const round = useRef(0);
@@ -37,7 +39,7 @@ export function useHoldPosition(reveal = false): (el: Element | null | undefined
       if (by !== 0) window.scrollBy(0, by);
       // 捲出來的距離從記下的位置扣掉，不再量一次版面：在這裡多量一次時，WebKit 之後在題目頁按上一題，scroll anchoring
       // 不補、上一題被推到視窗外（round 12 的 probe-k，原因沒查清楚，拿掉這一次量就恢復）
-      if (reveal) h.top -= revealBelowHeader(h.el);
+      if (h.reveal) h.top -= revealBelowHeader(h.el);
     };
     settle();
     // 上面的按鈕（.btn 的 transition: all）換字級時字與 padding 慢慢變，上面的內容在這 0.2 秒裡一直換高度，Firefox 的
@@ -62,14 +64,17 @@ export function useHoldPosition(reveal = false): (el: Element | null | undefined
     });
   });
 
-  return useCallback((el) => {
-    if (!el) return;
-    round.current++;
-    const h = { el, top: el.getBoundingClientRect().top };
-    held.current = h;
-    // 這一次沒有重畫（值沒變）的話不留到之後別的原因重畫（別的分頁改了名單）才捲
-    setTimeout(() => {
-      if (held.current === h) held.current = null;
-    });
-  }, []);
+  return useCallback(
+    (el, show = reveal) => {
+      if (!el) return;
+      round.current++;
+      const h = { el, top: el.getBoundingClientRect().top, reveal: show };
+      held.current = h;
+      // 這一次沒有重畫（值沒變）的話不留到之後別的原因重畫（別的分頁改了名單）才捲
+      setTimeout(() => {
+        if (held.current === h) held.current = null;
+      });
+    },
+    [reveal]
+  );
 }

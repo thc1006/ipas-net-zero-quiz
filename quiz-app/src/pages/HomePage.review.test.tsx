@@ -767,6 +767,18 @@ describe('使用者換了控制項：正在操作的那一個不移動', () => {
     expect(scrollBy).toHaveBeenLastCalledWith(0, after.height - before.height);
   });
 
+  // 題目來源、題數只捲回原來的位置，不再捲出來：首頁換題目來源時也捲出來的話，WebKit 之後在題目頁按上一題，scroll anchoring
+  // 不補（round 12 的 probe-k）。開關才捲出來
+  it('題目來源有一截在視窗上緣外面：只捲回原來的位置，不再往下露出來', () => {
+    localStorage.setItem('practice-pool-enabled', '1');
+    render(<HomePage onStartQuiz={() => {}} />);
+    scrollY = source().getBoundingClientRect().top + 10;
+    const before = source().getBoundingClientRect().top;
+    expect(before, '前提：上緣在視窗外').toBeLessThan(0);
+    choose('official');
+    expect(source().getBoundingClientRect().top).toBe(before);
+  });
+
   it('沒有重畫（值沒變）：記下的位置不留到之後別的原因重畫才捲', async () => {
     localStorage.setItem('practice-pool-enabled', '1');
     render(<HomePage onStartQuiz={() => {}} />);

@@ -149,13 +149,13 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   const poolDescRef = useRef<HTMLParagraphElement>(null);
   useKeepHeight(poolDescRef, `${source}|${poolToggles}|${showDistribution || practiceMode.enabled}`);
   // 使用者換了控制項，上面的說明卡、題數說明跟著換高度：正在操作的那一個留在原來的位置。排在 useKeepHeight 後面。
-  // 控制項自己也可能變高（字級特大時說明卡的開關從實心換成框線高 2px），在視窗底邊的話再捲到露出來
-  const hold = useHoldPosition(true);
+  // 加強練習池的開關自己也會變高（字級特大時從實心換成框線高 2px），在視窗底邊的話再捲到露出來（reveal 只給開關，見 useHoldPosition）
+  const hold = useHoldPosition();
   // 打開揭露對話框的開關：按同意時說明卡換字，開關留在原來的位置
   const dialogOpener = useRef<HTMLElement | null>(null);
 
   const handlePracticeToggle = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    hold(e.currentTarget);
+    hold(e.currentTarget, true);
     if (practiceMode.enabled) {
       practiceMode.disable();
       setPoolToggles((n) => n + 1);
@@ -172,7 +172,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   }, [practiceMode, hold]);
 
   const handleAcceptOptIn = useCallback(() => {
-    hold(dialogOpener.current);
+    hold(dialogOpener.current, true);
     writeBool(DISCLOSURE_SEEN_KEY, true);
     practiceMode.acceptOptIn();
     setPoolToggles((n) => n + 1);
