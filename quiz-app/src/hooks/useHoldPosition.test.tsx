@@ -168,8 +168,9 @@ describe('useHoldPosition', () => {
       extra += 2;
       await act(async () => finish());
       expect(scrollBy).toHaveBeenLastCalledWith(0, 2);
-      const count = frames.length;
-      frames[count - 1](0);
+      // 跑完之後排著的那一個 frame 取消了：之後上面再變也不捲（不再一直跟著）
+      extra += 7;
+      frames[frames.length - 1](0);
       expect(scrollBy).toHaveBeenCalledTimes(3);
     });
 
