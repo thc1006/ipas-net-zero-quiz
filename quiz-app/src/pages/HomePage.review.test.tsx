@@ -223,6 +223,18 @@ describe('題目來源：星號題與待複習錯題', () => {
     expect(screen.getByTestId('practice-pool-tip')).not.toHaveTextContent('這一場不會混入練習池');
   });
 
+  it('同意過但沒啟用加強練習池：說明卡一樣說名單上的練習池題照出，不說下一場會混入', () => {
+    localStorage.setItem('practice-pool-ai-opt-in', '1');
+    __setPracticePoolForTesting(buildFixturePool());
+    put([s1[0].id]);
+    render(<HomePage onStartQuiz={() => {}} />);
+    choose('review:starred');
+    const tip = screen.getByTestId('practice-pool-tip');
+    expect(tip).toHaveTextContent('想多練？啟用加強練習池');
+    expect(tip).toHaveTextContent('名單上的練習池題照出');
+    expect(tip).not.toHaveTextContent('啟用後下一場練習會混入');
+  });
+
   it('官方來源：題數說明不提加強練習池，說明卡說這個模式不混入', () => {
     localStorage.setItem('practice-pool-enabled', '1');
     render(<HomePage onStartQuiz={() => {}} />);

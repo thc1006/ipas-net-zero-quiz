@@ -284,22 +284,22 @@ describe('清除', () => {
     expect(status()).toHaveTextContent('已清除待複習錯題。');
   });
 
-  it('取消、點背景、Esc 都不清除；背景點擊之內的 dialog 本身不關閉', () => {
-    put({ a: 1 });
+  it.each(['清除星號', '清除待複習錯題'])('%s：取消、點背景、Esc 都不清除；背景點擊之內的 dialog 本身不關閉', (name) => {
+    put({ a: 1 }, { b: { streak: 0, last: 1 } });
     render(<ReviewBackup />);
-    const open = () => fireEvent.click(screen.getByRole('button', { name: /清除星號/ }));
+    const open = () => fireEvent.click(screen.getByRole('button', { name: new RegExp(name) }));
     open();
     fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: '取消' }));
     expect(screen.queryByRole('dialog')).toBeNull();
     open();
-    fireEvent.click(screen.getByText('清除星號？'));
+    fireEvent.click(screen.getByText(`${name}？`));
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('dialog'));
     expect(screen.queryByRole('dialog')).toBeNull();
     open();
     fireEvent.keyDown(window, { key: 'Escape' });
     expect(screen.queryByRole('dialog')).toBeNull();
-    expect(saved().stars).toEqual({ a: 1 });
+    expect(saved()).toMatchObject({ stars: { a: 1 }, wrong: { b: { streak: 0, last: 1 } } });
   });
 
   it.each([
