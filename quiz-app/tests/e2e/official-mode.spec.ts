@@ -1,5 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { test, expect } from './fixtures';
+import { SLACK, settle } from './layout';
 
 /**
  * #128 只出官方題目：「題目來源」選單放在既有的測驗設定裡（不另加按鈕）。
@@ -186,11 +187,8 @@ const place = (control: Locator, where: 'top' | 'bottom') =>
     window.scrollBy(0, where === 'top' ? box.top - (header + 2) : box.bottom - (document.documentElement.clientHeight - 2));
   }, where);
 
-/** 進場動畫與按鈕的 transition 跑完，再等兩個 frame */
-const nextFrames = (page: Page) =>
-  page
-    .evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))))
-    .then(() => page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))));
+/** 等版面停下來再量（layout.ts） */
+const nextFrames = settle;
 
 // 使用者換了首頁的控制項，上面的說明卡、題數說明跟著長高或變矮（只出官方題目時說明卡換字、拿掉開關與抽題分布，
 // 長高 29px 或變矮 64px）。正在操作的控制項要留在原來的位置：之前 WebKit 1280x720 選全部官方題目時題目來源從 66 移到 10
@@ -224,7 +222,7 @@ test.describe('首頁：換了控制項之後上面的內容長高或變矮，�
         await nextFrames(page);
         const after = await spot(source);
         if (Math.abs((await card.boundingBox())!.height - cardBefore) > 1) changed++;
-        expect(Math.abs(after.top - before.top), `換成 ${value}：題目來源移動了 ${JSON.stringify({ before, after })}`).toBeLessThanOrEqual(1);
+        expect(Math.abs(after.top - before.top), `換成 ${value}：題目來源移動了 ${JSON.stringify({ before, after })}`).toBeLessThanOrEqual(SLACK);
       }
       // 反空轉：上面的說明卡真的換過高度
       expect(changed).toBeGreaterThan(0);
@@ -241,6 +239,7 @@ test.describe('首頁：換了控制項之後上面的內容長高或變矮，�
     });
     await gotoHome(page, 'xlarge');
     const source = page.getByLabel('題目來源');
+    await nextFrames(page);
     await source.focus();
     await place(source, 'bottom');
     await nextFrames(page);
@@ -249,8 +248,8 @@ test.describe('首頁：換了控制項之後上面的內容長高或變矮，�
       await source.selectOption(i % 2 ? 'all' : 'official');
       await nextFrames(page);
       const now = await spot(source);
-      expect(Math.abs(now.top - start.top), `第 ${i + 1} 次之後題目來源移動了 ${JSON.stringify({ start, now })}`).toBeLessThanOrEqual(1);
-      expect(now.bottom, `第 ${i + 1} 次之後超出視窗底邊 ${JSON.stringify(now)}`).toBeLessThanOrEqual(now.viewport + 0.5);
+      expect(Math.abs(now.top - start.top), `第 ${i + 1} 次之後題目來源移動了 ${JSON.stringify({ start, now })}`).toBeLessThanOrEqual(SLACK);
+      expect(now.bottom, `第 ${i + 1} 次之後超出視窗底邊 ${JSON.stringify(now)}`).toBeLessThanOrEqual(now.viewport + SLACK);
     }
   });
 
@@ -272,7 +271,7 @@ test.describe('首頁：換了控制項之後上面的內容長高或變矮，�
       await nextFrames(page);
       const after = await spot(count);
       expect(Math.abs((await hint.boundingBox())!.height - hintBefore), '前提：題數說明換了高度').toBeGreaterThan(1);
-      expect(Math.abs(after.top - before.top), `打 ${value}：題數移動了 ${JSON.stringify({ before, after })}`).toBeLessThanOrEqual(1);
+      expect(Math.abs(after.top - before.top), `打 ${value}：題數移動了 ${JSON.stringify({ before, after })}`).toBeLessThanOrEqual(SLACK);
     }
   });
 
@@ -299,7 +298,7 @@ test.describe('首頁：換了控制項之後上面的內容長高或變矮，�
         const after = await spot(cta);
         const card = (await page.getByTestId('practice-pool-tip').boundingBox())!.height;
         expect(Math.abs(card - cardBefore), '前提：說明卡換了高度').toBeGreaterThan(1);
-        expect(Math.abs(after.top - before.top), `開關移動了 ${JSON.stringify({ before, after })}`).toBeLessThanOrEqual(1);
+        expect(Math.abs(after.top - before.top), `開關移動了 ${JSON.stringify({ before, after })}`).toBeLessThanOrEqual(SLACK);
       }
     });
   }

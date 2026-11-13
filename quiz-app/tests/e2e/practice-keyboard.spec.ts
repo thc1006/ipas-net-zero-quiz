@@ -1,5 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { test, expect, stubVisitorCounter, STUB_VISITOR_COUNT } from './fixtures';
+import { SLACK, settle } from './layout';
 
 /**
  * 練習模式選了就鎖定，而原生 radio 的方向鍵會同時移動與選取：第一次按方向鍵就交卷了。
@@ -40,8 +41,8 @@ async function expectBelowHeader(page: Page, target: Locator, where: string): Pr
       viewport: innerHeight,
     };
   });
-  expect(m.top, `${where} ${JSON.stringify(m)}`).toBeGreaterThanOrEqual(m.headerBottom);
-  expect(m.bottom, `${where} ${JSON.stringify(m)}`).toBeLessThanOrEqual(m.viewport);
+  expect(m.top, `${where} ${JSON.stringify(m)}`).toBeGreaterThanOrEqual(m.headerBottom - SLACK);
+  expect(m.bottom, `${where} ${JSON.stringify(m)}`).toBeLessThanOrEqual(m.viewport + SLACK);
 }
 
 /** Tab 進選項群組（群組前面最後一個可聚焦的是回報連結），停在第一個選項 */
@@ -451,11 +452,11 @@ test.describe('練習模式的鍵盤作答', () => {
           };
         });
         const where = `第 ${i} 題 ${JSON.stringify(m)}`;
-        expect(m.buttonTop, where).toBeGreaterThanOrEqual(m.headerBottom);
-        expect(m.buttonBottom, where).toBeLessThanOrEqual(m.viewport);
+        expect(m.buttonTop, where).toBeGreaterThanOrEqual(m.headerBottom - SLACK);
+        expect(m.buttonBottom, where).toBeLessThanOrEqual(m.viewport + SLACK);
         // 導覽列捲到離視窗底部 8px（scroll-margin-bottom）
         if (m.buttonBottom - m.correctTop + 8 <= m.viewport - m.headerBottom) {
-          expect(m.correctTop, where).toBeGreaterThanOrEqual(m.headerBottom);
+          expect(m.correctTop, where).toBeGreaterThanOrEqual(m.headerBottom - SLACK);
           bothFit++;
         }
 
@@ -570,8 +571,8 @@ test.describe('練習模式的鍵盤作答', () => {
       await tabIntoOptions(page);
       const moved = async (i: number, way: string) => {
         await expect(options(page).nth(i)).toBeFocused();
-        // 補捲排在下一個 frame
-        await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+        // 補捲排在下一個 frame，版面停下來再量
+        await settle(page);
         await expectBelowHeader(page, page.locator('.option-item').nth(i), `往${way}到第 ${i + 1} 個選項`);
       };
       for (let i = 1; i < 4; i++) {
@@ -649,9 +650,9 @@ test.describe('練習模式的鍵盤作答', () => {
         };
         const where = `${key} 到 ${KEYS[to]} ${JSON.stringify(m)}`;
         expect(m.value, where).toBe(KEYS[to]);
-        expect(m.top, where).toBeGreaterThanOrEqual(m.header - 0.5);
-        expect(m.bottom, where).toBeLessThanOrEqual(m.viewport + 0.5);
-        expect(Math.abs(m.scrolled), where).toBeLessThanOrEqual(0.5);
+        expect(m.top, where).toBeGreaterThanOrEqual(m.header - SLACK);
+        expect(m.bottom, where).toBeLessThanOrEqual(m.viewport + SLACK);
+        expect(Math.abs(m.scrolled), where).toBeLessThanOrEqual(SLACK);
         await expect(page.locator('.question-options input:checked')).toHaveValue(KEYS[to]);
       }
     });

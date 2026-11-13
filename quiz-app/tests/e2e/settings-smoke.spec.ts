@@ -1,4 +1,5 @@
 import { test, expect } from './fixtures';
+import { SLACK, settle } from './layout';
 
 /**
  * Settings 頁的跨瀏覽器 smoke（chromium + firefox + webkit）。
@@ -74,6 +75,7 @@ test.describe('換字級：字體大小的選單留在原來的位置，不被�
         const select = page.locator('.setting-item select').first();
         await expect(select).toHaveValue('normal');
         for (const size of ['large', 'xlarge', 'large', 'normal', 'xlarge', 'normal']) {
+          await settle(page);
           await select.focus();
           const before = await select.evaluate((el, where) => {
             const box = el.getBoundingClientRect();
@@ -84,9 +86,8 @@ test.describe('換字級：字體大小的選單留在原來的位置，不被�
           await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
           await select.selectOption(size);
           await expect(page.locator('html')).toHaveAttribute('data-font-size', size);
-          // 按鈕的 transition 跑完之後（padding 跟著字級慢慢變）再量
-          await page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))));
-          await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+          // 按鈕的 transition 跑完（padding 跟著字級慢慢變）、版面停下來再量
+          await settle(page);
           const m = await select.evaluate((el) => ({
             top: el.getBoundingClientRect().top,
             bottom: el.getBoundingClientRect().bottom,
@@ -94,11 +95,11 @@ test.describe('換字級：字體大小的選單留在原來的位置，不被�
             viewport: document.documentElement.clientHeight,
           }));
           const where2 = `換成 ${size} ${JSON.stringify({ before, m })}`;
-          expect(m.top, `被頁首蓋住 ${where2}`).toBeGreaterThanOrEqual(m.header - 0.5);
-          expect(m.bottom, `在視窗外 ${where2}`).toBeLessThanOrEqual(m.viewport + 0.5);
+          expect(m.top, `被頁首蓋住 ${where2}`).toBeGreaterThanOrEqual(m.header - SLACK);
+          expect(m.bottom, `在視窗外 ${where2}`).toBeLessThanOrEqual(m.viewport + SLACK);
           // 沒有被頁首或視窗底邊擋住時留在原來的位置。捲在最上面時換小字級，上面變矮，頁面捲不回去
-          const blocked = m.top <= m.header + 1 || m.bottom >= m.viewport - 1 || (before.scrollY < 1 && m.top < before.top);
-          if (!blocked) expect(Math.abs(m.top - before.top), `移動了 ${where2}`).toBeLessThanOrEqual(1);
+          const blocked = m.top <= m.header + SLACK || m.bottom >= m.viewport - SLACK || (before.scrollY < 1 && m.top < before.top);
+          if (!blocked) expect(Math.abs(m.top - before.top), `移動了 ${where2}`).toBeLessThanOrEqual(SLACK);
         }
       });
     }

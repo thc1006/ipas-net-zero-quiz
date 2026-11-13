@@ -1,6 +1,7 @@
 import type { Locator, Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
+import { SLACK, settle } from './layout';
 
 /**
  * 練習池是另一個 chunk，部署新版後舊分頁載不到舊檔名，網路斷線時也載不到。
@@ -196,10 +197,10 @@ async function closeByKeyboard(page: Page, opener: Locator): Promise<void> {
   await page.keyboard.press('Enter');
   await expect(alert).toHaveCount(0);
   await expect(opener).toBeFocused();
-  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+  await settle(page);
   const m = await focusBox(page);
-  expect(m.top, `被頁首蓋住 ${JSON.stringify(m)}`).toBeGreaterThanOrEqual(m.header - 0.5);
-  expect(m.bottom, `在視窗外 ${JSON.stringify(m)}`).toBeLessThanOrEqual(m.viewport + 0.5);
+  expect(m.top, `被頁首蓋住 ${JSON.stringify(m)}`).toBeGreaterThanOrEqual(m.header - SLACK);
+  expect(m.bottom, `在視窗外 ${JSON.stringify(m)}`).toBeLessThanOrEqual(m.viewport + SLACK);
   expect(m.bottom, `捲的不是最少的距離 ${JSON.stringify(m)}`).toBeGreaterThan(m.viewport - 1.5);
 }
 

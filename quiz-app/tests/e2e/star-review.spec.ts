@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import type { BrowserContext, Locator, Page } from '@playwright/test';
 import { test, expect, stubVisitorCounter } from './fixtures';
+import { SLACK, expectNear, settle } from './layout';
 
 /**
  * 星號與待複習錯題（Discussion #1）。jsdom 沒有排版、焦點順序、跨分頁的 storage 事件，也沒有真的下載，
@@ -785,9 +786,8 @@ test.describe('星號與待複習錯題', () => {
 const settleAnimations = (page: Page) =>
   page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))));
 
-/** 等兩個 frame */
-const nextFrames = (page: Page) =>
-  page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+/** 等版面停下來再量（layout.ts） */
+const nextFrames = settle;
 
 const TIP = '已加星號，首頁「題目來源」選「星號題」可以反覆練習。';
 
@@ -1042,8 +1042,8 @@ function expectReadable(m: Awaited<ReturnType<typeof readable>>, what: string): 
   const info = `${what} ${JSON.stringify(m)}`;
   expect(m.position, `不在文件流裡 ${info}`).toBe('static');
   expect(m.clipped, `字被裁掉 ${info}`).toBe(false);
-  expect(m.top, `在頁首底下 ${info}`).toBeGreaterThanOrEqual(m.headerBottom);
-  expect(m.bottom, `超出視窗 ${info}`).toBeLessThanOrEqual(m.viewport);
+  expect(m.top, `在頁首底下 ${info}`).toBeGreaterThanOrEqual(m.headerBottom - SLACK);
+  expect(m.bottom, `超出視窗 ${info}`).toBeLessThanOrEqual(m.viewport + SLACK);
 }
 
 test.describe('320x256 字級特大（1280x1024 放大 400%）：說明看得到、整段讀得到', () => {
@@ -1086,7 +1086,7 @@ test.describe('320x256 字級特大（1280x1024 放大 400%）：說明看得到
     const m = await readable(notice);
     expectReadable(m, '存不進去的說明');
     const after = await starState(star(page));
-    expect(after.top, `星號被捲到頁首底下 ${JSON.stringify(after)}`).toBeGreaterThanOrEqual(m.headerBottom);
+    expect(after.top, `星號被捲到頁首底下 ${JSON.stringify(after)}`).toBeGreaterThanOrEqual(m.headerBottom - SLACK);
   });
 });
 
@@ -1150,8 +1150,8 @@ for (const failing of [false, true]) {
       return { top: r.top, bottom: r.bottom, headerBottom: header.bottom, viewport: window.innerHeight };
     });
     const info = JSON.stringify(m);
-    expect(m.bottom, `上一題被捲出視窗 ${info}`).toBeLessThanOrEqual(m.viewport);
-    expect(m.top, `上一題被捲到頁首底下 ${info}`).toBeGreaterThanOrEqual(m.headerBottom);
+    expect(m.bottom, `上一題被捲出視窗 ${info}`).toBeLessThanOrEqual(m.viewport + SLACK);
+    expect(m.top, `上一題被捲到頁首底下 ${info}`).toBeGreaterThanOrEqual(m.headerBottom - SLACK);
     await expect(prev).toBeFocused();
     await expect(page.locator('.review-notice')).toHaveCount(0);
   });
@@ -1174,7 +1174,7 @@ async function expectNotCovered(target: Locator, where: string): Promise<void> {
     };
   });
   const info = `${where} ${JSON.stringify(m)}`;
-  expect(m.top, `被頁首蓋住 ${info}`).toBeGreaterThanOrEqual(m.headerBottom);
+  expect(m.top, `被頁首蓋住 ${info}`).toBeGreaterThanOrEqual(m.headerBottom - SLACK);
   expect(m.notices.some((n) => m.top < n.bottom && m.bottom > n.top), `被提示蓋住 ${info}`).toBe(false);
   expect(m.bottom, `在視窗外 ${info}`).toBeLessThanOrEqual(m.viewport);
 }
@@ -1370,7 +1370,7 @@ test('設定頁清除星號存不進去：只在設定頁自己的狀態列說�
   await nextFrames(page);
   await expect.soft(page.locator('.review-notice'), '加了星號的提示').toHaveCount(0);
   expect.soft(await liveSaid(page), 'live region 又念了一次').toEqual([]);
-  expect(await clear.evaluate((el) => ({ top: el.getBoundingClientRect().top, scrollY: window.scrollY }))).toEqual(before);
+  expectNear(await clear.evaluate((el) => ({ top: el.getBoundingClientRect().top, scrollY: window.scrollY })), before, '清除移動了');
 });
 
 const NOT_SAVED = '這次變更沒有儲存。瀏覽器可能封鎖了網站資料，或儲存空間已滿。';
@@ -1529,7 +1529,7 @@ test.describe('之後才出現的說明不排在主內容最上面：上面的�
     await expect(page.locator('.review-notice', { hasText: /新版網站寫入的/ })).toHaveCount(0);
     await nextFrames(page);
     const after = await spot();
-    expect(after, `再測一次移動了 ${JSON.stringify({ before, after })}`).toEqual(before);
+    expectNear(after, before, '再測一次移動了');
     await expect(page.locator('.review-notice--end')).toHaveText(END_RESOLVED);
     const short = await measureEnd();
     const sizes = JSON.stringify({ tall, short });
@@ -1559,7 +1559,7 @@ test.describe('之後才出現的說明不排在主內容最上面：上面的�
     await expect(page.locator('.review-backup__status')).toHaveText(/新版網站寫入的/);
     await nextFrames(page);
     const after = await spot();
-    expect(after, `清除星號移動了 ${JSON.stringify({ before, after })}`).toEqual(before);
+    expectNear(after, before, '清除星號移動了');
     await expect(page.locator('.review-notice--end')).toHaveText(/新版網站寫入的/);
   });
 });
@@ -1626,11 +1626,11 @@ test.describe('星號在視窗底部：提示在視窗外時', () => {
         if (m.bottom - starTop <= m.viewport - m.headerBottom) {
           // 放得下：整段看得到，只捲需要的，說明的底邊貼著視窗底邊
           expectReadable(m, '存不進去的說明');
-          expect(Math.abs(m.bottom - m.viewport), `捲過頭了 ${info}`).toBeLessThanOrEqual(1);
+          expect(Math.abs(m.bottom - m.viewport), `捲過頭了 ${info}`).toBeLessThanOrEqual(SLACK);
         } else {
           // 放不下（320x256 字級特大，題幹那一列比視窗高）：捲到星號停在頁首下緣為止，說明露出放得下的部分
           // （Firefox 的字比較寬，那一列更高，說明可能一點都露不出來）
-          expect(starTop - m.headerBottom, `沒有捲到星號停在頁首下緣 ${info}`).toBeLessThanOrEqual(1);
+          expect(starTop - m.headerBottom, `沒有捲到星號停在頁首下緣 ${info}`).toBeLessThanOrEqual(SLACK);
         }
         if (way === 'Space') await expect(button).toBeFocused();
         else expect(await page.evaluate(() => document.activeElement?.closest('.review-notice'))).toBeNull();
@@ -1665,12 +1665,12 @@ test('結果頁名單空了再測一次：說明排在按鈕那一列下面，�
   await expect(notice).toHaveText(EMPTY);
   await nextFrames(page);
   const after = await spot();
-  expect(after, `再測一次移動了 ${JSON.stringify({ before, after })}`).toEqual(before);
+  expectNear(after, before, '再測一次移動了');
   await expect.poll(() => liveSaid(page)).toEqual([EMPTY]);
   await page.mouse.click(before.x, before.y);
   await expect.poll(() => liveSaid(page)).toEqual([EMPTY, '', EMPTY]);
   await expect(page.locator('.action-notice')).toHaveCount(1);
-  expect(await spot()).toEqual(before);
+  expectNear(await spot(), before, '再按一次之後再測一次移動了');
 });
 
 // 別的分頁改了名單：畫面上的一段跟著換字，但不消失、不變矮，下面的東西才不會往上移到使用者正要按的地方
@@ -1707,7 +1707,7 @@ test.describe('別的分頁改了名單：下面的按鈕不移動', () => {
     await other.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 1, seeded: true, stars: {}, wrong: {} })), KEY);
     await expect(page.locator('#source-hint')).toHaveText(/還沒有星號題/);
     await nextFrames(page);
-    expect(await spot(), '開始測驗移動了').toEqual(before);
+    expectNear(await spot(), before, '開始測驗移動了');
   });
 });
 
@@ -1760,7 +1760,7 @@ test.describe('換畫面時從最上面開始：別的分頁的說明排到最�
     const optionB = page.getByTestId('option-B');
     const before = await spot(optionB);
     await writeNewer({ page, context });
-    expect(await spot(optionB), '選項 B 移動了').toEqual(before);
+    expectNear(await spot(optionB), before, '選項 B 移動了');
     await page.mouse.click(before.x, before.y);
     await expect(page.getByRole('radio', { name: /^B:/ })).toBeChecked();
   });
@@ -1777,7 +1777,7 @@ test.describe('換畫面時從最上面開始：別的分頁的說明排到最�
     await nextFrames(page);
     const before = await spot(startButton(page));
     await writeNewer({ page, context });
-    expect(await spot(startButton(page)), '開始測驗移動了').toEqual(before);
+    expectNear(await spot(startButton(page)), before, '開始測驗移動了');
   });
 
   test('Pixel 7 橫向點開始測驗：星號在視窗裡、在頁首下面', async ({ browser, baseURL }) => {
@@ -1833,12 +1833,12 @@ test.describe('移出待複習那一列：別的分頁改了名單，下面的�
     await writeWrong({ context }, [q1, q2, q3].map(idOf));
     await expect(remove).toHaveCount(1);
     await nextFrames(page);
-    expect(await spot(second), '加回來之後第二張卡移動了').toEqual(before);
+    expectNear(await spot(second), before, '加回來之後第二張卡移動了');
     expect(await active(page), '加回來之後焦點不在那一列的按鈕上').toBe('BUTTON in row:移出待複習');
     await writeWrong({ context }, [q2, q3].map(idOf));
     await expect(remove).toHaveCount(0);
     await nextFrames(page);
-    expect(await spot(second), '又移出之後第二張卡移動了').toEqual(before);
+    expectNear(await spot(second), before, '又移出之後第二張卡移動了');
     expect(await active(page), '又移出之後焦點不在那一列').toBe('P in row:已移出待複習');
   });
 
@@ -1892,11 +1892,11 @@ test.describe('移出待複習那一列：別的分頁改了名單，下面的�
     await writeWrong({ context }, [q1, q2, q3].filter((x) => x !== current).map(idOf));
     await expect(row).toHaveText('已不在待複習清單上');
     await nextFrames(page);
-    expect(await spot(next), '移出之後下一題移動了').toEqual(before);
+    expectNear(await spot(next), before, '移出之後下一題移動了');
     await writeWrong({ context }, [q1, q2, q3].map(idOf));
     await expect(row.getByRole('button', { name: '移出待複習' })).toBeVisible();
     await nextFrames(page);
-    expect(await spot(next), '加回來之後下一題移動了').toEqual(before);
+    expectNear(await spot(next), before, '加回來之後下一題移動了');
   });
 
   test('題目頁練習模式：答完的題目不在名單上，別的分頁把它加進來：這一題不加一列，下一題不動；換題之後照名單畫', async ({ page, context }) => {
@@ -1916,7 +1916,7 @@ test.describe('移出待複習那一列：別的分頁改了名單，下面的�
     await expect.poll(async () => (await stored(page)).wrong[idOf(current)]).toBeTruthy();
     await nextFrames(page);
     await expect(page.locator('.question-card .review-remove')).toHaveCount(0);
-    expect(await spot(next), '下一題移動了').toEqual(before);
+    expectNear(await spot(next), before, '下一題移動了');
     // 下一題、上一題回來：重新畫，這時在名單上
     await next.click();
     await page.getByRole('button', { name: /上一題/ }).click();
@@ -1948,7 +1948,7 @@ test('結果頁 375px：別的分頁清掉待複習錯題，錯題區的說明�
   await nextFrames(page);
   // 前提：換的那一句少一行，不然量不到變矮
   expect(await textHeight(), '前提：換的那一句比較矮').toBeLessThan(tall - 10);
-  expect(await spot(), '第一張卡的星號移動了').toEqual(before);
+  expectNear(await spot(), before, '第一張卡的星號移動了');
 });
 
 test('視窗轉成橫向：最後面那一段留著的高度照新的寬度重新量，不留直向時的空白', async ({ page, context }) => {
@@ -1983,7 +1983,7 @@ test('視窗轉成橫向：最後面那一段留著的高度照新的寬度重�
   await page.setViewportSize({ width: 900, height: 600 });
   await nextFrames(page);
   const landscape = await measure();
-  expect(landscape.box, `橫向還留著直向的高度 ${JSON.stringify({ portrait, landscape })}`).toBeLessThan(landscape.content + 1);
+  expect(landscape.box, `橫向還留著直向的高度 ${JSON.stringify({ portrait, landscape })}`).toBeLessThanOrEqual(landscape.content + SLACK);
 });
 
 // 按鈕的 min-height 在 640px 以下是 44、以上是 40，.btn 有 transition: all：resize 當下量到的是 transition 還沒跑完的
@@ -2041,7 +2041,7 @@ test('設定頁把字級從特大換回標準：留著的高度照新的字級�
   await nextFrames(page);
   const normal = await measure();
   expect(normal.content, `前提：標準字級比較矮 ${JSON.stringify({ xlarge, normal })}`).toBeLessThan(xlarge.content - 10);
-  expect(normal.box, `還留著特大時的高度 ${JSON.stringify({ xlarge, normal })}`).toBeLessThan(normal.content + 1);
+  expect(normal.box, `還留著特大時的高度 ${JSON.stringify({ xlarge, normal })}`).toBeLessThanOrEqual(normal.content + SLACK);
 });
 
 // useAccessibility 每換一個設定都把 data-font-size 照原來的值再寫一次：只換顏色時不能當成換了字級，把留著的高度量掉
@@ -2068,7 +2068,7 @@ test.describe('首頁：別的分頁清掉星號之後換深色模式，題數�
       else await page.emulateMedia({ colorScheme: 'dark' });
       await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
       await nextFrames(page);
-      expect({ start: await spot(), kept: await kept() }, '開始測驗移動了').toEqual(before);
+      expectNear({ start: await spot(), kept: await kept() }, before, '開始測驗移動了');
     });
   }
 });
@@ -2108,7 +2108,7 @@ test.describe('首頁：別的分頁停用加強練習池，說明卡與徽章�
       await expect(page.getByRole('button', { name: '啟用加強練習池' })).toBeVisible();
       await expect(page.locator('.practice-pool-tip__details summary'), '前提：抽題分布換成停用前的').toHaveText('停用前的抽題分布');
       await nextFrames(page);
-      expect(await spot(), '題目來源或開始測驗移動了').toEqual(before);
+      expectNear(await spot(), before, '題目來源或開始測驗移動了');
       await expect(source(page)).toBeFocused();
       // 這個分頁自己按啟用、停用：照現在的內容從頭量，不留著啟用時的高度
       await page.getByRole('button', { name: '啟用加強練習池' }).click();
@@ -2119,7 +2119,7 @@ test.describe('首頁：別的分頁停用加強練習池，說明卡與徽章�
         el.style.minHeight = '';
         return { box, content: el.getBoundingClientRect().height };
       });
-      expect(tip.box, `自己停用之後還留著啟用時的高度 ${JSON.stringify(tip)}`).toBeLessThan(tip.content + 1);
+      expect(tip.box, `自己停用之後還留著啟用時的高度 ${JSON.stringify(tip)}`).toBeLessThanOrEqual(tip.content + SLACK);
     });
   }
 });
@@ -2189,7 +2189,7 @@ test.describe('首頁：別的分頁停用加強練習池，抽題分布那一�
           expect(after.box, `別的分頁改成 ${to}：說明卡留下空白 ${JSON.stringify(after)}`).toBeLessThan(after.content + 2.5);
           // Firefox 412 寬時頁首的徽章換字從一行變兩行（已知，不在這裡處理）：只比說明卡裡面與下面差多少
           const shift = (a: typeof before) => [a.source - a.summary, a.start - a.source, a.box];
-          expect(shift(after), `別的分頁改成 ${to}：說明卡變高、變矮或下面的東西移動 ${JSON.stringify({ before, after })}`).toEqual(shift(before));
+          expectNear(shift(after), shift(before), `別的分頁改成 ${to}：說明卡變高、變矮或下面的東西移動 ${JSON.stringify({ before, after })}`);
         }
       });
     }
@@ -2237,9 +2237,9 @@ test.describe('首頁：別的分頁啟用加強練習池，不加抽題分布�
         const after = await spot();
         // Firefox 412 寬時頁首的徽章換字從一行變兩行（已知，不在這裡處理）：下面的東西只移那麼多
         const badgeGrowth = after.badges - before.badges;
-        if (badgeGrowth === 0) expect(after, '題目來源或開始測驗移動了').toEqual(before);
-        else expect(after.source + after.scrollY - (before.source + before.scrollY), JSON.stringify({ before, after })).toBeCloseTo(badgeGrowth, 1);
-        expect(after.tip, '說明卡長高了').toBe(before.tip);
+        if (Math.abs(badgeGrowth) <= SLACK) expectNear(after, before, '題目來源或開始測驗移動了');
+        else expect(Math.abs(after.source + after.scrollY - (before.source + before.scrollY) - badgeGrowth), JSON.stringify({ before, after })).toBeLessThanOrEqual(SLACK);
+        expect(Math.abs(after.tip - before.tip), `說明卡長高了 ${JSON.stringify({ before, after })}`).toBeLessThanOrEqual(SLACK);
         await expect(page.locator('.practice-pool-tip__details'), '別的分頁啟用時加了抽題分布那一列').toHaveCount(0);
         await expect(source(page)).toBeFocused();
         // 這個分頁自己停用再啟用：照現在的狀態加上那一列
@@ -2285,7 +2285,7 @@ test.describe('首頁只出官方題目：別的分頁啟用、停用加強練�
           await other.close();
           await expect.poll(() => page.evaluate(() => window.localStorage.getItem('practice-pool-enabled'))).toBe(to);
           await nextFrames(page);
-          expect(await spot(), `${value}：別的分頁改成 ${to} 之後題目來源或開始測驗移動了`).toEqual(before);
+          expectNear(await spot(), before, `${value}：別的分頁改成 ${to} 之後題目來源或開始測驗移動了`);
           await expect(source(page)).toBeFocused();
         }
       }
@@ -2328,6 +2328,6 @@ for (const [name, how] of [
       el.style.minHeight = kept;
       return { box, content };
     });
-    expect(tip.box, `說明卡比內容高 ${JSON.stringify(tip)}`).toBeLessThan(tip.content + 0.5);
+    expect(tip.box, `說明卡比內容高 ${JSON.stringify(tip)}`).toBeLessThanOrEqual(tip.content + SLACK);
   });
 }

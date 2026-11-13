@@ -1,5 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { test, expect } from './fixtures';
+import { SLACK, settle } from './layout';
 
 /**
  * 小視窗上對話框比視窗高時，上緣與按鈕會跑到畫面外，遮罩又不能捲，只剩按旁邊的遮罩一條路。
@@ -319,6 +320,7 @@ for (const [width, height] of [
         await page.goto('/');
         await expect(page.locator('html')).toHaveAttribute('data-font-size', fontSize);
         const cta = page.locator('.practice-pool-tip__cta');
+        await settle(page);
         await cta.focus();
         await cta.evaluate((el, where) => {
           const box = el.getBoundingClientRect();
@@ -335,17 +337,16 @@ for (const [width, height] of [
         }
         await expect(page.getByRole('dialog')).toHaveCount(0);
         await expect(cta).toBeFocused();
-        // 開關的 transition（換樣式）跑完再量
-        await page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))));
-        await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+        // 開關的 transition（換樣式）跑完、版面停下來再量
+        await settle(page);
         const m = await cta.evaluate((el) => ({
           top: el.getBoundingClientRect().top,
           bottom: el.getBoundingClientRect().bottom,
           header: document.querySelector('.app-header')!.getBoundingClientRect().bottom,
           viewport: document.documentElement.clientHeight,
         }));
-        expect(m.top, `被頁首蓋住 ${JSON.stringify(m)}`).toBeGreaterThanOrEqual(m.header - 0.5);
-        expect(m.bottom, `在視窗外 ${JSON.stringify(m)}`).toBeLessThanOrEqual(m.viewport + 0.5);
+        expect(m.top, `被頁首蓋住 ${JSON.stringify(m)}`).toBeGreaterThanOrEqual(m.header - SLACK);
+        expect(m.bottom, `在視窗外 ${JSON.stringify(m)}`).toBeLessThanOrEqual(m.viewport + SLACK);
       });
       }
     }
