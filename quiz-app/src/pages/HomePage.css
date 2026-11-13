@@ -156,6 +156,13 @@
   margin-top: var(--spacing-md);
 }
 
+/* 啟用前後在 btn-primary 與 btn-secondary 之間換：secondary 有 1px 框線，primary 沒有。高度差 2px，
+   .btn 的 transition: all 又讓它慢慢長出來，說明卡留著的高度要等它跑完才量得準，機器慢的時候就差這 2px。
+   primary 這邊也留一條透明的框線，兩種樣式一樣高 */
+.practice-pool-tip__cta.btn-primary {
+  border: 1px solid transparent;
+}
+
 /* === Progressive disclosure：抽題分布預設收摺 ===
    用原生 <details>/<summary> 取得免費 a11y（鍵盤、aria-expanded、SR），
    並避免「已啟用」狀態時 histogram 永遠占據版面。 */
