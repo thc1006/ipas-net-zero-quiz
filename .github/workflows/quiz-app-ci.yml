@@ -351,15 +351,18 @@ jobs:
           retention-days: 7
 
   e2e:
-    # 一個 worker 跑完全部要 24 分鐘上下（884 個），分兩份平行跑，每份仍是一個 worker
-    name: E2E Tests (${{ matrix.shard }}/2)
+    # 一個 worker 跑完全部要 24 分鐘以上（884 個）。--shard 照個數平均切，WebKit 一個最慢（CI 上 3.5 秒上下）：
+    # 分兩份時 Firefox 與 WebKit 那份跑不完 20 分鐘，分四份時全是 WebKit 的那份也要 13 分鐘以上，重試幾個就逼近上限。
+    # 分六份平行跑，每份仍是一個 worker
+    name: E2E Tests (${{ matrix.shard }}/${{ matrix.total }})
     runs-on: ubuntu-latest
     timeout-minutes: 20
     needs: [lint, test, build]
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2]
+        shard: [1, 2, 3, 4, 5, 6]
+        total: [6]
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -402,7 +405,7 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium firefox webkit
 
       - name: Run E2E tests
-        run: pnpm test:e2e --shard=${{ matrix.shard }}/2
+        run: pnpm test:e2e --shard=${{ matrix.shard }}/${{ matrix.total }}
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v7
