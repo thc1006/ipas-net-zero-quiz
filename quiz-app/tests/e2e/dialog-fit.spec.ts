@@ -1,5 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { test, expect } from './fixtures';
+import { SLACK, settle } from './layout';
 
 /**
  * 小視窗上對話框比視窗高時，上緣與按鈕會跑到畫面外，遮罩又不能捲，只剩按旁邊的遮罩一條路。
@@ -299,3 +300,55 @@ test('清除作答統計對話框：每個尺寸、每個字級都在畫面內',
 
   expect(await offscreenParts(page, '.settings-confirm-dialog')).toEqual([]);
 });
+
+// 說明卡的開關在視窗底邊或頁首下面時用鍵盤打開對話框，按同意或暫不啟用關閉：焦點回到開關，整顆在頁首下面、視窗之內。
+// 之前交給 focus() 自己捲：按同意之後說明卡長高（多一列抽題分布），開關被推到視窗底邊下面，Firefox 不捲（差 8px）。
+// 字級特大時開關從實心換成框線高 2px：留在原來的位置之後下緣超出視窗底邊（WebKit 839x412 差 1.8px），要再露出來
+for (const [width, height] of [
+  [640, 360],
+  [839, 412],
+]) {
+  for (const where of ['bottom', 'top'] as const) {
+    for (const how of ['accept', 'decline'] as const) {
+      for (const fontSize of ['normal', 'xlarge'] as const) {
+      test(`${width}x${height} ${fontSize === 'xlarge' ? '字級特大 ' : ''}開關在${where === 'bottom' ? '視窗底邊' : '頁首下面'}，${how === 'accept' ? '按同意' : '暫不啟用'}：焦點回到開關，看得到`, async ({ page }) => {
+        await page.setViewportSize({ width, height });
+        await page.addInitScript((size) => {
+          window.localStorage.setItem('practice-pool-disclosure-seen', '1');
+          window.localStorage.setItem('ipas-quiz-a11y', JSON.stringify({ fontSize: size }));
+        }, fontSize);
+        await page.goto('/');
+        await expect(page.locator('html')).toHaveAttribute('data-font-size', fontSize);
+        const cta = page.locator('.practice-pool-tip__cta');
+        await settle(page);
+        await cta.focus();
+        await cta.evaluate((el, where) => {
+          const box = el.getBoundingClientRect();
+          const header = document.querySelector('.app-header')!.getBoundingClientRect().bottom;
+          window.scrollBy(0, where === 'top' ? box.top - (header + 2) : box.bottom - (document.documentElement.clientHeight - 2));
+        }, where);
+        await page.keyboard.press('Enter');
+        await expect(page.getByRole('dialog', { name: '啟用加強練習池' })).toBeVisible();
+        if (how === 'accept') {
+          await page.keyboard.press('Tab');
+          await page.keyboard.press('Enter');
+        } else {
+          await page.keyboard.press('Escape');
+        }
+        await expect(page.getByRole('dialog')).toHaveCount(0);
+        await expect(cta).toBeFocused();
+        // 開關的 transition（換樣式）跑完、版面停下來再量
+        await settle(page);
+        const m = await cta.evaluate((el) => ({
+          top: el.getBoundingClientRect().top,
+          bottom: el.getBoundingClientRect().bottom,
+          header: document.querySelector('.app-header')!.getBoundingClientRect().bottom,
+          viewport: document.documentElement.clientHeight,
+        }));
+        expect(m.top, `被頁首蓋住 ${JSON.stringify(m)}`).toBeGreaterThanOrEqual(m.header - SLACK);
+        expect(m.bottom, `在視窗外 ${JSON.stringify(m)}`).toBeLessThanOrEqual(m.viewport + SLACK);
+      });
+      }
+    }
+  }
+}

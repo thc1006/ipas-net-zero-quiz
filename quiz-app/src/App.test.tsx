@@ -136,6 +136,46 @@ describe('App', () => {
     expect(screen.getByText(/^外觀$/)).toBeInTheDocument();
   });
 
+  // 新畫面比較短時捲動位置被夾在最底，Chromium 的 scroll anchoring 記著舊畫面的位置，頁面一變長就捲回去（E2E 量位置）
+  it('換畫面時捲到最上面；開頁時與沒有換畫面時不捲', async () => {
+    const scrollTo = vi.mocked(window.scrollTo);
+    scrollTo.mockClear();
+    render(<App />);
+    expect(scrollTo).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByLabelText(/開啟設定/));
+    expect(scrollTo).toHaveBeenCalledTimes(1);
+    expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
+    fireEvent.click(screen.getByRole('button', { name: /返回首頁/ }));
+    expect(scrollTo).toHaveBeenCalledTimes(2);
+    // 抽不到題目時留在首頁：不捲
+    fireEvent.change(screen.getByLabelText('題目來源'), { target: { value: 'official' } });
+    sourceEmpty.value = true;
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    await act(async () => {});
+    expect(document.querySelector('.question-card')).toBeNull();
+    expect(scrollTo).toHaveBeenCalledTimes(2);
+    sourceEmpty.value = false;
+    fireEvent.click(screen.getByRole('button', { name: /開始/ }));
+    await waitFor(() => expect(screen.getByText(/第\s*1\s*題/)).toBeInTheDocument());
+    expect(scrollTo).toHaveBeenCalledTimes(3);
+    expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
+  });
+
+  it('換畫面時在畫出來之前捲（layout effect）：比新畫面的 effect 早', () => {
+    const scrollTo = vi.mocked(window.scrollTo);
+    render(<App />);
+    fireEvent.click(screen.getByLabelText(/開啟設定/));
+    scrollTo.mockClear();
+    // 首頁一畫出來就在 effect 裡讀「看過揭露 dialog 沒有」
+    const getItem = vi.spyOn(localStorage, 'getItem');
+    fireEvent.click(screen.getByRole('button', { name: /返回首頁/ }));
+    const read = getItem.mock.calls.findIndex(([key]) => key === 'practice-pool-disclosure-seen');
+    expect(read).toBeGreaterThanOrEqual(0);
+    expect(scrollTo).toHaveBeenCalledTimes(1);
+    expect(scrollTo.mock.invocationCallOrder[0]).toBeLessThan(getItem.mock.invocationCallOrder[read]);
+    getItem.mockRestore();
+  });
+
   it('starts quiz from HomePage and lands on QuizPage', async () => {
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: /開始/ }));
@@ -186,6 +226,66 @@ describe('App', () => {
       fireEvent.click(within(await screen.findByRole('alert')).getByRole('button', { name: '關閉' }));
 
       expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
+
+    it('關閉之後焦點回到按下開始的按鈕，不掉回 body；中間按過再試一次也一樣', async () => {
+      poolBroken.value = true;
+      render(<App />);
+      const start = screen.getByRole('button', { name: /開始/ });
+      start.focus();
+      fireEvent.click(start);
+      const retry = within(await screen.findByRole('alert')).getByRole('button', { name: '再試一次' });
+      await waitFor(() => expect(retry).toHaveFocus());
+      // 再試一次也失敗：訊息換一個新的，焦點在新的再試一次上
+      fireEvent.click(retry);
+      await waitFor(() =>
+        expect(within(screen.getByRole('alert')).getByRole('button', { name: '再試一次' })).toHaveFocus()
+      );
+      fireEvent.click(within(screen.getByRole('alert')).getByRole('button', { name: '關閉' }));
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /開始/ })).toHaveFocus();
+    });
+
+    // 開始按鈕在頁面下方、訊息在最上面：焦點放回去之後捲最少的距離。要等訊息拿掉之後才量，訊息還在時按鈕低了訊息的高度
+    it('關閉之後開始按鈕在視窗下面：訊息拿掉之後才量，下緣捲到視窗底邊，focus 自己不捲', async () => {
+      poolBroken.value = true;
+      Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 720 });
+      const scrollBy = vi.fn();
+      vi.stubGlobal('scrollBy', scrollBy);
+      try {
+        render(<App />);
+        const start = screen.getByRole('button', { name: /開始/ });
+        start.getBoundingClientRect = () => {
+          const top = screen.queryByRole('alert') ? 900 : 810;
+          return { top, bottom: top + 40, height: 40 } as DOMRect;
+        };
+        start.focus();
+        fireEvent.click(start);
+        const focus = vi.spyOn(start, 'focus');
+        fireEvent.click(within(await screen.findByRole('alert')).getByRole('button', { name: '關閉' }));
+        expect(start).toHaveFocus();
+        expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+        expect(scrollBy).toHaveBeenCalledExactlyOnceWith(0, 130);
+      } finally {
+        Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 0 });
+      }
+    });
+
+    // macOS 的 Safari 與 Firefox 用滑鼠按按鈕不給它焦點：先點過空白的地方，按開始時有焦點的是 body
+    it('按開始時焦點在 body：不記成 body，關閉之後焦點回到上一次記下的按鈕', async () => {
+      poolBroken.value = true;
+      render(<App />);
+      const start = screen.getByRole('button', { name: /開始/ });
+      start.focus();
+      fireEvent.click(start);
+      fireEvent.click(within(await screen.findByRole('alert')).getByRole('button', { name: '關閉' }));
+      expect(start).toHaveFocus();
+      start.blur();
+      expect(document.activeElement, '前提：焦點在 body').toBe(document.body);
+      fireEvent.click(start);
+      fireEvent.click(within(await screen.findByRole('alert')).getByRole('button', { name: '關閉' }));
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+      expect(start).toHaveFocus();
     });
 
     it('換頁時訊息收起，回來也不再出現', async () => {
@@ -605,6 +705,8 @@ describe('App', () => {
       await act(async () => {});
       expect(screen.getByRole('button', { name: /再測一次/ })).toBeInTheDocument();
       expect(document.querySelector('.question-card')).toBeNull();
+      // 「目前沒有星號題」這類說明只給星號與待複習錯題；官方題目的路徑照舊
+      expect(document.querySelector('.action-notice')).toBeNull();
     });
   }
 

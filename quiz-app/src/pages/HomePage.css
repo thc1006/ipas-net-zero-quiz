@@ -156,6 +156,13 @@
   margin-top: var(--spacing-md);
 }
 
+/* 啟用前後在 btn-primary 與 btn-secondary 之間換：secondary 有 1px 框線，primary 沒有。高度差 2px，
+   .btn 的 transition: all 又讓它慢慢長出來，說明卡留著的高度要等它跑完才量得準，機器慢的時候就差這 2px。
+   primary 這邊也留一條透明的框線，兩種樣式一樣高 */
+.practice-pool-tip__cta.btn-primary {
+  border: 1px solid transparent;
+}
+
 /* === Progressive disclosure：抽題分布預設收摺 ===
    用原生 <details>/<summary> 取得免費 a11y（鍵盤、aria-expanded、SR），
    並避免「已啟用」狀態時 histogram 永遠占據版面。 */
@@ -272,7 +279,9 @@
 
 .config-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  /* 欄寬跟著字級走：題目來源的最長選項約 16.5em（「星號 + 待複習錯題（1135 題）」加上箭頭與內距），
+     寫死 px 的話，大字級會在多欄時被截掉 */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17em), 1fr));
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
 }
@@ -304,6 +313,12 @@
   background: var(--color-surface);
   font-size: var(--font-size-base);
   transition: border-color var(--transition-fast);
+}
+
+/* 左右內距比輸入框窄：WebKit 的下拉箭頭比較寬，三欄時 272px 的欄放不下最長的選項 */
+.config-item select {
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
 }
 
 .config-item select:focus,
@@ -426,5 +441,17 @@
 
   .config-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* 單欄的窄螢幕，欄寬跟不上最長的選項（320px、最大字級的選單只有 280 到 288px，WebKit 的箭頭還更寬）。名稱是所有者定的，
+   所以這裡收窄左右內距、字級最大用 18px（不低於 16px，iOS 才不會自動放大）。
+   每個選單一起改：字級不同，WebKit 的選單高度就不同，同一列的欄位對不齊。
+   tests/e2e/star-review.spec.ts 逐一掃寬度量每一個選項 */
+@media (max-width: 400px) {
+  .config-item select {
+    padding-left: var(--spacing-xs);
+    padding-right: var(--spacing-xs);
+    font-size: min(var(--font-size-base), 18px);
   }
 }

@@ -250,12 +250,15 @@ export interface QuizDataset {
 /** 測驗模式 */
 export type QuizMode = 'practice' | 'exam' | 'review';
 
+/** 星號與待複習錯題（Discussion #1）。名單在使用者的瀏覽器裡（utils/review-storage.ts），不在題目資料上 */
+export type ReviewSource = 'review:starred' | 'review:wrong' | 'review:both';
+
 /**
  * 題目來源（#128）：'all' 是全部題目；'official' 是官方題目（公告試題與參考樣題）；'exam:115-01' 只出那一場
  * 公告試題，'sample:114' 只出那一版參考樣題。判斷依據是資料上的標記（officialExam、officialSample），
  * 不是題號或文字（utils/question-source.ts）。
  */
-export type QuestionSource = 'all' | 'official' | `exam:${string}` | `sample:${string}`;
+export type QuestionSource = 'all' | 'official' | `exam:${string}` | `sample:${string}` | ReviewSource;
 
 /** 測驗配置 */
 export interface QuizConfig {
@@ -320,6 +323,8 @@ export interface QuizResult {
   correctCount: number;
   wrongCount: number;
   skippedCount: number;
+  /** 這一場讓待複習清單有什麼變動（結果頁的摘要）；寫入失敗是 null，舊的結果沒有這個欄位 */
+  reviewSummary?: { added: number; removed: number } | null;
 }
 
 /** 無障礙設定 */

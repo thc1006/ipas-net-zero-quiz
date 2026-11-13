@@ -16,6 +16,12 @@ let poolPromise: Promise<PracticePool> | null = null;
 /** 同步 cache：透過 loadPracticePool 與 prefetchPracticePool 都會寫入 */
 let poolCached: PracticePool | null = null;
 
+/**
+ * 星號與待複習錯題載不到練習池時對使用者說的話（首頁的題數說明、這一場的提醒，旁邊沒有再試一次）：
+ * 部署新版後舊分頁載不到舊檔名，通常要重新載入頁面才救得回來
+ */
+export const PAGE_LOAD_FAILED = '題目載入失敗，網站可能剛更新。請重新載入頁面再開始。';
+
 export function loadPracticePool(): Promise<PracticePool> {
   if (!poolPromise) {
     poolPromise = import('../data/practice_pool.json')

@@ -276,17 +276,6 @@ textarea {
   }
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes pulse {
   0%,
   100% {
@@ -299,10 +288,6 @@ textarea {
 
 .animate-fade-in {
   animation: fadeIn var(--transition-normal) var(--easing-standard);
-}
-
-.animate-slide-up {
-  animation: slideUp var(--transition-normal) var(--easing-standard);
 }
 
 /* 響應式斷點 */

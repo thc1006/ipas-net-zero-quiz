@@ -2,6 +2,7 @@
 // 對應 EU AI Act Art.50（2026-08-02 起）對 AI 生成文字之揭露義務
 import { useEffect, useRef } from 'react';
 import { PRACTICE_POOL_COUNTS } from '../../data/practice-pool-counts';
+import { returnFocus } from '../../utils/reveal-focus';
 import './PracticeOptInDialog.css';
 
 interface PracticeOptInDialogProps {
@@ -61,7 +62,8 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
     return () => {
       cancelAnimationFrame(frame);
       document.removeEventListener('keydown', onKey);
-      previouslyFocused?.focus?.();
+      // 對話框已經拿掉、頁面已經換成按下去之後的樣子（說明卡長高）：打開它的按鈕可能被推到視窗外
+      returnFocus(previouslyFocused);
     };
   }, [open, onDecline]);
 

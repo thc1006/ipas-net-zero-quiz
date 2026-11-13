@@ -1,5 +1,5 @@
 // QuestionCard 元件 - 顯示單一題目和選項
-import { useCallback, useId, useMemo, useState } from 'react';
+import { useCallback, useId, useMemo, useRef, useState } from 'react';
 import type { QuizQuestion, QuizOption } from '../../types/quiz';
 import { explainQuestion, type AIResponse } from '../../utils/ai-helper';
 import { AnswerEvidence } from '../AnswerEvidence/AnswerEvidence';
@@ -12,6 +12,10 @@ import { subjectClass, subjectLabel } from '../../utils/subject-label';
 import { buildFeedbackUrl } from '../../utils/feedback-url';
 import { useAllQuestionStats } from '../../hooks/useQuestionStats';
 import { renderMarkdown } from '../../utils/render-markdown';
+import { StarButton } from '../StarButton/StarButton';
+import { ButtonNotice } from '../ReviewNotice/ReviewNotice';
+import { RemoveFromReview } from '../RemoveFromReview/RemoveFromReview';
+import { revealBelowHeader } from '../../utils/reveal-focus';
 import './QuestionCard.css';
 
 export interface QuestionCardProps {
@@ -119,6 +123,9 @@ export function QuestionCard({
     [showAnswer, onSelectAnswer]
   );
 
+  // 考試模式：這一次的焦點是方向鍵在原生的 radio 群組裡移過去的（keydown 的同一個 task 裡）
+  const arrowMove = useRef(false);
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>, optionKey: string) => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -128,19 +135,45 @@ export function QuestionCard({
         return;
       }
       const step = ARROW_STEP[e.key];
-      if (!onKeyboardAnswered || !step) return;
-      e.preventDefault();
-      // 加 Alt／Ctrl／Meta 也要攔下：WebKit 照樣點下一個選項，放行就直接交卷。代價是焦點在選項上時 Alt+左 不能上一頁
-      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      if (!step) return;
       const inputs = Array.from(
         e.currentTarget.closest('[role="radiogroup"]')?.querySelectorAll('input') ?? []
       );
-      const next = inputs[(inputs.indexOf(e.currentTarget) + step + inputs.length) % inputs.length];
+      const to = inputs.indexOf(e.currentTarget) + step;
+      const next = inputs[(to + inputs.length) % inputs.length];
+      if (!onKeyboardAnswered) {
+        // 考試模式交給原生的 radio 群組（移動並選取），移過去的選項在 focus 時捲出來（handleExamFocus）。
+        // WebKit 的群組頭尾不接：在最後一個按往下（第一個按往上）不處理，頁面跟著捲。頭尾這裡自己接，跟 Chromium、
+        // Firefox 一樣移到另一頭並選取。加 Alt／Ctrl／Meta 的照舊交給瀏覽器
+        if (e.altKey || e.ctrlKey || e.metaKey) return;
+        if (to >= 0 && to < inputs.length) {
+          arrowMove.current = true;
+          setTimeout(() => (arrowMove.current = false));
+          return;
+        }
+        e.preventDefault();
+        next.focus({ preventScroll: true });
+        handleOptionClick(next.value);
+        revealBelowHeader(next.closest('.option-item')!);
+        return;
+      }
+      e.preventDefault();
+      // 加 Alt／Ctrl／Meta 也要攔下：WebKit 照樣點下一個選項，放行就直接交卷。代價是焦點在選項上時 Alt+左 不能上一頁
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
       setMovedTo(next.value);
       next.focus({ preventScroll: true });
     },
     [handleOptionClick, onKeyboardAnswered]
   );
+
+  // 考試模式用方向鍵移過去的選項在同一個 frame 捲出來：瀏覽器自己只捲 radio（高度 0）那一條線（WebKit 不捲），
+  // 頁首的補捲要等下一個 frame（WebKit 沒有新畫面時晚到 100ms 上下）。不用 scrollIntoView：選項的 scroll-margin-top
+  // 是練習模式留給提示的，考試模式沒有提示，整個看得到的選項也會被捲下來 41 到 47px（640x360）
+  const handleExamFocus = useCallback((e: React.FocusEvent<HTMLDivElement>) => {
+    if (!arrowMove.current) return;
+    arrowMove.current = false;
+    revealBelowHeader(e.target.closest('.option-item')!);
+  }, []);
 
   // 提示只給鍵盤：滑鼠點選項時選項也會拿到焦點，那一下不能閃出提示
   // radio 高度 0，瀏覽器只保一條線進視窗，整個選項可能還在固定的 header 底下
@@ -178,8 +211,10 @@ export function QuestionCard({
     }
   }, [question, isLoadingAI]);
 
+  // 進場只淡入，不用 transform 位移：Firefox 選 scroll anchor 時跳過有 transform 的題卡，選到排在提示下面的導覽列，
+  // 一直用到下一次捲動。之後在題卡裡插進提示（星號的提示、存不進去的說明），整頁就往上捲，剛按的星號跑到頁首底下
   return (
-    <article className="question-card card animate-slide-up">
+    <article className="question-card card animate-fade-in">
       {/* 題目標頭 */}
       <header className="question-header">
         <span className="question-number">第 {questionNumber} 題</span>
@@ -225,24 +260,28 @@ export function QuestionCard({
             )}
           </span>
         )}
-        {/* 回報此題（Refs #63）— 開新分頁不打斷答題 flow；icon-only 但有 aria-label */}
-        <a
-          className="question-feedback-link"
-          href={buildFeedbackUrl({
-            questionId: question.id,
-            stem: question.stem,
-            fromPage: 'quiz',
-          })}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="回報此題的問題"
-          title="此題有問題？回報維護者"
-        >
-          <span className="material-icons sm" aria-hidden="true">
-            flag
-          </span>
-        </a>
+        <span className="question-header__actions">
+          <StarButton questionId={question.id} />
+          {/* 回報此題（Refs #63）：開新分頁不打斷答題 flow；icon-only 但有 aria-label */}
+          <a
+            className="question-feedback-link"
+            href={buildFeedbackUrl({
+              questionId: question.id,
+              stem: question.stem,
+              fromPage: 'quiz',
+            })}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="回報此題的問題"
+            title="此題有問題？回報維護者"
+          >
+            <span className="material-icons sm" aria-hidden="true">
+              flag
+            </span>
+          </a>
+        </span>
       </header>
+      <ButtonNotice button="star" questionId={question.id} />
 
       {/* 練習池來源 banner — 主題庫題不顯示 */}
       {question.provenance && (
@@ -275,7 +314,7 @@ export function QuestionCard({
         className="question-options"
         role="radiogroup"
         aria-labelledby={labelId}
-        onFocus={onKeyboardAnswered && handleOptionsFocus}
+        onFocus={onKeyboardAnswered ? handleOptionsFocus : handleExamFocus}
         onBlur={onKeyboardAnswered && handleOptionsBlur}
       >
         {question.options.map((option) => (
@@ -292,6 +331,15 @@ export function QuestionCard({
           />
         ))}
       </div>
+
+      {/* 待複習的狀態也是答案揭曉後才顯示：考試模式整場都看不到。有沒有這一列在這一題畫出來時就定了，換題時重新畫 */}
+      {showAnswer && (
+        <RemoveFromReview
+          key={question.id}
+          questionId={question.id}
+          answeredCorrectly={selectedAnswer === question.answer}
+        />
+      )}
 
       {/* 無答案提示 */}
       {showAnswer && !question.hasAnswer && (

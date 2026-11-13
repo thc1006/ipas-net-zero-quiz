@@ -1,5 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { test, expect, stubVisitorCounter, STUB_VISITOR_COUNT } from './fixtures';
+import { SLACK, settle } from './layout';
 
 /**
  * 練習模式選了就鎖定，而原生 radio 的方向鍵會同時移動與選取：第一次按方向鍵就交卷了。
@@ -40,8 +41,8 @@ async function expectBelowHeader(page: Page, target: Locator, where: string): Pr
       viewport: innerHeight,
     };
   });
-  expect(m.top, `${where} ${JSON.stringify(m)}`).toBeGreaterThanOrEqual(m.headerBottom);
-  expect(m.bottom, `${where} ${JSON.stringify(m)}`).toBeLessThanOrEqual(m.viewport);
+  expect(m.top, `${where} ${JSON.stringify(m)}`).toBeGreaterThanOrEqual(m.headerBottom - SLACK);
+  expect(m.bottom, `${where} ${JSON.stringify(m)}`).toBeLessThanOrEqual(m.viewport + SLACK);
 }
 
 /** Tab 進選項群組（群組前面最後一個可聚焦的是回報連結），停在第一個選項 */
@@ -451,11 +452,11 @@ test.describe('練習模式的鍵盤作答', () => {
           };
         });
         const where = `第 ${i} 題 ${JSON.stringify(m)}`;
-        expect(m.buttonTop, where).toBeGreaterThanOrEqual(m.headerBottom);
-        expect(m.buttonBottom, where).toBeLessThanOrEqual(m.viewport);
+        expect(m.buttonTop, where).toBeGreaterThanOrEqual(m.headerBottom - SLACK);
+        expect(m.buttonBottom, where).toBeLessThanOrEqual(m.viewport + SLACK);
         // 導覽列捲到離視窗底部 8px（scroll-margin-bottom）
         if (m.buttonBottom - m.correctTop + 8 <= m.viewport - m.headerBottom) {
-          expect(m.correctTop, where).toBeGreaterThanOrEqual(m.headerBottom);
+          expect(m.correctTop, where).toBeGreaterThanOrEqual(m.headerBottom - SLACK);
           bothFit++;
         }
 
@@ -560,4 +561,100 @@ test.describe('練習模式的鍵盤作答', () => {
     await expect(page.getByText('第 2 題')).toBeVisible();
     await expect(page.locator('.question-stem')).not.toBeFocused();
   });
+
+  // 考試模式是原生的 radio 群組。WebKit 用方向鍵移過去的 radio 不算 :focus-visible，自己也不捲：
+  // 640x360 時移到的選項被頁首或視窗底邊蓋住 34px
+  for (const [width, height] of [[640, 360], [360, 640], [320, 256]]) {
+    test(`考試模式 ${width}x${height}：方向鍵移到的選項在 header 下面、視窗之內`, async ({ page }) => {
+      await page.setViewportSize({ width, height });
+      await startQuiz(page, 'exam');
+      await tabIntoOptions(page);
+      const moved = async (i: number, way: string) => {
+        await expect(options(page).nth(i)).toBeFocused();
+        // 補捲排在下一個 frame，版面停下來再量
+        await settle(page);
+        await expectBelowHeader(page, page.locator('.option-item').nth(i), `往${way}到第 ${i + 1} 個選項`);
+      };
+      for (let i = 1; i < 4; i++) {
+        await page.keyboard.press('ArrowDown');
+        await moved(i, '下');
+      }
+      for (let i = 2; i >= 0; i--) {
+        await page.keyboard.press('ArrowUp');
+        await moved(i, '上');
+      }
+    });
+  }
+
+  // 按鍵之後的第一個 frame 量：選項要在同一個 frame 就露出來。之前 Chromium 與 Firefox 自己只捲 radio（高度 0）那一條線，
+  // 下一個 frame 才由頁首補捲；WebKit 不捲，要等頁首的補捲（沒有新畫面時晚到 100ms 上下）。WebKit 的 radio 群組在頭尾
+  // 不接：在最後一個按往下（第一個按往上）焦點不動、頁面捲 45 到 76px。Chromium 與 Firefox 頭尾相接
+  for (const [width, height] of [[640, 360], [839, 412]]) {
+    test(`考試模式 ${width}x${height}：方向鍵移到的選項第一個 frame 就在頁首下面、視窗之內，頭尾相接`, async ({ page }) => {
+      await page.setViewportSize({ width, height });
+      await startQuiz(page, 'exam');
+      await tabIntoOptions(page);
+      const steps: [string, number][] = [
+        ['ArrowDown', 1],
+        ['ArrowDown', 2],
+        ['ArrowDown', 3],
+        ['ArrowDown', 0],
+        ['ArrowUp', 3],
+        ['ArrowUp', 2],
+        ['ArrowRight', 3],
+        ['ArrowRight', 0],
+        ['ArrowLeft', 3],
+        ['ArrowUp', 2],
+        ['ArrowUp', 1],
+        ['ArrowUp', 0],
+      ];
+      for (const [key, to] of steps) {
+        // 每個 frame 看一次焦點；換了之後的第一個 frame 記下選項的位置。按之前就整個看得到的選項，頁面不捲
+        // （之前頭尾相接時照選項的 scroll-margin-top 捲，那是練習模式留給提示的空間：640x360 捲了 41 到 47px）
+        await page.evaluate((to) => {
+          const w = window as unknown as { __first: Promise<unknown> };
+          const from = document.activeElement;
+          const start = performance.now();
+          const pre = document.querySelectorAll('.option-item')[to].getBoundingClientRect();
+          const shown =
+            pre.top >= document.querySelector('.app-header')!.getBoundingClientRect().bottom &&
+            pre.bottom <= document.documentElement.clientHeight;
+          const y = window.scrollY;
+          w.__first = new Promise((resolve) => {
+            const tick = () => {
+              const a = document.activeElement as HTMLInputElement;
+              if (a !== from) {
+                const box = a.closest('.option-item')!.getBoundingClientRect();
+                resolve({
+                  value: a.value,
+                  top: box.top,
+                  bottom: box.bottom,
+                  header: document.querySelector('.app-header')!.getBoundingClientRect().bottom,
+                  viewport: document.documentElement.clientHeight,
+                  scrolled: shown ? window.scrollY - y : 0,
+                });
+              } else if (performance.now() - start > 1000) resolve({ value: '焦點沒有移動' });
+              else requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          });
+        }, to);
+        await page.keyboard.press(key);
+        const m = (await page.evaluate(() => (window as unknown as { __first: Promise<unknown> }).__first)) as {
+          value: string;
+          top: number;
+          bottom: number;
+          header: number;
+          viewport: number;
+          scrolled: number;
+        };
+        const where = `${key} 到 ${KEYS[to]} ${JSON.stringify(m)}`;
+        expect(m.value, where).toBe(KEYS[to]);
+        expect(m.top, where).toBeGreaterThanOrEqual(m.header - SLACK);
+        expect(m.bottom, where).toBeLessThanOrEqual(m.viewport + SLACK);
+        expect(Math.abs(m.scrolled), where).toBeLessThanOrEqual(SLACK);
+        await expect(page.locator('.question-options input:checked')).toHaveValue(KEYS[to]);
+      }
+    });
+  }
 });

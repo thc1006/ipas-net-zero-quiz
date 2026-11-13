@@ -1,18 +1,26 @@
 // 首頁元件 - 測驗配置與開始
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { allQuestions, getSourceCandidates, stats } from '../data/questions';
 import { PRACTICE_POOL_COUNTS } from '../data/practice-pool-counts';
 import { defaultConfig } from '../hooks/useQuiz';
 import { usePracticeMode } from '../hooks/usePracticeMode';
+import { useReviewQuestions } from '../hooks/useReviewQuestions';
+import { useKeepHeight } from '../hooks/useKeepHeight';
+import { useHoldPosition } from '../hooks/useHoldPosition';
 import { PracticeOptInDialog } from '../components/PracticeOptInDialog/PracticeOptInDialog';
 import { PracticePoolHistogram } from '../components/PracticePoolHistogram/PracticePoolHistogram';
 import { readBool, writeBool } from '../utils/local-storage';
+import { PAGE_LOAD_FAILED } from '../utils/practice-pool';
 import { loadResumableProgress, formatRelativeTime } from '../utils/quiz-progress-storage';
 import {
+  REVIEW_SOURCES,
+  isReviewSource,
   officialSessions,
   questionSourceLabel,
   questionSourceNoun,
   questionSourceScope,
+  reviewEmptyHint,
+  reviewOptionLabel,
   sampleEditions,
 } from '../utils/question-source';
 import type { QuizConfig, ExamSubject, QuestionSource } from '../types/quiz';
@@ -33,7 +41,7 @@ const QUESTION_COUNT_MAX = 100;
 
 /**
  * 題目來源選單（#128）：全部題目、全部官方題目（公告試題與參考樣題都算）、各場公告試題、各版參考樣題
- * （場次與版次都是新到舊，由資料算出）
+ * （場次與版次都是新到舊，由資料算出）。星號題與待複習錯題的選項帶即時題數，接在這些後面
  */
 const SOURCE_OPTIONS: QuestionSource[] = [
   'all',
@@ -76,13 +84,24 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   const [optInDialogOpen, setOptInDialogOpen] = useState(false);
   const parsedQuestionCount = parseClampedQuestionCount(questionCountInput);
   const canStartQuiz = parsedQuestionCount !== null;
-  // 只出官方題目時：這個考科範圍有幾題可出（'all' 時是 null，不顯示也不限制）
+  // 只出官方題目或星號題、待複習錯題時：這個考科範圍有幾題可出（'all' 時是 null，不顯示也不限制）
   const source = config.questionSource ?? 'all';
-  const sourceAvailable = useMemo(
-    () => (source === 'all' ? null : getSourceCandidates(config.subject, source).length),
-    [config.subject, source]
-  );
-  const canStart = canStartQuiz && sourceAvailable !== 0;
+  const review = useReviewQuestions(config.subject);
+  const reviewSelected = isReviewSource(source);
+  // 只出官方題目（全部官方題目、某一場公告試題、某一版參考樣題）：加強練習池一題都不混入，首頁上的東西都不隨它啟用與否
+  // 改變。別的分頁切換時說明卡、題數說明、頁首的徽章換字或長高的話，下面的題目來源與開始測驗會移動
+  const officialOnly = source !== 'all' && !reviewSelected;
+  const sourceAvailable = useMemo(() => {
+    if (source === 'all') return null;
+    return isReviewSource(source)
+      ? review.counts[source]
+      : getSourceCandidates(config.subject, source).length;
+  }, [config.subject, source, review.counts]);
+  // 練習池還在載入時題數不算數，算好才能開始
+  const reviewLoading = reviewSelected && review.isLoading;
+  const canStart = canStartQuiz && sourceAvailable !== 0 && !reviewLoading;
+  // 星號題與待複習錯題：名單上的練習池題會出，其他練習池題不會（官方題目是一題都不混）
+  const reviewPoolNote = `目前的題目來源只出${questionSourceNoun(source)}，名單上的練習池題照出，其他練習池題不會混入；題目來源選「全部題目」時，才會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
 
   // 首次進首頁、尚未 opt-in、尚未看過揭露 → 自動彈 dialog
   // 已 opt-in 過或已 dismissed 過則不彈
@@ -92,24 +111,73 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
     setOptInDialogOpen(true);
   }, [practiceMode.hasOptedIn]);
 
-  const handlePracticeToggle = useCallback(() => {
+  // 這個分頁自己切換加強練習池的次數：說明卡與徽章從頭量。別的分頁切換的（storage 事件）不算，換字但不變矮
+  const [poolToggles, setPoolToggles] = useState(0);
+
+  const countHintId = 'count-hint';
+  const sourceHintId = 'source-hint';
+  // 別的分頁改了星號或待複習錯題時，題數說明的字跟著換。變短的話它下面的開始測驗往上移：
+  // 使用者自己換來源、考科範圍、題數，或練習池載完之前不變矮
+  const sourceHintRef = useRef<HTMLParagraphElement>(null);
+  useKeepHeight(sourceHintRef, `${source}|${config.subject}|${parsedQuestionCount}|${reviewLoading}`);
+  // 加強練習池的說明卡與頁首的徽章也是：別的分頁切換加強練習池時換字（說明卡拿掉抽題分布），變矮的話下面的題目來源與
+  // 開始測驗往上移。這個分頁自己切換、換來源（說明跟著換，只出官方題目時徽章收起來）、打開或收起抽題分布時從頭量。
+  // 考科範圍只換抽題分布裡的數字
+  const [detailsToggles, setDetailsToggles] = useState(0);
+  const poolTipRef = useRef<HTMLElement>(null);
+  useKeepHeight(poolTipRef, `${source}|${poolToggles}|${detailsToggles}`);
+  const badgesRef = useRef<HTMLDivElement>(null);
+  useKeepHeight(badgesRef, `${poolToggles}|${officialOnly}`);
+  // 說明卡的抽題分布那一列（主題庫加練習池，只有全部題目時有）：有沒有這一列在首頁畫出來時、這個分頁自己切換或換題目
+  // 來源時才定。別的分頁啟用時加一列的話說明卡長高 30.4，下面的題目來源與開始測驗往下移；到下一次畫首頁或這個分頁自己
+  // 切換時才出現。
+  // 別的分頁停用時也不拿掉：焦點在那一列時會掉回 body，打開著的話說明卡留下 210 到 263px 的空白。留在原地（staleDistribution）：
+  // 同一個 <details>，焦點與打開的狀態都不動，抽題分布的內容不換（換字會換行數，說明卡變高或留空白）；前面的說明換成
+  // 「別的分頁停用、下面的抽題分布不適用」，那一列換成「停用前的抽題分布」。這兩句不比啟用時的長，說明卡不變高。
+  // 之後別的分頁再啟用就換回現在的字
+  const distributionScope = `${source}|${poolToggles}`;
+  const distributionNow = practiceMode.enabled && source === 'all';
+  const [distribution, setDistribution] = useState({ scope: distributionScope, shown: distributionNow });
+  const showDistribution = distribution.scope === distributionScope ? distribution.shown : distributionNow;
+  if (distribution.scope !== distributionScope) {
+    setDistribution({ scope: distributionScope, shown: showDistribution });
+  }
+  const staleDistribution = showDistribution && !practiceMode.enabled;
+  // 說明卡的說明本身也留著：別的分頁停用時抽題分布留在原地（上面），說明換成比較短的一句，不留高度的話下面的抽題分布
+  // 與開關往上移（焦點可能在抽題分布上），說明卡底下留空白。沒有那一列時不留（每次切換都從頭量）：說明變矮的那一截讓給
+  // 開關換樣式時 transition 多出來的 2 到 4px，說明卡不必長高再等 transition 跑完縮回來（WebKit 在機器忙時偶爾沒縮回來）
+  const poolDescRef = useRef<HTMLParagraphElement>(null);
+  useKeepHeight(poolDescRef, `${source}|${poolToggles}|${showDistribution || practiceMode.enabled}`);
+  // 使用者換了控制項，上面的說明卡、題數說明跟著換高度：正在操作的那一個留在原來的位置。排在 useKeepHeight 後面。
+  // 加強練習池的開關自己也會變高（字級特大時從實心換成框線高 2px），在視窗底邊的話再捲到露出來（reveal 只給開關，見 useHoldPosition）
+  const hold = useHoldPosition();
+  // 打開揭露對話框的開關：按同意時說明卡換字，開關留在原來的位置
+  const dialogOpener = useRef<HTMLElement | null>(null);
+
+  const handlePracticeToggle = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    hold(e.currentTarget, true);
     if (practiceMode.enabled) {
       practiceMode.disable();
+      setPoolToggles((n) => n + 1);
       return;
     }
     if (practiceMode.hasOptedIn) {
       // 已揭露過，直接啟用不再彈 dialog
       practiceMode.enable();
+      setPoolToggles((n) => n + 1);
       return;
     }
+    dialogOpener.current = e.currentTarget;
     setOptInDialogOpen(true);
-  }, [practiceMode]);
+  }, [practiceMode, hold]);
 
   const handleAcceptOptIn = useCallback(() => {
+    hold(dialogOpener.current, true);
     writeBool(DISCLOSURE_SEEN_KEY, true);
     practiceMode.acceptOptIn();
+    setPoolToggles((n) => n + 1);
     setOptInDialogOpen(false);
-  }, [practiceMode]);
+  }, [practiceMode, hold]);
 
   const handleDeclineOptIn = useCallback(() => {
     writeBool(DISCLOSURE_SEEN_KEY, true);
@@ -119,21 +187,24 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
   const handleSubjectChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       const value = e.target.value as ExamSubject | 'all';
+      hold(e.currentTarget);
       setConfig((prev) => ({ ...prev, subject: value }));
     },
-    []
+    [hold]
   );
 
   const handleSourceChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as QuestionSource;
+    hold(e.currentTarget);
     setConfig((prev) => ({ ...prev, questionSource: value }));
-  }, []);
+  }, [hold]);
 
   const handleCountChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      hold(e.currentTarget);
       setQuestionCountInput(e.target.value);
     },
-    []
+    [hold]
   );
 
   // 失焦時把合法輸入正規化（去前後空白、去前導零、超過 100 夾為 100），
@@ -169,9 +240,6 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
     onStartQuiz({ ...config, questionCount: parsedQuestionCount });
   }, [config, onStartQuiz, parsedQuestionCount]);
 
-  const countHintId = 'count-hint';
-  const sourceHintId = 'source-hint';
-
   return (
     <div className="home-page animate-fade-in">
       {/* 標題區 */}
@@ -185,7 +253,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           <span className="hero-subtitle__phrase">（初級）</span>
           <span className="hero-subtitle__phrase">考古題線上測驗</span>
         </p>
-        <div className="stats-badges">
+        <div className="stats-badges" ref={badgesRef}>
           <span className="badge badge-success">
             <span className="material-icons sm">quiz</span>
             {stats.total} 題
@@ -196,7 +264,8 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
           <span className="badge badge-info">
             考科二 {stats.subject2} 題
           </span>
-          {practiceMode.enabled ? (
+          {/* 只出官方題目時不放：切換加強練習池不影響這一場（說明卡說明），也不隨它的狀態換字 */}
+          {officialOnly ? null : practiceMode.enabled ? (
             <button
               type="button"
               className="badge badge-warning badge-button"
@@ -249,29 +318,44 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
 
       {/* 加強練習池 tip card — 隨啟用狀態切換內容，避免突然消失造成困惑 */}
       {(() => {
-        const { enabled, hasOptedIn } = practiceMode;
+        const { hasOptedIn } = practiceMode;
+        // 只出官方題目時照沒啟用的樣子畫（圖示、樣式），不放開關
+        const enabled = practiceMode.enabled && !officialOnly;
         let title: string;
         let desc: string;
         let ctaLabel: string;
         let ctaIcon: string;
         let modifierClass: string;
 
-        if (enabled) {
+        if (officialOnly) {
+          // 只出官方題目時練習池不混入（#128）：說的是啟用、沒啟用都對的話
+          title = '加強練習池在這個模式不混入';
+          desc = `目前的題目來源只出${questionSourceNoun(source)}，加強練習池不論有沒有啟用，這一場都不會混入。題目來源選「全部題目」時，可以在這裡啟用或停用這 ${PRACTICE_POOL_COUNTS.total} 題（${PRACTICE_POOL_COUNTS.externalMock} 模擬 + ${PRACTICE_POOL_COUNTS.aiGenerated} AI 產題）。`;
+          ctaLabel = '';
+          ctaIcon = '';
+          modifierClass = '';
+        } else if (enabled) {
           title = '加強練習池已啟用';
-          // 只出官方題目時練習池不混入（#128），這裡不能再說「下一場會混入」
           desc =
             source === 'all'
               ? `下一場測驗會額外混入 ${PRACTICE_POOL_COUNTS.total} 題（${PRACTICE_POOL_COUNTS.externalMock} 模擬 + ${PRACTICE_POOL_COUNTS.aiGenerated} AI 產題；每題附來源徽章）。`
-              : `目前的題目來源只出${questionSourceNoun(source)}，這一場不會混入練習池；題目來源選「全部題目」時，才會額外混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
+              : reviewPoolNote;
           ctaLabel = '停用加強練習';
           ctaIcon = 'remove_circle_outline';
           modifierClass = 'practice-pool-tip--enabled';
+        } else if (staleDistribution) {
+          // 抽題分布還留著（別的分頁停用）：先說它為什麼不適用
+          title = '想多練？啟用加強練習池';
+          desc = '加強練習池已在別的分頁停用，下面的抽題分布不適用。';
+          ctaLabel = hasOptedIn ? `啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習` : `了解並啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習`;
+          ctaIcon = 'add_circle_outline';
+          modifierClass = '';
         } else if (hasOptedIn) {
           title = '想多練？啟用加強練習池';
           desc =
             source === 'all'
               ? `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章），啟用後下一場練習會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`
-              : `加強練習池含 ${PRACTICE_POOL_COUNTS.externalMock} 題公開模擬題 + ${PRACTICE_POOL_COUNTS.aiGenerated} 題 AI 產題（每題附來源徽章）。目前的題目來源只出${questionSourceNoun(source)}，啟用後這一場也不會混入；題目來源選「全部題目」時才會混入這 ${PRACTICE_POOL_COUNTS.total} 題。`;
+              : reviewPoolNote;
           ctaLabel = `啟用 +${PRACTICE_POOL_COUNTS.total} 題加強練習`;
           ctaIcon = 'add_circle_outline';
           modifierClass = '';
@@ -285,6 +369,7 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
 
         return (
           <section
+            ref={poolTipRef}
             className={`practice-pool-tip card ${modifierClass}`}
             data-testid="practice-pool-tip"
             aria-labelledby="practice-pool-tip-heading"
@@ -298,12 +383,14 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
               <h3 id="practice-pool-tip-heading" className="practice-pool-tip__title">
                 {title}
               </h3>
-              <p className="practice-pool-tip__desc">{desc}</p>
-              {/* 抽題分布畫的是主題庫加練習池；只出官方題目時抽題範圍不是這個，不顯示 */}
-              {enabled && source === 'all' && (
-                <details className="practice-pool-tip__details">
+              <p ref={poolDescRef} className="practice-pool-tip__desc">
+                {desc}
+              </p>
+              {/* 抽題分布畫的是主題庫加練習池；只出官方題目時抽題範圍不是這個，不顯示。別的分頁啟用時不加（見上面） */}
+              {showDistribution && (
+                <details className="practice-pool-tip__details" onToggle={() => setDetailsToggles((n) => n + 1)}>
                   <summary className="practice-pool-tip__details-summary">
-                    查看抽題分布
+                    {staleDistribution ? '停用前的抽題分布' : '查看抽題分布'}
                   </summary>
                   <div className="practice-pool-tip__details-content">
                     <PracticePoolHistogram
@@ -313,14 +400,16 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
                   </div>
                 </details>
               )}
-              <button
-                type="button"
-                className={`btn ${enabled ? 'btn-secondary' : 'btn-primary'} practice-pool-tip__cta`}
-                onClick={handlePracticeToggle}
-              >
-                <span className="material-icons sm">{ctaIcon}</span>
-                {ctaLabel}
-              </button>
+              {!officialOnly && (
+                <button
+                  type="button"
+                  className={`btn ${enabled ? 'btn-secondary' : 'btn-primary'} practice-pool-tip__cta`}
+                  onClick={handlePracticeToggle}
+                >
+                  <span className="material-icons sm">{ctaIcon}</span>
+                  {ctaLabel}
+                </button>
+              )}
             </div>
           </section>
         );
@@ -370,16 +459,26 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
                   {questionSourceLabel(s)}
                 </option>
               ))}
+              {REVIEW_SOURCES.map((s) => (
+                <option key={s} value={s}>
+                  {reviewOptionLabel(s, review.isLoading ? null : review.counts[s])}
+                </option>
+              ))}
             </select>
             {/* live region 一直在畫面上，內容換了螢幕閱讀器才會念 */}
             <p
+              ref={sourceHintRef}
               id={sourceHintId}
               className="config-item__hint"
               role="status"
               aria-live="polite"
               aria-atomic="true"
             >
-              {sourceAvailable === null ? null : sourceAvailable === 0 ? (
+              {reviewLoading ? (
+                <span>正在載入加強練習池，題數算好後才能開始。</span>
+              ) : reviewSelected && sourceAvailable === 0 ? (
+                !review.poolFailed && <span>{reviewEmptyHint(source, review.totals[source] > 0)}</span>
+              ) : sourceAvailable === null ? null : sourceAvailable === 0 ? (
                 <span>這個範圍沒有{questionSourceNoun(source)}，無法開始。</span>
               ) : (
                 <>
@@ -393,8 +492,12 @@ export function HomePage({ onStartQuiz, onResumeQuiz }: HomePageProps) {
                       {questionSourceNoun(source)}，本次會出 {sourceAvailable} 題。
                     </span>
                   )}
-                  {practiceMode.enabled && <span>加強練習池在這個模式不會混入。</span>}
                 </>
+              )}
+              {reviewSelected && review.poolFailed && (
+                <span className="config-item__hint--notice">
+                  {PAGE_LOAD_FAILED}重新載入之前只算主題庫裡的題目。
+                </span>
               )}
             </p>
           </div>

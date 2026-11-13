@@ -36,7 +36,7 @@ import type { QuizState } from '../hooks/useQuiz';
 import type { QuizConfig, QuizQuestion } from '../types/quiz';
 import { getQuestionById } from '../data/questions';
 import { currentQuestionId } from '../data/renamed-questions';
-import { matchesSource } from './question-source';
+import { isReviewSource, matchesSource } from './question-source';
 import { isQuestionScorable } from './scorable';
 
 // v2 用獨立 key，與已部署的 v1 bundle 隔離（見檔頭「儲存 key 版本化」）。
@@ -225,11 +225,13 @@ function isValidEnvelope(v: unknown): v is PersistedProgressRaw {
 }
 
 /**
- * 這一題屬於這一場的題目來源嗎。來源認不認得、怎麼算屬於，全看 matchesSource，這裡不列來源。
+ * 這一題屬於這一場的題目來源嗎。星號與待複習錯題以外，來源認不認得、怎麼算屬於，全看 matchesSource。
  * 沒有這個欄位（舊版存下的進度）等同 'all'。
  */
 function belongsToSavedSource(q: QuizQuestion, config: QuizConfig | null): boolean {
-  return matchesSource(q, config?.questionSource ?? 'all');
+  const source = config?.questionSource ?? 'all';
+  // 星號與待複習錯題的題目清單在開始時就定下來，名單之後會變（取消星號、作答），只看這個來源認不認得
+  return isReviewSource(source) || matchesSource(q, source);
 }
 
 /**

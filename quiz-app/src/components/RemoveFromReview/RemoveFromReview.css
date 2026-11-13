@@ -1,0 +1,19 @@
+.review-remove {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-sm) 0;
+}
+
+.review-remove__progress,
+.review-remove__done {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* 排在那一列裡（與按鈕同一個位置） */
+.review-remove__done {
+  margin: 0;
+}

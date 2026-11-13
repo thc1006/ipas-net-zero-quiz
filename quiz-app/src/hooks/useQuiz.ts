@@ -14,8 +14,10 @@ import {
   dedupeByContent,
   allQuestions,
   getSourceCandidates,
+  hasIdsOutsideMainBank,
 } from '../data/questions';
 import { loadPracticePool, toQuizQuestion } from '../utils/practice-pool';
+import { loadReviewPool } from '../utils/review-pool';
 import {
   resumableQuestions,
   saveProgress,
@@ -26,6 +28,21 @@ import {
   recordAttempts,
   type AttemptUpdate,
 } from '../utils/question-stats-storage';
+import { isReviewSource, reviewCandidates, reviewIds } from '../utils/question-source';
+import {
+  getReviewSnapshot,
+  recordReviewResults,
+  reportReviewPoolFailure,
+  reviewResultsFrom,
+} from '../utils/review-storage';
+
+/** 星號題或待複習錯題開始不了，因為名單上的練習池題載不到（主題庫裡的題目又一題都沒有）：不是名單空了 */
+export class ReviewPoolUnavailableError extends Error {
+  constructor() {
+    super('練習池載入不到，名單上的題目出不了');
+    this.name = 'ReviewPoolUnavailableError';
+  }
+}
 
 /** 測驗狀態 */
 export interface QuizState {
@@ -60,7 +77,10 @@ export const defaultConfig: QuizConfig = {
  * （首頁開始前已經告知），不補非官方題、不混練習池。隨機時沿用主題庫同一套洗牌。
  */
 function pickFromSource(config: QuizConfig): QuizQuestion[] {
-  const candidates = getSourceCandidates(config.subject, config.questionSource ?? 'all');
+  return drawFrom(getSourceCandidates(config.subject, config.questionSource ?? 'all'), config);
+}
+
+function drawFrom(candidates: QuizQuestion[], config: QuizConfig): QuizQuestion[] {
   return config.shuffleQuestions
     ? getRandomQuestionsFromPool(candidates, config.questionCount, 'all', true)
     : candidates.slice(0, config.questionCount);
@@ -189,6 +209,49 @@ export function useQuiz() {
         questions = subjectFiltered.slice(0, config.questionCount);
       }
     }
+
+    setState({
+      isActive: true,
+      questions,
+      currentIndex: 0,
+      answers: [],
+      startTime: Date.now(),
+      config,
+    });
+    setQuestionStartTime(Date.now());
+    return true;
+  }, []);
+
+  /**
+   * 開始星號題或待複習錯題的一場。名單上可能有練習池題，不管加強練習開了沒，有主題庫沒有的 id 就載入練習池；
+   * 載入失敗時用主題庫出題，真的開始了才告知使用者這一場只出主題庫的題目。一題都抽不到時回傳 false、不開始；
+   * 抽不到是因為練習池載不到（名單上還有主題庫以外的題目）時丟 ReviewPoolUnavailableError，不是名單空了。
+   * 題目清單在這裡定下來：之後取消星號、作答都不影響這一場。
+   * 載入途中被取代或取消時回傳 false，不開始、也不報載入失敗（與 startQuizWithPool 相同）。
+   */
+  const startReviewQuiz = useCallback(async (config: QuizConfig): Promise<boolean> => {
+    const request = ++latestStart.current;
+    const source = config.questionSource;
+    if (!isReviewSource(source)) return false;
+
+    let bank = allQuestions;
+    let poolMissing = false;
+    if (hasIdsOutsideMainBank(reviewIds(source, getReviewSnapshot()))) {
+      const pool = await loadReviewPool();
+      if (request !== latestStart.current) return false;
+      if (pool) bank = [...allQuestions, ...pool.items.map(toQuizQuestion)];
+      else poolMissing = true;
+    }
+
+    const questions = drawFrom(
+      reviewCandidates(bank, config.subject, source, getReviewSnapshot()),
+      config
+    );
+    if (questions.length === 0) {
+      if (poolMissing) throw new ReviewPoolUnavailableError();
+      return false;
+    }
+    if (poolMissing) reportReviewPoolFailure();
 
     setState({
       isActive: true,
@@ -337,11 +400,13 @@ export function useQuiz() {
         at: a.timestamp,
       }));
     recordAttempts(statUpdates);
+    // 星號與待複習錯題（Discussion #1）：與作答統計同一個時機，所以放棄的測驗同樣不算
+    const reviewSummary = recordReviewResults(reviewResultsFrom(questions, answers), startTime);
 
     clearProgress();
     setState(initialState);
 
-    return result;
+    return { ...result, reviewSummary };
   }, [state]);
 
   /** 重置測驗（亦會清除持久化進度）— 用於 user 主動「重來」/ result 後返家 */
@@ -517,6 +582,7 @@ export function useQuiz() {
     // 操作
     startQuiz,
     startQuizWithPool,
+    startReviewQuiz,
     cancelPendingStart,
     submitAnswer,
     nextQuestion,

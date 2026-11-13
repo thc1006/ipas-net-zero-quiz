@@ -464,6 +464,9 @@ describe('題目來源（只出官方題目）', () => {
       ['official', '全部官方題目'],
       ...sessions.map((s) => [`exam:${s}`, expect.stringMatching(/^1\d\d 年第.+次公告試題$/)]),
       ['sample:114', '參考樣題（114 年版）'],
+      ['review:starred', '星號題（0 題）'],
+      ['review:wrong', '待複習錯題（0 題）'],
+      ['review:both', '星號 + 待複習錯題（0 題）'],
     ]);
   });
 
@@ -574,11 +577,13 @@ describe('題目來源（只出官方題目）', () => {
     expect(lastConfig(onStartQuiz)).toMatchObject({ mode: 'exam', questionSource: 'official' });
   });
 
-  it('加強練習池啟用時，說明這個模式不會混入練習題', () => {
+  // 題數說明已經說不會混入其他來源的題目；加強練習池由說明卡說，啟用、沒啟用都一樣（別的分頁切換時說明不換字）
+  it('加強練習池啟用時，題數說明不另外提加強練習池，說明卡說這個模式不混入', () => {
     localStorage.setItem('practice-pool-enabled', '1');
     render(<HomePage onStartQuiz={() => {}} />);
     fireEvent.change(sourceSelect(), { target: { value: 'official' } });
-    expect(screen.getByText('加強練習池在這個模式不會混入。')).toBeInTheDocument();
+    expect(document.getElementById('source-hint')!.textContent).toMatch(/^可出 \d+ 題官方題目（公告試題與參考樣題），不會混入其他來源的題目。$/);
+    expect(within(screen.getByTestId('practice-pool-tip')).getByText(/加強練習池不論有沒有啟用，這一場都不會混入/)).toBeInTheDocument();
   });
 
   it('加強練習池啟用時，練習池提示卡不再說會混入，也不顯示主題庫加練習池的抽題分布', () => {
@@ -590,9 +595,9 @@ describe('題目來源（只出官方題目）', () => {
 
     fireEvent.change(sourceSelect(), { target: { value: 'official' } });
     expect(within(tip).queryByText(/下一場測驗會額外混入/)).toBeNull();
-    expect(within(tip).getByText(/目前的題目來源只出官方題目，這一場不會混入練習池/)).toBeInTheDocument();
+    expect(within(tip).getByText(/目前的題目來源只出官方題目，加強練習池不論有沒有啟用，這一場都不會混入/)).toBeInTheDocument();
     fireEvent.change(sourceSelect(), { target: { value: 'sample:114' } });
-    expect(within(tip).getByText(/目前的題目來源只出參考樣題，這一場不會混入練習池/)).toBeInTheDocument();
+    expect(within(tip).getByText(/目前的題目來源只出參考樣題，加強練習池不論有沒有啟用，這一場都不會混入/)).toBeInTheDocument();
     expect(within(tip).queryByText(/查看抽題分布/)).toBeNull();
 
     fireEvent.change(sourceSelect(), { target: { value: 'all' } });
@@ -608,7 +613,7 @@ describe('題目來源（只出官方題目）', () => {
 
     fireEvent.change(sourceSelect(), { target: { value: 'official' } });
     expect(within(tip).queryByText(/啟用後下一場練習會混入/)).toBeNull();
-    expect(within(tip).getByText(/目前的題目來源只出官方題目，啟用後這一場也不會混入/)).toBeInTheDocument();
+    expect(within(tip).getByText(/目前的題目來源只出官方題目，加強練習池不論有沒有啟用，這一場都不會混入/)).toBeInTheDocument();
   });
 
   it('題數不合法時不出現「題數不夠」的提醒（題數那一格自己會報錯）', () => {

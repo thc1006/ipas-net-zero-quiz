@@ -200,3 +200,94 @@ describe('SettingsPage', () => {
     });
   });
 });
+
+describe('清除作答統計的確認', () => {
+  it('預設焦點在取消，關閉後回到原按鈕', () => {
+    renderSettings();
+    const open = screen.getByRole('button', { name: /清除作答統計/ });
+    open.focus();
+    fireEvent.click(open);
+    const dialog = screen.getByRole('dialog');
+    expect(within(dialog).getByRole('button', { name: '取消' })).toHaveFocus();
+    fireEvent.click(within(dialog).getByRole('button', { name: '取消' }));
+    expect(open).toHaveFocus();
+  });
+});
+
+describe('SettingsPage：星號與待複習錯題', () => {
+  it('有這個區塊；原本的清除作答統計不動星號與待複習', () => {
+    const review = JSON.stringify({ v: 1, seeded: true, stars: { a: 1 }, wrong: {} });
+    localStorage.setItem('ipas-review-v1', review);
+    localStorage.setItem(
+      'ipas-question-stats',
+      JSON.stringify({ version: 1, items: { x: { attempts: 1, correct: 1, lastTriedAt: 1 } } })
+    );
+    renderSettings();
+    expect(screen.getByRole('heading', { name: '星號與待複習錯題' })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /清除作答統計/ }));
+    fireEvent.click(screen.getByRole('button', { name: '確定清除' }));
+    expect(localStorage.getItem('ipas-question-stats')).toBeNull();
+    expect(localStorage.getItem('ipas-review-v1')).toBe(review);
+  });
+});
+
+// 換字級時頁首與上面的內容跟著變高：字體大小的選單留在原來的位置，被變高的頁首蓋到再往下露出來。
+// jsdom 不排版：頁首與選單上面那一段的高度照 html 的 data-font-size 給，頁首另外畫一個
+describe('換字級：字體大小的選單不移動', () => {
+  const HEADER = { normal: 64, large: 69, xlarge: 78 } as Record<string, number>;
+  const ABOVE = { normal: 300, large: 330, xlarge: 370 } as Record<string, number>;
+  let scrollY: number;
+  let scrollBy: ReturnType<typeof vi.fn>;
+  const font = () => document.documentElement.getAttribute('data-font-size') ?? 'normal';
+
+  function Page() {
+    const accessibility = useAccessibility();
+    return (
+      <>
+        <header className="app-header" />
+        <SettingsPage accessibility={accessibility} onClose={() => {}} />
+      </>
+    );
+  }
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+    Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 0 });
+    document.documentElement.removeAttribute('data-font-size');
+  });
+
+  it('上面變高：捲回原來的位置；原來的位置在變高的頁首底下時，捲到剛好在頁首下面', () => {
+    Object.defineProperty(document.documentElement, 'clientHeight', { configurable: true, value: 700 });
+    scrollBy = vi.fn((_x: number, y: number) => {
+      scrollY += y;
+    });
+    vi.stubGlobal('scrollBy', scrollBy);
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      if (this.matches('.app-header')) return { top: 0, bottom: HEADER[font()], height: HEADER[font()] } as DOMRect;
+      const top = HEADER[font()] + ABOVE[font()] - scrollY;
+      return { top, bottom: top + 40, height: 40 } as DOMRect;
+    });
+    render(<Page />);
+    const select = screen.getAllByRole('combobox')[0] as HTMLSelectElement;
+    expect(select).toHaveValue('normal');
+
+    // 選單在畫面中間：換大字級，捲回原來的位置
+    scrollY = 100;
+    const middle = select.getBoundingClientRect().top;
+    fireEvent.change(select, { target: { value: 'large' } });
+    expect(select.getBoundingClientRect().top).toBe(middle);
+    expect(scrollBy.mock.calls).toEqual([[0, 35]]);
+
+    // 選單在頁首下面 2px：換特大，頁首變高 9px，捲回原來的位置之後再往下露出來
+    scrollY = HEADER.large + ABOVE.large - (HEADER.large + 2);
+    scrollBy.mockClear();
+    fireEvent.change(select, { target: { value: 'xlarge' } });
+    expect(select.getBoundingClientRect().top).toBe(HEADER.xlarge);
+    expect(scrollBy.mock.calls).toEqual([
+      [0, 49],
+      [0, -7],
+    ]);
+  });
+});
+

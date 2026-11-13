@@ -4,12 +4,24 @@
 // 與 officialSample（由 tools/import_official_sample.py 從參考樣題的 PDF 匯入時寫入）。不看題號、不看題目文字：
 // 同一題拿掉標記就不算官方題。認不得的來源一題都不收（fail-closed），不會悄悄退回「全部題目」，否則使用者以為
 // 自己在練官方題，實際上混進了非官方的題目。一題最多帶一種標記（data/official-sample.test.ts 擋兩種都帶的題目）。
-import type { ExamSubject, QuestionSource, QuizQuestion } from '../types/quiz';
+import type { ExamSubject, QuestionSource, QuizQuestion, ReviewSource } from '../types/quiz';
 import { sampleEditionLabel, sessionLabel } from './official-exam';
 import { dedupeByContent } from './question-identity';
 import { isQuestionScorable } from './scorable';
+import { REVIEW_REMOVE_STREAK, type ReviewSnapshot } from './review-storage';
 
-/** 這一題算不算 source 這個來源 */
+/** 星號與待複習錯題的三個來源，也是它們在選單上的順序 */
+export const REVIEW_SOURCES: readonly ReviewSource[] = ['review:starred', 'review:wrong', 'review:both'];
+
+/** 用 unknown：存檔裡的來源要先過這一關（quiz-progress-storage.ts） */
+export function isReviewSource(source: unknown): source is ReviewSource {
+  return (REVIEW_SOURCES as readonly unknown[]).includes(source);
+}
+
+/**
+ * 這一題算不算 source 這個來源。星號與待複習錯題不是題目的屬性，這裡一題都不收：
+ * 抽題範圍走 reviewCandidates，存檔檢查走 isReviewSource
+ */
 export function matchesSource(q: QuizQuestion, source: QuestionSource): boolean {
   if (source === 'all') return true;
   const exam = q.officialExam;
@@ -46,6 +58,9 @@ export function sampleEditions(questions: readonly QuizQuestion[]): string[] {
 export function questionSourceLabel(source: QuestionSource): string {
   if (source === 'all') return '全部題目';
   if (source === 'official') return '全部官方題目';
+  if (source === 'review:starred') return '星號題';
+  if (source === 'review:wrong') return '待複習錯題';
+  if (source === 'review:both') return '星號 + 待複習錯題';
   if (source.startsWith('sample:')) return sampleEditionLabel(source.slice('sample:'.length));
   return `${sessionLabel(source.slice('exam:'.length))}公告試題`;
 }
@@ -62,8 +77,28 @@ export function questionSourceScope(source: QuestionSource): string {
 export function questionSourceNoun(source: QuestionSource): string {
   if (source === 'all') return '題目';
   if (source === 'official') return '官方題目';
+  if (source === 'review:starred') return '星號題';
+  if (source === 'review:wrong') return '待複習錯題';
+  if (source === 'review:both') return '星號題與待複習錯題';
   if (source.startsWith('sample:')) return '參考樣題';
   return '官方公告試題';
+}
+
+/** 選單上帶題數的名稱：「星號題（12 題）」。count 是 null 代表練習池還在載入，題數還不知道 */
+export function reviewOptionLabel(source: ReviewSource, count: number | null): string {
+  return `${questionSourceLabel(source)}（${count === null ? '載入中' : `${count} 題`}）`;
+}
+
+/** 一題都沒有時的說明：題目要怎麼加進來；otherSubjectHasSome 是別的考科範圍有題目，要換的是考科 */
+export function reviewEmptyHint(source: ReviewSource, otherSubjectHasSome: boolean): string {
+  if (otherSubjectHasSome) {
+    return `這個考科範圍沒有${questionSourceNoun(source)}，可以把考科範圍改成全部。`;
+  }
+  const starHow = '作答時按題目上的星號';
+  const wrongHow = `測驗答錯的題目會自動列入，連續答對 ${REVIEW_REMOVE_STREAK} 次後移出`;
+  if (source === 'review:starred') return `還沒有星號題。${starHow}，題目就會出現在這裡。`;
+  if (source === 'review:wrong') return `還沒有待複習錯題。${wrongHow}。`;
+  return `還沒有星號題或待複習錯題。${starHow}，或是${wrongHow}。`;
 }
 
 /**
@@ -117,6 +152,32 @@ export function sourceCandidates(
       (subject === 'all' || q.subject === subject) &&
       matchesSource(q, source) &&
       isQuestionScorable(q)
+  );
+  return dedupeByContent(picked.sort(byPaperOrder));
+}
+
+/** 這個來源的名單（id）；兩邊都有的題目只算一次 */
+export function reviewIds(source: ReviewSource, review: Pick<ReviewSnapshot, 'stars' | 'wrong'>): string[] {
+  const stars = Object.keys(review.stars);
+  const wrong = Object.keys(review.wrong);
+  if (source === 'review:starred') return stars;
+  if (source === 'review:wrong') return wrong;
+  return [...new Set([...stars, ...wrong])];
+}
+
+/**
+ * 星號與待複習錯題的抽題範圍：pool 裡在名單上、考科相符、有標準答案的題目，順序與去重都跟 sourceCandidates 相同。
+ * 名單上認不得的 id（題庫改過、練習池沒載入）在這裡被過濾掉，名單本身不動。
+ */
+export function reviewCandidates(
+  pool: readonly QuizQuestion[],
+  subject: ExamSubject | 'all',
+  source: ReviewSource,
+  review: Pick<ReviewSnapshot, 'stars' | 'wrong'>
+): QuizQuestion[] {
+  const ids = new Set(reviewIds(source, review));
+  const picked = pool.filter(
+    (q) => ids.has(q.id) && (subject === 'all' || q.subject === subject) && isQuestionScorable(q)
   );
   return dedupeByContent(picked.sort(byPaperOrder));
 }

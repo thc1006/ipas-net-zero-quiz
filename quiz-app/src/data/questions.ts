@@ -318,6 +318,11 @@ export function getQuestionById(id: string): QuizQuestion | undefined {
   return questionsById.get(id);
 }
 
+/** 這些 id 有沒有主題庫以外的題目（星號與待複習錯題的名單可能有練習池題；有才需要載入練習池） */
+export function hasIdsOutsideMainBank(ids: readonly string[]): boolean {
+  return ids.some((id) => !questionsById.has(id));
+}
+
 /**
  * 搜尋題目（題幹關鍵字）
  */

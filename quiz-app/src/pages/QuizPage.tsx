@@ -1,6 +1,7 @@
 // 測驗頁面元件
 import { useState, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { QuestionCard } from '../components/QuestionCard';
+import { silence } from '../components/ReviewNotice/announce';
 import type { useQuiz } from '../hooks/useQuiz';
 import './QuizPage.css';
 
@@ -67,6 +68,15 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
       stem?.scrollIntoView({ block: 'start' });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentQuestion?.id]);
+
+  // 換題時螢幕閱讀器念過的提示不留到下一題（最後面那一段還看得到也一樣）。開頁的第一題不清：換畫面時主內容最上面的
+  // 說明剛念
+  const announcedQuestion = useRef(currentQuestion?.id);
+  useEffect(() => {
+    if (announcedQuestion.current === currentQuestion?.id) return;
+    announcedQuestion.current = currentQuestion?.id;
+    silence();
   }, [currentQuestion?.id]);
 
   // 選擇答案

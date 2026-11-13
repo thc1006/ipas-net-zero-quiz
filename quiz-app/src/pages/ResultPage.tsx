@@ -1,5 +1,5 @@
 // 結果頁面元件
-import { useMemo, useCallback, useState } from 'react';
+import { useMemo, useCallback, useRef, useState } from 'react';
 import { AnswerEvidence } from '../components/AnswerEvidence/AnswerEvidence';
 import { getQuestionById, getSimilarQuestions } from '../data/questions';
 import {
@@ -10,11 +10,17 @@ import {
 import { SourceBreakdown } from '../components/SourceBreakdown/SourceBreakdown';
 import type { QuizResult, QuizQuestion } from '../types/quiz';
 import { BankSimilarQuestionItem } from '../components/BankSimilarQuestionItem/BankSimilarQuestionItem';
+import { StarButton } from '../components/StarButton/StarButton';
+import { ActionNotice, ButtonNotice } from '../components/ReviewNotice/ReviewNotice';
+import { RemoveFromReview } from '../components/RemoveFromReview/RemoveFromReview';
 import { buildFeedbackUrl } from '../utils/feedback-url';
 import { selectWeakQuestions } from '../utils/question-stats-storage';
 import { renderMarkdown } from '../utils/render-markdown';
 import { echoOfOriginal } from '../utils/generated-question';
 import { useAllQuestionStats } from '../hooks/useQuestionStats';
+import { useReview } from '../hooks/useReview';
+import { useKeepHeight } from '../hooks/useKeepHeight';
+import { wrongEntry } from '../utils/review-storage';
 import './ResultPage.css';
 
 const WEAK_MIN_ATTEMPTS = 3;
@@ -25,6 +31,8 @@ interface ResultPageProps {
   result: QuizResult;
   onGoHome: () => void;
   onRetry: () => void;
+  /** 再測一次沒有題目時的說明（星號與待複習錯題的名單可能已經空了）；seq 每按一次就換 */
+  retryNotice?: { text: string; seq: number } | null;
 }
 
 // 解析可能含多段（#121 新增了不少帶條文引文的長解析）。用常數避免每次 render 重建 RegExp，
@@ -47,7 +55,7 @@ function GeneratedLines({ content }: { content: string }) {
   );
 }
 
-export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
+export function ResultPage({ result, onGoHome, onRetry, retryNotice = null }: ResultPageProps) {
   const { score, correctCount, wrongCount, totalAnswerable, skippedCount, answers, totalTime } =
     result;
 
@@ -74,6 +82,14 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
     }));
   }, []);
 
+  const review = useReview();
+  // 這一場讓待複習清單有什麼變動；寫入失敗（null）或沒有變動就不說
+  const reviewSummary = useMemo(() => {
+    const { added = 0, removed = 0 } = result.reviewSummary ?? {};
+    const parts = [added > 0 ? `${added} 題進待複習` : '', removed > 0 ? `${removed} 題移出` : ''];
+    return parts.some(Boolean) ? `這場有 ${parts.filter(Boolean).join('、')}。` : null;
+  }, [result.reviewSummary]);
+
   // 計算時間
   const formattedTime = useMemo(() => {
     const minutes = Math.floor(totalTime / 60000);
@@ -86,6 +102,11 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
     () => answers.filter((a) => a.isCorrect === false),
     [answers]
   );
+  const stillListed = wrongAnswers.some((a) => wrongEntry(review, a.questionId));
+  // 錯題區的說明有沒有，在畫出來時就定了（見下面錯題列表）。換字時也不變矮：窄螢幕上兩行換成一行，下面的錯題卡往上移
+  const [reviewHintShown] = useState(stillListed);
+  const reviewHintRef = useRef<HTMLParagraphElement>(null);
+  useKeepHeight(reviewHintRef);
 
   // 先查當次快照，再退回靜態題庫。前者才涵蓋練習池題 ——
   // getQuestionById() 的索引只由主題庫組成。
@@ -278,6 +299,8 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
         </div>
       </section>
 
+      {reviewSummary && <p className="review-summary">{reviewSummary}</p>}
+
       {/* 按題目來源分組的正確率（僅啟用練習池且抽到池題時顯示） */}
       <SourceBreakdown answers={answers} />
 
@@ -313,6 +336,16 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
             <span className="material-icons">error_outline</span>
             錯誤題目 ({wrongAnswers.length} 題)
           </h2>
+
+          {/* 存不進去時這句話就不對了，所以看清單上有沒有。有沒有這一段在畫出來時就定了：之後都移出了（手動移出、
+              別的分頁清除）改說已經不在清單上，不收掉、不變矮，下面的錯題卡才不會往上移 */}
+          {reviewHintShown && (
+            <p className="wrong-review-hint" ref={reviewHintRef}>
+              {stillListed
+                ? '答錯的題目已進待複習，首頁「題目來源」選「待複習錯題」可以練。'
+                : '這幾題都已不在待複習清單上。'}
+            </p>
+          )}
 
           {/* AI 功能說明與免責聲明 */}
           <div className="ai-disclaimer">
@@ -355,6 +388,7 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                   <div className="wrong-content">
                     <div className="wrong-stem-row">
                       <p className="wrong-stem">{question.stem}</p>
+                      <StarButton questionId={qid} label={`第 ${index + 1} 題加星號`} />
                       {/* 回報此題（Refs #63）— 開新分頁、不打斷使用者瀏覽結果頁 */}
                       <a
                         className="question-feedback-link wrong-feedback-link"
@@ -373,6 +407,7 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                         </span>
                       </a>
                     </div>
+                    <ButtonNotice button="star" questionId={qid} />
                     {/* role="list"：Safari 的 VoiceOver 不把 list-style: none 的 ul 念成清單 */}
                     <ul className="wrong-options" role="list" aria-label="選項">
                       {question.options.map((option) => {
@@ -410,6 +445,8 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
                         <strong className="text-success">{answer.correctAnswer}</strong>
                       </span>
                     </div>
+
+                    <RemoveFromReview questionId={qid} label={`第 ${index + 1} 題移出待複習`} />
 
                     {question.explanation && (
                       <section className="wrong-explanation" aria-label="題庫解析">
@@ -604,6 +641,8 @@ export function ResultPage({ result, onGoHome, onRetry }: ResultPageProps) {
           返回首頁
         </button>
       </section>
+      {/* 與按鈕引起的提示同一套：排在那一列下面，上面的按鈕不動 */}
+      {retryNotice && <ActionNotice text={retryNotice.text} seq={retryNotice.seq} />}
     </div>
   );
 }

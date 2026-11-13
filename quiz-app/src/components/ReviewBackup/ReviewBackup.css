@@ -1,0 +1,16 @@
+.review-backup__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+}
+
+.review-backup__status {
+  margin: var(--spacing-sm) 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+.review-backup__status:empty {
+  margin: 0;
+}
