@@ -292,24 +292,18 @@ describe('QuestionCard 元件', () => {
   });
 
   describe('可以改答案的模式（沒有 onKeyboardAnswered，考試模式）', () => {
-    it('方向鍵交給瀏覽器：不攔、不移動焦點，也沒有提示', () => {
-      render(<QuestionCard question={mockQuestion} questionNumber={1} onSelectAnswer={vi.fn()} />);
-      const radios = screen.getAllByRole('radio');
-      radios[0].focus();
-
-      expect(fireEvent.keyDown(radios[0], { key: 'ArrowDown' })).toBe(true);
-
-      expect(radios[0]).toHaveFocus();
-      expect(screen.queryByRole('status')).toBeNull();
-    });
-
-    // WebKit 的 radio 群組頭尾不接（頁面跟著捲）：頭尾自己接，跟 Chromium、Firefox 一樣移到另一頭並選取
+    // 原生的 radio 群組在 WebKit 移過去的選項沒有焦點框，頭尾也不接（頁面跟著捲）：一律自己移，跟 Chromium、Firefox
+    // 一樣移動並選取，頭尾相接
     it.each([
+      ['ArrowDown', 0, 1],
+      ['ArrowRight', 1, 2],
+      ['ArrowUp', 2, 1],
+      ['ArrowLeft', 1, 0],
       ['ArrowDown', 3, 0],
       ['ArrowRight', 3, 0],
       ['ArrowUp', 0, 3],
       ['ArrowLeft', 0, 3],
-    ])('%s 從第 %i 個：攔下來，移到第 %i 個並選取，選項捲出來，focus 自己不捲', (key, from, to) => {
+    ])('%s 從第 %i 個：攔下來，移到第 %i 個並選取，選項捲出來，focus 自己不捲，沒有提示', (key, from, to) => {
       const onSelectAnswer = vi.fn();
       render(<QuestionCard question={mockQuestion} questionNumber={1} onSelectAnswer={onSelectAnswer} />);
       const radios = screen.getAllByRole('radio');
@@ -327,9 +321,10 @@ describe('QuestionCard 元件', () => {
       expect(onSelectAnswer).toHaveBeenCalledExactlyOnceWith(mockQuestion.options[to].key);
       expect(reveal.mock.calls).toEqual([[radios[to].closest('.option-item')]]);
       expect(scroll).not.toHaveBeenCalled();
+      expect(screen.queryByRole('status')).toBeNull();
     });
 
-    it.each(['altKey', 'ctrlKey', 'metaKey'])('頭尾加 %s：交給瀏覽器', (modifier) => {
+    it.each(['altKey', 'ctrlKey', 'metaKey'])('加 %s：交給瀏覽器', (modifier) => {
       const onSelectAnswer = vi.fn();
       render(<QuestionCard question={mockQuestion} questionNumber={1} onSelectAnswer={onSelectAnswer} />);
       const radios = screen.getAllByRole('radio');
@@ -338,32 +333,6 @@ describe('QuestionCard 元件', () => {
       expect(fireEvent.keyDown(radios[3], { key: 'ArrowDown', [modifier]: true })).toBe(true);
       expect(radios[3]).toHaveFocus();
       expect(onSelectAnswer).not.toHaveBeenCalled();
-    });
-
-    // 瀏覽器移過去的選項：在 focus 的同一個 task 裡捲出來，不等頁首下一個 frame 的補捲。jsdom 沒有 radio 的預設行為，
-    // 方向鍵之後自己移焦點
-    it('方向鍵之後同一個 task 裡移過去的選項捲出來；下一個 task 才移的、Tab 移過去的不捲', async () => {
-      render(<QuestionCard question={mockQuestion} questionNumber={1} onSelectAnswer={vi.fn()} />);
-      const radios = screen.getAllByRole('radio');
-      const scroll = vi.mocked(revealBelowHeader);
-      radios[0].focus();
-      scroll.mockClear();
-
-      fireEvent.keyDown(radios[0], { key: 'ArrowDown' });
-      act(() => radios[1].focus());
-      expect(scroll.mock.calls).toEqual([[radios[1].closest('.option-item')]]);
-      expect(vi.mocked(Element.prototype.scrollIntoView)).not.toHaveBeenCalled();
-
-      // 一次按鍵只捲一次：之後同一個 task 裡又移的不算
-      act(() => radios[2].focus());
-      expect(scroll).toHaveBeenCalledTimes(1);
-
-      fireEvent.keyDown(radios[2], { key: 'ArrowUp' });
-      await new Promise((r) => setTimeout(r));
-      act(() => radios[1].focus());
-      fireEvent.keyDown(radios[1], { key: 'Tab' });
-      act(() => radios[0].focus());
-      expect(scroll).toHaveBeenCalledTimes(1);
     });
   });
 

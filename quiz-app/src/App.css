@@ -47,6 +47,11 @@ html {
   color: var(--color-text-secondary);
 }
 
+/* 訪客計數器連不上時整個不顯示，它前面的分隔點就落單了 */
+.app-footer .footer-links .divider:last-child {
+  display: none;
+}
+
 .app-footer .copyright {
   margin-top: var(--spacing-sm);
   font-size: var(--font-size-xs);

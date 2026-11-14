@@ -16,6 +16,12 @@ const FOCUSABLE_SELECTOR =
 
 export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptInDialogProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  // 呼叫端常傳 inline 函式，每次重畫都是新的。放進 effect 的依賴的話，開著時呼叫端一重畫，effect 就重跑，
+  // 焦點被拉回第一顆按鈕「暫不啟用」
+  const onDeclineRef = useRef(onDecline);
+  useEffect(() => {
+    onDeclineRef.current = onDecline;
+  });
 
   useEffect(() => {
     if (!open) return;
@@ -38,7 +44,7 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault();
-        onDecline();
+        onDeclineRef.current();
         return;
       }
       if (e.key !== 'Tab') return;
@@ -65,7 +71,7 @@ export function PracticeOptInDialog({ open, onAccept, onDecline }: PracticeOptIn
       // 對話框已經拿掉、頁面已經換成按下去之後的樣子（說明卡長高）：打開它的按鈕可能被推到視窗外
       returnFocus(previouslyFocused);
     };
-  }, [open, onDecline]);
+  }, [open]);
 
   if (!open) return null;
   return (

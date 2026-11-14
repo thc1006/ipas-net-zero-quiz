@@ -179,3 +179,16 @@ test.describe('回報問題與討論區', () => {
     });
   }
 });
+
+// 訪客計數器連不上時整個不顯示：頁尾最後一個看得到的是討論區，不是落單的分隔點
+test('頁尾：訪客計數器連不上時，最後面沒有落單的分隔點', async ({ page }) => {
+  await page.route(/abacus\.jasoncameron\.dev/, (route) => route.fulfill({ status: 500, body: '' }));
+  await gotoHome(page);
+  const links = page.locator('.footer-links');
+  await expect(links.locator('.visitor-counter')).toHaveCount(0);
+  const shown = await links.evaluate((el) =>
+    [...el.children].filter((c) => c.getClientRects().length > 0).map((c) => c.textContent?.trim())
+  );
+  expect(shown.at(-1)).toBe('討論區');
+  expect(shown).toHaveLength(5);
+});

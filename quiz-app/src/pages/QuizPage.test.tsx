@@ -203,25 +203,84 @@ describe('QuizPage — abort flow (#71)', () => {
     expect(scrollIntoView.mock.contexts[0]).toBe(document.querySelector('.question-stem'));
   });
 
-  it('考試模式：鍵盤按下一題，焦點不動', () => {
-    const quiz = makeQuizMock({
-      config: {
-        mode: 'exam',
-        subject: 'all',
-        questionCount: 10,
-        shuffleQuestions: false,
-        showAnswerImmediately: false,
-      },
+  describe('考試模式：鍵盤按的導覽按鈕換題後不能按，焦點移到新題幹', () => {
+    const examQuiz = (overrides: Partial<ReturnType<typeof useQuiz>> = {}) =>
+      makeQuizMock({
+        config: {
+          mode: 'exam',
+          subject: 'all',
+          questionCount: 10,
+          shuffleQuestions: false,
+          showAnswerImmediately: false,
+        },
+        ...overrides,
+      });
+    const stem = () => document.querySelector('.question-stem');
+
+    it('下一題換到沒答過的題目：按鈕停用，焦點移到題幹並捲到它', () => {
+      const quiz = examQuiz();
+      const second = { ...quiz.currentQuestion!, id: 'q-2', stem: '第二題' };
+      const { rerender } = render(<QuizPage quiz={quiz} onFinish={vi.fn()} onAbort={vi.fn()} />);
+      fireEvent.click(screen.getByRole('radio', { name: /選項 A/ }));
+      const next = screen.getByRole('button', { name: /下一題/ });
+      next.focus();
+
+      fireEvent.click(next, { detail: 0 });
+      rerender(<QuizPage quiz={{ ...quiz, currentQuestion: second }} onFinish={vi.fn()} onAbort={vi.fn()} />);
+
+      expect(next).toBeDisabled();
+      expect(stem()).toHaveFocus();
+      expect(scrollIntoView).toHaveBeenCalledExactlyOnceWith({ block: 'start' });
+      expect(document.querySelector('.nav-center [role="status"]')).toBeNull();
     });
-    const second = { ...quiz.currentQuestion!, id: 'q-2', stem: '第二題' };
-    const { rerender } = render(<QuizPage quiz={quiz} onFinish={vi.fn()} onAbort={vi.fn()} />);
-    fireEvent.click(screen.getByRole('radio', { name: /選項 A/ }));
 
-    fireEvent.click(screen.getByRole('button', { name: /下一題/ }), { detail: 0 });
-    rerender(<QuizPage quiz={{ ...quiz, currentQuestion: second }} onFinish={vi.fn()} onAbort={vi.fn()} />);
+    it('上一題回到第一題：按鈕停用，焦點移到題幹', () => {
+      const quiz = examQuiz({ currentAnswer: { questionId: 'q-1', selectedAnswer: 'A' } as never });
+      const first = { ...quiz.currentQuestion!, id: 'q-0', stem: '第一題' };
+      const { rerender } = render(<QuizPage quiz={quiz} onFinish={vi.fn()} onAbort={vi.fn()} />);
+      const prev = screen.getByRole('button', { name: /上一題/ });
+      prev.focus();
 
-    expect(document.querySelector('.question-stem')).not.toHaveFocus();
-    expect(document.querySelector('.nav-center [role="status"]')).toBeNull();
+      fireEvent.click(prev, { detail: 0 });
+      rerender(
+        <QuizPage
+          quiz={{ ...quiz, currentQuestion: first, isFirstQuestion: true }}
+          onFinish={vi.fn()}
+          onAbort={vi.fn()}
+        />
+      );
+
+      expect(prev).toBeDisabled();
+      expect(stem()).toHaveFocus();
+    });
+
+    it('換題後按鈕還能按（回到答過的題目）：焦點留在按鈕上，不捲', () => {
+      const quiz = examQuiz({ currentAnswer: { questionId: 'q-1', selectedAnswer: 'A' } as never });
+      const second = { ...quiz.currentQuestion!, id: 'q-2', stem: '第二題' };
+      const { rerender } = render(<QuizPage quiz={quiz} onFinish={vi.fn()} onAbort={vi.fn()} />);
+      const next = screen.getByRole('button', { name: /下一題/ });
+      next.focus();
+
+      fireEvent.click(next, { detail: 0 });
+      rerender(<QuizPage quiz={{ ...quiz, currentQuestion: second }} onFinish={vi.fn()} onAbort={vi.fn()} />);
+
+      expect(next).toBeEnabled();
+      expect(next).toHaveFocus();
+      expect(scrollIntoView).not.toHaveBeenCalled();
+    });
+
+    it('滑鼠按的：焦點不移到題幹', () => {
+      const quiz = examQuiz();
+      const second = { ...quiz.currentQuestion!, id: 'q-2', stem: '第二題' };
+      const { rerender } = render(<QuizPage quiz={quiz} onFinish={vi.fn()} onAbort={vi.fn()} />);
+      fireEvent.click(screen.getByRole('radio', { name: /選項 A/ }));
+
+      fireEvent.click(screen.getByRole('button', { name: /下一題/ }), { detail: 1 });
+      rerender(<QuizPage quiz={{ ...quiz, currentQuestion: second }} onFinish={vi.fn()} onAbort={vi.fn()} />);
+
+      expect(stem()).not.toHaveFocus();
+      expect(scrollIntoView).not.toHaveBeenCalled();
+    });
   });
 
   it('練習模式：最後一題作答後焦點落在完成測驗', () => {
@@ -265,12 +324,15 @@ describe('QuizPage — abort flow (#71)', () => {
     const radios = screen.getAllByRole('radio');
     radios[0].focus();
 
-    expect(fireEvent.keyDown(radios[0], { key: 'ArrowDown' })).toBe(true);
-    expect(submitAnswer).not.toHaveBeenCalled(); // jsdom 沒有 radio 的預設行為，真實改答案在 E2E
+    // 方向鍵跟原生的 radio 群組一樣移動並改答案（QuestionCard 自己移）
+    expect(fireEvent.keyDown(radios[0], { key: 'ArrowDown' })).toBe(false);
+    expect(submitAnswer).toHaveBeenCalledExactlyOnceWith('B');
+    expect(radios[1]).toHaveFocus();
 
-    fireEvent.keyDown(radios[0], { key: 'Enter' });
-    expect(submitAnswer).toHaveBeenCalledExactlyOnceWith('A');
-    expect(radios[0]).toHaveFocus();
+    fireEvent.keyDown(radios[1], { key: 'Enter' });
+    expect(submitAnswer).toHaveBeenLastCalledWith('B');
+    expect(submitAnswer).toHaveBeenCalledTimes(2);
+    expect(radios[1]).toHaveFocus();
 
     const next = screen.getByRole('button', { name: /下一題/ });
     expect(fireEvent.keyDown(next, { key: 'Enter', repeat: true })).toBe(true);

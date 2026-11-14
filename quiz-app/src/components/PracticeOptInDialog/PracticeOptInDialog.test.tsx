@@ -174,6 +174,21 @@ describe('PracticeOptInDialog', () => {
     });
   });
 
+  it('開著時呼叫端重畫、傳來新的 onDecline：焦點留在原處，ESC 呼叫新的那個', () => {
+    const first = vi.fn();
+    const second = vi.fn();
+    const { rerender } = render(<PracticeOptInDialog open onAccept={() => {}} onDecline={first} />);
+    const accept = screen.getByRole('button', { name: /我已了解/ });
+    accept.focus();
+
+    rerender(<PracticeOptInDialog open onAccept={() => {}} onDecline={second} />);
+    expect(document.activeElement).toBe(accept);
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(first).not.toHaveBeenCalled();
+    expect(second).toHaveBeenCalledOnce();
+  });
+
   it('does NOT set aria-hidden on #root (relies on aria-modal=true on dialog itself)', () => {
     // 故意不設 aria-hidden — dialog 是 #root 的子孫，若把 #root aria-hidden=true，
     // dialog 本身也會被視為隱藏，導致 a11y tree 找不到 dialog。
