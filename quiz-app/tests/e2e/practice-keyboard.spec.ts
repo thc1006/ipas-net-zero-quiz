@@ -556,10 +556,12 @@ test.describe('練習模式的鍵盤作答', () => {
     await expect(hint(page)).toHaveCount(0);
     await expect(outcome(page)).toHaveCount(0);
 
+    // 第 2 題還沒作答，下一題不能按：焦點移到新題幹，不掉到 body
     await nextButton(page).focus();
     await page.keyboard.press('Enter');
     await expect(page.getByText('第 2 題')).toBeVisible();
-    await expect(page.locator('.question-stem')).not.toBeFocused();
+    await expect(nextButton(page)).toBeDisabled();
+    await expect(page.locator('.question-stem')).toBeFocused();
   });
 
   // 考試模式是原生的 radio 群組。WebKit 用方向鍵移過去的 radio 不算 :focus-visible，自己也不捲：

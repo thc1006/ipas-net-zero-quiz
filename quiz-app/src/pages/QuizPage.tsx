@@ -27,6 +27,8 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
   const navigationRef = useRef<HTMLDivElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
   const focusStemAfterNext = useRef(false);
+  // 鍵盤按的導覽按鈕。換題後它不能按（考試模式換到沒答過的題目、上一題回到第一題）的話，焦點會掉到 body
+  const navPressedByKey = useRef<'prev' | 'next' | null>(null);
 
   // ESC 關閉 abort confirm dialog（a11y 期待行為）
   useEffect(() => {
@@ -51,6 +53,9 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
     prevQuestion,
   } = quiz;
 
+  // 考試模式沒作答不能按下一題
+  const nextLocked = (answer: string | null) => !answer && config?.mode === 'exam';
+
   // 切換題目時（返回上一題、續作還原、以及「選擇即記錄」後的導覽），從既有作答紀錄
   // 還原 UI 的選取／已答狀態。若不還原：回到已答題會顯示未選，考試模式還會因
   // `!selectedAnswer` 而卡住「下一題／完成測驗」按鈕，逼使用者重答（且重答會覆蓋原紀錄）。
@@ -61,7 +66,11 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
     setSelectedAnswer(prior);
     setHasAnswered(prior !== null && !!config?.showAnswerImmediately);
     setAnsweredBy(null);
-    if (focusStemAfterNext.current) {
+    // 按鈕這時還沒換成新題目的樣子（選取狀態上面才剛設），照新題目的狀態算
+    const pressed = navPressedByKey.current;
+    navPressedByKey.current = null;
+    const pressedLocked = pressed === 'prev' ? isFirstQuestion : pressed === 'next' && nextLocked(prior);
+    if (focusStemAfterNext.current || pressedLocked) {
       focusStemAfterNext.current = false;
       const stem = pageRef.current?.querySelector<HTMLElement>('.question-stem');
       stem?.focus({ preventScroll: true });
@@ -223,7 +232,10 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
       <div className="quiz-navigation" ref={navigationRef}>
         <button
           className="btn btn-secondary"
-          onClick={handlePrev}
+          onClick={(e) => {
+            navPressedByKey.current = e.detail === 0 ? 'prev' : null;
+            handlePrev();
+          }}
           disabled={isFirstQuestion}
         >
           <span className="material-icons">chevron_left</span>
@@ -246,13 +258,14 @@ export function QuizPage({ quiz, onFinish, onAbort }: QuizPageProps) {
           onClick={(e) => {
             // detail 0 是鍵盤或輔助工具的點擊：新題幹可能在畫面外，焦點跟著過去。不移到選項，連按 Enter 才不會替下一題作答
             focusStemAfterNext.current = !!config?.showAnswerImmediately && e.detail === 0;
+            navPressedByKey.current = e.detail === 0 ? 'next' : null;
             handleNext();
           }}
           onKeyDown={(e) => {
             // 按住 Enter 或空白鍵作答時，焦點已經移到這裡：重複的按鍵不算按下一題，否則一路跳題
             if (e.repeat && config?.showAnswerImmediately) e.preventDefault();
           }}
-          disabled={!selectedAnswer && config?.mode === 'exam'}
+          disabled={nextLocked(selectedAnswer)}
         >
           {isLastQuestion ? (
             <>
