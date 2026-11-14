@@ -186,7 +186,7 @@ const focusBox = (page: Page) =>
  * 用鍵盤走到關閉、按 Enter：焦點回到按下開始的按鈕。按鈕在頁面下方、訊息在最上面，訊息拿掉之後按鈕還在視窗下面。
  * 捲最少的距離：下緣貼視窗底邊，不捲到正中間
  */
-async function closeByKeyboard(page: Page, opener: Locator): Promise<void> {
+async function closeByKeyboard(page: Page, opener: Locator, afterClose?: () => Promise<void>): Promise<void> {
   const alert = page.getByRole('alert');
   await expect(alert.getByRole('button', { name: '再試一次' })).toBeFocused();
   await page.keyboard.press('Tab');
@@ -197,6 +197,7 @@ async function closeByKeyboard(page: Page, opener: Locator): Promise<void> {
   await page.keyboard.press('Enter');
   await expect(alert).toHaveCount(0);
   await expect(opener).toBeFocused();
+  await afterClose?.();
   await settle(page);
   const m = await focusBox(page);
   expect(m.top, `被頁首蓋住 ${JSON.stringify(m)}`).toBeGreaterThanOrEqual(m.header - SLACK);
@@ -219,6 +220,29 @@ for (const viewport of [
     await start.focus();
     await page.keyboard.press('Enter');
     await closeByKeyboard(page, start);
+  });
+
+  // 網路慢的時候字型檔晚到（CI 上偶爾這樣）：換成網頁字型後上面的字變高，開始測驗被推到視窗外 9 到 12px
+  test(`${viewport.width}x${viewport.height} 字型在關閉訊息之後才載完：開始測驗還在視窗之內`, async ({ page }) => {
+    let fontsArrive!: () => void;
+    const held = new Promise<void>((resolve) => (fontsArrive = resolve));
+    await page.route(/fonts\.gstatic\.com/, async (route) => {
+      await held;
+      await route.continue();
+    });
+    await page.setViewportSize(viewport);
+    await seedPoolEnabled(page);
+    await page.route(POOL_CHUNK, (route) => route.abort());
+    // Firefox、WebKit 的 load 事件等字型
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const start = page.getByRole('button', { name: /開始測驗/ });
+    await start.focus();
+    await page.keyboard.press('Enter');
+    await closeByKeyboard(page, start, async () => {
+      expect(await page.evaluate(() => document.fonts.status), '前提：關閉時字型還在載入').toBe('loading');
+      fontsArrive();
+      await page.evaluate(() => document.fonts.ready);
+    });
   });
 }
 

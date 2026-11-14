@@ -26,9 +26,18 @@ export function revealBelowHeader(el: Element): number {
   return by;
 }
 
-/** 焦點放回 el（不在畫面上、拿不到焦點就不動），再捲到看得到 */
+/**
+ * 焦點放回 el（不在畫面上、拿不到焦點就不動），再捲到看得到。網頁字型還在載入時，載完後上面的字會變高、
+ * 把 el 推出視窗（網路慢時 9 到 12px），所以載完再看一次，焦點還在 el 才捲
+ */
 export function returnFocus(el: HTMLElement | null | undefined): void {
   if (!el || !el.isConnected || el === document.body) return;
   el.focus({ preventScroll: true });
-  if (document.activeElement === el) revealBelowHeader(el);
+  if (document.activeElement !== el) return;
+  revealBelowHeader(el);
+  if (document.fonts?.status === 'loading') {
+    void document.fonts.ready.then(() => {
+      if (document.activeElement === el) revealBelowHeader(el);
+    });
+  }
 }
