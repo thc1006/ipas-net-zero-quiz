@@ -537,7 +537,13 @@ test.describe('練習模式的鍵盤作答', () => {
     await expect(page.locator('.question-stem')).not.toBeFocused();
   });
 
-  test('考試模式不變：方向鍵直接改答案，不鎖定、不顯示提示，焦點留在選項', async ({ page }) => {
+  // 移到的選項要有焦點框：之前交給原生的 radio 群組，WebKit 移過去的選項不算 :focus-visible，看不出焦點在哪
+  test('考試模式不變：方向鍵直接改答案，不鎖定、不顯示提示，焦點留在選項，看得到焦點框', async ({ page }) => {
+    const ring = () =>
+      page.evaluate(() => {
+        const el = document.activeElement as HTMLElement;
+        return [el.matches(':focus-visible'), getComputedStyle(el.nextElementSibling!).outlineStyle];
+      });
     await startQuiz(page, 'exam');
     await tabIntoOptions(page);
     await expect(nextButton(page)).toBeDisabled();
@@ -545,10 +551,17 @@ test.describe('練習模式的鍵盤作答', () => {
     await page.keyboard.press('ArrowDown');
     await expect(page.locator('.question-options input:checked')).toHaveValue('B');
     await expect(nextButton(page)).toBeEnabled();
+    expect(await ring(), '往下到 B').toEqual([true, 'solid']);
 
     await page.keyboard.press('ArrowDown');
     await expect(page.locator('.question-options input:checked')).toHaveValue('C');
     await expect(options(page).nth(2)).toBeFocused();
+    expect(await ring(), '往下到 C').toEqual([true, 'solid']);
+
+    await page.keyboard.press('ArrowUp');
+    await expect(page.locator('.question-options input:checked')).toHaveValue('B');
+    expect(await ring(), '往上到 B').toEqual([true, 'solid']);
+    await page.keyboard.press('ArrowDown');
 
     await page.keyboard.press('Enter');
     await expect(options(page).nth(2)).toBeFocused();
@@ -564,7 +577,7 @@ test.describe('練習模式的鍵盤作答', () => {
     await expect(page.locator('.question-stem')).toBeFocused();
   });
 
-  // 考試模式是原生的 radio 群組。WebKit 用方向鍵移過去的 radio 不算 :focus-visible，自己也不捲：
+  // 考試模式之前交給原生的 radio 群組。WebKit 用方向鍵移過去的 radio 不算 :focus-visible，自己也不捲：
   // 640x360 時移到的選項被頁首或視窗底邊蓋住 34px
   for (const [width, height] of [[640, 360], [360, 640], [320, 256]]) {
     test(`考試模式 ${width}x${height}：方向鍵移到的選項在 header 下面、視窗之內`, async ({ page }) => {

@@ -324,12 +324,15 @@ describe('QuizPage — abort flow (#71)', () => {
     const radios = screen.getAllByRole('radio');
     radios[0].focus();
 
-    expect(fireEvent.keyDown(radios[0], { key: 'ArrowDown' })).toBe(true);
-    expect(submitAnswer).not.toHaveBeenCalled(); // jsdom 沒有 radio 的預設行為，真實改答案在 E2E
+    // 方向鍵跟原生的 radio 群組一樣移動並改答案（QuestionCard 自己移）
+    expect(fireEvent.keyDown(radios[0], { key: 'ArrowDown' })).toBe(false);
+    expect(submitAnswer).toHaveBeenCalledExactlyOnceWith('B');
+    expect(radios[1]).toHaveFocus();
 
-    fireEvent.keyDown(radios[0], { key: 'Enter' });
-    expect(submitAnswer).toHaveBeenCalledExactlyOnceWith('A');
-    expect(radios[0]).toHaveFocus();
+    fireEvent.keyDown(radios[1], { key: 'Enter' });
+    expect(submitAnswer).toHaveBeenLastCalledWith('B');
+    expect(submitAnswer).toHaveBeenCalledTimes(2);
+    expect(radios[1]).toHaveFocus();
 
     const next = screen.getByRole('button', { name: /下一題/ });
     expect(fireEvent.keyDown(next, { key: 'Enter', repeat: true })).toBe(true);
