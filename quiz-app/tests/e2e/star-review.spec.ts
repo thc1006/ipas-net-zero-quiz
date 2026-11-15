@@ -85,10 +85,15 @@ const layoutSize = (locator: Locator) =>
 
 /**
  * 哪些選項選中時放不下。完整顯示一個選項要多寬交給瀏覽器量：複製一個只有這個選項的選單、寬度設成 max-content，
- * 量出來的就是選項文字加上下拉箭頭、padding 與框線（見 official-mode.spec.ts）
+ * 量出來的就是選項文字加上下拉箭頭、padding 與框線（見 official-mode.spec.ts）。
+ * 先等選項文字用到的網頁字型載完：CI 的 WebKit 有時 load 比網頁字型先到，goto 回來時還是備用字型，
+ * 320px 最大字級的「星號 + 待複習錯題」量到要 295px（網頁字型放得下）
  */
 const cutOptions = (page: Page) =>
-  source(page).evaluate((el: HTMLSelectElement) => {
+  source(page).evaluate(async (el: HTMLSelectElement) => {
+    const style = getComputedStyle(el);
+    const font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+    await Promise.all([...el.options].map((option) => document.fonts.load(font, option.text)));
     const available = el.getBoundingClientRect().width;
     return [...el.options].flatMap((option) => {
       const probe = el.cloneNode(false) as HTMLSelectElement;
