@@ -65,6 +65,21 @@ function remeasureSettled(): void {
   });
 }
 
+/**
+ * 網頁字型載完、換掉備用字型：折行與行高都換了，React 沒有重畫，畫完時量的是備用字型的高度。網頁字型比較高的話
+ * （CI 的 WebKit 上說明卡 191 與 272px），留著的高度撐不住，之後別的分頁讓內容變短時下面的東西往上移。
+ * 只往上提、不往下降：別的分頁換了字、多載一段字型時，不能把留著的高度量掉
+ */
+function raiseToContent(): void {
+  const shown = [...kept].filter((k): k is Kept & { el: HTMLElement } => k.el !== null);
+  for (const k of shown) k.el.style.minHeight = '';
+  const heights = shown.map((k) => k.el.getBoundingClientRect().height);
+  shown.forEach((k, i) => {
+    k.tallest = Math.max(k.tallest, heights[i]);
+    k.el.style.minHeight = `${k.tallest}px`;
+  });
+}
+
 function onResize(): void {
   const turned = window.innerWidth > window.innerHeight;
   // 只有高度換了（手機網址列收起來）不算
@@ -82,6 +97,9 @@ function track(k: Kept): () => void {
     shownFont = document.documentElement.getAttribute('data-font-size');
     fontSize = new MutationObserver(onFontSize);
     fontSize.observe(document.documentElement, { attributes: true, attributeFilter: ['data-font-size'] });
+    document.fonts?.addEventListener('loadingdone', raiseToContent);
+    // 畫完到開始聽之間字型就載完的話 loadingdone 已經過去
+    void document.fonts?.ready.then(raiseToContent);
   }
   kept.add(k);
   return () => {
@@ -90,6 +108,7 @@ function track(k: Kept): () => void {
     window.removeEventListener('resize', onResize);
     fontSize?.disconnect();
     fontSize = null;
+    document.fonts?.removeEventListener('loadingdone', raiseToContent);
   };
 }
 

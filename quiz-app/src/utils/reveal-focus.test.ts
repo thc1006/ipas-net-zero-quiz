@@ -96,4 +96,39 @@ describe('returnFocus：程式放回焦點之後捲最少的距離', () => {
     returnFocus(button);
     expect(scrollBy).toHaveBeenCalledWith(0, -30);
   });
+
+  describe('網頁字型還在載入', () => {
+    let fontsReady: () => void;
+
+    beforeEach(() => {
+      const ready = new Promise<void>((r) => (fontsReady = r));
+      Object.defineProperty(document, 'fonts', { configurable: true, value: { status: 'loading', ready } });
+    });
+
+    afterEach(() => {
+      delete (document as { fonts?: unknown }).fonts;
+    });
+
+    it('載完之後上面的字變高、把它推到視窗外：再捲一次', async () => {
+      button.getBoundingClientRect = () => rect(810, 40);
+      returnFocus(button);
+      expect(scrollBy).toHaveBeenLastCalledWith(0, 130);
+      button.getBoundingClientRect = () => rect(731.5, 40);
+      fontsReady();
+      await vi.waitFor(() => expect(scrollBy).toHaveBeenCalledTimes(2));
+      expect(scrollBy).toHaveBeenLastCalledWith(0, 52);
+    });
+
+    it('載完之前焦點已經移走：不捲', async () => {
+      button.getBoundingClientRect = () => rect(810, 40);
+      returnFocus(button);
+      const other = document.createElement('button');
+      document.body.append(other);
+      other.focus();
+      button.getBoundingClientRect = () => rect(731.5, 40);
+      fontsReady();
+      await new Promise((r) => setTimeout(r));
+      expect(scrollBy).toHaveBeenCalledTimes(1);
+    });
+  });
 });
