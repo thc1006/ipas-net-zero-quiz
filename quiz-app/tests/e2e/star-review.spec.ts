@@ -2196,6 +2196,77 @@ test.describe('首頁：別的分頁停用加強練習池，抽題分布那一�
   }
 });
 
+// CI 的 WebKit 上首頁常常先用備用字型畫完：留著的高度量的是備用字型的（說明卡 191px，網頁字型到了之後 272px；
+// 說明文字 42 與 44.78px）。字型換掉時 React 沒有重畫，留著的高度沒跟上，之後別的分頁停用，說明文字與徽章列變矮，
+// 下面的東西往上移（#165 合併後與 #167 的 CI 都紅在上面那一組）。這裡把網頁字型放大一倍、擋到首頁畫完之後才放行，
+// 每個引擎都照這個順序。字放大後標題換字會多折一行、把下面往下推：留著的高度本來就只擋變矮，所以只比不變矮、不往上移
+test('首頁畫完之後網頁字型才到：留著的高度跟上網頁字型，別的分頁停用加強練習池時不變矮、下面的東西不往上移', async ({ page, context }) => {
+  await page.setViewportSize({ width: 412, height: 839 });
+  await page.route(/fonts\.googleapis\.com\/css2/, async (route) => {
+    const response = await route.fetch();
+    const css = (await response.text()).replaceAll('font-display: swap;', 'font-display: swap;\n  size-adjust: 200%;');
+    await route.fulfill({ response, body: css });
+  });
+  let fontsArrive!: () => void;
+  const held = new Promise<void>((resolve) => (fontsArrive = resolve));
+  await page.route(/fonts\.gstatic\.com/, async (route) => {
+    await held;
+    await route.continue();
+  });
+  await page.addInitScript(() => {
+    if (window.sessionStorage.getItem('seeded')) return;
+    window.sessionStorage.setItem('seeded', '1');
+    window.localStorage.setItem('practice-pool-disclosure-seen', '1');
+    window.localStorage.setItem('practice-pool-enabled', '1');
+    window.localStorage.setItem('practice-pool-ai-opt-in', '1');
+  });
+  // Firefox、WebKit 的 load 事件等字型
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const summary = page.locator('.practice-pool-tip__details summary');
+  await expect(summary).toHaveText('查看抽題分布');
+  // 首頁留著高度的三段（useKeepHeight）：高度、留著的 min-height、拿掉 min-height 之後內容的高度
+  const KEPT = ['.stats-badges', '[data-testid="practice-pool-tip"]', '.practice-pool-tip__desc'];
+  const look = () =>
+    page.evaluate((selectors) => {
+      const parts = selectors.map((selector) => {
+        const el = document.querySelector<HTMLElement>(selector)!;
+        const box = el.getBoundingClientRect().height;
+        const kept = el.style.minHeight;
+        el.style.minHeight = '';
+        const content = el.getBoundingClientRect().height;
+        el.style.minHeight = kept;
+        return { selector, box, kept: parseFloat(kept) || 0, content };
+      });
+      const summaryTop = document.querySelector('.practice-pool-tip__details summary')!.getBoundingClientRect().top + window.scrollY;
+      return { parts, summary: summaryTop };
+    }, KEPT);
+  const fallback = await look();
+  fontsArrive();
+  await page.evaluate(() => document.fonts.ready);
+  await settle(page);
+  const before = await look();
+  expect(before.parts[1].content, `前提：網頁字型到了之後說明卡變高 ${JSON.stringify({ fallback, before })}`).toBeGreaterThan(
+    fallback.parts[1].content + 10
+  );
+  for (const part of before.parts) {
+    expect(part.kept, `網頁字型到了之後留著的高度沒跟上 ${JSON.stringify(part)}`).toBeGreaterThanOrEqual(part.content - 0.5);
+  }
+  await summary.focus();
+  const other = await context.newPage();
+  await other.goto('/');
+  await other.evaluate(() => window.localStorage.setItem('practice-pool-enabled', '0'));
+  await other.close();
+  await expect(summary).toHaveText('停用前的抽題分布');
+  await settle(page);
+  const after = await look();
+  before.parts.forEach((part, i) => {
+    expect(after.parts[i].box, `別的分頁停用之後變矮 ${JSON.stringify({ before: part, after: after.parts[i] })}`).toBeGreaterThanOrEqual(
+      part.box - SLACK
+    );
+  });
+  expect(after.summary, `別的分頁停用之後抽題分布往上移 ${JSON.stringify({ before, after })}`).toBeGreaterThanOrEqual(before.summary - SLACK);
+});
+
 // 別的分頁啟用加強練習池時說明卡加上抽題分布那一列（30.4），下面的題目來源與開始測驗往下移。有沒有這一列在首頁畫出來時、
 // 這個分頁自己切換時才定
 test.describe('首頁：別的分頁啟用加強練習池，不加抽題分布那一列，題目來源與開始測驗不動', () => {

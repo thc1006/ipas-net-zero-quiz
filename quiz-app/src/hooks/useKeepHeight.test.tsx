@@ -356,6 +356,61 @@ describe('useKeepHeight', () => {
     });
   });
 
+  describe('網頁字型載完（換掉備用字型，React 沒有重畫）', () => {
+    let fonts: EventTarget & { status: string; ready: Promise<unknown> };
+    let fontsReady: () => void;
+    const fontsLoaded = () => act(() => void fonts.dispatchEvent(new Event('loadingdone')));
+
+    beforeEach(() => {
+      const ready = new Promise<void>((resolve) => (fontsReady = resolve));
+      fonts = Object.assign(new EventTarget(), { status: 'loading', ready });
+      Object.defineProperty(document, 'fonts', { configurable: true, value: fonts });
+    });
+    afterEach(() => {
+      delete (document as { fonts?: unknown }).fonts;
+    });
+
+    it('畫完時量的是備用字型的高度、載完之後內容變高：留著的高度跟著提高，之後換成短的內容不變矮', () => {
+      natural = 40;
+      const { rerender } = render(<Line text="長" />);
+      expect(line().style.minHeight).toBe('40px');
+      natural = 60;
+      fontsLoaded();
+      expect(line().style.minHeight).toBe('60px');
+      natural = 20;
+      rerender(<Line text="短" />);
+      expect(line().style.minHeight).toBe('60px');
+    });
+
+    it('載完時內容比留著的矮（別的分頁換了字、多載一段字型）：不降，下面的東西不動', () => {
+      natural = 60;
+      const { rerender } = render(<Line text="長" />);
+      natural = 20;
+      rerender(<Line text="短" />);
+      fontsLoaded();
+      expect(line().style.minHeight).toBe('60px');
+    });
+
+    it('開始看之前字型就載完了（loadingdone 已經過去）：ready 之後照現在的內容量一次', async () => {
+      natural = 40;
+      render(<Line text="長" />);
+      natural = 60;
+      await act(async () => {
+        fontsReady();
+        await fonts.ready;
+      });
+      expect(line().style.minHeight).toBe('60px');
+    });
+
+    it('最後一段拿掉之後不再聽', () => {
+      const remove = vi.spyOn(fonts, 'removeEventListener');
+      natural = 40;
+      const { unmount } = render(<Line text="長" />);
+      unmount();
+      expect(remove).toHaveBeenCalledWith('loadingdone', expect.any(Function));
+    });
+  });
+
   it('拿掉之後不再聽 resize', () => {
     const remove = vi.spyOn(window, 'removeEventListener');
     natural = 60;
